@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay *.jpg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20%2A.jpg&In-Reply-To=%3C431DFA0C.7020903%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001184.html">
+   <LINK REL="Next"  HREF="001197.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay *.jpg</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20%2A.jpg&In-Reply-To=%3C431DFA0C.7020903%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softplay *.jpg">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Sep  6 22:20:28 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001184.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+        <LI>Next message: <A HREF="001197.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1194">[ date ]</a>
+              <a href="thread.html#1194">[ thread ]</a>
+              <a href="subject.html#1194">[ subject ]</a>
+              <a href="author.html#1194">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> 
+</I>&gt;<i> I have to explain a bit more what my intension is. In the past days I
+</I>&gt;<i> did an journey into the world of UPnP and associated media players
+</I>&gt;<i> and servers:
+</I>&gt;<i> <A HREF="http://www.twonkyvision.de/">http://www.twonkyvision.de/</A>
+</I>&gt;<i> 
+</I>&gt;<i> Still have to try the free mediaserver MediaTomb:
+</I>&gt;<i> <A HREF="http://sourceforge.net/projects/mediatomb">http://sourceforge.net/projects/mediatomb</A>
+</I>&gt;<i> 
+</I>&gt;<i> At least it is possible to play MP3 from an url connecting to a UPnP
+</I>&gt;<i> mediaserver, filename hard coded set to :
+</I>&gt;<i> <A HREF="http://192.x.y.z:9000/disk/music/O962.mp3">http://192.x.y.z:9000/disk/music/O962.mp3</A>&quot;
+</I>&gt;<i> 
+</I>&gt;<i> That info was transferred in the following document:
+</I>&gt;<i>   &lt;DIDL-Lite&gt;
+</I>&gt;<i>     &lt;item id=&quot;962&quot; refID=&quot;960&quot; parentID=&quot;709&quot; restricted=&quot;1&quot;&gt;
+</I>&gt;<i>       &lt;dc:title&gt;What Do You Want The Girl To Do&lt;/dc:title&gt;
+</I>&gt;<i>       &lt;dc:creator&gt;Lowell George&lt;/dc:creator&gt;
+</I>&gt;<i>       &lt;upnp:artist&gt;Lowell George&lt;/upnp:artist&gt;
+</I>&gt;<i>       &lt;upnp:album&gt;Thanks I'll Eat It Here&lt;/upnp:album&gt;
+</I>&gt;<i>       &lt;upnp:genre&gt;Rock&lt;/upnp:genre&gt;
+</I>&gt;<i>       &lt;upnp:playlist&gt;&lt;/upnp:playlist&gt;
+</I>&gt;<i>       &lt;dc:date&gt;1999-01-01&lt;/dc:date&gt;
+</I>&gt;<i>       &lt;upnp:originalTrackNumber&gt;1&lt;/upnp:originalTrackNumber&gt;
+</I>&gt;<i>       &lt;upnp:albumArtURI&gt;&lt;/upnp:albumArtURI&gt;
+</I>&gt;<i>       &lt;res size=&quot;4629639&quot; duration=&quot;0:04:49.340&quot; protocolInfo=&quot;http-get:*:audio/mpeg:*&quot;&gt;
+</I>&gt;<i><A HREF="http://192.x.y.z:9000/disk/music/O962.mp3&lt;/res">http://192.x.y.z:9000/disk/music/O962.mp3&lt;/res</A>&gt;
+</I>&gt;<i>       &lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;
+</I>&gt;<i>     &lt;/item&gt;
+</I>&gt;<i> .. 
+</I>&gt;<i>   &lt;/DIDL-Lite&gt;
+</I>&gt;<i> 
+</I>&gt;<i> Thats part of a trace from a java UPnP controll point Cidero:
+</I>&gt;<i> <A HREF="http://www.cidero.com/">http://www.cidero.com/</A>
+</I>&gt;<i> 
+</I>
+If softplay can already play the http stream I think it should be not
+very difficult to add support for the controll stream and so support the
+UPnP protocol. What bothers me is just that we would have to parse xml
+and I would not like to add the dependency to another library to parse
+xml. On the other hand parsing xml is not a matter of a few lines.
+I'm still working on some major changes in sofplay, I want to use the
+new Service interface of vdr to comunicate and I also improved the
+playlist support. If you want to integrate UPnP support into softplay
+and you find a simple and easy way to parse the xml without the use of
+an external library I certainly wont object.
+By the way, I want add the possiblity to show background pictures while
+playing audio files at some point, but up to now I think there are more
+important missing features.
+
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001184.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+	<LI>Next message: <A HREF="001197.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1194">[ date ]</a>
+              <a href="thread.html#1194">[ thread ]</a>
+              <a href="subject.html#1194">[ subject ]</a>
+              <a href="author.html#1194">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Better Error Handling for bad sample rates &quot;Fatal: Exiting&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Better%20Error%20Handling%20for%20bad%20sample%20rates%20%22Fatal%3A%20Exiting%22&In-Reply-To=%3C20060628074343.GC5684%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002208.html">
+   <LINK REL="Next"  HREF="002213.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Better Error Handling for bad sample rates &quot;Fatal: Exiting&quot;</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Better%20Error%20Handling%20for%20bad%20sample%20rates%20%22Fatal%3A%20Exiting%22&In-Reply-To=%3C20060628074343.GC5684%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Better Error Handling for bad sample rates &quot;Fatal: Exiting&quot;">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Jun 28 09:43:43 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002208.html">[Softdevice-devel] Better Error Handling for bad sample rates &quot;Fatal: Exiting&quot;
+</A></li>
+        <LI>Next message: <A HREF="002213.html">[Softdevice-devel] Better Error Handling for bad sample rates &quot;Fatal: Exiting&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2210">[ date ]</a>
+              <a href="thread.html#2210">[ thread ]</a>
+              <a href="subject.html#2210">[ subject ]</a>
+              <a href="author.html#2210">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jun 28, 2006 at 12:30:24AM -0400, Dave wrote:
+&gt;<i> 
+</I>&gt;<i> I have this problem occasionally with softdevice exiting out due to
+</I>&gt;<i> unsupported audio sample rates. for example 44100 khz causes softdevice
+</I>&gt;<i> to exit and kill VDR.
+</I>&gt;<i> 
+</I>&gt;<i> Is there a better way to handle this rather than to kill VDR
+</I>&gt;<i> completely?
+</I>
+You might want to work this around by suspending the output when you are
+not watching it.  Then, softdevice shouldn't be able to crash.  That should
+also reduce the power consumption of your VDR box by some 10 or 20 watts.
+
+There are at least three alternatives: the suspend flag in the softdevice
+setup menu, the vdr-suspendoutput plugin, and my vdr patch
+(<A HREF="http://www.iki.fi/~msmakela/software/vdr/#suspend">http://www.iki.fi/~msmakela/software/vdr/#suspend</A>).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002208.html">[Softdevice-devel] Better Error Handling for bad sample rates &quot;Fatal: Exiting&quot;
+</A></li>
+	<LI>Next message: <A HREF="002213.html">[Softdevice-devel] Better Error Handling for bad sample rates &quot;Fatal: Exiting&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2210">[ date ]</a>
+              <a href="thread.html#2210">[ thread ]</a>
+              <a href="subject.html#2210">[ subject ]</a>
+              <a href="author.html#2210">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

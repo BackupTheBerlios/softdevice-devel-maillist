@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C5A6A80AB-3555-4354-B3B2-8DAE41780388%40scene.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002744.html">
+   <LINK REL="Next"  HREF="002748.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Hugo Visser</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C5A6A80AB-3555-4354-B3B2-8DAE41780388%40scene.nl%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">joegi at scene.nl
+       </A><BR>
+    <I>Tue Feb 27 23:08:14 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002744.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002748.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2746">[ date ]</a>
+              <a href="thread.html#2746">[ thread ]</a>
+              <a href="subject.html#2746">[ subject ]</a>
+              <a href="author.html#2746">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Stefan,
+
+&gt;<i> For this one, it look like &quot;Cropping&quot; -&gt; &quot;CropMode&quot; is set to 14:9  
+</I>&gt;<i> and &quot;Screen Aspect&quot;
+</I>&gt;<i> set &quot;16:9&quot; or &quot;default&quot;.
+</I>&gt;<i> 14:9:
+</I>&gt;<i> video.c, line 345:
+</I>&gt;<i>   if (afd_asp &lt;= new_asp) {
+</I>&gt;<i>     swidth = (int) (0.5 + ((double) tmpWidth * afd_asp / new_asp));
+</I>&gt;<i>   } else {
+</I>&gt;<i>     sheight = (int) (0.5 + ((double) tmpHeight * new_asp / afd_asp));
+</I>&gt;<i>   }
+</I>&gt;<i>
+</I>&gt;<i> new_asp: assumed as 4/3 (1.3333),
+</I>&gt;<i> afd_asp: unknown but greater than new_asp
+</I>&gt;<i> -&gt; else part will be choosen.
+</I>&gt;<i> so afd_asp = tmpHeight * new_asp / sheight;
+</I>&gt;<i> sheight: about 496 (+2 due to adjusting to YV12)
+</I>&gt;<i> tmpHeight: 576 (not other zoom / offset values applied)
+</I>&gt;<i> afd_asp is about 1.54838 ( 14 / 9 = 1.5555)
+</I>&gt;<i>
+</I>
+I think the crop mode was disabled, but the aspect was set to 16:9.  
+I'll test again and pay more attention :)
+
+&gt;&gt;<i> Feb 26 23:05:14 localhost vdr: [6878] [VideoOut]: 528x576 [0,0   
+</I>&gt;&gt;<i> 528x576] -&gt; 1368x768 [170,0 1026x768]
+</I>&gt;&gt;<i> Feb 26 23:05:21 localhost vdr: [6878] [VideoOut]: 528x576 [0,0   
+</I>&gt;&gt;<i> 528x576] -&gt; 1368x768 [114,0 1140x768]
+</I>&gt;&gt;<i> Feb 26 23:05:22 localhost vdr: [6878] [VideoOut]: 528x576 [0,0   
+</I>&gt;&gt;<i> 528x576] -&gt; 1368x768 [136,0 1094x768]
+</I>&gt;&gt;<i> Feb 26 23:05:24 localhost vdr: [6878] [VideoOut]: 528x576 [0,0   
+</I>&gt;&gt;<i> 528x576] -&gt; 1368x768 [172,0 1024x768]
+</I>&gt;<i>
+</I>&gt;<i> Did you cycle through all possible &quot;Screen Aspect&quot; possibilities ?
+</I>&gt;<i>
+</I>
+Yes I was cycling here, I realized that when I'd already sent the  
+message that log wasn't very usefull.
+
+&gt;<i> &quot;Screen Aspect&quot; should be set only once, so that it fits the geometry
+</I>&gt;<i> of your output device.
+</I>&gt;<i>
+</I>&gt;<i> So with screen aspect set to 16:9 and cropmode set to 16:9 it  
+</I>&gt;<i> should work,
+</I>&gt;<i> as long a pur 16:9 video fills the entire screen of your lcd .
+</I>&gt;<i> Don't know what to ask further, exept for short sample recording as  
+</I>&gt;<i> I've never
+</I>&gt;<i> seen resolution 528x576 (only 540x576).
+</I>
+I'll record a short clip and post back when I've put it online  
+somewhere if thats ok. I think that will be later this week as I then  
+have some spare time to hack on this. I'll look at vdeo.c to see if I  
+can put in some printf's so that I can figure out what's going on.
+
+Could it be that my dvb device (a dvb-t usb stick) is producing the  
+weird resolution? I thought it was the broadcaster that controls that?
+
+Thanks,
+
+Hugo
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002744.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002748.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2746">[ date ]</a>
+              <a href="thread.html#2746">[ thread ]</a>
+              <a href="subject.html#2746">[ subject ]</a>
+              <a href="author.html#2746">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

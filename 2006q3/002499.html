@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Error! Trying to unlock a nil	picture...	Ignoring.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%21%20Trying%20to%20unlock%20a%20nil%09picture...%0A%09Ignoring.&In-Reply-To=%3C20060918202224.GA3319%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002498.html">
+   <LINK REL="Next"  HREF="002500.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Error! Trying to unlock a nil	picture...	Ignoring.</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%21%20Trying%20to%20unlock%20a%20nil%09picture...%0A%09Ignoring.&In-Reply-To=%3C20060918202224.GA3319%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Error! Trying to unlock a nil	picture...	Ignoring.">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Sep 18 22:22:24 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002498.html">[Softdevice-devel] Error! Trying to unlock a nil	picture...	Ignoring.
+</A></li>
+        <LI>Next message: <A HREF="002500.html">[Softdevice-devel] Error! Trying to unlock a	nil	picture...	Ignoring.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2499">[ date ]</a>
+              <a href="thread.html#2499">[ thread ]</a>
+              <a href="subject.html#2499">[ subject ]</a>
+              <a href="author.html#2499">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Sep 18, 2006 at 09:12:04PM +0200, Martin Wache wrote:
+&gt;<i> The log you posted indicates that there as been bad signal during some
+</I>&gt;<i> time. Maybe this has something to do with you problem?
+</I>
+It might have something to do with my patch suspending the MPEG stream in
+cDevice::Action():
+
+@@ -1201,8 +1203,16 @@ void cDevice::Action(void)
+                  int Pid = (((uint16_t)b[1] &amp; PID_MASK_HI) &lt;&lt; 8) | b[2];
+                  // Distribute the packet to all attached receivers:
+                  Lock();
++                 int isSuspended = Setup.Suspend;
++                 if (!wasSuspended &amp;&amp; isSuspended) {
++                    PrimaryDevice()-&gt;Clear();
++                    }
++                 wasSuspended = isSuspended;
+                  for (int i = 0; i &lt; MAXRECEIVERS; i++) {
+-                     if (receiver[i] &amp;&amp; receiver[i]-&gt;WantsPid(Pid))
++                     if (!receiver[i]);
++                     else if (isSuspended &amp;&amp;
++                              !dynamic_cast&lt;cRecorder *&gt;(receiver[i]));
++                     else if (receiver[i]-&gt;WantsPid(Pid))
+                         receiver[i]-&gt;Receive(b, TS_SIZE);
+                      }
+                  Unlock();
+
+I think it is up to what PrimaryDevice()-&gt;Clear() does.  The stream will
+be suspended or resumed at packet boundary.  Doing it at GOP boundary
+would probably be nicer.  I have seen some garbled video for one or
+two seconds after resuming live playback.
+
+&gt;<i> Did this happen just one time or does it happen more often?
+</I>
+The hang may have happened once or twice before.  I cannot remember when
+the last time was.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002498.html">[Softdevice-devel] Error! Trying to unlock a nil	picture...	Ignoring.
+</A></li>
+	<LI>Next message: <A HREF="002500.html">[Softdevice-devel] Error! Trying to unlock a	nil	picture...	Ignoring.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2499">[ date ]</a>
+              <a href="thread.html#2499">[ thread ]</a>
+              <a href="subject.html#2499">[ subject ]</a>
+              <a href="author.html#2499">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

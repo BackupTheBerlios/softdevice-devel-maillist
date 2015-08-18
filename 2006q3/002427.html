@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180609091327t3a6fbb56xd91baeafaa2f1927%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002424.html">
+   <LINK REL="Next"  HREF="002435.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Alasdair Campbell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180609091327t3a6fbb56xd91baeafaa2f1927%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">ragawu at gmail.com
+       </A><BR>
+    <I>Sat Sep  9 22:27:28 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002424.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002435.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2427">[ date ]</a>
+              <a href="thread.html#2427">[ thread ]</a>
+              <a href="subject.html#2427">[ subject ]</a>
+              <a href="author.html#2427">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 09/09/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt; wrote:
+&gt;<i> The first time I tested with your configuration, I got a picture.
+</I>&gt;<i> &quot;top&quot; indicated 60% CPU usage, which is slightly more than with
+</I>&gt;<i> mgatv.  So, I tried to switch from YUY2 to I420.  The CPU load
+</I>&gt;<i> would drop to around 40%, but the video overlay would be all black.
+</I>&gt;<i> Switching back to YUY2 did affect CPU usage, but the video overlay
+</I>&gt;<i> remained black.  Even rebooting did not help.
+</I>
+Well when I was fiddling with different modes in softdevice using -vo
+dfb:, I noticed that if I changed away from YUY2, the 2nd head went
+blank, and the video appeared on the 1st head with the wrong colours.
+After changing back to YUY2 I had to reset the STRETCH BLIT option
+just below. It has to be ON for me to see an image. The OSD works
+throughout this.
+
+don't know why rebooting didn't help though...
+
+&gt;<i> In the log, I can see messages like this:
+</I>&gt;<i>
+</I>&gt;<i> [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+</I>&gt;<i> [dfb]: SetParams: failed to set buffermode to back video, reverting to normal
+</I>&gt;<i> [dfb] SetParams: action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), result=Not supported!
+</I>&gt;<i> Can't configure ScreenLocation. Hope it is Fullscreen
+</I>&gt;<i> [surface capabilities] videoSurface: videoonly PixelFormat = 0x00200801
+</I>&gt;<i> [dfb] (re)configured 0x00200806
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?  -vo dfb:mgatv works fine.
+</I>&gt;<i>
+</I>&gt;<i>         Marko
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+-- 
+A l a s d a i r   C a m p b e l l
+
+r a g a w u @ g m a i l . c o m
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002424.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002435.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2427">[ date ]</a>
+              <a href="thread.html#2427">[ thread ]</a>
+              <a href="subject.html#2427">[ subject ]</a>
+              <a href="author.html#2427">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Save%2010%25%20CPU%20by%20sleeping%20before%20IDirectFBSurface%3A%3AFlip%28%29&In-Reply-To=%3C43D158F5.3030604%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001701.html">
+   <LINK REL="Next"  HREF="001710.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Save%2010%25%20CPU%20by%20sleeping%20before%20IDirectFBSurface%3A%3AFlip%28%29&In-Reply-To=%3C43D158F5.3030604%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Jan 20 22:41:09 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001701.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+        <LI>Next message: <A HREF="001710.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1702">[ date ]</a>
+              <a href="thread.html#1702">[ thread ]</a>
+              <a href="subject.html#1702">[ subject ]</a>
+              <a href="author.html#1702">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+&gt;<i> On Fri, Jan 20, 2006 at 08:45:01PM +0100, Martin Wache wrote:
+</I>&gt;&gt;<i> Marko M&#228;kel&#228; schrieb:
+</I>&gt;&gt;&gt;&gt;<i> Any busy-waiting in RefreshOSD() might explain why audio and video frames
+</I>&gt;&gt;&gt;&gt;<i> are occasionally dropped while the menus are being browsed. 
+</I>&gt;&gt;&gt;<i> Nope.  If I hold down the Down key in a menu with some usleep() added before
+</I>&gt;&gt;&gt;<i> every Flip() in video-dfb.c, I'll get instant audio chopping.  I guess the
+</I>&gt;&gt;&gt;<i> OSD is being handled by the same thread that does MPEG decoding and YUV.
+</I>&gt;&gt;&gt;<i> Is it so?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> No, RefreshOSD() should called by the main thread, while the video is
+</I>&gt;&gt;<i> decoded in a separate thread. Not sure why you get choppy audio...
+</I>&gt;<i> 
+</I>&gt;<i> Normally, I get a dropped audio frame at every 5th or 10th key-repeat if
+</I>&gt;<i> I hold down the Down button in the Recordings or EPG menu.  After I added
+</I>&gt;<i> a usleep() before every Flip() call in video-dfb.c, I got dropped audio
+</I>&gt;<i> frames on every key-repeat.  I'm using the linuxinput module of DirectFB
+</I>&gt;<i> for the remote control unit, if that makes any difference.
+</I>&gt;<i> 
+</I>Hmm, that's strange. I added a pthread_yield() in SoftOsd.c, maybe this
+does something. I added it because some skins use scrolling texts and
+this caused audio buffer underruns on my system.
+
+&gt;&gt;<i> Maybe it is just because of the CPU usage of the OSD rendering.
+</I>&gt;<i> 
+</I>&gt;<i> It could also be some weird priority inversion thing.
+</I>&gt;<i> 
+</I>&gt;<i> Can you give me a summary of the threads set up by vdr and softdevice?
+</I>&gt;<i> Or is there some English or German documentation I could read?  I didn't
+</I>&gt;<i> see anything relevant in the vdr source distribution.
+</I>&gt;<i> 
+</I>For the vdr, I'm not even sure myself. For the softdevice, well that's
+complicated, I guess I will miss a one or the other ;-)
+There is one thread which uses libavformat to parse the PES received
+from the vdr, one decoding thread for each audio and video, one for
+events in DFB/Xv, one for redrawing the osd on format changes and
+blanking the screen. And maybe I missed one ;-)
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001701.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+	<LI>Next message: <A HREF="001710.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1702">[ date ]</a>
+              <a href="thread.html#1702">[ thread ]</a>
+              <a href="subject.html#1702">[ subject ]</a>
+              <a href="author.html#1702">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

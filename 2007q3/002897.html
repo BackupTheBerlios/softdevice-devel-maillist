@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Compilation agains new ffmpeg snapshot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Compilation%20agains%20new%20ffmpeg%20snapshot&In-Reply-To=%3C200707082247.49294.zzam%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="002898.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Compilation agains new ffmpeg snapshot</H1>
+    <B>Matthias Schwarzott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Compilation%20agains%20new%20ffmpeg%20snapshot&In-Reply-To=%3C200707082247.49294.zzam%40gentoo.org%3E"
+       TITLE="[Softdevice-devel] Compilation agains new ffmpeg snapshot">zzam at gentoo.org
+       </A><BR>
+    <I>Sun Jul  8 22:47:49 CEST 2007</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="002898.html">[Softdevice-devel] Compilation agains new ffmpeg snapshot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2897">[ date ]</a>
+              <a href="thread.html#2897">[ thread ]</a>
+              <a href="subject.html#2897">[ subject ]</a>
+              <a href="author.html#2897">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there!
+
+vdr-softdevice cvs version does not compile against new ffmpeg snapshot (using 
+ebuilds this is from 2007/06/16).
+
+The reason is they finally removed the extern &quot;C&quot; statements from their 
+headers.
+Then adding extern &quot;C&quot; to the configure script where it misses makes 
+vdr-softdevice compilable again.
+
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: new-ffmpeg-extern-c.diff
+Type: text/x-diff
+Size: 961 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070708/e471df0c/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070708/e471df0c/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="002898.html">[Softdevice-devel] Compilation agains new ffmpeg snapshot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2897">[ date ]</a>
+              <a href="thread.html#2897">[ thread ]</a>
+              <a href="subject.html#2897">[ subject ]</a>
+              <a href="author.html#2897">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

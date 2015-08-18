@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20VGA%20%28not%20mgatv%29%20to%20SCART%20pinout%3F&In-Reply-To=%3C20060220193251.GA4466%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001782.html">
+   <LINK REL="Next"  HREF="001763.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20VGA%20%28not%20mgatv%29%20to%20SCART%20pinout%3F&In-Reply-To=%3C20060220193251.GA4466%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Feb 20 20:33:44 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001782.html">[Softdevice-devel] Softdevice and HDTV and OSD
+</A></li>
+        <LI>Next message: <A HREF="001763.html">[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1761">[ date ]</a>
+              <a href="thread.html#1761">[ thread ]</a>
+              <a href="subject.html#1761">[ subject ]</a>
+              <a href="author.html#1761">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm trying to connect my RGB video monitor to the VGA output of the G450,
+so that the color space conversion could be avoided.
+
+The mgatv output works fine with this cable connected to the secondary
+head: <A HREF="http://forum.matrox.com/mga/viewtopic.php?t=4383">http://forum.matrox.com/mga/viewtopic.php?t=4383</A>
+
+However, I was unable to figure out where to get composite sync from
+the primary head.  The link to <A HREF="http://www.sm.go.dlr.de/%7Ebob/scart/scart.gif">http://www.sm.go.dlr.de/%7Ebob/scart/scart.gif</A>
+at <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A> doesn't respond.
+
+As I don't have access to an oscilloscope right now, I don't know if the
+sync problems are due to bad fbset timings (/etc/fb.modes) or wrong cable.
+I tried with and without the DDC loop (pins 12 and 15), hoping to find
+composite sync on pins 5, 13 or 14.
+
+While testing, I noticed that DirectFB insists on having mode=%ux%u in
+/etc/directfbrc.  I wonder where it takes the timings.  Does it get the
+first entry with matching xres and yres from /etc/fb.modes?
+
+Last but not least, are the &quot;my-pal-32&quot; timings posted at
+<A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A> a bit off?  If I understood correctly,
+they give a line time of 66.9 &#181;s, while 64 &#181;s would be correct (AFAIK).
+The frame time is about 19.470 ms, while it should be 20 ms to get a 50 Hz
+frame rate.  As I couldn't get my monitor to synchronize by fiddling with
+the values, I do not think that this is my problem.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001782.html">[Softdevice-devel] Softdevice and HDTV and OSD
+</A></li>
+	<LI>Next message: <A HREF="001763.html">[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1761">[ date ]</a>
+              <a href="thread.html#1761">[ thread ]</a>
+              <a href="subject.html#1761">[ subject ]</a>
+              <a href="author.html#1761">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

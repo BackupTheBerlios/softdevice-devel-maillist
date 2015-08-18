@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] problems with mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20problems%20with%20mgatv&In-Reply-To=%3C1105021777.3202.83.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000127.html">
+   <LINK REL="Next"  HREF="000132.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] problems with mgatv</H1>
+    <B>Ari Koponen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20problems%20with%20mgatv&In-Reply-To=%3C1105021777.3202.83.camel%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] problems with mgatv">particle at luukku.com
+       </A><BR>
+    <I>Thu Jan  6 15:29:37 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000127.html">[Softdevice-devel] problems with mgatv
+</A></li>
+        <LI>Next message: <A HREF="000132.html">[Softdevice-devel] problems with mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#131">[ date ]</a>
+              <a href="thread.html#131">[ thread ]</a>
+              <a href="subject.html#131">[ subject ]</a>
+              <a href="author.html#131">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Turn deinterlace OFF. It is not needed in TV-out mode.
+</I>
+&gt;<i> &gt; [dfb] RAM: 8388608 bytes
+</I>&gt;<i> 
+</I>&gt;<i> Only 8MB are reported, please use the matorx-full-memory patch from DirectFB.
+</I>
+Okay, these did the trick, it works with mode=720x576. Now the video
+flows very well. Only problem seems to be that when there's motion the
+video looks pretty crap. I don't know if this called tearing or what and
+if it could be fixed by setting some directfb options. Maybe field
+parity or something but with quick glance I couldn't find an option for
+that in the directfbrc man-page.
+
+&gt;<i> Why the 16 bit mode ? Something from your directfbrc ?
+</I>&gt;<i> But the number 0x00200806 should be ok as I posted on vdr list ;-) .
+</I>
+Well that's because I had commented the depth=32 line in directfbrc. I
+thought that it would save some memory.
+
+&gt;<i> &gt; And last some information about my system:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; - Graphics card: Matrox G450 Dualhead 16 Mb
+</I>&gt;<i> &gt; - Kernel: 2.6.9 (vanilla)
+</I>&gt;<i> &gt; - Softdevice and ffmpeg are from today's CVS
+</I>&gt;<i> &gt; - Distro: FedoraCore 2
+</I>&gt;<i> 
+</I>&gt;<i> Whats the CPU type and speed ?
+</I>
+AMD Athlon XP 1700+ 
+
+One more problem I had was that VDR found an RC unit and it accepted
+only keyboard input. Next it asked to configure the keyboard. Then it
+didn't accept the keyboard buttons anymore. I solved the problem by
+compiling VDR without keyboard input possibility. My keyboard is
+wireless and currently connected to ps/2 port but it can be connected to
+USB port as well and maybe I'll try that if I have some time. But most
+important, now I get the picture so thank you!
+
+Few more questions about that RGB via VGA connector method described on
+the softdevice homepage. Is that setup supposed to be used with
+framebuffer output driver with softdevice? Are you using matroxset
+program and perhaps how?
+
+Did you use the VGA connector pinout from matrox to connect the VGA
+connector cable?
+
+<A HREF="http://forum.matrox.com/mga/viewtopic.php?t=4381">http://forum.matrox.com/mga/viewtopic.php?t=4381</A>
+
+All other pins are clear to me but the pin 16 (blanking) on the scart
+side of the schematic
+
+<A HREF="http://www.sm.go.dlr.de/%7Ebob/scart/scart.gif">http://www.sm.go.dlr.de/%7Ebob/scart/scart.gif</A>
+
+makes me wonder. Is it connected to the TTL vertical sync pin (14) on
+the VGA connector? 
+
+And one more question: Does anyone know if G450 can generate intercaled
+signal and from which connectors? I read that G450 is a stripped version
+of G400. 
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000127.html">[Softdevice-devel] problems with mgatv
+</A></li>
+	<LI>Next message: <A HREF="000132.html">[Softdevice-devel] problems with mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#131">[ date ]</a>
+              <a href="thread.html#131">[ thread ]</a>
+              <a href="subject.html#131">[ subject ]</a>
+              <a href="author.html#131">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

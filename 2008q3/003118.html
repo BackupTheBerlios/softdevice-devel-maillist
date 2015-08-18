@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14303] ShmClient: Fullscreen commandline	parameter
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314303%5D%20ShmClient%3A%20Fullscreen%20commandline%0A%09parameter&In-Reply-To=%3C200809101718.m8AHIBF6018057%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003117.html">
+   <LINK REL="Next"  HREF="003119.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14303] ShmClient: Fullscreen commandline	parameter</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314303%5D%20ShmClient%3A%20Fullscreen%20commandline%0A%09parameter&In-Reply-To=%3C200809101718.m8AHIBF6018057%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14303] ShmClient: Fullscreen commandline	parameter">admin at berlios.de
+       </A><BR>
+    <I>Wed Sep 10 19:18:11 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003117.html">[Softdevice-devel] [Bug #14302] ShmClient broken
+</A></li>
+        <LI>Next message: <A HREF="003119.html">[Softdevice-devel] Softdevice, VDR and DVB-subtitles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3118">[ date ]</a>
+              <a href="thread.html#3118">[ thread ]</a>
+              <a href="subject.html#3118">[ subject ]</a>
+              <a href="author.html#3118">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #14303, was updated on 2008-Aug-03 01:47
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Closed
+Resolution: Wont Fix
+Bug Group: None
+Priority: 5
+Submitted by: bugmenot
+Assigned to : none
+Summary: ShmClient: Fullscreen commandline parameter
+
+Details: Please apply the following patch to provide a commandline parameter for fullscreen. thanks in advance.
+
+Index: softdevice-cvs/ShmClient.c
+===================================================================
+--- softdevice-cvs.orig/ShmClient.c
++++ softdevice-cvs/ShmClient.c
+@@ -119,6 +119,16 @@ int main(int argc, char **argv) {
+         xvRemote= new cShmRemote(&quot;softdevice-xv&quot;);
+         //SetupStore.InitSetupStore();
+         SetupStore-&gt;xvFullscreen=0;
++       if (argc&gt;1) {
++               if (strcmp(argv[1], &quot;-f&quot;) == 0) {
++                       SetupStore-&gt;xvFullscreen=1;
++               } else if (strcmp(argv[1], &quot;-h&quot;) == 0) {
++                       printf (&quot;Shared-Memory-Client for vdr-softdevice\n&quot;);
++                       printf (&quot;Options:\n&quot;);
++                       printf (&quot;  -f   Start fullscreen\n&quot;);
++                       return 0;
++               }
++       }
+ 
+         if ( !vout-&gt;Initialize()  ) {
+                 fprintf(stderr,&quot;Could not init video out!\n&quot;);
+
+
+Follow-Ups:
+
+Date: 2008-Sep-10 19:18
+By: lucke
+
+Comment:
+Patch rejected.
+Parameters for starting in full screen mode should be specified like those for softdevice: -vo xv:full .
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14303&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14303&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003117.html">[Softdevice-devel] [Bug #14302] ShmClient broken
+</A></li>
+	<LI>Next message: <A HREF="003119.html">[Softdevice-devel] Softdevice, VDR and DVB-subtitles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3118">[ date ]</a>
+              <a href="thread.html#3118">[ thread ]</a>
+              <a href="subject.html#3118">[ subject ]</a>
+              <a href="author.html#3118">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20Resend%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Will%20Softplay%20stay%20separated%20from%0A%20Softdevice%3F&In-Reply-To=%3C44218167.1080309%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001823.html">
+   <LINK REL="Next"  HREF="001825.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20Resend%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Will%20Softplay%20stay%20separated%20from%0A%20Softdevice%3F&In-Reply-To=%3C44218167.1080309%40gmx.net%3E"
+       TITLE="Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Mar 22 17:55:03 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001823.html">[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+</A></li>
+        <LI>Next message: <A HREF="001825.html">Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1824">[ date ]</a>
+              <a href="thread.html#1824">[ thread ]</a>
+              <a href="subject.html#1824">[ subject ]</a>
+              <a href="author.html#1824">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Either the list is stuck again, or this message was somehow lost, so I'm
+resending it...
+
+Tobias Grimm schrieb:
+&gt;<i> There seems to be some issues with GCC4:
+</I>&gt;<i> 
+</I>&gt;<i> PlayList.c: In member function 'void cItemIdx::Shuffle()':
+</I>&gt;<i> PlayList.c:246: warning: format '%4d' expects type 'int', but argument 3
+</I>&gt;<i> has type 'sIdx'
+</I>&gt;<i> PlayList.c:246: warning: format '%4d' expects type 'int', but argument 5
+</I>&gt;<i> has type 'sIdx'
+</I>&gt;<i> PlayList.c: In member function 'int cPlayList::LoadM3U(const char*)':
+</I>&gt;<i> PlayList.c:647: error: invalid initialization of non-const reference of
+</I>&gt;<i> type 'const char*&amp;' from a temporary of type 'const char*'
+</I>&gt;<i> softplay.h:120: error: in passing argument 1 of 'void skipSpaces(const
+</I>&gt;<i> char*&amp;)'
+</I>&gt;<i> PlayList.c:674: error: invalid initialization of non-const reference of
+</I>&gt;<i> type 'const char*&amp;' from a temporary of type 'const char*'
+</I>&gt;<i> softplay.h:120: error: in passing argument 1 of 'void skipSpaces(const
+</I>&gt;<i> char*&amp;)'
+</I>&gt;<i> 
+</I>
+Thank you for the report, it should be fixed in the CVS now.
+
+
+&gt;&gt;<i> So my question is now: the shmclient has to be linked against a few vdr
+</I>&gt;&gt;<i> objects, is it possible to do that in a debian package?
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> That's a little bit difficult. I can think of the following solutions:
+</I>&gt;<i> 
+</I>&gt;<i> 1) The necessary VDR sources are put into the debian package - but this
+</I>&gt;<i> makes the source package too dependent on the vdr version
+</I>&gt;<i> 
+</I>&gt;<i> 2) The VDR package is modified, to produce a static library, containing
+</I>&gt;<i> the needed objects, which is distributed with vdr-dev. That's probably
+</I>&gt;<i> the cleanest solution, but I have to speak with Thomas first, because I
+</I>&gt;<i> don't want the VDR package at e-tobi.net to be too different from the
+</I>&gt;<i> official Debian package.
+</I>
+Hmm, maybe the cleanest solution is to get rid of the dependency on vdr
+objects at all. It is not really needed, it's just because for the first
+tries it was the fastest solution. Since I consider the ShmClient
+currently as experimental it is probably the best if you just ignore it
+in the softdevice-0.2.2 package. I will get rid of the dependencies and
+the problem won't be there for the next release :-)
+
+
+&gt;<i> 
+</I>&gt;<i> What's the reason for the SHMClient? Can't this be built directly into
+</I>&gt;<i> the plugin? A separate 'launchshmclient' could then trigger the plugin
+</I>&gt;<i> to start the SHMClient.
+</I>&gt;<i> 
+</I>I thought that would be obvious, it is mainly for people who use a
+combined vdr/desktop box (like me). When booting my computer vdr is
+started with the softdevice shared memory server. I can work without
+noticing that vdr is running, and when I want to watch TV I start the
+ShmClient.
+It may also be useful if one wants to use vdr from a different program,
+for example MythTV
+
+Bye,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001823.html">[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+</A></li>
+	<LI>Next message: <A HREF="001825.html">Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1824">[ date ]</a>
+              <a href="thread.html#1824">[ thread ]</a>
+              <a href="subject.html#1824">[ subject ]</a>
+              <a href="author.html#1824">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

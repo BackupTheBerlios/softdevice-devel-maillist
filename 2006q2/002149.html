@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C4491DDA4.7040106%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002145.html">
+   <LINK REL="Next"  HREF="002152.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C4491DDA4.7040106%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Jun 16 00:22:28 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002145.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002152.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2149">[ date ]</a>
+              <a href="thread.html#2149">[ thread ]</a>
+              <a href="subject.html#2149">[ subject ]</a>
+              <a href="author.html#2149">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Rolf Ahrenberg schrieb:
+&gt;<i> On Thu, 15 Jun 2006, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> That are great news! Can you please tell me which change did the trick?
+</I>&gt;&gt;<i> I only found two differences to the patch I send, the pixelformat is
+</I>&gt;&gt;<i> changed back, and BesColorKeyState() is not called for the unichrome
+</I>&gt;&gt;<i> anymore. I tried both changes, but for me the cpu load is still high.
+</I>&gt;<i> 
+</I>&gt;<i> It was the pixelformat. As the comment in patch says, CLE266 seems to
+</I>&gt;<i> require YV12 format. However, I also did enable the viaTV variable for
+</I>&gt;<i> cle266, made that BesColorKeyState() modification just in case, and
+</I>&gt;<i> corrected the configuration script.
+</I>&gt;<i> 
+</I>I tried the changes again, unfortunately for me the cpu load is still high.
+I must say that I'm a bit lost... I've already fixed the last issues
+with the buffering, so in principle the patches would be ready to be
+merged. But I don't like the idea of merging the patches when they
+actually increase the cpu load instead of reducing it.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002145.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002152.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2149">[ date ]</a>
+              <a href="thread.html#2149">[ thread ]</a>
+              <a href="subject.html#2149">[ subject ]</a>
+              <a href="author.html#2149">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

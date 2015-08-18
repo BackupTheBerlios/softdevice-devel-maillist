@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] I only see osd
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20only%20see%20osd&In-Reply-To=%3C44915DCC.7000702%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002140.html">
+   <LINK REL="Next"  HREF="002142.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] I only see osd</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20only%20see%20osd&In-Reply-To=%3C44915DCC.7000702%40calidae.net%3E"
+       TITLE="[Softdevice-devel] I only see osd">leo at calidae.net
+       </A><BR>
+    <I>Thu Jun 15 15:17:00 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002140.html">[Softdevice-devel] I only see osd
+</A></li>
+        <LI>Next message: <A HREF="002142.html">[Softdevice-devel] I only see osd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2141">[ date ]</a>
+              <a href="thread.html#2141">[ thread ]</a>
+              <a href="subject.html#2141">[ subject ]</a>
+              <a href="author.html#2141">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi again,
+Some logs I see in syslog:
+
+switching to channel 6
+Jun 15 15:51:35 vdr vdr: [3606] transfer thread ended (pid=3577, tid=3606)
+Jun 15 15:51:35 vdr vdr: [3609] TS buffer on device 1 thread ended 
+(pid=3577, tid=3609)
+Jun 15 15:51:35 vdr vdr: [3607] buffer stats: 67680 (3%) used
+Jun 15 15:51:35 vdr vdr: [3607] receiver on device 1 thread ended 
+(pid=3577, tid=3607)
+Jun 15 15:51:35 vdr vdr: [3577] cTS2PES got 0 TS errors, 1 TS continuity 
+errors
+Jun 15 15:51:35 vdr vdr: [3577] buffer stats: 68056 (3%) used
+Jun 15 15:51:35 vdr vdr: [3614] transfer thread started (pid=3577, tid=3614)
+Jun 15 15:51:35 vdr vdr: [3615] receiver on device 1 thread started 
+(pid=3577, tid=3615)
+Jun 15 15:51:35 vdr vdr: [3617] TS buffer on device 1 thread started 
+(pid=3577, tid=3617)
+Jun 15 15:51:36 vdr vdr: [3614] setting audio track to 1 (0)
+Jun 15 15:51:36 vdr vdr: [3619] [softdevice-audio]: xrun
+Jun 15 15:51:39 vdr vdr: [3577] switching to channel 7
+Jun 15 15:51:39 vdr vdr: [3614] transfer thread ended (pid=3577, tid=3614)
+Jun 15 15:51:39 vdr vdr: [3617] TS buffer on device 1 thread ended 
+(pid=3577, tid=3617)
+Jun 15 15:51:39 vdr vdr: [3615] buffer stats: 57528 (2%) used
+Jun 15 15:51:39 vdr vdr: [3615] receiver on device 1 thread ended 
+(pid=3577, tid=3615)
+Jun 15 15:51:39 vdr vdr: [3577] cTS2PES got 0 TS errors, 1 TS continuity 
+errors
+Jun 15 15:51:39 vdr vdr: [3577] cTS2PES got 1 TS errors, 1 TS continuity 
+errors
+Jun 15 15:51:39 vdr vdr: [3577] buffer stats: 57904 (2%) used
+Jun 15 15:51:39 vdr vdr: [3620] transfer thread started (pid=3577, tid=3620)
+Jun 15 15:51:39 vdr vdr: [3621] receiver on device 1 thread started 
+(pid=3577, tid=3621)
+Jun 15 15:51:39 vdr vdr: [3623] TS buffer on device 1 thread started 
+(pid=3577, tid=3623)
+Jun 15 15:51:40 vdr vdr: [3624] [VideoOut]: resolution changed: W(720 -&gt; 
+528); H(576 -&gt;576)
+Jun 15 15:51:40 vdr vdr: [3624] [VideoOut]: 528x576 [0,0 528x576] -&gt; 
+768x576 [0,0 768x576]
+
+
+Can be related to my problem?
+
+Thanks again.
+
+Leo
+
+
+
+Leo M&#225;rquez wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Well I'm setted up a vdr with softdevice, directfb but when I start 
+</I>&gt;<i> vdr with:
+</I>&gt;<i>
+</I>&gt;<i> ./vdr -P&quot;softdevice -vo dfb:&quot;
+</I>&gt;<i>
+</I>&gt;<i> I only see the osd menus, but no tv image.
+</I>&gt;<i> My directfbrc file contains:
+</I>&gt;<i>
+</I>&gt;<i> mode  = 768x576
+</I>&gt;<i> depth = 32
+</I>&gt;<i> pixelformat=ARGB
+</I>&gt;<i>
+</I>&gt;<i> My hardware is a nvidia tnt2 M64.
+</I>&gt;<i> The framebuffer module I use is nvidiafb
+</I>&gt;<i>
+</I>&gt;<i> In var/log/syslog I don't see anything strange.
+</I>&gt;<i>
+</I>&gt;<i> In the other hand if I start vdr with only -Pstreamdev-server the 
+</I>&gt;<i> clients can watch TV.
+</I>&gt;<i> In the server few days a go I use -vo fb: as output and It works.
+</I>&gt;<i>
+</I>&gt;<i> I supose the problem is related to the directfb configuration but... 
+</I>&gt;<i> why can I see osd and not TV?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Leo
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002140.html">[Softdevice-devel] I only see osd
+</A></li>
+	<LI>Next message: <A HREF="002142.html">[Softdevice-devel] I only see osd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2141">[ date ]</a>
+              <a href="thread.html#2141">[ thread ]</a>
+              <a href="subject.html#2141">[ subject ]</a>
+              <a href="author.html#2141">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

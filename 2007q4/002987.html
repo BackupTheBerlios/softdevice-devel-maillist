@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice+dvd plugin - audio jerks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%2Bdvd%20plugin%20-%20audio%20jerks&In-Reply-To=%3C4778F56C.6060104%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002981.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice+dvd plugin - audio jerks</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%2Bdvd%20plugin%20-%20audio%20jerks&In-Reply-To=%3C4778F56C.6060104%40globall.ru%3E"
+       TITLE="[Softdevice-devel] softdevice+dvd plugin - audio jerks">bob at globall.ru
+       </A><BR>
+    <I>Mon Dec 31 14:58:04 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002981.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2987">[ date ]</a>
+              <a href="thread.html#2987">[ thread ]</a>
+              <a href="subject.html#2987">[ subject ]</a>
+              <a href="author.html#2987">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have updated today ffmpeg and softdevice from cvs.
+At playing of DVD through vdr-dvd plugin I get an irregular and jerks
+audio. After downgrade on the version softdevice from 2007-08-29 all it
+is played normally.
+
+It is my vdr log:
+
+libdvdnav: Using dvdnav version 0.1.10 from <A HREF="http://dvd.sf.net">http://dvd.sf.net</A>
+libdvdread: Using libdvdcss version 1.2.9 for DVD access
+libdvdnav: DVD Title: ROBIN_HOOD_PRINCE_OF_THIEVES
+libdvdnav: DVD Serial Number: 297098F7
+libdvdnav: DVD Title (Alternative): ROBIN_HOOD_PRINCE_OF_THIEVES
+libdvdnav: Unable to find map file
+'/home/bob/.dvdnav/ROBIN_HOOD_PRINCE_OF_THIEVES.map'
+libdvdnav: DVD disk reports itself with Region mask 0x00ef0000. Regions: 5
+
+libdvdread: Attempting to retrieve all CSS keys
+libdvdread: This can take a _long_ time, please be patient
+
+libdvdread: Get key for /VIDEO_TS/VIDEO_TS.VOB at 0x00000120
+libdvdread: Elapsed time 0
+libdvdread: Get key for /VIDEO_TS/VTS_01_0.VOB at 0x000001eb
+libdvdread: Elapsed time 0
+libdvdread: Get key for /VIDEO_TS/VTS_01_1.VOB at 0x00000501
+libdvdread: Elapsed time 0
+libdvdread: Found 1 VTS's
+libdvdread: Elapsed time 0
+No accelerated IMDCT transform found
+16:44:01.0410 D [47562467843823] [VideoOut] reset: sync info: repF =
+1908404013, drpF = 16892704, totF = 1938060864
+ALSA lib pcm.c:2144:(snd_pcm_open_noupdate) Unknown PCM CH2
+Warning, unsupported format in ClearPicBuffer!
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+16:44:04.0427 D [7921] [VideoOut] video now synced (-1628 - -1628)
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+[liba52 @ 0x2b4273f9fbf0]Error decoding frame
+
+
+Happy New Year!
+
+Regards,
+Vladimir Monchenko.
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002981.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2987">[ date ]</a>
+              <a href="thread.html#2987">[ thread ]</a>
+              <a href="subject.html#2987">[ subject ]</a>
+              <a href="author.html#2987">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

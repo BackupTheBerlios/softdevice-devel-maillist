@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] fix for softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20fix%20for%20softplay&In-Reply-To=%3C200606122024.18568.prakash%40punnoor.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002112.html">
+   <LINK REL="Next"  HREF="002123.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] fix for softplay</H1>
+    <B>Prakash Punnoor</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20fix%20for%20softplay&In-Reply-To=%3C200606122024.18568.prakash%40punnoor.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] fix for softplay">prakash at punnoor.de
+       </A><BR>
+    <I>Mon Jun 12 20:24:18 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002112.html">[Softdevice-devel] starting softdevice/DirectFB in gentoo init script ?
+</A></li>
+        <LI>Next message: <A HREF="002123.html">[Softdevice-devel] [PATCH] fix for softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2119">[ date ]</a>
+              <a href="thread.html#2119">[ thread ]</a>
+              <a href="subject.html#2119">[ subject ]</a>
+              <a href="author.html#2119">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I needed following to get it compiled in gentoo with gcc 4.1.1 and 
+ffmpeg-0.4.9_p20060302. but it looks like a real bug to me, at least looking 
+at the ffmpeg header files. I have also modified Makefile for vdr 1.4.0, but 
+I saw that some patch already exists? Hth.
+
+
+--- SoftPlayer.c.old	2006-06-12 17:48:30.000000000 +0200
++++ SoftPlayer.c	2006-06-12 17:48:03.000000000 +0200
+@@ -170,12 +170,12 @@
+         
+                 // set audio index if not yet set
+                 if ( AudioIdx== -1 &amp;&amp;
+-                     ic-&gt;streams[pkt.stream_index]-&gt;codec.codec_type == 
+CODEC_TYPE_AUDIO )
++                     ic-&gt;streams[pkt.stream_index]-&gt;codec-&gt;codec_type == 
+CODEC_TYPE_AUDIO )
+                         AudioIdx=pkt.stream_index;
+                    
+                 // set video index if not yet set
+                 if ( VideoIdx== -1 &amp;&amp;
+-                     ic-&gt;streams[pkt.stream_index]-&gt;codec.codec_type == 
+CODEC_TYPE_VIDEO )
++                     ic-&gt;streams[pkt.stream_index]-&gt;codec-&gt;codec_type == 
+CODEC_TYPE_VIDEO )
+                         VideoIdx=pkt.stream_index;
+                 // skip packets which do not belong to the current streams
+                 if ( pkt.stream_index != VideoIdx &amp;&amp;
+@@ -219,7 +219,7 @@
+ 			nStreams=ic-&gt;nb_streams;
+ 			fprintf(stderr,&quot;Streams: %d\n&quot;,nStreams);
+ 			for (int i=0; i &lt;nStreams; i++ ) {
+-				printf(&quot;Codec %d ID: %d\n&quot;,i,ic-&gt;streams[i]-&gt;codec.codec_id);
++				printf(&quot;Codec %d ID: %d\n&quot;,i,ic-&gt;streams[i]-&gt;codec-&gt;codec_id);
+ 			};
+ 		};
+ 
+@@ -245,9 +245,9 @@
+ 	for (i = 0; i&lt;IC-&gt;nb_streams; i++) {
+ 		PLDBG(&quot;GetPlayMode stream %d codec_type %d\n&quot;,
+ 			i, IC-&gt;streams[i]-&gt;codec.codec_type);
+-		if (IC-&gt;streams[i]-&gt;codec.codec_type == CODEC_TYPE_AUDIO)
++		if (IC-&gt;streams[i]-&gt;codec-&gt;codec_type == CODEC_TYPE_AUDIO)
+ 			hasAudio=true;
+-		else if (IC-&gt;streams[i]-&gt;codec.codec_type == CODEC_TYPE_VIDEO)
++		else if (IC-&gt;streams[i]-&gt;codec-&gt;codec_type == CODEC_TYPE_VIDEO)
+ 			hasVideo=true;
+ 	};
+ 
+
+-- 
+(&#176;=                 =&#176;)
+//\ Prakash Punnoor /\\
+V_/                 \_V
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: deref.diff
+Type: text/x-diff
+Size: 1683 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060612/200cb751/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060612/200cb751/attachment.diff</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060612/200cb751/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060612/200cb751/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002112.html">[Softdevice-devel] starting softdevice/DirectFB in gentoo init script ?
+</A></li>
+	<LI>Next message: <A HREF="002123.html">[Softdevice-devel] [PATCH] fix for softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2119">[ date ]</a>
+              <a href="thread.html#2119">[ thread ]</a>
+              <a href="subject.html#2119">[ subject ]</a>
+              <a href="author.html#2119">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

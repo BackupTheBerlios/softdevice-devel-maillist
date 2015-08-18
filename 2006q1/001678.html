@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C20060117213459.GC3460%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001694.html">
+   <LINK REL="Next"  HREF="001680.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C20060117213459.GC3460%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Jan 17 22:34:59 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001694.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+        <LI>Next message: <A HREF="001680.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1678">[ date ]</a>
+              <a href="thread.html#1678">[ thread ]</a>
+              <a href="subject.html#1678">[ subject ]</a>
+              <a href="author.html#1678">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jan 17, 2006 at 10:53:33PM +0200, Marko M&#228;kel&#228; wrote:
+&gt;<i> Maybe this could be done stride by stride, i.e., output to a main
+</I>&gt;<i> memory block (of a few kilobytes) inside the loop on j, and fast_memcpy()
+</I>&gt;<i> it to the surface memory after the loop?
+</I>
+I tried this.
+
+Before patching, viewing live video for 20 seconds:
+   173680 65.2199 libvdr-softdevice.so.1.3.37
+10131     5.8331  yv12_to_yuy2()
+
+After original patch, viewing for 20 seconds:
+   173900 65.2068 libvdr-softdevice.so.1.3.37
+8391      4.8252  yv12_to_yuy2()
+
+It seems a significant improvement in yv12_to_yuy2(), almost 16%
+((8391/20) / (10479/21)-1), but the something makes the total
+slower by 15% ((173900/20)/(158838/21)-1).
+
+To test this theory, I replaced the stack-allocated buffer
+uint8_t tmp[pitch] with static uint8_t tmp[8192]
+(pitch==1408 in gdb).  Result from viewing for 20 seconds:
+
+   166348 62.1934 libvdr-softdevice.so.1.3.37
+9246      5.5582  yv12_to_yuy2()
+
+Okay, not much better.  Perhaps the tmp buffer should be aligned at
+a 4096-byte boundary?  Let's see, again viewing live video for 20 seconds:
+
+   164434 63.1957 libvdr-softdevice.so.1.3.37
+9474      5.7616  yv12_to_yuy2()
+
+It doesn't seem to make any significant difference.
+
+Maybe the whole frame should be copied to main memory first.  1408
+bytes is not that big a block size.
+
+Attached is the third version of my patch.  To get the second and
+first version, replace &quot;(uint8_t*) ((uint32_t(tmp)+4095)&amp;~4095)&quot;
+with &quot;tmp&quot; and &quot;static uint8_t tmp[8192]&quot; with &quot;uint8_t tmp[pitch]&quot;.
+
+	Marko
+-------------- next part --------------
+Index: utils.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+retrieving revision 1.10
+diff -p -u -r1.10 utils.c
+--- utils.c	7 Jan 2006 13:26:43 -0000	1.10
++++ utils.c	17 Jan 2006 21:27:45 -0000
+@@ -27,7 +27,7 @@
+ #endif
+ 
+ void yv12_to_yuy2(const uint8_t *ysrc, const uint8_t *usrc, const uint8_t *vsrc,
+-                  uint8_t *dst, int width, int height,
++                  uint8_t *tmp, uint8_t *dst, int width, int height,
+                   int lumStride, int chromStride, int dstStride)
+ {
+ #ifndef USE_MMX
+@@ -65,7 +65,7 @@ void yv12_to_yuy2(const uint8_t *ysrc, c
+     pv = vsrc;
+     py = ysrc;
+ 
+-    srfc = dst;
++    srfc = tmp;
+ 
+     for (int j =0; j &lt; width/8; j++)
+     {
+@@ -89,12 +89,13 @@ void yv12_to_yuy2(const uint8_t *ysrc, c
+ 
+     ysrc += lumStride;;
+ 
+-    if (i % 2 == 1)
++    if (i &amp; 1)
+     {
+       usrc += chromStride;
+       vsrc += chromStride;
+     }
+ 
++    fast_memcpy(dst, tmp, dstStride);
+     dst += dstStride;
+   }
+   __asm__ __volatile__ (&quot;sfence \n&quot;
+Index: utils.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/utils.h,v
+retrieving revision 1.5
+diff -p -u -r1.5 utils.h
+--- utils.h	15 Jul 2005 20:42:16 -0000	1.5
++++ utils.h	17 Jan 2006 21:27:45 -0000
+@@ -22,6 +22,7 @@
+ void yv12_to_yuy2( const uint8_t *ysrc,
+                    const uint8_t *usrc,
+                    const uint8_t *vsrc,
++                   uint8_t *tmp, // [dstStride]
+                    uint8_t *dst,
+                    int width,
+                    int height,
+Index: video-dfb.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.c,v
+retrieving revision 1.45
+diff -p -u -r1.45 video-dfb.c
+--- video-dfb.c	10 Jan 2006 19:40:25 -0000	1.45
++++ video-dfb.c	17 Jan 2006 21:27:45 -0000
+@@ -1335,10 +1335,12 @@ void cDFBVideoOut::YUV(uint8_t *Py, uint
+       }
+ #endif
+     } else if (pixelformat == DSPF_YUY2) {
++      static uint8_t tmp[8192];
+ 
+       yv12_to_yuy2(Py + Ystride  * cutTop * 2 + cutLeft * 2,
+                    Pu + UVstride * cutTop + cutLeft,
+                    Pv + UVstride * cutTop + cutLeft,
++                   (uint8_t*) ((uint32_t(tmp)+4095)&amp;~4095),
+                    dst + pitch * cutTop * 2 + cutLeft * 4,
+                    Width - 2 * (cutLeft + cutRight),
+                    Height - 2 * (cutTop + cutBottom),
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001694.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+	<LI>Next message: <A HREF="001680.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1678">[ date ]</a>
+              <a href="thread.html#1678">[ thread ]</a>
+              <a href="subject.html#1678">[ subject ]</a>
+              <a href="author.html#1678">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

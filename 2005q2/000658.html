@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C200505140854.48485.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000644.html">
+   <LINK REL="Next"  HREF="000659.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C200505140854.48485.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Repeatable crash">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat May 14 08:54:48 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000644.html">[Softdevice-devel] Repeatable crash
+</A></li>
+        <LI>Next message: <A HREF="000659.html">[Softdevice-devel] Repeatable crash (SOLVED !!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#658">[ date ]</a>
+              <a href="thread.html#658">[ thread ]</a>
+              <a href="subject.html#658">[ subject ]</a>
+              <a href="author.html#658">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 11. Mai 2005 21:51, Stefan Lucke wrote:
+&gt;<i> On Montag, 9. Mai 2005 22:47, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Mittwoch, 27. April 2005 21:13, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; On Mittwoch, 27. April 2005 20:38, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; &gt; On Wed, Apr 27, 2005 at 09:39:26AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; &gt; <A HREF="http://mplayerhq.hu/pipermail/ffmpeg-devel/2005-April/000027.html">http://mplayerhq.hu/pipermail/ffmpeg-devel/2005-April/000027.html</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; You may try that with vdr running for gdb too.
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; I got a nice crash in libavcodec:
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Some similar crash here. And that is suprising, as my ffmpeg has
+</I>&gt;<i> &gt; &gt; a private fix for my samples when ffmpegs crashes at 4:3 -&gt; 16:9
+</I>&gt;<i> &gt; &gt; switch. Your stream has _no_ such switch and when reverting
+</I>&gt;<i> &gt; &gt; ffmpeg change of file mpeg12.c from 2004-04-03 (rev 1.227 -&gt; 1.228)
+</I>&gt;<i> &gt; &gt; the segfault has gone.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; That is wrong: this stream has a 4:3 -&gt; 16:9 switch. I backed out
+</I>&gt;<i> &gt; above mentioned mpeg12.c change and replaced it with my
+</I>&gt;<i> &gt; proposted (and rejected change) 
+</I>&gt;<i> &gt; see: <A HREF="http://article.gmane.org/gmane.comp.video.ffmpeg.devel/20933">http://article.gmane.org/gmane.comp.video.ffmpeg.devel/20933</A>  .
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; and the result is a playback without crash and a correct
+</I>&gt;<i> &gt; displayed aspect ratio change.
+</I>&gt;<i> 
+</I>&gt;<i> Hm, softplay can play this one with corrrect aspect switch. But there are
+</I>&gt;<i> some troubles with sync. I changed softdevice to use av_read_frame()
+</I>&gt;<i> (with av_dup_packet()), and Marko's stream is playable too (got the
+</I>&gt;<i> same sync problems). 
+</I>
+In between I got a crash even in softplay and randomly some great
+disortions at aspect switch. I'm of the opinion that the real cause
+is in ffmpegs code, but it is hard to convince them.
+
+Can you try attached diff. 
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: crash-03.diff
+Type: text/x-diff
+Size: 711 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050514/aa1d96cc/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050514/aa1d96cc/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000644.html">[Softdevice-devel] Repeatable crash
+</A></li>
+	<LI>Next message: <A HREF="000659.html">[Softdevice-devel] Repeatable crash (SOLVED !!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#658">[ date ]</a>
+              <a href="thread.html#658">[ thread ]</a>
+              <a href="subject.html#658">[ subject ]</a>
+              <a href="author.html#658">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

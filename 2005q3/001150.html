@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspend patch for vdr
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C20050826160628.GA245307%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001143.html">
+   <LINK REL="Next"  HREF="001151.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspend patch for vdr</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C20050826160628.GA245307%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Suspend patch for vdr">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Aug 26 18:06:28 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001143.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+        <LI>Next message: <A HREF="001151.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1150">[ date ]</a>
+              <a href="thread.html#1150">[ thread ]</a>
+              <a href="subject.html#1150">[ subject ]</a>
+              <a href="author.html#1150">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Aug 24, 2005 at 05:54:58PM +0200, Martin Wache wrote:
+&gt;<i> But feel free to send a patch when you are ready, I will surely give it
+</I>&gt;<i> a try.
+</I>
+Here's my initial patch against vdr-1.3.30.  This patch also contains my fix
+to the bug that the Power key is ignored during playback.  (With my patch,
+the Power key will stop playback before asking any questions.  Admittedly,
+it's not a very clean solution, but better than outright ignoring the
+key.)
+
+I also had to patch the subtitles plugin in order to prevent subtitles from
+appearing during live playback.  It'd be better to stop the stream from
+the tuner (in cDevice::Action()), but that would require some more logic,
+i.e., some way to notify cDevice when instances of cRecorder are created or
+destroyed, and perhaps also some extra logic to re-tune.  I believe that
+a similar patch will be needed for the ttxtsubs (sp?) plugin.
+
+To try out the patch, you will have to map some key to &quot;Suspend&quot; in
+remote.conf, e.g., softdevice.Suspend in my case.  For instance,
+temporarily rename some less frequently needed key, e.g.,
+softdevice-dfb.Mute to softdevice-dfb.Suspend.
+
+Next, I'm going to move my solid-state relay patch from softdevice to vdr.
+I will keep these two patches independent, as I don't think the relay
+control will ever make it to mainline vdr.
+
+The timeout mechanism in softdevice seems to work nicely.  Also when
+viewing recordings, video-dfb.c will blank the screen after a few
+seconds of displaying paused picture.  (When the Pause key is pressed
+instead of Suspend, the still picture will remain on the screen.)
+I don't know if video-xv.c will turn off the monitor, but I hope you
+can test that (and patch softdevice if necessary).
+
+Please let me know if there are any problems.  If everything seems
+fine, I'll post this to the main vdr mailing list.
+
+	Marko
+-------------- next part --------------
+diff -pu vdr-1.3.30/device.c vdr-1.3.30/device.c
+--- vdr-1.3.30/device.c	2005-08-21 11:56:49.000000000 +0300
++++ vdr-1.3.30/device.c	2005-08-25 20:32:50.000000000 +0300
+@@ -147,6 +147,17 @@ int cDevice::nextCardIndex = 0;
+ int cDevice::currentChannel = 1;
+ cDevice *cDevice::device[MAXDEVICES] = { NULL };
+ cDevice *cDevice::primaryDevice = NULL;
++#ifdef SUSPEND_PATCH
++// TODO: setupStore
++bool cDevice::isSuspended = false;
++void
++cDevice::ToggleSuspend(void)
++{
++  // TODO: setupStore (better: command line option in vdr.c:main())
++  // TODO: flip relay
++  isSuspended = !isSuspended;
++}
++#endif // SUSPEND_PATCH
+ 
+ cDevice::cDevice(void)
+ {
+@@ -926,6 +937,10 @@ int cDevice::PlayAudio(const uchar *Data
+ 
+ int cDevice::PlayPesPacket(const uchar *Data, int Length, bool VideoOnly)
+ {
++#ifdef SUSPEND_PATCH
++  if (isSuspended)
++     return Length;
++#endif // SUSPEND_PATCH
+   bool FirstLoop = true;
+   uchar c = Data[3];
+   const uchar *Start = Data;
+diff -pu vdr-1.3.30/device.h vdr-1.3.30/device.h
+--- vdr-1.3.30/device.h	2005-08-21 11:52:20.000000000 +0300
++++ vdr-1.3.30/device.h	2005-08-26 18:21:08.000000000 +0300
+@@ -10,6 +10,10 @@
+ #ifndef __DEVICE_H
+ #define __DEVICE_H
+ 
++#ifndef SUSPEND_PATCH
++# define SUSPEND_PATCH
++#endif
++
+ #include &quot;ci.h&quot;
+ #include &quot;eit.h&quot;
+ #include &quot;filter.h&quot;
+@@ -139,6 +143,15 @@ public:
+ private:
+   static int nextCardIndex;
+   int cardIndex;
++#ifdef SUSPEND_PATCH
++  static bool isSuspended;
++         ///&lt; Flag: has audio/video playback been suspended?
++public:
++  static bool IsSuspended(void) { return isSuspended; }
++         ///&lt; Determine if audio/video playback has been suspended
++  static void ToggleSuspend(void);
++         ///&lt; Suspend or resume audio/video playback
++#endif // SUSPEND_PATCH
+ protected:
+   cDevice(void);
+   virtual ~cDevice();
+diff -pu vdr-1.3.30/keys.c vdr-1.3.30/keys.c
+--- vdr-1.3.30/keys.c	2004-12-27 13:08:34.000000000 +0200
++++ vdr-1.3.30/keys.c	2005-08-23 21:24:55.000000000 +0300
+@@ -39,6 +39,9 @@ static tKey keyTable[] = { // &quot;Up&quot; and &quot;
+                     { kFastFwd,       &quot;FastFwd&quot;    },
+                     { kFastRew,       &quot;FastRew&quot;    },
+                     { kPower,         &quot;Power&quot;      },
++#ifdef SUSPEND_PATCH
++                    { kSuspend,       &quot;Suspend&quot;    },
++#endif // SUSPEND_PATCH
+                     { kChanUp,        &quot;Channel+&quot;   },
+                     { kChanDn,        &quot;Channel-&quot;   },
+                     { kVolUp,         &quot;Volume+&quot;    },
+diff -pu vdr-1.3.30/keys.h vdr-1.3.30/keys.h
+--- vdr-1.3.30/keys.h	2004-12-27 13:10:59.000000000 +0200
++++ vdr-1.3.30/keys.h	2005-08-23 21:25:16.000000000 +0300
+@@ -33,6 +33,9 @@ enum eKeys { // &quot;Up&quot; and &quot;Down&quot; must be 
+              kFastFwd,
+              kFastRew,
+              kPower,
++#ifdef SUSPEND_PATCH
++             kSuspend,
++#endif // SUSPEND_PATCH
+              kChanUp,
+              kChanDn,
+              kVolUp,
+diff -pu vdr-1.3.30/menu.c vdr-1.3.30/menu.c
+--- vdr-1.3.30/menu.c	2005-08-14 18:14:29.000000000 +0300
++++ vdr-1.3.30/menu.c	2005-08-25 18:55:28.000000000 +0300
+@@ -3538,8 +3538,16 @@ void cReplayControl::TimeSearchProcess(e
+     case kUp:
+     case kPause:
+     case kDown:
++#ifdef SUSPEND_PATCH
++    case kSuspend:
++#endif // SUSPEND_PATCH
+          Seconds = min(Total - STAY_SECONDS_OFF_END, Seconds);
++#ifdef SUSPEND_PATCH
++         Goto(Seconds * FRAMESPERSEC,
++              Key == kDown || Key == kPause || cDevice::IsSuspended());
++#else // SUSPEND_PATCH
+          Goto(Seconds * FRAMESPERSEC, Key == kDown || Key == kPause);
++#endif // SUSPEND_PATCH
+          timeSearchActive = false;
+          break;
+     default:
+@@ -3695,6 +3703,9 @@ eOSState cReplayControl::ProcessKey(eKey
+     case kUp:      Play(); break;
+     case kPause:
+     case kDown:    Pause(); break;
++#ifdef SUSPEND_PATCH
++    case kSuspend: if (cDevice::IsSuspended()) Pause(); else Play(); break;
++#endif // SUSPEND_PATCH
+     case kFastRew|k_Release:
+     case kLeft|k_Release:
+                    if (Setup.MultiSpeedMode) break;
+diff -pu vdr-1.3.30/transfer.c vdr-1.3.30/transfer.c
+--- vdr-1.3.30/transfer.c	2005-08-14 13:55:03.000000000 +0300
++++ vdr-1.3.30/transfer.c	2005-08-26 17:49:32.000000000 +0300
+@@ -41,6 +41,10 @@ void cTransfer::Activate(bool On)
+ 
+ void cTransfer::Receive(uchar *Data, int Length)
+ {
++#ifdef SUSPEND_PATCH
++  if (cDevice::IsSuspended())
++     return;
++#endif // SUSPEND_PATCH
+   if (IsAttached() &amp;&amp; Running()) {
+      int p = ringBuffer-&gt;Put(Data, Length);
+      if (p != Length &amp;&amp; Running())
+diff -pu vdr-1.3.30/vdr.c vdr-1.3.30/vdr.c
+--- vdr-1.3.30/vdr.c	2005-08-21 11:47:06.000000000 +0300
++++ vdr-1.3.30/vdr.c	2005-08-26 16:30:41.000000000 +0300
+@@ -779,12 +779,26 @@ int main(int argc, char *argv[])
+                           break;
+                           }
+                        if (cRecordControls::Active()) {
+-                          if (Interface-&gt;Confirm(tr(&quot;Recording - shut down anyway?&quot;)))
++                          if (Interface-&gt;Confirm(tr(&quot;Recording - shut down anyway?&quot;))) {
+                              ForceShutdown = true;
++                             cControl::Shutdown();
++                             }
+                           }
++                       else
++                          cControl::Shutdown();
+                        LastActivity = 1; // not 0, see below!
+                        UserShutdown = true;
+                        break;
++#ifdef SUSPEND_PATCH
++          // Suspend/resume:
++          case kSuspend:
++               cDevice::ToggleSuspend();
++               if (cDevice::IsSuspended()) {
++                  LastActivity = 0;
++                  cDevice::PrimaryDevice()-&gt;Clear();
++                  }
++               break;
++#endif // SUSPEND_PATCH
+           default: break;
+           }
+         Interact = Menu ? Menu : cControl::Control(); // might have been closed in the mean time
+-------------- next part --------------
+--- receiver.c	2005-02-15 12:08:00.000000000 +0200
++++ receiver.c	2005-08-26 18:33:17.000000000 +0300
+@@ -66,6 +66,10 @@
+ 
+ void cSubtitlesReceiver::Receive(uchar *Data, int Length){
+ 
++#ifdef SUSPEND_PATCH
++  if (cDevice::IsSuspended())
++    return;
++#endif // SUSPEND_PATCH
+   if (!active || Length &lt; 188)
+     return;
+   int p = ringBuffer-&gt;Put( Data, Length );
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001143.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+	<LI>Next message: <A HREF="001151.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1150">[ date ]</a>
+              <a href="thread.html#1150">[ thread ]</a>
+              <a href="subject.html#1150">[ subject ]</a>
+              <a href="author.html#1150">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

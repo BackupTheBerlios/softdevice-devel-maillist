@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay features / keys
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20features%20/%20keys&In-Reply-To=%3C427F9020.7040408%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000643.html">
+   <LINK REL="Next"  HREF="000627.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay features / keys</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20features%20/%20keys&In-Reply-To=%3C427F9020.7040408%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softplay features / keys">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon May  9 18:30:24 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000643.html">[Softdevice-devel] 4:3-&gt;16:9 crashes, interlacing options
+</A></li>
+        <LI>Next message: <A HREF="000627.html">[Softdevice-devel] softplay features / keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#626">[ date ]</a>
+              <a href="thread.html#626">[ thread ]</a>
+              <a href="subject.html#626">[ subject ]</a>
+              <a href="author.html#626">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+ok, here is a list of features that I'm currently working on or that I 
+plan to include:
+
+- playlist with album support similar to mp3blaster - almost done
+- remove/add  files/albums during playback ( adding is already possible)
+- shuffle the complete playlist - done (maybe I will also add per album 
+shuffle a la mp3blaster in the future)
+- .m3u support ( future )
+- display cut down path in the title ( near future )
+- saving of the softplay playlist ( future - how important is this feature?)
+- reading and display of mp3 id tags (reading is already done by 
+libavformat, but the information is not passed to the playlist - future 
+- should one be able to disable this feature?)
+
+Did I miss a feature request?
+
+By pressing the red key during a playlist playback you enter a playlist 
+display from where you can browse through the playlist, skip to a 
+certain song and edit (not really yet) the playlist. The current title 
+is automatically highlighted at the start and after some time of 
+inactivity. I'm currently thinking about which keys to use during 
+playlist playback, I guess it makes sense to use different keys from the 
+single file playback (eg. movies) there. What kind of actions would be 
+important for you to have a key for? Skip to next/last song? Skip 
+forward/backward in the current song? Which keys should be used? 
+Currently I tried to stick as close the what Klaus Schmidinger suggested 
+  in the plugins manual, but a some things doesn't make sense for 
+playlist playback.
+
+Yesterday I rewrote the playlist support almost completly to get the 
+album support, and now I've almost all features I already implemented 
+the day before yesterday. I will commit these changes sometimes this 
+evening.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000643.html">[Softdevice-devel] 4:3-&gt;16:9 crashes, interlacing options
+</A></li>
+	<LI>Next message: <A HREF="000627.html">[Softdevice-devel] softplay features / keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#626">[ date ]</a>
+              <a href="thread.html#626">[ thread ]</a>
+              <a href="subject.html#626">[ subject ]</a>
+              <a href="author.html#626">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

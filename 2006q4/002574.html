@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a	long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%0A%09long%09time&In-Reply-To=%3C1159860627.45221193b05af%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002573.html">
+   <LINK REL="Next"  HREF="002577.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a	long	time</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%0A%09long%09time&In-Reply-To=%3C1159860627.45221193b05af%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a	long	time">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Oct  3 09:30:27 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002573.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002577.html">[Softdevice-devel] Hang after suspending MPEG stream for a	long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2574">[ date ]</a>
+              <a href="thread.html#2574">[ thread ]</a>
+              <a href="subject.html#2574">[ subject ]</a>
+              <a href="author.html#2574">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zitat von Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;:
+
+&gt;<i> Zitat von Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Stefan Lucke schrieb:
+</I>&gt;<i> &gt; &gt; On Samstag 30 September 2006 20:04, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt;&gt; On Sat, Sep 30, 2006 at 05:32:06PM +0100, Laz wrote:
+</I>&gt;<i> &gt; &gt;&gt;&gt; I usually let mine turn itself on and off with nvram-wakeup! I see
+</I>&gt;<i> &gt; &gt;&gt;&gt; the problem when I leave it for a short while in the middle of something
+</I>&gt;<i> &gt; &gt;&gt;&gt; and get distracted!
+</I>&gt;<i> &gt; &gt;&gt; Me too.  Sometimes, I hit the Power button followed by some other button
+</I>&gt;<i> &gt; &gt;&gt; to suspend the playback and to prevent the system from powering off.
+</I>&gt;<i> &gt; &gt;&gt; Then, I'd hit the Power button to resume.
+</I>&gt;<i> &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt;&gt;&gt; Hmmm...if you're right about this, how long should it take to overflow? The
+</I>&gt;<i> &gt; &gt;&gt;&gt; only counter I can see is a 64-bit integer which looks like it's counting in
+</I>&gt;<i> &gt; &gt;&gt;&gt; useconds which would take a few million years to overflow, by my reckoning!
+</I>&gt;<i> &gt; &gt;&gt;&gt; Maybe I'm looking in the wrong place and it's a 32-bit counter which would
+</I>&gt;<i> &gt; &gt;&gt;&gt; take 1 h 12 min to overflow. Not sure it was taking that long but it's hard
+</I>&gt;<i> &gt; &gt;&gt;&gt; to tell.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Negative values should not harm,as we would return immedeatly.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; I think the problem is in cSyncTimer::GetRelTime() which returns an
+</I>&gt;<i> &gt; signed int. If GetRelTime() returns a negative number because of an
+</I>&gt;<i> &gt; overflow we will actually add that value to delay instead of
+</I>&gt;<i> &gt; substracting, when we do the ususal delay-=GetRelTime().
+</I>&gt;<i>
+</I>&gt;<i> The -= operator is the one which is causing troubles.
+</I>
+That computed value is not only issue in that situation. I managed to
+avoid hang by some other changes. With current code we are loosing a signal to
+the condition variable.
+I did the following changes to sync_timer.c
+1. cSigTimer::Sleep() clear signal &quot;got_signal=false;&quot; only if would not sleep.
+
+-- snip --
+/* --- cSigTimer --------------------------------------------------------------
+ */
+int cSigTimer::Sleep(int timeoutUS, int lowLimitUS)
+{
+  if ( timeoutUS &lt; lowLimitUS ) {
+    got_signal=false;
+    return GetRelTime();
+  }
+
+-- snip --
+
+2. cSyncTimer::Sleep(): clear signals &quot;got_signal=false;&quot; only in case of
+   emUsleepTimer and emRtcTimer.
+
+-- snip --
+/* ----------------------------------------------------------------------------
+ */
+void cSyncTimer::Sleep(int *timeoutUS, int lowLimitUS)
+{
+  switch(syncMode)
+  {
+    case emUsleepTimer: // usleep timer mode
+      while ((*timeoutUS - lowLimitUS) &gt; 2200 &amp;&amp; !got_signal)
+      {
+        usleep (2200);
+        *timeoutUS -= GetRelTime ();
+      }
+      break;
+      got_signal=false;
+    case emRtcTimer: // rtc timer mode
+      while ((*timeoutUS - lowLimitUS) &gt; 15000 &amp;&amp; !got_signal)
+      {
+        usleep (10000);
+        *timeoutUS -= GetRelTime();
+      }
+      while ((*timeoutUS - lowLimitUS) &gt; 1200 &amp;&amp; !got_signal)
+      {
+          uint32_t  ts;
+
+        if (read(rtcFd, &amp;ts, sizeof(ts)) &lt;= 0)
+        {
+          close(rtcFd);
+          rtcFd = -1;
+          syncMode = emUsleepTimer;
+        }
+        *timeoutUS -= GetRelTime();
+      }
+      break;
+      got_signal=false;
+    case emSigTimer: // signal timer mode
+      *timeoutUS -= cSigTimer::Sleep(*timeoutUS, lowLimitUS);
+      break;
+  }
+}
+-- snip --
+
+With these two modifications vdr did _not_ hang after the 40min sleep.
+
+One thing I did not test in case of real long Sync() is in video.c.
+Sync() is protected by oldPictureMutex and would lock video thread from
+event processing.
+
+&gt;<i> I guess we should
+</I>&gt;<i> introduce a private member &quot;clampValue&quot; , and return values of TimePassed()
+</I>&gt;<i> and GetRelTime() should be clamped to +/- clampValue if it is nonzero.
+</I>&gt;<i>
+</I>&gt;<i> The one thing which I cannot recalulate is: I had a sleep time of 27min (0x634cc13f usec).
+</I>&gt;<i> Time passed between pause/play was about 42min 50sec (0x992f1680 usec) .
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; We could avoid this by letting GetRelTime() return some maximum, if
+</I>&gt;<i> &gt; there have been overflows. This would fix the pause problem as well as
+</I>&gt;<i> &gt; Marco's problem.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Bye,
+</I>&gt;<i> &gt; Martin
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002573.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002577.html">[Softdevice-devel] Hang after suspending MPEG stream for a	long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2574">[ date ]</a>
+              <a href="thread.html#2574">[ thread ]</a>
+              <a href="subject.html#2574">[ subject ]</a>
+              <a href="author.html#2574">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

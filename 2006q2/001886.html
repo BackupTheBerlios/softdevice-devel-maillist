@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [directfb-users] [Softdevice-devel] Re: Joining the club of &quot;Caught signal 11 ..&quot; users
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5Bdirectfb-users%5D%20%5BSoftdevice-devel%5D%20Re%3A%20Joining%20the%20club%20of%20%22Caught%20signal%2011%20..%22%20users&In-Reply-To=%3C200604202324.00071.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001885.html">
+   <LINK REL="Next"  HREF="001887.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[directfb-users] [Softdevice-devel] Re: Joining the club of &quot;Caught signal 11 ..&quot; users</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5Bdirectfb-users%5D%20%5BSoftdevice-devel%5D%20Re%3A%20Joining%20the%20club%20of%20%22Caught%20signal%2011%20..%22%20users&In-Reply-To=%3C200604202324.00071.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[directfb-users] [Softdevice-devel] Re: Joining the club of &quot;Caught signal 11 ..&quot; users">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr 20 23:23:59 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001885.html">[Softdevice-devel] [Bug #7202] Illegal instruction
+</A></li>
+        <LI>Next message: <A HREF="001887.html">[Softdevice-devel] Next release ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1886">[ date ]</a>
+              <a href="thread.html#1886">[ thread ]</a>
+              <a href="subject.html#1886">[ subject ]</a>
+              <a href="author.html#1886">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 20 April 2006 17:33, Tom Bridgwater wrote:
+&gt;<i> I have better luck using UDP for coherent debugging output.
+</I>&gt;<i> 
+</I>&gt;<i> In /etc/directfbrc add (192.168.1.100 is the machine where you watch  
+</I>&gt;<i> the log):
+</I>&gt;<i> log-udp=192.168.1.100:8088
+</I>&gt;<i> 
+</I>&gt;<i> On the machine where you watch the log, run:
+</I>&gt;<i> socat - udp4-listen:8088,fork
+</I>&gt;<i> 
+</I>&gt;<i> In your own program you can get your debugging in that same stream  
+</I>&gt;<i> using D_DEBUG macros instead of fprintf(stderr ...) or cerr&lt;&lt;
+</I>&gt;<i> <A HREF="http://www.directfb.org/wiki/index.php/Direct:Debug">http://www.directfb.org/wiki/index.php/Direct:Debug</A>
+</I>&gt;<i> 
+</I>
+Thanks for the hint, I guess I have to consider this for future
+debugging statements.
+
+I found the bug, and it's a plain softdevice bug.
+I copied vdr's setup.conf file from an existing vdr instance of mine.
+In this setup, I'd set our OSD drawing mode to software alpha blending.
+When this is set, constructor of cDFBVideoOut super class starts a thread
+for refreshing which takes some action, even constructor of derived class
+has not yet finished :-( .
+
+
+&gt;<i> /TomB
+</I>&gt;<i> 
+</I>&gt;<i> On Apr 19, 2006, at 10:55 PM, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; Results are very strange. I thought a fprintf to stderr is  
+</I>&gt;<i> &gt;&gt; unbuffered,
+</I>&gt;<i> &gt;&gt; but that seem to be no longer true, as I see your SetParms() method
+</I>&gt;<i> &gt;&gt; beeing called when _not_ all messages from constructor are printed.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001885.html">[Softdevice-devel] [Bug #7202] Illegal instruction
+</A></li>
+	<LI>Next message: <A HREF="001887.html">[Softdevice-devel] Next release ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1886">[ date ]</a>
+              <a href="thread.html#1886">[ thread ]</a>
+              <a href="subject.html#1886">[ subject ]</a>
+              <a href="author.html#1886">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

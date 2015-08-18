@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606171509.32867.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002158.html">
+   <LINK REL="Next"  HREF="002160.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606171509.32867.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jun 17 15:09:32 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002158.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002160.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2159">[ date ]</a>
+              <a href="thread.html#2159">[ thread ]</a>
+              <a href="subject.html#2159">[ subject ]</a>
+              <a href="author.html#2159">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 17 Juni 2006 14:05, Rolf Ahrenberg wrote:
+&gt;<i> On Sat, 17 Jun 2006, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Sure, having more systems to test it is never a bad idea. I'm not sure
+</I>&gt;<i> &gt; if I caught all the changes that you did on the patches, for some reason
+</I>&gt;<i> &gt; patch refused to apply your patch and also a diff of the diffs failed.
+</I>&gt;<i> 
+</I>&gt;<i> OK. I've attached my modifications over your patch (some configuration 
+</I>&gt;<i> stuff and the forced pixelFormat), that makes your patch working on my 
+</I>&gt;<i> setup too.
+</I>
+We should break patches into several smaller peaces.
+
+diff -Nru softdevice-cvs-20060617-cle266-martin/setup-softdevice-menu.c softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice-menu.c
+--- softdevice-cvs-20060617-cle266-martin/setup-softdevice-menu.c       2006-06-17 13:53:11.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice-menu.c 2006-06-17 14:46:15.000000000 +0300
+@@ -356,7 +356,7 @@
+   Add(new cOsdItem(&quot; &quot;, osUnknown));
+ #endif
+ 
+-  if (data-&gt;outputMethod == VOUT_DFB || data-&gt;outputMethod == VOUT_VIDIX)
++  if ((data-&gt;outputMethod == VOUT_DFB || data-&gt;outputMethod == VOUT_VIDIX) &amp;&amp; !data-&gt;cle266HWdecode)
+   {
+     Add(new cMenuEditStraItem(tr(&quot;Pixel Format&quot;),
+                               &amp;data-&gt;pixelFormat,
+
+That is ok. Don't offer pixelformat selection when in HW-decoder mode. It 
+implies that this cSetupStore member is a permanent one and not protected
+by ifdefs. Otherwise we would need a ifdef here too. Changing stretchblit 
+shouldn't be offered too when cle266HWdecode == 1 .
+
+diff -Nru softdevice-cvs-20060617-cle266-martin/setup-softdevice.c softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice.c
+--- softdevice-cvs-20060617-cle266-martin/setup-softdevice.c    2006-06-17 13:54:17.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice.c      2006-06-17 14:54:04.000000000 +0300
+@@ -282,9 +282,12 @@
+     fprintf(stderr,&quot;[setup-softdevice] Expanding %d columns at left and right\n&quot;,
+             expandLeftRightCols);
+   } else if (!strcasecmp(Name,&quot;PixelFormat&quot;)) {
++#ifdef HAVE_CLE266_MPEG_DECODER
++    pixelFormat = 1;
++#else
+     pixelFormat = atoi(Value);
+     pixelFormat = clamp (0, pixelFormat, 2);
+-
++#endif
+     fprintf (stderr,
+              &quot;[setup-softdevice] pixel format set to (%s)\n&quot;,
+              pix_fmt [pixelFormat]);
+
+No. This would force YV12 pixelformat whenever HAVE_CLE266_MPEG_DECODER
+is detected. But without option cle266 we need I420, right ?
+
+In video-dfb.c we have to force stretchblit = 0 and pixelformat = 1 in constructor
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002158.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002160.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2159">[ date ]</a>
+              <a href="thread.html#2159">[ thread ]</a>
+              <a href="subject.html#2159">[ subject ]</a>
+              <a href="author.html#2159">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

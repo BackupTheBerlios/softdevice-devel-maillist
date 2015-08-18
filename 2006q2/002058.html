@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200605191049.44627.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002057.html">
+   <LINK REL="Next"  HREF="002033.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200605191049.44627.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Fri May 19 11:49:44 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002057.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="002033.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2058">[ date ]</a>
+              <a href="thread.html#2058">[ thread ]</a>
+              <a href="subject.html#2058">[ subject ]</a>
+              <a href="author.html#2058">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 19 May 2006 10:13, Michael Reinelt wrote:
+&gt;<i> Hi there,
+</I>&gt;<i>
+</I>&gt;<i> &gt; However, there is the inclusion of a nanosleep for 1 ns, although I
+</I>&gt;<i> &gt; think you need to be running as root or with realtime priority for
+</I>&gt;<i> &gt; this to work, otherwise the sleep is a few ms, I think. In fact,
+</I>&gt;<i> &gt; from: <A HREF="http://www.tldp.org/HOWTO/IO-Port-Programming-4.html">http://www.tldp.org/HOWTO/IO-Port-Programming-4.html</A>
+</I>&gt;<i>
+</I>&gt;<i> Well, I've worked on this problems for years now. Achieving very short
+</I>&gt;<i> delays in the nanosecond range in userspace is a pain.
+</I>
+:<i>-s
+</I>
+&gt;<i> &gt; For delays &lt;= 2 ms, if (and only if) your process is set to soft real
+</I>&gt;<i> &gt; time scheduling (using sched_setscheduler()), nanosleep() uses a busy
+</I>&gt;<i> &gt; loop; otherwise it sleeps, just like usleep().
+</I>&gt;<i>
+</I>&gt;<i> and as usleep() always does a reschedule, it delays at least 1/HZ
+</I>&gt;<i> (which is 10 msec with the default of 100 HZ).
+</I>&gt;<i>
+</I>&gt;<i> Using sched_setscheduler() is dangerous: if something goes wrong, it
+</I>&gt;<i> will completely block your system (think of an infinitive loop).
+</I>&gt;<i> Changing the scheduler mode just for the delay loop produces too much
+</I>&gt;<i> overhead.
+</I>
+I don't think we really want to get into that!
+
+&gt;<i> In lcd4linux (where I need such small delays) I implemented two forms
+</I>&gt;<i> for such delays: a simple gettimeofday() busy loop (which works fine,
+</I>&gt;<i> but there's a quite big syscall overhead) and a RDTSC waiting loop
+</I>&gt;<i> (which is very fast and precise, but works on i386 only). At least my
+</I>&gt;<i> EPIA-M6000 supports TSC. The disadvantage of TSC is that it needs to be
+</I>&gt;<i> calibrated in some way, and produces wrong results when CPU frequency
+</I>&gt;<i> changes.
+</I>&gt;<i>
+</I>&gt;<i> I can provide sample code if you're interested.
+</I>
+I'd be interested to see how you are doing this: might not be relevant 
+here but may come in useful for some other stuff I'm working on!
+
+All we are trying to do here is trying to sleep to reduce CPU load a bit. 
+Someone suggested I try using sched_yield() which probably wouldn't 
+reduce CPU load but should give other processes a look in! Not got round 
+to trying that one yet, though...
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002057.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="002033.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2058">[ date ]</a>
+              <a href="thread.html#2058">[ thread ]</a>
+              <a href="subject.html#2058">[ subject ]</a>
+              <a href="author.html#2058">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

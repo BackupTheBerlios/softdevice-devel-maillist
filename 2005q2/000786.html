@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C200505311916.55087.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000776.html">
+   <LINK REL="Next"  HREF="000787.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C200505311916.55087.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue May 31 19:16:54 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000776.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+        <LI>Next message: <A HREF="000787.html">[Softdevice-devel] Communicating status changes to an external program
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#786">[ date ]</a>
+              <a href="thread.html#786">[ thread ]</a>
+              <a href="subject.html#786">[ subject ]</a>
+              <a href="author.html#786">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 30. Mai 2005 21:40, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Mon, May 30, 2005 at 05:51:46PM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt;Okay, I finally have completed the unit, but haven't integrated it to
+</I>&gt;<i> &gt; &gt;softdevice yet.  I would appreciate some insight there; how to implement
+</I>&gt;<i> &gt; &gt;this hook for all playback methods (DirectFB, Xv and so on).
+</I>&gt;<i> &gt; On suspend cMpeg2Decoder::Suspend() is called, on resume 
+</I>&gt;<i> &gt; cMpeg2Decoder::Resume(), is this what you wanted to know?
+</I>&gt;<i> 
+</I>&gt;<i> Yes, thanks a lot, Martin!  Attached is my patch for controlling the relay
+</I>&gt;<i> with the IsSuspended flag.  You will also need to add a line to
+</I>&gt;<i> /video/setup.conf that looks like this:
+</I>&gt;<i> 
+</I>&gt;<i> softdevice.serialfd = /dev/ttyS0
+</I>&gt;<i> 
+</I>
+There should be a more general way to do such communications. Next
+could be to send some commands via signal line toggeling over usb or
+transmitting an udp packet.
+vdr has the possibility to execute commands and it is possible to bind
+them to userX keys.
+
+The minimum we could to is sending such key events to vdr like we do
+already in one case.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000776.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+	<LI>Next message: <A HREF="000787.html">[Softdevice-devel] Communicating status changes to an external program
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#786">[ date ]</a>
+              <a href="thread.html#786">[ thread ]</a>
+              <a href="subject.html#786">[ subject ]</a>
+              <a href="author.html#786">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

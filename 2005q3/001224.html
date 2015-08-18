@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash when video stream is suspended or resumed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C20050908161351.GB12566%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001223.html">
+   <LINK REL="Next"  HREF="001225.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash when video stream is suspended or resumed</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C20050908161351.GB12566%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Crash when video stream is suspended or resumed">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Sep  8 18:13:51 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001223.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+        <LI>Next message: <A HREF="001225.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1224">[ date ]</a>
+              <a href="thread.html#1224">[ thread ]</a>
+              <a href="subject.html#1224">[ subject ]</a>
+              <a href="author.html#1224">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Sep 08, 2005 at 05:04:59PM +0200, Stefan Lucke wrote:
+&gt;<i> Without HAVE_SetSourceLocation your version my crash again. Thats what I ment
+</I>&gt;<i> by &quot;some small differences&quot;:
+</I>
+I was unable to get my patched version to crash, but I didn't try
+with useStretchBlit.  Of course, you know better than me the
+purpose of all the cVideoOut member variables.
+
+However, your patched version always crashes in cVideoOut::Action(),
+on the line osd-&gt;Flush(), presumably when the OSD (showing the
+information of the current program) is to be closed.  The command
+line for repeating this is &quot;vdr --suspend -Psoftdevice&quot; (obviously,
+with my suspend patch applied to vdr), or just &quot;vdr -Psoftdevice&quot;.
+In both cases, the video overlay will remain black.  The crash
+occurs both with and without HAVE_SetSourceLocation.
+
+I'm running vdr 1.3.31 with my suspend patch as well as the
+patches from subtitles-0.3.8 and the avoid-trashing patch.
+
+My version of your patch is attached.  I moved the method
+definition to an existing #if VDRVERSNUM &gt;= 10307 block.
+
+	Marko
+-------------- next part --------------
+Index: video-dfb.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.c,v
+retrieving revision 1.39
+diff -p -u -r1.39 video-dfb.c
+--- video-dfb.c	4 Sep 2005 05:49:18 -0000	1.39
++++ video-dfb.c	8 Sep 2005 16:00:53 -0000
+@@ -945,6 +945,27 @@ void cDFBVideoOut::OSDCommit()
+ {
+   OSDdirty=false;
+   OSDpresent = true;
++}
++
++/* ---------------------------------------------------------------------------
++ */
++void cDFBVideoOut::GetOSDDimension(int &amp;OsdWidth,int &amp;OsdHeight)
++{
++#if HAVE_SetSourceLocation
++      OsdWidth   = fwidth;
++      OsdHeight  = fheight;
++#else
++      if (useStretchBlit)
++      {
++        OsdWidth   = fwidth;
++        OsdHeight  = fheight;
++      }
++      else
++      {
++        OsdWidth   = swidth;
++        OsdHeight  = sheight;
++      }
++#endif
+ }
+ 
+ /* ---------------------------------------------------------------------------
+Index: video-dfb.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.h,v
+retrieving revision 1.10
+diff -p -u -r1.10 video-dfb.h
+--- video-dfb.h	4 Sep 2005 05:49:18 -0000	1.10
++++ video-dfb.h	8 Sep 2005 16:00:53 -0000
+@@ -54,6 +54,7 @@ class cDFBVideoOut : public cVideoOut {
+     virtual void OpenOSD(int x, int y);
+ 
+ #if VDRVERSNUM &gt;= 10307
++    virtual void GetOSDDimension(int &amp;OsdWidth,int &amp;OsdHeight);
+     virtual void Refresh(cBitmap *Bitmap);
+     virtual void OSDStart();
+     virtual void OSDCommit();
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001223.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+	<LI>Next message: <A HREF="001225.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1224">[ date ]</a>
+              <a href="thread.html#1224">[ thread ]</a>
+              <a href="subject.html#1224">[ subject ]</a>
+              <a href="author.html#1224">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

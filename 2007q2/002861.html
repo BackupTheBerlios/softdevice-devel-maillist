@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] no video (OSD works),	stuttering audio (xruns)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20video%20%28OSD%20works%29%2C%0A%09stuttering%20audio%20%28xruns%29&In-Reply-To=%3C1177854280.4634a14850ad7%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002860.html">
+   <LINK REL="Next"  HREF="002862.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20video%20%28OSD%20works%29%2C%0A%09stuttering%20audio%20%28xruns%29&In-Reply-To=%3C1177854280.4634a14850ad7%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr 29 15:44:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002860.html">[Softdevice-devel] no video (OSD works), stuttering audio (xruns)
+</A></li>
+        <LI>Next message: <A HREF="002862.html">[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2861">[ date ]</a>
+              <a href="thread.html#2861">[ thread ]</a>
+              <a href="subject.html#2861">[ subject ]</a>
+              <a href="author.html#2861">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Lucian Muresan:
+
+&gt;<i> Hello folks,
+</I>&gt;<i>
+</I>&gt;<i> I did not really used VDR very often in past few weeks, so I can't
+</I>&gt;<i> really know when this exactly happened, but maybe you guys could point
+</I>&gt;<i> me on some known issue or something, before I start downgrading
+</I>&gt;<i> everything...
+</I>&gt;<i> So here are the facts:
+</I>&gt;<i> I'm using Gentoo, the TV-Out (crtc2) of a Matrox G400 DH connected via
+</I>&gt;<i> SCART-RGB cable to a normal PAL TV, and used to start VDR with the
+</I>&gt;<i> softdevice plugin, over DirectFB, which is really well supported for
+</I>&gt;<i> this card. Now, I have all these versions pulled from cvs/git/svn:
+</I>&gt;<i> DirectFB, linux-fusion, DFB++, softdevice. Furthermore, I have
+</I>&gt;<i> media-video/ffmpeg-0.4.9_p20070330-r1.
+</I>
+Are you using the patched gentoo vdr-1.x.y  or a vanilla version ?
+In this gentoo bug:
+<A HREF="http://bugs.gentoo.org/show_bug.cgi?id=175490">http://bugs.gentoo.org/show_bug.cgi?id=175490</A>
+
+ffmpeg is at SVN-8560.
+
+&quot;ffmpeg 2&gt;&amp;1 | grep SVN&quot; for my system is:
+FFmpeg version SVN-r8627, Copyright (c) 2000-2007 Fabrice Bellard, et al.
+without these problems.
+
+&gt;<i> Now, xineliboutput compiled with the same versions works, but softdevice
+</I>&gt;<i> only produces black video over DirectFB (OSD works) and stuttering audio
+</I>&gt;<i> over ALSA (spdif, always worked) with lots of xruns.
+</I>&gt;<i> Any idea where I could start searching for the cause? I tried various
+</I>&gt;<i> softdevice settings from the config menu, but I might not have found the
+</I>&gt;<i> proper ones...
+</I>&gt;<i>
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002860.html">[Softdevice-devel] no video (OSD works), stuttering audio (xruns)
+</A></li>
+	<LI>Next message: <A HREF="002862.html">[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2861">[ date ]</a>
+              <a href="thread.html#2861">[ thread ]</a>
+              <a href="subject.html#2861">[ subject ]</a>
+              <a href="author.html#2861">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

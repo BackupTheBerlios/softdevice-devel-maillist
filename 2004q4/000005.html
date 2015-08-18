@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Contribute to vdr-softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Contribute%20to%20vdr-softdevice&In-Reply-To=%3C24173.1098436129%40www39.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000004.html">
+   <LINK REL="Next"  HREF="000006.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Contribute to vdr-softdevice</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Contribute%20to%20vdr-softdevice&In-Reply-To=%3C24173.1098436129%40www39.gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: Contribute to vdr-softdevice">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Oct 22 11:08:49 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000004.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+        <LI>Next message: <A HREF="000006.html">[Softdevice-devel] pseudo OSD background
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5">[ date ]</a>
+              <a href="thread.html#5">[ thread ]</a>
+              <a href="subject.html#5">[ subject ]</a>
+              <a href="author.html#5">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> &gt; So I'll commit patch 01 and 03?
+</I>&gt;<i> 
+</I>&gt;<i> I added Martin to our developer crew. So he can commit his fix (patch01)
+</I>&gt;<i> hisself :-) .
+</I>Great! But since I again have all my stuff at home, I have to wait until the
+evening to commit the patch...
+&gt;<i> 
+</I>&gt;<i> Martin's suggested change for that &quot;if (delay + avOffset &lt; 20)&quot; to
+</I>&gt;<i> &quot;if (delay &lt; 80)&quot; is like a fix avOffset value of -60 and that fix offset
+</I>As far as I understand this condition is just to ensure that the sound
+buffer 
+doesn't underrun. Since we get audio data only every 50-75ms we have to
+ensure that the sound buffer should contains more than 80ms right after the
+audio decoding has been called, independently of the avOffset. The avOffset
+comes in afterwards, because up to now we just sync the video to the audio,
+we just have to delay or accelerate 
+the video to keep the avOffset.
+
+&gt;<i> As this should be reworked in a more general way with considering
+</I>&gt;<i> STC syncing with some audio prebuffering, we should not spend to much time
+</I>&gt;<i> on this. So I'll like to keep that in your decision.
+</I>I'm already working on a new A-V syncing code, the current code is in my
+opinion quite 
+broken... For example the cPTS is only updated every 50-75ms again because
+AudioStreamDecoder::DecodeData is only called every 50-75ms. The result is
+that the cPTS jumps and this gives the Video quite a hard time to sync on
+the cPTS.
+I also grabbed a copy of the mpeg2 iso norm and started to read in it...
+
+Bye,
+Martin
+
+-- 
++++ GMX DSL Premiumtarife 3 Monate gratis* + WLAN-Router 0,- EUR* +++
+Clevere DSL-Nutzer wechseln jetzt zu GMX: <A HREF="http://www.gmx.net/de/go/dsl">http://www.gmx.net/de/go/dsl</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000004.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+	<LI>Next message: <A HREF="000006.html">[Softdevice-devel] pseudo OSD background
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5">[ date ]</a>
+              <a href="thread.html#5">[ thread ]</a>
+              <a href="subject.html#5">[ subject ]</a>
+              <a href="author.html#5">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

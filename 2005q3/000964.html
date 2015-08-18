@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.2%20%2B%20vdr%201.3.27%20on%20EPIA%20M10000%0A%20-%20flickering%20or%20hanging&In-Reply-To=%3C42D648AF.3080207%40smega.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000937.html">
+   <LINK REL="Next"  HREF="000938.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging</H1>
+    <B>Felix</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.2%20%2B%20vdr%201.3.27%20on%20EPIA%20M10000%0A%20-%20flickering%20or%20hanging&In-Reply-To=%3C42D648AF.3080207%40smega.com%3E"
+       TITLE="[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging">felix_lists at smega.com
+       </A><BR>
+    <I>Thu Jul 14 13:12:47 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000937.html">[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+</A></li>
+        <LI>Next message: <A HREF="000938.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#964">[ date ]</a>
+              <a href="thread.html#964">[ thread ]</a>
+              <a href="subject.html#964">[ subject ]</a>
+              <a href="author.html#964">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;<i>On Freitag, 8. Juli 2005 14:45, Felix wrote:
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;&gt;<i>Hi everybody,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>after one week of trying all possibilities to get live TV running on the 
+</I>&gt;&gt;<i>above setup, you are my last hope.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>With fb, Live TV output is flickering like hell, and sound his jerky. It 
+</I>&gt;&gt;<i>looks like i only got a third of the framerate and the output is not in 
+</I>&gt;&gt;<i>sync with screen refresh. However, for about half a second after 
+</I>&gt;&gt;<i>starting vdr, the output looks good.
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>I think M10000 is to slow for plain (unaccelerated) output &quot;-vo fb:&quot;
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>It seems that this is not the case. Mplayer is able to play .vdr files 
+over fb with about 40% CPU usage, and vdr shows good output for about 
+half a second after start. The flickering which I experience is not the 
+normal &quot;framerate too low&quot; thing. It looks more like the writing to the 
+framebuffer is not in sync with the actual screen refresh. So I don't 
+see a low framerate like in a video game, but it looks more like when 
+you point your videocamera on a TV screen. In addition, sound has 
+multiple gaps in a second, but the OSD is shown perfectly and is also 
+very responsive.
+
+&gt;&gt;<i>The kernel fb is a:
+</I>&gt;&gt;<i>    VIA Graphics Intergration Chipset framebuffer 0.9 initializing
+</I>&gt;&gt;<i>configured at kernel startup with
+</I>&gt;&gt;<i>   append=&quot;video=viafb:720x576,bpp=16&quot;
+</I>&gt;&gt;<i>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>When starting with dfb, vdr just locks with a black screen after giving 
+</I>&gt;&gt;<i>the following output. I have to kill -9 it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Any hints?
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>Did you check the following thread ?
+</I>&gt;<i>
+</I>&gt;<i><A HREF="../2005q2/000785.html">http://lists.berlios.de/pipermail/softdevice-devel/2005q2/000785.html</A>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>Thank you, I did. His problem seems to slightly different, telling from 
+his output, and the proposed solutions are already in place in my machine.
+
+... Felix
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000937.html">[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+</A></li>
+	<LI>Next message: <A HREF="000938.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#964">[ date ]</a>
+              <a href="thread.html#964">[ thread ]</a>
+              <a href="subject.html#964">[ subject ]</a>
+              <a href="author.html#964">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

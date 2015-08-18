@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nV OSD issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nV%20OSD%20issues&In-Reply-To=%3C28804-07152%40sneakemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002374.html">
+   <LINK REL="Next"  HREF="002378.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nV OSD issues</H1>
+    <B>CR</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nV%20OSD%20issues&In-Reply-To=%3C28804-07152%40sneakemail.com%3E"
+       TITLE="[Softdevice-devel] nV OSD issues">omge2ri02 at sneakemail.com
+       </A><BR>
+    <I>Wed Sep  6 12:08:13 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002374.html">[Softdevice-devel] dfb-out audio sync (Was: Re: g450 interlaced	output)
+</A></li>
+        <LI>Next message: <A HREF="002378.html">[Softdevice-devel] New OSD method for X/Xv proposed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2356">[ date ]</a>
+              <a href="thread.html#2356">[ thread ]</a>
+              <a href="subject.html#2356">[ subject ]</a>
+              <a href="author.html#2356">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm plauged by an OSD issue with my nV video card, so I'm brain storming
+about possible problems/solutions.  It turns out the nVidia Xv blitter
+port supports &quot;XRGB&quot; but not ARGB (the &quot;XRGB&quot; == upper bits do nothing).
+
+I specifically notice when VDR starts up and there is no video playback,
+the OSD is fine.  The moment video playback starts, the OSD gets
+corrupted.  After all video playback has ceased, the OSD retains it's
+corruption, even if I change menus, options, etc.
+
+Question:
+
+Does softdevice do something like grab a &quot;blackframe&quot; or a chroma-key
+frame when video playback starts, so the OSD does not get removed by the
+video card's &quot;overlay&quot; functionality?
+
+CR.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002374.html">[Softdevice-devel] dfb-out audio sync (Was: Re: g450 interlaced	output)
+</A></li>
+	<LI>Next message: <A HREF="002378.html">[Softdevice-devel] New OSD method for X/Xv proposed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2356">[ date ]</a>
+              <a href="thread.html#2356">[ thread ]</a>
+              <a href="subject.html#2356">[ subject ]</a>
+              <a href="author.html#2356">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%0A%20version%20and%20ffmpeg%20from%20svn&In-Reply-To=%3C20081116214942.3f885749%40bk.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003175.html">
+   <LINK REL="Next"  HREF="003177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn</H1>
+    <B>Goga777</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%0A%20version%20and%20ffmpeg%20from%20svn&In-Reply-To=%3C20081116214942.3f885749%40bk.ru%3E"
+       TITLE="[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn">goga777 at bk.ru
+       </A><BR>
+    <I>Sun Nov 16 19:49:42 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003175.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+        <LI>Next message: <A HREF="003177.html">[Softdevice-devel] a lot of warnings with cvs softdevice	version and ffmpeg from svn
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3176">[ date ]</a>
+              <a href="thread.html#3176">[ thread ]</a>
+              <a href="subject.html#3176">[ subject ]</a>
+              <a href="author.html#3176">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Stefan
+
+ah - it was the good test with disconnected antenna
+when I connected the dish, I had vdr crash  :(
+seems to me it's ffmpeg problem yes ?
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr$ ./vdr -c /etc/vdr/ -P &quot;softdevice -vo xv:&quot;
+softdevice: Created setupStoreId 22872064!
+softdevice: Attatched to setupStoreId 22872064 at 0xb7fb9000.
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3408640)
+[XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+[XvVideoOut]: osd_image shmid = 22904833
+[XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120, Bpp 32
+[XvVideoOut]: max area size 2048 x 2048
+[XvVideoOut]: using area size 736 x 576
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[XvVideoOut]: Xinerama-Screen changed to 0
+&#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1089;&#1077;&#1075;&#1084;&#1077;&#1085;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103;
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr$   
+
+
+goga:/etc/init.d# gdb sv 5529
+GNU gdb 6.8-debian
+Copyright (C) 2008 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;i486-linux-gnu&quot;...
+sv: No such file or directory.
+Attaching to process 5529
+Reading symbols from /usr/src/vdr1_70/vdr...done.
+Error while mapping shared library sections:
+./PLUGINS/lib/libvdr-softdevice.so.1.7.0: No such file or directory.
+Error while mapping shared library sections:
+./PLUGINS/lib//libsoftdevice-xv.so.1.7.0: No such file or directory.
+Reading symbols from /usr/lib/libjpeg.so.62...done.
+Loaded symbols for /usr/lib/libjpeg.so.62
+Reading symbols from /lib/i686/cmov/libpthread.so.0...done.
+[Thread debugging using libthread_db enabled]
+[New Thread 0xb7c1c6c0 (LWP 5529)]
+[New Thread 0xb2c05b90 (LWP 5541)]
+[New Thread 0xb3406b90 (LWP 5540)]
+[New Thread 0xb3e08b90 (LWP 5539)]
+[New Thread 0xb4609b90 (LWP 5538)]
+[New Thread 0xb504cb90 (LWP 5536)]
+[New Thread 0xb5897b90 (LWP 5535)]
+[New Thread 0xb715bb90 (LWP 5534)]
+[New Thread 0xb695ab90 (LWP 5533)]
+Loaded symbols for /lib/i686/cmov/libpthread.so.0
+Reading symbols from /lib/i686/cmov/libdl.so.2...done.
+Loaded symbols for /lib/i686/cmov/libdl.so.2
+Reading symbols from /lib/libcap.so.1...done.
+Loaded symbols for /lib/libcap.so.1
+Reading symbols from /lib/i686/cmov/librt.so.1...done.
+Loaded symbols for /lib/i686/cmov/librt.so.1
+Reading symbols from /usr/lib/libfreetype.so.6...done.
+Loaded symbols for /usr/lib/libfreetype.so.6
+Reading symbols from /usr/lib/libfontconfig.so.1...done.
+Loaded symbols for /usr/lib/libfontconfig.so.1
+Reading symbols from /usr/lib/libstdc++.so.6...done.
+Loaded symbols for /usr/lib/libstdc++.so.6
+Reading symbols from /lib/i686/cmov/libm.so.6...done.
+Loaded symbols for /lib/i686/cmov/libm.so.6
+Reading symbols from /lib/libgcc_s.so.1...done.
+Loaded symbols for /lib/libgcc_s.so.1
+Reading symbols from /lib/i686/cmov/libc.so.6...done.
+Loaded symbols for /lib/i686/cmov/libc.so.6
+Reading symbols from /lib/ld-linux.so.2...done.
+Loaded symbols for /lib/ld-linux.so.2
+Reading symbols from /usr/lib/libz.so.1...done.
+Loaded symbols for /usr/lib/libz.so.1
+Reading symbols from /usr/lib/libexpat.so.1...done.
+Loaded symbols for /usr/lib/libexpat.so.1
+Reading symbols from /usr/lib/gconv/ISO8859-1.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-1.so
+Reading symbols from /usr/lib/gconv/ISO8859-2.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-2.so
+Reading symbols from /usr/lib/gconv/ISO8859-15.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-15.so
+Reading symbols from /usr/lib/gconv/ISO8859-7.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-7.so
+Reading symbols from /usr/lib/gconv/ISO8859-13.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-13.so
+Reading symbols from /usr/lib/gconv/ISO8859-5.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-5.so
+Reading symbols from /usr/lib/gconv/ISO8859-9.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-9.so
+Symbol file not found for ./PLUGINS/lib/libvdr-softdevice.so.1.7.0
+Reading symbols from /usr/local/lib/libavformat.so.52...done.
+Loaded symbols for /usr/local/lib/libavformat.so.52
+Reading symbols from /usr/local/lib/libavcodec.so.52...done.
+Loaded symbols for /usr/local/lib/libavcodec.so.52
+Reading symbols from /usr/local/lib/libpostproc.so.51...done.
+Loaded symbols for /usr/local/lib/libpostproc.so.51
+Reading symbols from /usr/lib/libasound.so.2...done.
+Loaded symbols for /usr/lib/libasound.so.2
+Reading symbols from /usr/local/lib/libavutil.so.49...done.
+Loaded symbols for /usr/local/lib/libavutil.so.49
+Reading symbols from /lib/libbz2.so.1.0...done.
+Loaded symbols for /lib/libbz2.so.1.0
+Symbol file not found for ./PLUGINS/lib//libsoftdevice-xv.so.1.7.0
+Reading symbols from /usr/lib/libXext.so.6...done.
+Loaded symbols for /usr/lib/libXext.so.6
+Reading symbols from /usr/lib/libX11.so.6...done.
+Loaded symbols for /usr/lib/libX11.so.6
+Reading symbols from /usr/lib/libXv.so.1...done.
+Loaded symbols for /usr/lib/libXv.so.1
+Reading symbols from /usr/lib/libXinerama.so.1...done.
+Loaded symbols for /usr/lib/libXinerama.so.1
+Reading symbols from /usr/lib/libXau.so.6...done.
+Loaded symbols for /usr/lib/libXau.so.6
+Reading symbols from /usr/lib/libxcb-xlib.so.0...done.
+Loaded symbols for /usr/lib/libxcb-xlib.so.0
+Reading symbols from /usr/lib/libxcb.so.1...done.
+Loaded symbols for /usr/lib/libxcb.so.1
+Reading symbols from /usr/lib/libXdmcp.so.6...done.
+Loaded symbols for /usr/lib/libXdmcp.so.6
+Reading symbols from /usr/lib/libXcursor.so.1...done.
+Loaded symbols for /usr/lib/libXcursor.so.1
+Reading symbols from /usr/lib/libXrender.so.1...done.
+Loaded symbols for /usr/lib/libXrender.so.1
+Reading symbols from /usr/lib/libXfixes.so.3...done.
+Loaded symbols for /usr/lib/libXfixes.so.3
+Reading symbols from /lib/i686/cmov/libnss_compat.so.2...done.
+Loaded symbols for /lib/i686/cmov/libnss_compat.so.2
+Reading symbols from /lib/i686/cmov/libnsl.so.1...done.
+Loaded symbols for /lib/i686/cmov/libnsl.so.1
+Reading symbols from /lib/i686/cmov/libnss_nis.so.2...done.
+Loaded symbols for /lib/i686/cmov/libnss_nis.so.2
+Reading symbols from /lib/i686/cmov/libnss_files.so.2...done.
+Loaded symbols for /lib/i686/cmov/libnss_files.so.2
+0xb7fd4430 in __kernel_vsyscall ()
+(gdb) c
+Continuing.
+[New Thread 0xb21ceb90 (LWP 5578)]
+[Thread 0xb21ceb90 (LWP 5578) exited]
+[New Thread 0xb21ceb90 (LWP 5579)]
+[Thread 0xb4609b90 (LWP 5538) exited]
+[Thread 0xb2c05b90 (LWP 5541) exited]
+[New Thread 0xb2c05b90 (LWP 5589)]
+[Thread 0xb3406b90 (LWP 5540) exited]
+[Thread 0xb3e08b90 (LWP 5539) exited]
+[New Thread 0xb3e08b90 (LWP 5590)]
+[New Thread 0xb3406b90 (LWP 5591)]
+[Thread 0xb21ceb90 (LWP 5579) exited]
+[New Thread 0xb21ceb90 (LWP 5592)]
+[New Thread 0xb4609b90 (LWP 5593)]
+[Thread 0xb4609b90 (LWP 5593) exited]
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0xb21ceb90 (LWP 5592)]
+0xb7947cc2 in get_byte (s=0x98aa1e0) at libavformat/aviobuf.c:351
+351                 return *s-&gt;buf_ptr++;
+(gdb) bt
+#0  0xb7947cc2 in get_byte (s=0x98aa1e0) at libavformat/aviobuf.c:351
+#1  0xb7988405 in find_next_start_code (pb=0x98aa1e0, size_ptr=0xb21ce134, header_state=0x98411a0)
+    at libavformat/mpeg.c:142
+#2  0xb79885b8 in mpegps_read_pes_header (s=0x990f660, ppos=0xb21ce1c8, pstart_code=0xb21ce1e0, ppts=0xb21ce1d8,
+    pdts=0xb21ce1d0) at libavformat/mpeg.c:246
+#3  0xb7988c79 in mpegps_read_packet (s=0x990f660, pkt=0x9910528) at libavformat/mpeg.c:418
+#4  0xb793df22 in av_read_packet (s=0x990f660, pkt=0x9910528) at libavformat/utils.c:625
+#5  0xb793f578 in av_read_frame_internal (s=0x990f660, pkt=0xb21ce340) at libavformat/utils.c:1004
+#6  0xb793fbdf in av_read_frame (s=0x990f660, pkt=0xb21ce340) at libavformat/utils.c:1123
+#7  0xb7a43567 in ?? ()
+#8  0x0990f660 in ?? ()
+#9  0xb21ce340 in ?? ()
+#10 0xb21ce330 in ?? ()
+#11 0x00000000 in ?? ()
+(gdb) disass $pc-32 $pc+32
+Dump of assembler code from 0xb7947ca2 to 0xb7947ce2:
+0xb7947ca2 &lt;get_byte+49&gt;:       inc    %ebp
+0xb7947ca3 &lt;get_byte+50&gt;:       or     %cl,-0x5e17dbfc(%ecx)
+0xb7947ca9 &lt;get_byte+56&gt;:       std
+0xb7947caa &lt;get_byte+57&gt;:       (bad)
+0xb7947cab &lt;get_byte+58&gt;:       decl   0x508b0845(%ebx)
+0xb7947cb1 &lt;get_byte+64&gt;:       or     %cl,0x408b0845(%ebx)
+0xb7947cb7 &lt;get_byte+70&gt;:       or     $0x39,%al
+0xb7947cb9 &lt;get_byte+72&gt;:       ret    $0x1a73
+0xb7947cbc &lt;get_byte+75&gt;:       mov    0x8(%ebp),%eax
+0xb7947cbf &lt;get_byte+78&gt;:       mov    0x8(%eax),%edx
+0xb7947cc2 &lt;get_byte+81&gt;:       movzbl (%edx),%eax
+0xb7947cc5 &lt;get_byte+84&gt;:       movzbl %al,%eax
+0xb7947cc8 &lt;get_byte+87&gt;:       mov    %eax,-0x4(%ebp)
+0xb7947ccb &lt;get_byte+90&gt;:       add    $0x1,%edx
+0xb7947cce &lt;get_byte+93&gt;:       mov    0x8(%ebp),%eax
+0xb7947cd1 &lt;get_byte+96&gt;:       mov    %edx,0x8(%eax)
+0xb7947cd4 &lt;get_byte+99&gt;:       jmp    0xb7947cdd &lt;get_byte+108&gt;
+0xb7947cd6 &lt;get_byte+101&gt;:      movl   $0x0,-0x4(%ebp)
+0xb7947cdd &lt;get_byte+108&gt;:      mov    -0x4(%ebp),%eax
+0xb7947ce0 &lt;get_byte+111&gt;:      leave
+0xb7947ce1 &lt;get_byte+112&gt;:      ret
+End of assembler dump.
+(gdb) info all-registers
+eax            0x98aa1e0        160080352
+ecx            0x98aa1e0        160080352
+edx            0x0      0
+ebx            0xb7a630b4       -1213845324
+esp            0xb21ce0c0       0xb21ce0c0
+ebp            0xb21ce0c8       0xb21ce0c8
+esi            0x9859448        159749192
+edi            0xb21ce340       -1306729664
+eip            0xb7947cc2       0xb7947cc2 &lt;get_byte+81&gt;
+eflags         0x210293 [ CF AF SF IF RF ID ]
+cs             0x73     115
+ss             0x7b     123
+ds             0x7b     123
+es             0x7b     123
+fs             0x0      0
+gs             0x33     51
+st0            -nan(0x7f7f7f7f7f7f7f7f) (raw 0xffff7f7f7f7f7f7f7f7f)
+st1            -nan(0xfe00fe00fe00fe)   (raw 0xffff00fe00fe00fe00fe)
+st2            -nan(0xfe00fe00fe00fe)   (raw 0xffff00fe00fe00fe00fe)
+st3            -nan(0x7f7f7f7f7f7f7f7f) (raw 0xffff7f7f7f7f7f7f7f7f)
+st4            -nan(0x80008000800080)   (raw 0xffff0080008000800080)
+st5            65280    (raw 0x400eff00000000000000)
+st6            1        (raw 0x3fff8000000000000000)
+st7            1        (raw 0x3fff8000000000000000)
+fctrl          0x37f    895
+fstat          0x4020   16416
+ftag           0xffff   65535
+fiseg          0x73     115
+fioff          0xb72bda89       -1221862775
+foseg          0x7b     123
+fooff          0xbf8ed3f0       -1081158672
+fop            0x1c9    457
+xmm0           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+  uint128 = 0x00000000000000000000000000000000}
+xmm1           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+  uint128 = 0x00000000000000000000000000000000}
+xmm2           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+  uint128 = 0x00000000000000000000000000000000}
+xmm3           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+  uint128 = 0x00000000000000000000000000000000}
+xmm4           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+  uint128 = 0x00000000000000000000000000000000}
+xmm5           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+  uint128 = 0x00000000000000000000000000000000}
+xmm6           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+  uint128 = 0x00000000000000000000000000000000}
+xmm7           {v4_float = {0x0, 0x0, 0x0, 0x0}, v2_double = {0x0, 0x0}, v16_int8 = {0x0 &lt;repeats 16 times&gt;}, v8_int16 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, v4_int32 = {0x0, 0x0, 0x0, 0x0}, v2_int64 = {0x0, 0x0},
+  uint128 = 0x00000000000000000000000000000000}
+mxcsr          0x1f80   [ IM DM ZM OM UM PM ]
+mm0            {uint64 = 0x7f7f7f7f7f7f7f7f, v2_int32 = {0x7f7f7f7f, 0x7f7f7f7f}, v4_int16 = {0x7f7f, 0x7f7f, 0x7f7f,
+    0x7f7f}, v8_int8 = {0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f}}
+mm1            {uint64 = 0xfe00fe00fe00fe, v2_int32 = {0xfe00fe, 0xfe00fe}, v4_int16 = {0xfe, 0xfe, 0xfe, 0xfe},
+  v8_int8 = {0xfe, 0x0, 0xfe, 0x0, 0xfe, 0x0, 0xfe, 0x0}}
+mm2            {uint64 = 0xfe00fe00fe00fe, v2_int32 = {0xfe00fe, 0xfe00fe}, v4_int16 = {0xfe, 0xfe, 0xfe, 0xfe},
+  v8_int8 = {0xfe, 0x0, 0xfe, 0x0, 0xfe, 0x0, 0xfe, 0x0}}
+mm3            {uint64 = 0x7f7f7f7f7f7f7f7f, v2_int32 = {0x7f7f7f7f, 0x7f7f7f7f}, v4_int16 = {0x7f7f, 0x7f7f, 0x7f7f,
+    0x7f7f}, v8_int8 = {0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f}}
+mm4            {uint64 = 0x80008000800080, v2_int32 = {0x800080, 0x800080}, v4_int16 = {0x80, 0x80, 0x80, 0x80},
+  v8_int8 = {0x80, 0x0, 0x80, 0x0, 0x80, 0x0, 0x80, 0x0}}
+mm5            {uint64 = 0xff00000000000000, v2_int32 = {0x0, 0xff000000}, v4_int16 = {0x0, 0x0, 0x0, 0xff00}, v8_int8 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xff}}
+mm6            {uint64 = 0x8000000000000000, v2_int32 = {0x0, 0x80000000}, v4_int16 = {0x0, 0x0, 0x0, 0x8000}, v8_int8 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80}}
+mm7            {uint64 = 0x8000000000000000, v2_int32 = {0x0, 0x80000000}, v4_int16 = {0x0, 0x0, 0x0, 0x8000}, v8_int8 = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80}}
+(gdb)
+(gdb)
+(gdb) c
+Continuing.
+
+Program terminated with signal SIGSEGV, Segmentation fault.
+The program no longer exists.
+(gdb)
+          
+
+
+
+&gt;<i> 
+</I>&gt;<i> did you find something wrong in softdevice code ? or is it was ffmpeg problem ?
+</I>&gt;<i> today with svn ffmpeg and cvs softdevice I could run vdr
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr$ ./vdr -c /etc/vdr/ -P xineliboutput -P reelchannelscan
+</I>&gt;<i> ./vdr: symbol lookup error: ./PLUGINS/lib/libxineliboutput-sxfe.so.1.0.90-cvs: undefined symbol: x_syslog
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr$ ./vdr -c /etc/vdr/ -P &quot;softdevice -vo xv:&quot;
+</I>&gt;<i> softdevice: Created setupStoreId 289144833!
+</I>&gt;<i> softdevice: Attatched to setupStoreId 289144833 at 0xb808b000.
+</I>&gt;<i> [softdevice] processing args
+</I>&gt;<i> [softdevice]   argv [0] = softdevice
+</I>&gt;<i> [softdevice]   argv [1] = -vo
+</I>&gt;<i> [softdevice] initializing Plugin
+</I>&gt;<i> [softdevice] Initializing Video Out
+</I>&gt;<i> [softdevice] ffmpeg build(3408640)
+</I>&gt;<i> [XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+</I>&gt;<i> [XvVideoOut]: osd_image shmid = 289177609
+</I>&gt;<i> [XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120, Bpp 32
+</I>&gt;<i> [XvVideoOut]: max area size 2048 x 2048
+</I>&gt;<i> [XvVideoOut]: using area size 736 x 576
+</I>&gt;<i> [softdevice] Subplugin successfully opend
+</I>&gt;<i> [softdevice] Video Out seems to be OK
+</I>&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;<i> [XvVideoOut]: Xinerama-Screen changed to 0
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003175.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+	<LI>Next message: <A HREF="003177.html">[Softdevice-devel] a lot of warnings with cvs softdevice	version and ffmpeg from svn
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3176">[ date ]</a>
+              <a href="thread.html#3176">[ thread ]</a>
+              <a href="subject.html#3176">[ subject ]</a>
+              <a href="author.html#3176">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

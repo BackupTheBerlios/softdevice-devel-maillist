@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%232699%5D%20segfault%20in%20XvShmPutImage&In-Reply-To=%3C200410280735.i9S7Z3CR020435%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000032.html">
+   <LINK REL="Next"  HREF="000034.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #2699] segfault in XvShmPutImage</H1>
+    <B>noreply at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%232699%5D%20segfault%20in%20XvShmPutImage&In-Reply-To=%3C200410280735.i9S7Z3CR020435%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #2699] segfault in XvShmPutImage">noreply at berlios.de
+       </A><BR>
+    <I>Thu Oct 28 09:35:03 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000032.html">[Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+</A></li>
+        <LI>Next message: <A HREF="000034.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #2699, was updated on 2004-Oct-28 07:34
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: jbu
+Assigned to : lucke
+Summary: segfault in XvShmPutImage
+
+Details: HI!
+I tried to use latest 0.0.7Pre3 CVS-version. Softdevice did't start up at all. Previous version 0.0.7Pre2 works well.
+
+Here is the gdb output:
+
+(gdb) run
+Starting program: /usr/include/vdr-1.2.6/vdr -P softdevice -P subtitles -P 
+vdrrip
+[Thread debugging using libthread_db enabled]
+[New Thread 1076286848 (LWP 14075)]
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[setup-softdevice] cropping mode set to 2 (16:9) [setup-softdevice] deinterlace method set to 0 none [softdevice] picture mirroring set to 0 (off) [setup-softdevice] pixel format set to (I420) [setup-softdevice] startup aspect set to (16:9 wide) [New Thread 1091074992 (LWP 14079)] [New Thread 1099467696 (LWP 14080)] [softdevice] initializing Plugin [softdevice] Initializing Video Out [softdevice] ffmpeg version(0.4.9-pre1) build(4727) [New Thread 1108937648 (LWP 14081)]
+**************** 1
+Xlib: sequence lost (0x10666 &gt; 0x667) in reply type 0x0!
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 1108937648 (LWP 14081)]
+0x4038e518 in XvShmPutImage () from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+(gdb) where
+#0  0x4038e518 in XvShmPutImage ()
+   from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+#1  0x4038c800 in cXvVideoOut::ProcessEvents (this=Variable &quot;this&quot; is not 
+available.
+) at video-xv.c:423
+#2  0x4038cd6e in cXvRemote::Action (this=Variable &quot;this&quot; is not available.
+) at video-xv.c:255
+#3  0x080a7b98 in cThread::StartThread (Thread=0x8116e90) at thread.c:143 #4  0x400639dd in start_thread () from /lib/tls/libpthread.so.0 #5  0x4020fffa in clone () from /lib/tls/libc.so.6
+(gdb)
+
+
+Follow-Ups:
+
+Date: 2004-Oct-28 09:35
+By: lucke
+
+Comment:
+there is a possible race condition during startup.  in initialize
+remote control thread is started without Xv setup finished.
+so this could happen even with pre2.
+-------------------------------------------------------
+
+Date: 2004-Oct-28 09:34
+By: lucke
+
+Comment:
+there is a possible race condition during startup.  in initialize
+remote control thread is started without Xv setup finished.
+so this could happen even with pre2.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=2699&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=2699&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000032.html">[Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+</A></li>
+	<LI>Next message: <A HREF="000034.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

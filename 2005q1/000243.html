@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%09blending%0A%20for%20XV&In-Reply-To=%3C4215BBDA.5070702%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000241.html">
+   <LINK REL="Next"  HREF="000244.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%09blending%0A%20for%20XV&In-Reply-To=%3C4215BBDA.5070702%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Feb 18 10:56:42 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000241.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV
+</A></li>
+        <LI>Next message: <A HREF="000244.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#243">[ date ]</a>
+              <a href="thread.html#243">[ thread ]</a>
+              <a href="subject.html#243">[ subject ]</a>
+              <a href="author.html#243">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo wrote:
+
+&gt;<i> 
+</I>&gt;<i> Work nicely here as well. 
+</I>Hey, that's great! Thank you for testing.
+&gt;<i> 
+</I>&gt;<i> We'll still keep the old method as an option for high res output
+</I>&gt;<i> devices? 
+</I>I wanted to keep it, mostly because it's faster and I think for hardware 
+accelerated alpha blending the old Draw(cBitmap..) method is also more 
+usefull.
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>So as soon as this patch is finished, I will start working on using
+</I>&gt;&gt;<i>libavformat for parsing of the ps stream. I already studied the code of
+</I>&gt;&gt;<i>the library, it looks quite good and I hope that in a few weeks we can
+</I>&gt;&gt;<i>have a first version of the softdevice which understands more than just
+</I>&gt;&gt;<i>mp2 as audio-codec....
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Will you look into a simpler version of the dvd plugin that leaves a bit
+</I>&gt;<i> more of the decoding to libavcodec?
+</I>&gt;<i> 
+</I>
+You are right that could be done, but right now I don't plan to do it. 
+First I want to have the softdevice running with libavformat and support 
+the other audio formats. Hopefully the dvd-plugin will work togther with 
+the softdevice after this step and maybe some tuneing. And if the 
+dvd-plugin is working, I think the need for a softdevice-only dvd-plugin 
+is not that big.
+My next step will be to use libavformat to be able to replay avi, mp3 
+and others with vdr/softdevice. Including unencrypted .vob support 
+should be not to difficult at that step (although I did not check that 
+yet), but I certainly don't want to mess around with decss and libdvdnav.
+
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000241.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV
+</A></li>
+	<LI>Next message: <A HREF="000244.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#243">[ date ]</a>
+              <a href="thread.html#243">[ thread ]</a>
+              <a href="subject.html#243">[ subject ]</a>
+              <a href="author.html#243">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

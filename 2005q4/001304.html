@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] ac3 passthrough 1st try
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C4345181A.5020703%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001303.html">
+   <LINK REL="Next"  HREF="001306.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] ac3 passthrough 1st try</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C4345181A.5020703%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] [PATCH] ac3 passthrough 1st try">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu Oct  6 14:27:06 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001303.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+        <LI>Next message: <A HREF="001306.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1304">[ date ]</a>
+              <a href="thread.html#1304">[ thread ]</a>
+              <a href="subject.html#1304">[ subject ]</a>
+              <a href="author.html#1304">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> On Donnerstag, 6. Oktober 2005 13:47, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Stefan Lucke a &#233;crit :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>attached is a patch which enables AC3 passthrough.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Which version is this patch diffed against ?
+</I>&gt;<i> 
+</I>&gt;<i> Current CVS version (I guess)  :-) . Any problems on patching ?
+</I>
+Yes.
+Main problem regarding the huge hunk #4 in audio.c. Maybe moving the
+whole code at the end of the file would help ?
+I'm patching 0.1.3.
+I can't stick to CVS version, because I aim my work at packaging stuff,
+and I do not have much time. You happen to release this patch at the
+right time for me to test.
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at vdr</A>:vdr-plugin-softdevice-0.1.3$ bzcat ../ac3-pass-01.diff.bz2
+|<i> patch --dry-run
+</I>patching file audio.c
+Hunk #1 succeeded at 16 with fuzz 2 (offset -1 lines).
+Hunk #2 succeeded at 33 (offset -8 lines).
+Hunk #3 succeeded at 96 with fuzz 2 (offset -9 lines).
+Hunk #4 FAILED at 142.
+Hunk #5 FAILED at 885.
+Hunk #6 succeeded at 971 (offset -29 lines).
+Hunk #7 succeeded at 992 (offset -29 lines).
+Hunk #8 succeeded at 1004 (offset -29 lines).
+Hunk #9 succeeded at 1016 (offset -29 lines).
+2 out of 9 hunks FAILED -- saving rejects to file audio.c.rej
+patching file audio.h
+patching file mpeg2decoder.c
+patching file setup-softdevice.c
+patching file setup-softdevice.h
+patching file softdevice.c
+Hunk #1 succeeded at 674 (offset -4 lines).
+Hunk #2 succeeded at 811 (offset -4 lines).
+
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001303.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+	<LI>Next message: <A HREF="001306.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1304">[ date ]</a>
+              <a href="thread.html#1304">[ thread ]</a>
+              <a href="subject.html#1304">[ subject ]</a>
+              <a href="author.html#1304">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

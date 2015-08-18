@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr exit on dfb error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%20exit%20on%20dfb%20error&In-Reply-To=%3C200712212335.39746.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002973.html">
+   <LINK REL="Next"  HREF="002979.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr exit on dfb error</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%20exit%20on%20dfb%20error&In-Reply-To=%3C200712212335.39746.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] vdr exit on dfb error">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Dec 21 23:35:39 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002973.html">[Softdevice-devel] vdr exit on dfb error
+</A></li>
+        <LI>Next message: <A HREF="002979.html">[Softdevice-devel] &lt;kein Betreff&gt;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2975">[ date ]</a>
+              <a href="thread.html#2975">[ thread ]</a>
+              <a href="subject.html#2975">[ subject ]</a>
+              <a href="author.html#2975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 21 December 2007, D.Pageau wrote:
+&gt;<i> vdr exit with dfb error.
+</I>&gt;<i> 
+</I>&gt;<i> I've seen some discussion on this list 2007Q1, I have try both 
+</I>&gt;<i> ARGB/AiRGB without success.  Can't figure out what's wrong.
+</I>&gt;<i> 
+</I>&gt;<i> My config: debian and follow step here but using vdr1.4.7:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+</I>&gt;<i> 
+</I>&gt;<i> viafb, libcle266mpegdec, ffmpeg, DirectFB, DFB++
+</I>&gt;<i> 
+</I>&gt;<i> # cat /etc/directfbrc
+</I>&gt;<i> fbdev=/dev/fb0
+</I>&gt;<i> mode=720x576
+</I>
+720x576 is mostly used for TV-out. But I guess you are trying vga-out.
+So your /etc/fb.modes should have a mode that fits the resolution
+specified here.
+
+&gt;<i> depth=32
+</I>&gt;<i> pixelformat=ARGB
+</I>&gt;<i> disable-module=cle266
+</I>&gt;<i> no-vt
+</I>&gt;<i> 
+</I>&gt;<i> # LANG=c ./vdr -P&quot;softdevice -vo dfb:cle266&quot; -v /tmp
+</I>
+
+&gt;<i> (!) DirectFB/DirectFBCreate: Setting desktop resolution to 720x576 failed!
+</I>&gt;<i>       -&gt; Using default resolution.
+</I>
+
+&gt;<i> 16:55:17.0404 I [6430] [dfb] Supported video Modes are:
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>
+</I>
+&gt;<i> 16:55:17.0423 I [6430] [dfb] (osdLayer): flags, options, pixelformat: 
+</I>&gt;<i> 0000000f, 00000000 00200801
+</I>&gt;<i> 16:55:17.0423 I [6430] [dfb] (osdLayer): width, height: 
+</I>&gt;<i> 640 480
+</I>
+Here the default resolution 640x480 is selected. From above enumeration
+of available modes, there is only 8 bit color depth available for this one.
+
+&gt;<i> 16:55:17.0424 I [6430] [dfb] osdLayer has alpha channel
+</I>&gt;<i> 16:55:17.0440 E [6430] [dfb] init 
+</I>&gt;<i> EXITING:action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), 
+</I>&gt;<i> result=Not supported!
+</I>&gt;<i>   (!!!)  *** WARNING [Application exited without deinitialization of 
+</I>&gt;<i> DirectFB!] *** [core.c:775 in dfb_core_deinit_check()]
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002973.html">[Softdevice-devel] vdr exit on dfb error
+</A></li>
+	<LI>Next message: <A HREF="002979.html">[Softdevice-devel] &lt;kein Betreff&gt;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2975">[ date ]</a>
+              <a href="thread.html#2975">[ thread ]</a>
+              <a href="subject.html#2975">[ subject ]</a>
+              <a href="author.html#2975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Success%20report%3A%20VIA%20EPIA%20ME6000%20%26%20VDR%20%26%20Streamdev%20%26%20DirectFB%20%26%20DFB%2B%2B&In-Reply-To=%3C427CCF99.4030104%40deltabbs.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000605.html">
+   <LINK REL="Next"  HREF="000649.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++</H1>
+    <B>Steve Brown</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Success%20report%3A%20VIA%20EPIA%20ME6000%20%26%20VDR%20%26%20Streamdev%20%26%20DirectFB%20%26%20DFB%2B%2B&In-Reply-To=%3C427CCF99.4030104%40deltabbs.org%3E"
+       TITLE="[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++">steve at deltabbs.org
+       </A><BR>
+    <I>Sat May  7 16:24:25 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000605.html">[Softdevice-devel] softplay: Now not playing at all: d_type == 0x00 !
+</A></li>
+        <LI>Next message: <A HREF="000649.html">[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#606">[ date ]</a>
+              <a href="thread.html#606">[ thread ]</a>
+              <a href="subject.html#606">[ subject ]</a>
+              <a href="author.html#606">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Guys,
+
+I'd like to report my success with softdevice on my Eden powered ME6000 
+mini-itx mainboard built on Debian.
+
+The ME6000 is a 600MHz VIA Eden powered mainboard with CLE266 chipset. I 
+was really interested to get the accellerated MPEG decoder going, 
+because with a 600MHz processor I really didn't think it was going to 
+work with a software decoder solution.
+
+I'm using:
+Kernel 2.6.11
+DirectFB-0.9.22
+DFB++-0.9.22
+VDR 1.3.23
+Softdevice-0.1.1
+Streamdev-0.3.3-pre3-geni
+
+and this is configured as a diskless (Actually, I'm using a 16MB flash 
+card to boot with the custom initrd image containing the USB WLAN driver 
+and then mounting root on NFS) client with a USB Wireless NIC.
+Yes, I like pain, and this setup produced plenty.
+
+DirectFB *does have* support for the MPEG decoder in the CLE266. It 
+seems support for that function is growing rapidly now the VIA drivers 
+are in the open.
+
+Softdevice makefile was configured for DFB_SUPPORT, FB_SUPPORT (Not 
+actually needed), and DEFINES += -DUSE_MMX. The output methods were 
+built as a single library.
+
+Note that PP_LIBAVCODEC and MMX2 are _not_enabled, they require 
+instructions not available in the Eden processor.
+
+Performance.
+On the whole, great. I'm using a 17inch LCD monitor for output. Sure, 
+the quality doesn't come close to that produced on my main VDR box with 
+FF DVB card and 32inch screen - if you look at the 17inch screen from 
+one foot away you can see some (not too significant) MPEG artifacts 
+inthe form of blockiness here and there - but from usual viewing 
+position it's great. This system is in my main bedroom at the end of th bed.
+
+The majority of channels are just fine, with maybe a few high bitrate 
+ones that are too much for the decoding (or other) process. On these 
+few, the A/V sync moves apart over a period of some secods and a brief 
+&lt;click&gt; on the audio is heard and sync is restored. The process repeats.
+
+On usual channels with plenty of movement, say MTV, processor 
+utilisation is maybe 60-70% for the VDR and associated processes. On 
+high quality channels it hits maybe 80% and having the OSD active may 
+make the audio stutter slightly until it's cleared. This all gives a 
+load average of around 1.0.
+
+I _may_ be being unfair to softdevice, and it _could_ be the WLAN device 
+located in a bad spot. I have moved it since I noticed the dodgy channel 
+(I noticed it on BBC News 24 of all things) and I haven't noticed it 
+since. Just managing expectations if anyone else was thinking of doing 
+the same.
+
+Conclusion.
+Compared to my previous installation with a DXR3 card? It's on a 
+different planet! The DXR3 would crash at least once per viewing sesion, 
+the OSD menus were slow and clunky, scrolling through the channel list 
+quickly would almost certainly kill it.
+
+With the above softdevice setup, the menus are, oh, so slinky and 
+snappy, the remote is very responsive (as it should be) and the A/V 
+quality excellent. Changing channels is somehow quicker too.
+
+Thanks very much to everyone who developed or contributed to the 
+softdevice plugin, and the DirectFB project. Excellent work.
+
+Steve
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000605.html">[Softdevice-devel] softplay: Now not playing at all: d_type == 0x00 !
+</A></li>
+	<LI>Next message: <A HREF="000649.html">[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#606">[ date ]</a>
+              <a href="thread.html#606">[ thread ]</a>
+              <a href="subject.html#606">[ subject ]</a>
+              <a href="author.html#606">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

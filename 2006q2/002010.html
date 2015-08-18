@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: DirectFB downscaling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20DirectFB%20downscaling&In-Reply-To=%3C4464B128.6030202%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002009.html">
+   <LINK REL="Next"  HREF="002012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: DirectFB downscaling</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20DirectFB%20downscaling&In-Reply-To=%3C4464B128.6030202%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: DirectFB downscaling">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri May 12 18:00:40 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002009.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+        <LI>Next message: <A HREF="002012.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2010">[ date ]</a>
+              <a href="thread.html#2010">[ thread ]</a>
+              <a href="subject.html#2010">[ subject ]</a>
+              <a href="author.html#2010">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache schrieb:
+&gt;<i> Marko M&#228;kel&#228; schrieb:
+</I>&gt;&gt;<i> On Thu, May 11, 2006 at 10:37:35PM +0930, Malcolm Caldwell wrote:
+</I>&gt;&gt;&gt;<i> Perhaps the decision can also be based on if the source has differing
+</I>&gt;&gt;&gt;<i> dimensions to the destination?  (ie if (4:3-&gt;4:3) use the fast code?)
+</I>&gt;&gt;<i> Excellent idea!  That would really be very helpful for my poor 900 MHz
+</I>&gt;&gt;<i> system.
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> I think it would be better just to try to accelerate yv12_to_yuy2_il_c()
+</I>&gt;<i> with mmx. That should be quite simple, one could use yv12_to_yuy2_mmx()
+</I>&gt;<i> as a template and just adjust the pointers in the mmx code. Even better
+</I>&gt;<i> would be to merge the two loops over the strides into one, so that the
+</I>&gt;<i> cache usage (every u and v stride has to be accessed twice) would be
+</I>&gt;<i> optimal.
+</I>
+Hmm, stupid me, scratch the last comment. The cache usage is
+automatically ok, it is already in the way the loops are build :-)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002009.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+	<LI>Next message: <A HREF="002012.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2010">[ date ]</a>
+              <a href="thread.html#2010">[ thread ]</a>
+              <a href="subject.html#2010">[ subject ]</a>
+              <a href="author.html#2010">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

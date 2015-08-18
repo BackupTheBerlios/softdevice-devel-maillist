@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspend patch for vdr
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C20050829220120.GB3341%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001157.html">
+   <LINK REL="Next"  HREF="001128.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspend patch for vdr</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C20050829220120.GB3341%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Suspend patch for vdr">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Aug 30 00:01:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001157.html">[Softdevice-devel] Suspend patch for vdr; DirectFB keyrepeat bug
+</A></li>
+        <LI>Next message: <A HREF="001128.html">[Softdevice-devel] [Bug #2971] Short gaps in audio output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1158">[ date ]</a>
+              <a href="thread.html#1158">[ thread ]</a>
+              <a href="subject.html#1158">[ subject ]</a>
+              <a href="author.html#1158">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Aug 28, 2005 at 09:34:42AM +0200, Martin Wache wrote:
+&gt;<i> &gt;&gt;* There is a commented-out assignment &quot;LastActivity = 1&quot; in the kSuspend
+</I>&gt;<i> &gt;&gt;  handler of vdr.c.  If you enable it, the Suspend key will initiate a
+</I>&gt;<i> &gt;&gt;  timeout mechanism (default 60+300 seconds after the key has been pressed,
+</I>&gt;<i> &gt;&gt;  or 300 seconds after all timers have completed).
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Actually this is the prefered mode for me. So my personal suggestion
+</I>&gt;<i> would be just to use the power key, and extend it's features. If the
+</I>&gt;<i> power key is pressed, shutdown in case of no recording and the -s option
+</I>&gt;<i> was given, otherwise just suspend the mpeg2 decoding.
+</I>&gt;<i> That would be the natural behaviour for me.
+</I>
+I made another patch tonight:
+
+<A HREF="http://www.funet.fi/~msmakela/software/vdr/vdr-1.3.30-suspend-0.1.patch">http://www.funet.fi/~msmakela/software/vdr/vdr-1.3.30-suspend-0.1.patch</A>
+
+See also <A HREF="http://www.funet.fi/~msmakela/software/vdr/">http://www.funet.fi/~msmakela/software/vdr/</A> for related patches.
+
+In the new vdr-suspend patch, suspend-to-shutdown can be enabled by
+setting a timeout in the Setup/Replay menu.  I would appreciate new
+or improved translations for that menu item, in i18n.c.
+
+Another thing I improved is that cDevice::Clear() will only be invoked when
+viewing live stream.  Thus, the Suspend key can pause a recording without
+dropping any frames.
+
+&gt;<i> cDevice-&gt;Clear() just clears the input buffers, so I guess it is not
+</I>&gt;<i> meant to clear the screen. Maybe a call to SetPlayMode(pmNone) would
+</I>&gt;<i> help, if I understand dvbplayer.c correctly that would work even for FF
+</I>&gt;<i> cards. Of course you'll have to restore the playmode on resume...
+</I>
+I didn't try this out yet, because I'm afraid it would cause race
+conditions.  I'd have to study the thread architecture of vdr a bit deeper.
+The current solution works for softdevice users, as the built-in timeout
+in softdevice will clear the screen, and for those whose monitor's power
+switch is controlled by vdr (<A HREF="http://www.funet.fi/~msmakela/electronics/relay/">http://www.funet.fi/~msmakela/electronics/relay/</A>).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001157.html">[Softdevice-devel] Suspend patch for vdr; DirectFB keyrepeat bug
+</A></li>
+	<LI>Next message: <A HREF="001128.html">[Softdevice-devel] [Bug #2971] Short gaps in audio output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1158">[ date ]</a>
+              <a href="thread.html#1158">[ thread ]</a>
+              <a href="subject.html#1158">[ subject ]</a>
+              <a href="author.html#1158">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

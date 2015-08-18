@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XV-out, toggle fullscreen while playback paused
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%20paused&In-Reply-To=%3C43D3809D.9060802%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001705.html">
+   <LINK REL="Next"  HREF="001712.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XV-out, toggle fullscreen while playback paused</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%20paused&In-Reply-To=%3C43D3809D.9060802%40gmx.net%3E"
+       TITLE="[Softdevice-devel] XV-out, toggle fullscreen while playback paused">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Jan 22 13:54:53 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001705.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+        <LI>Next message: <A HREF="001712.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1706">[ date ]</a>
+              <a href="thread.html#1706">[ thread ]</a>
+              <a href="subject.html#1706">[ subject ]</a>
+              <a href="author.html#1706">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I get an odd behaviour when toggleing fullscreen mode while playback
+</I>&gt;<i> is paused. It took a few seconds until still video image is shown
+</I>&gt;<i> after toggle.
+</I>&gt;<i> 
+</I>&gt;<i> To fix this, I'm using attached dif to get instant video refresh.
+</I>&gt;<i> 
+</I>&gt;<i> map_count is used for limiting redraw operations to every third
+</I>&gt;<i> event of interest. So when event processing loop terminates, there
+</I>&gt;<i> may be some yet unhandled events. In that case redrawing of
+</I>&gt;<i> current (still) picture is required too. XClearArea() should be
+</I>&gt;<i> called too so that parts of screen which do not hold video,
+</I>&gt;<i> get cleared. After reenabling this code video I got a huge number
+</I>&gt;<i> of Expose events, so I disabled map_count increment for this 
+</I>&gt;<i> (new handled) event type.
+</I>&gt;<i> 
+</I>&gt;<i> Martin, in which situations did you encounter problems with old logic ?
+</I>&gt;<i>
+</I>I think it's stupid to randomly only to handle every third event, and
+I'm sure that this was needed because the drawing mechanism of the
+softdevice was/is broken. For instance the OSD was redrawn every other
+video frame and not just on OSD change or window format change.
+The Expose events are send by the xlib in case the window has to be
+redrawn, for example because the window was partly overdrawn by an other
+window and is put in front again. So in principle one only has to draw
+the OSD in Expose events and on OSD change.
+But as far as I understand the XClearArea() usage in the softdevice is
+mostly wrong, usually we use XClearArea() and then immediately redraw
+the window. This is wrong, because the XClearArea() call automatically
+generates Expose events, so that the redrawing happens automatically
+from ProcessEvents. And that is also the reason why XClearArea() should
+not be called on Expose events.
+I'm still new to xlib programming, so I maybe wrong somewhere, but to my
+experience now the cpu usage of the xlib is smaller when osd is shown.
+And there are still a lot of things which could be cleaned up...
+
+&gt;<i>          break;
+</I>&gt;<i>        case Expose:
+</I>&gt;<i>          EVDEB(&quot;Expose\n&quot;);
+</I>&gt;<i> -        map_count++;
+</I>&gt;<i> +        //map_count++;
+</I>&gt;<i>          break;
+</I>&gt;<i>        default:
+</I>&gt;<i>          EVDEB(&quot;unhandled event: %d\n&quot;,event.type);
+</I>&gt;<i> @@ -657,16 +657,16 @@
+</I>&gt;<i>  
+</I>&gt;<i>    if (xv_initialized) {
+</I>&gt;<i>      if (map_count) {
+</I>&gt;<i> -      //XClearArea (dpy, win, 0, 0, 0, 0, True);
+</I>&gt;<i> +      XClearArea (dpy, win, 0, 0, 0, 0, True);
+</I>&gt;<i>        ShowOSD(0,false);
+</I>&gt;<i> -//      XvShmPutImage(dpy, port,
+</I>&gt;<i> -//                    win, gc,
+</I>&gt;<i> -//                    xv_image,
+</I>&gt;<i> -//                    sxoff, syoff,      /* sx, sy */
+</I>&gt;<i> -//                    swidth, sheight,   /* sw, sh */
+</I>&gt;<i> -//                    lxoff,  lyoff,     /* dx, dy */
+</I>&gt;<i> -//                    lwidth, lheight,   /* dw, dh */
+</I>&gt;<i> -//                    False);
+</I>&gt;<i> +      XvShmPutImage(dpy, port,
+</I>&gt;<i> +                    win, gc,
+</I>&gt;<i> +                    xv_image,
+</I>&gt;<i> +                    sxoff, syoff,      /* sx, sy */
+</I>&gt;<i> +                    swidth, sheight,   /* sw, sh */
+</I>&gt;<i> +                    lxoff,  lyoff,     /* dx, dy */
+</I>&gt;<i> +                    lwidth, lheight,   /* dw, dh */
+</I>&gt;<i> +                    False);
+</I>&gt;<i>        XSync(dpy, False);
+</I>&gt;<i>        map_count=0;
+</I>&gt;<i>      }
+</I>
+To fix your problem, isn't it enough to uncomment XvShmPutImage()?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001705.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+	<LI>Next message: <A HREF="001712.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1706">[ date ]</a>
+              <a href="thread.html#1706">[ thread ]</a>
+              <a href="subject.html#1706">[ subject ]</a>
+              <a href="author.html#1706">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

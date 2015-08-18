@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] just recompiled, now fails to run..
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20just%20recompiled%2C%20now%20fails%20to%20run..&In-Reply-To=%3C73011110-5056-41FA-BE84-7F804A0C8A5A%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002557.html">
+   <LINK REL="Next"  HREF="002559.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] just recompiled, now fails to run..</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20just%20recompiled%2C%20now%20fails%20to%20run..&In-Reply-To=%3C73011110-5056-41FA-BE84-7F804A0C8A5A%40pobox.com%3E"
+       TITLE="[Softdevice-devel] just recompiled, now fails to run..">torgeir at pobox.com
+       </A><BR>
+    <I>Fri Sep 29 17:37:27 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002557.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+        <LI>Next message: <A HREF="002559.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2558">[ date ]</a>
+              <a href="thread.html#2558">[ thread ]</a>
+              <a href="subject.html#2558">[ subject ]</a>
+              <a href="author.html#2558">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 29 Sep 2006, at 13:44, Marko M&#228;kel&#228; wrote:
+
+&gt;<i> On Fri, Sep 29, 2006 at 01:19:39PM +0100, Torgeir Veimo wrote:
+</I>&gt;&gt;<i> I just updated and recompiled DirectFB and softdevice to test the
+</I>&gt;&gt;<i> fixes for interlaced output, but now vdr won't start again. I've seen
+</I>&gt;&gt;<i> it before but I don't remember how I fixed it. Can anyone give me a
+</I>&gt;&gt;<i> hint?
+</I>&gt;<i>
+</I>&gt;<i> Recompile also vdr, in case you had applied any patches to it or  
+</I>&gt;<i> updated
+</I>&gt;<i> the compiler since the last time you compiled vdr and plugins.
+</I>
+It seems to be a problem with surfaces. It's weird, since every other  
+dfb program works, df_xine runs nicely etc..
+
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine  
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Src.premultiply
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize  
+SrcColorkey SrcPremultiply Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A>
+[dfb] Enumerating display Layers
+Layer 2 FBDev Primary Layer  Type: graphics
+   Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+   Caps: brightness contrast deinterlacing dst_colorkey  
+screen_location surface
+Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+   Caps: brightness contrast hue field_parity saturation surface
+[dfb] (osdLayer): flags, options, pixelformat: 0000005f, 00000000  
+00418c04
+[dfb] (osdLayer): width, height:               720 576
+[dfb] osdLayer without !! alpha channel
+[dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+[dfb] DLOP_FIELD_PARITY supported by layer [Matrox CRTC2 Layer]
+[surface capabilities] scrSurface: videoonly flipping interlaced  
+triple-buffered
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread -1208162080 (LWP 17382)]
+0x00a43b91 in reportSurfaceCapabilities (name=Variable &quot;name&quot; is not  
+available.
+) at video-dfb.c:195
+195       fprintf(stderr, &quot;PixelFormat = 0x%08x &quot;, surf- 
+ &gt;GetPixelFormat());
+Current language:  auto; currently c++
+(gdb) ba
+#0  0x00a43b91 in reportSurfaceCapabilities (name=Variable &quot;name&quot; is  
+not available.
+) at video-dfb.c:195
+#1  0x00a46629 in cDFBVideoOut (this=0x888a9a0, setupStore=0x5a4d00)  
+at video-dfb.c:402
+#2  0x00a46e27 in SubPluginCreator (s=0x5a4d00) at video-dfb.c:1620
+#3  0x00580b17 in cSoftDevice::LoadSubPlugin (this=0x8887a90,  
+outMethodName=0x59b39d &quot;dfb&quot;, pluginPath=0x84e4920 &quot;./PLUGINS/lib/&quot;)
+     at softdevice.c:355
+#4  0x0058112e in cSoftDevice (this=0x8887a90, method=3,  
+audioMethod=1, pluginPath=0x84e4920 &quot;./PLUGINS/lib/&quot;) at softdevice.c: 
+211
+#5  0x00581246 in cPluginSoftDevice::Initialize (this=0x84e4900) at  
+softdevice.c:1039
+#6  0x080cc58c in cPluginManager::InitializePlugins (this=0xbffb0fc4)  
+at plugin.c:340
+#7  0x080fb9c0 in main (argc=Cannot access memory at address 0x1
+) at vdr.c:568
+
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at htpc</A> VDR]# dfbinfo
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       =======================  DirectFB 1.0.0-rc1   
+=======================
+           (c) 2001-2006  United Cultures of Earth - go for outer space!
+           (c) 2000-2004  Convergence (integrated media) GmbH
+          
+----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2006-09-29 12:11) [ DEBUG ]
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 17453)...
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 17454)...
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 17455)...
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence  
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 17456)...
+(*) DirectFB/Input: Logitech USB Receiver (2) 0.1 (convergence  
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 17457)...
+(*) DirectFB/Input: cx88 IR (Hauppauge Nova-T DVB-T (3) 0.1  
+(convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 17458)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G550 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+
+
+Screen (01) FBDev Primary Screen
+    Caps: VSYNC POWER_MANAGEMENT
+
+      Layer (02) FBDev Primary Layer
+         Type:    GRAPHICS
+         Caps:    SURFACE BRIGHTNESS CONTRAST SATURATION
+
+      Layer (01) Matrox Backend Scaler
+         Type:    GRAPHICS VIDEO STILL_PICTURE
+         Caps:    SURFACE SCREEN_LOCATION DEINTERLACING DST_COLORKEY  
+BRIGHTNESS CONTRAST SCREEN_POSITION SCREEN_SIZE
+
+Screen (00) Matrox CRTC2 Screen             (primary screen)
+    Caps: VSYNC ENCODERS OUTPUTS
+
+    Encoder (0)
+      Type:           TV
+      Caps:           TV_STANDARDS
+      TV Standards:   PAL NTSC PAL_60
+
+
+    Output (0)
+      Caps:       CONNECTORS SIGNAL_SEL CONNECTOR_SEL
+      Connectors: SCART YC CVBS
+      Signals:    YC CVBS RGB
+
+
+      Layer (00) Matrox CRTC2 Layer              (primary layer)
+         Type:    GRAPHICS VIDEO STILL_PICTURE
+         Caps:    SURFACE BRIGHTNESS CONTRAST HUE SATURATION  
+FIELD_PARITY ALPHA_RAMP
+
+      Layer (03) Matrox CRTC2 Sub-Picture
+         Type:    GRAPHICS VIDEO STILL_PICTURE
+         Caps:    SURFACE OPACITY ALPHACHANNEL
+
+
+Input (01) IMPS/2 Mouse                    (primary mouse)
+    Type: MOUSE
+    Caps: AXES BUTTONS
+    Max. Axis: 2
+    Max. Button: 2
+
+Input (00) AT Translated Set 2 keyboard    (primary keyboard)
+    Type: KEYBOARD
+    Caps: KEYS
+
+Input (10) Logitech USB Receiver
+    Type: MOUSE
+    Caps: AXES BUTTONS
+    Max. Axis: 2
+    Max. Button: 4
+
+Input (03) cx88 IR (Hauppauge Nova-T DVB-T  (primary remote control)
+    Type: REMOTE
+    Caps: KEYS
+
+Input (11) Keyboard
+    Type: KEYBOARD
+    Caps: KEYS
+
+
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002557.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+	<LI>Next message: <A HREF="002559.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2558">[ date ]</a>
+              <a href="thread.html#2558">[ thread ]</a>
+              <a href="subject.html#2558">[ subject ]</a>
+              <a href="author.html#2558">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

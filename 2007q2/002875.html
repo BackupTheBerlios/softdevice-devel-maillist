@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A few questions - softdevice+G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651A7CC.2060704%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002874.html">
+   <LINK REL="Next"  HREF="002876.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A few questions - softdevice+G450</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651A7CC.2060704%40globall.ru%3E"
+       TITLE="[Softdevice-devel] A few questions - softdevice+G450">bob at globall.ru
+       </A><BR>
+    <I>Mon May 21 16:08:12 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002874.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+        <LI>Next message: <A HREF="002876.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2875">[ date ]</a>
+              <a href="thread.html#2875">[ thread ]</a>
+              <a href="subject.html#2875">[ subject ]</a>
+              <a href="author.html#2875">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo ?????:
+&gt;<i> On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I try to use old Celeron 850MHz and Matrox G450 DH together with
+</I>&gt;&gt;<i> softdevice.  I download  from CVS DirectFB, DFB++ and softdevice.  
+</I>&gt;&gt;<i> FFmpeg
+</I>&gt;&gt;<i> build is 3349760, matroxfb built in kernel (2.6.20.7).
+</I>&gt;&gt;<i> After the attentive reading of guidance and tuning all began to work,
+</I>&gt;&gt;<i> but a few questions appeared.
+</I>&gt;&gt;<i> Output through head1 (19&quot; LCD, 800x600-32), video is very smooth,  
+</I>&gt;&gt;<i> overal
+</I>&gt;&gt;<i> CPU utilization 90% . Is it a normal CPU load or it very much?
+</I>&gt;&gt;<i> Output through head2 (PAL TV, crtc2 768x576-32), video is slow and
+</I>&gt;&gt;<i> jerky, wrong  field order, CPU loaded on 70%.
+</I>&gt;&gt;<i> A few days of experiments and googling changed nothing. It can be  
+</I>&gt;&gt;<i> there
+</I>&gt;&gt;<i> are what to specific requirements?
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> 70% cpu sounds right with crtc2, but you should get the correct field  
+</I>&gt;<i> order. What's your /etc/directfb and what version of DirectFB do you  
+</I>&gt;<i> have?
+</I>&gt;<i>
+</I>&gt;<i> 90% through crtc1 doesn't sound right, but I've never used crtc1 on a  
+</I>&gt;<i> matrox card before.. Can you try toggling between the different sync  
+</I>&gt;<i> impl in softdevice settings? Also, are you using mmx, and lavc  
+</I>&gt;<i> deinterlacing?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>My /etc/directfbrc and /etc/fb.modes:
+
+mode=768x576
+#mode=800x600
+depth = 32
+matrox-crtc2
+matrox-tv-standard=pal
+primary-layer=2
+matrox-cable-type=composite
+#matrox-cable-type=scart-composite
+#matrox-cable-type=scart-rgb
+disable-module=lirc
+pixelformat=ARGB
+
+mode &quot;768x576&quot;
+# D: 30.274 MHz, H: 37.701 kHz, V: 50.001 Hz
+geometry 768 576 768 576 32
+timings 33032 30 5 110 55 48 13
+vsync high
+bcast true
+accel true
+rgba 8/16,8/8,8/0,8/24
+endmode
+
+mode &quot;800x600&quot;
+# D: 49.50 MHz, H: 46.875 kHz, V: 75.00 Hz
+geometry 800 600 800 600 32
+timings 20203 160 16 21 1 80 3
+hsync high
+vsync high
+endmode
+
+
+#mode &quot;768x576&quot;
+# geometry 768 576 768 576 32
+# timings 67723 106 1 44 1 70 4
+# csync high
+# laced true
+# bcast true
+#endmode
+
+DirectFB daily snapshot - DirectFB-2007-05-19-04-25-10-UTC.tar.gz from
+directfb.org. With the different sync settings a softdevice result is
+the same.
+Softdevice compiled with --disable-subplugins --disable-mmx2
+--disable-oss, all deinterlacing disabled.
+My vdr is started with next messages:
+
+[softdevice] processing args
+[softdevice] argv [0] = softdevice
+[softdevice] argv [1] = -ao
+[softdevice] argv [3] = -vo
+vo_argv: dfb:mgatv
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] Expanding 0 columns at left and right
+[setup-softdevice] Expanding 0 columns at top and bottom
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YUY2)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to on
+[setup-softdevice] vidBrightness: -1
+[setup-softdevice] vidContrast: -1
+[setup-softdevice] vidHue: -1
+[setup-softdevice] vidSaturation: -1
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3349760)
+07:51:49.0947 I [5186] [dfb] init
+
+=======================| DirectFB 1.0.0 |=======================
+(c) 2001-2007 The DirectFB Organization (directfb.org)
+(c) 2000-2004 Convergence (integrated media) GmbH
+------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2007-05-19 09:03)
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 5194)...
+(*) Direct/Modules: suppress module 'lirc'
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 5195)...
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (directfb.org)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 5196)...
+(*) DirectFB/Input: Keyboard 0.9 (directfb.org)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+(!) DirectFB/DirectFBCreate: Setting desktop resolution to 768x576 failed!
+-&gt; Using default resolution.
+[dfb] RAM: 33554432 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Src.premultiply
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize
+SrcColorkey SrcPremultiply Deinterlace
+07:51:50.0126 I [5186] [dfb] Supported video Modes are:
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A>
+07:51:50.0128 I [5186] [dfb] Enumerating display Layers
+Layer 2 FBDev Primary Layer Type: graphics
+Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler Type: graphics picture video
+Caps: brightness contrast deinterlacing dst_colorkey screen_location surface
+Layer 0 Matrox CRTC2 Layer Type: graphics picture video
+Caps: brightness contrast hue field_parity saturation surface
+07:51:50.0157 I [5186] [dfb] (osdLayer): flags, options, pixelformat:
+0000005f, 00000000 00418c04
+07:51:50.0158 I [5186] [dfb] (osdLayer): width, height: 720 576
+07:51:50.0158 I [5186] [dfb] osdLayer without !! alpha channel
+07:51:50.0195 I [5186] [dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+07:51:50.0196 I [5186] [dfb] DLOP_FIELD_PARITY supported by layer
+[Matrox CRTC2 Layer]
+07:51:50.0216 D [5186] [dfb] surface capabilities for (scrSurface):
+videoonly, flipping, interlaced, triple-buffered, PixelFormat = 0x00418c04
+07:51:50.0217 I [5186] [dfb] width = 720, height = 576
+07:51:50.0218 I [5186] [dfb] got fmt = 0x00418c04 bpp = 32
+07:51:50.0220 I [5186] [dfb] Using this layer for OSD: (Matrox CRTC2
+Layer - [720x576])
+07:51:50.0221 D [5186] [dfb] surface capabilities for (osdSurface):
+videoonly, double-buffered, flipping, PixelFormat = 0x00418c04
+07:51:50.0222 D [5186] [dfb] surface capabilities for (videoSurface):
+videoonly, PixelFormat = 0x00200806
+07:51:50.0223 I [5186] [dfb] Using this layer for OSD: Matrox CRTC2 Layer
+07:51:50.0224 I [5186] [dfb] Using this layer for Video out: Matrox
+CRTC2 Layer
+07:51:50.0254 I [5186] [dfb] Display frame time is 19966 microseconds
+07:51:50.0255 D [5186] [dfb] (re)configuring Videolayer to 720 x 576
+(720x576)
+07:51:50.0255 D [5186] [dfb] creating new surface (stretchBlit)
+07:51:50.0270 D [5186] [dfb] surface capabilities for (videoSurface):
+videoonly, interlaced, PixelFormat = 0x00200806
+07:51:50.0271 D [5186] [dfb] (re)configured 0x00200806
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+07:51:50.0504 D [5197] [dfb] (re)configuring Videolayer to 736 x 576
+(736x576)
+07:51:50.0505 D [5197] [dfb] creating new surface (stretchBlit)
+07:51:50.0520 D [5197] [dfb] surface capabilities for (videoSurface):
+videoonly, interlaced, PixelFormat = 0x00200806
+07:51:50.0521 D [5197] [dfb] (re)configured 0x00200806
+
+Regards,
+Vladimir Monchenko.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002874.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+	<LI>Next message: <A HREF="002876.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2875">[ date ]</a>
+              <a href="thread.html#2875">[ thread ]</a>
+              <a href="subject.html#2875">[ subject ]</a>
+              <a href="author.html#2875">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

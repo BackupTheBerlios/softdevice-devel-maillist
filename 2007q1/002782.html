@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XReparentWindow() needed?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XReparentWindow%28%29%20needed%3F&In-Reply-To=%3C45F5CAA6.8040909%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002781.html">
+   <LINK REL="Next"  HREF="002783.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XReparentWindow() needed?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XReparentWindow%28%29%20needed%3F&In-Reply-To=%3C45F5CAA6.8040909%40gmx.net%3E"
+       TITLE="[Softdevice-devel] XReparentWindow() needed?">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Mar 12 22:48:22 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002781.html">[Softdevice-devel] [Bug #10575] softplay + vdr-1.5.0
+</A></li>
+        <LI>Next message: <A HREF="002783.html">[Softdevice-devel] XReparentWindow() needed?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2782">[ date ]</a>
+              <a href="thread.html#2782">[ thread ]</a>
+              <a href="subject.html#2782">[ subject ]</a>
+              <a href="author.html#2782">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I have experienced some problems when trying to go from fullscreen to
+windowed mode with Xfce 4.3.99. The softdevice returns to windowed mode,
+but the size is still almost as large as the screen, and when pressing
+&quot;f&quot; again, nothing happens.
+
+After experimenting a bit I found that everything works well, when I
+comment the call to XReparentWindow(). So now I wonder what for, or if
+at all, this call is needed? MPlayer doesn't have a this call, so I
+would remove it unless it breaks things for other window managers...
+
+Attached is a patch for those who want to try it :-)
+
+Bye,
+
+Martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: fullscreen.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070312/c28213c2/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070312/c28213c2/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002781.html">[Softdevice-devel] [Bug #10575] softplay + vdr-1.5.0
+</A></li>
+	<LI>Next message: <A HREF="002783.html">[Softdevice-devel] XReparentWindow() needed?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2782">[ date ]</a>
+              <a href="thread.html#2782">[ thread ]</a>
+              <a href="subject.html#2782">[ subject ]</a>
+              <a href="author.html#2782">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

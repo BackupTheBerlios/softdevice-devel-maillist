@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] mgatv &amp; interlaced playback
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mgatv%20%26%20interlaced%20playback&In-Reply-To=%3C1106469568.41f362c0994d5%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000200.html">
+   <LINK REL="Next"  HREF="000203.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] mgatv &amp; interlaced playback</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mgatv%20%26%20interlaced%20playback&In-Reply-To=%3C1106469568.41f362c0994d5%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] mgatv &amp; interlaced playback">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Jan 23 09:39:28 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000200.html">[Softdevice-devel] mgatv &amp; interlaced playback
+</A></li>
+        <LI>Next message: <A HREF="000203.html">[Softdevice-devel] HDTV support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#202">[ date ]</a>
+              <a href="thread.html#202">[ thread ]</a>
+              <a href="subject.html#202">[ subject ]</a>
+              <a href="author.html#202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zitat von Ari Koponen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">particle at luukku.com</A>&gt;:
+
+&gt;<i> I managed to get mplayer to play interlaced content smoothly with these
+</I>&gt;<i> options: -vo dfbmga:fieldparity=top:buffermode=triple -vsync. I also
+</I>&gt;<i> tested with buffermode=single and there were tearing.
+</I>
+I still have some troubles during select of field parity. For select
+field_parity I have SetCooperationLevel (.._EXCLUSIVE) instead of
+_ADMINISTRATIVE. But this segfault on one box and produces a black screen on an
+other one.
+
+&gt;<i> 
+</I>&gt;<i> I don't know how softdevice is built but would it be possible to use
+</I>&gt;<i> double or triple buffering for DirectFB (or is it already using it?) and
+</I>&gt;<i> use interrupt based synchronizing like the mplayer seems to do? Would
+</I>&gt;<i> that extra buffering affect channel switching time?
+</I>
+Triple buffering is used implicit.
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000200.html">[Softdevice-devel] mgatv &amp; interlaced playback
+</A></li>
+	<LI>Next message: <A HREF="000203.html">[Softdevice-devel] HDTV support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#202">[ date ]</a>
+              <a href="thread.html#202">[ thread ]</a>
+              <a href="subject.html#202">[ subject ]</a>
+              <a href="author.html#202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

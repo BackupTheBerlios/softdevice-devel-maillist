@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Again%3A%20%22result%3DOut%20of%20video%20memory%22%20with%20DFB&In-Reply-To=%3C1159865980.4522267c1b07e%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002575.html">
+   <LINK REL="Next"  HREF="002584.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Again%3A%20%22result%3DOut%20of%20video%20memory%22%20with%20DFB&In-Reply-To=%3C1159865980.4522267c1b07e%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Oct  3 10:59:40 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002575.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+        <LI>Next message: <A HREF="002584.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2576">[ date ]</a>
+              <a href="thread.html#2576">[ thread ]</a>
+              <a href="subject.html#2576">[ subject ]</a>
+              <a href="author.html#2576">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zitat von Harald Milz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">hm at seneca.muc.de</A>&gt;:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I'm rebuilding my VDR w/ Matrox G550 DVI and softdevice CVS from today.
+</I>&gt;<i> More components:
+</I>&gt;<i>
+</I>&gt;<i> vdr-1.4.1
+</I>&gt;<i> ffmpeg CVS from today
+</I>&gt;<i> DirectFB-1.0.0-rc1
+</I>&gt;<i> DFB++-0.9.25
+</I>&gt;<i> OpenSUSE 10.1 w/ kernel 2.6.16.13-4-default.
+</I>&gt;<i>
+</I>&gt;<i> This setup used to work just fine until the root disk began to produce more
+</I>&gt;<i> and more errors some time ago. The rest of the hardware is unchanged, as
+</I>&gt;<i> well as fb.modes and directfbrc (as I documented on
+</I>&gt;<i> <A HREF="http://www.vdr-wiki.de/wiki/index.php/Softdevice-plugin#Matrox_G550_mit_DVI-Ausgang_und_DirectFB">http://www.vdr-wiki.de/wiki/index.php/Softdevice-plugin#Matrox_G550_mit_DVI-Ausgang_und_DirectFB</A>).
+</I>&gt;<i>
+</I>&gt;<i> softdevice audio decoding via ALSA / SPDIF works fine, no probs. Video
+</I>&gt;<i> decoding doesn't product any output, and I get this &quot;Out of video memory&quot;
+</I>&gt;<i> error that was mentioned here earlier. The error log is attached.
+</I>&gt;<i>
+</I>&gt;<i> What gives? DFB only recognizes 16MB video RAM (the card has 32). But this
+</I>&gt;<i> was similar when the setup worked back then, and was apparently no problem.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> softdevice -vo vidix: sort of works, just the CPU load rises to nearly
+</I>&gt;<i> 100% after some time (~ 10 min or more) sometimes but it's at 22-25% most
+</I>&gt;<i> of the time, and the console output (cursor blink) can be seen on the
+</I>&gt;<i> screen. setterm doesn't help because I invoke runvdr from /etc/inittab,
+</I>&gt;<i> and vdr isn't attached to a TTY anyway. So I'd prefer using DFB as I used
+</I>&gt;<i> to.
+</I>&gt;<i>
+</I>&gt;<i> So - what's wrong with the DFB setup?
+</I>
+I guess your kernel lacks matrox full memory patch.
+
+<A HREF="http://www.directfb.org/index.php/viewcvs.cgi/DirectFB/patches/">http://www.directfb.org/index.php/viewcvs.cgi/DirectFB/patches/</A>
+
+
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002575.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+	<LI>Next message: <A HREF="002584.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2576">[ date ]</a>
+              <a href="thread.html#2576">[ thread ]</a>
+              <a href="subject.html#2576">[ subject ]</a>
+              <a href="author.html#2576">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

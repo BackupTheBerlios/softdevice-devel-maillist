@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash when video stream is suspended or resumed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C1126170022.431ffda6b02ee%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001214.html">
+   <LINK REL="Next"  HREF="001216.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash when video stream is suspended or resumed</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C1126170022.431ffda6b02ee%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Crash when video stream is suspended or resumed">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Sep  8 11:00:22 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001214.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+        <LI>Next message: <A HREF="001216.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1215">[ date ]</a>
+              <a href="thread.html#1215">[ thread ]</a>
+              <a href="subject.html#1215">[ subject ]</a>
+              <a href="author.html#1215">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt;:
+
+&gt;<i> On Wed, Sep 07, 2005 at 09:27:14PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; However, I've got another crash to report.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Did expect that kind of report :-) .
+</I>
+I tried joking.
+
+&gt;<i>
+</I>&gt;<i> What could I do to troubleshoot that bug?  When exactly are softdevice
+</I>&gt;<i> threads created and terminated?
+</I>
+After a second thought, I don't think it's thread synching related
+(don't know excatly when they are created :-( ).
+
+The code from video.c when YUV() is called (line 106/107, annotated cvs view):
+  97                  osdMutex.Lock();
+
+  98 lucke 1.27       if (old_picture)
+  99                  {
+ 100                    YUV(old_picture-&gt;data[0], old_picture-&gt;data[1], old_picture-&gt;data[2],
+ 101                        old_width,old_height,
+ 102                        old_picture-&gt;linesize[0],old_picture-&gt;linesize[1]);
+ 103                  }
+ 104                  else
+ 105                  {
+ 106                    YUV(OsdPy,OsdPu, OsdPv, OsdWidth, OsdHeight,
+ 107                        OSD_FULL_WIDTH, OSD_FULL_WIDTH/2);
+ 108                  }
+
+ 109 lucke 1.22       Osd_changed=0;
+ 110                  osdMutex.Unlock();
+
+
+and yout original crash report should be enough:
+#0  0xb7d755ef in memcpy () from /lib/tls/libc.so.6
+No symbol table info available.
+#1  0xb79a1daf in cDFBVideoOut::YUV (this=0x827c410, Py=0xb4ef8808 &quot;&quot;, Pu=0x829bbb8 &quot;&quot;,
+    Pv=0x82b5858 '\177' &lt;repeats 200 times&gt;..., Width=736, Height=576, Ystride=736,
+    UVstride=368) at video-dfb.c:1166
+	dst = (uint8_t *) 0xb5f06ea0 &lt;Address 0xb5f06ea0 out of bounds&gt;
+	pitch = 704
+	hi = 137058744
+#2  0xb799315f in cVideoOut::Action (this=0x827c410) at video.c:107
+	newOsdWidth = 736
+	newOsdHeight = 576
+	changeMode = false
+
+That's what happend:
+We have been suspended for a while and the desired drawing area just does not fit
+into our current surface area. We are called with WidthxHeight = 736x576 but
+pitch is 704, that's the width of current surface.
+A segfault in that case should be expected :-( .
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001214.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+	<LI>Next message: <A HREF="001216.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1215">[ date ]</a>
+              <a href="thread.html#1215">[ thread ]</a>
+              <a href="subject.html#1215">[ subject ]</a>
+              <a href="author.html#1215">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

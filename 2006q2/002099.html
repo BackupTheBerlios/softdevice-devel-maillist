@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [vdr] G450 softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606011912.31798.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002096.html">
+   <LINK REL="Next"  HREF="002101.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [vdr] G450 softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606011912.31798.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: [vdr] G450 softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Jun  1 19:12:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002096.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+        <LI>Next message: <A HREF="002101.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2099">[ date ]</a>
+              <a href="thread.html#2099">[ thread ]</a>
+              <a href="subject.html#2099">[ subject ]</a>
+              <a href="author.html#2099">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 01 Juni 2006 16:28, Laz wrote:
+&gt;<i> On Thursday 01 Jun 2006 13:52, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Thu, Jun 01, 2006 at 12:46:52PM +0100, Laz wrote:
+</I>&gt;<i> &gt; &gt; As I mentioned in a previous posting it was working perfectly until I
+</I>&gt;<i> &gt; &gt; updated softdevice a few weeks back. Now the A-V sync sometimes
+</I>&gt;<i> &gt; &gt; wanders and interlaced streams aren't always smooth. Yet to track
+</I>&gt;<i> &gt; &gt; down the cause of this...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It's probably the non-MMX scaler function that was introduced in order
+</I>&gt;<i> &gt; to properly scale the interlaced fields separately, to avoid
+</I>&gt;<i> &gt; distortions when the vertical resolution changes.  I posted my findings
+</I>&gt;<i> &gt; about that on the softdevice list a couple of weeks ago.
+</I>&gt;<i> 
+</I>&gt;<i> Ahhhh...I did see your post and never got round to following it up because 
+</I>&gt;<i> I had a perfect picture (once I switched my TV to 16:9!)! DOH! Looks like 
+</I>&gt;<i> my problems are down to those changes: the loss of MMX acceleration 
+</I>&gt;<i> making the OSD sluggish, etc.
+</I>
+OSD shapes are normal when 4:3 is displayed on 16:9 as there is no
+special clear of black bar area :-( .
+
+The MMX version of yv12_to_yuy2_il_c() is on my list.
+
+&gt;<i> 
+</I>&gt;<i> Looking through the thread again:
+</I>&gt;<i> <A HREF="001877.html">http://lists.berlios.de/pipermail/softdevice-devel/2006q2/001877.html</A>
+</I>&gt;<i> 
+</I>&gt;<i> Looks like the DSBLIT_INTERLACED patch hasn't made it into DirectFB cvs 
+</I>&gt;<i> yet but softdevice does include support for it.
+</I>
+Patch is not in cvs, Ville is working on a solution which works implicit
+(source surface is allocated as interlaced). Once I asked him for the
+weekend he had in mind (for further investigations on his patch),
+I got a new version from him which had not the desired results too.
+
+&gt;<i> 
+</I>&gt;<i> Should I be apply Stefan's DirectFB patch at
+</I>&gt;<i> <A HREF="001968.html">http://lists.berlios.de/pipermail/softdevice-devel/2006q2/001968.html</A>
+</I>
+Original patch starts here:
+<A HREF="http://mail.directfb.org/pipermail/directfb-dev/2005-October/000846.html">http://mail.directfb.org/pipermail/directfb-dev/2005-October/000846.html</A>
+
+&gt;<i> 
+</I>&gt;<i> Sounds like it makes things jerky so was backed out again.
+</I>
+&gt;<i> 
+</I>&gt;<i> :-s
+</I>&gt;<i> 
+</I>&gt;<i> Has this been resolved? Should I have a stable interlaced TV-out with 
+</I>&gt;<i> mgatv or is it still being worked on?
+</I>
+That was a different issue (independant of DSBLIT_INTERLACED etc).
+Do you have that applied ?
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002096.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+	<LI>Next message: <A HREF="002101.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2099">[ date ]</a>
+              <a href="thread.html#2099">[ thread ]</a>
+              <a href="subject.html#2099">[ subject ]</a>
+              <a href="author.html#2099">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

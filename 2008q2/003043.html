@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with softdevice (&amp;softplay)	with vdr-1.6.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20softdevice%20%28%26softplay%29%09with%0A%20vdr-1.6.0&In-Reply-To=%3C47F51BA9.3040202%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003042.html">
+   <LINK REL="Next"  HREF="003051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with softdevice (&amp;softplay)	with vdr-1.6.0</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20softdevice%20%28%26softplay%29%09with%0A%20vdr-1.6.0&In-Reply-To=%3C47F51BA9.3040202%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Problems with softdevice (&amp;softplay)	with vdr-1.6.0">m.wache at gmx.net
+       </A><BR>
+    <I>Thu Apr  3 20:02:17 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003042.html">[Softdevice-devel] Problems with softdevice (&amp;softplay)	with	vdr-1.6.0
+</A></li>
+        <LI>Next message: <A HREF="003051.html">[Softdevice-devel] Problems with softdevice	(&amp;softplay)	with	vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3043">[ date ]</a>
+              <a href="thread.html#3043">[ thread ]</a>
+              <a href="subject.html#3043">[ subject ]</a>
+              <a href="author.html#3043">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Malcolm,
+
+sorry for my late answer...
+
+Malcolm Caldwell schrieb:
+&gt;<i> Any idea on this?
+</I>&gt;<i> 
+</I>&gt;<i> I hope to get in and have a look myself, but I don't really want to do
+</I>&gt;<i> it on my production vdr system.
+</I>&gt;<i> 
+</I>It would be great if you could solve this problem. I currently don't
+have much time left to work on the softdevice and softplay. I'm sorry...
+
+&gt;<i> So I tried to compile this on my laptop: the problem is softdevice does
+</I>&gt;<i> not compile against my system's ffmeg (ffmpeg-0.4.9-0.45.20080113. from
+</I>&gt;<i> livna on fedora 9)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Thu, 2008-03-27 at 23:08 +0930, Malcolm Caldwell wrote:
+</I>&gt;&gt;<i> On Wed, 2008-03-26 at 19:21 +0100, Martin Wache wrote:
+</I>&gt;&gt;&gt;&gt;<i> Ok.  Here is the bt for my first problem:
+</I>&gt;&gt;&gt;&gt;<i> Program received signal SIGSEGV, Segmentation fault.
+</I>&gt;&gt;&gt;&gt;<i> [Switching to Thread -1414853744 (LWP 20444)]
+</I>&gt;&gt;&gt;&gt;<i> 0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+</I>&gt;&gt;&gt;&gt;<i> pkt=@0xabab0304)
+</I>&gt;&gt;&gt;&gt;<i>     at SoftPlayer.c:73
+</I>&gt;&gt;&gt;&gt;<i> 73              if ( AudioIdx== -1 &amp;&amp;
+</I>&gt;&gt;&gt;&gt;<i> Current language:  auto; currently c++
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thread 30 (Thread -1414853744 (LWP 20444)):
+</I>&gt;&gt;&gt;&gt;<i> #0  0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+</I>&gt;&gt;&gt;&gt;<i> pkt=@0xabab0304)
+</I>&gt;&gt;&gt;&gt;<i>     at SoftPlayer.c:73
+</I>&gt;&gt;&gt;&gt;<i> #1  0x002fc89c in cSoftPlayer::FileReplay (this=0x8536ff0) at
+</I>&gt;&gt;&gt;&gt;<i> SoftPlayer.c:290
+</I>&gt;&gt;&gt;&gt;<i> #2  0x002fcd82 in cSoftPlayer::Action (this=0x8536ff0) at
+</I>&gt;&gt;&gt;&gt;<i> SoftPlayer.c:358
+</I>&gt;&gt;&gt;&gt;<i> #3  0x0810b48c in cThread::StartThread (Thread=0x8536ffc) at
+</I>&gt;&gt;&gt;&gt;<i> thread.c:244
+</I>&gt;&gt;&gt;&gt;<i> #4  0x0081045b in start_thread () from /lib/libpthread.so.0
+</I>&gt;&gt;&gt;&gt;<i> #5  0x0076823e in clone () from /lib/libc.so.6
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It would be nice to have the values of pkt.stream_index
+</I>&gt;&gt;<i> pkt.stream_index is 1
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (gdb) print pkt
+</I>&gt;&gt;<i> $3 = (AVPacket &amp;) @0xa9470304: {pts = 0, dts = 0, data = 0x886cc60 &quot;&#65533;&#65533;\224d&quot;, 
+</I>&gt;&gt;<i>   size = 384, stream_index = 1, flags = 1, duration = 1, 
+</I>&gt;&gt;<i>   destruct = 0x201d60 &lt;av_destruct_packet&gt;, priv = 0x87785ec, pos = 10260}
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  and
+</I>&gt;&gt;&gt;<i> ic-&gt;stream[pkt.stream_index].
+</I>&gt;&gt;<i> (gdb) print ic-&gt;stream[1]
+</I>&gt;&gt;<i> There is no member named stream.
+</I>&gt;&gt;<i> (gdb) print ic-&gt;streams[1]
+</I>&gt;&gt;<i> $6 = (AVStream *) 0x0
+</I>&gt;&gt;<i>
+</I>
+Well, this is the reason for the crash, streams[1] should not point to
+NULL. Dereferencing this pointer leads to the crash. The question is why
+ist streams NULL. I must admit that I don't know... probably there have
+been changes in ffmpeg. You could try to use an older version of ffmpeg.
+On the other hand, I'm also using a quite recent version of ffmpeg,
+although with an old vdr.
+
+Bye,
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003042.html">[Softdevice-devel] Problems with softdevice (&amp;softplay)	with	vdr-1.6.0
+</A></li>
+	<LI>Next message: <A HREF="003051.html">[Softdevice-devel] Problems with softdevice	(&amp;softplay)	with	vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3043">[ date ]</a>
+              <a href="thread.html#3043">[ thread ]</a>
+              <a href="subject.html#3043">[ subject ]</a>
+              <a href="author.html#3043">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

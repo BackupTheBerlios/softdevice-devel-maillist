@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C20060112214734.GC3487%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001664.html">
+   <LINK REL="Next"  HREF="001669.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C20060112214734.GC3487%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Jan 12 22:47:34 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001664.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+        <LI>Next message: <A HREF="001669.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1665">[ date ]</a>
+              <a href="thread.html#1665">[ thread ]</a>
+              <a href="subject.html#1665">[ subject ]</a>
+              <a href="author.html#1665">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jan 12, 2006 at 11:21:17PM +0200, Marko M&#228;kel&#228; wrote:
+&gt;<i>    171  0.0975 :   5f320:       movd   (%ebx),%mm1
+</I>&gt;<i>  10316  5.8848 :   5f323:       movd   (%ecx),%mm2
+</I>&gt;<i>   7726  4.4073 :   5f326:       movq   (%edx),%mm0
+</I>&gt;<i>  26967 15.3833 :   5f329:       punpcklbw %mm2,%mm1
+</I>&gt;<i>     10  0.0057 :   5f32c:       movq   %mm0,%mm3
+</I>&gt;<i>    299  0.1706 :   5f32f:       movq   %mm1,%mm4
+</I>&gt;<i>     63  0.0359 :   5f332:       punpcklbw %mm1,%mm0
+</I>&gt;<i>     88  0.0502 :   5f335:       punpckhbw %mm4,%mm3
+</I>&gt;<i>   1644  0.9378 :   5f338:       movq   %mm0,(%eax)
+</I>&gt;<i> 
+</I>&gt;<i> It looks like this one MMX instruction is consuming 15% of softdevice
+</I>&gt;<i> time, or 0.153833*0.659127 = 10% of all samples, or 6% of all CPU,
+</I>&gt;<i> assuming that the CPU is 40% idle.  I would guess that this is due to
+</I>&gt;<i> a memory fault.
+</I>
+More probably, the samples are reported one instructions too late.
+The real culprits are the movd and movq instructions in the beginning
+of the loop.
+
+The article &quot;Applications Tuning for Streaming SIMD Extensions&quot; at
+<A HREF="http://developer.intel.com/technology/itj/archive/1999.htm">http://developer.intel.com/technology/itj/archive/1999.htm</A>
+suggests that the loop should be unrolled to get any advantage of
+prefetching.  Each unrolled pass should process one cache line worth
+of prefetched variables.  Assuming 16 bytes cache line width, the
+loop would have to be unrolled 4 times to process a full cache line of
+pu and pv and two cache lines of py.
+
+I tried adding prefetch instructions using the predefined macros
+in mmx.h, but it didn't help.  I guess the guys at SiS already
+considered this.  Besides, the CPU probably does some heuristic
+prefetching on its own.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001664.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+	<LI>Next message: <A HREF="001669.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1665">[ date ]</a>
+              <a href="thread.html#1665">[ thread ]</a>
+              <a href="subject.html#1665">[ subject ]</a>
+              <a href="author.html#1665">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

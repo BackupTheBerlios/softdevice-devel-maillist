@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] mpeg2decoder.c compile error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C476BDF6C.6000305%40poczta.multimo.pl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002968.html">
+   <LINK REL="Next"  HREF="002971.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] mpeg2decoder.c compile error</H1>
+    <B>Artur Skawina</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C476BDF6C.6000305%40poczta.multimo.pl%3E"
+       TITLE="[Softdevice-devel] mpeg2decoder.c compile error">lis_-t.20_0.7 at poczta.multimo.pl
+       </A><BR>
+    <I>Fri Dec 21 16:44:44 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002968.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+        <LI>Next message: <A HREF="002971.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2969">[ date ]</a>
+              <a href="thread.html#2969">[ thread ]</a>
+              <a href="subject.html#2969">[ subject ]</a>
+              <a href="author.html#2969">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> Quoting Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Quoting Per Mellander &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">per at mellander.org</A>&gt;:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've noticed that newer ffmpeg doesn't match softdevice.
+</I>
+&gt;&gt;&gt;<i> Looking at my main VDR @home, I'm running softdevice-cvs-071220 + FFmpeg version
+</I>&gt;&gt;&gt;<i> SVN-r10885.
+</I>&gt;&gt;<i> At a first glance it looks like ffmpeg svn-11071 is causing some troubles.
+</I>&gt;&gt;<i> Comment of this change is: &quot;Use dynamically allocated ByteIOContext in AVFormatContext&quot;
+</I>
+&gt;&gt;<i> For troubles in line 1081 it should be something like:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> #if LIBAVFORMAT_BUILD &gt;= ((52&lt;&lt;16)+(0&lt;&lt;8)+0)
+</I>&gt;&gt;<i>        ic-&gt;pb-&gt;buffer=u;
+</I>&gt;&gt;<i> #else
+</I>&gt;&gt;<i>        ic-&gt;pb.buffer=u;
+</I>&gt;&gt;<i> #endif
+</I>
+&gt;<i> Seems to be a more serious problem as fixing this,
+</I>&gt;<i> still causes segfaults during av_open_input_file(&amp;ic, &quot;null&quot;,fmt,0,NULL)
+</I>&gt;<i> or with fmt-&gt;flags |= AVFMT_NOFILE; commented out, during
+</I>&gt;<i> init_put_byte ().
+</I>
+yes, i ran into this when upgrading ffmpeg too, tried the simple changes below,
+but it wasn't enough, something is still missing. then i downgraded ffmpeg and
+didn't investigate further....
+
+artur 
+
+diff -urNp softdevice-cvs/mpeg2decoder.c softdevice-cvs-new/mpeg2decoder.c
+--- softdevice-cvs/mpeg2decoder.c	2007-05-12 18:40:49.000000000 +0200
++++ softdevice-cvs-new/mpeg2decoder.c	2007-11-28 19:15:16.000000000 +0100
+@@ -1067,7 +1067,7 @@ start:
+        if (size&gt;buf_size)
+          size=buf_size;
+ 
+-       ic-&gt;pb.buffer=u;
++       ic-&gt;pb-&gt;buffer=u;
+        LastSize=size;
+        BUFDEB(&quot;read_packet: got %d bytes\n&quot;,size);
+        return size;
+@@ -1096,14 +1096,15 @@ void cMpeg2Decoder::initStream() {
+    fmt=av_find_input_format(&quot;mpeg&quot;);
+    fmt-&gt;flags |= AVFMT_NOFILE;
+ 
++   ic = NULL;
+    if ( int err=av_open_input_file(&amp;ic, &quot;null&quot;,fmt,0,NULL) ) {
+        printf(&quot;Failed to open input stream.Error %d\n&quot;,err);
+    };
+ 
+-   init_put_byte(&amp;ic-&gt;pb, NULL,dvb_buf_size[setupStore-&gt;bufferMode]/2, 0, this,
++   init_put_byte(ic-&gt;pb, NULL,dvb_buf_size[setupStore-&gt;bufferMode]/2, 0, this,
+        read_packet_RingBuffer,NULL,seek_RingBuffer);
+-   ic-&gt;pb.buf_end=NULL;
+-   ic-&gt;pb.is_streamed=true;
++   ic-&gt;pb-&gt;buf_end=NULL;
++   ic-&gt;pb-&gt;is_streamed=true;
+    CMDDEB(&quot;init put byte finished\n&quot;);
+ };
+ 
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002968.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+	<LI>Next message: <A HREF="002971.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2969">[ date ]</a>
+              <a href="thread.html#2969">[ thread ]</a>
+              <a href="subject.html#2969">[ subject ]</a>
+              <a href="author.html#2969">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

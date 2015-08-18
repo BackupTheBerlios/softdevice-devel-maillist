@@ -1,0 +1,109 @@
+From admin at berlios.de  Fri Feb 26 22:05:29 2010
+From: admin at berlios.de (admin at berlios.de)
+Date: Sat, 27 Feb 2010 00:05:29 +0300 (MSK)
+Subject: [Softdevice-devel] [Bug #16887] vdr 1.7?
+Message-ID: <201002262105.o1QL5TsE018055@unicorn.berlios.de>
+
+Bug #16887, was updated on 2010-Feb-27 00:05
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: vdr 1.7?
+
+Details: anybody use softdevice with vdr 1.7*?
+
+on amd64 i have strange problems with picture - freezes and etc.
+
+thanks!
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=16887&group_id=2051
+
+
+From bob at globall.ru  Sat Feb 27 07:33:43 2010
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Sat, 27 Feb 2010 09:33:43 +0300
+Subject: [Softdevice-devel] [Bug #16887] vdr 1.7?
+In-Reply-To: <201002262105.o1QL5TsE018055@unicorn.berlios.de>
+References: <201002262105.o1QL5TsE018055@unicorn.berlios.de>
+Message-ID: <4B88BCC7.5080206@globall.ru>
+
+admin at berlios.de ?????:
+> on amd64 i have strange problems with picture - freezes and etc.
+>
+>
+>   
+
+Softdevice works incorrectly with the last releases ffmpeg. Try to apply 
+softdevice-framerate.patch from Wallak - 
+http://lists.berlios.de/pipermail/softdevice-devel/2009q4/003253.html .
+For me it has solved the majority of problems with freezes.
+
+Best regards,
+Vladimir Monchenko.
+
+
+From admin at berlios.de  Sun Feb 28 10:39:53 2010
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 28 Feb 2010 12:39:53 +0300 (MSK)
+Subject: [Softdevice-devel] [Bug #16887] vdr 1.7?
+Message-ID: <201002280939.o1S9drXU004998@unicorn.berlios.de>
+
+Bug #16887, was updated on 2010-Feb-27 00:05
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: vdr 1.7?
+
+Details: anybody use softdevice with vdr 1.7*?
+
+on amd64 i have strange problems with picture - freezes and etc.
+
+thanks!
+
+Follow-Ups:
+
+Date: 2010-Feb-28 12:39
+By: axiator
+
+Comment:
+some records from log:
+
+[mp2 @ 0x164a1f0]incorrect frame size
+    Last message repeated 1 times
+[mpeg2video @ 0x1648070]mpeg_decode_postinit() failure
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+[mp2 @ 0x164a1f0]incorrect frame size
+    Last message repeated 1 times
+[mpeg2video @ 0x1648070]mpeg_decode_postinit() failure
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+[mp2 @ 0x164a1f0]incorrect frame size
+    Last message repeated 2 times
+[mpeg2video @ 0x1648070]mpeg_decode_postinit() failure
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+[mp2 @ 0x164a1f0]incorrect frame size
+    Last message repeated 4 times
+
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=16887&group_id=2051
+
+

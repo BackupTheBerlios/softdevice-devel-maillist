@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with nvidia TwinView and ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710061611.50493.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002927.html">
+   <LINK REL="Next"  HREF="002932.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with nvidia TwinView and ShmClient</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710061611.50493.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems with nvidia TwinView and ShmClient">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Oct  6 16:11:50 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002927.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+        <LI>Next message: <A HREF="002932.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2929">[ date ]</a>
+              <a href="thread.html#2929">[ thread ]</a>
+              <a href="subject.html#2929">[ subject ]</a>
+              <a href="author.html#2929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 6. Oktober 2007, Michael Rademacher wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> On Sat, 06.10.07, at 09:13 Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; If that works now, some of your previous tests was wrong (or with
+</I>&gt;<i> &gt; a version too old, see below).
+</I>&gt;<i> &gt; From initial mail:
+</I>&gt;<i> &gt; ii &#160;vdr-plugin-softdevice &#160; &#160; &#160; &#160; &#160; &#160;0.4.0-5 &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;VDR plugin for frame-buffer output
+</I>&gt;<i> 
+</I>&gt;<i> Hmm, I don't know if I did something wrong but, here is what I've done:
+</I>
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at zentrale</A>:/usr/src/vdr/vdr-1.4.7/PLUGINS/src/vdr-plugin-softdevice-0.4.0# ./configure --disable-vidix --disable-fb --disable-dfb --disable-cle266 --disable-oss --disable-yaepg
+</I>&gt;<i> Testing system and cpu type... found Linux on i386 cpu.
+</I>
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at zentrale</A>:/usr/src/vdr/vdr-1.4.7/PLUGINS/src/vdr-plugin-softdevice-0.4.0# make ShmClient
+</I>&gt;<i> [...]
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> This leads to the known problem. After applying your patch follwed by 'make
+</I>&gt;<i> clean ; make ShmClient' it works. I did not change anything in the setup of
+</I>&gt;<i> softdevice, so the aspect ratio still is 5:4.
+</I>
+I'd like to see some more mesages. Revert to original cvs version.
+
+
+Please try attached patch and cycle through different aspect
+settings of softdevice. Above change is commented out:
+  if (xin_mode)
+    // displayAspect =
+    displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+
+We will get lines like:
+dsyslog:[VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,72 768x432]
+width x height (MM) 342 x 274
+Screen width x height 1280 x 1024
+Display width x height 1280 x 1024
+xin_screen = 0
+par [0] 0.9985
+par [1] 1.0000
+par [2] 1.0667
+par [3] 1.4222
+par [4] 1.2800
+par [5] 1.3333
+dsyslog:[VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,6 768x562]
+dsyslog:[VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,72 768x432]
+PAR idx changed 1 -&gt; 2
+dsyslog:[VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,56 768x461]
+PAR idx changed 2 -&gt; 3
+dsyslog:[VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [24,0 720x576]
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: video.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.c,v
+retrieving revision 1.76
+diff -U3 -r1.76 video.c
+--- video.c	12 Jul 2007 16:17:31 -0000	1.76
++++ video.c	6 Oct 2007 13:58:36 -0000
+@@ -173,6 +173,12 @@
+   parValues [3] = (16.0 /  9.0) / displayRatio;
+   parValues [4] = (16.0 / 10.0) / displayRatio;
+   parValues [5] = (15.0 /  9.0) / displayRatio;
++fprintf (stderr, &quot;par [0] %1.4lf\n&quot;, parValues[0]);
++fprintf (stderr, &quot;par [1] %1.4lf\n&quot;, parValues[1]);
++fprintf (stderr, &quot;par [2] %1.4lf\n&quot;, parValues[2]);
++fprintf (stderr, &quot;par [3] %1.4lf\n&quot;, parValues[3]);
++fprintf (stderr, &quot;par [4] %1.4lf\n&quot;, parValues[4]);
++fprintf (stderr, &quot;par [5] %1.4lf\n&quot;, parValues[5]);
+ }
+ 
+ /* ---------------------------------------------------------------------------
+@@ -307,6 +313,9 @@
+ 
+   if (screenPixelAspect != setupStore-&gt;screenPixelAspect)
+   {
++fprintf(stderr,&quot;PAR idx changed %d -&gt; %d \n&quot;,
++        screenPixelAspect, setupStore-&gt;screenPixelAspect);
++
+     screenPixelAspect = setupStore-&gt;screenPixelAspect;
+     /* -----------------------------------------------------------------------
+      * force recalculation for aspect ration handling
+Index: video.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.h,v
+retrieving revision 1.55
+diff -U3 -r1.55 video.h
+--- video.h	11 Jul 2007 20:08:34 -0000	1.55
++++ video.h	6 Oct 2007 13:58:36 -0000
+@@ -36,6 +36,13 @@
+ 
+ #define AVRG_OFF_CNT        16
+ 
++/* ---------------------------------------------------------------------------
++ */
++static inline int roundI (int i)
++{
++  return (i + 3) &amp; ~3;
++}
++
+ #ifndef STAND_ALONE
+ class cSoftRemote : public cRemote {
+   public:
+Index: video-xv.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-xv.c,v
+retrieving revision 1.73
+diff -U3 -r1.73 video-xv.c
+--- video-xv.c	11 Jul 2007 20:08:35 -0000	1.73
++++ video-xv.c	6 Oct 2007 13:58:38 -0000
+@@ -476,10 +476,26 @@
+   displayAspect = (double) DisplayWidthMM(dpy, DefaultScreen(dpy)) /
+                     (double) DisplayHeightMM(dpy, DefaultScreen(dpy));
+   if (xin_mode)
++    // displayAspect =
+     displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+   else
+     displayRatio  = (double) DisplayWidth(dpy, DefaultScreen(dpy)) /
+                       (double) DisplayHeight(dpy, DefaultScreen(dpy));
++
++fprintf(stderr,&quot;width x height (MM) %d x %d\n&quot;,
++        DisplayWidthMM(dpy, DefaultScreen(dpy)),
++        DisplayHeightMM(dpy, DefaultScreen(dpy)));
++fprintf(stderr,&quot;Screen width x height %d x %d\n&quot;,
++         GetScreenWidth(),
++         GetScreenHeight());
++fprintf(stderr,&quot;Display width x height %d x %d\n&quot;,
++        DisplayWidth(dpy, DefaultScreen(dpy)),
++        DisplayHeight(dpy, DefaultScreen(dpy)));
++#if XINERAMA_SUPPORT
++if (xin_mode) {
++fprintf(stderr,&quot;xin_screen = %d\n&quot;, xin_screen);
++}
++#endif
+ 
+   SetParValues(displayAspect, displayRatio);
+ 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002927.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+	<LI>Next message: <A HREF="002932.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2929">[ date ]</a>
+              <a href="thread.html#2929">[ thread ]</a>
+              <a href="subject.html#2929">[ subject ]</a>
+              <a href="author.html#2929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

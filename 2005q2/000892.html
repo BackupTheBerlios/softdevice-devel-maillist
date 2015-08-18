@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Blue vertical bar on left side of the picture
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%20picture&In-Reply-To=%3C42AF01D2.5030605%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000877.html">
+   <LINK REL="Next"  HREF="000893.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Blue vertical bar on left side of the picture</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%20picture&In-Reply-To=%3C42AF01D2.5030605%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Blue vertical bar on left side of the picture">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Jun 14 18:12:02 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000877.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+        <LI>Next message: <A HREF="000893.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#892">[ date ]</a>
+              <a href="thread.html#892">[ thread ]</a>
+              <a href="subject.html#892">[ subject ]</a>
+              <a href="author.html#892">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Voitto Tuomainen schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> As stated in subject, there is a blue bar on left side of the picture in certain conditions. 
+</I>&gt;<i> I think that if broadcasting picture is smaller than the maximum
+</I>picture viewable area, this
+&gt;<i> happens. This problem was not shown in a channel, I have an example in
+</I>my web page
+&gt;<i> <A HREF="http://kotisivu.mtv3.fi/vtuomain/blue_bar.jpg">http://kotisivu.mtv3.fi/vtuomain/blue_bar.jpg</A> in 0.1.2 or older
+</I>releases, but it occurs on
+&gt;<i> another channel, which I think is in different channel bunch. Problem
+</I>in that channel is valid
+&gt;<i> still.
+</I>&gt;<i> 
+</I>&gt;<i> My configuration is vdr 1.3.25, softdevice xv, FFMpeg-20050609, 
+</I>&gt;<i> gentoo with one week old software and Technisat Airstar2 DVB-T PCI.
+</I>&gt;<i> Picture is sent to plasma through Sapphire Radeon 9600 DVI connection.
+</I>
+I may be wrong but I think this blue bar is coded in the mpeg stream and
+not shown by the TVs due to the overscan. As far as I know televisions
+don't show the complete picture which is sent to them (the reason for
+this is that it is transfered analogous, so there are disortions at the
+edges, which they just cut away). The softdevice in Xv mode doesn't do
+this, it shows the complete picture.
+
+So I think a cropping mode which emulates the overscan is the correct
+solution for this.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000877.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+	<LI>Next message: <A HREF="000893.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#892">[ date ]</a>
+              <a href="thread.html#892">[ thread ]</a>
+              <a href="subject.html#892">[ subject ]</a>
+              <a href="author.html#892">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

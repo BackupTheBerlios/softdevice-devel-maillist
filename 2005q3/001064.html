@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C42ED2D1B.4060008%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001058.html">
+   <LINK REL="Next"  HREF="001101.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C42ED2D1B.4060008%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Jul 31 21:57:15 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001058.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001101.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1064">[ date ]</a>
+              <a href="thread.html#1064">[ thread ]</a>
+              <a href="subject.html#1064">[ subject ]</a>
+              <a href="author.html#1064">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Patrick Boettcher schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> On Sun, 31 Jul 2005, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i> Well, not on purpose. I changed the way the audio delay is accessed.
+</I>&gt;&gt;&gt;<i> Prevously it was a call to the audio out, now just a offset to the
+</I>&gt;&gt;&gt;<i> system clock is stored. The call to audio out was a bit unpredictable
+</I>&gt;&gt;&gt;<i> since the call was from the video thread while the audio thread has been
+</I>&gt;&gt;&gt;<i> running at the same time, so we got a few threading problems.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you for confirming this.  For me, the delay seems unpredictable
+</I>&gt;&gt;<i> now.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> For me too. I was wrong stating to be able to compensate it with
+</I>&gt;<i> modifying AV delay. In fact it is different everytime when tuning to a
+</I>&gt;<i> new channel or starting a recording.
+</I>&gt;<i> 
+</I>That is bad news :-(. Maybe the new mechanism isn't as stable as I
+thought...
+Can you tell me if the AV delay changes only when changeing a station? I
+mean if you correct the delay once for one station and watch TV without
+changeing the station, is it still okay after some (preferably a long )
+time? I know that this is probably not easy to say for those small
+delays... I guess I will prepare a patch with debug outputs to test the
+stability of the new delay mechanism when I find the time.
+
+@Marko:
+The change of the access of the audio delay was on the 29. May 05, you
+can get the diff from cvs web access, the relevant files are
+mpegdecoder.c and .h. There are some more changes in this commit, look
+only for those which concern cClock and the PTS handling.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001058.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001101.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1064">[ date ]</a>
+              <a href="thread.html#1064">[ thread ]</a>
+              <a href="subject.html#1064">[ subject ]</a>
+              <a href="author.html#1064">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

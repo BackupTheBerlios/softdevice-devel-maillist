@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A-V sync problems with directfb on
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on&In-Reply-To=%3C47841.144.32.128.73.1127897562.squirrel%40webmail.projectmeerkat.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001269.html">
+   <LINK REL="Next"  HREF="001273.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A-V sync problems with directfb on</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on&In-Reply-To=%3C47841.144.32.128.73.1127897562.squirrel%40webmail.projectmeerkat.co.uk%3E"
+       TITLE="[Softdevice-devel] A-V sync problems with directfb on">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Wed Sep 28 10:52:42 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001269.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+        <LI>Next message: <A HREF="001273.html">[Softdevice-devel] A-V sync problems with directfb on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1271">[ date ]</a>
+              <a href="thread.html#1271">[ thread ]</a>
+              <a href="subject.html#1271">[ subject ]</a>
+              <a href="author.html#1271">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> On Dienstag, 27. September 2005 01:28, Stefan Lucke wrote:
+</I>&gt;&gt;<i> Stretchblit doesn't work accelerated I think.
+</I>&gt;<i>
+</I>&gt;<i> From directfb web page: stretchbilt is supported, but not from
+</I>&gt;<i> an YV12, YUY2 surface ton an rgb surface.
+</I>
+Ahhhh...if I enable it, the OSD goes really transparent and weird colours!
+
+&gt;&gt;<i> So for now I did a short test on my gentoo epia system. My old gentoo
+</I>&gt;&gt;<i> does not like my new kernel. No sound device available. With the old
+</I>&gt;&gt;<i> kernel
+</I>&gt;&gt;<i> 2.6.7, there is a strange A/V sync behavior vieable. Recordings started
+</I>&gt;&gt;<i> at
+</I>&gt;&gt;<i> full speed, ways too fast. Video is not throttled to audio. Could it be
+</I>&gt;&gt;<i> that rtc timer does not work ? My main systems cannot use /dev/rtc
+</I>&gt;&gt;<i> for syncing as chrony has this device. But on my epia box, there is no
+</I>&gt;&gt;<i> chrony.
+</I>&gt;<i>
+</I>&gt;<i> Found the reason, but not the fault :-) .
+</I>&gt;<i> Reported display time is very strange:
+</I>&gt;<i>
+</I>&gt;<i> [dfb] Display frame time is 99949 microseconds
+</I>&gt;<i>
+</I>&gt;<i> As a hack I set that to 16667. There should be some bounds check or some
+</I>&gt;<i> more measurement points.
+</I>&gt;<i>
+</I>&gt;<i> This strange display time is reproducable after each reconfigure.
+</I>&gt;<i>
+</I>&gt;<i> [dfb] (re)configured 0x08100609
+</I>&gt;<i> [dfb] Display frame time is 99949 microseconds
+</I>&gt;<i> [dfb] Display frame time is 99950 microseconds
+</I>
+Hmmmmm...I saw this and thought it might be my problem too. Just checked,
+and I see: [dfb] Display frame time is 19997 microseconds, which works out
+as about 50 Hz (PAL). Did you mean this value or are you using NTSC?
+
+&gt;<i> I cannot say very much about sync as audio out seems to broken.
+</I>&gt;<i> Both active speaker sets are nearly and almost silent. But there
+</I>&gt;<i> are no '+' chars written for skipping frames.
+</I>
+I'm not currently seeing any '+' in the output. I think there must be a
+race condition or something because I sometimes get loads of them under
+the same conditions!
+
+&gt;<i> Cpu load is around 45% for recordings (no tuner connected) 1GHz Nehemia.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can you try to choose another sync timer ? mpeg2decoder line 463:
+</I>&gt;&gt;<i> syncTimer = new cSyncTimer (emRtcTimer);
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> change emRtcTimer to emSigTimer or emUsleepTimer .
+</I>&gt;&gt;<i> Shouldn't that be emSigTimer always ?
+</I>
+Tried both last night:
+emSigTimer: one frame about every 3 seconds! CPU usage ca. 3%! ;-)
+emUsleepTimer: played about half speed.
+
+I've enabled more debug statements in sync-timer.c and get lots of 'Set up
+to use linux RTC' messages. I saw about 5 'Could not open /dev/rtc'
+messages over about 5 h. Maybe I have a cron job that's grabbing it or
+something but it can't be the cause of my problems.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001269.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+	<LI>Next message: <A HREF="001273.html">[Softdevice-devel] A-V sync problems with directfb on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1271">[ date ]</a>
+              <a href="thread.html#1271">[ thread ]</a>
+              <a href="subject.html#1271">[ subject ]</a>
+              <a href="author.html#1271">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

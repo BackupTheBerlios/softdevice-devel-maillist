@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Some issues regarding libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Some%20issues%20regarding%20libcle266mpegdec&In-Reply-To=%3C44B77A89.8040406%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002255.html">
+   <LINK REL="Next"  HREF="002257.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Some issues regarding libcle266mpegdec</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Some%20issues%20regarding%20libcle266mpegdec&In-Reply-To=%3C44B77A89.8040406%40pobox.com%3E"
+       TITLE="[Softdevice-devel] Some issues regarding libcle266mpegdec">torgeir at pobox.com
+       </A><BR>
+    <I>Fri Jul 14 13:05:45 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002255.html">[Softdevice-devel] Some issues regarding libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002257.html">[Softdevice-devel] configure Patch for Ubuntu 6.06 (using	ffmpeg-config instead of pkg-config)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2256">[ date ]</a>
+              <a href="thread.html#2256">[ thread ]</a>
+              <a href="subject.html#2256">[ subject ]</a>
+              <a href="author.html#2256">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo wrote:
+&gt;<i> Per Mellander wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Last question. Does anyone know how to make directfb/linux-viafb to comply to 1360x768?
+</I>&gt;&gt;<i> If I try to add it to fb.modes and do a fbset I'm getting,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ioctl FBIOPUT_VSCREENINFO: Invalid argument
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> wich I interpret that there is something to be done to linux-viafb. I can see that the
+</I>&gt;&gt;<i> resolution that I want is not listed ;) Can someone please put me in the right direction
+</I>&gt;&gt;<i> to add this resolution?
+</I>&gt;<i> 
+</I>&gt;<i> What does your relevant lines in fb.modes look like?
+</I>
+Try this one if you haven't put any such modes in yet:
+
+mode &quot;1360x768-48&quot;
+     geometry 1360 768 1920 25 16
+     timings 15385 160 24 29 3 136 6
+endmode
+
+You can also try these, even if they don't match your tvs native resolution:
+
+# 50 Hz
+mode &quot;1280x720-50&quot;
+    # D: 61.80 MHz, H: 37.50 kHz, V: 50.00 Hz
+    geometry 1280 720 1280 720 32
+    timings 16181 218 110 20 5 40 5
+endmode
+
+# 60 Hz from X setup
+mode &quot;1280x720-60&quot;
+    # D: 74.25 MHz, H: 45.00 kHz, V: 60.00 Hz
+    geometry 1280 720 1280 720 16
+    timings 13468 220 110 20 5 40 5
+endmode
+
+
+-- 
+-Torgeir
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002255.html">[Softdevice-devel] Some issues regarding libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002257.html">[Softdevice-devel] configure Patch for Ubuntu 6.06 (using	ffmpeg-config instead of pkg-config)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2256">[ date ]</a>
+              <a href="thread.html#2256">[ thread ]</a>
+              <a href="subject.html#2256">[ subject ]</a>
+              <a href="author.html#2256">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

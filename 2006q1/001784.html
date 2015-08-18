@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Displaying images
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C43FE0BE4.70803%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001774.html">
+   <LINK REL="Next"  HREF="001786.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Displaying images</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C43FE0BE4.70803%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Displaying images">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Feb 23 20:24:20 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001774.html">[Softdevice-devel] Displaying images
+</A></li>
+        <LI>Next message: <A HREF="001786.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1784">[ date ]</a>
+              <a href="thread.html#1784">[ thread ]</a>
+              <a href="subject.html#1784">[ subject ]</a>
+              <a href="author.html#1784">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sebastian Vandersee schrieb:
+
+&gt;&gt;<i> The best graphics format would be YUV420, then we can display it in the
+</I>&gt;&gt;<i> video layer. The image has also to be scaled to some sensible
+</I>&gt;&gt;<i> resolution, for the YUV420 format that can also be done be ffmpeg with
+</I>&gt;&gt;<i> av_img_resample() or similar.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I would prefer to use ffmpeg (I know that it is possible to do it with
+</I>&gt;&gt;<i> ffmpeg - I'm just not sure how it works), currently that is the only
+</I>&gt;&gt;<i> library which is needed, and I don't like the idea of having a
+</I>&gt;&gt;<i> dependency on imagemagick.
+</I>&gt;&gt;<i>
+</I>&gt;<i> Well, if I create a separate plugin which utilize another lib
+</I>&gt;<i> (e.g. ImageMagick) to transform pics to YUV420 and then pass it
+</I>&gt;<i> to softdevice, there will be no dependency on ImageMagick for
+</I>&gt;<i> softdevice.
+</I>&gt;<i> Anyway, I'll take a look at the API provided by ffmpeg.
+</I>&gt;<i> 
+</I>Sure, if you create your own plugin  I don't mind any dependencies ;-)
+
+Maybe you should also consider libjpeg, like Marko suggested since vdr
+depends on it I think it doesn't harm if softplay or softdevice also
+depend on it. I wonder why it didn't come to my mind ;-)
+Thanks Marko!
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001774.html">[Softdevice-devel] Displaying images
+</A></li>
+	<LI>Next message: <A HREF="001786.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1784">[ date ]</a>
+              <a href="thread.html#1784">[ thread ]</a>
+              <a href="subject.html#1784">[ subject ]</a>
+              <a href="author.html#1784">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

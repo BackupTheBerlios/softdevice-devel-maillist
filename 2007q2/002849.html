@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] building on mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C200704120012.40199.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002845.html">
+   <LINK REL="Next"  HREF="002852.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] building on mac</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C200704120012.40199.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] building on mac">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr 12 00:12:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002845.html">[Softdevice-devel] building on mac
+</A></li>
+        <LI>Next message: <A HREF="002852.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2849">[ date ]</a>
+              <a href="thread.html#2849">[ thread ]</a>
+              <a href="subject.html#2849">[ subject ]</a>
+              <a href="author.html#2849">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 04 April 2007 19:06, Torgeir Veimo wrote:
+&gt;<i> 
+</I>&gt;<i> On 4 Apr 2007, at 17:27, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Torgeir Veimo schrieb:
+</I>&gt;<i> &gt;&gt;&gt; Ok, that works. But I got an endian issue I guess. Are you  
+</I>&gt;<i> &gt;&gt;&gt; working on
+</I>&gt;<i> &gt;&gt;&gt; a ppc mac?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt; Yes :-)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;&gt; Here's a screenshot;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt; I had a chance to try it on an intel mac a few weeks ago, I didn't  
+</I>&gt;<i> &gt; have
+</I>&gt;<i> &gt; the time to fix those problems correctly, but this hack fixes the
+</I>&gt;<i> &gt; problems...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Bye,
+</I>&gt;<i> &gt; Martin
+</I>&gt;<i> &gt; Index: utils.c
+</I>&gt;<i> &gt; ===================================================================
+</I>&gt;<i> &gt; RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+</I>&gt;<i> &gt; retrieving revision 1.25
+</I>&gt;<i> &gt; diff -u -r1.25 utils.c
+</I>&gt;<i> &gt; --- utils.c	15 Jan 2007 19:35:13 -0000	1.25
+</I>&gt;<i> &gt; +++ utils.c	4 Apr 2007 16:24:06 -0000
+</I>&gt;<i> &gt; @@ -172,9 +172,13 @@
+</I>&gt;<i> &gt;     }
+</I>&gt;<i> &gt;  #endif
+</I>&gt;<i> &gt;     for ( ; i&gt;=2; i-=2 ) {
+</I>&gt;<i> &gt; +#if 1
+</I>&gt;<i> &gt; +      *((uint32_t *)dest1) = (yc1[1] &lt;&lt; 24)+ (vc[0] &lt;&lt; 16) + (yc1 
+</I>&gt;<i> &gt; [0] &lt;&lt; 8) + (uc[0] &lt;&lt; 0);
+</I>&gt;<i> &gt; +      *((uint32_t *)dest2) = (yc2[1] &lt;&lt; 24)+ (vc[0] &lt;&lt; 16) + (yc2 
+</I>&gt;<i> &gt; [0] &lt;&lt; 8) + (uc[0] &lt;&lt; 0);
+</I>&gt;<i> &gt; +#else
+</I>
+Which one needs this: PowerMac or IntelMac ?
+
+Are you using the OpenGL output ?
+
+Maybe that using GL_UNSIGNED_SHORT_8_8_REV_APPLE instead of
+GL_UNSIGNED_SHORT_8_8_APPLE has the same effect (line 747 video-quartz.c). 
+
+OT: How much does the develoment enviroment for apple costs ?
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002845.html">[Softdevice-devel] building on mac
+</A></li>
+	<LI>Next message: <A HREF="002852.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2849">[ date ]</a>
+              <a href="thread.html#2849">[ thread ]</a>
+              <a href="subject.html#2849">[ subject ]</a>
+              <a href="author.html#2849">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

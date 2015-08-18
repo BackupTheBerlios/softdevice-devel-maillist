@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200604301253.06606.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001958.html">
+   <LINK REL="Next"  HREF="001960.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200604301253.06606.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr 30 12:53:06 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001958.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="001960.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1959">[ date ]</a>
+              <a href="thread.html#1959">[ thread ]</a>
+              <a href="subject.html#1959">[ subject ]</a>
+              <a href="author.html#1959">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 30 April 2006 11:41, Laz wrote:
+&gt;<i> 
+</I>&gt;<i> Right...here is a first attempt at a patch which incorporates hardware 
+</I>&gt;<i> decoding into softdevice on via cle266 chipsets. It's a bit hacked together 
+</I>&gt;<i> and requires a lot more work but as a first point it seems to work mostly.
+</I>&gt;<i> 
+</I>&gt;<i> Prerequisites: libcle266decode (see below for link), the library which 
+</I>&gt;<i> provides the decoder access.
+</I>&gt;<i> 
+</I>&gt;<i> viafb: I'm using linux-viafb from DirectFB cvs from 18/4/06. My version 
+</I>&gt;<i> includes Mark Adams' field sync patch. Not sure whether this would work with 
+</I>&gt;<i> any other viafb. Probably not.
+</I>&gt;<i> 
+</I>&gt;<i> DirectFB and DFB++: both need patching with patches supplied in 
+</I>&gt;<i> libcle266decode tarball (DFB++ one needs applying by hand at present but it 
+</I>&gt;<i> involves adding about 2 lines: will fix at some point!). I'm using DirectFB 
+</I>&gt;<i> and DFB++ from cvs on the 18/4/06 (not sure if anything drastic has changed 
+</I>&gt;<i> since then). I've also patched with Mark Adams' field sync patch.
+</I>&gt;<i> 
+</I>&gt;<i> The patch is against softdevice cvs from 28/4/06. You will probably have to 
+</I>&gt;<i> add -lcle266decode to the Makefile or config.mak. I have tried to enclose all 
+</I>&gt;<i> of my additions in #ifdefs so you will also need to add -DCLE266HW to the 
+</I>&gt;<i> Makefile. I think the only place where I didn't enclose with an #ifdef was in 
+</I>&gt;<i> cDFBVideoOut::YUV because the compiler didn't like having #ifdefs within the 
+</I>&gt;<i> try {} catch {} structures: they are there but commented out!
+</I>&gt;<i> 
+</I>&gt;<i> ;)
+</I>&gt;<i> 
+</I>&gt;<i> Hopefully, the plugin should behave as normal unless it is called as 
+</I>&gt;<i> -P'softdevice -vo dfb:cle266' Only MPEG-2 video is sent to the hardware 
+</I>&gt;<i> decoder: anything else should still be decoded by ffmpeg, so things like 
+</I>&gt;<i> softplay should hopefully work still (not tried yet!).
+</I>&gt;<i> 
+</I>&gt;<i> At present, this also enables viatv because I'm using TV-out for this.
+</I>&gt;<i> 
+</I>&gt;<i> At present, I get a smooth picture on my TV but it only occupies the top-left 
+</I>&gt;<i> quarter of the screen! Total CPU usage has dropped from ca. 70-80% with 
+</I>&gt;<i> software decoding to ca. 35% with my patch. It seems quite stable: it ran 
+</I>&gt;<i> seamlessly over night without locking up.
+</I>
+Ups, top left corner ...
+
+Can you try this after line 355 in video-dfb.c:
+
+  if (desc.caps &amp; DLCAPS_SCREEN_LOCATION)
+  {
+    try 
+    {
+       videoLayer-&gt;SetScreenLocation(0.0,0.0,0.5,0.5);
+       videoLayer-&gt;SetScreenLocation(0.0,0.0,1.0,1.0);
+    }
+    catch (DFBException *ex)
+    {
+      fprintf (stderr, &quot;[dfb] SetParams: action=%s, result=%s\n&quot;, ex-&gt;GetAction(), ex-&gt;GetResult());
+      delete ex;
+    }
+  }
+
+Perhaps SetParams() gets not called due to missing information
+size/aspect ratio of decoded frames.
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001958.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="001960.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1959">[ date ]</a>
+              <a href="thread.html#1959">[ thread ]</a>
+              <a href="subject.html#1959">[ subject ]</a>
+              <a href="author.html#1959">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] building on mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C46134AEB.6040900%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002839.html">
+   <LINK REL="Next"  HREF="002845.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] building on mac</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C46134AEB.6040900%40gmx.net%3E"
+       TITLE="[Softdevice-devel] building on mac">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Apr  4 08:51:23 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002839.html">[Softdevice-devel] building on mac
+</A></li>
+        <LI>Next message: <A HREF="002845.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2840">[ date ]</a>
+              <a href="thread.html#2840">[ thread ]</a>
+              <a href="subject.html#2840">[ subject ]</a>
+              <a href="author.html#2840">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo schrieb:
+&gt;<i> On 3 Apr 2007, at 23:58, Torgeir Veimo wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> On 3 Apr 2007, at 22:32, Martin Wache wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> [...]
+</I>&gt;&gt;&gt;<i> You have to remove the &quot;-mdynamic-no-pic&quot; option from ffmpeg
+</I>&gt;&gt;&gt;<i> config.mak
+</I>&gt;&gt;&gt;<i> and recompile ffmpeg.
+</I>&gt;&gt;<i> ffmpeg had to be configured with --disable-mmx as well.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When I try running, I get a bus error;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;&gt;<i> Bus error
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> gdb shows:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Program received signal EXC_BAD_ACCESS, Could not access memory.
+</I>&gt;&gt;<i> Reason: KERN_PROTECTION_FAILURE at address: 0x161c0000
+</I>&gt;&gt;<i> 0xffff07c7 in ___memcpy () at /System/Library/Frameworks/
+</I>&gt;&gt;<i> System.framework/PrivateHeaders/i386/cpu_capabilities.h:228
+</I>&gt;&gt;<i> 228     /System/Library/Frameworks/System.framework/PrivateHeaders/
+</I>&gt;&gt;<i> i386/cpu_capabilities.h: No such file or directory.
+</I>&gt;&gt;<i>          in /System/Library/Frameworks/System.framework/
+</I>&gt;&gt;<i> PrivateHeaders/i386/cpu_capabilities.h
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Could this be because I don't have any DVB device available on the  
+</I>&gt;&gt;<i> mac?
+</I>&gt;<i> 
+</I>&gt;<i> I forgot -vo..
+</I>&gt;<i> 
+</I>&gt;<i> Using -vo shm: works with the shm stuff in /etc/rc, but when I start  
+</I>&gt;<i> MacVdrClient, I cannot move the window, and it refused to go on top  
+</I>&gt;<i> of my iterm window, even though it goes on top of other windows. I  
+</I>&gt;<i> also won't allow itself to be resized nor accept any key input.
+</I>&gt;<i> 
+</I>I guess this is because you didn't start the MacVdrClient from its .app
+folder. Please start it by clicking on the Folder from the Finder or, by
+typing &quot;./MacVdrClient.app/Contents/MacOS/MacVdrClient &quot; in the
+softdevice directory.
+
+&gt;<i> Shouldn't  -vo quartz: also work? I get the previous bus error as  
+</I>&gt;<i> without any -vo, so I guess that means -vo quartz: is default on mac?
+</I>&gt;<i> 
+</I>In principle it should work, but I never had it working. I think Quartz
+doesn't like the threading in the softdevice and doesn't deliver the
+events to our event loop. I haven't tried it for some time, I will check
+if I also get a crash. Maybe it is the best to remove this option until
+it works, to avoid confusion.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002839.html">[Softdevice-devel] building on mac
+</A></li>
+	<LI>Next message: <A HREF="002845.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2840">[ date ]</a>
+              <a href="thread.html#2840">[ thread ]</a>
+              <a href="subject.html#2840">[ subject ]</a>
+              <a href="author.html#2840">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] problems with mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20problems%20with%20mgatv&In-Reply-To=%3C1105643828837.particle.11367.HjhzuqCf_wucO5nSCksOgA%40luukku.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000167.html">
+   <LINK REL="Next"  HREF="000179.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] problems with mgatv</H1>
+    <B>Ari Koponen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20problems%20with%20mgatv&In-Reply-To=%3C1105643828837.particle.11367.HjhzuqCf_wucO5nSCksOgA%40luukku.com%3E"
+       TITLE="[Softdevice-devel] problems with mgatv">particle at luukku.com
+       </A><BR>
+    <I>Thu Jan 13 20:17:08 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000167.html">[Softdevice-devel] problems with mgatv
+</A></li>
+        <LI>Next message: <A HREF="000179.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#174">[ date ]</a>
+              <a href="thread.html#174">[ thread ]</a>
+              <a href="subject.html#174">[ subject ]</a>
+              <a href="author.html#174">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jari H kirjoitti 12.01.2005 kello 22:09:
+&gt;<i> &gt;&gt; Can you try attached diff, which should enable field parity TOP ?
+</I>&gt;<i> 
+</I>&gt;<i> &gt;I'm afraid this didn't solve my problem either. It seems that the
+</I>&gt;<i> &gt;interlaced picture is sometimes ok but most of the time not. 
+</I>&gt;<i> 
+</I>&gt;<i> I have same problem becouse somehow softdevice wont use interrupt.
+</I>&gt;<i> 
+</I>&gt;<i> You can check it yourself: cat /proc/interrupts
+</I>&gt;<i> 
+</I>I'm not sure if it's that easy. I read from the DirectFB Changelog that IRQ is used only when there's actually traffic on /dev/fb?. So I think you should be running softdevice while you log in yourself via ssh or similar from anoter computer.  Quote from the changelog (sorry if it's garbled):
+
+2003-04-05   syrjala	21:04:23	Ville Syrjala &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">syrjala at sci.fi</A>&gt;
+
+	Files:	patches/matroxfb-vsync-c2vline-irq-patch-2.4.19.bz2 (1.4) (+0 -0)
+		patches/matroxfb-vsync-irq-2.4.21-pre6.patch.bz2 (1.1) ( )
+		patches/matroxfb-vsync-irq-2.4.20.patch.bz2 (1.1) ( )
+	
+	Improved matroxfb vsync patch.
+	
+	- Move wait queues to the matrox_fb_info struct. Should allow more than
+	  one card to work at the same time.
+	- Enable irq only when /dev/fbX is opened. I think this should eliminate
+	  XFree86 hanging on startup.
+	- Use vline interrupt on the first head simply because it's easier to
+	  turn on/off than the vsync interrupt. It's programmed to trigger on
+	  vblank start.
+	- Check card type before trying to use the c2vline interrupt.
+
+So this is about those vsync patches for 2.4 kernels. I'm not sure if these patches are included in the 2.6 kernel or not but atleast they won't apply cleanly to 2.6.9 that I have. I tested some of these with --dry-run option. Here
+
+<A HREF="http://platan.vc.cvut.cz/ftp/pub/linux/matrox-latest/">http://platan.vc.cvut.cz/ftp/pub/linux/matrox-latest/</A>
+
+seems to be also some patches for matroxfb but I haven't found out what do they actually do.. 
+
+This could be even problem with my mainboard which is Asrock K7S8X. I've read about (and previosly experienced myself) problems with its APIC. 
+
+Is someone having good interlaced picture with G450, G550 or G400 using s-video or scart-rgb and directfb? 
+
+..............................................................
+ MTV3 Laajakaista - Hauskemman el&#228;m&#228;n puolesta.
+ <A HREF="http://www.mtv3.fi/liittyma/hankinta/laajakaista/">http://www.mtv3.fi/liittyma/hankinta/laajakaista/</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000167.html">[Softdevice-devel] problems with mgatv
+</A></li>
+	<LI>Next message: <A HREF="000179.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#174">[ date ]</a>
+              <a href="thread.html#174">[ thread ]</a>
+              <a href="subject.html#174">[ subject ]</a>
+              <a href="author.html#174">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

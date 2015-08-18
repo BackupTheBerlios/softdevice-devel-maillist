@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] just recompiled, now fails to run..
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20just%20recompiled%2C%20now%20fails%20to%20run..&In-Reply-To=%3C9F84AAE5-5E94-428E-96E4-73935C69C9AB%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002565.html">
+   <LINK REL="Next"  HREF="002556.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] just recompiled, now fails to run..</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20just%20recompiled%2C%20now%20fails%20to%20run..&In-Reply-To=%3C9F84AAE5-5E94-428E-96E4-73935C69C9AB%40pobox.com%3E"
+       TITLE="[Softdevice-devel] just recompiled, now fails to run..">torgeir at pobox.com
+       </A><BR>
+    <I>Fri Sep 29 14:19:39 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002565.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002556.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2555">[ date ]</a>
+              <a href="thread.html#2555">[ thread ]</a>
+              <a href="subject.html#2555">[ subject ]</a>
+              <a href="author.html#2555">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I just updated and recompiled DirectFB and softdevice to test the  
+fixes for interlaced output, but now vdr won't start again. I've seen  
+it before but I don't remember how I fixed it. Can anyone give me a  
+hint?
+
+log:
+
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G550 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 33554432 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine  
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Src.premultiply
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize  
+SrcColorkey SrcPremultiply Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>  
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A>
+[dfb] Enumerating display Layers
+Layer 2 FBDev Primary Layer  Type: graphics
+   Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+   Caps: brightness contrast deinterlacing dst_colorkey  
+screen_location surface
+Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+   Caps: brightness contrast hue field_parity saturation surface
+[dfb] (osdLayer): flags, options, pixelformat: 0000005f, 00000000  
+00418c04
+[dfb] (osdLayer): width, height:               720 576
+[dfb] osdLayer without !! alpha channel
+[dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+[dfb] DLOP_FIELD_PARITY supported by layer [Matrox CRTC2 Layer]
+[surface capabilities] scrSurface: videoonly flipping interlaced  
+triple-buffered (!) [20966:    0.000] --&gt; Caught signal 11 (at 0x2d0,  
+invalid address) &lt;--
+/usr/local/bin/rundfb: line 17: 20966 Killed                  ./vdr - 
+v /video/vdr -m 0 -s &quot;killall vdr;/bin/false&quot; -P&quot;softdevice -vo  
+dfb:mgatv&quot; -P&quot;remote -i /dev/input/event2&quot; -P&quot;remote -i /dev/input/ 
+event1&quot; -P&quot;softplay --media-path /video/vdr&quot; -Pdvd -Pfemon
+Fri Sep 29 13:20:02 BST 2006
+restarting VDR
+
+gdb with backtrace give me this:
+
+[dfb] (osdLayer): flags, options, pixelformat: 0000005f, 00000000  
+00418c04
+[dfb] (osdLayer): width, height:               720 576
+[dfb] osdLayer without !! alpha channel
+[dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+[dfb] DLOP_FIELD_PARITY supported by layer [Matrox CRTC2 Layer]
+[surface capabilities] scrSurface: videoonly flipping interlaced  
+triple-buffered
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread -1208375072 (LWP 21000)]
+0x002acb91 in reportSurfaceCapabilities (name=Variable &quot;name&quot; is not  
+available.
+) at video-dfb.c:195
+195       fprintf(stderr, &quot;PixelFormat = 0x%08x &quot;, surf- 
+ &gt;GetPixelFormat());
+Current language:  auto; currently c++
+(gdb) ba
+#0  0x002acb91 in reportSurfaceCapabilities (name=Variable &quot;name&quot; is  
+not available.
+) at video-dfb.c:195
+#1  0x002af629 in cDFBVideoOut (this=0x92ba128, setupStore=0x170940)  
+at video-dfb.c:402
+#2  0x002afe27 in SubPluginCreator (s=0x170940) at video-dfb.c:1620
+#3  0x0014d6f7 in cSoftDevice::LoadSubPlugin (this=0x92b9060,  
+outMethodName=0x1672bd &quot;dfb&quot;,
+     pluginPath=0x8f18800 &quot;./PLUGINS/lib/&quot;) at softdevice.c:355
+#4  0x0014dd0e in cSoftDevice (this=0x92b9060, method=3, audioMethod=1,
+     pluginPath=0x8f18800 &quot;./PLUGINS/lib/&quot;) at softdevice.c:211
+#5  0x0014de26 in cPluginSoftDevice::Initialize (this=0x8f187e0) at  
+softdevice.c:1039
+#6  0x080cc58c in cPluginManager::InitializePlugins (this=0xbff0bed4)  
+at plugin.c:340
+#7  0x080fb9c0 in main (argc=Cannot access memory at address 0x1
+) at vdr.c:568
+(gdb)
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002565.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002556.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2555">[ date ]</a>
+              <a href="thread.html#2555">[ thread ]</a>
+              <a href="subject.html#2555">[ subject ]</a>
+              <a href="author.html#2555">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

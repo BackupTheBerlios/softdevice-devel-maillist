@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay features / keys
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20features%20/%20keys&In-Reply-To=%3C427FE1F6.2080005%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000627.html">
+   <LINK REL="Next"  HREF="000630.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay features / keys</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20features%20/%20keys&In-Reply-To=%3C427FE1F6.2080005%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softplay features / keys">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue May 10 00:19:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000627.html">[Softdevice-devel] softplay features / keys
+</A></li>
+        <LI>Next message: <A HREF="000630.html">[Softdevice-devel] Softplay : Bugs/features
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#635">[ date ]</a>
+              <a href="thread.html#635">[ thread ]</a>
+              <a href="subject.html#635">[ subject ]</a>
+              <a href="author.html#635">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nicolas Huillard wrote:
+
+&gt;<i> Since you code faster than I think, I'll try not to forget anything and 
+</I>&gt;<i> reply promptly !
+</I>I guess I will have to slow down soon, I still have different things to 
+do than coding...
+
+&gt;<i> 
+</I>&gt;<i> Maybe keys from the DVD plugin should be the model to follow, regarding 
+</I>&gt;<i> albums as titles/chapters in the DVD realm.
+</I>&gt;<i> Am I right to think replaying will work for both audio and video in 
+</I>&gt;<i> either mode (playlist playback and single file playback) ?
+</I>&gt;<i> In that case, the left/right/up/down keys should remain the same (ie. 
+</I>&gt;<i> resp. rewind/fastforward/play/pause).
+</I>Good point. I was about not to have a rewind/fast forward function in 
+playlist mode, and use those keys instead for next/previous file/album. 
+But yes, the playlist mode is supposed to work also with video files.
+What about the Green and Yellow button, they are supposed to skip 
+forward/backward. Maybe I should use them for next/previous file?
+
+&gt;<i> The DVD-plugin uses the numeric keys for title/chapter navigation. Could 
+</I>&gt;<i> those keys be used for previous/next song, previous/next album, and so on ?
+</I>Actualy that's one of the features of the DVD-plugin I don't really 
+like. I can never remember which numeric key belongs to which function. 
+Is there anyone who actualy uses these features and knows the keys and 
+functions by heart? For me it's just not intuitive, but currently I 
+don't have a much better idea.
+
+&gt;<i> When the playlist is actually on-screen, the direction-keys can be used 
+</I>&gt;<i> for navigation (down goes down, ie. select next song, right enters the 
+</I>&gt;<i> album, etc.) OK can be used as in the channel-list view : play the song.
+</I>That's almost like it is now :-) Expect that left and right a currently 
+unused (I think vdr skips pages when pressing left and right, but that 
+can be changed). Opening albums works with OK, but currently the 
+playlist is always expanded in replay mode. So albums are only visible 
+in edit mode.
+Right now the playlist is always shuffled, but just because I didn't add 
+a switch for disable shuffleing.
+
+&gt;<i> 
+</I>&gt;<i> User interface is difficult to make right,
+</I>That's true ;-) For me the most important thing would be that one 
+doesn't have to read through pages of manual to be able to use the main 
+features of the plugin. It should just behave like one would expect, but 
+what is it that people expect?
+
+&gt;<i> current state to discuss it clearly. I'll surely have more to say once I 
+</I>&gt;<i> compile your plugin, and actually see it on screen.
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Yesterday I rewrote the playlist support almost completly to get the 
+</I>&gt;&gt;<i> album support, and now I've almost all features I already implemented 
+</I>&gt;&gt;<i> the day before yesterday. I will commit these changes sometimes this 
+</I>&gt;&gt;<i> evening.
+</I>
+I commited my last changes to the CVS, now adding and deleting to the 
+current playlist during playback is possible, but not really stable 
+right now. Maybe I have to rethink the shuffle support, this makes 
+deleting and adding really complicated :-(
+
+Good night,
+Martin
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000627.html">[Softdevice-devel] softplay features / keys
+</A></li>
+	<LI>Next message: <A HREF="000630.html">[Softdevice-devel] Softplay : Bugs/features
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#635">[ date ]</a>
+              <a href="thread.html#635">[ thread ]</a>
+              <a href="subject.html#635">[ subject ]</a>
+              <a href="author.html#635">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

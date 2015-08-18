@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Epia EN1500G + softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C48D526DE.9000200%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003139.html">
+   <LINK REL="Next"  HREF="003143.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Epia EN1500G + softdevice</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C48D526DE.9000200%40globall.ru%3E"
+       TITLE="[Softdevice-devel] Epia EN1500G + softdevice">bob at globall.ru
+       </A><BR>
+    <I>Sat Sep 20 18:37:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003139.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+        <LI>Next message: <A HREF="003143.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3140">[ date ]</a>
+              <a href="thread.html#3140">[ thread ]</a>
+              <a href="subject.html#3140">[ subject ]</a>
+              <a href="author.html#3140">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo wrote:
+&gt;<i> On 21 Sep 2008, at 01:06, Vladimir Monchenko wrote:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> On video I see movement artefacts, jitter and small jerks on the
+</I>&gt;&gt;<i> scrolling text. CPU is loaded on 50-55 % at live video or record  
+</I>&gt;&gt;<i> playback.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> You might be experiencing a problem with the video hardware not being  
+</I>&gt;<i> able to use an irq. Are you seeing about 10 FPS video playback?
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>I see complete 25 FPS video playback and I do not receive in log 
+messages of resync video and sound.
+Here a complete log vdr sessions - start vdr, start playback records and 
+in 2,5 minutes shutdown vdr.
+
+Sep 19 20:18:07 epia-en vdr: [4946] VDR version 1.6.0-2 started
+Sep 19 20:18:07 epia-en vdr: [4946] codeset is 'UTF-8' - known
+Sep 19 20:18:08 epia-en vdr: [4946] found 23 locales in /usr/share/locale
+Sep 19 20:18:08 epia-en vdr: [4946] loading plugin: 
+/usr/lib/vdr/libvdr-softdevice.so.1.6.0
+Sep 19 20:18:09 epia-en vdr: [4946] loading plugin: 
+/usr/lib/vdr/libvdr-softplay.so.1.6.0
+Sep 19 20:18:09 epia-en vdr: [4946] loading /etc/vdr/setup.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/sources.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/diseqc.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/channels.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/timers.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/reccmds.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/svdrphosts.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/remote.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/keymacros.conf
+Sep 19 20:18:10 epia-en vdr: [4946] ERROR: unknown plugin 'prefermenu'
+Sep 19 20:18:10 epia-en vdr: [4946] ERROR: empty key macro
+Sep 19 20:18:10 epia-en vdr: [4947] video directory scanner thread 
+started (pid=4946, tid=4947)
+Sep 19 20:18:10 epia-en vdr: [4948] video directory scanner thread 
+started (pid=4946, tid=4948)
+Sep 19 20:18:10 epia-en vdr: [4947] video directory scanner thread ended 
+(pid=4946, tid=4947)
+Sep 19 20:18:10 epia-en vdr: [4948] video directory scanner thread ended 
+(pid=4946, tid=4948)
+Sep 19 20:18:10 epia-en vdr: [4946] reading EPG data from 
+/mnt/pub/video/epg.data
+Sep 19 20:18:10 epia-en vdr: [4946] no DVB device found
+Sep 19 20:18:10 epia-en vdr: [4946] initializing plugin: softdevice 
+(0.5.0): ??????????-??????????? MPEG-2 ??????????
+Sep 19 20:18:10 epia-en vdr: [4946] [dfb] init
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Supported video Modes are:
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Enumerating display Layers
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Configuring CooperativeLevel 
+for OSD
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] disabling hw-decode support 
+for this layer
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (osdLayer): flags, options, 
+pixelformat: 0000000f, 00000000 80418c0d
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (osdLayer): width, height: 720 576
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] osdLayer has alpha channel
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Set DLBM_TRIPLE for layer [VIA 
+Unichrome Video 3]
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] DLOP_FIELD_PARITY supported by 
+layer [VIA Unichrome Video 3]
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Set layer [VIA Unichrome Video 
+3] to (TOP field first)
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(scrSurface): videoonly, double-buffered, flipping, PixelFormat = 0x80418c0d
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] width = 720, height = 576
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] got fmt = 0x80418c0d bpp = 32
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Using this layer for OSD: (VIA 
+CLE266 Graphics - [720x576])
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(osdSurface): videoonly, double-buffered, flipping, PixelFormat = 0x00418c04
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Configuring CooperativeLevel 
+for Overlay
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(videoSurface): videoonly, PixelFormat = 0x00200806
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Using this layer for OSD: VIA 
+CLE266 Graphics
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Using this layer for Video 
+out: VIA Unichrome Video 3
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Display frame time is 20008 
+microseconds
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (re)configuring Videolayer to 
+720 x 576 (720x576)
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (re)configured 0x00200806
+Sep 19 20:18:11 epia-en vdr: [4946] [softdevice-audio] Opening alsa 
+device default
+Sep 19 20:18:11 epia-en vdr: [4946] [softdevice-audio] Using alsa AC3 
+device hw:0,1
+Sep 19 20:18:11 epia-en vdr: [4946] [softdevice-audio] Device opened! 
+Ready to play
+Sep 19 20:18:11 epia-en vdr: [4946] initializing plugin: softplay 
+(0.0.2): SoftPlay play media files with the softdevice
+Sep 19 20:18:11 epia-en vdr: [4946] setting primary device to 1
+Sep 19 20:18:11 epia-en vdr: [4946] assuming manual start of VDR
+Sep 19 20:18:11 epia-en vdr: [4946] SVDRP listening on port 2001
+Sep 19 20:18:11 epia-en vdr: [4946] setting current skin to &quot;sttng&quot;
+Sep 19 20:18:11 epia-en vdr: [4946] loading 
+/etc/vdr/themes/sttng-default.theme
+Sep 19 20:18:11 epia-en vdr: [4946] starting plugin: softdevice
+Sep 19 20:18:11 epia-en vdr: [4946] plugin 'softdevice' called obsolete 
+function RegisterI18n()
+Sep 19 20:18:11 epia-en vdr: [4946] starting plugin: softplay
+Sep 19 20:18:11 epia-en vdr: [4946] plugin 'softplay' called obsolete 
+function RegisterI18n()
+Sep 19 20:18:11 epia-en vdr: [4954] KBD remote control thread started 
+(pid=4946, tid=4954)
+Sep 19 20:18:11 epia-en vdr: [4946] remote control softdevice-dfb - keys 
+known
+Sep 19 20:18:11 epia-en vdr: [4946] remote control KBD - keys known
+Sep 19 20:18:11 epia-en vdr: [4946] switching to channel 1
+Sep 19 20:18:11 epia-en vdr: [4946] info: ????? ??????????!
+Sep 19 20:18:13 epia-en vdr: [4946] switching to channel 1
+Sep 19 20:18:13 epia-en vdr: [4946] info: ????? ??????????!
+Sep 19 20:18:14 epia-en vdr: [4953] [VideoOut]: resolution changed: 
+W(720 -&gt; 736); H(576 -&gt;576)
+Sep 19 20:18:14 epia-en vdr: [4953] [VideoOut]: 736x576 [0,0 736x576] -&gt; 
+720x576 [14,0 690x576]
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] (re)configuring Videolayer to 
+736 x 576 (736x576)
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] (re)configured 0x00200806
+Sep 19 20:18:16 epia-en vdr: [4946] replay 
+/mnt/pub/video/C1R-Europe/2008-09-13.20.25.50.99.rec
+Sep 19 20:18:16 epia-en vdr: [4946] playing 
+'/mnt/pub/video/C1R-Europe/2008-09-13.20.25.50.99.rec/001.vdr'
+Sep 19 20:18:16 epia-en vdr: [4960] dvbplayer thread started (pid=4946, 
+tid=4960)
+Sep 19 20:18:16 epia-en vdr: [4960] playing 
+'/mnt/pub/video/C1R-Europe/2008-09-13.20.25.50.99.rec/003.vdr'
+Sep 19 20:18:16 epia-en vdr: [4960] resuming replay at index 262713 
+(2:55:08.14)
+Sep 19 20:18:16 epia-en vdr: [4961] non blocking file reader thread 
+started (pid=4946, tid=4961)
+Sep 19 20:18:16 epia-en vdr: [4960] SetBrokenLink: no GOP header found 
+in video packet
+Sep 19 20:18:16 epia-en vdr: [4959] [VideoOut] reset: sync info: repF = 
+0, drpF = 0, totF = 0
+Sep 19 20:18:16 epia-en vdr: [4960] setting audio track to 1 (0)
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Playback reopen 
+error: CH2, ??? ?????? ????? ??? ????????
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] samplerate: 
+48000Hz, channels: #2
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Device 'default', 
+Samplerate 48000 Channels 2
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Period size 1152 
+Buffer size 9216
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Hardware initialized
+Sep 19 20:18:16 epia-en vdr: [4962] [VideoOut]: resolution changed: 
+W(736 -&gt; 720); H(576 -&gt;576)
+Sep 19 20:18:16 epia-en vdr: [4962] [VideoOut]: aspect changed (0 -&gt; 0 ; 
+1.366667 -&gt; 1.333333)
+Sep 19 20:18:16 epia-en vdr: [4962] [VideoOut]: 720x576 [0,0 720x576] -&gt; 
+720x576 [0,0 720x576]
+Sep 19 20:18:16 epia-en vdr: [4962] [dfb] (re)configuring Videolayer to 
+720 x 576 (720x576)
+Sep 19 20:18:16 epia-en vdr: [4962] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 19 20:18:17 epia-en vdr: [4962] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 19 20:18:17 epia-en vdr: [4962] [dfb] (re)configured 0x00200806
+Sep 19 20:18:20 epia-en vdr: [4962] [VideoOut] video now synced (70 - -270)
+Sep 19 20:20:01 epia-en cron[4965]: (root) CMD (test -x 
+/usr/sbin/run-crons &amp;&amp; /usr/sbin/run-crons )
+Sep 19 20:20:57 epia-en vdr: [4961] non blocking file reader thread 
+ended (pid=4946, tid=4961)
+Sep 19 20:20:57 epia-en vdr: [4960] dvbplayer thread ended (pid=4946, 
+tid=4960)
+Sep 19 20:20:57 epia-en vdr: [4946] switching to channel 1
+Sep 19 20:20:57 epia-en vdr: [4946] info: ????? ??????????!
+Sep 19 20:21:00 epia-en vdr: [4946] confirm: ????????????? ??????????????
+Sep 19 20:21:00 epia-en vdr: [4946] warning: ????????????? ??????????????
+Sep 19 20:21:00 epia-en vdr: [4946] confirmed
+Sep 19 20:21:00 epia-en vdr: [4946] stopping plugin: softplay
+Sep 19 20:21:00 epia-en vdr: [4946] stopping plugin: softdevice
+Sep 19 20:21:00 epia-en vdr: [4954] KBD remote control thread ended 
+(pid=4946, tid=4954)
+Sep 19 20:21:00 epia-en vdr: [4946] saved setup to /etc/vdr/setup.conf
+Sep 19 20:21:00 epia-en vdr: [4946] Releasing DFB
+Sep 19 20:21:01 epia-en vdr: [4946] [VideoOut]: Good bye
+Sep 19 20:21:01 epia-en vdr: [4946] deleting plugin: softplay
+Sep 19 20:21:01 epia-en vdr: [4946] deleting plugin: softdevice
+Sep 19 20:21:01 epia-en vdr: [4946] exiting, exit code 1
+Sep 19 20:22:10 epia-en sshd[4983]: Accepted keyboard-interactive/pam 
+for root from 192.168.2.3 port 34342 ssh2
+Sep 19 20:22:10 epia-en sshd[4988]: pam_unix(sshd:session): session 
+opened for user root by root(uid=0)
+
+Regards,
+Vladimir Monchenko.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003139.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+	<LI>Next message: <A HREF="003143.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3140">[ date ]</a>
+              <a href="thread.html#3140">[ thread ]</a>
+              <a href="subject.html#3140">[ subject ]</a>
+              <a href="author.html#3140">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

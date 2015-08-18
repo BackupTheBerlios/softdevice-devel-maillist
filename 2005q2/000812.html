@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20%2B%20directfb%20%2B%20g400%20TV%20out%20problem.&In-Reply-To=%3CPine.LNX.4.62.0506061228500.12980%40lakka%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000808.html">
+   <LINK REL="Next"  HREF="000813.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice + directfb + g400 TV out problem.</H1>
+    <B>Tommi Lundell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20%2B%20directfb%20%2B%20g400%20TV%20out%20problem.&In-Reply-To=%3CPine.LNX.4.62.0506061228500.12980%40lakka%3E"
+       TITLE="[Softdevice-devel] Softdevice + directfb + g400 TV out problem.">prelude at kapsi.fi
+       </A><BR>
+    <I>Mon Jun  6 11:32:18 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000808.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+        <LI>Next message: <A HREF="000813.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#812">[ date ]</a>
+              <a href="thread.html#812">[ thread ]</a>
+              <a href="subject.html#812">[ subject ]</a>
+              <a href="author.html#812">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Mon, 6 Jun 2005, Lucian Muresan wrote:
+
+&gt;<i> Lucian Muresan wrote:
+</I>&gt;&gt;<i> Stefan Lucke wrote:
+</I>&gt;&gt;&gt;<i> On Sonntag, 5. Juni 2005 19:23, Ari Koponen wrote:
+</I>&gt;&gt;&gt;&gt;<i> &gt; [dfb] width = 720, height = 576
+</I>&gt;&gt;&gt;&gt;<i> &gt; [dfb] got fmt = 0x00418c04 bpp = 32
+</I>&gt;&gt;&gt;&gt;<i> &gt; (!) [ 6288:    1.152] --&gt; Caught signal 6 (sent by pid 6288, uid 0) &lt;--
+</I>&gt;&gt;&gt;&gt;<i> &gt; (!) Direct/Thread: Killing 'Fusion Dispatch' (6294)!
+</I>&gt;&gt;&gt;&gt;<i> &gt; Killed
+</I>&gt;&gt;&gt;&gt;<i> &gt; &lt;clip&gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; &gt; Problem coming from line 431 in video-dfb.c
+</I>&gt;&gt;&gt;&gt;<i> &gt;    osdSurface   = dfb-&gt;CreateSurface (osdDsc);
+</I>&gt;&gt;&gt;&gt;<i> &gt; &gt; Any idea how i can get it working?
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> How about the graphics card memory, is DirectFB seeing all the memory
+</I>&gt;&gt;&gt;&gt;<i> your card has? If not you could apply the full memory kernel patch
+</I>&gt;&gt;&gt;&gt;<i> that comes with DFB.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Good idea, but unfortunately reporting video memory is disabled
+</I>&gt;&gt;&gt;<i> for directfb incompatibilty break.. So the question is:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I sent a simple patch to this, I guess a week ago. Did it get lost? Here it 
+</I>&gt;&gt;<i> is again.
+</I>&gt;<i>
+</I>&gt;<i> Sorry, previous one was missing the reported RAM line. Corrected patch 
+</I>&gt;<i> attached,
+</I>&gt;<i>
+</I>&gt;<i> Lucian
+</I>
+I added that patch to source and now it's report:
+
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 8388608 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle Blit StretchBlit All
+
+That 8MB look's pretty low so maybe that is problem.
+Now i need to find how i can add more memory to DFB.
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000808.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+	<LI>Next message: <A HREF="000813.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#812">[ date ]</a>
+              <a href="thread.html#812">[ thread ]</a>
+              <a href="subject.html#812">[ subject ]</a>
+              <a href="author.html#812">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

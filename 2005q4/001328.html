@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Fwd: [vdr] [ANNOUNCE] vdr-softdevice-0.2.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Fwd%3A%20%5Bvdr%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.0&In-Reply-To=%3C200510081555.27315.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001327.html">
+   <LINK REL="Next"  HREF="001330.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Fwd: [vdr] [ANNOUNCE] vdr-softdevice-0.2.0</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Fwd%3A%20%5Bvdr%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.0&In-Reply-To=%3C200510081555.27315.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Fwd: [vdr] [ANNOUNCE] vdr-softdevice-0.2.0">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Oct  8 15:55:27 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001327.html">[Softdevice-devel] Softdevice hangs?
+</A></li>
+        <LI>Next message: <A HREF="001330.html">[Softdevice-devel] playing music ac3 files with softplay :-)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1328">[ date ]</a>
+              <a href="thread.html#1328">[ thread ]</a>
+              <a href="subject.html#1328">[ subject ]</a>
+              <a href="author.html#1328">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+----------  Forwarded Message  ----------
+
+Subject: [vdr] [ANNOUNCE] vdr-softdevice-0.2.0
+Date: Samstag, 8. Oktober 2005 15:27
+From: Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">vdr at linuxtv.org</A>
+
+Hello,
+
+softdevice team (Torgeir Veimo, Martin Wache and me, Stefan Lucke)
+is pleased to announce a new release of vdr softdevice plugin.
+
+General info:
+  Softdevice plugin enables vdr to run on your desktop with
+  so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+  DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+
+Special in this release (from README):
+- AC3 pass through:
+  For using AC3 pass through, you have to specify the IEC958 device name of
+  your sound card. Which device to use, can be checked with ac3play.
+  For my system, ac3play works with: &quot;ac3play -C -D 0,1 AC3_FILE_NAME&quot;
+  So my vdr call with parameter list for softdevice looks like:
+  -P &quot;softdevice -ao alsa:pcm=default#ac3=hw:0,1# -vo dfb:mgatv&quot;
+  Notice the trailing '#' of the last alsa subparameter.
+  AC3 pass through is mainly based on the code of ac3play-0.5.2f, so
+  many thanks to the authors of that program.
+
+- configure script
+  By default you should &quot;cd&quot; to softdevice directory and run &quot;./configure&quot; .
+  This will generate config.h and config.mak files, which will guide make.
+  Available parameters of configure are listed by &quot;./configure --help&quot; .
+  To get rid of these generated files a &quot;make dist-clean&quot; should be done.
+  Without running configure, you'll have to modify the Makefile to your needs.
+
+Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+
+Changelog since last release:
+2005-10-08: softdevice-0.2.0
+2005-10-07:
+    - dfb+vidix: fix colored shadow bug for some crop modes
+    - configure: fix VIDIX_DIR path
+2005-10-06:
+    - configure: check if X11 is present
+    - audio: AC3 pass through
+2005-09-18:
+    - Makefile: compatibility for build without configure
+    - subplugin targets: changed prefix from libvdr to libsubvdr. so it doesn't
+      interfere with vdr's &quot;load all plugins&quot; for plain help command.
+2005-09-17:
+    - configure: check if vidix compiles, optionally disable fb-out via
+                 command line &quot;--disable-fb&quot; and/or subplugins via &quot;--disable-subplugins&quot;
+2005-09-16:
+    - introduce audio debug
+    - return 0 in GetDelay if pcm is not running
+2005-09-15:
+    - modified previous OSD redraw handling (timed redraw after _all_ OSD bitmaps
+      have been drawn)
+    - video-dfb: keyrepeat handling + configure check for DIET_REPEAT
+2005-09-11:
+    - fix for segfaults with some OSD activity
+    - introduced configure script: try ./configure --help
+2005-09-06:
+    - video-out (all methods): fix for missing actions upon aspect ratio change
+    - audio-out: fix potentially div by zero.
+
+-- 
+Stefan Lucke
+
+
+_______________________________________________
+vdr mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">vdr at linuxtv.org</A>
+<A HREF="http://www.linuxtv.org/cgi-bin/mailman/listinfo/vdr">http://www.linuxtv.org/cgi-bin/mailman/listinfo/vdr</A>
+
+
+-------------------------------------------------------
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001327.html">[Softdevice-devel] Softdevice hangs?
+</A></li>
+	<LI>Next message: <A HREF="001330.html">[Softdevice-devel] playing music ac3 files with softplay :-)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1328">[ date ]</a>
+              <a href="thread.html#1328">[ thread ]</a>
+              <a href="subject.html#1328">[ subject ]</a>
+              <a href="author.html#1328">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

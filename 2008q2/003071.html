@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%201.6.0%2C%20old%20recordings%20and%20bad%20audio&In-Reply-To=%3C200804161053.16022.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003070.html">
+   <LINK REL="Next"  HREF="003073.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr 1.6.0, old recordings and bad audio</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%201.6.0%2C%20old%20recordings%20and%20bad%20audio&In-Reply-To=%3C200804161053.16022.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] vdr 1.6.0, old recordings and bad audio">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Apr 16 10:53:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003070.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+        <LI>Next message: <A HREF="003073.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3071">[ date ]</a>
+              <a href="thread.html#3071">[ thread ]</a>
+              <a href="subject.html#3071">[ subject ]</a>
+              <a href="author.html#3071">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 16 April 2008, Malcolm Caldwell wrote:
+&gt;<i> On Wed, 2008-04-16 at 09:50 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Wednesday 16 April 2008, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; &gt; (Starting a new thread with an appropriate subject).
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I still have the issue that with vdr 1.6.0, recent softdevice cvs,
+</I>&gt;<i> &gt; &gt; recent ffmpeg svn I have my recordings playing with audio that is played
+</I>&gt;<i> &gt; &gt; too fast and stuttering.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; By too fast I mean that for every minute of playback the audio gets out
+</I>&gt;<i> &gt; &gt; of sync by about 5 seconds.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 5 seconds per minute is a big gap.
+</I>&gt;<i> &gt; Should we look into NTSC vs PAL issues ?
+</I>&gt;<i> 
+</I>&gt;<i> This is all PAL material (I live in Australia which is a PAL country)
+</I>&gt;<i> 
+</I>&gt;<i> (I do have NTSC channels I can pick up via Satellite.  I have not tried
+</I>&gt;<i> those recently, but in the past softdevice has not handled them at all
+</I>&gt;<i> well due to the g450 being set at program startup from /etc/directfbrc
+</I>&gt;<i> to PAL)
+</I>
+Newer DirectFB versions look for /usr/local/etc/directfbrc I guess
+(/usr/local = $TARGETDIR).
+
+&gt;<i> 
+</I>&gt;<i> Do you think that somehow vdr things my old recordings are NTSC instead
+</I>&gt;<i> of PAL?
+</I>
+No, I only did a search for NTSC in our mail archive and your name
+was found a few times.
+I guess your recordings won't change TV-norm just when they are replayed
+with a different vdr ;-).
+
+So I think it's best to get a short example from you and play around
+with pts tracing in different vdr versions.
+
+&gt;<i> 
+</I>&gt;<i> &gt; Do you use other patches/plugins that use GetVideoSystem() ?
+</I>&gt;<i> 
+</I>&gt;<i> I have streamdev installed, but I don't use it much.
+</I>&gt;<i> 
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003070.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+	<LI>Next message: <A HREF="003073.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3071">[ date ]</a>
+              <a href="thread.html#3071">[ thread ]</a>
+              <a href="subject.html#3071">[ subject ]</a>
+              <a href="author.html#3071">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

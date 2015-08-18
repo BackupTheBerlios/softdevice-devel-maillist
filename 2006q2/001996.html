@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605092302.37838.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001990.html">
+   <LINK REL="Next"  HREF="001998.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605092302.37838.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Wed May 10 00:02:37 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001990.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+        <LI>Next message: <A HREF="001998.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1996">[ date ]</a>
+              <a href="thread.html#1996">[ thread ]</a>
+              <a href="subject.html#1996">[ subject ]</a>
+              <a href="author.html#1996">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tuesday 09 May 2006 19:15, Stefan Lucke wrote:
+&gt;<i> On Dienstag 09 Mai 2006 10:56, Laz wrote:
+</I>&gt;<i> &gt; With cvs from a couple of weeks back, the only time I see transparency is
+</I>&gt;<i> &gt; when I have black text which becomes totally see-through (with
+</I>&gt;<i> &gt; skinsopalusika). Setting the colour to something like 0x111111 does make
+</I>&gt;<i> &gt; it opaque again.
+</I>&gt;<i>
+</I>&gt;<i> Full black is full transparent now ?
+</I>
+Yes: took me a while to work out what was wrong. It's quite difficult to spot 
+transparent text in an opaque background!
+
+;)
+
+&gt;<i> Colud be either an issue with AlphaInversed at line 1091 or
+</I>&gt;<i> with SetLevel (1)  at line 763.
+</I>&gt;<i>
+</I>&gt;<i> Could you try setting AlphaInversed to false fixed, and/ or
+</I>&gt;<i> either skip the call of SetLevel or replacing that with SetLevel(-1).
+</I>
+I had a quick go at trying SetLevel(-1) after reading Readme.txt in the 
+DirectFB unichrome driver source. I can't actually remember what that did but 
+I lost either the OSD or the video layer completely!
+
+Just tested again: commenting out the SetLevel(1) made no difference; setting 
+it to -1 gives me no visible video, even when the OSD is absent. I also don't 
+see any glimpses of video through any of the text with it like this. I also 
+tried setting osdDsc.pixelformat = DSPF_AiRGB (see below) to no effect, i.e. 
+with SetLevel(-1) I still saw no video layer.
+
+Maybe this is a change in DirectFB so that the alpha channel isn't reversed 
+(assuming that's how it was before!). Just had a quick go setting 
+AlphaInversed to false and it didn't seem to have any effect at all.
+
+Maybe this is something deeper in SoftOsd.c? Not really delved into that 
+yet...
+
+&gt;<i> Won't try that here at the moment, as my epia board acts as our
+</I>&gt;<i> productive dvb-t receiver. My dvb-s cards turned inoperable
+</I>&gt;<i> during some slight maintenance :-( .
+</I>&gt;<i>
+</I>&gt;<i> See (in german):
+</I>&gt;<i> <A HREF="http://www.vdr-portal.de/board/thread.php?threadid=44983">http://www.vdr-portal.de/board/thread.php?threadid=44983</A>
+</I>&gt;<i>
+</I>&gt;<i> &gt; I think that the depth of the alpha channel isn't quite as good as it
+</I>&gt;<i> &gt; ould like to be (I think I had to play about a bit with the colours
+</I>&gt;<i> &gt; before they were transparent and nicely alpha blended).
+</I>&gt;<i>
+</I>&gt;<i> Epia boards do not support 8bit alpha values, only 4 or 5bit
+</I>&gt;<i> (the higher ones).
+</I>
+Sounds familiar. To quote bits from the DirectFB unichrome Readme.txt file:
+
+Special features
+----------------
+
+* The video overlay layer can be placed beneath the primary layer,
+  which can have an alpha channel.
+
+  To enable this, set the level of the overlay to -1 (using SetLevel)
+  and enable the DLOP_ALPHACHANNEL option on the primary.  Then use
+  either ARGB or AiRGB as the primary pixel format (see also 'known
+  bugs and quirks' below).
+
+Known bugs and quirks
+---------------------
+
+* In underlay mode (see 'special features', above), the video
+  is fully visible where the primary layer's alpha is 255, and
+  invisible (= graphics visible) where the alpha is 0.
+
+  There are two options to overcome this:
+
+  The first is to use the special pixel format AiRGB.
+
+  The second is to XOR the alpha channel of the surface, e.g. just
+  before flipping the primary surface.
+
+
+Now this &quot;Special feature&quot; sounds like the behaviour we would want here but 
+the video layer is currently set to layer 1 rather than -1 (and see above!):
+
+if (isVIAUnichrome)
+            videoLayer-&gt;SetLevel(1);
+
+DLOP_ALPHACHANNEL is being enabled just above here, too. The pixel format is 
+DSPF_ARGB, as far as I can tell.
+
+More details:
+
+I generally use skinsoppalusikka and this appears as everything fully opaque 
+except black text (or anything else?) being fully transparent. Switching to 
+the standard vdr skin or the ST-TNG skin gives me a fully transparent 
+background with coloured opaque text, except for the selected line of a menu 
+or menu titles which have fully transparent text.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001990.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+	<LI>Next message: <A HREF="001998.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1996">[ date ]</a>
+              <a href="thread.html#1996">[ thread ]</a>
+              <a href="subject.html#1996">[ subject ]</a>
+              <a href="author.html#1996">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

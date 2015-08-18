@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Matrox TV-out vs kernel version...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20TV-out%20vs%20kernel%20version...&In-Reply-To=%3C200804121214.17011.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003056.html">
+   <LINK REL="Next"  HREF="003067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Matrox TV-out vs kernel version...</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20TV-out%20vs%20kernel%20version...&In-Reply-To=%3C200804121214.17011.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Matrox TV-out vs kernel version...">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr 12 12:14:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003056.html">[Softdevice-devel] Matrox TV-out vs kernel version...
+</A></li>
+        <LI>Next message: <A HREF="003067.html">[Softdevice-devel] Matrox TV-out vs kernel version...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3057">[ date ]</a>
+              <a href="thread.html#3057">[ thread ]</a>
+              <a href="subject.html#3057">[ subject ]</a>
+              <a href="author.html#3057">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 11 April 2008, Malcolm Caldwell wrote:
+&gt;<i> On Thu, 2008-04-10 at 09:46 +0100, Laz wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Probably more of a DirectFB question but thought I'd ask on here first 
+</I>&gt;<i> &gt; because it might be a more obvious effect to some of us!
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I'm using softdevice with DirectFB output with a Matrox G450 card using 
+</I>&gt;<i> &gt; TV-out.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I was using a 2.6.14.3 kernel which I can't remember if I patched with the 
+</I>&gt;<i> &gt; patches supplied with DirectFB and the picture I got was pretty stable. I 
+</I>&gt;<i> &gt; have now upgraded the kernel to 2.6.24.4 (needed newer DVB drivers). The 
+</I>&gt;<i> &gt; only patching I have done to the Matrox driver is to apply (by hand) 
+</I>&gt;<i> &gt; the &quot;full memory patch&quot;. I'm pretty sure that the picture is now not as 
+</I>&gt;<i> &gt; stable, giving the odd flicker every few seconds or so.
+</I>&gt;<i> 
+</I>&gt;<i> I also noticed a less stable picture when I recently upgraded my kernel.
+</I>&gt;<i> I am currently running 2.6.22.  Softdevice output shows significant
+</I>&gt;<i> numbers of repeated and dropped frames.  They are noticeable while
+</I>&gt;<i> watching.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Do I still need to apply the matroxfb-vsync-irq (and matroxfb-g400-clock?) 
+</I>&gt;<i> &gt; patches to get a stable picture or have these now been added to the 
+</I>&gt;<i> &gt; vanilla kernel driver?
+</I>&gt;<i> 
+</I>&gt;<i> Good question.  I did the full memory patch only: I did not think the
+</I>&gt;<i> other patches apply any more, but could well be wrong.
+</I>&gt;<i> 
+</I>
+Those other patches do not apply any more I guess too.
+
+But which method did you choose for softdevice to manage
+delays and syncing?
+
+&quot;Sync Mode&quot; could be : sig | usleep | rtc
+
+To my opinion it should be to &quot;sig&quot;.
+In kernel rtc code there are some changes (HPET timers).
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003056.html">[Softdevice-devel] Matrox TV-out vs kernel version...
+</A></li>
+	<LI>Next message: <A HREF="003067.html">[Softdevice-devel] Matrox TV-out vs kernel version...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3057">[ date ]</a>
+              <a href="thread.html#3057">[ thread ]</a>
+              <a href="subject.html#3057">[ subject ]</a>
+              <a href="author.html#3057">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

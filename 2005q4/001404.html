@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice-dfb contents ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-dfb%20contents%20%3F&In-Reply-To=%3C20051026080631.GA3927%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001400.html">
+   <LINK REL="Next"  HREF="001395.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice-dfb contents ?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-dfb%20contents%20%3F&In-Reply-To=%3C20051026080631.GA3927%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] softdevice-dfb contents ?">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Oct 26 10:06:31 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001400.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+        <LI>Next message: <A HREF="001395.html">[Softdevice-devel] Matrox G450 DirectFB output setup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1404">[ date ]</a>
+              <a href="thread.html#1404">[ thread ]</a>
+              <a href="subject.html#1404">[ subject ]</a>
+              <a href="author.html#1404">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Oct 26, 2005 at 12:09:50AM +0200, Nicolas Huillard wrote:
+&gt;<i> I put fprintf's in cDFBVideoOut::ProcessEvents to get remote key codes.
+</I>&gt;<i> What I didn't understand at first is that, using LIRC through DFB :
+</I>&gt;<i> 1) those codes are not the same as LIRC codes that the normal VDR LURC 
+</I>&gt;<i> remote receives
+</I>&gt;<i> 2) not all remote keys are actually received by DFB
+</I>
+I had similar problems with the bundled remote control unit of the
+Hauppauge Nova-T PCI 90002.  In that case, there are two translation
+tables that are fixed at compilation time: in the Linux kernel, and
+in DirectFB.  Some mappings were missing from the kernel, and DirectFB
+didn't define all key codes found in &lt;linux/input.h&gt;.  Both have been
+fixed since then.
+
+While looking at the DirectFB source code, I noticed that it in some
+cases maps multiple keys to the same symbol.  That was not an issue for
+me, but it might be for users of multimedia keyboards.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001400.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+	<LI>Next message: <A HREF="001395.html">[Softdevice-devel] Matrox G450 DirectFB output setup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1404">[ date ]</a>
+              <a href="thread.html#1404">[ thread ]</a>
+              <a href="subject.html#1404">[ subject ]</a>
+              <a href="author.html#1404">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

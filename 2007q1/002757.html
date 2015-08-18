@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703012138.20273.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002756.html">
+   <LINK REL="Next"  HREF="002758.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703012138.20273.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Mar  1 21:38:20 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002756.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002758.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2757">[ date ]</a>
+              <a href="thread.html#2757">[ thread ]</a>
+              <a href="subject.html#2757">[ subject ]</a>
+              <a href="author.html#2757">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 01 March 2007 20:03, Hugo Visser wrote:
+&gt;<i> On Mar 1, 2007, at 11:06 AM, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I just read the whole thread, and it appears you have the same problem
+</I>&gt;<i> &gt; than me :
+</I>&gt;<i> &gt; * broadcasters in your country send bogus aspect ratio information, or
+</I>&gt;<i> &gt; simply do not bother with 16:9 TVs
+</I>&gt;<i> &gt; * you actually have a 16:9 screen
+</I>&gt;<i> &gt; * Stefan and other core developers have quality programs with correct
+</I>&gt;<i> &gt; AFD, 16:9-aware broadcasters et al.
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> I think you're spot on. Real 16:9 broadcasts are slowly becoming  
+</I>&gt;<i> reality on the three public nets we have in the Netherlands. The  
+</I>&gt;<i> commercial channels like RTL 4 and such do not broadcast in 16:9 at  
+</I>&gt;<i> all. Most of their content is 4:3, but some of that (mostly series)  
+</I>&gt;<i> is 16:9 content, scaled or cropped to 4:3 adding black bars.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Maybe the solution is to toggle SoftDevice's cropmode behaviour from
+</I>&gt;<i> &gt; &quot;reduce image to fit on the screen, adding black bars&quot; to &quot;expand the
+</I>&gt;<i> &gt; image, without bothering with lost parts of the image, which happen to
+</I>&gt;<i> &gt; be black bars&quot;.
+</I>&gt;<i> 
+</I>&gt;<i> Thats what I meant with zooming the picture , in stead of cropping.  
+</I>&gt;<i> If soft device could zoom the picture up to the point that the added  
+</I>&gt;<i> black bars are gone, I'd be happy.
+</I>&gt;<i> 
+</I>&gt;<i> As a reference, this link describes the mythtv zooming: <A HREF="http://">http://</A> 
+</I>&gt;<i> www.mythtv.org/wiki/index.php/Aspect_ratio
+</I>
+Whats described there within section &quot;zoom&quot; is what we are actual doing.
+
+I took some screen shots of a broadcast which is 4:3 aspect with encoded
+black bars (letterboxed video). It is displayed via xv-out in a 1024x576 window.
+
+<A HREF="http://lucke.in-berlin.de/aspect-crop/DSC00082.JPG">http://lucke.in-berlin.de/aspect-crop/DSC00082.JPG</A>
+
+The initial crop mode is none, so I get black borders on all 4 sides.
+<A HREF="http://lucke.in-berlin.de/aspect-crop/DSC00083.JPG">http://lucke.in-berlin.de/aspect-crop/DSC00083.JPG</A>
+
+Now when I select cropmode 16:9, the corresponding 16:9 part of that
+video is taken and displayed in the whole area of the window.
+<A HREF="http://lucke.in-berlin.de/aspect-crop/DSC00084.JPG">http://lucke.in-berlin.de/aspect-crop/DSC00084.JPG</A>
+
+So I've a small problem in understanding what might be wrong in
+our zoom/crop-modes.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002756.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002758.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2757">[ date ]</a>
+              <a href="thread.html#2757">[ thread ]</a>
+              <a href="subject.html#2757">[ subject ]</a>
+              <a href="author.html#2757">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

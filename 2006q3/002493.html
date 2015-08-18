@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C1158601134.15103.38.camel%40marumake%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002490.html">
+   <LINK REL="Next"  HREF="002496.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Enable mgatv spic and YV12</H1>
+    <B>Heikki Lindholm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C1158601134.15103.38.camel%40marumake%3E"
+       TITLE="[Softdevice-devel] [PATCH] Enable mgatv spic and YV12">holindho at cs.helsinki.fi
+       </A><BR>
+    <I>Mon Sep 18 19:38:54 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002490.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+        <LI>Next message: <A HREF="002496.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2493">[ date ]</a>
+              <a href="thread.html#2493">[ thread ]</a>
+              <a href="subject.html#2493">[ subject ]</a>
+              <a href="author.html#2493">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ma, 2006-09-18 kello 18:44 +0200, Martin Wache kirjoitti:
+&gt;<i> Heikki Lindholm schrieb:
+</I>&gt;<i> &gt; ma, 2006-09-18 kello 11:39 +0200, Martin Wache kirjoitti:
+</I>&gt;<i> &gt;&gt; Heikki Lindholm schrieb:
+</I>&gt;<i> &gt;&gt;&gt; The included patch makes dfb:mgatv use YV12 colourspace for video and
+</I>&gt;<i> &gt;&gt;&gt; the hardware subpicture layer for OSD. The patch is a prime example of
+</I>&gt;<i> &gt;&gt;&gt; bad goal-oriented programming, but does what I wanted: improves
+</I>&gt;<i> &gt;&gt;&gt; performance to the level that my 450 MHz P2 can now function as a DVB
+</I>&gt;<i> &gt;&gt;&gt; box like no underpowered P2 has done before! Unfortunately, the patch
+</I>&gt;<i> &gt;&gt;&gt; probably breaks everything else, but I'm too lazy to clean it up.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; Can you please point out to me what the advantage of using the
+</I>&gt;<i> &gt;&gt; subpicture layer is? To me it looks like the main speed change is that
+</I>&gt;<i> &gt;&gt; you don't scale the osd. Or does the change to YV12 colourspace bring
+</I>&gt;<i> &gt;&gt; some speed advantage?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Wow - this list has wonky ordering. See my previous mail about this.
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> From you other mail:
+</I>&gt;<i> &gt; I didn't receive the above Martin's message at all - off list, perhaps? 
+</I>&gt;<i> &gt; Anyway, if it's still about the topic in question, the keyword for using 
+</I>&gt;<i> &gt; the subpicture layer from my perspective is 'incompetence': I couldn't 
+</I>&gt;<i> &gt; get crtc2 (mgatv) video layer working with YV12 colourspace and blitted 
+</I>&gt;<i> &gt; OSD, so, I thought maybe it'd work with a subpicture layer more 
+</I>&gt;<i> &gt; effortlessly, and it did. So, the advantage for me isn't the OSD really, 
+</I>&gt;<i> &gt; but the YV12 for the crtc2 video. YV12-&gt;YUY2 was simply too slow.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Ah, yes I see. I forgot that for mgatv the default is YUY2, I thought
+</I>&gt;<i> that it is I420. Of course YV12 is faster compared to YUY2...
+</I>&gt;<i> 
+</I>&gt;<i> Why is YUY2 is the default at all? Is the OSD not working at all or is
+</I>
+Don't ask me.
+
+&gt;<i> &gt; Using YV12 and LUT44 both bring advantages of reduced memory 
+</I>&gt;<i> &gt; requirements and are generally faster. I didn't implement the scaling 
+</I>&gt;<i> &gt; routines for the LUT44 OSD, because I simply didn't grasp the idea of 
+</I>&gt;<i> &gt; the existing code in 5 seconds, and realized that scaling would 
+</I>&gt;<i> &gt; practically never be required by the tv output.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Scaling LUT44 makes not much sense, the quality would be very low
+</I>&gt;<i> because of the limited colors. The simplest and fastest solution one
+</I>
+That's true. 2x and (1/2)x scaling might be passable.
+
+&gt;<i> could do, would be to skip or repeat pixels. To adopt the existing
+</I>&gt;<i> scaling routines to indexed bitmaps would be dead slow, and probably
+</I>&gt;<i> still have a limited quality.
+</I>&gt;<i> I saw that you implemented ScaleVUpXXXLut() and ScaleVDownXXXLut(), that
+</I>&gt;<i> is not needed, if you don't scale only a CopyToBitmapLut() should be enough.
+</I>&gt;<i> But without scaling there probably will be complaints again because of
+</I>&gt;<i> the shift of the menu cursor and the menu when using the DVD-plugin.
+</I>
+What does the DVD plugin do? I haven't tried that one (either). 
+
+&gt;<i> &gt;&gt; I would not mind adding support for an indexed bitmap, but currently I
+</I>&gt;<i> &gt;&gt; don't see the advantage. If we do that we should probably think again
+</I>&gt;<i> &gt;&gt; about the interface of GetOSDMode(), I never liked that very much, it
+</I>&gt;<i> &gt;&gt; was a hack from the start...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; And I didn't add much style to that either :) Adding the indexed code is
+</I>&gt;<i> &gt; useless if there are no other users and I'm not going to clean up the
+</I>&gt;<i> &gt; mess I made in video-dfb anytime soon. Of course, if you'd add just the
+</I>&gt;<i> &gt; SoftOsd bits (without maybe the OSD_WIDTH changes), it would make my
+</I>&gt;<i> &gt; life easier when trying to keep up with cvs updates. 
+</I>&gt;<i> &gt;
+</I>&gt;<i> No, either we apply the DFB part and the OSD part together or nothing. I
+</I>
+Firm but fair. I'm not going for that, for now, then. Maybe I'll update
+the patch sometime and re-post.
+
+-- Heikki Lindholm
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002490.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+	<LI>Next message: <A HREF="002496.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2493">[ date ]</a>
+              <a href="thread.html#2493">[ thread ]</a>
+              <a href="subject.html#2493">[ subject ]</a>
+              <a href="author.html#2493">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

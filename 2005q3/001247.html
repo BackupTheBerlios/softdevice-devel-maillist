@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr suspend patch and vdr-relay plugin
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr%20suspend%20patch%20and%20vdr-relay%20plugin&In-Reply-To=%3C20050916230955.GC3908%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001245.html">
+   <LINK REL="Next"  HREF="001249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr suspend patch and vdr-relay plugin</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr%20suspend%20patch%20and%20vdr-relay%20plugin&In-Reply-To=%3C20050916230955.GC3908%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr suspend patch and vdr-relay plugin">marko.makela at hut.fi
+       </A><BR>
+    <I>Sat Sep 17 01:09:55 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001245.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+        <LI>Next message: <A HREF="001249.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1247">[ date ]</a>
+              <a href="thread.html#1247">[ thread ]</a>
+              <a href="subject.html#1247">[ subject ]</a>
+              <a href="author.html#1247">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>To those who are not subscribers of the vdr mailing list,
+I am proud to announce the vdr-suspend patch
+(tested with 1.3.30, 1.3.31 and 1.3.32) and the vdr-relay plugin
+(which requires the vdr-suspend patch).
+
+The vdr-suspend patch allows the Power button to toggle a
+&quot;Suspended&quot; flag.  When the flag is set, the MPEG PES streams
+to anything else than recorder functions will be stopped.
+
+This is better than the softdevice suspend flag, for two reasons:
+First, if you are watching a recording, the playback will
+effectively be paused during the suspension.  On softdevice suspend,
+VDR would fast-forward the recording.  Second, users of the
+vdr-subtitles plugin will be happy to notice that the subtitles
+will not keep playing during the suspension.
+
+When the Power button is pressed to suspend playback, a user-selectable
+timeout can kick in.  If no button is pressed during this timeout,
+vdr will shut down (unless, of course, timed recordings are running
+or about to start; then, vdr would shut down after completing the
+recordings).
+
+With the vdr-relay plugin controlling an easy-to-build solid-state
+relay box, you can power off the speakers and monitor when playback
+is suspended.  On my system, the monitor and speakers will only be
+powered on when the computer is started by remote control; for instance,
+if it is started by nvram-wakeup for timed recordings, the equipment
+will remain powered off.
+
+Read more at <A HREF="http://www.funet.fi/~msmakela/software/vdr/">http://www.funet.fi/~msmakela/software/vdr/</A>
+and get the most recent packages:
+<A HREF="http://www.funet.fi/~msmakela/software/vdr/vdr-1.3.32-suspend-0.4.1.patch.gz">http://www.funet.fi/~msmakela/software/vdr/vdr-1.3.32-suspend-0.4.1.patch.gz</A>
+<A HREF="http://www.funet.fi/~msmakela/software/vdr/vdr-relay-0.0.1.tgz">http://www.funet.fi/~msmakela/software/vdr/vdr-relay-0.0.1.tgz</A>
+
+Note that you will have to configure the added variables in the
+Setup/Miscellanous menu in order to enable the
+&quot;resume/suspend/smart-power-off&quot; behaviour of the Power button.
+
+Translation strings for the Setup/Miscellanous menu (file i18n.c in
+vdr-1.3.32-suspend-0.4.1.patch.gz) are appreciated.  I could perhaps
+come up with some more or less broken strings for Swedish and Estonian
+and give Babelfish a try for further languages, but I think it's better
+left to native speakers.  I hope that the German strings are not too broken.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001245.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+	<LI>Next message: <A HREF="001249.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1247">[ date ]</a>
+              <a href="thread.html#1247">[ thread ]</a>
+              <a href="subject.html#1247">[ subject ]</a>
+              <a href="author.html#1247">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

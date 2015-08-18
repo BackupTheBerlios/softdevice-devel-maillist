@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3C20051219171102.78508.qmail%40web35407.mail.mud.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001612.html">
+   <LINK REL="Next"  HREF="001615.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem</H1>
+    <B>Zdzislaw Gorlicki</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3C20051219171102.78508.qmail%40web35407.mail.mud.yahoo.com%3E"
+       TITLE="[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem">zdzisekg at yahoo.com
+       </A><BR>
+    <I>Mon Dec 19 18:11:02 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001612.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+        <LI>Next message: <A HREF="001615.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1614">[ date ]</a>
+              <a href="thread.html#1614">[ thread ]</a>
+              <a href="subject.html#1614">[ subject ]</a>
+              <a href="author.html#1614">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:I think we have a bug here, depending on the ffmpeg version.
+I modified quoted code to the following:
+
+    if (pkt-&gt;pts != (int64_t) AV_NOPTS_VALUE) {
+         lastPTS=pkt-&gt;pts;
+         lastDuration=pkt-&gt;duration;
+
+         if (lastDuration) {
+#if LIBAVCODEC_BUILD &gt; 4753
+                 default_frametime=context-&gt;time_base.num*
+                         10000/context-&gt;time_base.den;
+fprintf(stderr, &quot;tb num %d, tb den %d\n&quot;,context-&gt;time_base.num,context-&gt;time_base.den);
+#else
+                 default_frametime=lastDuration/100;
+#endif
+                 if (!default_frametime) {
+                  /* ----------------------------------------------------------
+                   * we should have another/better guess.
+                   */
+                  fprintf (stderr, &quot; --- setting default frametime !! ---\n&quot;);
+                  default_frametime = DEFAULT_FRAMETIME;
+                 }
+                 MPGDEB(&quot;Set default_frametime to %d\n&quot;,default_frametime);
+         };
+         fprintf (stderr, &quot;default frame time:%d - %d\n&quot;,default_frametime,lastDuration);
+    };
+
+and got this on stderr (1st part is PAL live TV, 2nd is from Madagascar.avi DivX-HDTV 30fps):
+
+default frame time:400 - 0
+default frame time:400 - 0
+device is of type: [11cSoftDevice]
+Softdevice and device are of same types
+Streams: 2
+Input #0, avi, from 'test':
+  Duration: 00:01:54.9, start: 0.000000, bitrate: 4200 kb/s
+  Stream #0.0,   inf fps: Video: mpeg4, yuv420p, 1280x720
+  Stream #0.1: Audio: mp3, 44100 Hz, stereo, 192 kb/s
+tb num 1, tb den 30000
+ --- setting default frametime !! ---
+default frame time:400 - 1
+tb num 1, tb den 30000
+ --- setting default frametime !! ---
+default frame time:400 - 1
+#tb num 1, tb den 30000
+ --- setting default frametime !! ---
+
+my ffmpeg version is reported as:
+
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3277056)
+[XvVideoOut]: displayAspect = 1,248175, displayRatio = 1,250000, PAR = 0,998540
+
+-- 
+Stefan Lucke
+
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+<A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+Update:
+
+After ugrading to DirectFB, DFB++, ffmpeg and softdevice all cvs as of
+12-17-2005, some problems have been resolved. The HD channels that were
+causing problems before are playing good now as well as the recordings. All
+these channels are 1080i. However, there are some 720p channels on a different
+sat, that are still experiencing the same exect problems as the 1080i did when I
+originally reported.
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+<A HREF="http://mail.yahoo.com">http://mail.yahoo.com</A> 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20051219/e94b3bbc/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20051219/e94b3bbc/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001612.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+	<LI>Next message: <A HREF="001615.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1614">[ date ]</a>
+              <a href="thread.html#1614">[ thread ]</a>
+              <a href="subject.html#1614">[ subject ]</a>
+              <a href="author.html#1614">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

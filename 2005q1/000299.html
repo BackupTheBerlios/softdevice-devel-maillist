@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dvd plugin with softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dvd%20plugin%20with%20softdevice&In-Reply-To=%3C4238621F.9010108%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000296.html">
+   <LINK REL="Next"  HREF="000297.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dvd plugin with softdevice</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dvd%20plugin%20with%20softdevice&In-Reply-To=%3C4238621F.9010108%40gmx.net%3E"
+       TITLE="[Softdevice-devel] dvd plugin with softdevice">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Mar 16 17:43:11 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000296.html">[Softdevice-devel] dvd plugin with softdevice
+</A></li>
+        <LI>Next message: <A HREF="000297.html">[Softdevice-devel] directfb questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#299">[ date ]</a>
+              <a href="thread.html#299">[ thread ]</a>
+              <a href="subject.html#299">[ subject ]</a>
+              <a href="author.html#299">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Which ffmpeg version do you use and for which ffmpeg version do you
+</I>&gt;<i> expect problems ? 
+</I>I'm currently working with ffmpeg-0.4.9pre1, there are some differences 
+in the pts handling of libavformat of ffmpeg-0.4.8.
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Also the dvd-plugin works, but I still have some troubles with audio 
+</I>&gt;&gt;<i>buffer underruns in ac3 mode :-(.
+</I>
+Don't worry :-) I found a bug in my code.... Now dvd playback is smooth 
+for both ac3 and pcm audio. The only strange thing is that live tv and 
+the playback of vdr recordings were not affected.
+
+So now what remains are only compatibility checks... Hmm, I might be 
+even finished before the weekend :-).
+
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000296.html">[Softdevice-devel] dvd plugin with softdevice
+</A></li>
+	<LI>Next message: <A HREF="000297.html">[Softdevice-devel] directfb questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#299">[ date ]</a>
+              <a href="thread.html#299">[ thread ]</a>
+              <a href="subject.html#299">[ subject ]</a>
+              <a href="author.html#299">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

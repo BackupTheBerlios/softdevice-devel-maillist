@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606170014.30484.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002157.html">
+   <LINK REL="Next"  HREF="002177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606170014.30484.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jun 17 00:14:30 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002157.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002177.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2154">[ date ]</a>
+              <a href="thread.html#2154">[ thread ]</a>
+              <a href="subject.html#2154">[ subject ]</a>
+              <a href="author.html#2154">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 14 Juni 2006 19:27, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; On Montag 29 Mai 2006 21:55, Martin Wache wrote:
+</I>
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; @@ -1454,8 +1485,8 @@
+</I>&gt;<i> &gt;  #endif
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt;        }
+</I>&gt;<i> &gt; -      //scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
+</I>&gt;<i> &gt; -      scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+</I>&gt;<i> &gt; +      scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
+</I>&gt;<i> &gt; +      //scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt;      }
+</I>&gt;<i> &gt;      else
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; This hunk may cause effects you noticed. But this is a rather sensible change and
+</I>&gt;<i> &gt; should be delayed until the software blit issue is resolved.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> I don't mind..
+</I>&gt;<i> 
+</I>
+I'm just merging this (Rolf's one) for myself and noticed that this hunk 
+is on the stretchblit path. That shouldn't be executed in this case !
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002157.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002177.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2154">[ date ]</a>
+              <a href="thread.html#2154">[ thread ]</a>
+              <a href="subject.html#2154">[ subject ]</a>
+              <a href="author.html#2154">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

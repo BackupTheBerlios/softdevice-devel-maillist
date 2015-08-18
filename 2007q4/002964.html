@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] mpeg2decoder.c compile error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C476AE719.40907%40infodev.ca%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002963.html">
+   <LINK REL="Next"  HREF="002966.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] mpeg2decoder.c compile error</H1>
+    <B>D.Pageau</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C476AE719.40907%40infodev.ca%3E"
+       TITLE="[Softdevice-devel] mpeg2decoder.c compile error">dpageau at infodev.ca
+       </A><BR>
+    <I>Thu Dec 20 23:05:13 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002963.html">[Softdevice-devel] EPIA HW decoding HOWTO
+</A></li>
+        <LI>Next message: <A HREF="002966.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2964">[ date ]</a>
+              <a href="thread.html#2964">[ thread ]</a>
+              <a href="subject.html#2964">[ subject ]</a>
+              <a href="author.html#2964">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm on debian and follow step here but using vdr1.4.7:
+
+<A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+
+viafb, libcle266mpegdec, ffmpeg, DirectFB, DFB++
+
+Compile error in vdr &quot;make plugins&quot; .  I'm stuck there.
+
+# LANG=c make plugins
+Plugin softdevice:
+make[1]: Entering directory 
+`/usr/local/src/vdr-1.4.7/PLUGINS/src/softdevice'
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG 
+-D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE 
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include 
+-I../../../../DVB/include -I/usr/local/include/ffmpeg 
+-I/usr/local/include/ffmpeg -I/usr/local/include/postproc   -D_REENTRANT 
+-I/usr/local/include/directfb -I/usr/local/include/dfb++ 
+-DHAVE_CLE266_MPEG_DECODER -I/usr/local/include   mpeg2decoder.c
+/usr/local/include/ffmpeg/avcodec.h:2285: warning: 'ImgReSampleContext' 
+is deprecated (declared at /usr/local/include/ffmpeg/avcodec.h:2279)
+/usr/local/include/ffmpeg/avcodec.h:2295: warning: 'ImgReSampleContext' 
+is deprecated (declared at /usr/local/include/ffmpeg/avcodec.h:2279)
+mpeg2decoder.c: In member function 'virtual int 
+cAudioStreamDecoder::DecodePacket(AVPacket*)':
+mpeg2decoder.c:455: warning: 'avcodec_decode_audio' is deprecated 
+(declared at /usr/local/include/ffmpeg/avcodec.h:2606)
+mpeg2decoder.c:456: warning: 'avcodec_decode_audio' is deprecated 
+(declared at /usr/local/include/ffmpeg/avcodec.h:2606)
+mpeg2decoder.c: In member function 'int 
+cMpeg2Decoder::read_packet(uint8_t*, int)':
+mpeg2decoder.c:1081: error: request for member 'buffer' in 
+'((cMpeg2Decoder*)this)-&gt;cMpeg2Decoder::ic-&gt;AVFormatContext::pb', which 
+is of non-class type 'ByteIOContext*'
+mpeg2decoder.c: In member function 'void cMpeg2Decoder::initStream()':
+mpeg2decoder.c:1115: error: cannot convert 'ByteIOContext**' to 
+'ByteIOContext*' for argument '1' to 'int init_put_byte(ByteIOContext*, 
+unsigned char*, int, int, void*, int (*)(void*, uint8_t*, int), int 
+(*)(void*, uint8_t*, int), offset_t (*)(void*, offset_t, int))'
+mpeg2decoder.c:1116: error: request for member 'buf_end' in 
+'((cMpeg2Decoder*)this)-&gt;cMpeg2Decoder::ic-&gt;AVFormatContext::pb', which 
+is of non-class type 'ByteIOContext*'
+mpeg2decoder.c:1117: error: request for member 'is_streamed' in 
+'((cMpeg2Decoder*)this)-&gt;cMpeg2Decoder::ic-&gt;AVFormatContext::pb', which 
+is of non-class type 'ByteIOContext*'
+mpeg2decoder.c: In member function 'virtual void cMpeg2Decoder::Action()':
+mpeg2decoder.c:1155: warning: comparison between signed and unsigned 
+integer expressions
+mpeg2decoder.c: In member function 'void 
+cMpeg2Decoder::QueuePacket(const AVFormatContext*, AVPacket&amp;, bool)':
+mpeg2decoder.c:1215: warning: comparison between signed and unsigned 
+integer expressions
+make[1]: *** [mpeg2decoder.o] Error 1
+make[1]: Leaving directory `/usr/local/src/vdr-1.4.7/PLUGINS/src/softdevice'
+
+*** failed plugins: softdevice
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002963.html">[Softdevice-devel] EPIA HW decoding HOWTO
+</A></li>
+	<LI>Next message: <A HREF="002966.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2964">[ date ]</a>
+              <a href="thread.html#2964">[ thread ]</a>
+              <a href="subject.html#2964">[ subject ]</a>
+              <a href="author.html#2964">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

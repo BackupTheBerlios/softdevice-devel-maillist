@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CVS%20from%20last%20night%20feedback%20%20-%20field%20parity%0A%20seems%20to%20be%20solved%20%3A-%29%20%2C%20some%20audio%20issues%20remain&In-Reply-To=%3C423B18DA.5010600%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000335.html">
+   <LINK REL="Next"  HREF="000342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CVS%20from%20last%20night%20feedback%20%20-%20field%20parity%0A%20seems%20to%20be%20solved%20%3A-%29%20%2C%20some%20audio%20issues%20remain&In-Reply-To=%3C423B18DA.5010600%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Fri Mar 18 19:07:22 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000335.html">[Softdevice-devel] CVS from last night feedback  -	field	parity seems to be solved :-) , some audio issues remain
+</A></li>
+        <LI>Next message: <A HREF="000342.html">[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#339">[ date ]</a>
+              <a href="thread.html#339">[ thread ]</a>
+              <a href="subject.html#339">[ subject ]</a>
+              <a href="author.html#339">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+...
+&gt;&gt;<i> As you see, I found some very distinct and reproducible scenarios, maybe 
+</I>&gt;&gt;<i> you can conclude few things from them, as you know your code best. for 
+</I>&gt;&gt;<i> instance, this A/V-sync stuff depending on the bitrate.
+</I>&gt;<i> Can you send me how you start the vdr and with exactly what parameters, 
+</I>&gt;<i> plugins etc.(send the command line or the appropriate parts of runvdr)? 
+</I>&gt;<i> That would make it easy to conclude things.
+</I>
+I started vdr from a ssh console like:
+
+  vdr -c /etc/vdr -L /usr/lib/vdr -P'softdevice -L /usr/lib/vdr -vo 
+dfb:mgatv'
+
+&gt;<i> If you are right and your soundcard repacks the pcm and sends it to 
+</I>&gt;<i> SPDIF out, we will have trouble syncing... There seems to be a buffer 
+</I>&gt;<i> either in the soundcard or in your ac3 decoder of unknown size which has 
+</I>&gt;<i> to be taken into account and may be different for different machines. 
+</I>&gt;<i> Hmm, I have to think about that... But I think we should wait for some 
+</I>&gt;<i> more reports before concluding anything.
+</I>&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Did samething actually changed in the DirectFB code what caused the 
+</I>&gt;&gt;<i> benefic effect that I no longer see field parity artifacts not even on 
+</I>&gt;&gt;<i> horizontally scrollin text banners (except a jump every 1-3 seconds, 
+</I>&gt;&gt;<i> maybe a re-sync attempt, I don't know)? Or is it due to the fact that 
+</I>&gt;&gt;<i> the audio stream parsing or even decoding is done differently? Or did 
+</I>&gt;&gt;<i> you changed something in the threading scheme of the plugin?
+</I>&gt;<i> I did not intend to change something, and I don't know what may have 
+</I>&gt;<i> made the difference. Are you useing -ao dummy?
+</I>
+
+Now that you asked me about -ao dummy, I tried it, and it seemed to 
+behave the same. I thought this one disables sound for use with 
+bitstreamout for FF-card owners who would want to decode with softdevice 
+(might make sense for HDTV, right ;-) ?) I couldn't make detailed 
+testing now, because we have to leave for now. Will check the ML when 
+I'm back.
+
+&gt;<i> Concering this field parity issue, I aggree now with Stefan who already 
+</I>&gt;<i> suggested a long time ago to add an option to sync the audio to the 
+</I>&gt;<i> video ( not the other way around like we are doing it now). This kind of 
+</I>&gt;<i> option make certainly sense for TV-out, and should finally solve these 
+</I>&gt;<i> issues. The only problem is that we need a good resampler and the ffmpeg 
+</I>&gt;<i> resampler can't cope with resampling rate changes. So this is on my todo 
+</I>&gt;<i> list.
+</I>&gt;<i> I will also consider an option to resample mono to stereo and 5.1 audio 
+</I>&gt;<i> to stereo. This should not be to difficult.
+</I>
+Hopefully these two things will be handled separately for MP2 and DD.
+
+&gt;<i> Thank you for your report!
+</I>
+I thank you for this whole work ;-)
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000335.html">[Softdevice-devel] CVS from last night feedback  -	field	parity seems to be solved :-) , some audio issues remain
+</A></li>
+	<LI>Next message: <A HREF="000342.html">[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#339">[ date ]</a>
+              <a href="thread.html#339">[ thread ]</a>
+              <a href="subject.html#339">[ subject ]</a>
+              <a href="author.html#339">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

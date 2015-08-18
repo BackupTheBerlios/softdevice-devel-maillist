@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Transparent skins with text2skin and softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Transparent%20skins%20with%20text2skin%20and%20softdevice&In-Reply-To=%3C200509202330.31055.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001250.html">
+   <LINK REL="Next"  HREF="001256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Transparent skins with text2skin and softdevice</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Transparent%20skins%20with%20text2skin%20and%20softdevice&In-Reply-To=%3C200509202330.31055.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Transparent skins with text2skin and softdevice">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Wed Sep 21 00:30:30 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001250.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+        <LI>Next message: <A HREF="001256.html">[Softdevice-devel] Transparent skins with text2skin and	softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1251">[ date ]</a>
+              <a href="thread.html#1251">[ thread ]</a>
+              <a href="subject.html#1251">[ subject ]</a>
+              <a href="author.html#1251">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tuesday 20 September 2005 22:39, Stefan Lucke wrote:
+&gt;<i> On Dienstag, 20. September 2005 19:36, Laz wrote:
+</I>&gt;<i> &gt; I've just been setting up an Epia system and finally got softdevice going
+</I>&gt;<i> &gt; relatively well with DirectFB output (using patches for the patcher2k
+</I>&gt;<i> &gt; kernel module and DirectFB from Mark Adams on the directfb-users list).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So far, it seems to work quite well, especially in terms of the OSD
+</I>&gt;<i> &gt; compared with the xine plugin because the OSD is on a separate layer for
+</I>&gt;<i> &gt; softdevice. The main problem I can see at the moment is that A-V sync
+</I>&gt;<i> &gt; seems to drift about quite a bit but I know that this is under further
+</I>&gt;<i> &gt; development form monitoring this list.
+</I>&gt;<i>
+</I>&gt;<i> And I'm following the discussion on the directfb lists very interested.
+</I>
+Good good. I had this system going quite well with the xine plugin but 
+starting X is an extra complexity and it slowed right down when the OSD was 
+visible!
+
+&gt;<i> On epia I only did a video out (no audio) with a vga connected monitor.
+</I>&gt;<i> So there are some A/V sync test pending.
+</I>
+I've just upgraded to vdr-1.3.32 and softdevice from cvs. It seems better than 
+it was with softdevice-1.3.0 but I may be imagining that! At the moment, A-V 
+sync drifts about a bit on live TV and on recordings; first impressions are 
+that it is in sync more for live TV than for recordings. With the previous 
+version of softdevice, recordings were out of sync most of the time and the 
+video went jittery, presumably as it tried to resync. I don't think it is 
+jittery with the cvs version I just checked out but I haven't tested it fully 
+yet!
+
+If you can suggest anything for me to test, please do.
+
+&gt;<i> &gt; One other thing I have found is that if I use a skin using text2skin, I
+</I>&gt;<i> &gt; get no transparent backgrounds to the OSD. This is the case for at least
+</I>&gt;<i> &gt; the enElchi and Deep Blue, and Enigma skins, although the EgalSimple skin
+</I>&gt;<i> &gt; does have  a transparent background. The standard vdr skin and the ST:TNG
+</I>&gt;<i> &gt; panels skins both have transparent backgrounds and work fine! All of
+</I>&gt;<i> &gt; these skins do have transparent backgrounds with the xine plugin.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Is this a know problem?
+</I>&gt;<i>
+</I>&gt;<i> I think it's a hardware limitation. Once I saw  (directfb code ?) that
+</I>&gt;<i> there is only a 4bit alpha value for hw blending available. By this alpha
+</I>&gt;<i> values less 0x10 are transparent and those greater 0xf0 are solid. I don't
+</I>&gt;<i> know if it is possible to change the used alpha values of skins.
+</I>&gt;<i>
+</I>&gt;<i> I did a search through current directfb code (on my some months
+</I>&gt;<i> old cvs version) but didn't find that location again.
+</I>
+Ahhh...that would make sense. I will look at the actual alpha values used in 
+the various skins: the colours are defines as ARGB quartets so can easily be 
+changed.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001250.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+	<LI>Next message: <A HREF="001256.html">[Softdevice-devel] Transparent skins with text2skin and	softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1251">[ date ]</a>
+              <a href="thread.html#1251">[ thread ]</a>
+              <a href="subject.html#1251">[ subject ]</a>
+              <a href="author.html#1251">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice - fix with current ffmpeg release	- frametime
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20-%20fix%20with%20current%20ffmpeg%20release%0A%09-%20frametime&In-Reply-To=%3C1260825854.4b26acfe93976%40imp.free.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003255.html">
+   <LINK REL="Next"  HREF="003254.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice - fix with current ffmpeg release	- frametime</H1>
+    <B>wallak at free.fr</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20-%20fix%20with%20current%20ffmpeg%20release%0A%09-%20frametime&In-Reply-To=%3C1260825854.4b26acfe93976%40imp.free.fr%3E"
+       TITLE="[Softdevice-devel] softdevice - fix with current ffmpeg release	- frametime">wallak at free.fr
+       </A><BR>
+    <I>Mon Dec 14 22:24:14 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003255.html">[Softdevice-devel] softdevice - fix with current ffmpeg release -	frametime
+</A></li>
+        <LI>Next message: <A HREF="003254.html">[Softdevice-devel] h264 compatibility
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3256">[ date ]</a>
+              <a href="thread.html#3256">[ thread ]</a>
+              <a href="subject.html#3256">[ subject ]</a>
+              <a href="author.html#3256">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Now, the video frame duration is correct, with interlaced/non interlaced video
+streams. Nevertheless  video jitter is visible,  this may be the consequence of
+a non optimized software video frame switching. And, I have a 60Hz LCD
+configuration, that is, definitively, not in-sync with a PAL 50Hz video stream.
+The later may be optimized with a 75Hz configuration, if the screen support it.
+Some further improvements are required...
+
+I still use softdevice with vdr-1.6, glibc-2.11, on an amd64 system.
+
+Best Regards,
+Wallak.
+
+Quoting Vladimir Monchenko &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">bob at globall.ru</A>&gt;:
+
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">wallak at free.fr</A> wrote:
+</I>&gt;<i> &gt; Here is a patch required to get the proper delay between video frames.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Best Regards,
+</I>&gt;<i> &gt; Wallak.
+</I>&gt;<i> &gt; ------------------------------------------------------------------------
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Softdevice-devel mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i> Your patch works for me, but he has not solved all problems. The big
+</I>&gt;<i> jerks are not present every second more, but video not smoothly. Log is
+</I>&gt;<i> not present shows &quot;Xrun&quot;, but fast movements on the image twitch.
+</I>&gt;<i>
+</I>&gt;<i> My system:
+</I>&gt;<i>
+</I>&gt;<i> Linux athlon 2.6.31-gentoo-r6 #6 SMP PREEMPT Thu Dec 10 22:17:15 MSK
+</I>&gt;<i> 2009 x86_64 AMD Phenom(tm) 8450 Triple-Core Processor AuthenticAMD GNU/Linux
+</I>&gt;<i>
+</I>&gt;<i> FFmpeg version 0.5, Copyright (c) 2000-2009 Fabrice Bellard, et al.
+</I>&gt;<i>   configuration: --prefix=/usr --libdir=/usr/lib64 --shlibdir=/usr/lib64
+</I>&gt;<i> --mandir=/usr/share/man --enable-static --enable-shared
+</I>&gt;<i> --cc=x86_64-pc-linux-gnu-gcc --disable-debug --disable-network
+</I>&gt;<i> --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libxvid
+</I>&gt;<i> --enable-libdc1394 --disable-demuxer=v4l --disable-demuxer=oss
+</I>&gt;<i> --disable-muxer=oss --enable-x11grab --enable-libamr-nb
+</I>&gt;<i> --enable-libamr-wb --enable-nonfree --enable-vdpau --disable-altivec
+</I>&gt;<i> --cpu=amdfam10 --disable-vhook --enable-gpl --enable-postproc
+</I>&gt;<i> --enable-avfilter --enable-avfilter-lavf --enable-swscale
+</I>&gt;<i> --disable-stripping --enable-hardcoded-tables
+</I>&gt;<i>   libavutil     49.15. 0 / 49.15. 0
+</I>&gt;<i>   libavcodec    52.20. 0 / 52.20. 0
+</I>&gt;<i>   libavformat   52.31. 0 / 52.31. 0
+</I>&gt;<i>   libavdevice   52. 1. 0 / 52. 1. 0
+</I>&gt;<i>   libavfilter    0. 4. 0 /  0. 4. 0
+</I>&gt;<i>   libswscale     0. 7. 1 /  0. 7. 1
+</I>&gt;<i>   libpostproc   51. 2. 0 / 51. 2. 0
+</I>&gt;<i>   built on Dec  6 2009 00:00:44, gcc: 4.3.4
+</I>&gt;<i>
+</I>&gt;<i> vdr-1.7.10
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Vladimir Monchenko.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003255.html">[Softdevice-devel] softdevice - fix with current ffmpeg release -	frametime
+</A></li>
+	<LI>Next message: <A HREF="003254.html">[Softdevice-devel] h264 compatibility
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3256">[ date ]</a>
+              <a href="thread.html#3256">[ thread ]</a>
+              <a href="subject.html#3256">[ subject ]</a>
+              <a href="author.html#3256">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

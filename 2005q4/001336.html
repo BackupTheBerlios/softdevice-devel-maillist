@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] ffmpeg : pkg-config vs. ffmpeg-config
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20ffmpeg%20%3A%20pkg-config%20vs.%20ffmpeg-config&In-Reply-To=%3C434B85F3.5020305%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001335.html">
+   <LINK REL="Next"  HREF="001344.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] ffmpeg : pkg-config vs. ffmpeg-config</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20ffmpeg%20%3A%20pkg-config%20vs.%20ffmpeg-config&In-Reply-To=%3C434B85F3.5020305%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] ffmpeg : pkg-config vs. ffmpeg-config">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Tue Oct 11 11:29:23 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001335.html">[Softdevice-devel] Wrong PLUGINLIBDIR = stop without any message
+</A></li>
+        <LI>Next message: <A HREF="001344.html">[Softdevice-devel] [PATCH] Gentoo packaging (updated)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1336">[ date ]</a>
+              <a href="thread.html#1336">[ thread ]</a>
+              <a href="subject.html#1336">[ subject ]</a>
+              <a href="author.html#1336">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I'm currently packaging softdevice 0.2.0 for the Debian e-tobi
+repository, adding ./configure support.
+
+I've tested the following patch to ./configure, that use ffmpeg-config
+instead of pkg-config, because they give different outputs, at least on
+my unclean box.
+Should we use one or the other ? Are all these lib really necessary
+(-lraw1394 -ldc1394_control -lgsm...) ?
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at vdr</A>:vdr-plugin-softdevice-0.2.0$ pkg-config --libs libavcodec
+libavformat
+-lavformat -lavcodec -ldts -lz -ldl -lvorbis -lm -ltheora -lavutil -logg
+
+With these libs, I get the following message when running vdr/softdevice:
+vdr: /usr/lib/vdr/plugins/libvdr-softdevice.so.1.3.33: undefined symbol:
+dc1394_create_handle
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at vdr</A>:vdr-plugin-softdevice-0.2.0$ ffmpeg-config --plugin-libs
+avcodec avformat
+-lavcodec_pic -lavutil_pic -lavformat_pic -lavutil_pic -lavcodec_pic
+-lvorbis -lvorbisenc -ltheora -logg -ldts_pic -la52 -lraw1394
+-ldc1394_control -lgsm -lz -lm
+
+
+Other problem on my box is that I did not install postproc (for
+testing), but ffmpeg-config still outputs libs, thus I can't tell
+whether postproc is installed or not :
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at vdr</A>:vdr-plugin-softdevice-0.2.0$ ffmpeg-config --plugin-libs
+postproc
+-lpostproc_pic -lavutil_pic -lavcodec_pic -lvorbis -lvorbisenc -ltheora
+-logg -ldts_pic -la52 -lraw1394 -ldc1394_control -lgsm -lz -lm
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at vdr</A>:vdr-plugin-softdevice-0.2.0$ pkg-config --libs libpostproc
+Package libpostproc was not found in the pkg-config search path.
+Perhaps you should add the directory containing `libpostproc.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'libpostproc' found
+
+
+
+
+--- ./configure 2005-10-07 15:37:53.000000000 +0200
++++ ./configure.debian  2005-10-11 00:49:11.000000000 +0200
+@@ -64,12 +64,12 @@
+ #########################################################
+ # start ffmpeg test
+ #
+-ffmpeg_l1=&quot;libavcodec libavformat&quot;
++ffmpeg_l1=&quot;avcodec avformat&quot;
+
+-pkg-config --libs libpostproc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; {
+ffmpeg_l1=&quot;$ffmpeg_l1 libpostproc&quot;;libpostproc=&quot;yes&quot;; }
++pkg-config --libs libpostproc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; {
+ffmpeg_l1=&quot;$ffmpeg_l1 postproc&quot;;libpostproc=&quot;yes&quot;; }
+
+-ffmpeg_libs=`pkg-config --libs $ffmpeg_l1`
+-ffmpeg_cflags=`pkg-config --cflags $ffmpeg_l1`
++ffmpeg_libs=`ffmpeg-config --plugin-libs $ffmpeg_l1`
++ffmpeg_cflags=`ffmpeg-config --cflags`
+
+ #########################################################
+ # start of DirectFB specific tests
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001335.html">[Softdevice-devel] Wrong PLUGINLIBDIR = stop without any message
+</A></li>
+	<LI>Next message: <A HREF="001344.html">[Softdevice-devel] [PATCH] Gentoo packaging (updated)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1336">[ date ]</a>
+              <a href="thread.html#1336">[ thread ]</a>
+              <a href="subject.html#1336">[ subject ]</a>
+              <a href="author.html#1336">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

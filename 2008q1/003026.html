@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] no output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20output&In-Reply-To=%3C1204328208.10878.4.camel%40lychee.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003025.html">
+   <LINK REL="Next"  HREF="003027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] no output</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20output&In-Reply-To=%3C1204328208.10878.4.camel%40lychee.local%3E"
+       TITLE="[Softdevice-devel] no output">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Sat Mar  1 00:36:48 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003025.html">[Softdevice-devel] no output
+</A></li>
+        <LI>Next message: <A HREF="003027.html">[Softdevice-devel] no output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3026">[ date ]</a>
+              <a href="thread.html#3026">[ thread ]</a>
+              <a href="subject.html#3026">[ subject ]</a>
+              <a href="author.html#3026">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Fri, 2008-02-29 at 13:49 +0100, Stefan Lucke wrote:
+&gt;<i> On Thursday 28 February 2008, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; With the latest cvs of softdevice I see no video output.
+</I>&gt;<i> 
+</I>&gt;<i> Just checked a freash cvs checkout.
+</I>&gt;<i> configure + make plugins + xv output is OK (vdr-1.4.0 ;-) ), FFmpeg is r12218.
+</I>
+I did not try xv, but did try directfb.  I also tried dummy checking the
+result with svdrp grab (via vdradmin)
+
+I will try again.
+ 
+&gt;<i> &gt; OSD works, but it does not seem like the video is being decoded: CPU is
+</I>&gt;<i> &gt; 3%.  My log file fills with Xrun messages.
+</I>&gt;<i> 
+</I>&gt;<i> Radio station ?
+</I>
+That would be too easy! (I tried multiple channels)
+
+&gt;<i> Did you check signal strength and or audio access rights ?
+</I>
+I fixed the issue by reverting to my older version of ffmpeg and
+softdevice (from around May 2007).  Everything worked as expected with
+the old version but not the new.  So this is certainly a problem with
+softdevice/ffmpeg.
+
+(Given that my previous versions of ffmpeg/softdevice were old I could
+not try to compile eg new softdevice against old ffmeg, or old
+softdevice against new ffmeg)
+
+&gt;<i> &gt; I have tried latest svn of ffmpeg as well as a version from 11 October
+</I>&gt;<i> &gt; 07.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Help!
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003025.html">[Softdevice-devel] no output
+</A></li>
+	<LI>Next message: <A HREF="003027.html">[Softdevice-devel] no output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3026">[ date ]</a>
+              <a href="thread.html#3026">[ thread ]</a>
+              <a href="subject.html#3026">[ subject ]</a>
+              <a href="author.html#3026">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

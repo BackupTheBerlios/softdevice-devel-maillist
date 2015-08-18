@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Dolby Digital out via SPDIF
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C200503161904.57024.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000300.html">
+   <LINK REL="Next"  HREF="000303.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Dolby Digital out via SPDIF</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C200503161904.57024.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Dolby Digital out via SPDIF">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Mar 16 19:04:56 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000300.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+        <LI>Next message: <A HREF="000303.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#301">[ date ]</a>
+              <a href="thread.html#301">[ thread ]</a>
+              <a href="subject.html#301">[ subject ]</a>
+              <a href="author.html#301">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 16. M&#228;rz 2005 18:14, Martin Wache wrote:
+&gt;<i> Carsten Kollmeier wrote:
+</I>&gt;<i> &gt; Hi!
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Me again, thought it was better to handle this in a seperate thread.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; As I understand, DD out could be done via Bitstreamout, but this is 
+</I>&gt;<i> &gt; not developed yet?
+</I>&gt;<i> In principle it should work since the softdevice tries to behave just 
+</I>&gt;<i> like a FF-card, but as far as I know noone ever tried to use the 
+</I>&gt;<i> Bitstreamout with the softdevice.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; In the moment (using the cvs-Head), Bitstreamout produces a big lag 
+</I>&gt;<i> &gt; in A/V sync (~10s). With DD sound, it produces quiet, then a sharp 
+</I>&gt;<i> &gt; digital squeak, finally the VDR crashes.
+</I>&gt;<i> Ok, so do I understand correctly that with only mp2-audio the 
+</I>&gt;<i> combination of Bitstreamout and softdevice works except for the bad A/V 
+</I>&gt;<i> sync? Do you get the audio from the softdevice or from the Bitstreamout? 
+</I>&gt;<i> Maybe I can explain the bad A/V sync. The softdevice reports only an 
+</I>&gt;<i> approximate pts of the video stream to other devices. Normally this is 
+</I>&gt;<i> okay, but for A/V sync this may be too bad... I will try to improve 
+</I>&gt;<i> precision of the reported pts, hopefully this helps.
+</I>&gt;<i> 
+</I>&gt;<i> The crash in DD-mode is very likely caused by the softdevice, it doesn't 
+</I>&gt;<i> understand ac3, and tries to handle it like mp2. This causes the noises 
+</I>&gt;<i> and the crash. I will commit some changes to the softdevice-cvs this 
+</I>&gt;<i> weekend which will hopefully cure this crash.
+</I>
+Cvs version should only lock 0x1bd stream when it is lpcm.
+I think we should have a deeper look at this when your decoder changes
+are in cvs.
+
+One problem with bitstreamout could be that it tries to open alsa which we
+have already open-&gt; Suspend audio only ??
+
+&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Is it planned to get DD working?
+</I>&gt;<i> Sure, but I don't own any DD equipment, so I can't test SPDIF out.
+</I>
+I can do that, currently in use by dxr3 card.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000300.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+	<LI>Next message: <A HREF="000303.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#301">[ date ]</a>
+              <a href="thread.html#301">[ thread ]</a>
+              <a href="subject.html#301">[ subject ]</a>
+              <a href="author.html#301">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

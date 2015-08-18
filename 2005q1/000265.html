@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.0pre1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.1.0pre1&In-Reply-To=%3C200503042131.02614.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000287.html">
+   <LINK REL="Next"  HREF="000266.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.0pre1</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.1.0pre1&In-Reply-To=%3C200503042131.02614.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.0pre1">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Mar  4 21:31:02 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000287.html">[Softdevice-devel] Xv-out and Ati Mach64
+</A></li>
+        <LI>Next message: <A HREF="000266.html">[Softdevice-devel] old_stuff..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#265">[ date ]</a>
+              <a href="thread.html#265">[ thread ]</a>
+              <a href="subject.html#265">[ subject ]</a>
+              <a href="author.html#265">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I'm pleased to announce a new pre-release of vdr softdevice plugin.
+
+In short words: softdevice plugin is for getting vdr to your desktop with
+so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+
+For compile options, please read the Makefile carefully and decide which of
+the available output methods fit to your system.
+
+Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+
+Changelog since last release:
+ 2005-03-04: 0.1.0pre1
+    - some i18n changes
+ 2005-03-03:
+    - fb-out: fix for build option USE_SUBPLUGINS
+              fix alpha mask misplacement
+              fix locking during video and OSD drawing
+ 2005-03-02:
+    - increased osd fallback timeout
+    - removed syoff and sxoff from Draw(...)
+ 2005-02-27:
+    - save &quot;vo&quot; and &quot;ao&quot; calling args in setup store.
+    - new runtime arg &quot;-L path_name&quot;. Default set in Makefile to: &quot;./PLUGINS/lib&quot;
+    - USE_SUBPLUGINS is now default build option
+    - dfb-out: fix for segfault on via unichrome with current DirectFB cvs.
+ 2005-02-25:
+    - vidix-out: fix segfaults upon switch from software OSD back to pseudo mode.
+                 match available fourcc against selected.
+                 support for YUY2 added (without soft alpha [todo]).
+    - all-out: unified constuctor parameter
+               optionaly output method is loaded at runtime. by this, one can
+               build and ship binaries with all methods enabled to target
+               enviroments where not all libs are present.
+    - removed obsolete OSD option &quot;sync on&quot; (I-frame/all frames).
+ 2005-02-18:
+    - support for DIRECTCOLOR framebuffer ( most ATI cards, tested with Mach64)
+    - fixed osd flickering in framebuffer mode vdr&gt;1.3.7
+    - software alpha blending implemented for Vidix (vdr&gt;1.3.7)
+    - software alpha blending done in software for Xv out and vdr&gt;1.3.7
+    - osd scaling for vdr and Xv &gt;1.3.7
+ 2005-02-13:
+    - a/v sync: auto adjusting back index instead of using fixed value 4
+ 2005-02-08:
+    - dfb-out: fix for field parity in tv-out mode
+    - xv-out: fix compile warnings on amd64 (reported by Konrad Naumann)
+ 2005-01-23:
+    - added suspend video playback patch.
+ 2005-01-15:
+    - fix OSD drawing when multiple areas are used (with text2skin plugin)
+    - dfb out: reverted top-field first setting as it may crash
+    - removed some unused code
+    - subtract already spend time from delay before entering delay loop
+      (found by Stefan Lucke)
+    - audio pts calculation changed to use sample rate and number of channels
+ 2005-01-13:
+    - compatibility fix for vdr-1.3.18
+    - aspect ratio handling for 16:9 TV output
+    - dfb-out TVout: set top field first and acpect scaleing for TV mode if not set
+  2005-01-12:
+    - fix aspect ratio calculation/recognition on some dvds
+
+
+By subscribing to the to cvs list via
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-cvs">https://lists.berlios.de/mailman/listinfo/softdevice-cvs</A>
+you'll get informed about lastest changes.
+
+For those who are interested in active development, subscribing to
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+is a good choice.
+
+Members of softdevice development crew are:
+Torgeir Veimo, Martin Wache and me, Stefan Lucke.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000287.html">[Softdevice-devel] Xv-out and Ati Mach64
+</A></li>
+	<LI>Next message: <A HREF="000266.html">[Softdevice-devel] old_stuff..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#265">[ date ]</a>
+              <a href="thread.html#265">[ thread ]</a>
+              <a href="subject.html#265">[ subject ]</a>
+              <a href="author.html#265">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

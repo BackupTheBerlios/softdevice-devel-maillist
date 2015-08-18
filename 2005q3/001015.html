@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] blue bar on left crop patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blue%20bar%20on%20left%20crop%20patch&In-Reply-To=%3C200507221910.15994.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001013.html">
+   <LINK REL="Next"  HREF="001016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] blue bar on left crop patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blue%20bar%20on%20left%20crop%20patch&In-Reply-To=%3C200507221910.15994.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] blue bar on left crop patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jul 22 19:10:15 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001013.html">[Softdevice-devel] blue bar on left crop patch
+</A></li>
+        <LI>Next message: <A HREF="001016.html">[Softdevice-devel] blue bar on left crop patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1015">[ date ]</a>
+              <a href="thread.html#1015">[ thread ]</a>
+              <a href="subject.html#1015">[ subject ]</a>
+              <a href="author.html#1015">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 22. Juli 2005 16:56, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Wed, Jul 20, 2005 at 10:26:20PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Mittwoch, 20. Juli 2005 21:08, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; On Wed, Jul 20, 2005 at 09:00:09PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; Crop left/right for xv (only) is in cvs.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Is this easily doable on DirectFB?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Oh, that's complicated :-) . You have to re-checkout or cvs update.
+</I>&gt;<i> 
+</I>&gt;<i> It wasn't that easy.  I had to add #ifdef USE_SUBPLUGINS/#endif to
+</I>&gt;<i> softdevice.c, cSoftDevice::LoadSubPlugin().  Can you please make sure
+</I>&gt;<i> that the function compiles without -DUSE_SUBPLUGINS?
+</I>
+Ah, you got the other change too. Instead of increasing the number of
+#if , I'd like to reduce it by including &quot;dlfcn.h&quot; allways. Dynamic load
+is mandatory for vdr, as it is the way to load plugins.
+
+-- snip --
+Index: softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.35
+diff -b -B -U3 -r1.35 softdevice.c
+--- softdevice.c        22 Jul 2005 08:24:56 -0000      1.35
++++ softdevice.c        22 Jul 2005 17:02:43 -0000
+@@ -11,9 +11,7 @@
+ #include &lt;getopt.h&gt;
+ #include &lt;stdlib.h&gt;
+
+-#ifdef USE_SUBPLUGINS
+ #include &lt;dlfcn.h&gt;
+-#endif
+
+ #if VDRVERSNUM &gt;= 10307
+ #include &lt;vdr/osd.h&gt;
+-- snip --
+
+&gt;<i> 
+</I>&gt;<i> The cropping seems to work, but for some strange reason, the live stream
+</I>&gt;<i> didn't have a blue bar at left when I tested it.
+</I>
+The blue bar might have an other reason too. Once I had one, on the
+right side (1 pixel column). It happend with an X-window at 16:9 size
+and 4:3 video source.  I did some full screen toggles and crop mode
+changes and the blue bar was at the end of the 4:3 area. But I was
+never able to get it again.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001013.html">[Softdevice-devel] blue bar on left crop patch
+</A></li>
+	<LI>Next message: <A HREF="001016.html">[Softdevice-devel] blue bar on left crop patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1015">[ date ]</a>
+              <a href="thread.html#1015">[ thread ]</a>
+              <a href="subject.html#1015">[ subject ]</a>
+              <a href="author.html#1015">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

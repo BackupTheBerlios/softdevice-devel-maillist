@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Contribute to vdr-softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Contribute%20to%20vdr-softdevice&In-Reply-To=%3C200410202246.20435.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Contribute to vdr-softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Contribute%20to%20vdr-softdevice&In-Reply-To=%3C200410202246.20435.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: Contribute to vdr-softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Oct 20 22:46:20 CEST 2004</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000001.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 19. Oktober 2004 19:48, Torgeir Veimo wrote:
+&gt;<i> On Tue, 2004-10-19 at 16:01 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; Quoting Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Martin.Wache at web.de</A>&gt;:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; [..]
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; The second patch fixes some ringbuffer locking. There was no locking when
+</I>&gt;<i> &gt; &gt; writing to the video ringbuffer
+</I>&gt;<i> &gt; &gt; (method cVideoStreamDecoder::Write), and the lock was held in the function
+</I>&gt;<i> &gt; &gt; cVideoStreamDecoder::Action, 
+</I>&gt;<i> &gt; &gt; when the function ParseStream was called. Since ParseStream sleeps when doing
+</I>&gt;<i> &gt; &gt; the A-V syncing, 
+</I>&gt;<i> &gt; &gt; but it doesn't modify the rinbuffer (it just reads) I think the mutex should
+</I>&gt;<i> &gt; &gt; be released before calling ParseStream.
+</I>&gt;<i> &gt; &gt; This patch fixes some crashes on buffer overflows.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; That kind of locking I introduced intentionally, To fix a crash when jumping
+</I>&gt;<i> &gt; very fast between marks of a recording. Sleeping in DecodeData via ParseStream
+</I>&gt;<i> &gt; with held lock is no so good either.
+</I>&gt;<i> 
+</I>&gt;<i> Reverting the Mutex patch reintroduces some clicks and pops in my
+</I>&gt;<i> setup. 
+</I>
+Thats in someway hard to believe. In normal operation mutex is acquired
+and released in a one thread: in method Action. So this should never
+block this thread itself. The only blocking situation is that when StillPicture is called,
+method Action is suspended while the ringbuffer gets cleared and
+avcodec's buffers get flushed. 
+
+Is it possible that your clicks and pops may have some other reasons ?
+
+With 02_Fix_Ringbuffer_Locking.diff patch I get partly corrupted stillpictures
+when a jump_to_mark_key is pressed during playback.
+
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000001.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

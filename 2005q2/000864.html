@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Poor%20performance%20and%20crashes%20on%20G450%20SCART-RGB%20output&In-Reply-To=%3C20050612063306.GA3230%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000863.html">
+   <LINK REL="Next"  HREF="000865.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Poor%20performance%20and%20crashes%20on%20G450%20SCART-RGB%20output&In-Reply-To=%3C20050612063306.GA3230%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Jun 12 08:33:06 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000863.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+        <LI>Next message: <A HREF="000865.html">[Softdevice-devel] Inefficient synchronization when playing back recordings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#864">[ date ]</a>
+              <a href="thread.html#864">[ thread ]</a>
+              <a href="subject.html#864">[ subject ]</a>
+              <a href="author.html#864">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Jun 11, 2005 at 04:37:06PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> When I used deinterlacing and the software-intensive pixel format (YUV2?)
+</I>&gt;<i> with VGA output, the sound played smoothly, but video frames were dropped
+</I>&gt;<i> every now and then.  With -vo:mgatv and obviously without deinterlacing,
+</I>&gt;<i> I also get dropped _audio_ frames, which is really annoying.  
+</I>
+Update: audio frames are never dropped on live stream, even when
+recording the stream while playing.  &quot;top&quot; will show about 50% idle
+processor time.  If I play the same stream from a recording, &quot;top&quot; shows
+about 25% idle processor time, and video and audio frames will be dropped,
+often several times per second.  I can't see anything suspicious in the
+oprofile output of softdevice.
+
+Hmm, now I think got it: opreport --global-percent tells it all at
+module level.  This is with live playback:
+
+  samples|      %|
+  ------------------
+   156558 67.6753 libvdr-softdevice.so.1.3.25
+    22436  9.6984 libdirectfb_matrox.so
+    19083  8.2490 vmlinux
+     7639  3.3021 oprofiled
+     7614  3.2913 libc-2.3.2.so
+     4933  2.1324 vdr
+     3832  1.6565 oprofile
+     3467  1.4987 dvb_core
+     1829  0.7906 libpthread-0.10.so
+
+And this when playing the corresponding recording:
+
+   160134 57.7513 libvdr-softdevice.so.1.3.25
+    35726 12.8844 libpthread-0.10.so
+    20816  7.5072 vdr
+    20243  7.3005 libdirectfb_matrox.so
+    16292  5.8756 vmlinux
+     9321  3.3616 oprofiled
+     4686  1.6900 oprofile
+     4090  1.4750 libc-2.3.2.so
+     2119  0.7642 dvb_core
+
+Somehow, libpthread is consuming 13 % of processing time.  In live
+playback, it uses less than one percent.  Judging from opstack
+output on /lib/libpthread-0.10.so, the most frequently used entry
+point is pthread_cond_timedwait_relative.  Here's the opreport
+breakdown:
+
+samples  %        symbol name
+9047     25.3233  __pthread_alt_unlock
+6931     19.4004  __pthread_alt_lock
+5338     14.9415  thread_self
+4370     12.2320  thread_self
+3354      9.3881  __GI___pthread_mutex_unlock
+3174      8.8843  __GI___pthread_mutex_lock
+1842      5.1559  __i686.get_pc_thunk.bx
+1045      2.9250  __errno_location
+89        0.2491  __pthread_lock
+52        0.1456  thread_self
+50        0.1400  __pthread_unlock
+45        0.1260  __pthread_timedsuspend_new
+45        0.1260  pthread_cond_timedwait_relative
+
+Any ideas?  In order to get more accurate results, I think I'll have to
+link vdr and all plugins and libraries statically.  Could someone
+(Martin?) post that patch again?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000863.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+	<LI>Next message: <A HREF="000865.html">[Softdevice-devel] Inefficient synchronization when playing back recordings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#864">[ date ]</a>
+              <a href="thread.html#864">[ thread ]</a>
+              <a href="subject.html#864">[ subject ]</a>
+              <a href="author.html#864">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

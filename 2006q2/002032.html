@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 hardware decoding: a bit of progress
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20hardware%20decoding%3A%20a%20bit%20of%20progress&In-Reply-To=%3C4468D712.30708%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002023.html">
+   <LINK REL="Next"  HREF="002024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 hardware decoding: a bit of progress</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20hardware%20decoding%3A%20a%20bit%20of%20progress&In-Reply-To=%3C4468D712.30708%40gmx.net%3E"
+       TITLE="[Softdevice-devel] CLE266 hardware decoding: a bit of progress">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon May 15 21:31:30 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002023.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+        <LI>Next message: <A HREF="002024.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2032">[ date ]</a>
+              <a href="thread.html#2032">[ thread ]</a>
+              <a href="subject.html#2032">[ subject ]</a>
+              <a href="author.html#2032">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> On Sunday 14 May 2006 09:25, Martin Wache wrote:
+</I>&gt;&gt;<i> Rolf Ahrenberg schrieb:
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i> OK. I've now uploaded the updated libcle266mpegdec-0.1.tar.gz to the
+</I>&gt;&gt;&gt;<i> server. It includes my attempt to fill up those aspect ratio numerators
+</I>&gt;&gt;&gt;<i> and denominators - hopefully I didn't misunderstood the feature.
+</I>&gt;<i> 
+</I>&gt;<i> I'm not convinced that your numbers here are correct: I get black borders at 
+</I>&gt;<i> the top and bottom of my 16:9 TV now. I also found a channel which wasn't 
+</I>&gt;<i> expanded properly horizontally. I'll see if I can find the relevant bits in 
+</I>&gt;<i> ffmpeg and see what values are set there. I was seeing things like 64/45 when 
+</I>&gt;<i> I looked at the output from software decoding.
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i> I did try the usleep hack in the decoder. It really brings my CPU load
+</I>&gt;&gt;&gt;<i> from 30% to 3%, but the drawback is jerky picture on my TV. So I left it
+</I>&gt;&gt;&gt;<i> out.. Please, let me know if broke something in the library or the
+</I>&gt;&gt;&gt;<i> included softdevice patch.
+</I>&gt;<i> 
+</I>&gt;<i> Your patch and library seem to work fine for me apart from the black borders.
+</I>&gt;<i> 
+</I>&gt;&gt;<i> I haven't had the time yet to look at your latest code, hopefully I will
+</I>&gt;&gt;<i> have some time this evening.
+</I>&gt;&gt;<i> But I want to say that the usleep part isn't properly working also for
+</I>&gt;&gt;<i> me. That busy waiting is definitely something which should be improved,
+</I>&gt;&gt;<i> but I fear that usleep won't work. The minimum sleep time is 1ms
+</I>&gt;&gt;<i> (depending on the kernel) and that seems to be too much.
+</I>&gt;<i> 
+</I>&gt;<i> I must admit that I thought the resolution would be better than that! Maybe 
+</I>&gt;<i> having it without is the best that can be achieved practically.
+</I>&gt;<i>
+</I>I had a look at the latest libViaXvMC and it seems that they do sleep in
+the loop using nanosleep. I'm not sure if nanosleep has a better
+resolution, they also seem to use DMA to copy the slices, maybe that
+makes a difference. I think I remember much lower CPU usages (less &lt;10%)
+from xine using the latest X11 XvMC VIA hw decoding, does somebody know
+some numbers? Is it worth to think about integrating the DMA routines?
+
+
+&gt;<i> Do we need to determine coded_picture_number somehow, too? This is probably 
+</I>&gt;<i> why I'm getting the odd # in my output:
+</I>&gt;<i> 
+</I>No, that is not needed, it is a part of a hack which we use to sort the
+pts values to the decoded frames. With my pts patch to your library we
+already know the pts values.
+
+In fact quite a lot of the code inside
+cVideoStreamDecoder::DecodePacket() which deals with pts values is not
+needed in your case. One could try to gather the ffmpeg specific stuff
+and move it into a separate method, which returns a more general picture
+structure already including the pts. For the via hw decoding one could
+write a similar method... I will send my patch for direct rendering to
+the list, it is still unfinished and may crash, but it is probably good
+to discuss if it is useful for your patches and what changes still need
+to be done.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002023.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+	<LI>Next message: <A HREF="002024.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2032">[ date ]</a>
+              <a href="thread.html#2032">[ thread ]</a>
+              <a href="subject.html#2032">[ subject ]</a>
+              <a href="author.html#2032">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

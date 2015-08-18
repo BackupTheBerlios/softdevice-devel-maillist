@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame-buffer%20driver%20%3A%20%22state%20of%20the%20art%22&In-Reply-To=%3C4293114F.3010303%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000770.html">
+   <LINK REL="Next"  HREF="000717.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame-buffer%20driver%20%3A%20%22state%20of%20the%20art%22&In-Reply-To=%3C4293114F.3010303%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Tue May 24 13:34:39 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000770.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+        <LI>Next message: <A HREF="000717.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#716">[ date ]</a>
+              <a href="thread.html#716">[ thread ]</a>
+              <a href="subject.html#716">[ subject ]</a>
+              <a href="author.html#716">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello all,
+
+Before digging into the viafb code to improve the TV-out tables and add 
+a 720x576noscale mode, I checked the various version available.
+
+The version I had was :
+* kernel 2.6.8.1 (Debian)
+* epiawiki kernel patch, including the viafb driver
+* compiled on 200410, IIRC
+
+I wanted to compile a new viafb driver, along with latest kernel 2.6.11, 
+to get any SkyStar 2 improvements available. Then start improving 
+whatever TV-out tables I would have had then.
+
+Available viafb sources, to my knowledge, are :
+* Viaarena : latest 
+<A HREF="http://www.viaarena.com/downloads/Source/linux-fbdev-kernel-src_20050203.tgz">http://www.viaarena.com/downloads/Source/linux-fbdev-kernel-src_20050203.tgz</A> 
+for 2.6 (download comments dated 2005-05-20)
+* open-source code from 2.4, updated to 2.6, maintained by Andre Kriehn 
+:<i> <A HREF="http://patcher2k.012webpages.com/">http://patcher2k.012webpages.com/</A> (latest 2005-01-02)
+</I>* code from the DirectFB CVS (to my knowledge derived from patcher2k)
+* patch from epiawiki.org (also to my knowledge derived from patcher2k)
+
+
+VIA : this lastest source won't compile with 2.6.11 because of missing 
+cursor member in fb_info struct. This fb_info.cursor is missing in 
+2.6.11 source but not in 2.6.8. I since checked that patcher2k 
+viafb_03.diff simply commented out references to that member in the source.
+TV-out tables are greatly improved with that source : structure is much 
+more readable, they added something which ressembles a noscale mode 
+(underscan, fit, overscale : respectively &quot;reduce the image to fit 
+everything in the visible area&quot;, &quot;reduce a little less to set border of 
+the image just at the border of the visible area&quot;, &quot;try to not scale at 
+all, thus loosing some of the image&quot;). The parameters are better than 
+the ones from 2004-10, but all include a flicker filter that blur the 
+image (that's not what I want, so tuning of the tables is still necessary).
+The driver includes a so-called &quot;accel&quot; mode for kernel 2.6 only, which 
+might or might not include anything else than cursor acceleration.
+dfbinfo/dfbshow are not happy with this driver, as if necessary 
+acceleration hooks were not present (I don't have any traces since I 
+didn't finish my checks).
+Since patcher2k simply removed the fb_info-&gt;cursor references, I still 
+have to try this code with 2.6.11 and be sure I didn't miss something 
+when I tested dfbinfo/dfbshow.
+Maybe directfb users can comment on compatibility between this driver 
+and DirectFB. Maybe it could work along with cle266vgaio kernel module 
+for 2.6 ?
+
+
+Patcher2k : I still have to try this driver with 2.6.11, since it should 
+work with DirectFB (I think that's the one I have in my kernel).
+Since my goal is to tune the TV-out tables, and the ones in there are 
+ugly, I don't want to loose time on deprecated code.
+
+
+DirectFB CVS : I don't know exactly where this code come from and what 
+is it's status, but it is said to work well with DirectFB. The TV-out 
+tables there are also ugly.
+
+
+Since the documentation around those tv-out tables is not available, the 
+best source for future updates seems to be Via itself (also the 
+Unichrome team have done a real good work at this for XFree, but the 
+overall code is quite different).
+
+I now have to :
+* check if the Via code will ever work with DirectFB (including all 2D 
+acceleration)
+* if the Via driver won't work with DirectFB, select the most 
+appropriate source for this driver (any advice is welcome)
+* tune and maybe improve tv-out tables
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000770.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+	<LI>Next message: <A HREF="000717.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#716">[ date ]</a>
+              <a href="thread.html#716">[ thread ]</a>
+              <a href="subject.html#716">[ subject ]</a>
+              <a href="author.html#716">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

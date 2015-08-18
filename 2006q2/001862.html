@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20upmix%20mono%20to%20stereo%20%28to%20be%20audible%20via%20SPDIF%29&In-Reply-To=%3C200604122357.51664.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001859.html">
+   <LINK REL="Next"  HREF="001864.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20upmix%20mono%20to%20stereo%20%28to%20be%20audible%20via%20SPDIF%29&In-Reply-To=%3C200604122357.51664.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Apr 12 23:57:51 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001859.html">[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+</A></li>
+        <LI>Next message: <A HREF="001864.html">[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1862">[ date ]</a>
+              <a href="thread.html#1862">[ thread ]</a>
+              <a href="subject.html#1862">[ subject ]</a>
+              <a href="author.html#1862">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 12 April 2006 01:39, Lucian Muresan wrote:
+&gt;<i> Martin Wache wrote:
+</I>&gt;<i> [..]
+</I>&gt;<i> &gt; The patch looks okay except that it should do something sensible in case
+</I>&gt;<i> &gt; that the audiosamples is too small. I don't think that this actually
+</I>&gt;<i> &gt; will happen, but if we don't handle that case the softdevice will crash
+</I>&gt;<i> &gt; which is always bad. I think reallocating a that case bigger buffer is
+</I>&gt;<i> &gt; enough.
+</I>&gt;<i> &gt; I'm a bit short on time, so if you fix this issue we can apply the
+</I>&gt;<i> &gt; patch. Otherwise you have to wait until I find some time to fix it myself.
+</I>&gt;<i> 
+</I>&gt;<i> Ok, here is a version which reallocates audiosamples (I changed the
+</I>&gt;<i> signature of UpmixMono to use references to the audiosamples buffer,
+</I>&gt;<i> respectively to the lenght) just in case. Seems a bit overdozed, but
+</I>&gt;<i> you're right, even if it#s very unlikely to happen, it shouldn't be left
+</I>&gt;<i> not handled.
+</I>
+&gt;<i> + &#160;if (Length &gt; AVCODEC_MAX_AUDIO_FRAME_SIZE/2) {
+</I>&gt;<i> + &#160; &#160; // in this unlikely case, the buffer should be increased
+</I>&gt;<i> + &#160; &#160; BUFDEB(
+</I>&gt;<i> + &#160; &#160; &#160; &quot;cAudioStreamDecoder::UpmixMono: reallocating too small buffer (%d) to %d\n&quot;,
+</I>&gt;<i> + &#160; &#160; &#160; AVCODEC_MAX_AUDIO_FRAME_SIZE, 2*Length );
+</I>&gt;<i> + &#160; &#160; samples = (uint8_t *)realloc(samples, 2*Length);
+</I>
+So in case realloc fails, you'll destroy your reference to an already
+allocated buffer (before: samples != NULL, after: samples == NULL)
+
+I would prefer the first version with extension that our initial buffer
+is allocated with 2*AVCODEC_MAX_AUDIO_FRAME_SIZE .
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001859.html">[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+</A></li>
+	<LI>Next message: <A HREF="001864.html">[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1862">[ date ]</a>
+              <a href="thread.html#1862">[ thread ]</a>
+              <a href="subject.html#1862">[ subject ]</a>
+              <a href="author.html#1862">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

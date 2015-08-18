@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XReparentWindow() needed?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XReparentWindow%28%29%20needed%3F&In-Reply-To=%3C45F721B8.9000003%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002784.html">
+   <LINK REL="Next"  HREF="002785.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XReparentWindow() needed?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XReparentWindow%28%29%20needed%3F&In-Reply-To=%3C45F721B8.9000003%40gmx.net%3E"
+       TITLE="[Softdevice-devel] XReparentWindow() needed?">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Mar 13 23:12:08 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002784.html">[Softdevice-devel] XReparentWindow() needed?
+</A></li>
+        <LI>Next message: <A HREF="002785.html">[Softdevice-devel] [Softdevice-cvs] softplay Makefile, 1.7,	1.8 Receiver.c, 1.1, 1.2 SoftPlayer.c, 1.15, 1.16
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2786">[ date ]</a>
+              <a href="thread.html#2786">[ thread ]</a>
+              <a href="subject.html#2786">[ subject ]</a>
+              <a href="author.html#2786">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> Quoting Martin Wache:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have experienced some problems when trying to go from fullscreen to
+</I>&gt;&gt;<i> windowed mode with Xfce 4.3.99. The softdevice returns to windowed mode,
+</I>&gt;&gt;<i> but the size is still almost as large as the screen, and when pressing
+</I>&gt;&gt;<i> &quot;f&quot; again, nothing happens.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> After experimenting a bit I found that everything works well, when I
+</I>&gt;&gt;<i> comment the call to XReparentWindow(). So now I wonder what for, or if
+</I>&gt;&gt;<i> at all, this call is needed? MPlayer doesn't have a this call, so I
+</I>&gt;&gt;<i> would remove it unless it breaks things for other window managers...
+</I>&gt;<i> 
+</I>&gt;<i> Of course I would suggest/prefer another way :-) .
+</I>&gt;<i> 
+</I>&gt;<i> Can you try to
+</I>&gt;<i> a. uncomment &quot;//XMapRaised (dpy, win);&quot; just below the reparent call, or
+</I>&gt;<i> b. (preferred way) to handle ReparentNotify event like MapNotify in ProcessEvents():
+</I>&gt;<i>        case ReparentNotify:
+</I>&gt;<i>        case MapNotify:
+</I>&gt;<i> 
+</I>
+Thanks, Torgeir and Stefan for your input. Unfortunately I cannot have a
+closer look at this now, I hope I will have some time maybe this weekend.
+
+Bye,
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002784.html">[Softdevice-devel] XReparentWindow() needed?
+</A></li>
+	<LI>Next message: <A HREF="002785.html">[Softdevice-devel] [Softdevice-cvs] softplay Makefile, 1.7,	1.8 Receiver.c, 1.1, 1.2 SoftPlayer.c, 1.15, 1.16
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2786">[ date ]</a>
+              <a href="thread.html#2786">[ thread ]</a>
+              <a href="subject.html#2786">[ subject ]</a>
+              <a href="author.html#2786">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XV-out, toggle fullscreen while playback	paused
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%09paused&In-Reply-To=%3C1138003429.43d48de556170%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001719.html">
+   <LINK REL="Next"  HREF="001722.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XV-out, toggle fullscreen while playback	paused</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%09paused&In-Reply-To=%3C1138003429.43d48de556170%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] XV-out, toggle fullscreen while playback	paused">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Jan 23 09:03:49 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001719.html">[Softdevice-devel] XV-out, toggle fullscreen while playback	paused
+</A></li>
+        <LI>Next message: <A HREF="001722.html">[Softdevice-devel] XV-out, toggle fullscreen while	playback	paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1720">[ date ]</a>
+              <a href="thread.html#1720">[ thread ]</a>
+              <a href="subject.html#1720">[ subject ]</a>
+              <a href="author.html#1720">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;:
+
+&gt;<i> On Sun, 2006-01-22 at 17:32 +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Sonntag, 22. Januar 2006 13:54, Martin Wache wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; &gt; I think it's stupid to randomly only to handle every third event, and
+</I>&gt;<i> &gt; &gt; I'm sure that this was needed because the drawing mechanism of the
+</I>&gt;<i> &gt; &gt; softdevice was/is broken.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; No that's not stupid, it's just optimizing. Think of resizing. In that
+</I>&gt;<i> &gt; situation you'll get ContigureNotify on every pixel size change
+</I>&gt;<i> &gt; and a final Expose.
+</I>&gt;<i>
+</I>&gt;<i> It's possible to ask for events being compressed to avoid this.
+</I>
+Are you referring to specifying this via hints ?
+I think that is depending on window manager in use. Some honor such
+hints and some not :-( .
+
+&gt;<i>
+</I>&gt;<i> &gt; No, when going from full to windowed mode, it is required to clear
+</I>&gt;<i> &gt; the entire area. Assume displaying a 4:3 video in a 16:9 window.
+</I>&gt;<i> &gt; Without clear(), there may some parts of a previous drawn OSD left
+</I>&gt;<i> &gt; and right of the video area.
+</I>&gt;<i>
+</I>&gt;<i> XClearArea should be correct, as long as the last argument if false
+</I>&gt;<i> (don't generate expose event). See
+</I>&gt;<i> <A HREF="http://tronche.com/gui/x/xlib/graphics/XClearArea.html">http://tronche.com/gui/x/xlib/graphics/XClearArea.html</A>
+</I>
+Ups, thanks, that seems to be a general fault of mine :-(.
+
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001719.html">[Softdevice-devel] XV-out, toggle fullscreen while playback	paused
+</A></li>
+	<LI>Next message: <A HREF="001722.html">[Softdevice-devel] XV-out, toggle fullscreen while	playback	paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1720">[ date ]</a>
+              <a href="thread.html#1720">[ thread ]</a>
+              <a href="subject.html#1720">[ subject ]</a>
+              <a href="author.html#1720">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Next release ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Next%20release%20%3F&In-Reply-To=%3C200604232318.53229.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001891.html">
+   <LINK REL="Next"  HREF="001890.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Next release ?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Next%20release%20%3F&In-Reply-To=%3C200604232318.53229.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Next release ?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr 23 23:18:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001891.html">[Softdevice-devel] Next release ?
+</A></li>
+        <LI>Next message: <A HREF="001890.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1903">[ date ]</a>
+              <a href="thread.html#1903">[ thread ]</a>
+              <a href="subject.html#1903">[ subject ]</a>
+              <a href="author.html#1903">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 22 April 2006 18:22, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Apr 22, 2006 at 12:42:00AM +0200, Stefan Lucke wrote:
+</I>
+
+&gt;<i> 
+</I>&gt;<i> &gt; Short test with vdr-1.3.47: configure runs and xv-out is still usable.
+</I>&gt;<i> 
+</I>&gt;<i> That's because VDRVERSION == APIVERSION.  The two will probably differ when
+</I>&gt;<i> vdr 1.4 is released.  Then vdr would be loading plugins by APIVERSION.
+</I>
+Damm, my modification I prepared worked until I noticed Klaus did another
+funny check for plugin compatibility today. So I had to add a comment
+line to trick that check:
+
+#DUMMY=$(LIBDIR)/fake.vdr.Makefile.check.$(APIVERSION)
+
+Without that line, softdevice won't get compiled at all ;-) .
+
+Next release should be delayed, until our cvs version
+stabilized a few days.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001891.html">[Softdevice-devel] Next release ?
+</A></li>
+	<LI>Next message: <A HREF="001890.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1903">[ date ]</a>
+              <a href="thread.html#1903">[ thread ]</a>
+              <a href="subject.html#1903">[ subject ]</a>
+              <a href="author.html#1903">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Towards softdevice-0.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C200504061939.19814.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000457.html">
+   <LINK REL="Next"  HREF="000460.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Towards softdevice-0.1.1</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C200504061939.19814.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: Towards softdevice-0.1.1">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Apr  6 19:39:19 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000457.html">Towards sofdevice-0.1.1 was Re: [Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: 
+</A></li>
+        <LI>Next message: <A HREF="000460.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#459">[ date ]</a>
+              <a href="thread.html#459">[ thread ]</a>
+              <a href="subject.html#459">[ subject ]</a>
+              <a href="author.html#459">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 1. Januar 1970 00:59, Martin Wache wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I've no major pending issues to fix. Just a short test with older
+</I>&gt;<i> &gt; vdr versions (1.2.x) . So it's up to you to signal OK.
+</I>&gt;<i> &gt; I would like thursday evening more, as it's just before berlios
+</I>&gt;<i> &gt; mailing list breakdown. ;-( .
+</I>&gt;<i> Unfortunatly I won't have much time to work on the softdevice until the 
+</I>&gt;<i> weekend. So if we release on thursday I won't be able to do anything.
+</I>
+Ok, then on sunday.
+
+&gt;<i> 
+</I>&gt;<i> There are also some feature request which should be easy to implement. 
+</I>&gt;<i> For instance the startup in fullscreen mode for XV. I tried just to call 
+</I>&gt;<i> ToggleFullScreen() at the end of the initialising of XV-out, this works 
+</I>&gt;<i> without any problems for me. So we would just have to parse the 
+</I>&gt;<i> parameters and if full screen is requested call ToggleFullScreen.
+</I>
+That would be ok to (no high risk).
+
+&gt;<i> 
+</I>&gt;<i> Also I would like to implement some safety checks for the packet mode, 
+</I>&gt;<i> and of course remove all usleeps &lt; 10000ms which are not needed.
+</I>&gt;<i> I also thought about giveing the option of useing signal triggerd 
+</I>&gt;<i> timing, but that should be tested before releasing it as default...
+</I>
+Safty checks ok, but removing all usleeps &lt; 2000&#181;s, I'd like to veto.
+I tried it once with sched_yield() but that caused a high cpu load.
+Somewhere in the newer vdr versions there is another method
+via timed wait but that will introduce some &quot;#if VDRVERSNUM ..&quot;
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000457.html">Towards sofdevice-0.1.1 was Re: [Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: 
+</A></li>
+	<LI>Next message: <A HREF="000460.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#459">[ date ]</a>
+              <a href="thread.html#459">[ thread ]</a>
+              <a href="subject.html#459">[ subject ]</a>
+              <a href="author.html#459">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

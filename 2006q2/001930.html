@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XvMC support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XvMC%20support&In-Reply-To=%3C444F446F.4000508%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001929.html">
+   <LINK REL="Next"  HREF="001931.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XvMC support</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XvMC%20support&In-Reply-To=%3C444F446F.4000508%40huillard.net%3E"
+       TITLE="[Softdevice-devel] XvMC support">nicolas at huillard.net
+       </A><BR>
+    <I>Wed Apr 26 11:59:11 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001929.html">[Softdevice-devel] XvMC support
+</A></li>
+        <LI>Next message: <A HREF="001931.html">[Softdevice-devel] XvMC support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1930">[ date ]</a>
+              <a href="thread.html#1930">[ thread ]</a>
+              <a href="subject.html#1930">[ subject ]</a>
+              <a href="author.html#1930">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz a &#233;crit :
+&gt;<i> Nothing really to report yet: I now have a working-ish version of 
+</I>&gt;<i> libsoftmpeg which uses the hardware decoder. It no longer needs to have 
+</I>&gt;<i> things running as root (which is always nice!) and I eventually got it 
+</I>&gt;<i> working with the demo app (plays back an MPEG2-TS file), albeit quite 
+</I>&gt;<i> jerkily!
+</I>
+Congratulations !
+Feel free to submit code to the ML (directfb, softdevice), to give a
+chance to test.
+If you modified libsoftmpeg, you can also upload your mods to the
+DirectFB CVS repository, to have a broader audience. I think DOK was
+interested (2005-09) in adding hardware support to the MPEG2 video
+provider in DirectFB. If he can do this using your modified libsoftmpeg,
+you will get much more testers and maybe developers.
+
+&gt;<i> I'll need to do a bit more testing with this and then I'll try to work it 
+</I>&gt;<i> into an output method for softdevice.
+</I>
+Great !
+I just though about something : if your code is a new output method, it
+will only handle MPEG1/2, preventing from using softplay to decode DivX
+et al. Maybe it's better implemented as an alternate decoder for the
+directfb output method, giving a chance to still use current libavcodec
+for other codecs.
+
+&gt;<i> I doubt I'll get much done before the weekend, though...
+</I>
+Live your life, keep up the good work, and try to build a supporting
+community around your project.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001929.html">[Softdevice-devel] XvMC support
+</A></li>
+	<LI>Next message: <A HREF="001931.html">[Softdevice-devel] XvMC support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1930">[ date ]</a>
+              <a href="thread.html#1930">[ thread ]</a>
+              <a href="subject.html#1930">[ subject ]</a>
+              <a href="author.html#1930">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

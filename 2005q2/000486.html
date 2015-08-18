@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] some issues with current cvs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20some%20issues%20with%20current%20cvs&In-Reply-To=%3C4258D581.2040309%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000485.html">
+   <LINK REL="Next"  HREF="000487.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] some issues with current cvs</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20some%20issues%20with%20current%20cvs&In-Reply-To=%3C4258D581.2040309%40gmx.net%3E"
+       TITLE="[Softdevice-devel] some issues with current cvs">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Apr 10 09:28:01 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000485.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+        <LI>Next message: <A HREF="000487.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#486">[ date ]</a>
+              <a href="thread.html#486">[ thread ]</a>
+              <a href="subject.html#486">[ subject ]</a>
+              <a href="author.html#486">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> On Samstag, 9. April 2005 20:14, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>On Samstag, 9. April 2005 18:06, Martin Wache wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Stefan Lucke wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>But I come to a more serious bug. When aspect ratio changes in recordings.
+</I>&gt;&gt;&gt;&gt;<i>changes from 4:3 to 16:9 gives a few frames garbage and on change from
+</I>&gt;&gt;&gt;&gt;<i>16:9 to 4:3 (thats Torgeir's test stream) I get segfaults. When skipping back
+</I>&gt;&gt;&gt;&gt;<i>a few (2 or 3) times (back over 4:3-&gt; 16:9 transition) viewable garbadge
+</I>&gt;&gt;&gt;&gt;<i>dissapears.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Sorry, I don't have Torgeirs test stream and I don't have the 
+</I>&gt;&gt;&gt;<i>possibility to download large things until monday :-(...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Maybe thats related to the change they did, as I reported dvb instream
+</I>&gt;&gt;<i>aspect ratio changes where not correct detected (action is codec reset now).
+</I>&gt;&gt;<i>But why does that not influence vdr-1.2.1 ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>So we have to wait until you'll have a deeper look at that. At least to
+</I>&gt;&gt;<i>my opinion it's a show stopper for a new release tomorrow.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Segfault was introduced on 2005-04-02. checkout with -D 2005-04-02 is ok
+</I>&gt;<i> and -D 2005-04-03 segfaults.
+</I>&gt;<i> 
+</I>For mpeg2decoder there was only a change on 2005-04-02, which was the 
+introduction of the packet mode. Is this change included in the last 
+working version? However I doubt that this change causes the segfaults. 
+I suspect a error in libavcodec. Which version do you use?
+The only possibility we could break things would be that we skip/add 
+bytes on the input to libavformat, but why should we do that on aspect 
+ratio changes (we don't even know about them before libavcodec passes 
+the information to us...). Or tries vdr to detect the aspect ratio 
+changes and does something?
+This is very strange... I will check my recordings for aspect ratio 
+changes...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000485.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+	<LI>Next message: <A HREF="000487.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#486">[ date ]</a>
+              <a href="thread.html#486">[ thread ]</a>
+              <a href="subject.html#486">[ subject ]</a>
+              <a href="author.html#486">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

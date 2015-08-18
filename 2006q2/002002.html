@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C4462A918.4010301%40mountaincable.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001987.html">
+   <LINK REL="Next"  HREF="002005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Dave</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C4462A918.4010301%40mountaincable.net%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">inssomniak at mountaincable.net
+       </A><BR>
+    <I>Thu May 11 05:01:44 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001987.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="002005.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2002">[ date ]</a>
+              <a href="thread.html#2002">[ thread ]</a>
+              <a href="subject.html#2002">[ subject ]</a>
+              <a href="author.html#2002">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>What are the chances this would work for a VIA KM400 based chipset? 
+
+
+Martin Wache wrote:
+&gt;<i> Laz schrieb:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> On Sunday 07 May 2006 14:08, Stefan Lucke wrote:
+</I>&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i> On Mittwoch 03 Mai 2006 10:51, Laz wrote:
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;<i> I've had a private email from Rolf Ahrenberg who got this working and
+</I>&gt;&gt;&gt;&gt;<i> had the same quarter-sized image. However, he tells me that setting
+</I>&gt;&gt;&gt;&gt;<i> &quot;context-&gt;width = 720; context-&gt;height = 576;&quot; around where the
+</I>&gt;&gt;&gt;&gt;<i> decoder is called gives a full-screen picture.
+</I>&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;<i> They should be available in CLE266MPEGDecoderState.width ( and height).
+</I>&gt;&gt;&gt;<i> Hopefully it is accessible, should be as it is not declared private.
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i> Ah yes: didn't think of that at the time! I should probably add the 'which 
+</I>&gt;&gt;<i> buffer contains the decoded frame' variable to that structure to make it 
+</I>&gt;&gt;<i> a bit more self-contained.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     
+</I>&gt;<i> The softdevice currently doesn't support direct rendering, and that is
+</I>&gt;<i> what the hardware decoder actually does. I have a patch which starts to
+</I>&gt;<i> implement the direct rendering, unfortunately it isn't finished yet.
+</I>&gt;<i> With proper direct rendering support passing the correct FB will not be
+</I>&gt;<i> a problem, so I would suggest to leave it as it is for now.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;&gt;<i> But some information for aspect calculation and interlaced/progressive
+</I>&gt;&gt;&gt;<i> detection is taken from the decoded frame (AVFrame).
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i> I thought it might be a bit more complicated. Does any of the A-V sync 
+</I>&gt;&gt;<i> stuff come from the decoding or is all of that from the libavformat bit?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     
+</I>&gt;<i> Libavformat delivers the pts for the coded frame which starts in the
+</I>&gt;<i> packet. The difficult bit is to find the correct decoded frame to that
+</I>&gt;<i> pts, since they are reordered for displaying. I will try to have a look
+</I>&gt;<i> at it...
+</I>&gt;<i>
+</I>&gt;<i> I also have the patches running now, it works nice except for the aspect
+</I>&gt;<i> ratio and some a-v syncing issues.
+</I>&gt;<i>
+</I>&gt;<i> Bye,
+</I>&gt;<i> Martin
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001987.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="002005.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2002">[ date ]</a>
+              <a href="thread.html#2002">[ thread ]</a>
+              <a href="subject.html#2002">[ subject ]</a>
+              <a href="author.html#2002">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

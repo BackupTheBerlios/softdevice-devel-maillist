@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C450E904D.8090405%40cs.helsinki.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002487.html">
+   <LINK REL="Next"  HREF="002489.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Enable mgatv spic and YV12</H1>
+    <B>Heikki Lindholm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C450E904D.8090405%40cs.helsinki.fi%3E"
+       TITLE="[Softdevice-devel] [PATCH] Enable mgatv spic and YV12">holindho at cs.helsinki.fi
+       </A><BR>
+    <I>Mon Sep 18 14:25:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002487.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+        <LI>Next message: <A HREF="002489.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2488">[ date ]</a>
+              <a href="thread.html#2488">[ thread ]</a>
+              <a href="subject.html#2488">[ subject ]</a>
+              <a href="author.html#2488">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; kirjoitti:
+&gt;<i> On Mon, Sep 18, 2006 at 11:39:57AM +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Can you please point out to me what the advantage of using the
+</I>&gt;&gt;<i>subpicture layer is? To me it looks like the main speed change is that
+</I>&gt;&gt;<i>you don't scale the osd. Or does the change to YV12 colourspace bring
+</I>&gt;&gt;<i>some speed advantage?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Some time ago, I tested replacing the YUY2 colour space conversion
+</I>&gt;<i> with a memcpy().  The memcpy() was about twice as fast on my
+</I>&gt;<i> 900 MHz Celeron, saving another 10% to 15% of CPU.  On his 450 MHz P2,
+</I>&gt;<i> this change is probably crucial.
+</I>
+I didn't receive the above Martin's message at all - off list, perhaps? 
+Anyway, if it's still about the topic in question, the keyword for using 
+the subpicture layer from my perspective is 'incompetence': I couldn't 
+get crtc2 (mgatv) video layer working with YV12 colourspace and blitted 
+OSD, so, I thought maybe it'd work with a subpicture layer more 
+effortlessly, and it did. So, the advantage for me isn't the OSD really, 
+but the YV12 for the crtc2 video. YV12-&gt;YUY2 was simply too slow.
+
+Using YV12 and LUT44 both bring advantages of reduced memory 
+requirements and are generally faster. I didn't implement the scaling 
+routines for the LUT44 OSD, because I simply didn't grasp the idea of 
+the existing code in 5 seconds, and realized that scaling would 
+practically never be required by the tv output.
+
+-- Heikki Lindholm
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002487.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+	<LI>Next message: <A HREF="002489.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2488">[ date ]</a>
+              <a href="thread.html#2488">[ thread ]</a>
+              <a href="subject.html#2488">[ subject ]</a>
+              <a href="author.html#2488">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash when fast-skipping a recording
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20fast-skipping%20a%20recording&In-Reply-To=%3C20050910064445.GA409179%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001230.html">
+   <LINK REL="Next"  HREF="001232.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash when fast-skipping a recording</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20fast-skipping%20a%20recording&In-Reply-To=%3C20050910064445.GA409179%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Crash when fast-skipping a recording">marko.makela at hut.fi
+       </A><BR>
+    <I>Sat Sep 10 08:44:45 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001230.html">[Softdevice-devel] [PATCH] Avoid vdr crash in &quot;make plugins&quot;
+</A></li>
+        <LI>Next message: <A HREF="001232.html">[Softdevice-devel] Crash when fast-skipping a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1231">[ date ]</a>
+              <a href="thread.html#1231">[ thread ]</a>
+              <a href="subject.html#1231">[ subject ]</a>
+              <a href="author.html#1231">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It seems that the crash bug that disturbs the use of my
+vdr-suspend patch can also be triggered by skipping a
+88-minute 16:9 recording in 1-minute steps at 33 ms
+keyrepeat rate.  (After some kernel hacking last night,
+I found out that ir-common.ko uses the default input.ko
+keyrepeat timer instead of mapping RC5 frames (which are
+sent every 177 ms) to keyrepeat events.)
+
+If I press OK to activate the timestamp display on the
+&quot;classic vdr&quot; theme and then keep the Yellow or Green key
+pressed down while watching this particular 16:9 recording,
+softdevice will often crash.
+
+First time, I didn't get a stack trace, but the second
+time I got one.  Third time, I wasn't able to repeat.
+Interestingly, after some 5 or 10 seconds of skipping
+going on at the 33 ms keyrepeat rate, softdevice would
+only play audio frames every now and then.  It would stop
+updating the video and eventually blank the video overlay.
+Maybe this is what caused the crash in the first place?
+(Sorry, this bug doesn't always occur, and I don't remember
+exactly what the screen looked like during the crashes.)
+
+The aspect ratio remains constant throughout this recording.
+
+In case it makes any difference: softdevice is unable to
+open /dev/rtc.
+
+Here is the stack trace:
+
+#0  0xb7cfd5ef in memcpy () from /lib/tls/libc.so.6
+No symbol table info available.
+#1  0xb7929daf in cDFBVideoOut::YUV (this=0x8296df8, Py=0xb4e90808 &quot;&quot;, Pu=0x82b4ab0 &quot;&quot;, 
+    Pv=0x82ce750 '\177' &lt;repeats 200 times&gt;..., Width=736, Height=576, Ystride=736, 
+    UVstride=368) at video-dfb.c:1166
+	dst = (uint8_t *) 0xb5e94ea0 &lt;Address 0xb5e94ea0 out of bounds&gt;
+	pitch = 704
+	hi = 137160880
+#2  0xb791b15f in cVideoOut::Action (this=0x8296df8) at video.c:107
+	newOsdWidth = 736
+	newOsdHeight = 576
+	changeMode = false
+#3  0x080f1c32 in cThread::StartThread (Thread=0x8296df8) at thread.c:234
+No locals.
+#4  0xb7ee7ccd in start_thread () from /lib/tls/libpthread.so.0
+No symbol table info available.
+#5  0xb7d5fb0e in clone () from /lib/tls/libc.so.6
+No symbol table info available.
+
+Compare it to a previous stack trace that occurred after hitting the
+Suspend key (of my vdr-suspend patch):
+
+#0  0xb7d755ef in memcpy () from /lib/tls/libc.so.6
+No symbol table info available.
+#1  0xb79a1daf in cDFBVideoOut::YUV (this=0x827c410, Py=0xb4ef8808 &quot;&quot;, Pu=0x829bbb8 &quot;&quot;, 
+    Pv=0x82b5858 '\177' &lt;repeats 200 times&gt;..., Width=736, Height=576, Ystride=736, 
+    UVstride=368) at video-dfb.c:1166
+	dst = (uint8_t *) 0xb5f06ea0 &lt;Address 0xb5f06ea0 out of bounds&gt;
+	pitch = 704
+	hi = 137058744
+#2  0xb799315f in cVideoOut::Action (this=0x827c410) at video.c:107
+	newOsdWidth = 736
+	newOsdHeight = 576
+	changeMode = false
+#3  0x080f1c32 in cThread::StartThread (Thread=0x827c410) at thread.c:234
+No locals.
+#4  0xb7f5fccd in start_thread () from /lib/tls/libpthread.so.0
+No symbol table info available.
+#5  0xb7dd7b0e in clone () from /lib/tls/libc.so.6
+No symbol table info available.
+
+Note that in cDFBVideoOut::YUV(), the local variable &quot;hi&quot; is garbage
+in both cases.
+
+One more thing: I have got some crashes when starting to view a
+recording while the disk containing it is spun down.  VDR would crash
+while the disk is spinning up.  This occurs quite rarely, and I have
+been unable to get a stack trace.  I believe that those crashes could
+be due to this same bug.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001230.html">[Softdevice-devel] [PATCH] Avoid vdr crash in &quot;make plugins&quot;
+</A></li>
+	<LI>Next message: <A HREF="001232.html">[Softdevice-devel] Crash when fast-skipping a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1231">[ date ]</a>
+              <a href="thread.html#1231">[ thread ]</a>
+              <a href="subject.html#1231">[ subject ]</a>
+              <a href="author.html#1231">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

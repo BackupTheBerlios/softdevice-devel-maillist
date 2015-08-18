@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems while playing recordings and in startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%20startup&In-Reply-To=%3C42A8A905.3060400%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000834.html">
+   <LINK REL="Next"  HREF="000849.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems while playing recordings and in startup</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%20startup&In-Reply-To=%3C42A8A905.3060400%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Problems while playing recordings and in startup">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Jun  9 22:39:33 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000834.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+        <LI>Next message: <A HREF="000849.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#848">[ date ]</a>
+              <a href="thread.html#848">[ thread ]</a>
+              <a href="subject.html#848">[ subject ]</a>
+              <a href="author.html#848">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ari Koponen schrieb:
+&gt;<i> On 6/6/05, Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>So there seems to be some process which takes unnecessarily takes CPU
+</I>&gt;&gt;<i>time when replaying a recording... Unfortunatly I'm still a bit short on
+</I>&gt;&gt;<i>time, but I will check on my box if I also see the difference. Than we
+</I>&gt;&gt;<i>have to find out which process takes the CPU time and see how we can fix
+</I>&gt;&gt;<i>it. On my system there is usually one thread which takes about 20-30% of
+</I>&gt;&gt;<i>the cpu time, this is the video decoding thread, all others take less
+</I>&gt;&gt;<i>than 10% cpu time. Is it the same for you when replaying a recording?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> There seems to be one process that takes 30 - 40 % and another that
+</I>&gt;<i> takes 20 - 30 % and the rest take under 10 %. So indeed, there seems
+</I>&gt;<i> to be a process that eats quite a lot cpu time.
+</I>&gt;<i> 
+</I>I just check on my box, I don't have an additional thread which takes so
+much CPU time when replaying a recording.
+
+Torgeir? What do you also have one thread which takes additional CPU time?
+
+I don't know how good you know debugging tools, but if you know gdb,
+could you try to attach to the additional thread and try to find out
+what it is doing? (Basically it just call gdb, enter &quot;attach PID&quot; and
+then &quot;backtrace&quot;. Vdr will crash after this, so you will have to kill it
+with kill -9. Do this several times, and hopefully you will get the
+position where the time is spent.)
+The other possibility would be to try to profile vdr while playing a
+recording with some profiling tool.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000834.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+	<LI>Next message: <A HREF="000849.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#848">[ date ]</a>
+              <a href="thread.html#848">[ thread ]</a>
+              <a href="subject.html#848">[ subject ]</a>
+              <a href="author.html#848">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

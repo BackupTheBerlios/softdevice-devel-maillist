@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Buffer mode?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Buffer%20mode%3F&In-Reply-To=%3C464390F9.4090907%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002856.html">
+   <LINK REL="Next"  HREF="002858.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Buffer mode?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Buffer%20mode%3F&In-Reply-To=%3C464390F9.4090907%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Buffer mode?">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu May 10 23:39:05 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002856.html">[Softdevice-devel] Buffer mode?
+</A></li>
+        <LI>Next message: <A HREF="002858.html">[Softdevice-devel] frames per second with lavc deinterlacing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2864">[ date ]</a>
+              <a href="thread.html#2864">[ thread ]</a>
+              <a href="subject.html#2864">[ subject ]</a>
+              <a href="author.html#2864">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Per Mellander schrieb:
+&gt;<i> Could someone please explain what the difference is between 'HDTV' and 
+</I>&gt;<i> 'safe' setting in 'Buffer Mode'? I've noticed problems with A/V sync, ( 
+</I>&gt;<i> see thread 'Is there a known A/V sync issue with current	softdevice.') 
+</I>&gt;<i> and I think it has to do with watching live (SD)TV and having buffer 
+</I>&gt;<i> mode set to HDTV.
+</I>&gt;<i> 
+</I>
+The difference between HDTV buffer mode and safe is the size of the
+demuxing buffer. The audio and video packets are interleaved and because
+it takes some time to decode the video (eg. for b frames) the video is
+usually ahead of the audio. The demuxing splits audio and video into
+separate buffers, if they are too small A/V sync problems can happen.
+That is why there is the HDTV option, HDTV needs bigger buffers :-)
+
+So I would not expect that this is a problem, but it may be. What about
+the default buffer sizes? Do they work fine for you?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002856.html">[Softdevice-devel] Buffer mode?
+</A></li>
+	<LI>Next message: <A HREF="002858.html">[Softdevice-devel] frames per second with lavc deinterlacing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2864">[ date ]</a>
+              <a href="thread.html#2864">[ thread ]</a>
+              <a href="subject.html#2864">[ subject ]</a>
+              <a href="author.html#2864">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> AW: AW: [Softdevice-devel] new OSD support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D145%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001630.html">
+   <LINK REL="Next"  HREF="001632.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>AW: AW: [Softdevice-devel] new OSD support</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D145%40sbs2003.do-net.de%3E"
+       TITLE="AW: AW: [Softdevice-devel] new OSD support">Neumann at do-net.de
+       </A><BR>
+    <I>Sun Jan  8 00:05:37 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001630.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+        <LI>Next message: <A HREF="001632.html">AW: AW: [Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1631">[ date ]</a>
+              <a href="thread.html#1631">[ thread ]</a>
+              <a href="subject.html#1631">[ subject ]</a>
+              <a href="author.html#1631">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've tried your instructions, but i cannot get it to work. When i do a ulimit -c unlimited before i call vdr,
+I do not get core.xx files, even if is try to run 
+
+gdb ./vdr 
+
+and then
+
+run -c /etc/vdr -v /video0 -P'softdevice -vo dfb:'
+
+Vdr do not crash when running with gdb. Really strange. When running vdr normal it always crashes.
+
+What can i do more ?
+
+-------------
+Andre Neumann 
+
+-----Urspr&#252;ngliche Nachricht-----
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] Im Auftrag von Martin Wache
+Gesendet: Samstag, 7. Januar 2006 22:50
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+Betreff: Re: AW: [Softdevice-devel] new OSD support
+
+Andre Neumann schrieb:
+&gt;<i> Hi Martin,
+</I>&gt;<i> 
+</I>&gt;<i> Wow, this really sounds good. 2006 is starting great :)
+</I>&gt;<i> 
+</I>&gt;<i> I checked out cvs und compiled the new version, but on startup vdr crashes. Here is the output.
+</I>&gt;<i> Im using dfb output with a matrox g550.
+</I>&gt;<i> 
+</I>Thank you for your report :-)
+
+Usually the easiest way to debug a crash is to use a core dump. Could you please try to generate one?
+
+If you don't know how, here is a short instruction:
+Type &quot;ulimit -c unlimited&quot; your a shell (assuming you're useing bash), then start vdr so that it crashes, you should get a message like &quot;Core dumped&quot; when it crashes. The core dump is a file in the current working directory which is usualy named core.XXXX, the XXXX is some number which is not always there (depends on your system). Now open the core dump in gdb (start gdb &quot;gdb vdr&quot;, then type &quot;core-file core.XXXX&quot;) and type &quot;bt full&quot; which generates a human readable output of the core dump.
+
+Without a core dump I'll have to try to guess the reason for the crash, but right now nothing comes to my mind :-(
+
+Bye,
+
+Martin
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+<A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001630.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+	<LI>Next message: <A HREF="001632.html">AW: AW: [Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1631">[ date ]</a>
+              <a href="thread.html#1631">[ thread ]</a>
+              <a href="subject.html#1631">[ subject ]</a>
+              <a href="author.html#1631">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

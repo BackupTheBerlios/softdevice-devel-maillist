@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%28Resend%29%3A%20Fwd%3A%20Re%3A%20Matrox%20patch&In-Reply-To=%3C41C93F53.5040206%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000105.html">
+   <LINK REL="Next"  HREF="000108.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] (Resend): Fwd: Re: Matrox patch</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%28Resend%29%3A%20Fwd%3A%20Re%3A%20Matrox%20patch&In-Reply-To=%3C41C93F53.5040206%40gmx.net%3E"
+       TITLE="[Softdevice-devel] (Resend): Fwd: Re: Matrox patch">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Dec 22 10:33:07 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000105.html">[Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+</A></li>
+        <LI>Next message: <A HREF="000108.html">[Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#106">[ date ]</a>
+              <a href="thread.html#106">[ thread ]</a>
+              <a href="subject.html#106">[ subject ]</a>
+              <a href="author.html#106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> As the mailing lsit seems to work again, I'll resend this.
+</I>&gt;<i> 
+</I>&gt;<i> If someone is interested in the patch from Andrei please let me know.
+</I>&gt;<i> bz2 size is about 90kB so beyond the limit of this list.
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> 
+</I>&gt;<i> ----------  Forwarded Message  ----------
+</I>&gt;<i> 
+</I>&gt;<i> Subject: Re: Matrox patch
+</I>&gt;<i> Date: Sonntag, 19. Dezember 2004 23:40
+</I>&gt;<i> From: Stefan Lucke &lt;..&gt;
+</I>&gt;<i> To: Andrei Naouman &lt;..&gt;
+</I>&gt;<i> Cc: softdevice- ..
+</I>&gt;<i> 
+</I>&gt;<i> On Sonntag, 19. Dezember 2004 17:31, Andrei Naouman wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Here is the patch I uploaded to the site.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>&quot;This patch adds a driver dedicated to support Matrox card TV-out. See
+</I>&gt;&gt;<i>screenshot.
+</I>&gt;&gt;<i>With recently enhanced Vidix mga driver you will have Hardware OSD of
+</I>&gt;&gt;<i>Matrox card.
+</I>&gt;&gt;<i>Since CRTC2 out does not support hardware scaling a software scaler
+</I>&gt;&gt;<i>was borrowed from MPlayer project.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I'm not sure if your CRTC2 statement is correct. I think I've seen code
+</I>&gt;<i> somewhere in directFB output modules (mplayer one ?) where they do
+</I>&gt;<i> some tricks in half-frame interrupts. Thus programming double line length
+</I>&gt;<i> and changing the line start addresses upon field interrupt :-) .
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I think we have to contact mplayer developer before accepting/including this
+</I>&gt;<i> huge patch into softdevice (uncompressed size is about 404K). At a first glance
+</I>&gt;<i> it looks like mplayer/postproc/* .
+</I>&gt;<i> 
+</I>&gt;<i> Do you or anyone else know of a library for software scaling?
+</I>&gt;<i> 
+</I>&gt;<i> Copying parts of mplayer is to my opinion not a clean solution, as I cannot maintain
+</I>&gt;<i> that code for bug fixing or further development.
+</I>&gt;<i> 
+</I>&gt;<i> If mplayer developers decide to make their postproc lib, part of a separate public
+</I>&gt;<i> standalone lib (or include it into ffmpeg) it would be easier for other projects
+</I>&gt;<i> to share code.
+</I>&gt;<i> 
+</I>&gt;<i> The screenshot you send to me looks nice.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -------------------------------------------------------
+</I>&gt;<i> 
+</I>
+
+Hi,
+
+I fully aggree with you, we should not blow up the softdevice that much 
+just to get software scaling. But having a procedure which scales the 
+osd to fit the actual windowsize would also be nice for X11-out.  In 
+principle scaling of a picture should not be that difficult, so maybe we 
+can get a algorithem from somewhere an implemented it ourself.
+I hope to have some more time during the holidays, can you send me the 
+patch to my private e-mail, so that I can have a look at it?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000105.html">[Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+</A></li>
+	<LI>Next message: <A HREF="000108.html">[Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#106">[ date ]</a>
+              <a href="thread.html#106">[ thread ]</a>
+              <a href="subject.html#106">[ subject ]</a>
+              <a href="author.html#106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200609251956.49373.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002527.html">
+   <LINK REL="Next"  HREF="002530.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200609251956.49373.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Sep 25 19:56:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002527.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+        <LI>Next message: <A HREF="002530.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2529">[ date ]</a>
+              <a href="thread.html#2529">[ thread ]</a>
+              <a href="subject.html#2529">[ subject ]</a>
+              <a href="author.html#2529">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag 25 September 2006 19:37, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; On Sonntag 24 September 2006 22:56, Martin Wache wrote:
+</I>&gt;<i> &gt;&gt; Stefan Lucke schrieb:
+</I>&gt;<i> &gt;&gt;&gt; On Freitag 22 September 2006 06:37, Stefan Lucke wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt; On Donnerstag 21 September 2006 12:53, Martin Wache wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; Marko M&#228;kel&#228; schrieb:
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; On Wed, Sep 20, 2006 at 10:20:49AM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt;&gt; I would suggest to check what osdMutex is actually protecting, in some
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt;&gt; places I really don't know that. So for protecting what is the osdMutex
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt;&gt; needed?
+</I>&gt;<i> &gt;&gt;&gt;&gt; Added some comment on what osdMutex is protecting.
+</I>&gt;<i> &gt;&gt; // -----------------------------------------------------------------------
+</I>&gt;<i> &gt;&gt; // State changes of OSD like on / off transitions, must be proteced by
+</I>&gt;<i> &gt;&gt; // osdMutex. This are changes of variable OSDpresent, as the output method
+</I>&gt;<i> &gt;&gt; // may need to take some longer actions e.g clearing background for one or
+</I>&gt;<i> &gt;&gt; // mutiple output buffers (double, triple buffering).
+</I>&gt;<i> &gt;&gt; //
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I don't think that for this we actually need a mutex. I saw that you
+</I>&gt;<i> &gt;&gt; sent a patch which removes osdMutex from DirectFB. So is this still what
+</I>&gt;<i> &gt;&gt; you are thinking? Do we need osdMutex?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I looked too close at directfb and that was my actual impression.
+</I>&gt;<i> &gt; Now I think different :-). The roots of osdMutex are in vdr-1.2.x:
+</I>&gt;<i> &gt; OpenOSD() , CloseOSD()
+</I>&gt;<i> &gt; In CloseOSD there is some code duplicated video.c:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; void cVideoOut::CloseOSD()
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt;   osdMutex.Lock();
+</I>&gt;<i> &gt;   OSDpresent=false;
+</I>&gt;<i> &gt;   for (int i = 0; i &lt; MAXNUMWINDOWS; i++)
+</I>&gt;<i> &gt;   {
+</I>&gt;<i> &gt;     if (layer[i])
+</I>&gt;<i> &gt;     {
+</I>&gt;<i> &gt;       delete(layer[i]);
+</I>&gt;<i> &gt;       layer[i]=0;
+</I>&gt;<i> &gt;     }
+</I>&gt;<i> &gt;   }
+</I>&gt;<i> &gt;   osdMutex.Unlock();
+</I>&gt;<i> &gt; }
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; and now in video-xv.c:
+</I>&gt;<i> &gt; /* ---------------------------------------------------------------------------
+</I>&gt;<i> &gt;  */
+</I>&gt;<i> &gt; void cXvVideoOut::CloseOSD()
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt;   cVideoOut::CloseOSD();
+</I>&gt;<i> &gt;   osdMutex.Lock();
+</I>&gt;<i> &gt; #if VDRVERSNUM &lt; 10307
+</I>&gt;<i> &gt;   for (int i = 0; i &lt; MAXNUMWINDOWS; i++)
+</I>&gt;<i> &gt;   {
+</I>&gt;<i> &gt;     if (layer[i])
+</I>&gt;<i> &gt;     {
+</I>&gt;<i> &gt;       delete(layer[i]);
+</I>&gt;<i> &gt;       layer[i]=0;
+</I>&gt;<i> &gt;     }
+</I>&gt;<i> &gt;   }
+</I>&gt;<i> &gt; #endif
+</I>&gt;<i> &gt;   [snip]
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;   osdMutex.Unlock();
+</I>&gt;<i> &gt; }
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;&gt;&gt; For Action() of cVideoOut, osdMutex is the wrong one, as the existance
+</I>&gt;<i> &gt;&gt;&gt;&gt; and current contend of previous decoded frame has to be protected.
+</I>&gt;<i> &gt;&gt;&gt;&gt; Introduced a separate mutex for that purpose.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; That should fix the hang situation.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Martin, what is areaMutex for ?
+</I>&gt;<i> &gt;&gt; Funny that you are asking me that question, you introduced areaMutex ;-)
+</I>&gt;<i> &gt;&gt; Please check video.c revision 1.30 and the corresponding log message.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Ok, then I only removed one of my own dark sides.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;&gt;&gt; From reading the the code, it is just for serializing calls of YUV() .
+</I>&gt;<i> &gt;&gt;&gt;&gt; So it could be moved to the private section, right ?
+</I>&gt;<i> &gt;&gt; Sure, it could be moved. But if you want to do this to avoid deadlocks,
+</I>&gt;<i> &gt;&gt; that won't work, since YUV() is still called with areaMutex, or now
+</I>&gt;<i> &gt;&gt; oldPictureMutex held. So it is still possible to create deadlocks in the
+</I>&gt;<i> &gt;&gt; video-out classes which inherit from cVideo.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Dropped areaMutex, as there was the possibility of loosing a current
+</I>&gt;<i> &gt;&gt;&gt; frame. This is now handled by locking with oldPictureMutex too.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; Hmm, it would have been simpler just to keep areaMutex and to use
+</I>&gt;<i> &gt;&gt; areaMutex instead of osdMutex in cVideo::Action()... Locking an mutex,
+</I>&gt;<i> &gt;&gt; which is already held by the thread is not a good coding style (Action()
+</I>&gt;<i> &gt;&gt; calls DrawStill())...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Beside coding style, do you still see a deadlock possibility ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> On non-linux systems, yes. As soon as you are using strict posix mutexes
+</I>&gt;<i>  trying to lock a mutex from the thread which already holds the mutex
+</I>&gt;<i> always results in a deadlock.
+</I>&gt;<i> 
+</I>&gt;<i> But there may be other problems as well: if you lock a mutex, and then
+</I>&gt;<i> call a method which locks the same mutex again, this second lock will
+</I>&gt;<i> fail with -EAGAIN (in case of a mutex PTHREAD_MUTEX_ERRORCHECK_NP), but
+</I>&gt;<i> not block. If this method now unlocks the mutex, the mutex will be
+</I>&gt;<i> unlocked, even though the calling method still thinks it holds the mutex.
+</I>&gt;<i> I did not try this out, maybe I'm wrong here (it depends on the
+</I>&gt;<i> implementation of the library... there are also recursive locks which
+</I>&gt;<i> are allowed to double lock)
+</I>&gt;<i> So I would like to avoid double locking...
+</I>&gt;<i> 
+</I>&gt;<i> Thinking again about all this, I don't think that one actually needs to
+</I>&gt;<i> call DrawStill() from other than cVideo, it is only used to redraw a
+</I>&gt;<i> frame when the OSD changes and no video currently is displayed.
+</I>&gt;<i> I think the name is misleading, even still pictures should be displayed
+</I>&gt;<i> with DrawVideo(), since on OSD change one still wants to have the last
+</I>&gt;<i> still picture, and only DrawVideo() updates oldPicture. So I would
+</I>&gt;<i> suggest to remove the lock from DrawStill(), make it private and put a
+</I>&gt;<i> comment on it, that it only should be called with oldPictureMutex held.
+</I>
+DrawStill() is called from outside of video.c -&gt; ShmClient.c.
+So we should have a non-locking private one, and a locking public.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002527.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+	<LI>Next message: <A HREF="002530.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2529">[ date ]</a>
+              <a href="thread.html#2529">[ thread ]</a>
+              <a href="subject.html#2529">[ subject ]</a>
+              <a href="author.html#2529">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

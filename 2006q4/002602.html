@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb + cle266mpegdec + TVout : field parity	status and patches [update]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20%2B%20cle266mpegdec%20%2B%20TVout%20%3A%20field%20parity%0A%09status%20and%20patches%20%5Bupdate%5D&In-Reply-To=%3C200610082229.10651.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002601.html">
+   <LINK REL="Next"  HREF="002603.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity	status and patches [update]</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20%2B%20cle266mpegdec%20%2B%20TVout%20%3A%20field%20parity%0A%09status%20and%20patches%20%5Bupdate%5D&In-Reply-To=%3C200610082229.10651.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity	status and patches [update]">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct  8 22:29:10 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002601.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+        <LI>Next message: <A HREF="002603.html">[Softdevice-devel] [directfb-users]  viafb + cle266mpegdec +	TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2602">[ date ]</a>
+              <a href="thread.html#2602">[ thread ]</a>
+              <a href="subject.html#2602">[ subject ]</a>
+              <a href="author.html#2602">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 08 Oktober 2006 19:45, Nicolas Huillard wrote:
+&gt;<i> Hi all,
+</I>&gt;<i> 
+</I>&gt;<i> Here's my update on the matter after upgrading quite everything. I would
+</I>&gt;<i> like to thank those who replied to my questions.
+</I>&gt;<i> First : I still have field parity problems with interlaced material on
+</I>&gt;<i> interlaced TV.
+</I>&gt;<i> Second : there are a lot things there, from the kernel, viafb,
+</I>&gt;<i> libcle266mpegdec, DirectFB, DFB++, up to softdevice...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+&gt;<i> 
+</I>&gt;<i> DFB++ CVS 20061008 (today)
+</I>&gt;<i> * applied the GetFBOffsetDFB++.patch from libcle266mpegdec
+</I>&gt;<i> * this patch should make it into CVS, to keep in sync with DirectFB
+</I>&gt;<i> * there is nothing about field parity there, since Mark's patch was
+</I>&gt;<i> about the unichrome driver, not about DirectFB API (which DFB++ only
+</I>&gt;<i> deals with)
+</I>
+I think the DFB++ patch is still on Denis' radar, see:
+<A HREF="http://mail.directfb.org/pipermail/directfb-dev/2006-October/002356.html">http://mail.directfb.org/pipermail/directfb-dev/2006-October/002356.html</A>
+
+So I don't think we need to push him further.
+
+The missing DFB++ part, is one reason not to publish a new softdevice release now.
+
+&gt;<i> 
+</I>&gt;<i> softdevice CVS 20061008 (today)
+</I>&gt;<i> * no patch to apply ?
+</I>&gt;<i> * uses libclempegdec, viafb, etc.
+</I>&gt;<i> * to attached log shows field parity is enabled ([softdevice] enabling
+</I>&gt;<i> field parity / [softdevice] enabling CLE266 HW decoding)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I don't know what I miss to get rid of interlacing artifacts on TV out...
+</I>
+If the interlacing problem is a permanent issue, you may try to change
+line 294 in video-dfb.c:
+
+fieldParity = 0;    // 0 - top field first, 1 - bottom field first
+
+If that issue is a changing one, we need to set this from
+stream information and/or give the user a chance to invert field
+parity derived from stream info.
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002601.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+	<LI>Next message: <A HREF="002603.html">[Softdevice-devel] [directfb-users]  viafb + cle266mpegdec +	TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2602">[ date ]</a>
+              <a href="thread.html#2602">[ thread ]</a>
+              <a href="subject.html#2602">[ subject ]</a>
+              <a href="author.html#2602">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

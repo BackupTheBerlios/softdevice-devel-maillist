@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] DFB Matrox Hardware Deinterlace
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DFB%20Matrox%20Hardware%20Deinterlace&In-Reply-To=%3C200602112126.45707.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001744.html">
+   <LINK REL="Next"  HREF="001746.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] DFB Matrox Hardware Deinterlace</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DFB%20Matrox%20Hardware%20Deinterlace&In-Reply-To=%3C200602112126.45707.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] DFB Matrox Hardware Deinterlace">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Feb 11 21:26:45 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001744.html">[Softdevice-devel] DFB Matrox Hardware Deinterlace
+</A></li>
+        <LI>Next message: <A HREF="001746.html">[Softdevice-devel] DFB Matrox Hardware Deinterlace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1745">[ date ]</a>
+              <a href="thread.html#1745">[ thread ]</a>
+              <a href="subject.html#1745">[ subject ]</a>
+              <a href="author.html#1745">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 11. Februar 2006 20:12, Andre Neumann wrote:
+&gt;<i> Hi list,
+</I>&gt;<i>  
+</I>&gt;<i> i asked that some weeks ago, but now i have the answer.
+</I>&gt;<i>  
+</I>&gt;<i> I asked, if the matrox can do deinterlacing in hardware, and yes, it is true.
+</I>
+My impression is: this is not true. Around line 770 in video-dfb.c
+you'll find some code that is deactivated (DSCAPS_INTERLACED) .
+You may activate this for a test. DirectFBs use of this flag is line doubling.
+Or when dealing  blitting with flag DSBLIT_DEINTERLACE:
+<A HREF="http://www.directfb.org/docs/DirectFB_Reference/types.html#DFBSurfaceBlittingFlags">http://www.directfb.org/docs/DirectFB_Reference/types.html#DFBSurfaceBlittingFlags</A>
+
+What could be done is: double frame rate by use of these flags.
+Use field 0 and do upscaling, use field 1 (SetField(1);) and do it too.
+
+But activating this part of code will result in poor quality when video
+has a small resolution like 352x288.
+
+There is something still on the todo list like doubling frame rate.
+Modern LCD-TVs use higher refresh rates and any scaling
+(especially downscaling) of interlaced material, should be done
+for each field separate. That applies to normal TVs too.
+
+&gt;<i> The Matrox can do it, and it works good. Not with softdevice,
+</I>&gt;<i> but i tested vdr-xine plugin with df_xine. It works great and it is very fast.
+</I>&gt;<i> With the vdr-xine plugin an df_xine i can watch HD1 channel without stuttering, cpu is about 90%.
+</I>&gt;<i>  
+</I>&gt;<i> Since df_xine can use the hardware deinterlacing, im sure softdevice can do it aswell.
+</I>&gt;<i> Since im not a programmer, i wanted to ask
+</I>&gt;<i> if someone (maybe Stefan or Martin) could take a look at it. 
+</I>&gt;<i>  
+</I>&gt;<i> Here is df_xine: <A HREF="http://www.directfb.org/index.php/viewcvs.cgi/DirectFB-extra/samples/df_xine/">http://www.directfb.org/index.php/viewcvs.cgi/DirectFB-extra/samples/df_xine/</A>
+</I>&gt;<i>  
+</I>
+Xine has some buildin software deinterlace funtions.
+
+But to my knowledge there is no additional deinterlacer on matrox cards
+beside the already used hardware scaling functions.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001744.html">[Softdevice-devel] DFB Matrox Hardware Deinterlace
+</A></li>
+	<LI>Next message: <A HREF="001746.html">[Softdevice-devel] DFB Matrox Hardware Deinterlace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1745">[ date ]</a>
+              <a href="thread.html#1745">[ thread ]</a>
+              <a href="subject.html#1745">[ subject ]</a>
+              <a href="author.html#1745">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

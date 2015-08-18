@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] New A-V sync
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C200411031909.11542.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000059.html">
+   <LINK REL="Next"  HREF="000062.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] New A-V sync</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C200411031909.11542.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] New A-V sync">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Nov  3 19:09:11 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000059.html">[Softdevice-devel] New A-V sync
+</A></li>
+        <LI>Next message: <A HREF="000062.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#60">[ date ]</a>
+              <a href="thread.html#60">[ thread ]</a>
+              <a href="subject.html#60">[ subject ]</a>
+              <a href="author.html#60">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 2. November 2004 11:38, Martin Wache wrote:
+&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Making the dvd plugin working was just a digression. It didn't work
+</I>&gt;<i> &gt; previously either.
+</I>&gt;<i> Ah, ok, I was thinking it was working with the old code, but I didn't even
+</I>&gt;<i> get it to work with the old code... But anyway I think will spend some more
+</I>&gt;<i> work on it... I guess we can make it work...
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; I also changed the buffering of the audio part so I hope that issue
+</I>&gt;<i> &gt; should
+</I>&gt;<i> &gt; &gt; be fixed now.
+</I>&gt;<i> &gt; &gt; I don't know yet how much time I will have this evening, but maybe I can
+</I>&gt;<i> &gt; &gt; send an improved patch this evening.
+</I>&gt;<i> 
+</I>&gt;<i> I didn't make it last evening, but I have a new version for you now.
+</I>&gt;<i> Actually it's
+</I>&gt;<i> the my &quot;working&quot; version so it is quite experimental and there are also
+</I>&gt;<i> still a few
+</I>&gt;<i> known issues, eg. sometimes it takes ages to switch a channel and then
+</I>&gt;<i> something goes completly wrong the sound is corrupted and so on.
+</I>&gt;<i> But I got rid of this 80ms delay and the doubleing of audio samples and
+</I>&gt;<i> still there are almost no buffer underruns anymore.
+</I>&gt;<i> So if you have some time to spare, please try the patch and tell me your
+</I>&gt;<i> experience with it.
+</I>
+I tested this with vdr-1.3.15 and vdr-1.2.1.
+with vdr-1.2.1 compile fails:
+
+../../../include/vdr/ringbuffer.h: In member function `virtual void
+   cStreamDecoder::Clear()':
+../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+   protected
+
+I think there are some other issues even with newer vdrs due to
+CondVar handling.
+
+Pausing playback seems to take some longer time.
+Audio sync in life mode is better.
+I still have to do some more test .
+
+I'm using that part of sync code, that has no rtc access. /dev/rtc
+is in use by chronyd for network time syncing :-) .
+
+For compalibility issues: is it possbile to have the new audio sync
+concurrent with the old one, so that new code can be selected via &quot;#if some_thing&quot; ?
+
+A minor issue towards coding style: could you please replace tabs with blanks
+so that indentation (2 spaces) is kept independent of editor's tab settings ?
+
+For EINTR handling in audio.c I'll commit a last change for 0.0.7 with &quot;continue&quot;
+replaced by &quot;return&quot; .
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000059.html">[Softdevice-devel] New A-V sync
+</A></li>
+	<LI>Next message: <A HREF="000062.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#60">[ date ]</a>
+              <a href="thread.html#60">[ thread ]</a>
+              <a href="subject.html#60">[ subject ]</a>
+              <a href="author.html#60">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

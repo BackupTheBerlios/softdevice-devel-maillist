@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb support using overlay?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20support%20using%20overlay%3F&In-Reply-To=%3C1100114643.24436.97.camel%40atlantis.netenviron.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000079.html">
+   <LINK REL="Next"  HREF="000081.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb support using overlay?</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20support%20using%20overlay%3F&In-Reply-To=%3C1100114643.24436.97.camel%40atlantis.netenviron.com%3E"
+       TITLE="[Softdevice-devel] dfb support using overlay?">torgeir at pobox.com
+       </A><BR>
+    <I>Wed Nov 10 20:24:03 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000079.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+        <LI>Next message: <A HREF="000081.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, 2004-11-10 at 19:55 +0100, Stefan Lucke wrote:
+&gt;<i> On Montag, 8. November 2004 17:23, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; I've been trying to get a directfb setup running and have temporarily
+</I>&gt;<i> &gt; given up on my radeon.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I've tried with a g450 card with better results, but softdevice doesn't
+</I>&gt;<i> &gt; seem to use the scaler on the card; I'd like to use the native
+</I>&gt;<i> &gt; resolution of my projector. Is this possible? 
+</I>&gt;<i> 
+</I>&gt;<i> So what is the &quot;native resolution&quot; of your projector ?
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 720x576 works, but gives me tearing. Is there anything I can do to avoid
+</I>&gt;<i> &gt; this?
+</I>&gt;<i> 
+</I>&gt;<i> tearing ? .. could you describe that a bit more ?
+</I>
+It looks like part of the frame is still one frame behind. You can see
+it on horizontal pans easily. It only happens with matrox and I420 color
+space.
+
+&gt;<i> 720x576 is not optimal as it needs some special handling.
+</I>&gt;<i> Currently the scaling operation assumes operating in square pixel mode.
+</I>
+That's why the native mode works best for me. My projector is 1280x720
+and the setup in Xv works really well as long as the aspect ratio change
+is detected. When the programme is in 4x3 black bars are added correctly
+at the sides in Xv, that doesn't happen with 720x576 and dfb output.
+Maybe a 1024x576 resolution is better. Will have to test it again. 
+
+I usually keep the radeon in the machine as it has better black details,
+which I attribute to the 10 bit per component resolution of the hw
+scaler. The image of the matrox g450 also look too soft to my eye.
+
+Incidentally, the judder problems I'm having, which I was due to the
+extra indirection before the YUV data is actually sent to the hardware
+caused by the X server process, is also present when using dfb output on
+the matrox g450. So I am beginning to suspect it is caused by the
+libavcodec decoding... The plot thickens...
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000079.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+	<LI>Next message: <A HREF="000081.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

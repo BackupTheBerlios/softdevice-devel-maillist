@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Can't get composite sync from G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C200506102316.34994.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000854.html">
+   <LINK REL="Next"  HREF="000859.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Can't get composite sync from G450</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C200506102316.34994.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Can't get composite sync from G450">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jun 10 23:16:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000854.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+        <LI>Next message: <A HREF="000859.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#857">[ date ]</a>
+              <a href="thread.html#857">[ thread ]</a>
+              <a href="subject.html#857">[ subject ]</a>
+              <a href="author.html#857">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 10. Juni 2005 19:10, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Fri, Jun 10, 2005 at 10:28:54AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; YUV -&gt; RGB conversion is done in hardware during stretch_bilt.
+</I>&gt;<i> 
+</I>&gt;<i> Hmm, somehow I got some judder while playing a recording that was
+</I>&gt;<i> perfectly okay with VGA output.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; my-pal-32 timings are used for display via vga. The disadvantage
+</I>&gt;<i> &gt; of that method is, that it is not possible to select field parity.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; For &quot;tv-out&quot; field parity select is possible and will be adjusted
+</I>&gt;<i> &gt; (in future) to current video material. Currently it is fixed
+</I>&gt;<i> &gt; to top field first.
+</I>&gt;<i> 
+</I>&gt;<i> What are the symptomps of wrong field parity?  I got some wavy output
+</I>&gt;<i> on the screen, i.e., vertical lines in horizontal motion would look like
+</I>&gt;<i> blurry waves:
+</I>&gt;<i> 
+</I>&gt;<i> \
+</I>&gt;<i> /
+</I>&gt;<i> \
+</I>&gt;<i> /
+</I>
+That looks like wrong field parity. Hm, there are some differences between
+G400 and G450. You can try to change field parity around line 349.
+Try: osdLayer-&gt;SetFieldParity(1);
+
+&gt;<i> 
+</I>&gt;<i> One more thing: could it be that the composite sync of the Matrox G450
+</I>&gt;<i> TV output violates the standard during vertical retrace (i.e.,
+</I>&gt;<i> MacroVision)?  The top visible lines on my monitor were shifted to the
+</I>&gt;<i> right.  The problem is not as bad as with the DXR3, which omitted
+</I>&gt;<i> horizontal sync pulses for several dozen lines during vertical retrace,
+</I>&gt;<i> and then output a very narrow and high spike (over 1 volt if I remember
+</I>&gt;<i> correctly) a bit before starting to output the picture.  I haven't
+</I>&gt;<i> measured the G450 composite sync output yet.
+</I>
+I wish, I'd have an oscilloscope too.
+
+&gt;<i> 
+</I>&gt;<i> Oh well, I may revert back to VGA.  It has problems with horizontal
+</I>&gt;<i> scrolling and interlaced video, but at least the picture is sharp,
+</I>&gt;<i> and I have no other use for the monitor.  Is there some easy way
+</I>&gt;<i> to specify which directfbrc to use on the -Psoftdevice command line?
+</I>&gt;<i> 
+</I>&gt;<i> 	Marko
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000854.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+	<LI>Next message: <A HREF="000859.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#857">[ date ]</a>
+              <a href="thread.html#857">[ thread ]</a>
+              <a href="subject.html#857">[ subject ]</a>
+              <a href="author.html#857">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

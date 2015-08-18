@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash when video stream is suspended or resumed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C43212E5A.1020406%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001226.html">
+   <LINK REL="Next"  HREF="001228.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash when video stream is suspended or resumed</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C43212E5A.1020406%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Crash when video stream is suspended or resumed">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Sep  9 08:40:26 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001226.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+        <LI>Next message: <A HREF="001228.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1227">[ date ]</a>
+              <a href="thread.html#1227">[ thread ]</a>
+              <a href="subject.html#1227">[ subject ]</a>
+              <a href="author.html#1227">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+
+&gt;<i> Without HAVE_SetSourceLocation your version my crash again. Thats what I ment
+</I>&gt;<i> by &quot;some small differences&quot;:
+</I>&gt;<i> -- snip --
+</I>&gt;<i> #if VDRVERSNUM &gt;= 10307
+</I>&gt;<i> /* ---------------------------------------------------------------------------
+</I>&gt;<i>  */
+</I>&gt;<i> void cDFBVideoOut::GetOSDDimension(int &amp;OsdWidth,int &amp;OsdHeight)
+</I>&gt;<i> {
+</I>&gt;<i> #if HAVE_SetSourceLocation
+</I>&gt;<i>       OsdWidth   = fwidth;
+</I>&gt;<i>       OsdHeight  = fheight;
+</I>&gt;<i> #else
+</I>&gt;<i>       if (useStretchBlit)
+</I>&gt;<i>       {
+</I>&gt;<i>         OsdWidth   = fwidth;
+</I>&gt;<i>         OsdHeight  = fheight;
+</I>&gt;<i>       }
+</I>&gt;<i>       else
+</I>&gt;<i>       {
+</I>&gt;<i>         OsdWidth   = swidth;
+</I>&gt;<i>         OsdHeight  = sheight;
+</I>&gt;<i>       }
+</I>&gt;<i> #endif
+</I>&gt;<i> }
+</I>&gt;<i> 
+</I>&gt;<i> #endif
+</I>&gt;<i> -- snip --
+</I>&gt;<i> 
+</I>
+I don't like this fix very much, since it may have side effects.
+GetOSDDimension is used to determine the dimensions to which the OSD is
+scaled, and I don't think you want to have a scaled OSD.
+I think the better way would be to check the dimensions of the video
+layer in YUV() and be shure only to copy that part of the picture which
+fits.
+That would also prevent crashes when the signal qualtiy is bad and
+ffmpeg decodes var too big images. I had a few of these crashed some
+time ago but the latest ffmpeg version seems to be more stable now.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001226.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+	<LI>Next message: <A HREF="001228.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1227">[ date ]</a>
+              <a href="thread.html#1227">[ thread ]</a>
+              <a href="subject.html#1227">[ subject ]</a>
+              <a href="author.html#1227">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

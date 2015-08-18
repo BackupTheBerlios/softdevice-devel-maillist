@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Missing catch statements in video-dfb.c cause crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Missing%20catch%20statements%20in%20video-dfb.c%20cause%20crashes&In-Reply-To=%3C20050803120756.GB5127%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001066.html">
+   <LINK REL="Next"  HREF="001083.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Missing catch statements in video-dfb.c cause crashes</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Missing%20catch%20statements%20in%20video-dfb.c%20cause%20crashes&In-Reply-To=%3C20050803120756.GB5127%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Missing catch statements in video-dfb.c cause crashes">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Aug  3 14:07:56 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001066.html">[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+</A></li>
+        <LI>Next message: <A HREF="001083.html">[Softdevice-devel] [PATCH] Added catch statements to video-dfb.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1081">[ date ]</a>
+              <a href="thread.html#1081">[ thread ]</a>
+              <a href="subject.html#1081">[ subject ]</a>
+              <a href="author.html#1081">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jul 31, 2005 at 10:24:07PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> If I'm on a different virtual console than where VDR was started from,
+</I>&gt;<i> VDR occasionally crashes when trying to update the OSD.
+</I>
+I got a stack trace by attaching gdb (running on an OpenSSH connection)
+to the running vdr process, then switching virtual consoles and pressing
+OK two times to trigger OSD updates.  The first press of OK displayed
+the information window as expected, but the second press of OK caused
+vdr to crash:
+
+Program received signal SIGABRT, Aborted.
+[Switching to Thread -1210542208 (LWP 980)]
+0xb7db283b in raise () from /lib/tls/libc.so.6
+(gdb) bt
+#0  0xb7db283b in raise () from /lib/tls/libc.so.6
+#1  0xb7db3fa2 in abort () from /lib/tls/libc.so.6
+#2  0xb784ada7 in __cxa_call_unexpected () from /usr/lib/libstdc++.so.5
+#3  0xb784ade4 in std::terminate () from /usr/lib/libstdc++.so.5
+#4  0xb784af56 in __cxa_throw () from /usr/lib/libstdc++.so.5
+#5  0xb78d662a in IDirectFBSurface::Flip (this=0x6, region=0x0,
+    flags=DSFLIP_NONE) at idirectfbsurface.cpp:128
+#6  0xb7a25170 in cDFBVideoOut::CloseOSD (this=0x8249c70) at video-dfb.c:1006
+#7  0xb7a139a4 in ~cSoftOsd (this=0x86754f8) at softdevice.c:117
+#8  0x080d7be4 in ~cSkinSTTNGDisplayChannel (this=0x868cd08) at skinsttng.c:224
+#9  0x080b2fcf in ~cDisplayChannel (this=0x8691af8) at menu.c:2707
+#10 0x080f05ac in main (argc=7, argv=0xbfcfd534) at vdr.c:802
+
+It looks like cDFBVideoOut::CloseOSD() is invoking tmpSurface-&gt;Flip()
+on an invalid tmpSurface object, or it is not catching the exception.
+I added some diagnostics to catch the exception:
+
+diff -u -r1.36 video-dfb.c
+--- video-dfb.c 27 Jul 2005 20:57:00 -0000      1.36
++++ video-dfb.c 3 Aug 2005 12:02:04 -0000
+@@ -998,12 +1002,17 @@
+   }
+   else
+   {
++fprintf(stderr, &quot;CloseOSD(): tmpSurface=%p\n&quot;, tmpSurface);
++    try {
+     tmpSurface-&gt;Clear(COLORKEY,clearAlpha); //clear and
+     tmpSurface-&gt;Flip(); // Flip the field
+     if (!isVIAUnichrome)
+     {
+       tmpSurface-&gt;Clear(COLORKEY,clearAlpha); //clear and
+       tmpSurface-&gt;Flip(); // Flip the field
++    }
++    } catch (DFBException *ex){
++      fprintf(stderr,&quot;--- CloseOSD failed: tmpSurface=%p\n&quot;, tmpSurface);
+     }
+   }
+
+By the way, does the DFBException need to be freed?  I have always
+avoided exceptions in my C++ code to avoid memory leaks.
+
+Here's the relevant snip from stderr on the new test run:
+
+[surface capabilities] videoSurface: videoonly double-buffered flipping
+[dfb] (re)configured 0x08100609
+CloseOSD(): tmpSurface=0x82a7930
+++CloseOSD(): tmpSurface=0x82a7930
+(!) DirectFB/FBDev: Panning display failed!
+    --&gt; Invalid argument
+--- CloseOSD failed: tmpSurface=0x82a7930
+(!) DirectFB/FBDev: Panning display failed!
+    --&gt; Invalid argument
+
+At this point, I got another crash:
+
+#0  0xb7d1c83b in raise () from /lib/tls/libc.so.6
+#1  0xb7d1dfa2 in abort () from /lib/tls/libc.so.6
+#2  0xb77b4da7 in __cxa_call_unexpected () from /usr/lib/libstdc++.so.5
+#3  0xb77b4de4 in std::terminate () from /usr/lib/libstdc++.so.5
+#4  0xb77b4f56 in __cxa_throw () from /usr/lib/libstdc++.so.5
+#5  0xb784062a in IDirectFBSurface::Flip (this=0x6, region=0x0,
+    flags=DSFLIP_NONE) at idirectfbsurface.cpp:128
+#6  0xb798f089 in cDFBVideoOut::OpenOSD (this=0x8253bd0, x=0, y=0)
+    at video-dfb.c:899
+#7  0xb797d917 in cSoftOsd (this=0x85166f8, VideoOut=0x8253bd0, X=54, Y=45)
+    at softdevice.c:108
+#8  0xb797db5a in cSoftOsdProvider::CreateOsd (this=0x82af630, Left=0, Top=0)
+    at softdevice.c:163
+#9  0x080dd585 in cSkinSTTNGDisplayChannel (this=0x8528d68, WithInfo=true)
+    at skinsttng.c:178
+#10 0x080dd9bd in cSkinSTTNG::DisplayChannel (this=0x82b6b90, WithInfo=true)
+    at skinsttng.c:1087
+#11 0x080b2d70 in cDisplayChannel (this=0x831fd00, Number=0, Switched=false)
+    at menu.c:2681
+#12 0x080efb0d in main (argc=7, argv=0xbf966c44) at vdr.c:590
+
+It looks like all DirectFB operations should be governed by catch
+statements.  Is someone working on video-dfb.c right now?  If not,
+I may give this a try.  (We are about to get our 2nd baby in these
+days, so this can happen in a few days or weeks, depending on the
+timing.)
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001066.html">[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+</A></li>
+	<LI>Next message: <A HREF="001083.html">[Softdevice-devel] [PATCH] Added catch statements to video-dfb.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1081">[ date ]</a>
+              <a href="thread.html#1081">[ thread ]</a>
+              <a href="subject.html#1081">[ subject ]</a>
+              <a href="author.html#1081">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3	passthrough mode no longer working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-0.5.0.20090218%20and%20CVS%3A%20AC3%0A%09passthrough%20mode%20no%20longer%20working&In-Reply-To=%3C200906042114.57947.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003243.html">
+   <LINK REL="Next"  HREF="003246.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3	passthrough mode no longer working</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-0.5.0.20090218%20and%20CVS%3A%20AC3%0A%09passthrough%20mode%20no%20longer%20working&In-Reply-To=%3C200906042114.57947.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3	passthrough mode no longer working">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Jun  4 21:14:57 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003243.html">[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3	passthrough mode no longer working
+</A></li>
+        <LI>Next message: <A HREF="003246.html">[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3	passthrough mode no longer working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3244">[ date ]</a>
+              <a href="thread.html#3244">[ thread ]</a>
+              <a href="subject.html#3244">[ subject ]</a>
+              <a href="author.html#3244">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 03 June 2009, Lucian Muresan wrote:
+&gt;<i> Lucian Muresan wrote:
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> &gt;&gt;&gt; No, unfortunately none of those &quot;ac3play&quot; messages are written, really
+</I>&gt;<i> &gt;&gt;&gt; strange...
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; So everything looks ok, but there is no sound :-( .
+</I>&gt;<i> &gt;&gt; There are 2 additional code paths (4 choices in total):
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; 1. Switching to professional transmission:
+</I>&gt;<i> &gt;&gt;     setting 'ac3SpdifPro = true' in audio-alsa.c, line 41.
+</I>&gt;<i> &gt;&gt; 2. Different open for AC3 with patch from Roland Praml found here:
+</I>&gt;<i> &gt;&gt;     <A HREF="http://www.vdr-portal.de/board/thread.php?postid=506499#post506499">http://www.vdr-portal.de/board/thread.php?postid=506499#post506499</A>
+</I>&gt;<i> &gt;&gt;     Patch includes enforcing of spdifpro mode.
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; If you need help, please ask again.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Thanks for the two hints, will try the other 3 remaining code paths
+</I>&gt;<i> &gt; tonight and report back.
+</I>&gt;<i> 
+</I>&gt;<i> Unfortunately, no luck with 'ac3SpdifPro = true', and that version of Roland 
+</I>&gt;<i> Praml's patch semms to be pretty old, it does no longer apply to current 
+</I>&gt;<i> softdevice. Do you have a newer one, by chance ;-) ?
+</I>
+Here is one, I did only a compile test.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: audio-ac3pt.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/audio-ac3pt.c,v
+retrieving revision 1.3
+diff -U3 -r1.3 audio-ac3pt.c
+--- audio-ac3pt.c	25 Dec 2007 13:21:46 -0000	1.3
++++ audio-ac3pt.c	4 Jun 2009 19:11:53 -0000
+@@ -500,6 +500,7 @@
+ unsigned int
+ cAlsaAC3pt::SpdifInitAC3(snd_pcm_t **handle, char *device, bool spdifPro)
+ {
++    char                      pcm_name[256];
+     static snd_aes_iec958_t   spdif;
+     unsigned int              rate = 48000;
+     snd_pcm_info_t            *info;
+@@ -509,22 +510,12 @@
+     unsigned int              channels = 2;
+     int                       err;//, c;
+ 
+-  if ((err = snd_pcm_open(handle, device, SND_PCM_STREAM_PLAYBACK, 0)) &lt; 0)
+-  {
+-    fprintf(stderr, &quot;ac3play: sound open: %s\n&quot;, snd_strerror(err));
+-    return 1;
+-  }
+-
+   if (ac3Status)
+     snd_pcm_status_free(ac3Status);
++  ac3Status = NULL;
+ 
+   snd_pcm_info_alloca(&amp;info);
+ 
+-  if ((err = snd_pcm_info(*handle, info)) &lt; 0) {
+-    fprintf(stderr, &quot;ac3play: sound info: %s\n&quot;, snd_strerror(err));
+-    snd_pcm_close(*handle);
+-    return 1;
+-  }
+   {
+       snd_ctl_elem_value_t  *ctl;
+       snd_ctl_t             *ctl_handle;
+@@ -551,6 +542,31 @@
+       spdif.status[3]  = (iec958_aes3_con_fs_rate);
+     }
+ 
++
++    snprintf(pcm_name, sizeof (pcm_name),
++             &quot;iec958:AES0=0x%.2x,AES1=0x%.2x,AES2=0x%.2x,AES3=0x%.2x,CARD=%1d&quot;,
++             spdif. status [0], spdif. status [1],
++             spdif. status [2], spdif. status [3],
++             0);
++
++    err = snd_pcm_open (handle, pcm_name, SND_PCM_STREAM_PLAYBACK, 0);
++    if (err &gt;= 0) {
++      fprintf(stderr, &quot;ac3play: Sucessfull opend (%s)\n&quot;, pcm_name);
++      goto __diga_end;
++    }
++
++    fprintf(stderr, &quot;ac3play: Failed to open (%s) trying old way\n&quot;, pcm_name);
++    if ((err = snd_pcm_open(handle, device, SND_PCM_STREAM_PLAYBACK, 0)) &lt; 0) {
++      fprintf(stderr, &quot;ac3play: sound open: %s\n&quot;, snd_strerror(err));
++      return 1;
++    }
++
++    if ((err = snd_pcm_info(*handle, info)) &lt; 0) {
++      fprintf(stderr, &quot;ac3play: sound info: %s\n&quot;, snd_strerror(err));
++      snd_pcm_close(*handle);
++      return 1;
++    }
++
+     snd_ctl_elem_value_alloca(&amp;ctl);
+     snd_ctl_elem_value_set_interface(ctl, SND_CTL_ELEM_IFACE_PCM);
+     snd_ctl_elem_value_set_device(ctl, snd_pcm_info_get_device(info));
+@@ -572,9 +588,9 @@
+       goto __diga_end;
+     }
+     snd_ctl_close(ctl_handle);
+-    __diga_end:
+-      ;
+   }
++  __diga_end:
++    ;
+   {
+       snd_pcm_hw_params_t *params;
+       snd_pcm_sw_params_t *swparams;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003243.html">[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3	passthrough mode no longer working
+</A></li>
+	<LI>Next message: <A HREF="003246.html">[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3	passthrough mode no longer working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3244">[ date ]</a>
+              <a href="thread.html#3244">[ thread ]</a>
+              <a href="subject.html#3244">[ subject ]</a>
+              <a href="author.html#3244">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

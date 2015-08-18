@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Loop when jumping to cut marks ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Loop%20when%20jumping%20to%20cut%20marks%20%3F&In-Reply-To=%3C200710051249.29482.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002916.html">
+   <LINK REL="Next"  HREF="002941.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Loop when jumping to cut marks ?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Loop%20when%20jumping%20to%20cut%20marks%20%3F&In-Reply-To=%3C200710051249.29482.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Loop when jumping to cut marks ?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Oct  5 12:49:29 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002916.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+        <LI>Next message: <A HREF="002941.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2922">[ date ]</a>
+              <a href="thread.html#2922">[ thread ]</a>
+              <a href="subject.html#2922">[ subject ]</a>
+              <a href="author.html#2922">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 4. Oktober 2007, Stefan Lucke wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> hopefully ml works again.
+</I>&gt;<i> 
+</I>&gt;<i> I noticed a problem which happens now with several vdr versions 1.4.0, 1.5.5, 1.5.9.
+</I>&gt;<i> When trying to jump to cut marks of recordings, vdr enters a loop.
+</I>&gt;<i> The first glance OSD seems still to be responsive.
+</I>
+We loop in decoding still picture. For some reason ffmpeg changed their
+api :-) and now it is possible that when avcodec_decode_video() is
+called with buffer and length 4, it may return 0 bytes consumed from 
+decode buffer. That happend on 2007-08-02:
+
+<A HREF="http://svn.mplayerhq.hu/ffmpeg/trunk/libavcodec/mpeg12.c?view=diff&amp;r1=9869&amp;r2=9870">http://svn.mplayerhq.hu/ffmpeg/trunk/libavcodec/mpeg12.c?view=diff&amp;r1=9869&amp;r2=9870</A>
+
+Lets see what fmpeg people think of attached patch.
+If they say no I fix (work around that) in mpeg2decoder.c
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: libavcodec/mpeg12.c
+===================================================================
+--- libavcodec/mpeg12.c	(Revision 10657)
++++ libavcodec/mpeg12.c	(Arbeitskopie)
+@@ -2239,7 +2239,7 @@
+ 
+             *data_size = sizeof(AVFrame);
+         }
+-        return 0;
++        return buf_size;
+     }
+ 
+     if(s2-&gt;flags&amp;CODEC_FLAG_TRUNCATED){
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.77
+diff -U3 -r1.77 mpeg2decoder.c
+--- mpeg2decoder.c	27 Sep 2007 18:10:41 -0000	1.77
++++ mpeg2decoder.c	5 Oct 2007 10:25:51 -0000
+@@ -670,6 +705,13 @@
+   if (len &lt; 0)
+     return len;
+ 
++  /* -------------------------------------------------------------------------
++   * newer ffmpeg versions return len 0 when the buffer holds the
++   * the 4 byte end sequence only.
++   */
++  if (!len &amp;&amp; length == 4)
++    len = 4;
++
+   // save coded picture number together with corresponding pts
+   if (context-&gt;coded_frame  &amp;&amp;
+       context-&gt;coded_frame-&gt;coded_picture_number!=lastCodedPictNo
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002916.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+	<LI>Next message: <A HREF="002941.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2922">[ date ]</a>
+              <a href="thread.html#2922">[ thread ]</a>
+              <a href="subject.html#2922">[ subject ]</a>
+              <a href="author.html#2922">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Fwd: [Softdevice-devel] bad display after pause]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BFwd%3A%20%5BSoftdevice-devel%5D%20bad%20display%20after%20pause%5D&In-Reply-To=%3C1130207421.4462.20.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001389.html">
+   <LINK REL="Next"  HREF="001398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Fwd: [Softdevice-devel] bad display after pause]</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BFwd%3A%20%5BSoftdevice-devel%5D%20bad%20display%20after%20pause%5D&In-Reply-To=%3C1130207421.4462.20.camel%40localhost.localdomain%3E"
+       TITLE="[Fwd: [Softdevice-devel] bad display after pause]">malcolm.caldwell at ntu.edu.au
+       </A><BR>
+    <I>Tue Oct 25 04:30:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001389.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+        <LI>Next message: <A HREF="001398.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1396">[ date ]</a>
+              <a href="thread.html#1396">[ thread ]</a>
+              <a href="subject.html#1396">[ subject ]</a>
+              <a href="author.html#1396">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, 2005-10-22 at 00:40 +0930, Malcolm Caldwell wrote:
+&gt;<i> I am resending this just in case the original did not get through (we
+</I>&gt;<i> had a spam bot problem at work and got blacklisited...)
+</I>&gt;<i> 
+</I>&gt;<i> I still see this problem.  Recordings will play back fine for quite a
+</I>&gt;<i> while, and then something happens (often associated with using the OSD)
+</I>&gt;<i> and the playback breaks.  By break I mean that from then on I only see
+</I>&gt;<i> every second field (or something like that).  To fix it I must restart
+</I>&gt;<i> the playback.
+</I>
+I guess this particular bug does sound familiar to anyone? 
+
+This problem happens in live TV as well as recordings.  My feeling is it
+is perhaps more likely to happen with higher bandwidth streams.  Display
+is jerky, missing 50% of frames, sort of like a strobe effect, and it
+lasts until I reset the stream.  I reset the stream either by chan
+up/chan down, &quot;menu 2 ok&quot;, or for recordings &quot;exit play&quot;.
+
+Can anyone suggest where I should start looking to see what is
+happening.  Before anyone suggests it, yes the source is a great place
+to start, as are the logs :)
+
+The logs do not seem to have specific output when the problem starts.
+
+I will have a look at the source, but was hoping for a suggestion on
+what functions to look at.
+
+&gt;<i> Any ideas?
+</I>&gt;<i> 
+</I>&gt;<i> -------- Forwarded Message --------
+</I>&gt;<i> From: Malcolm Caldwell &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">malcolm.caldwell at cdu.edu.au</A>&gt;
+</I>&gt;<i> Reply-To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+</I>&gt;<i> Subject: [Softdevice-devel] bad display after pause
+</I>&gt;<i> Date: Mon, 17 Oct 2005 15:57:31 +0930
+</I>&gt;<i> 
+</I>&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I am running softdevice using directfb on a g450 with tv-out.
+</I>&gt;<i> 
+</I>&gt;<i> When I pause a recording and then start playback again the video is bad.
+</I>&gt;<i> It would seem that half or more of the frames are not displayed.
+</I>&gt;<i> 
+</I>&gt;<i> If I hit exit, and then restart the recording everything works fine.
+</I>&gt;<i> 
+</I>&gt;<i> Also, if I go into the menus and change the crop mode the same problem
+</I>&gt;<i> occurs.
+</I>&gt;<i> 
+</I>&gt;<i> This is only while replaying recordings.
+</I>&gt;<i> 
+</I>&gt;<i> softdevice and directfb are from cvs.
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001389.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+	<LI>Next message: <A HREF="001398.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1396">[ date ]</a>
+              <a href="thread.html#1396">[ thread ]</a>
+              <a href="subject.html#1396">[ subject ]</a>
+              <a href="author.html#1396">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

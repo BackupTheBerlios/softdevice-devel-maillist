@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606171027.26985.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002194.html">
+   <LINK REL="Next"  HREF="002154.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606171027.26985.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jun 17 10:27:26 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002194.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002154.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2157">[ date ]</a>
+              <a href="thread.html#2157">[ thread ]</a>
+              <a href="subject.html#2157">[ subject ]</a>
+              <a href="author.html#2157">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 14 Juni 2006 21:33, Rolf Ahrenberg wrote:
+&gt;<i> On Wed, 14 Jun 2006, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; It would be nice if you could have a closer look at these issues, I'm a
+</I>&gt;<i> &gt; bit short on time...
+</I>&gt;<i> 
+</I>&gt;<i> Well, I've attached a patch from my softdevice tree that really enables 
+</I>&gt;<i> the cle266 hw decoding (-vo dfb:viatv:cle266). Now the cpu load is again 
+</I>&gt;<i> down to ~30% (was ~55%) on my 1GHz EPIA.
+</I>&gt;<i> 
+</I>
+Ok, so I have to flood my version to the list too.
+
+On my system (1GHz EPIA) cpu goes down from about 60% to 35%. System
+load is general higher, as there is a vdr server running with 2 cinergyT2 
+dvb-t cards in background.
+
+In dfb section I added defines to select OLD version of code I'm in doubt.
+All defines OLD_VERSION_0[123] are set to 1 (use the old version). If
+someone notice troubles, each of them could be set to 0 separately.
+
+YV12 vs I420:
+Handling of these formats is a mess in DirectFB. For one card is has
+to be set to I420 and for the other to YV12 to get colors correct displayed.
+
+So now for via without HW-decoding is has to set to I420 and with 
+HW-decoding it has to be set to YV12. If it is set the _wrong_ way,
+you'll get wrong colors without HW-dec or high cpu load with HW-dec.
+Stretchblit should be disabled in any case for via.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: cle266-02.patch.bz2
+Type: application/x-bzip2
+Size: 6133 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060617/2e6e3d69/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060617/2e6e3d69/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002194.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002154.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2157">[ date ]</a>
+              <a href="thread.html#2157">[ thread ]</a>
+              <a href="subject.html#2157">[ subject ]</a>
+              <a href="author.html#2157">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

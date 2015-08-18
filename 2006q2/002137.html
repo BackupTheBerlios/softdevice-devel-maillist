@@ -1,0 +1,570 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606142228120.334744%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002135.html">
+   <LINK REL="Next"  HREF="002143.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Rolf Ahrenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606142228120.334744%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">rahrenbe at cc.hut.fi
+       </A><BR>
+    <I>Wed Jun 14 21:33:08 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002135.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002143.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2137">[ date ]</a>
+              <a href="thread.html#2137">[ thread ]</a>
+              <a href="subject.html#2137">[ subject ]</a>
+              <a href="author.html#2137">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, 14 Jun 2006, Martin Wache wrote:
+
+&gt;<i> It would be nice if you could have a closer look at these issues, I'm a
+</I>&gt;<i> bit short on time...
+</I>
+Well, I've attached a patch from my softdevice tree that really enables 
+the cle266 hw decoding (-vo dfb:viatv:cle266). Now the cpu load is again 
+down to ~30% (was ~55%) on my 1GHz EPIA.
+
+BR,
+--
+rofa
+-------------- next part --------------
+Index: Makefile
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/Makefile,v
+retrieving revision 1.30
+diff -u -r1.30 Makefile
+--- Makefile	9 Jun 2006 16:45:13 -0000	1.30
++++ Makefile	14 Jun 2006 19:27:05 -0000
+@@ -148,6 +148,12 @@
+   DEFINES  += -DDFB_SUPPORT
+ endif
+ 
++ifdef CLE266_SUPPORT
++  CLE266_LIBS = -L/usr/local/lib -lcle266mpegdec
++  CLE266_CFLAGS = -I/usr/local/include
++  DEFINES  += -DHAVE_CLE266_MPEG_DECODER
++endif
++
+ ifdef XV_SUPPORT
+   XV_LIBS   = -L/usr/X11R6/lib -lXi -lXext -lX11 -lm -lXv
+   ifdef LIBXDPMS_SUPPORT
+@@ -229,12 +235,13 @@
+   ifdef USE_SUBPLUGINS
+     DFB_OBJS  = utils.o video.o video-dfb.o PicBuffer.o
+     ALL_OBJS += $(DFB_OBJS)
++    LIBS     += $(CLE266_LIBS)
+     TARGETS  += lib$(PLUGIN)-dfb.so
+   else
+     OBJS     += video-dfb.o
+-    LIBS     += $(DFB_LIBS)
++    LIBS     += $(DFB_LIBS) $(CLE266_LIBS)
+   endif
+-  INCLUDES += $(DFB_CFLAGS)
++  INCLUDES += $(DFB_CFLAGS) $(CLE266_CFLAGS)
+ endif
+ 
+ ifdef FB_SUPPORT
+Index: configure
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/configure,v
+retrieving revision 1.15
+diff -u -r1.15 configure
+--- configure	27 May 2006 13:00:07 -0000	1.15
++++ configure	14 Jun 2006 19:27:05 -0000
+@@ -35,6 +35,7 @@
+ with_subplugins=&quot;yes&quot;
+ with_mmx=&quot;yes&quot;
+ with_mmx2=&quot;yes&quot;
++cle266=&quot;yes&quot;
+ 
+ function help () {
+   echo &quot;Usage: configure [options]&quot;
+@@ -239,6 +240,19 @@
+ fi
+ 
+ #########################################################
++# cle266mpegdec: check if present
++#
++if test &quot;${dfb}&quot; = &quot;yes&quot; ; then
++cle266_cflags=`pkg-config --cflags libcle266mpegdec 2&gt;/dev/null` || cle266=&quot;no&quot;
++  if test &quot;${cle266}&quot; = &quot;yes&quot; ; then
++  cle266_libs=`pkg-config --libs libcle266mpegdec`
++  cle266_opts=&quot;${cle266_cflags} ${cle266_libs}&quot;
++  fi
++else
++  cle266=&quot;no&quot;
++fi
++
++#########################################################
+ # X11: check if X11 is present
+ #
+ if test &quot;${xv}&quot; = &quot;yes&quot; ; then
+@@ -378,6 +392,14 @@
+   else
+     echo &quot;#define HAVE_DSBLIT_INTERLACED          0&quot; &gt;&gt; $TMPH
+   fi
++fi
++
++###############################################################################
++# generating DirectFB specific defines
++#
++if test &quot;${cle266}&quot; = &quot;yes&quot; ; then
++  echo &quot;CLE266_LIBS = ${cle266_libs}&quot; &gt;&gt; $TMPM
++  echo &quot;CLE266_CFLAGS = -DHAVE_CLE266_MPEG_DECODER ${cle266_cflags}&quot; &gt;&gt; $TMPM
+ fi
+ 
+ ###############################################################################
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.64
+diff -u -r1.64 mpeg2decoder.c
+--- mpeg2decoder.c	27 May 2006 19:12:41 -0000	1.64
++++ mpeg2decoder.c	14 Jun 2006 19:27:05 -0000
+@@ -16,6 +16,9 @@
+ #include &quot;utils.h&quot;
+ #include &quot;setup-softdevice.h&quot;
+ 
++#ifdef HAVE_CLE266_MPEG_DECODER
++#include &lt;cle266mpegdec.h&gt;
++#endif // HAVE_CLE266_MPEG_DECODER
+ 
+ //#define MPGDEB(out...) {printf(&quot;mpegdec[%04d]:&quot;,(int)(getTimeMilis() % 10000));printf(out);}
+ 
+@@ -717,6 +720,8 @@
+   // save the picture's properties
+ #if LIBAVCODEC_BUILD &gt; 4684
+   pic-&gt;interlaced_frame=picture-&gt;interlaced_frame;
++#else
++  pic-&gt;interlaced_frame=true;
+ #endif
+   pic-&gt;width=context-&gt;width;
+   pic-&gt;height=context-&gt;height;
+@@ -751,6 +756,54 @@
+   return len;
+ };
+ 
++#ifdef HAVE_CLE266_MPEG_DECODER
++float aspect_ratio_values[5]={1.0, 1.0, 4.0/3.0, 16.0/9.0, 221.0/110 };
++
++int cVideoStreamDecoder::DecodePicture_cle266(sPicBuffer *&amp;pic, int &amp;got_picture,
++                              uint8_t *data, int length, int64_t pkt_pts) {
++        int cle266len = length;
++        int64_t cle266pts = pkt_pts;
++        int cle266CurrentFB;
++        int len;
++        got_picture=0;
++	pic = NULL;
++        
++        /* Do HW decode!
++         * Hopefully sets len to number of bytes decoded!
++         * Returns number of buffer containing decoded frame
++         */
++        cle266CurrentFB = CLE266MPEGDecodeData(data, &amp;cle266len, 
++                        &amp;cle266pts);
++        len = cle266len;
++        
++        if ( cle266CurrentFB == -1 ) 
++                // no new picture
++                return len;
++        
++        got_picture = 1;
++        pic = videoOut-&gt;GetMpegfbPic(cle266CurrentFB);
++        if ( pic == NULL ) {
++                fprintf(stderr,&quot;No picture buffer returned from cle266! %d\n&quot;,
++				cle266CurrentFB);
++		fflush(stderr);
++                return len;
++        };
++        
++        cle266_decoder_state_t decoder = CLE266MPEGGetDecoderState();
++        /* Fill up the necessary AVCodecContext information */
++        pic-&gt;width = decoder.width;
++        pic-&gt;height = decoder.height;
++        pic-&gt;pts = cle266pts;
++	pic-&gt;edge_width=pic-&gt;edge_height=0;
++        pic-&gt;dtg_active_format = 0; // currently not parsed
++        pic-&gt;interlaced_frame = true; // FIXME Do we have that information?
++	pic-&gt;aspect_ratio = (decoder.aspect_ratio_info &gt;= 0 &amp;&amp; decoder.aspect_ratio_info &lt;5) ?
++		aspect_ratio_values[decoder.aspect_ratio_info] : 1.0;
++	
++        return len;
++}
++#endif // HAVE_CLE266_MPEG_DECODER
++
+ int cVideoStreamDecoder::DecodePacket(AVPacket *pkt)
+ {
+   int len=0;
+@@ -763,8 +816,14 @@
+   while ( size &gt; 0 ) {
+     BUFDEB(&quot;start decode video stream %d data: %p size: %d \n&quot;,
+         pkt-&gt;stream_index,data,size);
+-    len = DecodePicture_avcodec(pic, got_picture,
+-                                data, size, pkt-&gt;pts)
++#ifdef HAVE_CLE266_MPEG_DECODER
++    if (setupStore.cle266HWdecode &amp;&amp; context-&gt;codec_id == CODEC_ID_MPEG2VIDEO)
++            len = DecodePicture_cle266(pic, got_picture,
++                                data, size, pkt-&gt;pts);
++    else
++#endif //HAVE_CLE266_MPEG_DECODER
++            len = DecodePicture_avcodec(pic, got_picture,
++                                data, size, pkt-&gt;pts);
+       //avcodec_decode_video(context, picture, &amp;got_picture,data, size);
+     BUFDEB(&quot;end decode video got_picture %d, data %p, size %d\n&quot;,
+         got_picture,data,size);
+Index: mpeg2decoder.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.h,v
+retrieving revision 1.37
+diff -u -r1.37 mpeg2decoder.h
+--- mpeg2decoder.h	27 May 2006 19:12:41 -0000	1.37
++++ mpeg2decoder.h	14 Jun 2006 19:27:05 -0000
+@@ -252,6 +252,10 @@
+ 
+     int DecodePicture_avcodec(sPicBuffer *&amp;pic, int &amp;got_picture,
+                               uint8_t *data, int length, int64_t pts);
++#ifdef HAVE_CLE266_MPEG_DECODER
++    int DecodePicture_cle266(sPicBuffer *&amp;pic, int &amp;got_picture,
++                              uint8_t *data, int length, int64_t pts);
++#endif //HAVE_CLE266_MPEG_DECODER
+     virtual void      Freeze(bool freeze=true);
+     virtual void      Play(void);
+     virtual int DecodePacket(AVPacket *pkt);
+Index: setup-softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.c,v
+retrieving revision 1.43
+diff -u -r1.43 setup-softdevice.c
+--- setup-softdevice.c	23 May 2006 21:11:37 -0000	1.43
++++ setup-softdevice.c	14 Jun 2006 19:27:06 -0000
+@@ -109,6 +109,9 @@
+   ac3Mode       = 0;
+   useMGAtv      = 0;
+   viaTv         = 0;
++#ifdef HAVE_CLE266_MPEG_DECODER
++  cle266HWdecode  = 0;
++#endif // HAVE_CLE266_MPEG_DECODER
+   tripleBuffering = 0;
+   useStretchBlit  = 0;
+   bufferMode      = 0;
+Index: setup-softdevice.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.h,v
+retrieving revision 1.30
+diff -u -r1.30 setup-softdevice.h
+--- setup-softdevice.h	23 May 2006 21:11:37 -0000	1.30
++++ setup-softdevice.h	14 Jun 2006 19:27:06 -0000
+@@ -148,6 +148,10 @@
+     int   zoomCenterY;
+     int   useMGAtv;
+     int   viaTv;
++#ifdef HAVE_CLE266_MPEG_DECODER
++    int   cle266HWdecode;
++    int   cle266FB;
++#endif // HAVE_CLE266_MPEG_DECODER
+     int   tripleBuffering;
+     int   useStretchBlit;
+     int   shouldSuspend;
+Index: softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.60
+diff -u -r1.60 softdevice.c
+--- softdevice.c	9 Jun 2006 16:45:13 -0000	1.60
++++ softdevice.c	14 Jun 2006 19:27:06 -0000
+@@ -704,6 +704,9 @@
+   &quot;  -vo dfb:                 enable output via directFB\n&quot;
+   &quot;  -vo dfb:mgatv                   output via MATROX TV-out\n&quot;
+   &quot;  -vo dfb:viatv                   output via Unichrome TV-out\n&quot;
++#ifdef HAVE_CLE266_MPEG_DECODER
++  &quot;  -vo dfb:viatv:cle266            output via CLE266 accelerated Unichrome TV-out\n&quot;
++#endif
+   &quot;  -vo dfb:triple                  enables triple buffering on back end scaler\n&quot;
+ #endif
+ #ifdef VIDIX_SUPPORT
+@@ -805,6 +808,13 @@
+           else if (!strncmp (vo_argv, &quot;viatv&quot;, 5)) {
+             setupStore.viaTv = 1;
+             fprintf(stderr,&quot;[softdevice] enabling field parity\n&quot;);
++#ifdef HAVE_CLE266_MPEG_DECODER
++            vo_argv += 5;
++            if (!strncmp (vo_argv, &quot;:cle266&quot;, 7)) {
++              setupStore.cle266HWdecode = 1;
++              fprintf(stderr,&quot;[softdevice] enabling CLE266 HW decoding\n&quot;);
++            }
++#endif // HAVE_CLE266_MPEG_DECODER
+           } else if (!strncmp (vo_argv, &quot;triple&quot;, 6)) {
+             setupStore.tripleBuffering = 1;
+             fprintf(stderr,&quot;[softdevice] enabling triple buffering\n&quot;);
+Index: video-dfb.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.c,v
+retrieving revision 1.63
+diff -u -r1.63 video-dfb.c
+--- video-dfb.c	9 Jun 2006 16:24:34 -0000	1.63
++++ video-dfb.c	14 Jun 2006 19:27:06 -0000
+@@ -14,6 +14,9 @@
+ #include &quot;utils.h&quot;
+ #include &quot;setup-softdevice.h&quot;
+ 
++#ifdef HAVE_CLE266_MPEG_DECODER
++#include &lt;cle266mpegdec.h&gt;
++#endif // HAVE_CLE266_MPEG_DECODER
+ 
+ #ifdef HAVE_CONFIG
+ # include &quot;config.h&quot;
+@@ -360,6 +363,17 @@
+     {
+       isVIAUnichrome = true;
+       clearAlpha = 0xff;
++#ifdef HAVE_CLE266_MPEG_DECODER
++      if (setupStore-&gt;cle266HWdecode) {     
++          if (!SetupCle266Buffers(swidth, sheight)) {
++              fprintf(stderr, &quot;Error allocating hardware buffers for CLE266 decoding: reverting to software decoding\n&quot;);
++              setupStore-&gt;cle266HWdecode = false;
++          } else {
++              // Need YV12 pixel format for blitting from hardware buffer
++              currentPixelFormat = setupStore-&gt;pixelFormat = 1;
++          }
++      }
++#endif // HAVE_CLE266_MPEG_DECODER
+ 
+       ReportLayerInfo(osdLayer, &quot;osdLayer&quot;);
+       if (osdLayerDescription.caps &amp; DLCAPS_ALPHACHANNEL)
+@@ -490,7 +504,7 @@
+         fprintf(stderr,&quot;[dfb] Configuring CooperativeLevel for Overlay\n&quot;);
+         videoLayer-&gt;SetCooperativeLevel(DLSCL_ADMINISTRATIVE);
+ 
+-        if (!setupStore-&gt;viaTv)
++        if (!isVIAUnichrome)
+           BESColorkeyState(videoLayer, true);
+       }
+ 
+@@ -501,7 +515,8 @@
+               videoLayerDescription.name);
+     }
+ 
+-    GetDisplayFrameTime();
++    if (setupStore-&gt;useMGAtv) 
++            GetDisplayFrameTime();
+     /* create an event buffer with all devices attached */
+     events = dfb-&gt;CreateInputEventBuffer(DICAPS_ALL,
+                                          (setupStore-&gt;useMGAtv) ? DFB_TRUE : DFB_FALSE);
+@@ -1311,6 +1326,18 @@
+   //fprintf(stderr,&quot;[dfb] draw frame (%d x %d) Y: %d UV: %d\n&quot;, Width, Height, Ystride, UVstride);
+   try
+   {
++#ifdef HAVE_CLE266_MPEG_DECODER
++    int currentFB = 0;
++    if (setupStore-&gt;cle266HWdecode) {
++      // check if we use internal buffers
++      while ( buf != &amp;mpegfbPic[currentFB]  &amp;&amp; currentFB &lt; 4)
++        currentFB++;
++    };
++    
++    if (setupStore-&gt;cle266HWdecode &amp;&amp; currentFB &lt; 4) {
++      videoSurface-&gt;Blit(mpegfb[currentFB], NULL, 0, 0);
++    } else {
++#endif // HAVE_CLE266_MPEG_DECODER
+     videoSurface-&gt;Lock(DSLF_WRITE, (void **)&amp;dst, &amp;pitch);
+     if (pixelformat == DSPF_I420 || pixelformat == DSPF_YV12)
+     {
+@@ -1391,6 +1418,9 @@
+                              Ystride, UVstride, pitch);
+       }
+      }
++#ifdef HAVE_CLE266_MPEG_DECODER
++    }
++#endif // HAVE_CLE266_MPEG_DECODER
+ 
+     videoSurface-&gt;Unlock();
+ 
+@@ -1454,8 +1484,8 @@
+ #endif
+ 
+       }
+-      //scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
+-      scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
++      scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
++      //scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+ 
+     }
+     else
+@@ -1474,6 +1504,83 @@
+   }
+ }
+ 
++#ifdef HAVE_CLE266_MPEG_DECODER
++sPicBuffer *cDFBVideoOut::GetMpegfbPic(int fb) 
++{
++  return ( fb&gt;=0 &amp;&amp; fb&lt;4 ? &amp;mpegfbPic[fb] : 0 );
++};
++
++bool cDFBVideoOut::SetupCle266Buffers(int width, int height)
++{
++  DFBSurfaceDescription dsc;
++  int *buf;
++  int y_offset, u_offset, v_offset, i;
++  int mpegfb_stride;
++
++  fprintf(stderr, &quot;Initialising CLE266 decoder:&quot;);
++  if (!CLE266MPEGInitialise(FBDEV)) {
++      fprintf(stderr, &quot;failed!\n&quot;);
++      return false;
++  } else {
++      fprintf(stderr, &quot;success!\n&quot;);
++  }
++
++  dsc.flags = (DFBSurfaceDescriptionFlags)(DSDESC_WIDTH |
++                DSDESC_HEIGHT |
++                DSDESC_PIXELFORMAT |
++                DSDESC_CAPS);
++  dsc.caps = DSCAPS_VIDEOONLY;
++  dsc.pixelformat = DSPF_YV12;
++  dsc.width = width;
++  dsc.height = height;
++
++/* Create the 4 MPEG buffers for decoding */
++  fprintf(stderr, &quot;CLE266: Creating buffers for decoder\n&quot;);
++  try {
++    for (i = 0; i &lt; 4; i++) {
++      fprintf(stderr, &quot;CLE266: Creating buffer number %i\n&quot;, i);
++      mpegfb[i] = dfb-&gt;CreateSurface(dsc);
++ 
++      mpegfb[i]-&gt;Clear(0,0,0,0);
++      mpegfb[i]-&gt;Lock(DSLF_WRITE, (void**) &amp;buf, &amp;mpegfb_stride);
++      mpegfb[i]-&gt;GetFramebufferOffset(&amp;mpegfb_ofs[i]);
++      
++      mpegfbPic[i].pixel[0] = (uint8_t*) buf;
++      mpegfbPic[i].pixel[2] = (uint8_t*) buf + height * mpegfb_stride;
++      mpegfbPic[i].pixel[1] = (uint8_t*) mpegfbPic[i].pixel[2]
++                                         +(height&gt;&gt;1)*(mpegfb_stride&gt;&gt;1);
++      mpegfbPic[i].stride[0] = mpegfb_stride;
++      mpegfbPic[i].stride[1] = mpegfbPic[i].stride[2] = mpegfb_stride&gt;&gt;1;
++      mpegfbPic[i].format = PIX_FMT_YUV420P;
++      mpegfbPic[i].owner = NULL;
++    }
++  }
++  catch (DFBException *ex)
++  {
++    fprintf(stderr, &quot;CLE266: Error creating buffer: action=%s, result=%s\n&quot;,
++                  ex-&gt;GetAction(), ex-&gt;GetResult());
++    delete ex;
++    return false;
++  }
++
++  /* Pass info to the decoder...*/
++  fprintf(stderr, &quot;CLE266: passing mpegfb_stride\n&quot;);
++  CLE266MPEGSetStride(mpegfb_stride, mpegfb_stride &gt;&gt; 1 );
++
++  height = (height + 15) &amp; ~15;
++  width  = (width  + 15) &amp; ~15;
++
++  fprintf(stderr, &quot;CLE266: passing buffers to decoder\n&quot;);
++  for (i = 0; i &lt; 4; i++) {
++    y_offset = mpegfb_ofs[i];
++    v_offset = y_offset + (mpegfb_stride * height);
++    u_offset = v_offset + (mpegfb_stride &gt;&gt; 1) * (height &gt;&gt; 1);
++    CLE266MPEGSetFrameBuffer(i,y_offset,v_offset,u_offset);
++  }
++  return true;
++}
++#endif // HAVE_CLE266_MPEG_DECODER
++
+ /* ---------------------------------------------------------------------------
+  */
+ cDFBVideoOut::~cDFBVideoOut()
+@@ -1488,6 +1595,10 @@
+   if (videoLayer)   videoLayer-&gt;Release ();
+   if (osdLayer)     osdLayer-&gt;Release();
+   if (dfb)          dfb-&gt;Release();
++#ifdef HAVE_CLE266_MPEG_DECODER
++  if (setupStore-&gt;cle266HWdecode)
++      CLE266MPEGClose();
++#endif // HAVE_CLE266_MPEG_DECODER
+ }
+ 
+ #ifdef USE_SUBPLUGINS
+Index: video-dfb.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.h,v
+retrieving revision 1.21
+diff -u -r1.21 video-dfb.h
+--- video-dfb.h	27 May 2006 19:12:41 -0000	1.21
++++ video-dfb.h	14 Jun 2006 19:27:06 -0000
+@@ -50,6 +50,13 @@
+     void SetParams();
+     void EnableFieldParity(IDirectFBDisplayLayer *layer);
+ 
++#ifdef HAVE_CLE266_MPEG_DECODER
++    IDirectFBSurface* mpegfb[4];
++    int               mpegfb_ofs[4];
++    sPicBuffer        mpegfbPic[4];
++    bool SetupCle266Buffers(int, int);
++    virtual sPicBuffer *GetMpegfbPic(int fb);
++#endif // HAVE_CLE266_MPEG_DECODER
+   public:
+     IDirectFB	*dfb;
+     cDFBVideoOut(cSetupStore *setupStore);
+Index: video.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.h,v
+retrieving revision 1.40
+diff -u -r1.40 video.h
+--- video.h	27 May 2006 19:12:41 -0000	1.40
++++ video.h	14 Jun 2006 19:27:07 -0000
+@@ -126,6 +126,11 @@
+     cVideoOut(cSetupStore *setupStore);
+     virtual ~cVideoOut();
+ 
++    
++    // FIXME remove
++    virtual sPicBuffer *GetMpegfbPic(int fb)
++    { return NULL;};
++
+     virtual void ProcessEvents ()
+     {};
+     // will be called every xx ms, at a minimum after each frame.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002135.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002143.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2137">[ date ]</a>
+              <a href="thread.html#2137">[ thread ]</a>
+              <a href="subject.html#2137">[ subject ]</a>
+              <a href="author.html#2137">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

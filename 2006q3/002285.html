@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Blinking/flickering with dvb-subtitles
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blinking/flickering%20with%20dvb-subtitles&In-Reply-To=%3C3e063bbf0607211552g4d382380y4bca2105539c6185%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002281.html">
+   <LINK REL="Next"  HREF="002282.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Blinking/flickering with dvb-subtitles</H1>
+    <B>Petri Helin</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blinking/flickering%20with%20dvb-subtitles&In-Reply-To=%3C3e063bbf0607211552g4d382380y4bca2105539c6185%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] Blinking/flickering with dvb-subtitles">phelin at googlemail.com
+       </A><BR>
+    <I>Sat Jul 22 00:52:28 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002281.html">[Softdevice-devel]  Blinking/flickering with dvb-subtitles
+</A></li>
+        <LI>Next message: <A HREF="002282.html">[Softdevice-devel] Softplay not playing last seconds of mp3 and	flac files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2285">[ date ]</a>
+              <a href="thread.html#2285">[ thread ]</a>
+              <a href="subject.html#2285">[ subject ]</a>
+              <a href="author.html#2285">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 7/19/06, Petri Helin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">phelin at googlemail.com</A>&gt; wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I am using softdevice from cvs (17.7.) with VDR 1.4.1 and
+</I>&gt;<i> DVB-subtitles plugin. Softdevice uses xv. Whenever dvb-subtitles
+</I>&gt;<i> appear/disappear there's a blink/flash/flicker which looks like the
+</I>&gt;<i> whole screen goes black for a very short period of time. If OSD is
+</I>&gt;<i> visible (e.g menu or progressbar), there is no flickering at all. I
+</I>&gt;<i> have tried changing the deinteracing methods, but that doesn't seem to
+</I>&gt;<i> have any effect. Any ideas how to correct this would be greatly
+</I>&gt;<i> appreciated.
+</I>&gt;<i>
+</I>&gt;<i> PS Otherwise everything seems to work quite well, so thank you for
+</I>&gt;<i> this great plugin.
+</I>&gt;<i>
+</I>&gt;<i> -Petri
+</I>&gt;<i>
+</I>
+I think I mannaged to solve this problem, though I am not sure if
+there are any side effects with this solution. I simply commented out
+the XClearArea in CloseOSD.
+
+
+--- softdevice/video-xv.c       2006-07-16 05:09:22.000000000 +0300
++++ softdevice-mod/video-xv.c   2006-07-22 01:37:18.000000000 +0300
+@@ -1401,7 +1401,7 @@
+   {
+     memset (osd_buffer, 0, osd_image-&gt;bytes_per_line * osd_max_height);
+     pthread_mutex_lock(&amp;xv_mutex);
+-    XClearArea (dpy, win, 0, 0, 0, 0, False);
++    //XClearArea (dpy, win, 0, 0, 0, 0, False);
+     ShowOSD();
+     XSync(dpy, False);
+     pthread_mutex_unlock(&amp;xv_mutex);
+
+
+-Petri
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002281.html">[Softdevice-devel]  Blinking/flickering with dvb-subtitles
+</A></li>
+	<LI>Next message: <A HREF="002282.html">[Softdevice-devel] Softplay not playing last seconds of mp3 and	flac files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2285">[ date ]</a>
+              <a href="thread.html#2285">[ thread ]</a>
+              <a href="subject.html#2285">[ subject ]</a>
+              <a href="author.html#2285">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

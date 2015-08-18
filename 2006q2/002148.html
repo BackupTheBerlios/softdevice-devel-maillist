@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] I only see osd
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20only%20see%20osd&In-Reply-To=%3C4491D707.2020502%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002142.html">
+   <LINK REL="Next"  HREF="002150.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] I only see osd</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20only%20see%20osd&In-Reply-To=%3C4491D707.2020502%40gmx.net%3E"
+       TITLE="[Softdevice-devel] I only see osd">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Jun 15 23:54:15 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002142.html">[Softdevice-devel] I only see osd
+</A></li>
+        <LI>Next message: <A HREF="002150.html">[Softdevice-devel] I only see osd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2148">[ date ]</a>
+              <a href="thread.html#2148">[ thread ]</a>
+              <a href="subject.html#2148">[ subject ]</a>
+              <a href="author.html#2148">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Leo M&#225;rquez schrieb:
+&gt;<i> More info. This is my fbset -i:
+</I>&gt;<i> 
+</I>&gt;<i> mode &quot;640x480-60&quot;
+</I>&gt;<i>    # D: 25.176 MHz, H: 31.469 kHz, V: 59.942 Hz
+</I>&gt;<i>    geometry 640 480 640 32767 8
+</I>&gt;<i>    timings 39721 40 24 32 11 96 2
+</I>&gt;<i>    accel true
+</I>&gt;<i>    rgba 8/0,8/0,8/0,0/0
+</I>&gt;<i> endmode
+</I>&gt;<i> 
+</I>&gt;<i> Frame buffer device information:
+</I>&gt;<i>    Name        : NV2
+</I>&gt;<i>    Address     : 0xe4000000
+</I>&gt;<i>    Size        : 33554432
+</I>&gt;<i>    Type        : PACKED PIXELS
+</I>&gt;<i>    Visual      : PSEUDOCOLOR
+</I>&gt;<i>    XPanStep    : 8
+</I>&gt;<i>    YPanStep    : 1
+</I>&gt;<i>    YWrapStep   : 0
+</I>&gt;<i>    LineLength  : 640
+</I>&gt;<i>    MMIO Address: 0xe6000000
+</I>&gt;<i>    MMIO Size   : 16777216
+</I>&gt;<i>    Accelerator : nVidia RIVA TNT
+</I>&gt;<i> 
+</I>Hmm, looks okay to mee.
+
+
+[...]
+&gt;&gt;<i> Jun 15 15:51:39 vdr vdr: [3623] TS buffer on device 1 thread started
+</I>&gt;&gt;<i> (pid=3577, tid=3623)
+</I>&gt;&gt;<i> Jun 15 15:51:40 vdr vdr: [3624] [VideoOut]: resolution changed: W(720
+</I>&gt;&gt;<i> -&gt; 528); H(576 -&gt;576)
+</I>&gt;&gt;<i> Jun 15 15:51:40 vdr vdr: [3624] [VideoOut]: 528x576 [0,0 528x576] -&gt;
+</I>&gt;&gt;<i> 768x576 [0,0 768x576]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can be related to my problem?
+</I>&gt;&gt;<i>
+</I>No, the log messages don't show any problem.
+
+
+&gt;&gt;&gt;<i> I supose the problem is related to the directfb configuration but...
+</I>&gt;&gt;&gt;<i> why can I see osd and not TV?
+</I>&gt;&gt;&gt;<i>
+</I>One possibility is that the VideoLayer in the DFB nvidia driver is
+broken. I'm not an DirectFB expert but I think that this is the most
+likely reason.
+Or is there anyone who has an nvidia card running with the softdevice
+and DirectFB?
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002142.html">[Softdevice-devel] I only see osd
+</A></li>
+	<LI>Next message: <A HREF="002150.html">[Softdevice-devel] I only see osd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2148">[ date ]</a>
+              <a href="thread.html#2148">[ thread ]</a>
+              <a href="subject.html#2148">[ subject ]</a>
+              <a href="author.html#2148">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

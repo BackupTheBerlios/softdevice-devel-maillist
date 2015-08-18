@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20upmix%20mono%20to%20stereo%20%28to%20be%20audible%20via%20SPDIF%29&In-Reply-To=%3C4439A07D.4060900%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001845.html">
+   <LINK REL="Next"  HREF="001854.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20upmix%20mono%20to%20stereo%20%28to%20be%20audible%20via%20SPDIF%29&In-Reply-To=%3C4439A07D.4060900%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Mon Apr 10 02:02:05 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001845.html">[Softdevice-devel] Packed color problem
+</A></li>
+        <LI>Next message: <A HREF="001854.html">[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1847">[ date ]</a>
+              <a href="thread.html#1847">[ thread ]</a>
+              <a href="subject.html#1847">[ subject ]</a>
+              <a href="author.html#1847">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi folks,
+
+if I only tried this myself earlier, didn't know it was so simple :-).
+Some of you might remember I mentioned I'm receiving several DVB-S
+channels whith just mono MP2 sound, and can't hear anything in my
+external amp hooked via SPDIF. Well, that's because PCM sent via SPDIF
+has to be stereo, and up to now, softdevice sent it mono as it came on
+those channels, therefore the amp couldn't understand it. The attached
+patch cures this. It's odd that the audioMode says &quot;stereo&quot; (maybe as
+it's nor left language or right language), but the number of channels
+says 1.
+I've seen that the audiosamples array is allocated big enough, so I just
+doubled the samples and modified the lenght and channel number, I hope
+that's ok and gets adopted somehow.
+
+Cheers,
+Lucian
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr-softdevice-0.2.2.20060315_mono.diff
+Type: text/x-patch
+Size: 1568 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060410/2813e719/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060410/2813e719/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001845.html">[Softdevice-devel] Packed color problem
+</A></li>
+	<LI>Next message: <A HREF="001854.html">[Softdevice-devel] [PATCH] upmix mono to stereo (to be audible via SPDIF)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1847">[ date ]</a>
+              <a href="thread.html#1847">[ thread ]</a>
+              <a href="subject.html#1847">[ subject ]</a>
+              <a href="author.html#1847">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

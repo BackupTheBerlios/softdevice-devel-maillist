@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C43CD25A9.70405%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001671.html">
+   <LINK REL="Next"  HREF="001674.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C43CD25A9.70405%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Jan 17 18:13:13 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001671.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+        <LI>Next message: <A HREF="001674.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1673">[ date ]</a>
+              <a href="thread.html#1673">[ thread ]</a>
+              <a href="subject.html#1673">[ subject ]</a>
+              <a href="author.html#1673">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+
+&gt;&gt;<i> So it seems that on my machine it is not the reading from the memory but
+</I>&gt;&gt;<i> the _writing_ which is slow - I assume because the video buffer is
+</I>&gt;&gt;<i> directly in the video memory.
+</I>&gt;<i> 
+</I>&gt;<i> Single writes to AGP (video memory) should be avoided. Using a memory buffer
+</I>&gt;<i> to convert (first) and copy to video (later) should be (much) faster.
+</I>
+I don't think so unless one uses DMA transfer for copying. Since in this
+case the CPU is much faster than the writing and the mtrr register is
+set to write-combined for the video memory the writes should be
+transfered in large blocks.
+
+&gt;<i> Perhaps we should add an intermediate surface, and let directfb do the
+</I>&gt;<i> conversion. I think there are some format conversions functions available.
+</I>
+If that is possible we should try that.
+
+&gt;&gt;<i> I wonder if it is possible with DFB to write the image to a main
+</I>&gt;&gt;<i> memory block and then use DMA copy to copy it to the video memory like
+</I>&gt;&gt;<i> it is done in most Xv implementations.
+</I>&gt;<i> 
+</I>&gt;<i> DMA and Xv ? Can you give me a hint which XV implementation uses hardware acc
+</I>&gt;<i> for YV12 formats ? The only thing I've seen is that they use a function often
+</I>&gt;<i> called like copy_munged_data() to convert YV12 to YUV2 (thats true for matrox).
+</I>&gt;<i> 
+</I>The R128 driver from XOrg and the Unichrome driver from Openchrome both
+use DMA transfer to copy the overlay picture into video memory. In fact
+these are the only two Xv implementations I know in source, but since
+they both do it and it makes sense to do it I just assumed that most of
+the Xv implementations do it like this. But I may be wrong here ;-)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001671.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+	<LI>Next message: <A HREF="001674.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1673">[ date ]</a>
+              <a href="thread.html#1673">[ thread ]</a>
+              <a href="subject.html#1673">[ subject ]</a>
+              <a href="author.html#1673">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

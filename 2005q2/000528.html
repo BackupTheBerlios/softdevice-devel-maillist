@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] terrible judder and stuttering
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20terrible%20judder%20and%20stuttering&In-Reply-To=%3C200504142317.20423.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000522.html">
+   <LINK REL="Next"  HREF="000529.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] terrible judder and stuttering</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20terrible%20judder%20and%20stuttering&In-Reply-To=%3C200504142317.20423.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] terrible judder and stuttering">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr 14 23:17:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000522.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+        <LI>Next message: <A HREF="000529.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#528">[ date ]</a>
+              <a href="thread.html#528">[ thread ]</a>
+              <a href="subject.html#528">[ subject ]</a>
+              <a href="author.html#528">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 13. April 2005 00:15, Lucian Muresan wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> ...
+</I>&gt;<i> &gt;&gt; off-syncronicity I've seen so far in softdevice, on my G400 TV-out. This 
+</I>&gt;<i> &gt;&gt; time I invoked properly, I hope:
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; vdr -c /etc/vdr -L /usr/lib/vdr -P'graphlcd -d noritake800' 
+</I>&gt;<i> &gt;&gt; -P'softdevice -L /usr/lib/vdr -vo dfb:mgatv'
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Please try that with graphlcd disabled. I'm back on my G550 development
+</I>&gt;<i> &gt; enviroment and I've seen _no_ major issue with tv-out composite.
+</I>&gt;<i> 
+</I>&gt;<i> I tried without graphlcd now, and it's the same situation.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; There are some problems with flickering OSD when not all screen
+</I>&gt;<i> &gt; backbuffers where cleared. Switched to triple buffering too which
+</I>&gt;<i> &gt; seems to fix a &quot;from time to time flicker&quot; when OSD is shown.
+</I>&gt;<i> &gt; And times the OSD _was_ not shown (subtitles ??).
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I'll test that tomorrow on my production system.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; There might be still an issue with A/V sync which needs some further
+</I>&gt;<i> &gt; testing.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Attached is a cvs diff of my working version which needs some cleanups.
+</I>&gt;<i> 
+</I>&gt;<i> With this patch applied on on my checout from yesterday, the image gets 
+</I>&gt;<i> very smooth, if it wasn't in slow motion and with audio skipping all the 
+</I>&gt;<i> time, it might be well, but I can't really say so now.
+</I>
+So now I did the test on my prod system (posted patch applied) and
+I'm very satisfied. Suprisingly the audio xruns are _not_audible.
+Sound connection is via optical link to my surround decoder
+logitech z-680. So ac3 passthrough should be done next.
+This test was on a 1.2G PIII Celeron. Cpu load is between 30 and 50%.
+
+The only thing I noticed that from time to time is a slight
+judder as frames were repeated. THis my be caused when the receiving
+framerate is slightly lower than matrox framerate. I should ask for
+framerate adjustment on directfb list again.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000522.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+	<LI>Next message: <A HREF="000529.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#528">[ date ]</a>
+              <a href="thread.html#528">[ thread ]</a>
+              <a href="subject.html#528">[ subject ]</a>
+              <a href="author.html#528">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

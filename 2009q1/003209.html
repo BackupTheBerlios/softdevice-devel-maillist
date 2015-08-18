@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%20ffmpeg%0A%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039258AF4%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003206.html">
+   <LINK REL="Next"  HREF="003217.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)</H1>
+    <B>Neumann, Andre [DO-net GmbH]</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%20ffmpeg%0A%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039258AF4%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)">Neumann at do-net.de
+       </A><BR>
+    <I>Wed Feb 18 09:26:11 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003206.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003217.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3209">[ date ]</a>
+              <a href="thread.html#3209">[ thread ]</a>
+              <a href="subject.html#3209">[ subject ]</a>
+              <a href="author.html#3209">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Does softdevice works with vdr-1.7.4 ? (TS)
+
+-------------
+Andre Neumann
+
+-----Urspr&#252;ngliche Nachricht-----
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-bounces at lists.berlios.de</A>] Im Auftrag von Stefan Lucke
+Gesendet: Mittwoch, 18. Februar 2009 00:34
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+Betreff: Re: [Softdevice-devel][Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+
+On Tuesday 17 February 2009, Maik Opitz wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> with the patches it works fine for me.
+</I>&gt;<i> But is this a bug in ffmpeg? Should we report it to them?
+</I>
+I think we have to modify our ByteIOContext interface, so that we do an additional copy of data to decode.
+Currently we just adjust the pointers inside the ByteIOContext.
+
+Attached patch is a fix for softdevice, which works with unpatched ffmpeg.
+
+--
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003206.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003217.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3209">[ date ]</a>
+              <a href="thread.html#3209">[ thread ]</a>
+              <a href="subject.html#3209">[ subject ]</a>
+              <a href="author.html#3209">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

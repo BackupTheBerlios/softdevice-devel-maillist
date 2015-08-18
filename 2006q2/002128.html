@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606140041.37079.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002100.html">
+   <LINK REL="Next"  HREF="002135.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606140041.37079.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jun 14 00:41:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002100.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002135.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2128">[ date ]</a>
+              <a href="thread.html#2128">[ thread ]</a>
+              <a href="subject.html#2128">[ subject ]</a>
+              <a href="author.html#2128">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag 29 Mai 2006 21:55, Martin Wache wrote:
+&gt;<i> Hi all,
+</I>&gt;<i> 
+</I>&gt;<i> since my last changes to the cvs Ralfs and Laz patches to enable the
+</I>&gt;<i> cle266 hw decoding in the softdevice any more. I adapted Ralf's latest
+</I>&gt;<i> patch to the cvs, and fixed a few things. I also made some other
+</I>&gt;<i> changes: I moved the colorspace back to the default and viatv is no
+</I>&gt;<i> longer enabled automatically.
+</I>
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.59
+diff -u -r1.59 softdevice.c
+--- softdevice.c        30 Apr 2006 13:50:12 -0000      1.59
++++ softdevice.c        29 May 2006 19:31:58 -0000
+@@ -782,6 +782,12 @@
+           else if (!strncmp (vo_argv, &quot;viatv&quot;, 5)) {
+             setupStore.viaTv = 1;
+             fprintf(stderr,&quot;[softdevice] enabling field parity\n&quot;);
++#ifdef HAVE_CLE266_MPEG_DECODER
++          } else if (!strncmp (vo_argv, &quot;cle266&quot;, 6)) {
++            //setupStore.viaTv = 1;
+
+This commented line may cause the noticed side effect of software blitting.
+Code should be modified in a way that both option could be specified,
+as some testers do TV-out (like LAZ and Rolf?) and some (like you and me) VGA-out.
+-vo:dfb:viatv:cle266
+
++            setupStore.cle266HWdecode = 1;
++            fprintf(stderr,&quot;[softdevice] enabling CLE266 HW decoding\n&quot;);
++#endif // HAVE_CLE266_MPEG_DECODER
+           } else if (!strncmp (vo_argv, &quot;triple&quot;, 6)) {
+             setupStore.tripleBuffering = 1;
+             fprintf(stderr,&quot;[softdevice] enabling triple buffering\n&quot;);
+
+&gt;<i> I also disabled the sync on horizontal refresh if mgaTV is not enabled,
+</I>&gt;<i> in my opinion it doesn't make sense to sync on the horizontal refresh
+</I>&gt;<i> when one doesn't know if the refresh rate is 50Hz/60Hz. 
+</I>
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.c,v
+retrieving revision 1.62
+diff -u -r1.62 video-dfb.c
+--- video-dfb.c 27 May 2006 19:12:41 -0000      1.62
++++ video-dfb.c 29 May 2006 19:32:02 -0000
+@@ -501,7 +516,8 @@
+&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;videoLayerDescription.name);
+&#160; &#160; &#160;}
+&#160;
+- &#160; &#160;GetDisplayFrameTime();
++ &#160; &#160;if (setupStore-&gt;useMGAtv) 
++ &#160; &#160; &#160; &#160; &#160; &#160;GetDisplayFrameTime();
+&#160; &#160; &#160;/* create an event buffer with all devices attached */
+&#160; &#160; &#160;events = dfb-&gt;CreateInputEventBuffer(DICAPS_ALL,
+&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; (setupStore-&gt;useMGAtv) ? DFB_TRUE : DFB_FALSE);
+
+Are you referring to this hunk ?
+It does not do any sync. It will cause the sleep/delay will be skipped,
+if time to delay is lower than current display refresh rate.
+
+It may lead to allways doing no delay, in case we get strange/false
+measured times. But it does not introduce an extra delay.
+
+&gt;<i> One can only be 
+</I>&gt;<i> sure for TV-out. What about viaTv? Should we enable it also for viaTV?
+</I>&gt;<i> Ah, and the main reason why I disabled it is because the a/v sync was
+</I>&gt;<i> totally messed up on my EPIA board with VGA-Monitor and sync on
+</I>&gt;<i> horizontal refresh enabled.
+</I>
+@@ -1454,8 +1485,8 @@
+ #endif
+ 
+       }
+-      //scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
+-      scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
++      scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
++      //scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+ 
+     }
+     else
+
+This hunk may cause effects you noticed. But this is a rather sensible change and
+should be delayed until the software blit issue is resolved.
+
+Software blit issue:
+in video-dfb.c around line 493 there is a test for:
+        if (!setupStore-&gt;viaTv)
+          BESColorkeyState(videoLayer, true);
+this should be replaced by:
+        if (!isVIAUnichrome)
+          BESColorkeyState(videoLayer, true);
+
+When using normal dfb-out I've another strange effect: video is visible
+only when OSD is active. To resolve this for me, I commented out
+line 362 (      //clearAlpha = 0xff;) .
+
+&gt;<i> With this patch, postprocessing should work with cle266 enabled (however
+</I>&gt;<i> it is painfully slow...) and softplay works :-)
+</I>&gt;<i> Still there is some work to be done. I want to get rid of the method
+</I>&gt;<i> GetMpegFb() which I temporarily introduced, instead I plan to move the
+</I>&gt;<i> fb management to PicBufferManager.
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002100.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002135.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2128">[ date ]</a>
+              <a href="thread.html#2128">[ thread ]</a>
+              <a href="subject.html#2128">[ subject ]</a>
+              <a href="author.html#2128">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

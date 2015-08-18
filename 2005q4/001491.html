@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Using hardware MPEG2 decoder?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Using%20hardware%20MPEG2%20decoder%3F&In-Reply-To=%3C20051106120923.GA8443%40seneca.muc.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001494.html">
+   <LINK REL="Next"  HREF="001500.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Using hardware MPEG2 decoder?</H1>
+    <B>Harald Milz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Using%20hardware%20MPEG2%20decoder%3F&In-Reply-To=%3C20051106120923.GA8443%40seneca.muc.de%3E"
+       TITLE="[Softdevice-devel] Using hardware MPEG2 decoder?">hm at seneca.muc.de
+       </A><BR>
+    <I>Sun Nov  6 13:09:23 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001494.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+        <LI>Next message: <A HREF="001500.html">[Softdevice-devel] Using hardware MPEG2 decoder?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1491">[ date ]</a>
+              <a href="thread.html#1491">[ thread ]</a>
+              <a href="subject.html#1491">[ subject ]</a>
+              <a href="author.html#1491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+this idea may sound somethat strange but it may be worth considering. 
+
+For people who have FF cards it may be a good idea to use the FF card's
+MPEG2 decoder for standard PAL or NTSC broadcastings. This would reduce the
+load of the main CPU and hence reduce noise if you have a thermostatic fan.
+For other broadcast formats one would use software decoding. 
+
+This would also have the advantage of using a digital out for everything.
+The FF card only has analog outs. I want DVI out. I would assume that
+the streamdev code is able to retrieve the decoded data from the card,
+right? Softdevice would only rescale if necessary and send everything
+to DFB or whatever.
+
+One could probably build a separate plugin to retrieve the TS stream from
+the card and send it to DFB but I think it would be better to have a
+unified plugin to handle both. 
+
+Or am I off track ? 
+
+
+-- 
+Ask not for whom the telephone bell tolls ... if thou art in the
+bathtub, it tolls for thee.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001494.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+	<LI>Next message: <A HREF="001500.html">[Softdevice-devel] Using hardware MPEG2 decoder?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1491">[ date ]</a>
+              <a href="thread.html#1491">[ thread ]</a>
+              <a href="subject.html#1491">[ subject ]</a>
+              <a href="author.html#1491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

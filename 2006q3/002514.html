@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%20time&In-Reply-To=%3C45126F1A.4050805%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002510.html">
+   <LINK REL="Next"  HREF="002516.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long time</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%20time&In-Reply-To=%3C45126F1A.4050805%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long time">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Sep 21 12:53:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002510.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002516.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2514">[ date ]</a>
+              <a href="thread.html#2514">[ thread ]</a>
+              <a href="subject.html#2514">[ subject ]</a>
+              <a href="author.html#2514">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+&gt;<i> On Wed, Sep 20, 2006 at 10:20:49AM +0200, Martin Wache wrote:
+</I>&gt;&gt;<i> I would suggest to check what osdMutex is actually protecting, in some
+</I>&gt;&gt;<i> places I really don't know that. So for protecting what is the osdMutex
+</I>&gt;&gt;<i> needed?
+</I>&gt;<i> 
+</I>&gt;<i> It might be a good idea to try running softdevice under Helgrind,
+</I>&gt;<i> which implements the Eraser algorithm for detecting data races.
+</I>&gt;<i> 
+</I>I never worked with Helgrind, but maybe I will it give a try.
+
+&gt;<i> FWIW, a good design principle would be to avoid deadlocks by avoiding
+</I>&gt;<i> cycles in the waits-for graph altogether.  This can be achieved by having
+</I>&gt;<i> all threads acquire mutexes in the same order (and to release them in the
+</I>&gt;<i> opposite order in a stack-like fashion).  Assign a rank to each mutex,
+</I>&gt;<i> and make sure that each thread can acquire only mutexes of lower rank
+</I>&gt;<i> than those it is currently holding.
+</I>&gt;<i>
+</I>Sure, ranks for all mutexes would help to solve those problems. But I
+don't think we actually need them, cVideo is just not complicated enough
+;-). We currently have two mutexes in cVideo, I actually don't think
+that we need both of them. If we can get rid of one of them, we should
+not have any problems with deadlocks.
+If some videout driver needs locks to protect calls to actual drivers,
+thats not a problem as long as no other methods of cVideo are called
+with the lock held.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002510.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002516.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2514">[ date ]</a>
+              <a href="thread.html#2514">[ thread ]</a>
+              <a href="subject.html#2514">[ subject ]</a>
+              <a href="author.html#2514">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

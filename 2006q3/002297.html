@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay not playing last seconds of mp3 and	flac files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20not%20playing%20last%20seconds%20of%20mp3%20and%0A%09flac%20files&In-Reply-To=%3C3e063bbf0607252353u116a97aaqca287fbb0f40ac20%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002294.html">
+   <LINK REL="Next"  HREF="002304.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay not playing last seconds of mp3 and	flac files</H1>
+    <B>Petri Helin</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20not%20playing%20last%20seconds%20of%20mp3%20and%0A%09flac%20files&In-Reply-To=%3C3e063bbf0607252353u116a97aaqca287fbb0f40ac20%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] Softplay not playing last seconds of mp3 and	flac files">phelin at googlemail.com
+       </A><BR>
+    <I>Wed Jul 26 08:53:56 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002294.html">[Softdevice-devel] Softplay not playing last seconds of mp3 and flac files
+</A></li>
+        <LI>Next message: <A HREF="002304.html">[Softdevice-devel] Softplay not playing last seconds of mp3 and flac files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2297">[ date ]</a>
+              <a href="thread.html#2297">[ thread ]</a>
+              <a href="subject.html#2297">[ subject ]</a>
+              <a href="author.html#2297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 7/25/06, Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt; wrote:
+&gt;<i> Petri Helin schrieb:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I am using softdevice and softplay from cvs (17.7.) with VDR 1.4.1.
+</I>&gt;<i> &gt; Softdevice uses xv. Softplay seems to play both flac and mp3 files
+</I>&gt;<i> &gt; quite nicely, but cuts many seconds from the end. Is that a feature or
+</I>&gt;<i> &gt; can I change it somehow?
+</I>&gt;<i> &gt;
+</I>&gt;<i> Please try the latest CVS version, this should be fixed now.
+</I>&gt;<i>
+</I>
+Actually, it looks like I discovered to right culprit earlier this
+week...  You have changed the upper limit for count in the
+FlushDevice's while loop to 200 in SoftPlayer.c, but what I tested,
+that is not enough. I have been now using 1000 which seems to be
+satisfactory. In most of the cases count went up to 955.
+
+But I will test this later today for it looks like you have made some
+additional changes.
+
+-Petri
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002294.html">[Softdevice-devel] Softplay not playing last seconds of mp3 and flac files
+</A></li>
+	<LI>Next message: <A HREF="002304.html">[Softdevice-devel] Softplay not playing last seconds of mp3 and flac files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2297">[ date ]</a>
+              <a href="thread.html#2297">[ thread ]</a>
+              <a href="subject.html#2297">[ subject ]</a>
+              <a href="author.html#2297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

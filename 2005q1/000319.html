@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] use libavformat in mpeg2decoder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C4239FE07.2060908%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000318.html">
+   <LINK REL="Next"  HREF="000321.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] use libavformat in mpeg2decoder</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C4239FE07.2060908%40gmx.net%3E"
+       TITLE="[Softdevice-devel] use libavformat in mpeg2decoder">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Mar 17 23:00:39 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000318.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+        <LI>Next message: <A HREF="000321.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#319">[ date ]</a>
+              <a href="thread.html#319">[ thread ]</a>
+              <a href="subject.html#319">[ subject ]</a>
+              <a href="author.html#319">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> 
+</I>&gt;<i> I can't get any output. Just did a fresh cvs checkout, and tried with
+</I>&gt;<i> both ffmpeg-0.4.9pre1 and current cvs. The output stops on
+</I>&gt;<i> 
+</I>&gt;<i> [dfb] Using this layer for OSD: FBDev Primary Layer
+</I>&gt;<i> [dfb] Using this layer for Video out: Radeon Overlay
+</I>&gt;<i> [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+</I>&gt;<i> [dfb] (re)configured 0x08100609
+</I>&gt;<i> Subplugin successfully opend
+</I>&gt;<i> [softdevice] Video Out seems to be OK
+</I>&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;<i> cSoftDevice::MakePrimaryDevice
+</I>&gt;<i> CMD[5951]:Start IsSuspended 0
+</I>&gt;<i> init put byte finished
+</I>&gt;<i> CMD[5961]:Neuer Thread gestartet: Mpeg2Decoder pid 1468
+</I>&gt;<i> playmode not implemented... 0
+</I>&gt;<i> 
+</I>&gt;<i> It happens with both DirectFB and Xv output.
+</I>&gt;<i> 
+</I>
+Hi Torgeir,
+
+please apply the attached patch, start vdr rederecting the output in a 
+file. You will get a hell lot of output, could you please send me the 
+output in a mail directly to my e-mail account? I guess the list will 
+reject the file because of it's length... Ah, and maybe you can just 
+send me the about the first 1000 lines, I guess the rest is not that 
+important.
+
+Thank you very much!
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000318.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+	<LI>Next message: <A HREF="000321.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#319">[ date ]</a>
+              <a href="thread.html#319">[ thread ]</a>
+              <a href="subject.html#319">[ subject ]</a>
+              <a href="author.html#319">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

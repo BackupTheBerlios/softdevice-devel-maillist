@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] last softdevice/ffmpeg branch and blank	video... [solved: subtitles-0.5.0 bug]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20last%20softdevice/ffmpeg%20branch%20and%20blank%0A%09video...%20%5Bsolved%3A%20subtitles-0.5.0%20bug%5D&In-Reply-To=%3C1192484533.4713deb55d791%40imp.free.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002949.html">
+   <LINK REL="Next"  HREF="002953.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] last softdevice/ffmpeg branch and blank	video... [solved: subtitles-0.5.0 bug]</H1>
+    <B>wallak at free.fr</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20last%20softdevice/ffmpeg%20branch%20and%20blank%0A%09video...%20%5Bsolved%3A%20subtitles-0.5.0%20bug%5D&In-Reply-To=%3C1192484533.4713deb55d791%40imp.free.fr%3E"
+       TITLE="[Softdevice-devel] last softdevice/ffmpeg branch and blank	video... [solved: subtitles-0.5.0 bug]">wallak at free.fr
+       </A><BR>
+    <I>Mon Oct 15 23:42:13 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002949.html">[Softdevice-devel] last softdevice/ffmpeg branch and blank	video...
+</A></li>
+        <LI>Next message: <A HREF="002953.html">[Softdevice-devel] last softdevice/ffmpeg branch and blank video... [solved: subtitles-0.5.0 bug]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2950">[ date ]</a>
+              <a href="thread.html#2950">[ thread ]</a>
+              <a href="subject.html#2950">[ subject ]</a>
+              <a href="author.html#2950">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> The bug was introduced by the subtitles-0.5.0 plugin patch. Vdr once patched,
+generate invalid PES extension. And so, softdevice/ffmpeg is unable to handle
+the stream (the patch given in a previous mail, is only a dirty fix).
+
+Best Regards,
+J. Wallak.
+
+PS: new patch to be applied (after the subtitles-0.5.0 one):
+
+--- vdr-1.4.7/remux.c   2007-10-15 23:16:40.000000000 +0200
++++ vdr-1.4.7-mdf/remux.c       2007-10-15 23:13:29.000000000 +0200
+@@ -1741,7 +1741,7 @@
+                         dataIdentifier = 0;
+                         }
+                      else {
+-                        flag2 |= PES_EXTENSION;
++                      /*flag2 |= PES_EXTENSION;*/
+                         }
+                      found++;
+                      }
+
+
+
+Quoting <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">wallak at free.fr</A>:
+
+&gt;<i> I've tried further, and everything works as is (without patch) when using
+</I>&gt;<i> vdr-1.5.9. But I still have the same problem with vdr-1.4.7. Some buggy PES
+</I>&gt;<i> extension may be generated inside vdr.
+</I>&gt;<i>
+</I>&gt;<i> Best Regards,
+</I>&gt;<i> J. Wallak.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Quoting Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Quoting <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">wallak at free.fr</A>:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I've tried, with the last version available of both ffmpeg and
+</I>&gt;<i> softdevice.
+</I>&gt;<i> &gt; I've
+</I>&gt;<i> &gt; &gt; tried again with the ffmpeg branch available today r10733. Without the
+</I>&gt;<i> &gt; above
+</I>&gt;<i> &gt; &gt; patch, I still get a blank video output on all live channels (CNN,
+</I>&gt;<i> etc...).
+</I>&gt;<i> &gt; I've
+</I>&gt;<i> &gt; &gt; not tried yet, any playback.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Softdevice displays, in that case, and without the patch:
+</I>&gt;<i> &gt; &gt; 14:43:33.0875 D [13341] [VideoOut] reset: sync info: repF = 0, drpF = 0,
+</I>&gt;<i> &gt; totF =
+</I>&gt;<i> &gt; &gt; 0
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; A bug, or a configuration incompatibility, seems to be there somewhere.
+</I>&gt;<i> &gt; Here is
+</I>&gt;<i> &gt; &gt; my configuration:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; #### compiler: gcc-4.2.2
+</I>&gt;<i> &gt; &gt; #### ffmpeg-20071014-r10733:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/X11R6/lib/pkgconfig:/usr/lib/pkgconfig
+</I>&gt;<i> &gt; \
+</I>&gt;<i> &gt; &gt; LDFLAGS=&quot;-lm&quot; CFLAGS=&quot;-O2 -fomit-frame-pointer -mcpu=pentium&quot;
+</I>&gt;<i> CXXFLAGS=&quot;-O2
+</I>&gt;<i> &gt; &gt; -fomit-frame-pointer -mcpu=pentium&quot; \
+</I>&gt;<i> &gt; &gt; &quot;${1:-.}/configure&quot; --prefix=/usr/local \
+</I>&gt;<i> &gt; &gt; --enable-shared --disable-static \
+</I>&gt;<i> &gt; &gt; --enable-gpl --enable-pthreads \
+</I>&gt;<i> &gt; &gt; --enable-libogg --enable-pp \
+</I>&gt;<i> &gt; &gt; --enable-liba52 --enable-libfaad --enable-libfaac --enable-libmp3lame
+</I>&gt;<i> &gt; &gt; --enable-libvorbis --enable-libxvid --enable-libx264
+</I>&gt;<i> &gt; &gt; make
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Ffmpeg options are according to ffplay:
+</I>&gt;<i> &gt; $ ffplay
+</I>&gt;<i> &gt; FFplay version SVN-r10733, Copyright (c) 2003-2007 Fabrice Bellard, et al.
+</I>&gt;<i> &gt;   configuration: --enable-shared --enable-pp --enable-gpl --enable-swscaler
+</I>&gt;<i> &gt; --enable-liba52
+</I>&gt;<i> &gt; --enable-libfaac --enable-libfaad
+</I>&gt;<i> &gt;   libavutil version: 49.5.0
+</I>&gt;<i> &gt;   libavcodec version: 51.45.0
+</I>&gt;<i> &gt;   libavformat version: 51.14.0
+</I>&gt;<i> &gt;   built on Oct 14 2007 15:23:37, gcc: 4.1.2 (Gentoo 4.1.2)
+</I>&gt;<i> &gt; usage: ffplay [options] input_file
+</I>&gt;<i> &gt; Simple media player
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; gcc is:
+</I>&gt;<i> &gt; gcc (GCC) 4.1.2 (Gentoo 4.1.2)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; #### softdevice-20071009
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/X11R6/lib/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig
+&gt;<i> &gt; &gt; \
+</I>&gt;<i> &gt; &gt;         CFLAGS=&quot;-I/usr/gnome/include -L/usr/gnome/lib -lstdc++&quot; \
+</I>&gt;<i> &gt; &gt;         ./configure --disable-cle266 --disable-mmx2
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I took your configure options for softdevice, ffmpeg r10733, vdr-1.4.0
+</I>&gt;<i> &gt; and I've no problems with live dvb-t and (new-)recordings.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Stefan
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Softdevice-devel mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002949.html">[Softdevice-devel] last softdevice/ffmpeg branch and blank	video...
+</A></li>
+	<LI>Next message: <A HREF="002953.html">[Softdevice-devel] last softdevice/ffmpeg branch and blank video... [solved: subtitles-0.5.0 bug]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2950">[ date ]</a>
+              <a href="thread.html#2950">[ thread ]</a>
+              <a href="subject.html#2950">[ subject ]</a>
+              <a href="author.html#2950">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

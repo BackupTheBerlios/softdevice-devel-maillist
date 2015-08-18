@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A few questions - softdevice+G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651E871.7000105%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002878.html">
+   <LINK REL="Next"  HREF="002880.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A few questions - softdevice+G450</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651E871.7000105%40globall.ru%3E"
+       TITLE="[Softdevice-devel] A few questions - softdevice+G450">bob at globall.ru
+       </A><BR>
+    <I>Mon May 21 20:44:01 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002878.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+        <LI>Next message: <A HREF="002880.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2879">[ date ]</a>
+              <a href="thread.html#2879">[ thread ]</a>
+              <a href="subject.html#2879">[ subject ]</a>
+              <a href="author.html#2879">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo ?????:
+&gt;<i> On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I try to use old Celeron 850MHz
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> What does cat /rpco/cpuinfo say about your processor?
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>uname -a:
+
+Linux vdr-new 2.6.20-gentoo-r7 #7 PREEMPT Sat May 19 13:28:18 MSD 2007
+i686 Celeron (Coppermine) GenuineIntel GNU/Linux
+
+
+cat /proc/cpuinfo:
+
+processor : 0
+vendor_id : GenuineIntel
+cpu family : 6
+model : 8
+model name : Celeron (Coppermine)
+stepping : 6
+cpu MHz : 851.980
+cache size : 128 KB
+fdiv_bug : no
+hlt_bug : no
+f00f_bug : no
+coma_bug : no
+fpu : yes
+fpu_exception : yes
+cpuid level : 2
+wp : yes
+flags : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca cmov pat
+pse36 mmx fxsr sse
+bogomips : 1705.15
+clflush size : 32
+
+cat /proc/mtrr:
+
+reg00: base=0x00000000 ( 0MB), size= 128MB: write-back, count=1
+reg01: base=0xe0000000 (3584MB), size= 64MB: write-combining, count=1
+reg02: base=0xe4000000 (3648MB), size= 32MB: write-combining, count=1
+
+lspci:
+
+00:00.0 Host bridge: VIA Technologies, Inc. VT82C693A/694x [Apollo
+PRO133x] (rev c4)
+00:01.0 PCI bridge: VIA Technologies, Inc. VT82C598/694x [Apollo
+MVP3/Pro133x AGP]
+00:07.0 ISA bridge: VIA Technologies, Inc. VT82C686 [Apollo Super South]
+(rev 1b)
+00:07.1 IDE interface: VIA Technologies, Inc.
+VT82C586A/B/VT82C686/A/B/VT823x/A/C PIPC Bus Master IDE (rev 06)
+00:07.2 USB Controller: VIA Technologies, Inc. VT82xxxxx UHCI USB 1.1
+Controller (rev 0e)
+00:07.3 USB Controller: VIA Technologies, Inc. VT82xxxxx UHCI USB 1.1
+Controller (rev 0e)
+00:07.4 Bridge: VIA Technologies, Inc. VT82C686 [Apollo Super ACPI] (rev 20)
+00:07.5 Multimedia audio controller: VIA Technologies, Inc. VT82C686
+AC97 Audio Controller (rev 21)
+00:10.0 Ethernet controller: VIA Technologies, Inc. VT6105 [Rhine-III]
+(rev 86)
+01:00.0 VGA compatible controller: Matrox Graphics, Inc. MGA G400/G450
+(rev 82)
+
+Regards,
+Vladimir Monchenko.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002878.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+	<LI>Next message: <A HREF="002880.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2879">[ date ]</a>
+              <a href="thread.html#2879">[ thread ]</a>
+              <a href="subject.html#2879">[ subject ]</a>
+              <a href="author.html#2879">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

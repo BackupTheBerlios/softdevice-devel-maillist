@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: DirectFB downscaling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20DirectFB%20downscaling&In-Reply-To=%3C200605082206.16699.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001972.html">
+   <LINK REL="Next"  HREF="001991.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: DirectFB downscaling</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20DirectFB%20downscaling&In-Reply-To=%3C200605082206.16699.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: DirectFB downscaling">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon May  8 22:06:16 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001972.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+</A></li>
+        <LI>Next message: <A HREF="001991.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1989">[ date ]</a>
+              <a href="thread.html#1989">[ thread ]</a>
+              <a href="subject.html#1989">[ subject ]</a>
+              <a href="author.html#1989">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag 05 Mai 2006 23:59, Stefan Lucke wrote:
+&gt;<i> On Sonntag 23 April 2006 15:39, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; On Sat, 2006-04-22 at 11:11 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; On Dienstag 18 April 2006 02:14, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; &gt; &gt; OK,
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Since I am one of those not on the cvs list...
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Has there been any work on the MGA TV non-field based StretchBlit bug?
+</I>&gt;<i> &gt; &gt; No.
+</I>&gt;<i> &gt; &gt; &gt; If not is anyone working on it?
+</I>&gt;<i> &gt; &gt; No.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I think your are referring to this thread on directfb-users:
+</I>&gt;<i> &gt; &gt; <A HREF="http://mail.directfb.org/pipermail/directfb-users/2005-October/000770.html">http://mail.directfb.org/pipermail/directfb-users/2005-October/000770.html</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Yes.  This would be the bug.
+</I>&gt;<i> 
+</I>&gt;<i> Ok, I made some progress. Here is the first patch for directfb.
+</I>&gt;<i> 
+</I>&gt;<i> In the code, there is still something I don't like. Hardwiring these
+</I>&gt;<i> multiplications '*2' for YUY2 and '*4' for RGBA (source / destination),
+</I>
+&gt;<i> 
+</I>&gt;<i> and forcing strechblit acting allways as an interlaced blit here:
+</I>&gt;<i> -     matroxBlitTMU( mdrv, mdev, srect, drect, true );
+</I>&gt;<i> -
+</I>&gt;<i> +       matroxBlitTMU_interlaced( mdrv, mdev, srect, drect, true );
+</I>
+&gt;<i> But by this, I guess you don't need a patch for softdevice.
+</I>
+These issues are resolved now.
+
+I posted the latest modification on directfb-dev. Softdevice cvs
+is ready for this patch. Detection of presence of DSBLIT_INTERLACED
+is done in configure.
+
+&gt;<i> I guess you see the difference too, as there is much movement with red color.
+</I>&gt;<i> To my opinion it is viewed best when function yv12_to_yuy2_il_c() gets
+</I>&gt;<i> called instead of yv12_to_yuy2() (lines 1309 &amp; 1310).
+</I>&gt;<i> I guess I should make yv12_to_yuy2_il_c() the default one, even there
+</I>&gt;<i> is not an mmx version.
+</I>
+That is in cvs too, but the desicion is dependant of interlaced
+vs. progressive video.
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: interlaced_blit_05.diff
+Type: text/x-diff
+Size: 9282 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060508/e8987618/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060508/e8987618/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001972.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+</A></li>
+	<LI>Next message: <A HREF="001991.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1989">[ date ]</a>
+              <a href="thread.html#1989">[ thread ]</a>
+              <a href="subject.html#1989">[ subject ]</a>
+              <a href="author.html#1989">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

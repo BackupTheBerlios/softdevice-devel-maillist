@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Other playback formats than mpeg2 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Other%20playback%20formats%20than%20mpeg2%20%3F&In-Reply-To=%3C200504021032.02286.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000422.html">
+   <LINK REL="Next"  HREF="000424.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Other playback formats than mpeg2 ?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Other%20playback%20formats%20than%20mpeg2%20%3F&In-Reply-To=%3C200504021032.02286.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Other playback formats than mpeg2 ?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr  2 10:32:02 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000422.html">Aspect ratio handling [WAS: Re: [Softdevice-devel] Ready for 0.0.9pre1]
+</A></li>
+        <LI>Next message: <A HREF="000424.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#421">[ date ]</a>
+              <a href="thread.html#421">[ thread ]</a>
+              <a href="subject.html#421">[ subject ]</a>
+              <a href="author.html#421">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 31. M&#228;rz 2005 20:48, Stefan Lucke wrote:
+&gt;<i> On Donnerstag, 31. M&#228;rz 2005 19:24, Martin Wache wrote:
+</I>&gt;<i> &gt; Stefan Lucke wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Does format recognition apply for file reading only (seeking in file) or
+</I>&gt;<i> &gt; &gt; does it work for other &quot;stream format as well ?
+</I>&gt;<i> &gt; I think currently it only works for file reading. In fact I open the 
+</I>&gt;<i> &gt; file in my player-plugin and send only packets to the softdevice. You 
+</I>&gt;<i> &gt; could do it similar, have a look at the DecodePackt method. Auto 
+</I>&gt;<i> &gt; detection of stream files is not that easy (since you can not seek 
+</I>&gt;<i> &gt; there), but I think it can be done.
+</I>&gt;<i> 
+</I>&gt;<i> In my case, I know that I'm reading dv, but I think I'll try that with
+</I>&gt;<i> a separate player class. Perhaps I get in trouble with the
+</I>&gt;<i> ringbuffer size. DV frames pal are of size 144000 bytes each.
+</I>&gt;<i> When I remaind ffmpeg logic correct, a dv frame must be fed at once.
+</I>&gt;<i> I'll see what the results are.
+</I>
+Ok, managed to get some dv pictures (read from file) on the display.
+Audio sample rate is not reported (in my case 32000). Whole clip is
+displayed in slow motion. That seems to be related to our ringbuffersize.
+After increasing it to cover at least 144000 bytes I get a better view,
+but A/V sync is now an issue.
+
+There seems to be a crash at the end of clip. With latest ffmpegs
+cvs I got a crash at startup. Even gdb cannot tel useful information.
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 229391 (LWP 2751)]
+0x00000000 in ?? ()
+(gdb) bt
+#0  0x00000000 in ?? ()
+(gdb)
+
+Changes to softdevice logic are not that much. Just a call to set a
+format, so that mpeg decoder can choose the right for avformat.
+
+cMpeg2Decoder::initStream()
+
+   if (currentFormat == eFmtDV)
+     fmt=av_find_input_format(&quot;dv&quot;);
+   else
+     fmt=av_find_input_format(&quot;mpeg&quot;);
+
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000422.html">Aspect ratio handling [WAS: Re: [Softdevice-devel] Ready for 0.0.9pre1]
+</A></li>
+	<LI>Next message: <A HREF="000424.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#421">[ date ]</a>
+              <a href="thread.html#421">[ thread ]</a>
+              <a href="subject.html#421">[ subject ]</a>
+              <a href="author.html#421">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

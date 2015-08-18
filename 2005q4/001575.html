@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3C20051207202450.73023.qmail%40web53210.mail.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001574.html">
+   <LINK REL="Next"  HREF="001579.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem</H1>
+    <B>Zdzislaw Gorlicki</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3C20051207202450.73023.qmail%40web53210.mail.yahoo.com%3E"
+       TITLE="[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem">zdzisekg at yahoo.com
+       </A><BR>
+    <I>Wed Dec  7 21:24:50 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001574.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+        <LI>Next message: <A HREF="001579.html">[Softdevice-devel] Re: [Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1575">[ date ]</a>
+              <a href="thread.html#1575">[ thread ]</a>
+              <a href="subject.html#1575">[ subject ]</a>
+              <a href="author.html#1575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>thanx for the reply,
+
+actually, I already tried that few days ago. I wasn't
+sure what else is involved with the buffer so I
+reverted the changes. I've had -- int
+packet_buf_size[] = {300,150,10000};--. All it did, is
+delayed the time that it took before the buffer
+started getting filled (astrisk going up). So the
+audio was smooth longer, but video was still dropping
+the frames, and eventually, audio would get choppy.
+video and audio would still be out of sync. so
+basically the same behavior, it would just take longer
+to repeat.
+
+By now, I'm thinking it's something with the nexus
+card. I was experiencing similiar problems with MythTV
+when I was testing PBS HD on AMC3.
+
+SD channels are fine regardless of what I set the
+buffer to, save, good seeking or HD. i'm not seeing
+anything in the log about buffers. audio and video are
+just slightly out of sync, but that can be adjusted in
+the plugins menu.
+
+Is there anything else that needs to be done to
+disable the onboard MPEG decoder of the nexus card?
+
+what is the maximum value for the buffer? are there
+negitive aspects if you set it too large?
+
+By now, I'm so frustrated, that I decided to get a
+budget card. I'll report the results, but I'd still
+like to get the nexus going as I really like that card
+and perhaps would help few people in the future.
+
+Again, thanx for all your help.
+
+--- Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt; wrote:
+
+&gt;<i> 
+</I>&gt;<i> &gt; &gt; Did you switch the buffer size to HDTV? You can
+</I>&gt;<i> do
+</I>&gt;<i> &gt; &gt; that in the
+</I>&gt;<i> &gt; &gt; setup-menu of the softdevice. After changeing
+</I>&gt;<i> the
+</I>&gt;<i> &gt; &gt; buffer size you will
+</I>&gt;<i> &gt; &gt; have to switch the channel to let the change
+</I>&gt;<i> take
+</I>&gt;<i> &gt; &gt; effect.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Bye,
+</I>&gt;<i> &gt; &gt; Martin
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; yes, of course.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> Hmm, the symptons sound like a too small demuxing
+</I>&gt;<i> buffer, I would have
+</I>&gt;<i> betted that you forgot to switch the buffer size
+</I>&gt;<i> ;-).
+</I>&gt;<i> If you want you can try to increase the buffer size
+</I>&gt;<i> further, in the file
+</I>&gt;<i> mpeg2decoder, around line 40:
+</I>&gt;<i> 
+</I>&gt;<i> int dvb_buf_size[] = {64*1024,32*1024,64*1024};
+</I>&gt;<i> int packet_buf_size[] = {300,150,2000};
+</I>&gt;<i> 
+</I>&gt;<i> The first ist the default, the second the one for
+</I>&gt;<i> the good seeking and
+</I>&gt;<i> the last one is HDTV. The packet_buf_size should be
+</I>&gt;<i> the relevant size,
+</I>&gt;<i> but you can play around also with dvb_buf_size.
+</I>&gt;<i> Please tell me when you find a working buffersize.
+</I>&gt;<i> I'm not sure what
+</I>&gt;<i> else could cause that... It really sounds like the
+</I>&gt;<i> buffer. Normal streams
+</I>&gt;<i> play fine? What about recorded HDTV/normal streams?
+</I>&gt;<i> 
+</I>&gt;<i> Bye,
+</I>&gt;<i> Martin
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> 10 GB Mailbox, 100 FreeSMS/Monat
+</I>&gt;<i> <A HREF="http://www.gmx.net/de/go/topmail">http://www.gmx.net/de/go/topmail</A>
+</I>&gt;<i> +++ GMX - die erste Adresse f&#252;r Mail, Message, More
+</I>&gt;<i> +++
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i>
+</I><A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+&gt;<i> 
+</I>
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+<A HREF="http://mail.yahoo.com">http://mail.yahoo.com</A> 
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001574.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+	<LI>Next message: <A HREF="001579.html">[Softdevice-devel] Re: [Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1575">[ date ]</a>
+              <a href="thread.html#1575">[ thread ]</a>
+              <a href="subject.html#1575">[ subject ]</a>
+              <a href="author.html#1575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

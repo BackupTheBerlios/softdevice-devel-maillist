@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio : my proposal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C4283F040.3030307%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000654.html">
+   <LINK REL="Next"  HREF="000599.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio : my proposal</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C4283F040.3030307%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio : my proposal">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Fri May 13 02:09:36 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000654.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+        <LI>Next message: <A HREF="000599.html">[Softdevice-devel] softdevice 0.1.1 / dvd 0.3.6_b03 : no overlay on menus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#655">[ date ]</a>
+              <a href="thread.html#655">[ thread ]</a>
+              <a href="subject.html#655">[ subject ]</a>
+              <a href="author.html#655">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> On Donnerstag, 12. Mai 2005 11:27, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>I didn't have any reply/comments/etc.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Was I totally dreaming at 3:00 AM ?
+</I>&gt;&gt;<i>Is it unimplementable ?
+</I>&gt;&gt;<i>Or is it simply just so clear and so well defined that everybody agrees 
+</I>&gt;&gt;<i>silently ? (I don't think the third option is the right one...)
+</I>&gt;<i> 
+</I>&gt;<i> Long mails require long responses. But I think I've not totally understood
+</I>&gt;<i> which parts should be done. To me most of it is done, as long as
+</I>&gt;<i> current hardware supports scaleing.
+</I>
+Thanks for your answer.
+First of all : I referred to 0.1.1 (and still refers to it, until I 
+update). You maybe already did something, so please forgive me if I 
+didn't see it yet.
+Next : I don't really know what have to be modified. This was just a 
+first-try full-spec.
+
+&gt;&gt;<i>Nicolas Huillard a &#233;crit :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>After I have read and I hope understood what you all did describe, I can 
+</I>&gt;&gt;&gt;<i>sum-up thing here :
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>1) option to set physical display size
+</I>&gt;&gt;&gt;<i>* use choose from &quot;16/9&quot;, &quot;4/3&quot;, even &quot;16/10&quot;, or so
+</I>&gt;&gt;&gt;<i>* this is stored as a a decimal value : 1.777, 1.333, 1.6, etc.
+</I>&gt;&gt;&gt;<i>* this may be stored as the physical H + V sizes of the screen (as X does)
+</I>&gt;&gt;&gt;<i>* this option is selected once for all
+</I>&gt;&gt;&gt;<i>* it is independent of the resolution of the screen : think about 16/9 
+</I>&gt;&gt;&gt;<i>display at 800x600, or 16/10 at 1400x1050, or the new plasmas 16/9 at 
+</I>&gt;&gt;&gt;<i>1024x1024
+</I>&gt;&gt;&gt;<i>* maybe this option is already present in the standard config / DVB card 
+</I>&gt;&gt;&gt;<i>/ video format option (from VDR's MANUAL : &quot;Video format = 4:3     The 
+</I>&gt;&gt;&gt;<i>video format (or aspect ratio) of the tv set in use (4:3 or 16:9)&quot;
+</I>&gt;&gt;&gt;<i>* display ratio, and display resolution can be used together to 
+</I>&gt;&gt;&gt;<i>calculate the pixel aspect ratio : 800/600 / (16/9) = 0.75 ; 1280/768 / 
+</I>&gt;&gt;&gt;<i>(16/9) = 0.9375 ; 720/576 / (4/3) = 0.9375 ; etc.
+</I>&gt;<i> 
+</I>&gt;<i> Most of that is done. We have an option to select the output geometry.
+</I>&gt;<i> - Monitor (with square pixels)
+</I>&gt;<i> - TV 4:3 non square pixel.
+</I>&gt;<i> - TV 16:9 non square pixel.
+</I>&gt;<i> and some other. What is missing is an arbitray user selectable ratio.
+</I>
+That's it.
+TV aspect ratio in 0.1.1 is in fact resolution selection. Thus selecting 
+TV 16:9 with a 800x600 mode does not yield the same result as selecting 
+the same with a 720x576 mode.
+But the TV didn't change, and it's ratio didn't change. Think about a 
+16:9 plasma with a native 1024x1024 grid. It's still 16:9, and the 
+output should be the same.
+That change might be easy.
+
+&gt;&gt;&gt;<i>2) auto-detection of aspect ratio
+</I>&gt;&gt;&gt;<i>* the WSS bit can be set by the broadcaster to set the aspect ratio to 
+</I>&gt;&gt;&gt;<i>16/9 (I think the only time I saw it was with Arte on analog broadcast, 
+</I>&gt;&gt;&gt;<i>because the TV switches to the full-frame display automagically)
+</I>&gt;&gt;&gt;<i>* other auto-detect features can be used, to set wether the frame is 
+</I>&gt;&gt;&gt;<i>meant to be viewed as 16/9 or 4/3 (or something else)
+</I>&gt;&gt;&gt;<i>* if no detection is done (I don't expect anything here in France), the 
+</I>&gt;&gt;&gt;<i>frame ratio will probably be advertised as 4/3
+</I>&gt;&gt;&gt;<i>* this is something the user has no impact on
+</I>&gt;<i> 
+</I>&gt;<i> I see here no TODO.
+</I>
+I can't really say. I think I didn't ever see actual auto-detection, 
+since everything is broadcast the same (bad) way in France.
+That one is really for completeness.
+
+&gt;&gt;&gt;<i>3) user-set programme aspect ratio
+</I>&gt;&gt;&gt;<i>* the user may choose not to trust the broadcaster advertised aspect 
+</I>&gt;&gt;&gt;<i>ratio (I won't)
+</I>&gt;&gt;&gt;<i>* the user selects the actual image ratio inside the frame : 4/3, 16/9, 
+</I>&gt;&gt;&gt;<i>1.85, 2.35, etc.
+</I>&gt;&gt;&gt;<i>* the special value &quot;trust the broadcaster&quot; is simply the fact that the 
+</I>&gt;&gt;&gt;<i>image fills the entire frame, whatever the aspect ratio (&quot;full-frame&quot;)
+</I>&gt;&gt;&gt;<i>* that would be the option the user changes most often : the one to 
+</I>&gt;&gt;&gt;<i>match to a remote key
+</I>&gt;<i> 
+</I>&gt;<i> User can override broadcasters setting. for dfb and xv, which have
+</I>&gt;<i> their own remotes, this can be mapped to a user key. This is
+</I>&gt;<i> implemented, no TODO.
+</I>
+I'll check that in CVS.
+
+&gt;&gt;&gt;<i>4) match between frame ratio and programme ratio
+</I>&gt;&gt;&gt;<i>* the match between frame ratio and image ratio is obvious : if the 
+</I>&gt;&gt;&gt;<i>broadcaster says the frame is 4:3 but I see a 16/9 image, the image 
+</I>&gt;&gt;&gt;<i>fills (4/3) / (16/9) = 0.75, leaving horizontal black bars ; if the 
+</I>&gt;&gt;&gt;<i>broadcaster says the frame is 16/9 but I see vertical black bars, the 
+</I>&gt;&gt;&gt;<i>image is in fact 4/3
+</I>&gt;&gt;&gt;<i>* the calculations begin to be difficult for me ;-)
+</I>&gt;&gt;&gt;<i>* this match is used to crop the image : strip black bars, the right 
+</I>&gt;&gt;&gt;<i>thickness, at the right places
+</I>&gt;<i> 
+</I>&gt;<i> Thats to my opinion a variant of 3.): let the user say it's 4:3 or
+</I>&gt;<i> 16:9 or trust the broad caster. no TODO.
+</I>
+This is not a variant, just the consequence of the previous : select the 
+show aspect ratio (2 or 3), then fit the show in the screen (4). Maybe 
+my explanation is a bit too separated in steps.
+2 or 3 is a way to add aspect ratio information to the show (automatic 
+vs. manual). 4 does the calculation.
+
+&gt;&gt;&gt;<i>5) scaling between the frame/image ratio and the screen
+</I>&gt;&gt;&gt;<i>* once the image is cropped by the match between the frame and the 
+</I>&gt;&gt;&gt;<i>image, it can be scaled to the screen
+</I>&gt;&gt;&gt;<i>* scaling uses the calculated image size and the actual screen size
+</I>&gt;&gt;&gt;<i>* it also uses the screen aspect ratio, in another crop stage : fitting 
+</I>&gt;&gt;&gt;<i>a 4/3 image in a 16/9 screen, or a 16/9 image in a 4/3 screen, can be 
+</I>&gt;&gt;&gt;<i>done by upscaling of downscaling
+</I>&gt;<i> 
+</I>&gt;<i> Also a variant of 3.) . We can map a 4:3 image with cropping to a 16:9
+</I>&gt;<i> screen without black boardes. No TODO.
+</I>
+Same answer : my explanation was a bit too stepped.
+
+To summarize :
+1) select the screen ratio once (not screen resolution, just ratio)
+2, 3) select the show ratio (automatic vs. user-selected, preferably 
+using the remote)
+4) eliminate black bars by cropping, based on 1 and 2-3
+5) scale to satisfy the once-set user preferences (loose parts of the 
+image by zooming-in, or scale to fit the whole screen, or don't destroy 
+aspect ratio or image size by adding black bars)
+
+It's a bit late : I'll draw ASCII art another day...
+
+&gt;<i> What could be done is: let the user select/define a zoom region
+</I>&gt;<i> of the current video (show F1 split screen advertising/race as
+</I>&gt;<i> zoomed race only :-) ).
+</I>
+Don't go too far. I already have problems with my wife when I toggle 
+between the 4 zoom modes of the TV to find the right one... so selecting 
+a screen region with the remote before zooming would be a bit to much 
+for her patience...
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000654.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+	<LI>Next message: <A HREF="000599.html">[Softdevice-devel] softdevice 0.1.1 / dvd 0.3.6_b03 : no overlay on menus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#655">[ date ]</a>
+              <a href="thread.html#655">[ thread ]</a>
+              <a href="subject.html#655">[ subject ]</a>
+              <a href="author.html#655">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Unrepeatable crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C42965B8E.30306%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000746.html">
+   <LINK REL="Next"  HREF="000748.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Unrepeatable crashes</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C42965B8E.30306%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] Unrepeatable crashes">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Fri May 27 01:28:14 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000746.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+        <LI>Next message: <A HREF="000748.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#747">[ date ]</a>
+              <a href="thread.html#747">[ thread ]</a>
+              <a href="subject.html#747">[ subject ]</a>
+              <a href="author.html#747">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> On Donnerstag, 26. Mai 2005 23:31, Martin Wache wrote:
+</I>&gt;&gt;<i> Marko M&#228;kel&#228; wrote:
+</I>&gt;&gt;<i> &gt; On Wed, May 25, 2005 at 05:28:16PM +0200, Martin Wache wrote:
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt;&gt;Unfortunatly it is very difficult to find the reasons for these crashes 
+</I>&gt;&gt;<i> &gt;&gt;just with this information. It is possible to enable core dumps in your 
+</I>&gt;&gt;<i> &gt;&gt;system, so that we can have this additional information? It would make 
+</I>&gt;&gt;<i> &gt;&gt;finding the problem a lot easier...
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt; Sure.  It seems it will be just a matter of adding ulimit -c unlimited
+</I>&gt;&gt;<i> &gt; to the runvdr script.  I'll also add &quot;sysctl kernel.core_pattern=core.%p&quot;
+</I>&gt;&gt;<i> &gt; to the startup scripts in order to ensure that the files are less likely
+</I>&gt;&gt;<i> &gt; to be overwritten (in case there are multiple crashes).  Both SIGABRT
+</I>&gt;&gt;<i> &gt; and SIGSEGV seem to create a core dump by default (I tested with /bin/cat
+</I>&gt;&gt;<i> &gt; and an explicit kill from another virtual console.)
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> And please compile the softdevice with the -g switch enabled, it is not 
+</I>&gt;&gt;<i> the default!
+</I>&gt;<i> 
+</I>&gt;<i> We should add -g as a default to Makefile. 
+</I>&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I played a bit crash-me yesterday, I moved my antenna to get a bad 
+</I>&gt;&gt;<i> signal and waited until the softdevice crashed. And indeed it payed off: 
+</I>&gt;&gt;<i> I found a few places where I forgot to check pointers and one _really_ 
+</I>&gt;&gt;<i> silly bug which caused a lot of problems on bad signal.
+</I>&gt;&gt;<i> Now I can watch a station with almost no signal ( mostly noise, 
+</I>&gt;&gt;<i> sometimes pieces of words, or parts of picture, or some movements 
+</I>&gt;&gt;<i> nothing someone would want to watch) for more than a quater of an hour. 
+</I>&gt;&gt;<i> There are still a few crashes which I couldn't track down yet, they 
+</I>&gt;&gt;<i> happen in ffmpeg but the cause may be in the softdevice.
+</I>&gt;&gt;<i> I will commit these fixes together with the HDTV patch (which I started 
+</I>&gt;&gt;<i> to merge, but is not fully completed yet) hopefully on sunday, but I 
+</I>&gt;<i> 
+</I>&gt;<i> Does this interfere with my posted aspect ratio patch ? 
+</I>&gt;<i> I'll do some aditional work on directfb out. Coupling YUV2 to
+</I>&gt;<i> stretchblit, and other formats to BES is eventually not required. So
+</I>&gt;<i> I'll try to separate this.
+</I>&gt;<i> You can even post a diff of an uncompleted state of work, as I somtimes
+</I>&gt;<i> have crashes with bad signal too. Not allways in ffmpeg. When a
+</I>&gt;<i> crash is in softdevice, it looks like a syncing issue between threads.
+</I>
+Hi,
+
+I hadn't time to try softdevice for a long time now, but now I checked 
+0.1.2 and it looks very well again on my Matrox G400 TV-out (SCART-RGB, 
+DirectFB). You might remember I started a thread on this ML once, about 
+terrible judder. Now it's all gone, the fields are displayed in the 
+right order, no more combs, it's really nice, except some (maybe) 
+syncing attemp from time to time where the image jumps a little (only 
+noticeable on constantly moving scenes (like scrolling text), or very 
+slow motion scenes).
+I also had few crashes in my testings, maybe also due to bad signal when 
+switching between LNBs via 4/1 diseqc switch.
+
+On the audio side, now there is no more AC3 decoding (maybe becasue I 
+set DD5.1 SPDIF in softdevice's setup, which is not yet implemented, am 
+I right?). I'll wait for the *real* AC3 passthrough feature, I hope 
+that's not too hard to do.
+Mono MP2 is still muted on the SPDIF (don't know if on analog speakers 
+on my C-Media soundcard too, I have no analogue connection and also am a 
+bit afraid to mess with the ALSA configuration), maybe an upmix to 2 
+channels is required here (I  think you might actually test this on CNN 
+on Astra 19.2).
+
+To sum up, I'm glad that it works pretty well again on my G400 CRTC2 
+with DFB, I know the rest is more or less on the TODO list. Thank you, 
+and keep up the good work!
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000746.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+	<LI>Next message: <A HREF="000748.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#747">[ date ]</a>
+              <a href="thread.html#747">[ thread ]</a>
+              <a href="subject.html#747">[ subject ]</a>
+              <a href="author.html#747">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

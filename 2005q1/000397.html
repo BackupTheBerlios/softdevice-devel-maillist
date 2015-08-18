@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Pause -&gt; Play
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Pause%20-%3E%20Play&In-Reply-To=%3C42498BA1.4060604%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000396.html">
+   <LINK REL="Next"  HREF="000399.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Pause -&gt; Play</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Pause%20-%3E%20Play&In-Reply-To=%3C42498BA1.4060604%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Pause -&gt; Play">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Mar 29 19:08:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000396.html">[Softdevice-devel] Pause -&gt; Play
+</A></li>
+        <LI>Next message: <A HREF="000399.html">[Softdevice-devel] Pause -&gt; Play
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#397">[ date ]</a>
+              <a href="thread.html#397">[ thread ]</a>
+              <a href="subject.html#397">[ subject ]</a>
+              <a href="author.html#397">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> On Dienstag, 29. M&#228;rz 2005 16:30, Torgeir Veimo wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>On Tue, 2005-03-29 at 16:26 +0200, Stefan Lucke wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Since changes of 2005-03-25 pause -&gt; play transition does not work any more.
+</I>&gt;&gt;&gt;<i>The only way is to kill -9 vdr :- (.
+</I>&gt;&gt;&gt;<i>Tested that with vdr-1.3.7 too. Same result.
+</I>&gt;&gt;&gt;<i>pmVideoOnly is present at vdr-1.3.11 and beyond.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Are you sure it's only since 2005-3-25? I think i've seen this problem
+</I>&gt;&gt;<i>earlier than that, but only when there is no OSD (position slider)
+</I>&gt;&gt;<i>present. 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Yes I'm sure. Did the the checkout with &quot; .. co -D 2005-03-25 softdevice&quot; 
+</I>&gt;<i> and that version was ok. The checkout with &quot; .. co -D 2005-03-26 softdevice&quot;
+</I>&gt;<i> which includes changes from 2005-03-25 was _not_ ok . In that co I had
+</I>&gt;<i> to comment out the pmVideoOnly case section (vdr-1.3.7).
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>I think I know what's wrong. In freeze mode vdr continues to send data, 
+but no data is consumed, so at some point the buffers of the softdevice 
+are full. When the softdevice receives more data in buffer full state it 
+will dead lock in cMpeg2Deocder::Decode in the loop.
+A fix would be not to accept any data in cMpeg2Deocer when freezeMode is 
+true. Can you try this? I'm won't be able to do this before Friday...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000396.html">[Softdevice-devel] Pause -&gt; Play
+</A></li>
+	<LI>Next message: <A HREF="000399.html">[Softdevice-devel] Pause -&gt; Play
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#397">[ date ]</a>
+              <a href="thread.html#397">[ thread ]</a>
+              <a href="subject.html#397">[ subject ]</a>
+              <a href="author.html#397">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

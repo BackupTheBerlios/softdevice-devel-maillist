@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with softdevice (&amp;softplay)	with	vdr-1.6.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20softdevice%20%28%26softplay%29%0A%09with%09vdr-1.6.0&In-Reply-To=%3C1207232858.18823.53.camel%40lychee.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003044.html">
+   <LINK REL="Next"  HREF="003043.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with softdevice (&amp;softplay)	with	vdr-1.6.0</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20softdevice%20%28%26softplay%29%0A%09with%09vdr-1.6.0&In-Reply-To=%3C1207232858.18823.53.camel%40lychee.local%3E"
+       TITLE="[Softdevice-devel] Problems with softdevice (&amp;softplay)	with	vdr-1.6.0">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Thu Apr  3 16:27:39 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003044.html">[Softdevice-devel] Playback while recording VDR Files on Windows
+</A></li>
+        <LI>Next message: <A HREF="003043.html">[Softdevice-devel] Problems with softdevice (&amp;softplay)	with vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3042">[ date ]</a>
+              <a href="thread.html#3042">[ thread ]</a>
+              <a href="subject.html#3042">[ subject ]</a>
+              <a href="author.html#3042">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Any idea on this?
+
+I hope to get in and have a look myself, but I don't really want to do
+it on my production vdr system.
+
+So I tried to compile this on my laptop: the problem is softdevice does
+not compile against my system's ffmeg (ffmpeg-0.4.9-0.45.20080113. from
+livna on fedora 9)
+
+
+On Thu, 2008-03-27 at 23:08 +0930, Malcolm Caldwell wrote:
+&gt;<i> On Wed, 2008-03-26 at 19:21 +0100, Martin Wache wrote:
+</I>&gt;<i> &gt; &gt; Ok.  Here is the bt for my first problem:
+</I>&gt;<i> &gt; &gt; Program received signal SIGSEGV, Segmentation fault.
+</I>&gt;<i> &gt; &gt; [Switching to Thread -1414853744 (LWP 20444)]
+</I>&gt;<i> &gt; &gt; 0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+</I>&gt;<i> &gt; &gt; pkt=@0xabab0304)
+</I>&gt;<i> &gt; &gt;     at SoftPlayer.c:73
+</I>&gt;<i> &gt; &gt; 73              if ( AudioIdx== -1 &amp;&amp;
+</I>&gt;<i> &gt; &gt; Current language:  auto; currently c++
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Thread 30 (Thread -1414853744 (LWP 20444)):
+</I>&gt;<i> &gt; &gt; #0  0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+</I>&gt;<i> &gt; &gt; pkt=@0xabab0304)
+</I>&gt;<i> &gt; &gt;     at SoftPlayer.c:73
+</I>&gt;<i> &gt; &gt; #1  0x002fc89c in cSoftPlayer::FileReplay (this=0x8536ff0) at
+</I>&gt;<i> &gt; &gt; SoftPlayer.c:290
+</I>&gt;<i> &gt; &gt; #2  0x002fcd82 in cSoftPlayer::Action (this=0x8536ff0) at
+</I>&gt;<i> &gt; &gt; SoftPlayer.c:358
+</I>&gt;<i> &gt; &gt; #3  0x0810b48c in cThread::StartThread (Thread=0x8536ffc) at
+</I>&gt;<i> &gt; &gt; thread.c:244
+</I>&gt;<i> &gt; &gt; #4  0x0081045b in start_thread () from /lib/libpthread.so.0
+</I>&gt;<i> &gt; &gt; #5  0x0076823e in clone () from /lib/libc.so.6
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; It would be nice to have the values of pkt.stream_index
+</I>&gt;<i> 
+</I>&gt;<i> pkt.stream_index is 1
+</I>&gt;<i> 
+</I>&gt;<i> (gdb) print pkt
+</I>&gt;<i> $3 = (AVPacket &amp;) @0xa9470304: {pts = 0, dts = 0, data = 0x886cc60 &quot;&#65533;&#65533;\224d&quot;, 
+</I>&gt;<i>   size = 384, stream_index = 1, flags = 1, duration = 1, 
+</I>&gt;<i>   destruct = 0x201d60 &lt;av_destruct_packet&gt;, priv = 0x87785ec, pos = 10260}
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt;  and
+</I>&gt;<i> &gt; ic-&gt;stream[pkt.stream_index].
+</I>&gt;<i> 
+</I>&gt;<i> (gdb) print ic-&gt;stream[1]
+</I>&gt;<i> There is no member named stream.
+</I>&gt;<i> (gdb) print ic-&gt;streams[1]
+</I>&gt;<i> $6 = (AVStream *) 0x0
+</I>&gt;<i> 
+</I>&gt;<i> &gt;  And maybe all the other variables involed
+</I>&gt;<i> &gt; in the lines 73-7 of SoftPlayer.C
+</I>&gt;<i> 
+</I>&gt;<i> I guess there is not much to see:
+</I>&gt;<i> 
+</I>&gt;<i> (gdb) print *ic
+</I>&gt;<i> $7 = {av_class = 0x270470, iformat = 0x287f40, oformat = 0x0, 
+</I>&gt;<i>   priv_data = 0x87fa620, pb = {buffer = 0x87e4e30 &quot;0h\204\b&quot;, buffer_size = 2, 
+</I>&gt;<i>     buf_ptr = 0x880d750 &quot;&quot;, buf_end = 0x880d170 &quot;\001&quot;, opaque = 0x0, 
+</I>&gt;<i>     read_packet = 0, write_packet = 0, seek = 0, pos = 0, must_flush = 0, 
+</I>&gt;<i>     eof_reached = 0, write_flag = 0, is_streamed = 0, max_packet_size = 0, 
+</I>&gt;<i>     checksum = 0, checksum_ptr = 0x0, update_checksum = 0, error = 0}, 
+</I>&gt;<i>   nb_streams = 0, streams = {0x0, 0x0, 0x64656d2f, 0x492f6169, 0x41206563, 
+</I>&gt;<i>     0x612e6567, 0x6976, 0x0 &lt;repeats 13 times&gt;}, 
+</I>&gt;<i>   filename = '\0' &lt;repeats 1023 times&gt;, timestamp = 0, 
+</I>&gt;<i>   title = '\0' &lt;repeats 511 times&gt;, author = '\0' &lt;repeats 511 times&gt;, 
+</I>&gt;<i>   copyright = '\0' &lt;repeats 511 times&gt;, comment = '\0' &lt;repeats 511 times&gt;, 
+</I>&gt;<i>   album = '\0' &lt;repeats 485 times&gt;, &quot;&#65533;\200\b\000\000\000\000\000\000\000\000&#65533;R\212\&quot;\001\000\000\000\000&#65533;n+\000\000\000&quot;, year = 1195926, track = 0, 
+</I>&gt;<i>   genre = &quot;\200(\221\b^\003\000\000\000\000\000\000\000\000\000\200\000\000\000\000\000\000\000\000\200(\221\b^\003\000&quot;, ctx_flags = 0, packet_buffer = 0x1, 
+</I>&gt;<i>   start_time = 9039497408806912, duration = 54236847013888, 
+</I>&gt;<i>   file_size = 44032004718592, bit_rate = 0, cur_st = 0x0, cur_ptr = 0x0, 
+</I>&gt;<i>   cur_len = 0, cur_pkt = {pts = 0, dts = 0, data = 0x0, size = 32000, 
+</I>&gt;<i>     stream_index = 3000000, flags = 0, duration = 0, destruct = 0, priv = 0x0, 
+</I>&gt;<i>     pos = 0}, data_offset = 4503599627370496, index_built = 3041280, 
+</I>&gt;<i>   mux_rate = 8388735, packet_size = 25, preload = 145336288, 
+</I>&gt;<i>   max_delay = 142637520, loop_output = 0, flags = 1, loop_input = 24, 
+</I>&gt;<i>   probesize = 2240, max_analyze_duration = 1107296320}
+</I>&gt;<i> (gdb) 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Let me know if anything else might help.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Just in case, the did you check the usual suspects? make clean? Are you
+</I>&gt;<i> &gt; using the same ffmpeg version for softplay &amp; softdevice?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Bye,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Martin
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Bye,
+</I>&gt;<i> &gt; Martin
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Softdevice-devel mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003044.html">[Softdevice-devel] Playback while recording VDR Files on Windows
+</A></li>
+	<LI>Next message: <A HREF="003043.html">[Softdevice-devel] Problems with softdevice (&amp;softplay)	with vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3042">[ date ]</a>
+              <a href="thread.html#3042">[ thread ]</a>
+              <a href="subject.html#3042">[ subject ]</a>
+              <a href="author.html#3042">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

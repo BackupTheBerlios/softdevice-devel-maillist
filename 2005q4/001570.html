@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3C20051205174049.59483.qmail%40web53208.mail.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001569.html">
+   <LINK REL="Next"  HREF="001572.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem</H1>
+    <B>Zdzislaw Gorlicki</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3C20051205174049.59483.qmail%40web53208.mail.yahoo.com%3E"
+       TITLE="[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem">zdzisekg at yahoo.com
+       </A><BR>
+    <I>Mon Dec  5 18:40:48 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001569.html">[Softdevice-devel] &quot;Out of video memory&quot; error with Matrox G450...
+</A></li>
+        <LI>Next message: <A HREF="001572.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1570">[ date ]</a>
+              <a href="thread.html#1570">[ thread ]</a>
+              <a href="subject.html#1570">[ subject ]</a>
+              <a href="author.html#1570">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+My Config:
+Athlon64 3700+
+1GB RAM
+Nexus-s 2.2 (drivers load with budget patch)
+ATI Radeon 9200SE 128MB (standard PCI)
+vdr-1.3.36
+softdevice-0.2.2.1
+output via DVI @ 1280x720
+using radeonfb driver
+CPU utilization 50% for 720p, 80%~90% for 1080i
+
+I've been unsuccesfully trying to get a smooth
+playback of HD content with softdevice using directfb.
+Video seems to be dropping a lot of frames and out of
+sync with audio. In addition video and audio freezes
+for a split secend, every few seconds. So far I've
+been able to determine this:
+
+When I play HD contant, in vdr log I start to see
+message &quot;allocating picture buffer for resolution
+1280x720&quot; then asterisk (*) start going up. as soon as
+I start seeing *, audio gets choppy. when * gets to
+the end, video &amp; audio freezes for a split second,
+then the process starts again with &quot;allocating picture
+buffer for resolution 1280x720&quot;. audio is good for 2
+or 3 sec, then I start seeing the * again, and audio
+gets choppy. at the same time it looks like video is
+skipping a lot of frames, and it gets worse when I
+start seeing * in the log. I assume the * shows the
+buffer status.
+
+Monitoring syslog output, I see notices that the
+buffer is 70%, 80%, 90% full, at that point the buffer
+gets cleared, audio &amp; video freezes for a sec. I also
+get alot of [softdevice-audio] xrun errors. so I tried
+-ao dummy: but it made no difference.
+
+can someone please help. I've been trying to resolve
+this for over a week now with no success. I'me not
+sure where to look for the problem anymore.
+
+
+
+
+		
+__________________________________ 
+Start your day with Yahoo! - Make it your home page! 
+<A HREF="http://www.yahoo.com/r/hs">http://www.yahoo.com/r/hs</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001569.html">[Softdevice-devel] &quot;Out of video memory&quot; error with Matrox G450...
+</A></li>
+	<LI>Next message: <A HREF="001572.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1570">[ date ]</a>
+              <a href="thread.html#1570">[ thread ]</a>
+              <a href="subject.html#1570">[ subject ]</a>
+              <a href="author.html#1570">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

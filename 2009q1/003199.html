@@ -1,0 +1,437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%0A%09ffmpeg%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C20090213222253.3a01wfanwg8okgcc%40www.domaingo-webmail.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003198.html">
+   <LINK REL="Next"  HREF="003200.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)</H1>
+    <B>Maik Opitz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%0A%09ffmpeg%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C20090213222253.3a01wfanwg8okgcc%40www.domaingo-webmail.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)">maik at fjordblau.de
+       </A><BR>
+    <I>Fri Feb 13 22:22:53 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003198.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003200.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3199">[ date ]</a>
+              <a href="thread.html#3199">[ thread ]</a>
+              <a href="subject.html#3199">[ subject ]</a>
+              <a href="author.html#3199">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Here is a log of my VDR startup.
+I do not know how to fix the message of missing libavcodec.so.51. With  
+newer ffmpeg there is none. Only a libavcodec.so.52.
+
+Feb 13 21:13:04 Digitainer vdr: [2669] cTimeMs: using monotonic clock  
+(resolution is 1 ns)
+Feb 13 21:13:04 Digitainer vdr: [2669] VDR version 1.6.0-2 started
+Feb 13 21:13:04 Digitainer vdr: [2669] switched to user 'root'
+Feb 13 21:13:04 Digitainer vdr: [2669] codeset is 'UTF-8' - known
+Feb 13 21:13:04 Digitainer vdr: [2669] found 23 locales in /usr/share/locale
+Feb 13 21:13:04 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-wirbelscan.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-femon.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-epgsearch.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-extrecmenu.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-menuorg.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-devstatus.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-osdadjust.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-channellists.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-osdpip.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: libavcodec.so.51: Kann  
+die Shared-Object-Datei nicht &#195;&#182;ffnen: Datei oder Verzeichnis nicht  
+gefunden
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-osdteletext.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-streamdev-server.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-live.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-skinenigmang.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-dvd.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-systeminfo.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-admin.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-bgprocess.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-yacoto.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/setup.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdDisplayMode = 1
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdDisplayZeros = 1
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdSpeedLimit = 0
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdTrayMode = 0
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: softdevice.AlsaAC3Device = front
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: softdevice.AlsaDevice = front
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/sources.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/diseqc.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/channels.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/timers.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] Failed to load translated  
+'/etc/vdr/commands.conf.de_DE' for language (de_DE)
+Feb 13 21:13:05 Digitainer vdr: [2669] Falling back to default  
+'/etc/vdr/commands.conf' (if any)
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/commands.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] Failed to load translated  
+'/etc/vdr/reccmds.conf.de_DE' for language (de_DE)
+Feb 13 21:13:05 Digitainer vdr: [2669] Falling back to default  
+'/etc/vdr/reccmds.conf' (if any)
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/reccmds.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/svdrphosts.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/remote.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/keymacros.conf
+Feb 13 21:13:05 Digitainer vdr: [2695] video directory scanner thread  
+started (pid=2669, tid=2695)
+Feb 13 21:13:05 Digitainer vdr: [2695] video directory scanner thread  
+ended (pid=2669, tid=2695)
+Feb 13 21:13:05 Digitainer vdr: [2696] video directory scanner thread  
+started (pid=2669, tid=2696)
+Feb 13 21:13:05 Digitainer vdr: [2696] video directory scanner thread  
+ended (pid=2669, tid=2696)
+Feb 13 21:13:05 Digitainer vdr: [2669] reading EPG data from  
+/var/cache/vdr/epg.data
+Feb 13 21:13:05 Digitainer vdr: [2669] probing /dev/dvb/adapter0/frontend0
+Feb 13 21:13:05 Digitainer vdr: [2698] tuner on device 1 thread  
+started (pid=2669, tid=2698)
+Feb 13 21:13:05 Digitainer vdr: [2699] section handler thread started  
+(pid=2669, tid=2699)
+Feb 13 21:13:05 Digitainer vdr: [2669] probing /dev/dvb/adapter1/frontend0
+Feb 13 21:13:05 Digitainer vdr: [2701] CI adapter on device 1 thread  
+started (pid=2669, tid=2701)
+Feb 13 21:13:05 Digitainer vdr: [2701] CAM 1: module present
+Feb 13 21:13:05 Digitainer dvb_ca adapter 1: DVB CAM detected and  
+initialised successfully
+Feb 13 21:13:06 Digitainer vdr: [2703] tuner on device 2 thread  
+started (pid=2669, tid=2703)
+Feb 13 21:13:06 Digitainer vdr: [2704] section handler thread started  
+(pid=2669, tid=2704)
+Feb 13 21:13:06 Digitainer vdr: [2669] found 2 video devices
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: softdevice  
+(0.5.0): Software-Ausgabeger&#195;&#164;t
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] init
+Feb 13 21:13:06 Digitainer vdr: [2701] CAM 1: module ready
+Feb 13 21:13:06 Digitainer agpgart-via 0000:00:00.0: AGP 2.0 bridge
+Feb 13 21:13:06 Digitainer agpgart-via 0000:00:00.0: putting AGP V2  
+device into 4x mode
+Feb 13 21:13:06 Digitainer viafb 0000:01:00.0: putting AGP V2 device  
+into 4x mode
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Supported video Modes are:
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Enumerating display Layers
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Configuring  
+CooperativeLevel for OSD
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] (osdLayer): flags,  
+options, pixelformat: 0000000f, 00000000 80418c0d
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] (osdLayer): width,  
+height:               720 576
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] osdLayer has alpha channel
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Set DLBM_TRIPLE for layer  
+[VIA Unichrome Video]
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] DLOP_FIELD_PARITY  
+supported by layer [VIA Unichrome Video]
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Set layer [VIA Unichrome  
+Video] to (TOP field first)
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] width = 720, height = 576
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] got fmt = 0x80418c0d bpp = 32
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Using this layer for OSD:  
+(VIA CLE266 Graphics - [720x576])
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Configuring  
+CooperativeLevel for Overlay
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Using this layer for OSD:  
+        VIA CLE266 Graphics
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Using this layer for  
+Video out:  VIA Unichrome Video
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Display frame time is  
+16672 microseconds
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice] videoOut OK !
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice-audio] Opening alsa  
+device front
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice-audio] Using alsa  
+AC3 device front
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice-audio] Device  
+opened! Ready to play
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: wirbelscan  
+(0.0.4a): dvb c/t/s/analog Kanalsuche
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: femon  
+(1.6.6): DVB Signal Informationsanzeige (OSD)
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: epgsearch  
+(0.9.24): Suche im EPG nach Wiederholungen und anderem
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: extrecmenu  
+(1.2-test1-am1): Erweitertes Aufzeichnungs-Men&#195;&#188;
+Feb 13 21:13:06 Digitainer vdr: [2669] plugin 'extrecmenu' called  
+obsolete function RegisterI18n()
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: menuorg  
+(0.4.4): Reorganisiert das Haupmen&#195;&#188;
+Feb 13 21:13:06 Digitainer vdr: [2669] loading menuorg config file  
+from /etc/vdr/plugins/menuorg.xml
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: devstatus  
+(0.3.0): DVB-Ger&#195;&#164;testatus
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: osdadjust  
+(0.0.3): Anpassen von OSD Gr&#195;&#182;&#195;?e und Position
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+channellists (0.0.4): Verwalte deine Kanallisten
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+osdteletext (0.8.1): Zeigt den Videotext auf dem OSD an
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+streamdev-server (0.3.4): VDR Streaming Server
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: live  
+(0.2.0): Live Interactive VDR Environment
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+skinenigmang (0.0.6): EnigmaNG Oberfl&#195;&#164;che
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: dvd  
+(0.3.6-b03): verwandelt VDR in einen (fast) vollst&#195;&#164;ndigen DVD Spieler
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: systeminfo  
+(0.1.1): Anzeige von Systeminformationen
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: admin  
+(0.8.0): Administrative Aufgaben
+Feb 13 21:13:06 Digitainer vdr: [2669] Executing  
+&lt;/etc/vdr/plugins/admin/admin.sh -init&gt;
+Feb 13 21:13:06 Digitainer logger: /etc/vdr/plugins/admin/admin.sh -init
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: bgprocess  
+(0.1.0): Collects and lists background processes and their status
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: yacoto  
+(0.2.1): Converting recordings
+Feb 13 21:13:06 Digitainer vdr: [2669] setting primary device to 3
+Feb 13 21:13:06 Digitainer vdr: [2669] assuming manual start of VDR
+Feb 13 21:13:06 Digitainer vdr: [2669] SVDRP listening on port 2001
+Feb 13 21:13:06 Digitainer vdr: [2669] skin &quot;EnigmaNG&quot; not available -  
+using &quot;classic&quot; instead
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/themes/classic-default.theme
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: softdevice
+Feb 13 21:13:06 Digitainer vdr: [2669] plugin 'softdevice' called  
+obsolete function RegisterI18n()
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: wirbelscan
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: femon
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: epgsearch
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/epgsearchcats.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/epgsearchmenu.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] EPGSearch: loading  
+/etc/vdr/plugins/epgsearch/epgsearch.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/deftimerchkmodes.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/timersdone.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] EPGSearch: loading  
+/etc/vdr/plugins/epgsearch/epgsearchupdmail.templ
+Feb 13 21:13:06 Digitainer vdr: [2712] EPGSearch: searchtimer thread  
+started (pid=2669, tid=2712)
+Feb 13 21:13:06 Digitainer vdr: [2713] EPGSearch: conflictcheck thread  
+started (pid=2669, tid=2713)
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: extrecmenu
+Feb 13 21:13:06 Digitainer vdr: [2714] extrecmenu worker thread thread  
+started (pid=2669, tid=2714)
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: menuorg
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: devstatus
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: osdadjust
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: channellists
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: osdteletext
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: streamdev-server
+Feb 13 21:13:06 Digitainer vdr: [2669] plugin 'streamdev-server'  
+called obsolete function RegisterI18n()
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/streamdevhosts.conf
+Feb 13 21:13:06 Digitainer vdr: [2715] streamdev server thread started  
+(pid=2669, tid=2715)
+Feb 13 21:13:06 Digitainer vdr: [2715] Streamdev: Listening (HTTP) on  
+port 3000
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: live
+Feb 13 21:13:06 Digitainer vdr: [2669] LIVE: initial file cache has 82  
+entries and needs 307017 bytes of data!
+Feb 13 21:13:06 Digitainer vdr: [2716] ERROR:  
+/etc/vdr/plugins/live/live.pem: Datei oder Verzeichnis nicht gefunden
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: skinenigmang
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: dvd
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: systeminfo
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: admin
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: bgprocess
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: yacoto
+Feb 13 21:13:06 Digitainer vdr: [2669] setting current skin to &quot;EnigmaNG&quot;
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/themes/EnigmaNG-default.theme
+Feb 13 21:13:06 Digitainer vdr: [2718] LIRC remote control thread  
+started (pid=2669, tid=2718)
+Feb 13 21:13:06 Digitainer vdr: [2720] KBD remote control thread  
+started (pid=2669, tid=2720)
+Feb 13 21:13:06 Digitainer vdr: [2669] remote control softdevice-dfb -  
+keys known
+Feb 13 21:13:06 Digitainer vdr: [2669] remote control LIRC - keys known
+Feb 13 21:13:06 Digitainer vdr: [2669] remote control KBD - keys known
+Feb 13 21:13:08 Digitainer vdr: [2701] CAM 1: AlphaCrypt Light, 01, 4A20, 4A20
+Feb 13 21:13:08 Digitainer vdr: [2706] [VideoOut]: resolution changed:  
+W(720 -&gt; 736); H(576 -&gt;576)
+Feb 13 21:13:08 Digitainer vdr: [2706] [VideoOut]: 736x576 [0,0  
+736x576] -&gt; 720x576 [100,0 518x576]
+Feb 13 21:13:10 Digitainer vdr: [2701] CAM 1: replies to QUERY - multi  
+channel decryption possible
+Feb 13 21:13:10 Digitainer vdr: [2669] switching to channel 1
+Feb 13 21:13:10 Digitainer vdr: [2727] receiver on device 2 thread  
+started (pid=2669, tid=2727)
+Feb 13 21:13:10 Digitainer vdr: [2728] TS buffer on device 2 thread  
+started (pid=2669, tid=2728)
+Feb 13 21:13:10 Digitainer vdr: [2731] livebuffer thread started  
+(pid=2669, tid=2731)
+Feb 13 21:13:10 Digitainer vdr: [2669] creating directory  
+/var/cache/vdr/vtx/C-1-1079-28006
+Feb 13 21:13:10 Digitainer vdr: [2732] osdteletext-receiver thread  
+started (pid=2669, tid=2732)
+Feb 13 21:13:10 Digitainer vdr: [2669] setting watchdog timer to 120 seconds
+Feb 13 21:13:10 Digitainer vdr: [2734] liveplayer thread started  
+(pid=2669, tid=2734)
+Feb 13 21:13:10 Digitainer vdr: [2735] EnigmaNG effects thread started  
+(pid=2669, tid=2735)
+Feb 13 21:13:11 Digitainer vdr: [2734] SetBrokenLink: no GOP header  
+found in video packet
+Feb 13 21:13:11 Digitainer vdr: [2706] [dfb] YUV:  
+action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*),  
+result=Resource was destroyed!
+Feb 13 21:13:11 Digitainer runvdr: [2041] VDR terminated (exit code:  
+134) - uptime was 0 d, 0 h, 0 m, 7 s
+Feb 13 21:13:11 Digitainer runvdr: [2041] VDR has crashed within the  
+first 15 seconds after program execution (crash counter: 3)
+Feb 13 21:13:11 Digitainer runvdr: [2041] restarting VDR
+Feb 13 21:13:11 Digitainer runvdr: [2041] unloading dvb modules
+Feb 13 21:13:11 Digitainer saa7146: unregister extension 'budget dvb'.
+Feb 13 21:13:11 Digitainer budget dvb 0000:00:07.0: PCI INT A disabled
+Feb 13 21:13:11 Digitainer saa7146: unregister extension 'budget_ci dvb'.
+Feb 13 21:13:11 Digitainer budget_ci dvb 0000:00:06.0: PCI INT A disabled
+Feb 13 21:13:11 Digitainer runvdr: [2041] unloaded modules: budget  
+budget_ci stv0299 budget_core dvb_core
+Feb 13 21:13:13 Digitainer runvdr: [2041] caught signal 15 - terminating VDR
+Feb 13 21:13:13 Digitainer runvdr: [2041] caught signal 0 - cleaning up
+Feb 13 21:13:13 Digitainer runvdr: [2041] exiting
+Feb 13 21:22:38 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3026', processed='center(received)=1033',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=514', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1027',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=1', processed='destination(authlog)=6',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=476',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1033'
+Feb 13 21:32:38 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3028', processed='center(received)=1034',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=514', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1028',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=2', processed='destination(authlog)=6',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=476',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1034'
+Feb 13 21:42:39 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3031', processed='center(received)=1036',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=514', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1029',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=3', processed='destination(authlog)=7',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=476',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1036'
+Feb 13 21:51:26 Digitainer softdevice-conf[10810]: segfault at fc ip  
+080484d1 sp bfd0cdd8 error 4 in  
+softdevice-conf-29295-10766-32541[8048000+1000]
+Feb 13 21:52:39 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3036', processed='center(received)=1038',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=515', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1031',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=4', processed='destination(authlog)=7',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=477',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1038'
+Feb 13 21:55:04 Digitainer softdevice-conf[12307]: segfault at fc ip  
+080484d1 sp bfff30c8 error 4 in  
+softdevice-conf-15684-12263-680[8048000+1000]
+Feb 13 21:57:40 Digitainer softdevice-conf[13285]: segfault at fc ip  
+080484d1 sp bfcce5a8 error 4 in  
+softdevice-conf-27198-13241-25455[8048000+1000]
+Feb 13 21:58:33 Digitainer softdevice-conf[13794]: segfault at fc ip  
+080484d1 sp bf9281f8 error 4 in  
+softdevice-conf-32326-13750-28082[8048000+1000]
+Feb 13 21:59:29 Digitainer softdevice-conf[14303]: segfault at fc ip  
+080484d1 sp bfcf6dc8 error 4 in  
+softdevice-conf-5064-14259-16905[8048000+1000]
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003198.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003200.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3199">[ date ]</a>
+              <a href="thread.html#3199">[ thread ]</a>
+              <a href="subject.html#3199">[ subject ]</a>
+              <a href="author.html#3199">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

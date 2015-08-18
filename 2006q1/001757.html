@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Fix%20softdevice%20compilation%20for%20AMD64&In-Reply-To=%3C4cd8d14e0602150444l640333e8l441aa89acb0dc60%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001739.html">
+   <LINK REL="Next"  HREF="001667.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64</H1>
+    <B>Janne Huttunen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Fix%20softdevice%20compilation%20for%20AMD64&In-Reply-To=%3C4cd8d14e0602150444l640333e8l441aa89acb0dc60%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64">jahuttun at gmail.com
+       </A><BR>
+    <I>Wed Feb 15 13:44:25 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001739.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+        <LI>Next message: <A HREF="001667.html">[Softdevice-devel] Getting rid of vertical tearing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1757">[ date ]</a>
+              <a href="thread.html#1757">[ thread ]</a>
+              <a href="subject.html#1757">[ subject ]</a>
+              <a href="author.html#1757">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> As &quot;%zu&quot; failes for me on my old prod vdr:
+</I>&gt;<i>
+</I>&gt;<i> video-fb.c: In method `cFBVideoOut::cFBVideoOut(cSetupStore *)':
+</I>&gt;<i> video-fb.c:137: warning: unknown conversion type character `z' in format
+</I>&gt;<i> video-fb.c:137: warning: too many arguments for format
+</I>&gt;<i>
+</I>&gt;<i> I consider &quot;too many arguments&quot; as an error.
+</I>
+Oh well, I guess zu is a C99ism. So it should be a matter of having
+recent enough gcc and glibc and possibly using some -std=c99
+switch. I have no idea how long it has been supported.
+
+&gt;<i> is there any other format string to printf size_t type  values on AMD64 ?
+</I>&gt;<i> Or does casting &quot;size&quot; to &quot;(unsigned int) size&quot; work?
+</I>
+In case you wish to support older systems, I think your best bet is
+to cast to (unsigned long) and use %lu .
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001739.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+	<LI>Next message: <A HREF="001667.html">[Softdevice-devel] Getting rid of vertical tearing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1757">[ date ]</a>
+              <a href="thread.html#1757">[ thread ]</a>
+              <a href="subject.html#1757">[ subject ]</a>
+              <a href="author.html#1757">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

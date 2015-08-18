@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Trickspeed jumps huge distances...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Trickspeed%20jumps%20huge%20distances...&In-Reply-To=%3C1209773183.14841.24.camel%40lychee.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003091.html">
+   <LINK REL="Next"  HREF="003095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Trickspeed jumps huge distances...</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Trickspeed%20jumps%20huge%20distances...&In-Reply-To=%3C1209773183.14841.24.camel%40lychee.local%3E"
+       TITLE="[Softdevice-devel] Trickspeed jumps huge distances...">malcolm.caldwell at gmail.com
+       </A><BR>
+    <I>Sat May  3 02:06:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003091.html">[Softdevice-devel] Trickspeed jumps huge distances...
+</A></li>
+        <LI>Next message: <A HREF="003095.html">[Softdevice-devel] Trickspeed jumps huge distances...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3093">[ date ]</a>
+              <a href="thread.html#3093">[ thread ]</a>
+              <a href="subject.html#3093">[ subject ]</a>
+              <a href="author.html#3093">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, 2008-05-02 at 14:30 +0100, Laz wrote:
+&gt;<i> I've just built a new vdr box with vdr-1.7.0 (with liemikuutio path but 
+</I>&gt;<i> I'm pretty sure this stuff isn't touched), softdevice cvs from a few days 
+</I>&gt;<i> back, ffmpeg svn from a few days back (SVN-r12942 it claims), 
+</I>&gt;<i> DirectFB-1.1.1, a Matrox G450 for output.
+</I>&gt;<i> 
+</I>&gt;<i> All works fine apart from when I try to scan a few seconds backwards 
+</I>&gt;<i> through a recording with trickspeed 2x. When I begin replay, it has gone 
+</I>&gt;<i> back much further than it should have (and has done so in the past with a 
+</I>&gt;<i> similar setup!). I haven't tested this in a forwards direction but think 
+</I>&gt;<i> it will probably be the same. Am I missing something obvious here or are 
+</I>&gt;<i> other people seeing this?
+</I>
+I have a similar setup (g450) and can confirm this problem.
+
+&gt;<i> Looking at the HISTORY file for vdr, vdr-1.5.15 has: &quot;Improved sending all 
+</I>&gt;<i> frames to devices that can handle them in fast forward trick speeds, 
+</I>&gt;<i> including subtitles&quot;. This is through 
+</I>&gt;<i> the virtual function bool cDevice::HasIBPTrickSpeed(void) { return 
+</I>&gt;<i> false; } which doesn't seem to be implemented by softdevice and so the 
+</I>&gt;<i> return value should be false.
+</I>&gt;<i> 
+</I>&gt;<i> What I'm seeing is almost as if softdevice is only expecting I-frames 
+</I>&gt;<i> during trickspeed but vdr is sending it all frames and so when playback 
+</I>&gt;<i> returns to normal speed, it is many frames away from where it should be.
+</I>&gt;<i> 
+</I>&gt;<i> Another thing I've noticed is that if I press &quot;0&quot; during replay to add a 
+</I>&gt;<i> cut-mark, it adds it about a second or so after when I pressed it. I know 
+</I>&gt;<i> it will put the cut mark at the nearest I-frame but this is a much larger 
+</I>&gt;<i> jump.
+</I>&gt;<i> 
+</I>&gt;<i> Any thoughts on where to look for clues on this?
+</I>&gt;<i> 
+</I>&gt;<i> Cheers,
+</I>&gt;<i> 
+</I>&gt;<i> Laz
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003091.html">[Softdevice-devel] Trickspeed jumps huge distances...
+</A></li>
+	<LI>Next message: <A HREF="003095.html">[Softdevice-devel] Trickspeed jumps huge distances...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3093">[ date ]</a>
+              <a href="thread.html#3093">[ thread ]</a>
+              <a href="subject.html#3093">[ subject ]</a>
+              <a href="author.html#3093">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

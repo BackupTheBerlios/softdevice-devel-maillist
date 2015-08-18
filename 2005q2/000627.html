@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay features / keys
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20features%20/%20keys&In-Reply-To=%3C427F9B8D.6060609%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000626.html">
+   <LINK REL="Next"  HREF="000635.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay features / keys</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20features%20/%20keys&In-Reply-To=%3C427F9B8D.6060609%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] softplay features / keys">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Mon May  9 19:19:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000626.html">[Softdevice-devel] softplay features / keys
+</A></li>
+        <LI>Next message: <A HREF="000635.html">[Softdevice-devel] softplay features / keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#627">[ date ]</a>
+              <a href="thread.html#627">[ thread ]</a>
+              <a href="subject.html#627">[ subject ]</a>
+              <a href="author.html#627">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache a &#233;crit :
+&gt;<i> ok, here is a list of features that I'm currently working on or that I 
+</I>&gt;<i> plan to include:
+</I>
+Since you code faster than I think, I'll try not to forget anything and 
+reply promptly !
+
+&gt;<i> - playlist with album support similar to mp3blaster - almost done
+</I>
+Great !
+
+&gt;<i> - remove/add  files/albums during playback ( adding is already possible)
+</I>
+Great !
+
+&gt;<i> - shuffle the complete playlist - done (maybe I will also add per album 
+</I>&gt;<i> shuffle a la mp3blaster in the future)
+</I>&gt;<i> - .m3u support ( future )
+</I>&gt;<i> - display cut down path in the title ( near future )
+</I>&gt;<i> - saving of the softplay playlist ( future - how important is this 
+</I>&gt;<i> feature?)
+</I>
+Important, as in : &quot;I really like it in XMMS/Winamp, but didn't yet find 
+enough time to check if mp3blaster can do that (but mp3blaster stays in 
+a screen terminal for days, rendering a save function useless)&quot;
+
+&gt;<i> - reading and display of mp3 id tags (reading is already done by 
+</I>&gt;<i> libavformat, but the information is not passed to the playlist - future 
+</I>&gt;<i> - should one be able to disable this feature?)
+</I>
+One should be able to disable junk ID3 tags. BTW, when speaking of ID3, 
+I also/always mean OGG meta-tags...
+
+&gt;<i> Did I miss a feature request?
+</I>
+I'll have to compile and see by myself... Since I tend to KISS, that may 
+be enough...
+
+&gt;<i> By pressing the red key during a playlist playback you enter a playlist 
+</I>&gt;<i> display from where you can browse through the playlist, skip to a 
+</I>&gt;<i> certain song and edit (not really yet) the playlist. The current title 
+</I>&gt;<i> is automatically highlighted at the start and after some time of 
+</I>&gt;<i> inactivity. I'm currently thinking about which keys to use during 
+</I>&gt;<i> playlist playback, I guess it makes sense to use different keys from the 
+</I>&gt;<i> single file playback (eg. movies) there. What kind of actions would be 
+</I>&gt;<i> important for you to have a key for? Skip to next/last song? Skip 
+</I>&gt;<i> forward/backward in the current song? Which keys should be used? 
+</I>&gt;<i> Currently I tried to stick as close the what Klaus Schmidinger suggested 
+</I>&gt;<i>  in the plugins manual, but a some things doesn't make sense for 
+</I>&gt;<i> playlist playback.
+</I>
+Maybe keys from the DVD plugin should be the model to follow, regarding 
+albums as titles/chapters in the DVD realm.
+Am I right to think replaying will work for both audio and video in 
+either mode (playlist playback and single file playback) ?
+In that case, the left/right/up/down keys should remain the same (ie. 
+resp. rewind/fastforward/play/pause).
+The DVD-plugin uses the numeric keys for title/chapter navigation. Could 
+those keys be used for previous/next song, previous/next album, and so on ?
+When the playlist is actually on-screen, the direction-keys can be used 
+for navigation (down goes down, ie. select next song, right enters the 
+album, etc.) OK can be used as in the channel-list view : play the song.
+
+User interface is difficult to make right, and I think I miss the 
+current state to discuss it clearly. I'll surely have more to say once I 
+compile your plugin, and actually see it on screen.
+
+&gt;<i> Yesterday I rewrote the playlist support almost completly to get the 
+</I>&gt;<i> album support, and now I've almost all features I already implemented 
+</I>&gt;<i> the day before yesterday. I will commit these changes sometimes this 
+</I>&gt;<i> evening.
+</I>
+Many thanks for your hard work !
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000626.html">[Softdevice-devel] softplay features / keys
+</A></li>
+	<LI>Next message: <A HREF="000635.html">[Softdevice-devel] softplay features / keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#627">[ date ]</a>
+              <a href="thread.html#627">[ thread ]</a>
+              <a href="subject.html#627">[ subject ]</a>
+              <a href="author.html#627">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

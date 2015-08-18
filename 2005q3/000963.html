@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minimum spec for a matrox based system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minimum%20spec%20for%20a%20matrox%20based%20system&In-Reply-To=%3C1121334938.3398.8.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000960.html">
+   <LINK REL="Next"  HREF="000961.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minimum spec for a matrox based system</H1>
+    <B>Anthony Hornby</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minimum%20spec%20for%20a%20matrox%20based%20system&In-Reply-To=%3C1121334938.3398.8.camel%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Minimum spec for a matrox based system">anthony.hornby at cdu.edu.au
+       </A><BR>
+    <I>Thu Jul 14 11:55:38 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000960.html">[Softdevice-devel] Minimum spec for a matrox based system
+</A></li>
+        <LI>Next message: <A HREF="000961.html">[Softdevice-devel] Remote key press when vdr starts?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#963">[ date ]</a>
+              <a href="thread.html#963">[ thread ]</a>
+              <a href="subject.html#963">[ subject ]</a>
+              <a href="author.html#963">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Malcolm,
+my system uses an Athlon barton cored 2500+ (1.5 Ghz) CPU.
+Here is typical usage when watching PAL TV via TV out on Matrox G550
+using DirectFB with VDR 1.3.24 and softdevice 0.1.2.
+
+I have softdevice deinterlacing set to lavc and color YUV2 - don't know
+if they are the best settings.
+
+PID USER        PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+17371 root      15   0  242m  19m 6308 S 34.5  3.8  41:34.74 vdr
+17372 root      15   0  242m  19m 6308 S  1.7  3.8   1:19.76 vdr
+17373 root       0 -15  242m  19m 6308 S  1.7  3.8   3:24.12 vdr
+17367 root      15   0  242m  19m 6308 S  0.3  3.8   0:26.47 vdr
+17369 root      15   0  242m  19m 6308 S  0.3  3.8   0:16.90 vdr
+17370 root      15   0  242m  19m 6308 S  0.3  3.8   0:13.40 vdr
+
+Hope that is useful.
+
+Anthony.
+
+On Thu, 2005-07-14 at 10:50 +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Thu, Jul 14, 2005 at 12:32:10PM +0930, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; This is probably a faq but...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; What is considered to be the minimum spec for a box to run the
+</I>&gt;<i> &gt; softdevice plugin using a Matrox g400 or g550 for output.
+</I>&gt;<i> 
+</I>&gt;<i> I have a 900 MHz Celeron system with 128 MB of RAM and a Matrox G450
+</I>&gt;<i> graphics card.  The VGA output (via DirectFB 0.9.22) uses much less
+</I>&gt;<i> CPU than the TV-out.  The system uses about 35% of the available CPU
+</I>&gt;<i> when using the I420 color space and no deinterlacing.  You will have
+</I>&gt;<i> to leave some room for I/O waits, scheduling and the like.  I'd expect
+</I>&gt;<i> 500 MHz to be enough, but I haven't tried underclocking my system yet.
+</I>&gt;<i> 
+</I>&gt;<i> 	Marko
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>-- 
+Mr Anthony Hornby RHCE BIT ALIATEC
+Library Systems &amp; Technology Coordinator
+Charles Darwin University | CRICOS 300K
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">anthony.hornby at cdu.edu.au</A> | office +61 8 89 466011
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000960.html">[Softdevice-devel] Minimum spec for a matrox based system
+</A></li>
+	<LI>Next message: <A HREF="000961.html">[Softdevice-devel] Remote key press when vdr starts?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#963">[ date ]</a>
+              <a href="thread.html#963">[ thread ]</a>
+              <a href="subject.html#963">[ subject ]</a>
+              <a href="author.html#963">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Epia EN1500G + softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C200810010018.31606.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="003154.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Epia EN1500G + softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C200810010018.31606.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Epia EN1500G + softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Oct  1 00:18:31 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="003154.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3153">[ date ]</a>
+              <a href="thread.html#3153">[ thread ]</a>
+              <a href="subject.html#3153">[ subject ]</a>
+              <a href="author.html#3153">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 29 September 2008, Stefan Lucke wrote:
+&gt;<i> On Tuesday 23 September 2008, Vladimir Monchenko wrote:
+</I>&gt;<i> &gt; Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; This description reminds me of pitch size mismatch for OSD.
+</I>&gt;<i> &gt; &gt; Can you add some debug message(s) to method GetLockOsdSurface()
+</I>&gt;<i> &gt; &gt; around line 1192, after commented out printf.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; softlog-&gt;Log(SOFT_LOG_INFO, 0, &quot;[dfb--] osd surface pitch is (%d)\n&quot;, pitch),
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;   
+</I>&gt;<i> &gt; After experiments, I have detected that this effect depends on the 
+</I>&gt;<i> &gt; resolution with which it is started vdr.
+</I>&gt;<i> &gt; In resolutions 640x480, 800x600 and 1024x768 OSD works not correctly. It 
+</I>&gt;<i> &gt; does not depend on customisations of video output (dfb:, dfb:cle266, 
+</I>&gt;<i> &gt; dfb:cle266:viatv).
+</I>&gt;<i> &gt; In reslution 720x576 OSD works normally.
+</I>&gt;<i> 
+</I>&gt;<i> With my system I can see now the same messy OSD.
+</I>&gt;<i> Pitch sizes are buggy when the first entry of /etc/fb.modes does not
+</I>&gt;<i> match the resolution choosen in directfbrc ;-) 
+</I>
+Attached diff for DirectFB fixes this for me.
+
+&gt;<i> 
+</I>&gt;<i> &gt; Sep 22 19:09:34 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+</I>&gt;<i> &gt; Sep 22 19:09:41 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+</I>&gt;<i> &gt; Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+</I>&gt;<i> 
+</I>
+
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+diff --git a/systems/fbdev/fbdev.c b/systems/fbdev/fbdev.c
+index d709cb3..e5d4ca6 100644
+--- a/systems/fbdev/fbdev.c
++++ b/systems/fbdev/fbdev.c
+@@ -1105,9 +1105,10 @@ primaryInitLayer( CoreLayer                  *layer,
+      config-&gt;flags      = DLCONF_WIDTH       | DLCONF_HEIGHT |
+                           DLCONF_PIXELFORMAT | DLCONF_BUFFERMODE;
+      config-&gt;buffermode = DLBM_FRONTONLY;
+-     config-&gt;width      = default_mode-&gt;xres;
+-     config-&gt;height     = default_mode-&gt;yres;
+-
++     config-&gt;width      = (dfb_config-&gt;mode.width) ? 
++                              dfb_config-&gt;mode.width : default_mode-&gt;xres;
++     config-&gt;height     = (dfb_config-&gt;mode.height) ?
++                              dfb_config-&gt;mode.height : default_mode-&gt;yres;
+      if (dfb_config-&gt;mode.format)
+           config-&gt;pixelformat = dfb_config-&gt;mode.format;
+      else
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="003154.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3153">[ date ]</a>
+              <a href="thread.html#3153">[ thread ]</a>
+              <a href="subject.html#3153">[ subject ]</a>
+              <a href="author.html#3153">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

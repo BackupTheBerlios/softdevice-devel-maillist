@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060716193223.GA4098%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002263.html">
+   <LINK REL="Next"  HREF="002265.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060716193223.GA4098%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Jul 16 21:32:23 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002263.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002265.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2264">[ date ]</a>
+              <a href="thread.html#2264">[ thread ]</a>
+              <a href="subject.html#2264">[ subject ]</a>
+              <a href="author.html#2264">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jul 16, 2006 at 05:37:00PM +0100, Alasdair Campbell wrote:
+&gt;<i> I've been having trouble getting the interlaced output of the G450
+</I>&gt;<i> working correctly.
+</I>&gt;<i> With current CVS, DirectFB 0..25.1 &amp; current CVS FFMPEG no matter
+</I>&gt;<i> whether I set the post-processing option &quot;Deinterlace method&quot; to
+</I>&gt;<i> 'none' or 'FB-intern' I still see lines (interlacing artifacts) where
+</I>&gt;<i> there is quick movement or scrolling text/credits.
+</I>
+Stefan Lucke replaced the scaler one or two months ago.  It works for me,
+although with DirectFB CVS the OSD is broken since some weeks.  I think
+I'll revert to the latest official release of DirectFB.
+
+&gt;<i> Should I be using &quot;-vo dfb:&quot; or &quot;-vo dfb:mgatv&quot; for my G450 with diy
+</I>&gt;<i> vga to scart cable?  I should add that using &quot;mplayer -vo dfbmga&quot;
+</I>&gt;<i> shows the same lines.
+</I>
+vdr -P'softdevice -vo dfb:mgatv' works for me.
+
+Note that if you sometimes test with VGA output, you will need a different
+/etc/directfbrc.  I solved the problem by creating two /etc/directfbrc.*
+files and symlinking the correct one to directfbrc.
+
+&gt;<i> I've picked up on work being done to ensue scaling of 16:9 interlaced
+</I>&gt;<i> video to 4:3 tv works correctly, is this complete &amp; working now? I
+</I>&gt;<i> notice that if I set &quot;Screen Aspect&quot; to 16:9, although I'm missing a
+</I>&gt;<i> lot of the image, and the aspect ratio is incorrect, there are no
+</I>&gt;<i> lines like those mentioned above.
+</I>
+Before the field-based scaler, it used to be like that.  I use CropMode 4:3
+on my 4:3 video monitor.
+
+&gt;<i> I would prefer not to use any software deinterlacing, as the main
+</I>&gt;<i> reason I bought this card was that everywhere I read I was told that
+</I>&gt;<i> the card could do all this in hardware. Other than this current
+</I>&gt;<i> problem, the output is fantastic, although the audio does seem to lose
+</I>&gt;<i> sync quite regularly.
+</I>
+What is the other hardware like?  I have a 900 MHz Celeron running on
+VIA 686A chipset, tested with 128 MB and 256 MB RAM, one ATAPI hard disk
+and two Nova-T PCI 90002 tuner cards.  It works most of the time, using
+nvram-wakeup for timed recordings, but every couple of months, the board
+needs to be powered off completely, because something in the PCI bus
+controller goes bad.  The only fan is the CPU fan, which blows air directly
+outside via a self-made duct.  Other than the size (a large tower case)
+and the occasional chipset glitches, I'm very happy with the system.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002263.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002265.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2264">[ date ]</a>
+              <a href="thread.html#2264">[ thread ]</a>
+              <a href="subject.html#2264">[ subject ]</a>
+              <a href="author.html#2264">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

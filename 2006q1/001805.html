@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Displaying images
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C4409CA24.7090200%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001804.html">
+   <LINK REL="Next"  HREF="001806.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Displaying images</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C4409CA24.7090200%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Displaying images">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Mar  4 18:11:00 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001804.html">[Softdevice-devel] Displaying images
+</A></li>
+        <LI>Next message: <A HREF="001806.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1805">[ date ]</a>
+              <a href="thread.html#1805">[ thread ]</a>
+              <a href="subject.html#1805">[ subject ]</a>
+              <a href="author.html#1805">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sebastian Vandersee schrieb:
+
+&gt;<i> I've written a little jpeg decoder utility based on your suggestions.
+</I>&gt;<i> It uses libjpeg to decode into YCbCr and then performs transformation
+</I>&gt;<i> to YUV420P. No scaling yet.
+</I>
+Nice to hear!
+
+&gt;<i> So now my question is, how to feed the decompressed data into
+</I>&gt;<i> softdevice?
+</I>&gt;<i> 
+</I>
+I attached a fast and crude patch which exports the DrawStill_420pl()
+function via the service interface. To use it you have to open the
+softdevice for replay (like it is done in softplay or softieee1394),
+then you can get function pointers to some replay functions including
+the DrawStill() method via vdr's Service interface (see the
+servicedemo-plugin). You can find the id-string and the structure in
+softdevice.h.
+Once you have the function pointer you just have to call DrawStill()
+with the three planes Y,U,V, the width and the height, and the strides
+(the number of bytes to jump to the next line) for Y and U,V planes.
+Don't pass pictures greater than 736x576, it will result in a crash.
+
+I did not test the patch, but there is not much which could go wrong,
+some thinks are still to be done inside the softdevice, like saving a
+local copy of the picture (for software osd blending), and we have to
+discuss how to handle the aspect ratio...
+So there are still some open points, but I think this is a starting
+point for discussions :-)
+
+Bye,
+
+Martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: StillPictures.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060304/24ee0b76/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060304/24ee0b76/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001804.html">[Softdevice-devel] Displaying images
+</A></li>
+	<LI>Next message: <A HREF="001806.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1805">[ date ]</a>
+              <a href="thread.html#1805">[ thread ]</a>
+              <a href="subject.html#1805">[ subject ]</a>
+              <a href="author.html#1805">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

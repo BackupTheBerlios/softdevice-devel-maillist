@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Can't get composite sync from G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C20050609064858.GA3328%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000840.html">
+   <LINK REL="Next"  HREF="000842.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Can't get composite sync from G450</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C20050609064858.GA3328%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Can't get composite sync from G450">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Jun  9 08:48:58 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000840.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+        <LI>Next message: <A HREF="000842.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#841">[ date ]</a>
+              <a href="thread.html#841">[ thread ]</a>
+              <a href="subject.html#841">[ subject ]</a>
+              <a href="author.html#841">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jun 08, 2005 at 11:57:55PM +0300, prelude wrote:
+&gt;<i> Fusion module is installed and DireFB compiled whit option &quot;--enable-multi&quot;.
+</I>
+Is that essential?
+
+&gt;<i> # fbset -i -fb /dev/fb/0
+</I>&gt;<i> 
+</I>&gt;<i> mode &quot;640x480-60&quot;
+</I>&gt;<i>    # D: 25.176 MHz, H: 31.469 kHz, V: 59.942 Hz
+</I>[clip]
+
+&gt;<i> mode &quot;640x480-60&quot;
+</I>&gt;<i>    # D: 25.176 MHz, H: 31.469 kHz, V: 59.942 Hz
+</I>
+How can you possibly get a picture on a TV with these settings?  The
+line frequency should be around 15 kHz, shouldn't it?
+
+Here are my frame buffer settings for the Matrox G450:
+
+fbset -i -fb /dev/fb1
+
+mode &quot;768x576-50&quot;
+    # D: 14.766 MHz, H: 15.776 kHz, V: 50.482 Hz
+    geometry 768 576 768 576 32
+    timings 67723 104 0 44 1 64 4
+    csync high
+    bcast true
+    laced true
+    accel true
+    rgba 8/16,8/8,8/0,8/24
+endmode
+
+Frame buffer device information:
+    Name        : MATROX DH
+    Address     : 0xd7800000
+    Size        : 8388608
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 8
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 3072
+    MMIO Address: 0xd9efc000
+    MMIO Size   : 16384
+    Accelerator : No
+
+fbset -i -fb /dev/fb0
+
+mode &quot;768x576-75&quot;
+    # D: 49.188 MHz, H: 46.580 kHz, V: 75.008 Hz
+    geometry 768 576 768 1152 32
+    timings 20330 128 32 32 8 128 5
+    rgba 8/16,8/8,8/0,8/24
+endmode
+
+Frame buffer device information:
+    Name        : MATROX
+    Address     : 0xd6000000
+    Size        : 16777216
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 8
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 3072
+    MMIO Address: 0xd9efc000
+    MMIO Size   : 16384
+    Accelerator : Matrox G400
+
+I have the RGB SCART monitor on the second head and the VGA multisync
+monitor on the first head.  The first head is fine, but the second
+head probably gets 46 kHz horizontal sync instead of the 15 kHz/50 Hz
+composite sync.  Yep, the oscilloscope shows 11 pulses in 250 &#181;s,
+and 11/250 &#181;s = 44 kHz.  I didn't notice any vertical sync pattern in
+the composite sync signal.  Here's the directfbrc:
+
+fbdev=/dev/fb0
+mode=768x576
+#vt-switch
+#vt-switching
+no-banner
+no-debug
+no-vt
+depth=16
+#disable-module=linux_input
+
+If I use -P'softdevice -vo dfb:mgatv' and the following directfbrc,
+the oscilloscope shows that the composite sync is constantly at GND!
+
+cat &gt; /etc/directfbrc &lt;&lt; EOF
+system=fbdev
+fbdev=/dev/fb0
+matrox-crtc2
+matrox-tv-standard=pal
+matrox-cable-type=scart-rgb
+videoram-limit=32768
+depth=16
+mode=768x576
+pixelformat=YV12
+primary-layer=2
+hardware
+mmx
+screenshot-dir=/tmp
+#vt-switch
+#vt-switching
+no-banner
+no-debug
+no-vt
+graphics-vt
+EOF
+
+Hmm, how should I set primary-layer?  Or should I set fbdev=/dev/fb1
+instead of /dev/fb0?  Nope, it won't fly:
+
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+(*) DirectFB/Core: Single Application Core. (2005-03-19 19:30)
+(!) [ 3230:    0.000] --&gt; Caught signal 11 (at 0xe091, invalid address)
+&lt;--
+Killed
+
+dfbinfo shows the following:
+
+Screen (00) FBDev Primary Screen            (primary screen)
+   Caps: VSYNC POWER_MANAGEMENT
+
+     Layer (02) FBDev Primary Layer
+        Type:    GRAPHICS
+        Caps:    SURFACE BRIGHTNESS CONTRAST SATURATION
+
+     Layer (01) Matrox Backend Scaler
+        Type:    GRAPHICS VIDEO STILL_PICTURE
+        Caps:    SURFACE SCREEN_LOCATION DEINTERLACING DST_COLORKEY BRIGHTNESS CONTRAST SCREEN_POSITION SCREEN_SIZE
+
+Screen (01) Matrox CRTC2 Screen
+   Caps: VSYNC ENCODERS OUTPUTS
+
+   Encoder (0)
+     Type:           TV
+     Caps:           TV_STANDARDS
+     TV Standards:   PAL NTSC
+
+
+   Output (0)
+     Caps:       CONNECTORS SIGNAL_SEL CONNECTOR_SEL
+     Connectors: SCART YC CVBS
+     Signals:    YC CVBS RGB
+
+
+     Layer (00) Matrox CRTC2 Layer              (primary layer)
+        Type:    GRAPHICS VIDEO STILL_PICTURE
+        Caps:    SURFACE FLICKER_FILTERING BRIGHTNESS CONTRAST HUE SATURATION FIELD_PARITY ALPHA_RAMP
+
+     Layer (03) Matrox CRTC2 Sub-Picture
+        Type:    GRAPHICS VIDEO STILL_PICTURE
+        Caps:    SURFACE OPACITY ALPHACHANNEL
+
+I guess primary-layer=2 is for the first head (VGA) and primary-layer=0
+should be for the second head (SCART RGB)?  However, DirectFB won't
+start with primary-layer=0:
+
+[dfb] Enumeratig display Layers
+(!) DirectFB/core/layers: Could not set primary region config!
+    --&gt; Not supported!
+(!) [ 3817:    0.000] --&gt; Caught signal 6 (sent by pid 3817, uid 1000) &lt;--
+Killed
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000840.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+	<LI>Next message: <A HREF="000842.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#841">[ date ]</a>
+              <a href="thread.html#841">[ thread ]</a>
+              <a href="subject.html#841">[ subject ]</a>
+              <a href="author.html#841">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

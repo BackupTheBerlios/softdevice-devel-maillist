@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 Vertical Refresh
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20Vertical%20Refresh&In-Reply-To=%3C44EEEA67.6030306%40conealley.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002330.html">
+   <LINK REL="Next"  HREF="002332.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 Vertical Refresh</H1>
+    <B>Kim Fredenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20Vertical%20Refresh&In-Reply-To=%3C44EEEA67.6030306%40conealley.net%3E"
+       TITLE="[Softdevice-devel] CLE266 Vertical Refresh">lists at conealley.net
+       </A><BR>
+    <I>Fri Aug 25 14:17:43 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002330.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+        <LI>Next message: <A HREF="002332.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2331">[ date ]</a>
+              <a href="thread.html#2331">[ thread ]</a>
+              <a href="subject.html#2331">[ subject ]</a>
+              <a href="author.html#2331">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nicolas Huillard wrote:
+&gt;<i> Kim Fredenberg a &#233;crit :
+</I>&gt;<i> 
+</I>&gt;&gt;<i>What am I doing wrong? Why can't I adjust the frequencies using fbset?
+</I>&gt;&gt;<i>Is my Epia board overriding the settings from linux in any way?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> The framebuffer driver adjusts the frequencies of the VGA output when
+</I>&gt;<i> TV-out is activated, in order to align the VGA out timings to the TV
+</I>&gt;<i> signal. The TV encoder just encodes the signal without changing the
+</I>&gt;<i> frequencies.
+</I>&gt;<i> Thus no change with fbset will have any effect when TV-out is on.
+</I>
+Nicolas,
+
+Thanks for your answer!
+
+I disabled the TV-Out from BIOS and likewise did not enable TVon in the
+driver. Still I cannot manage to adjust the frequency of the VGA output.
+When I set TVon=1 then I get PAL frequency ~50Hz but my TV doesn't like
+this frequency on the VGA input and I would really like to drive the
+output through the VGA connection.
+
+I will search the directfb-users list to see if I find anything useful
+and if I somehow could hack in another frequency into the driver.
+
+br, Kim
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002330.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+	<LI>Next message: <A HREF="002332.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2331">[ date ]</a>
+              <a href="thread.html#2331">[ thread ]</a>
+              <a href="subject.html#2331">[ subject ]</a>
+              <a href="author.html#2331">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

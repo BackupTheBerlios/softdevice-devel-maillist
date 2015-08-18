@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200605152242.58045.ivor%40ivor.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002035.html">
+   <LINK REL="Next"  HREF="002037.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Ivor Hewitt</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200605152242.58045.ivor%40ivor.org%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">ivor at ivor.org
+       </A><BR>
+    <I>Mon May 15 23:42:57 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002035.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="002037.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2036">[ date ]</a>
+              <a href="thread.html#2036">[ thread ]</a>
+              <a href="subject.html#2036">[ subject ]</a>
+              <a href="author.html#2036">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 15 May 2006 22:27, Martin Wache wrote:
+&gt;<i>
+</I>&gt;<i> I agree with you that it would be the best to share as much code as
+</I>&gt;<i> possible. I had a look at the latest libviaXvMC and in fact
+</I>&gt;<i> viaLowLevel.c is very similar to what Laz uses in his library. The one
+</I>&gt;<i> major difference is the use of DMA, and I don't know if it is simple to
+</I>&gt;<i> set up DMA from userspace. So maybe it is the best to start with the
+</I>&gt;<i> code as it is now and try to get it working and then try to synchronize
+</I>&gt;<i> the code bases.
+</I>&gt;<i>
+</I>possibly... although the xvmc library code will give you unichrome-pro support 
+for free.
+
+&gt;<i> The most pressing question on my mind is: is it possible to reduce the
+</I>&gt;<i> CPU load by getting rid of the busy loop while waiting for the decoder
+</I>&gt;<i> to become ready again? It's quite stupid to waste CPU time just for
+</I>&gt;<i> waiting for the decoder if the goal of using the decoder was to save CPU
+</I>&gt;<i> time :-)
+</I>&gt;<i>
+</I>As far as known, no. There's no end of decoding interrupt. Although there time 
+spent in that loop should be quite small, most of the time is spent copying 
+data back and forth.
+
+&gt;<i> It is really good to know that you are interested in the development, so
+</I>&gt;<i> we can ask a lot of questions concerning the via chipset :-)
+</I>&gt;<i>
+</I>Well it's all fun.
+
+-- 
+Ivor Hewitt.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002035.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="002037.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2036">[ date ]</a>
+              <a href="thread.html#2036">[ thread ]</a>
+              <a href="subject.html#2036">[ subject ]</a>
+              <a href="author.html#2036">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

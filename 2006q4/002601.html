@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20%2B%20cle266mpegdec%20%2B%20TVout%20%3A%20field%20parity%0A%20status%20and%20patches%20%5Bupdate%5D&In-Reply-To=%3C4529394D.8000800%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002600.html">
+   <LINK REL="Next"  HREF="002602.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches [update]</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20%2B%20cle266mpegdec%20%2B%20TVout%20%3A%20field%20parity%0A%20status%20and%20patches%20%5Bupdate%5D&In-Reply-To=%3C4529394D.8000800%40huillard.net%3E"
+       TITLE="[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches [update]">nicolas at huillard.net
+       </A><BR>
+    <I>Sun Oct  8 19:45:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002600.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches
+</A></li>
+        <LI>Next message: <A HREF="002602.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity	status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2601">[ date ]</a>
+              <a href="thread.html#2601">[ thread ]</a>
+              <a href="subject.html#2601">[ subject ]</a>
+              <a href="author.html#2601">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+Here's my update on the matter after upgrading quite everything. I would
+like to thank those who replied to my questions.
+First : I still have field parity problems with interlaced material on
+interlaced TV.
+Second : there are a lot things there, from the kernel, viafb,
+libcle266mpegdec, DirectFB, DFB++, up to softdevice...
+
+
+Kernel 2.6.17 Debian
+* fresh compile and packaging
+
+linux-viafb CVS 20061008 (today)
+* applied viafb_flip_ioctl.patch from Mark Adams (transfered by Rolf
+Ahrenberg and Laz today)
+* this patch is really old, and does not apply totally cleanly on
+today's CVS
+* attached is un updated patch against current CVS (maybe Mark could
+apply it to CVS if he have no better idea now about how to implement that ?)
+
+libcle266mpegdec 0.4 (latest as of today) (oops : I didn't even try CVS)
+* the GetFBOffset.patch isn't needed anymore with DirectFB 1.0rc1
+* but GetFBOffsetDFB++.patch is still needed with DFB++ CVS
+* maybe Rolf could get this patch integrated inside DFB++ before it
+reaches 1.0rc stage ?
+
+DirectFB 1.0rc1 (latest as of today)
+* since GetFBOffset.patch is already applied, I only have to add
+dfb_unichrome_flip_ioctl.patch from Mark Adams (transfered by Rolf
+Ahrenberg and Laz today)
+* here is the updated patch against 1.0rc1
+* this patch was difficult to cleanly apply, because adjustments were
+not correct (the code is so light and clean that patch select the wrong
+function to apply a chunk, while the other was correctly placed)
+(GetFBOffset.patch even applied cleanly, even though it was already in
+place, and patch didn't see it)
+* maybe Mark could add his patch to DirectFB CVS (if the freeze for 1.0
+still allows that)
+* to my knowledge, it is the only patch to apply to DirectFB
+* see dfbinfo output attached (Caps: ... FIELD_PARITY ...)
+
+DFB++ CVS 20061008 (today)
+* applied the GetFBOffsetDFB++.patch from libcle266mpegdec
+* this patch should make it into CVS, to keep in sync with DirectFB
+* there is nothing about field parity there, since Mark's patch was
+about the unichrome driver, not about DirectFB API (which DFB++ only
+deals with)
+
+softdevice CVS 20061008 (today)
+* no patch to apply ?
+* uses libclempegdec, viafb, etc.
+* to attached log shows field parity is enabled ([softdevice] enabling
+field parity / [softdevice] enabling CLE266 HW decoding)
+
+
+I don't know what I miss to get rid of interlacing artifacts on TV out...
+
+
+Nicolas Huillard a &#233;crit :
+&gt;<i> I'm a bit lost about what's needed for field parity correctness on
+</I>&gt;<i> TV-out with CLE266. I still have field artifacts on interlaced streams
+</I>&gt;<i> on TV-out.
+</I>&gt;<i> 
+</I>&gt;<i> My setup :
+</I>&gt;<i> VDR 1.4.2
+</I>&gt;<i> softdevice CVS 20060929 (-P softdevice -ao alsa:pcm=default -vo
+</I>&gt;<i> dfb:viatv:cle266)
+</I>&gt;<i> libcle266mpegdec 0.4
+</I>&gt;<i> DirectFB-2006-09-10-04-25-09-UTC
+</I>&gt;<i> DFB++-2006-09-10-04-25-02-UTC
+</I>&gt;<i> linux-viafb 20060910 (viafb mode=720x576 bpp=32 refresh=50 TVon=1
+</I>&gt;<i> TVoverscan=1)
+</I>&gt;<i> 
+</I>&gt;<i> I think I do not need any patches for linux-viafb (Mark Adams commited
+</I>&gt;<i> his patches to CVS)
+</I>&gt;<i> I don't know if I need something special in DirectFB/DFB++ (I applied
+</I>&gt;<i> libcle266mpegdec-0.3/patches/GetFBOffset.patch)
+</I>&gt;<i> I think the latest softdevice filed parity patches have joined CVS
+</I>&gt;<i> before I checked it out.
+</I>
+-- 
+NH
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: viafb_flip_ioctl-20061008.patch
+Type: text/x-patch
+Size: 4409 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment.bin</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb_unichrome_flip_ioctl-20061008.patch
+Type: text/x-patch
+Size: 3003 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment-0001.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment-0001.bin</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr.log
+Type: text/x-log
+Size: 4709 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment-0002.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment-0002.bin</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfbinfo.log
+Type: text/x-log
+Size: 1534 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment-0003.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061008/9e86e97a/attachment-0003.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002600.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches
+</A></li>
+	<LI>Next message: <A HREF="002602.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity	status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2601">[ date ]</a>
+              <a href="thread.html#2601">[ thread ]</a>
+              <a href="subject.html#2601">[ subject ]</a>
+              <a href="author.html#2601">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

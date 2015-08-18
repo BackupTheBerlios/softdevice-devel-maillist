@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606171954550.347215%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002161.html">
+   <LINK REL="Next"  HREF="002163.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Rolf Ahrenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606171954550.347215%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">rahrenbe at cc.hut.fi
+       </A><BR>
+    <I>Sat Jun 17 19:00:47 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002161.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002163.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2162">[ date ]</a>
+              <a href="thread.html#2162">[ thread ]</a>
+              <a href="subject.html#2162">[ subject ]</a>
+              <a href="author.html#2162">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, 17 Jun 2006, Stefan Lucke wrote:
+
+&gt;<i> Yes. In cvs, so we can talk in smaller patches.
+</I>&gt;<i> I left out disabling pixelformat and stretchblit, until we are sure
+</I>&gt;<i> of the right/fastest one.
+</I>
+Could add also this little patch into cvs? The current configure script 
+won't detect cle266mpegdec library without the patch.
+
+Howabout removing the cle266 commandline parameter and add an &quot;hardware 
+decoding: yes/no&quot; option into setup menu?
+
+--
+rofa
+-------------- next part --------------
+Index: Makefile
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/Makefile,v
+retrieving revision 1.31
+diff -u -r1.31 Makefile
+--- Makefile	17 Jun 2006 16:27:34 -0000	1.31
++++ Makefile	17 Jun 2006 16:52:03 -0000
+@@ -151,7 +151,7 @@
+ ifdef CLE266_SUPPORT
+   CLE266_LIBS = -L/usr/local/lib -lcle266mpegdec
+   CLE266_CFLAGS = -I/usr/local/include
+-  DEFINES  += -DHAVE_CLE266_MPEG_DECODER
++  DEFINES += -DFBDEV=\&quot;$(FBDEV)\&quot; -DHAVE_CLE266_MPEG_DECODER
+ endif
+ 
+ ifdef XV_SUPPORT
+Index: configure
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/configure,v
+retrieving revision 1.17
+diff -u -r1.17 configure
+--- configure	17 Jun 2006 16:27:34 -0000	1.17
++++ configure	17 Jun 2006 16:52:03 -0000
+@@ -48,6 +48,7 @@
+   echo &quot;  --disable-subplugins&quot;
+   echo &quot;  --disable-mmx&quot;
+   echo &quot;  --disable-mmx2&quot;
++  echo &quot;  --with-fb-device YOUR_FB_DEVICE&quot;
+   echo &quot;  --with-ffmpeg-path YOUR_FFMPEG_PATH&quot;
+   echo &quot;  --with-vidix-path YOUR_VIDIX_PATH&quot;
+   echo &quot;  --help&quot;
+@@ -67,6 +68,10 @@
+     --disable-subplugins) shift; with_subplugins=&quot;no&quot; ;;
+     --disable-mmx) shift; with_mmx=&quot;no&quot;;;
+     --disable-mmx2) shift; with_mmx2=&quot;no&quot;;;
++    --with-fb-device) shift;
++      fb_dev_name=$1 ;
++      echo &quot;framebuffer device set to: $fb_dev_name&quot; ;
++      shift ;;
+     --with-ffmpeg-path) shift;
+       ffmpeg_path=$1 ;
+       echo &quot;ffmpeg path set to: $ffmpeg_path&quot; ;
+@@ -271,9 +276,9 @@
+ #
+ if test &quot;${dfb}&quot; = &quot;yes&quot; ; then
+ echo -n &quot;Checking for cle266mpegdec... &quot;
+-cle266_cflags=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --cflags cle266mpegdec 2&gt;&gt;config.log` || cle266=&quot;no&quot;
++cle266_cflags=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --cflags libcle266mpegdec 2&gt;&gt;config.log` || cle266=&quot;no&quot;
+   if test &quot;${cle266}&quot; = &quot;yes&quot; ; then
+-  cle266_libs=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --libs cle266mpegdec`
++  cle266_libs=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --libs libcle266mpegdec`
+   cle266_opts=&quot;${cle266_cflags} ${cle266_libs}&quot;
+   fi
+ 
+@@ -453,6 +458,7 @@
+ if test &quot;${cle266}&quot; = &quot;yes&quot; ; then
+   echo &quot;CLE266_LIBS = ${cle266_libs}&quot; &gt;&gt; $TMPM
+   echo &quot;CLE266_CFLAGS = -DHAVE_CLE266_MPEG_DECODER ${cle266_cflags}&quot; &gt;&gt; $TMPM
++  echo &quot;#define FBDEV \&quot;${fb_dev_name}\&quot;&quot; &gt;&gt; $TMPH
+ fi
+ 
+ ###############################################################################
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002161.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002163.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2162">[ date ]</a>
+              <a href="thread.html#2162">[ thread ]</a>
+              <a href="subject.html#2162">[ subject ]</a>
+              <a href="author.html#2162">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

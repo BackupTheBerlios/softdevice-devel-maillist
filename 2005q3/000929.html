@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C1120637434.28383.2.camel%40africa%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000928.html">
+   <LINK REL="Next"  HREF="000930.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C1120637434.28383.2.camel%40africa%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">torgeir at pobox.com
+       </A><BR>
+    <I>Wed Jul  6 10:10:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000928.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000930.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#929">[ date ]</a>
+              <a href="thread.html#929">[ thread ]</a>
+              <a href="subject.html#929">[ subject ]</a>
+              <a href="author.html#929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, 2005-07-06 at 09:37 +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Wed, Jul 06, 2005 at 12:26:13AM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; After I applied the patch you posted later (Sleep=true in dvbplayer.c),
+</I>&gt;<i> &gt; this problem went away.  The samples reported for live and recorded
+</I>&gt;<i> &gt; playback are comparable - in fact, the system appears to be consuming
+</I>&gt;<i> &gt; slightly less CPU when playing back recorded streams.  Good work, Martin!
+</I>&gt;<i> 
+</I>&gt;<i> I don't know why, but this morning, using exactly the same software, vdr
+</I>&gt;<i> would consume only a couple per cent of CPU time, displaying perhaps one
+</I>&gt;<i> or two frames and then sleeping about a second, both on live and
+</I>&gt;<i> recorded playback.  After I commented out the added assignment in
+</I>&gt;<i> dvbplayer.c, it plays again.  Any idea why it worked differently at this
+</I>&gt;<i> time?
+</I>
+Very interesting. I've seen this on my box too, but before trying out
+any changes in dvbplayer.c. I've come to believe it's a hardware fault
+in my pci bridge, since the fan on it went bust a few weeks ago, and I
+didn't notice until recently. I've tried different kernels, different
+dvb-t cards, but not different vdr versions. 
+
+I might have to try downgrading. It's very weird, as when it happens,
+everything goes really slowly, even X cannot refresh its display.
+
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000928.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000930.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#929">[ date ]</a>
+              <a href="thread.html#929">[ thread ]</a>
+              <a href="subject.html#929">[ subject ]</a>
+              <a href="author.html#929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

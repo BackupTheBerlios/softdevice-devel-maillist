@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Pause%20the%20playback%20of%20recordings%0A%09when%20suspended&In-Reply-To=%3C200702080850.00884.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002711.html">
+   <LINK REL="Next"  HREF="002713.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Pause%20the%20playback%20of%20recordings%0A%09when%20suspended&In-Reply-To=%3C200702080850.00884.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Feb  8 08:50:00 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002711.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+        <LI>Next message: <A HREF="002713.html">[Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2712">[ date ]</a>
+              <a href="thread.html#2712">[ thread ]</a>
+              <a href="subject.html#2712">[ subject ]</a>
+              <a href="author.html#2712">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 07 February 2007 18:41, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Fri, Feb 02, 2007 at 10:26:33PM +0200, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; I fixed the long-standing bug with the suspend function of softdevice.
+</I>&gt;<i> &gt; If softdevice is suspended when playing back a recording, the recording
+</I>&gt;<i> &gt; will fast-forward to the end.  This patch modifies softdevice so that
+</I>&gt;<i> &gt; it will block the data stream from vdr when playing back recordings.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; This fix is now also included in my softdevice patch for Udo Richter's
+</I>&gt;<i> &gt; shutdown rewrite:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; <A HREF="http://www.iki.fi/~msmakela/software/vdr/#shutdown">http://www.iki.fi/~msmakela/software/vdr/#shutdown</A>
+</I>&gt;<i> &gt; <A HREF="http://www.iki.fi/~msmakela/software/vdr/shutdown-softdevice.patch">http://www.iki.fi/~msmakela/software/vdr/shutdown-softdevice.patch</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; The attached patch is simpler, as it only fixes this bug.  Please apply it.
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, the patch causes 100% CPU load when softdevice is suspended.  Adding
+</I>&gt;<i> a usleep(10000) drops the load to less than 1% on my system.  I first tried
+</I>&gt;<i> usleep(100000), but it caused vdr to hang for a long time.  I updated the
+</I>&gt;<i> patch on my home page.  Below are the hunks that fix this bug only.
+</I>
+Transferring() was introduced in vdr-1.3.42. So this needs an extra #if
+# if VDRVERSNUM &gt;= 10342
+
+Looking at the implementation of Transferring() in device.c I'm just
+wondering of the difference compared to Replaying() 
+!Transferring() == true -&gt; no player (player == NULL) or
+player is not derived from cTransfer.
+
+device.c around line 948:
+
+bool cDevice::Replaying(void) const
+{
+  return player != NULL;
+}
+
+bool cDevice::Transferring(void) const
+{
+  return dynamic_cast&lt;cTransfer *&gt;(player) != NULL;
+}
+
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002711.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+	<LI>Next message: <A HREF="002713.html">[Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2712">[ date ]</a>
+              <a href="thread.html#2712">[ thread ]</a>
+              <a href="subject.html#2712">[ subject ]</a>
+              <a href="author.html#2712">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

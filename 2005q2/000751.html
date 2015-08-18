@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OProfile success story and some performance measurement tips
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%20measurement%20tips&In-Reply-To=%3C20050527153119.GA230371%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000743.html">
+   <LINK REL="Next"  HREF="000770.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OProfile success story and some performance measurement tips</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%20measurement%20tips&In-Reply-To=%3C20050527153119.GA230371%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] OProfile success story and some performance measurement tips">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri May 27 17:31:19 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000743.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+        <LI>Next message: <A HREF="000770.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#751">[ date ]</a>
+              <a href="thread.html#751">[ thread ]</a>
+              <a href="subject.html#751">[ subject ]</a>
+              <a href="author.html#751">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin,
+
+&gt;<i> &gt;I guess so.  If not on the Celeron of my VDR box, I can play some 
+</I>&gt;<i> &gt;recordings
+</I>&gt;<i> &gt;on this Pentium-M and look for DCU_MISS_OUTSTANDING
+</I>&gt;<i> &gt;(number of cycles while DCU miss outstanding; DCU=data cache unit) or
+</I>&gt;<i> &gt;DATA_MEM_REFS (all memory references, cachable and non).
+</I>&gt;<i> &gt;opcontrol --list-events lists all possible events, but I can't start up
+</I>&gt;<i> &gt;my VDR box now.
+</I>&gt;<i> Sounds good. I never tried to do it until now but also my new AMD64 
+</I>&gt;<i> seems to have this option, but I will check again.
+</I>
+DCU_MISS_OUTSTANDING is available on Pentium III, including Celeron.
+
+&gt;<i> Do you have any experience on this?
+</I>
+I measured InnoDB performance and found out that data cache miss made
+a single machine instruction use several percent of total execution
+time in one test case.  It was accessing the InnoDB adaptive hash index,
+which of course wouldn't fit in the cache memory.  Actually, the execution
+time was reported for an instruction one or two positions after the actual
+data fetch.  I guess this is due to pipelining.
+
+I just made a measurement with 
+opcontrol --event=DCU_MISS_OUTSTANDING:7500
+on the beginning of a recorded clip, containing mostly computer-generated
+images but also some talking heads.  Here's the top from
+opreport -t1 -l PLUGINS/lib/libvdr-softdevice.so.1.3.24:
+
+CPU: PIII, speed 906.672 MHz (estimated)
+Counted DCU_MISS_OUTSTANDING events (number of cycles while DCU miss
+outstanding) with a unit mask of 0x00 (No unit mask) count 7500
+samples  %        symbol name
+80123    15.5482  put_pixels16_mmx
+67713    13.1400  put_pixels16_xy2_mmx
+59967    11.6369  put_pixels8_mmx
+30927     6.0015  avg_pixels16_xy2_mmx2
+30779     5.9728  put_pixels16_y2_mmx2
+29456     5.7161  put_pixels16_x2_mmx2
+29079     5.6429  avg_pixels16_mmx2
+21563     4.1844  avg_pixels8_mmx2
+21021     4.0792  put_pixels8_x2_mmx2
+19272     3.7398  put_pixels8_y2_mmx2
+13639     2.6467  avg_pixels16_x2_mmx2
+12241     2.3754  put_pixels8_xy2_mmx
+12058     2.3399  avg_pixels16_y2_mmx2
+12000     2.3287  mpeg2_decode_block_non_intra
+8700      1.6883  avg_pixels8_x2_mmx2
+7610      1.4768  avg_pixels8_y2_mmx2
+6530      1.2672  mpeg2_decode_block_intra
+6382      1.2385  ff_mpeg1_find_frame_end
+5872      1.1395  avg_pixels8_xy2_mmx2
+5625      1.0916  mpeg_decode_mb
+
+The {put,avg}_pixels functions are in ffmpeg,
+file libavcodec/i386/dsputil_mmx.c.  According to opstack output,
+they are called by MPV_motion.  If I'm guessing right, these
+functions are accessing the decompressed picture data.  Maybe
+explicit prefetch instructions would help after all?
+
+&gt;<i> Maybe there is something on the web how to measure the cache performance,
+</I>&gt;<i> I'll have a look.
+</I>
+If you don't find anything, just collect some samples with oprofile
+(and don't forget &quot;opcontrol --reset&quot; between &quot;opcontrol --stop&quot; and
+&quot;opcontrol --start&quot;) and make repeatable and controlled experiments,
+not modifying too many parameters (or lines of code) at a time.
+
+As I'm writing this, I'm replaying the same portion of the clip with
+DATA_MEM_REFS:7500.  I think it might be more fruitful to pay attention
+to this performance counter, as it could reveal some unnecessary memory
+accesses that do not happen to show up as cache misses.  Yes, here the
+top 99% percentile looks different:
+
+CPU: PIII, speed 906.672 MHz (estimated)
+Counted DATA_MEM_REFS events (all memory references, cachable and non)
+with a unit mask of 0x00 (No unit mask) count 7500
+samples  %        symbol name
+108722   15.8219  ff_simple_idct_add_mmx
+84480    12.2941  mpeg2_decode_block_non_intra
+63379     9.2233  ff_mpa_synth_filter
+44302     6.4471  cStreamDecoder::BufferFill()
+43877     6.3853  mpeg_decode_mb
+28323     4.1217  MPV_decode_mb
+26280     3.8244  mpeg2_decode_block_intra
+25913     3.7710  MPV_motion
+25898     3.7688  put_pixels16_mmx
+23264     3.3855  put_pixels8_mmx
+22451     3.2672  add_pixels_clamped_mmx
+22208     3.2318  mpeg_decode_motion
+20633     3.0026  clear_blocks_mmx
+20561     2.9922  ff_simple_idct_put_mmx
+16520     2.4041  mp_decode_layer2
+13938     2.0283  dct32
+12643     1.8399  cMpeg2Decoder::BufferFill()
+11050     1.6081  cSoftDevice::Poll(cPoller&amp;, int)
+10729     1.5614  mpeg_decode_slice
+10110     1.4713  put_pixels16_xy2_mmx
+7299      1.0622  ff_mpeg1_find_frame_end
+7287      1.0605  avg_pixels8_mmx2
+
+&gt;<i> So if also Nicolas joins the profiling we will get quite a nice sample 
+</I>&gt;<i> of different processor/cache sizes :-)
+</I>
+I hope that the VIAllinen processors are supported by oprofile. :-)
+
+&gt;<i> What video-out method do you prefer? I usually use Xv so my first step 
+</I>&gt;<i> would be to use Xv, but on my new box the X11 drivers are not in a good 
+</I>&gt;<i> shape. So maybe I will try DirectFB...
+</I>
+I prefer DirectFB, as my box tries to be a single-purpose box that can
+be controlled by the remote control.  But I do have an X11 installation
+that can be used if needed.  Anyway, I think it's easier to make measurements
+when everything is in a single process.
+
+By the way, DirectFB wasn't linked statically in my experiments.  The numbers
+of samples logged for libdfb++ and libdirect were insignificant (about 50
+total in the DATA_MEM_REFS case).  Also VDR wasn't linked statically,
+because I was too lazy to dig up your patch for that.  For VDR, the top for
+the DATA_MEM_REFS case looks like this:
+CPU: PIII, speed 906.672 MHz (estimated)
+Counted DATA_MEM_REFS events (all memory references, cachable and non) with a unit mask of 0x00 (No unit mask) count 7500
+samples  %        symbol name
+17894    29.8139  cDvbPlayer::Action()
+8546     14.2388  cMutex::Lock()
+5635      9.3887  anonymous symbol from section .plt
+4879      8.1291  cNonBlockingFileReader::Read(int, unsigned char*, int)
+4156      6.9245  cPoller::cPoller(int, bool)
+3506      5.8415  cThreadLock::Lock(cThread*)
+2983      4.9701  cThreadLock::cThreadLock(cThread*)
+2881      4.8001  cRingBufferFrame::Get()
+2386      3.9754  cMutex::Unlock()
+2321      3.8671  cPoller::Add(int, bool)
+1463      2.4376  cDvbPlayer::NextFile(unsigned char, int)
+
+Total number of samples is about 17894/.298139 = 60018.  For softdevice,
+the total is about 108722/.158219 = 687161, over ten times more.  So, I
+think we can concentrate on libvdr-softdevice in the DATA_MEM_REFS case.
+
+&gt;<i> &gt;You could perhaps also add explicit prefetch instructions, i.e.,
+</I>&gt;<i> &gt;__builtin_prefetch().  I don't know which processors have the opcodes.
+</I>&gt;<i> &gt;At least the Pentium-M does.  But that would only help for reading
+</I>&gt;<i> &gt;the MPEG stream.
+</I>&gt;<i> Prefetch calls are already used as far as I know (at least for the 
+</I>&gt;<i> software alpha blending I'm sure), but as you already said for copying 
+</I>&gt;<i> they don't help.
+</I>
+You can prefetch also for write access.  A cache line is something like
+16 or 32 bytes.  If you're writing 1 byte, you will need to read and write
+the whole cache line.  So, prefetching can help.
+
+I've heard that some Intel processors have automatic prefetching.
+Nevertheless, it might be useful to experiment with explicit prefetch
+instructions.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000743.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+	<LI>Next message: <A HREF="000770.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#751">[ date ]</a>
+              <a href="thread.html#751">[ thread ]</a>
+              <a href="subject.html#751">[ subject ]</a>
+              <a href="author.html#751">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems running HD channels with vidix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D03901A194%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002943.html">
+   <LINK REL="Next"  HREF="002938.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems running HD channels with vidix</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D03901A194%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] Problems running HD channels with vidix">Neumann at do-net.de
+       </A><BR>
+    <I>Wed Oct 10 22:42:54 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002943.html">[Softdevice-devel] [PATCH] shm init in incorrect order [was:	ShmClient: XvVideoOut.Reconfigure format &gt; 3!]
+</A></li>
+        <LI>Next message: <A HREF="002938.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2937">[ date ]</a>
+              <a href="thread.html#2937">[ thread ]</a>
+              <a href="subject.html#2937">[ subject ]</a>
+              <a href="author.html#2937">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+ 
+i have problems running softdevice with vidix enabled with HD Stations. When i switch to an HD channel, i get the following (complete log):
+ 
+(none):/usr/local/src/VDR # ./vdr -c /etc/vdr -v /video0/ -P'softdevice -vo vidix:'
+softdevice: Created setupStoreId 131073!
+softdevice: Attatched to setupStoreId 131073 at 0x40019000.
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[setup-softdevice] alsa ac3Mode set to: 1
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] autodetectAspect 0
+[setup-softdevice] A/V Offset set to (-2)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 2 (16:9)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 6 median
+[setup-softdevice] Expanding 0 columns at left and right
+[setup-softdevice] Expanding 0 columns at top and bottom
+[setup-softdevice] mainMenu: 0
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseSetSourceRectangle to off
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 55
+[setup-softdevice] vidContrast: 55
+[setup-softdevice] vidHue: 47
+[setup-softdevice] vidSaturation: 47
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3352064)
+22:36:43.0590 I [5193] [cVidixVideoOut] DirectColor FB found
+22:36:43.0590 I [5193] [cVidixVideoOut] xres = 1920 yres= 1080
+22:36:43.0590 I [5193] [cVidixVideoOut] line length = 7680
+22:36:43.0591 I [5193] [cVidixVideoOut] bpp = 32
+22:36:43.0599 I [5193] [cVidixVideoOut] vidix version: 100
+[mga] Can't find chip
+[mga] Can't find chip
+[mga] Can't find chip
+Radeon_vid: Found chip: RV370 5B60 [Radeon X300 (PCIE)]
+Radeon_vid: Video memory = 128Mb
+Radeon_vid: Set write-combining type of video memory
+Radeon_vid: DVI port has DFP monitor connected
+Radeon_vid: CRT port has no monitor connected
+libdha: Can't open /dev/dhahelper
+22:36:43.0606 I [5193] [cVidixVideoOut] capabilities:  0x2030
+22:36:43.0606 I [5193] [cVidixVideoOut] fourcc.flags:  0xf
+22:36:43.0606 I [5193] [cVidixVideoOut] set colorkey
+22:36:43.0606 I [5193] [cVidixVideoOut] vdlSetGrKeys() = 0
+22:36:43.0607 I [5193] [cVidixVideoOut] capabilities
+22:36:43.0607 I [5193] [cVidixVideoOut] EQ cap: 1f:
+22:36:43.0607 I [5193] [cVidixVideoOut]  brightness (0)
+22:36:43.0607 I [5193] [cVidixVideoOut]  contrast (0)
+22:36:43.0607 I [5193] [cVidixVideoOut]  saturation (0)
+22:36:43.0607 I [5193] [cVidixVideoOut]  hue (0)
+22:36:43.0607 I [5193] [cVidixVideoOut]  RGB-intensity (0, 0, 0)
+22:36:43.0607 I [5193] [cVidixVideoOut]  HW-deinterlace (8,900aaaaa)
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+22:36:46.0183 I [5202] [cVidixVideoOut] Video changed format to 736x576
+22:36:46.0183 I [5202] [cVidixVideoOut] set colorkey
+22:36:46.0183 I [5202] [cVidixVideoOut] vdlSetGrKeys() = 0
+22:36:46.0184 I [5202] [cVidixVideoOut] set eq values
+video: synced early
+22:36:46.0373 D [5207] [VideoOut] reset: sync info: repF = 0, drpF = 0, totF = 0
+ALSA lib pcm.c:1962:(snd_pcm_open_noupdate) Unknown PCM CH2
+allocating buffer format orig-&gt;format 0
+22:36:47.0243 I [5210] [cVidixVideoOut] Video changed format to 704x576
+22:36:47.0243 I [5210] [cVidixVideoOut] set colorkey
+22:36:47.0243 I [5210] [cVidixVideoOut] vdlSetGrKeys() = 0
+22:36:49.0724 D [5210] [VideoOut] video now synced (54 - -251)
+audio: synced early
+22:36:55.0344 D [5216] [softdevice-audio]: Xrun (at least 632.158 ms long)
+22:36:55.0742 D [5214] [VideoOut] reset: sync info: repF = 52, drpF = 0, totF = 173
+[mpeg2video @ 0x406d8488]skipped MB in I frame at 71 6
+[mpeg2video @ 0x406d8488]skipped MB in I frame at 16 10
+[mpeg2video @ 0x406d8488]skipped MB in I frame at 30 20
+[mpeg2video @ 0x406d8488]ac-tex damaged at 29 23
+[mpeg2video @ 0x406d8488]ac-tex damaged at 8 63
+[mpeg2video @ 0x406d8488]Warning MVs not available
+[mpeg2video @ 0x406d8488]concealing 300 DC, 300 AC, 300 MV errors
+[mpeg2video @ 0x406d8488]concealing 300 DC, 300 AC, 300 MV errors
+[mpeg2video @ 0x406d8488]concealing 300 DC, 300 AC, 300 MV errors
+[mpeg2video @ 0x406d8488]slice mismatch
+[mpeg2video @ 0x406d8488]ac-tex damaged at 119 14
+[mpeg2video @ 0x406d8488]mb incr damaged
+[mpeg2video @ 0x406d8488]slice mismatch
+[mpeg2video @ 0x406d8488]Warning MVs not available
+[mpeg2video @ 0x406d8488]concealing 290 DC, 290 AC, 290 MV errors
+allocating buffer format orig-&gt;format 0
+22:36:55.0998 I [5217] [cVidixVideoOut] Video changed format to 1920x1088
+22:36:55.0998 E [5217] [cVidixVideoOut] Can't configure playback: Function not implemented exiting
+
+ 
+Is there some kind of limitation with vidix ??
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071010/6dc65b96/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071010/6dc65b96/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002943.html">[Softdevice-devel] [PATCH] shm init in incorrect order [was:	ShmClient: XvVideoOut.Reconfigure format &gt; 3!]
+</A></li>
+	<LI>Next message: <A HREF="002938.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2937">[ date ]</a>
+              <a href="thread.html#2937">[ thread ]</a>
+              <a href="subject.html#2937">[ subject ]</a>
+              <a href="author.html#2937">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

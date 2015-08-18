@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] softdevice 0.2.3a issues reported by valgrind
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%200.2.3a%20issues%20reported%20by%20valgrind&In-Reply-To=%3C200606152246.33337.prakash%40punnoor.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002211.html">
+   <LINK REL="Next"  HREF="002146.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] softdevice 0.2.3a issues reported by valgrind</H1>
+    <B>Prakash Punnoor</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%200.2.3a%20issues%20reported%20by%20valgrind&In-Reply-To=%3C200606152246.33337.prakash%40punnoor.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] softdevice 0.2.3a issues reported by valgrind">prakash at punnoor.de
+       </A><BR>
+    <I>Thu Jun 15 22:46:33 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002211.html">[Softdevice-devel] I only see osd
+</A></li>
+        <LI>Next message: <A HREF="002146.html">[Softdevice-devel] [PATCH] softdevice 0.2.3a issues reported by valgrind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2144">[ date ]</a>
+              <a href="thread.html#2144">[ thread ]</a>
+              <a href="subject.html#2144">[ subject ]</a>
+              <a href="author.html#2144">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I haven't checked against cvs, but last release should probably have something 
+like this merged. You possibly have to tweak some inital values, as I dont 
+know correct values. This patch fixes
+
+- uninitialized variables
+- delete/delete[] mismatch
+- calling function with too little parameters
+
+There are some more issues with ioctls and uninitialized stuff, but I haven't 
+checked, yet.
+
+diff -urd softdevice-0.2.3a/SoftOsd.c softdevice-0.2.3a.mod/SoftOsd.c
+--- softdevice-0.2.3a/SoftOsd.c	2006-04-23 22:35:53.000000000 +0200
++++ softdevice-0.2.3a.mod/SoftOsd.c	2006-06-15 22:32:47.000000000 +0200
+@@ -43,6 +43,8 @@
+         xPan = yPan = 0;
+ 	videoOut-&gt;OpenOSD();
+ 	xOfs=X;yOfs=Y;
++	ScreenOsdWidth=0;
++	ScreenOsdHeight=0;
+         int Depth; bool HasAlpha; bool AlphaInversed; bool IsYUV; 
+         uint8_t *PixelMask;
+         videoOut-&gt;AdjustOSDMode();
+@@ -77,7 +79,7 @@
+                 videoOut-&gt;CloseOSD();
+                 videoOut=0;
+         }
+-        delete OSD_Bitmap;
++        delete[] OSD_Bitmap;
+ }
+ 
+ /* -------------------------------------------------------------------------*/
+diff -urd softdevice-0.2.3a/mpeg2decoder.c 
+softdevice-0.2.3a.mod/mpeg2decoder.c
+--- softdevice-0.2.3a/mpeg2decoder.c	2006-04-14 23:25:44.000000000 +0200
++++ softdevice-0.2.3a.mod/mpeg2decoder.c	2006-06-15 22:32:47.000000000 +0200
+@@ -51,7 +51,7 @@
+ 
+ cPacketQueue::~cPacketQueue() {
+   Clear();
+-  delete queue;
++  delete[] queue;
+ };
+ 
+ int cPacketQueue::PutPacket(const AVPacket &amp;Packet) {
+diff -urd softdevice-0.2.3a/video.c softdevice-0.2.3a.mod/video.c
+--- softdevice-0.2.3a/video.c	2006-04-29 17:57:27.000000000 +0200
++++ softdevice-0.2.3a.mod/video.c	2006-06-15 22:32:47.000000000 +0200
+@@ -35,6 +35,7 @@
+   old_width = fwidth = lwidth = old_dwidth = dwidth = swidth = 720;
+   old_height = fheight = lheight = old_dheight = dheight = sheight = 536;
+   sxoff = syoff = lxoff = lyoff = 0;
++  flags = 0;
+   cutTop = cutBottom = cutLeft = cutRight = 0;
+   OsdPy = OsdPu = OsdPv = OsdPAlphaY = OsdPAlphaUV = NULL;
+   Osd_changed = 0;
+@@ -44,6 +45,10 @@
+   interlaceMode = -1;
+   prevZoomFactor = 0;
+   realZoomFactor = 1.0;
++  zoomCenterX = 0;
++  zoomCenterY = 0;
++  expandTopBottom = 0;
++  expandLeftRight = 0;
+   PixelMask=NULL;
+   OsdRefreshCounter=0;
+   displayTimeUS = 0;
+@@ -118,7 +123,7 @@
+                          old_picture-&gt;data[2],
+                          old_width, old_height,
+                          old_picture-&gt;linesize[0],
+-                         old_picture-&gt;linesize[1]);
++                         old_picture-&gt;linesize[1],0,0);
+       }
+       else
+       {
+@@ -126,7 +131,7 @@
+         DrawStill_420pl (OsdPy,OsdPu, OsdPv,
+                         OsdWidth,OsdHeight,
+                         //OSD_FULL_WIDTH, OSD_FULL_HEIGHT,
+-                         OSD_FULL_WIDTH, OSD_FULL_WIDTH/2);
++                         OSD_FULL_WIDTH, OSD_FULL_WIDTH/2,0,0);
+       }
+       osdMutex.Unlock();
+     }
+
+
+Hth,
+-- 
+(&#176;=                 =&#176;)
+//\ Prakash Punnoor /\\
+V_/                 \_V
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: val-soft.diff
+Type: text/x-diff
+Size: 2535 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060615/caf48571/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060615/caf48571/attachment.diff</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060615/caf48571/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060615/caf48571/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002211.html">[Softdevice-devel] I only see osd
+</A></li>
+	<LI>Next message: <A HREF="002146.html">[Softdevice-devel] [PATCH] softdevice 0.2.3a issues reported by valgrind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2144">[ date ]</a>
+              <a href="thread.html#2144">[ thread ]</a>
+              <a href="subject.html#2144">[ subject ]</a>
+              <a href="author.html#2144">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] xrun problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C60F73C3E8E511499363F28E7%40%5B192.168.1.22%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001092.html">
+   <LINK REL="Next"  HREF="001096.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] xrun problems</H1>
+    <B>Claas Hilbrecht</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C60F73C3E8E511499363F28E7%40%5B192.168.1.22%5D%3E"
+       TITLE="[Softdevice-devel] xrun problems">claas+maillinglists.softdevice at jucs-kramkiste.de
+       </A><BR>
+    <I>Mon Aug  8 12:20:24 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001092.html">[Softdevice-devel] xrun problems
+</A></li>
+        <LI>Next message: <A HREF="001096.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1094">[ date ]</a>
+              <a href="thread.html#1094">[ thread ]</a>
+              <a href="subject.html#1094">[ subject ]</a>
+              <a href="author.html#1094">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>--Am Montag, 8. August 2005 11:59 +0200 Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt; 
+schrieb:
+
+&gt;<i> Currently, if you use &quot;-vo dummy:&quot; video is still decoded, but not
+</I>&gt;<i> displayed! To not decode the video there are still some changes in
+</I>&gt;<i> mpeg2decoder necessary...
+</I>
+My fault. I thought that using the dummy output disables video handling. 
+But maybe this is really something that could be improved.
+
+&gt;<i> Are these audio Xruns audible? Do you hear some clicks or does the audio
+</I>&gt;<i> stop sometimes for a short period, or do you just see the messages in
+</I>&gt;<i> the syslog?
+</I>
+Yes, you will hear &quot;nothing&quot;, that means from a few tens of seconds silence 
+up to approx. two seconds silence.
+
+&gt;<i> The reason I'm asking is that the softdevice doesn't stop the audio
+</I>&gt;<i> properly on channel change, so you'll get an audio Xrun message every
+</I>&gt;<i> time you change the channel. Up to now I've been to lazy to implement
+</I>&gt;<i> this correctly ( and I don't think it would make a difference expect
+</I>&gt;<i> that the Xrun messages would disapear...)
+</I>
+The system has 3 low bugdet DVB-S cards that are not used while listing to 
+radio. At daytime the system is used to distrubute a radio signal to 
+several clients. So I don't think a channel change is the problem.
+
+&gt;<i> If you really hear these Xruns then you should try the different  buffer
+</I>&gt;<i> settings from the OSD menu, the HDTV setting is the savest against
+</I>&gt;<i> buffer underruns, but the seeking in video will behave completly crazy.
+</I>&gt;<i> The &quot;good seeking&quot; setting should be avoided if you have problems with
+</I>&gt;<i> buffer underruns.
+</I>
+I never used the box to watch anything. It is only used as a vdr server. 
+But I'm not sure how to use the OSD since there is no full featured card in 
+the system and so far I didn't configure the softdevice plugin for diplay 
+so far. I which the &quot;make DEBUG_OSD=1&quot; switch will work again :)
+
+&gt;<i> I don't think that low latency patches are necessary on a system with
+</I>&gt;<i> low load, but they may improve the situation...
+</I>
+dito. I will try to increase buffer sizes first.
+
+-- 
+ Claas Hilbrecht
+ <A HREF="http://www.jucs-kramkiste.de">http://www.jucs-kramkiste.de</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001092.html">[Softdevice-devel] xrun problems
+</A></li>
+	<LI>Next message: <A HREF="001096.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1094">[ date ]</a>
+              <a href="thread.html#1094">[ thread ]</a>
+              <a href="subject.html#1094">[ subject ]</a>
+              <a href="author.html#1094">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20probs%20with%20softdevice-0.2.1%2C%20FusionSound-0.9.23%2C%0A%20linux-fusion-1.1%2C%20DirectFB-0.9.24&In-Reply-To=%3C43A1BE37.2040608%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001596.html">
+   <LINK REL="Next"  HREF="001597.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20probs%20with%20softdevice-0.2.1%2C%20FusionSound-0.9.23%2C%0A%20linux-fusion-1.1%2C%20DirectFB-0.9.24&In-Reply-To=%3C43A1BE37.2040608%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Dec 15 20:04:23 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001596.html">[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+        <LI>Next message: <A HREF="001597.html">[Softdevice-devel] Xine w/ crop mode or softdevice on CLE266/CN400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1600">[ date ]</a>
+              <a href="thread.html#1600">[ thread ]</a>
+              <a href="subject.html#1600">[ subject ]</a>
+              <a href="author.html#1600">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Harald Milz schrieb:
+
+&gt;<i> BTW I exchanged all memcpys by fast_memcpys in video-dfb.c and
+</I>&gt;<i> mpeg2decoder.c, and the image flickers only very slightly with a 1 GHz
+</I>&gt;<i> Athlon XP-M... good thing IMHO. Why aren't fast_memcpys used anyway? 
+</I>&gt;<i> 
+</I>
+It's used in Xv-Video out. DirectFB didn't work properly on my box, so I
+could not test it for DFB ;-).
+But as I already said fast_memcpy is only faster if cache can't be used,
+otherwise it is slower, so it's not the best to replace all memcpys.
+Only the ones which large amounts of data (which doesn't fit into the
+cache) should be copied with fast_memcpy.
+
+Martin
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001596.html">[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+	<LI>Next message: <A HREF="001597.html">[Softdevice-devel] Xine w/ crop mode or softdevice on CLE266/CN400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1600">[ date ]</a>
+              <a href="thread.html#1600">[ thread ]</a>
+              <a href="subject.html#1600">[ subject ]</a>
+              <a href="author.html#1600">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

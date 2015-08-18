@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A-V sync problems with directfb on	unichrome...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on%09unichrome...&In-Reply-To=%3C43352E00.7030206%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001260.html">
+   <LINK REL="Next"  HREF="001264.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A-V sync problems with directfb on	unichrome...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on%09unichrome...&In-Reply-To=%3C43352E00.7030206%40gmx.net%3E"
+       TITLE="[Softdevice-devel] A-V sync problems with directfb on	unichrome...">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Sep 24 12:44:16 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001260.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+        <LI>Next message: <A HREF="001264.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1263">[ date ]</a>
+              <a href="thread.html#1263">[ thread ]</a>
+              <a href="subject.html#1263">[ subject ]</a>
+              <a href="author.html#1263">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laurence Abbott schrieb:
+&gt;<i> On Thu, 2005-09-22 at 19:03 +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>However I think that the nans you see are just because I was a bit lazy
+</I>&gt;&gt;<i>with the conversions: (float)dispTime/1000  is not necessarly of type
+</I>&gt;&gt;<i>float again. Probably an additional conversion or replacing 1000 by
+</I>&gt;&gt;<i>1000.0 helps, I think I remember that some compilers didn't like these
+</I>&gt;&gt;<i>constructs.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Here are is some output from added '.0' with both BPGDEb and AV_STATS
+</I>&gt;<i> defined:
+</I>&gt;<i> 
+</I>&gt;<i> (short section posted here: full log from ca. 20 s run at
+</I>&gt;<i> <A HREF="http://vdr.club-burniston.co.uk/vdr_MPGDEB.log.gz">http://vdr.club-burniston.co.uk/vdr_MPGDEB.log.gz</A>):
+</I>
+&gt;<i> mpegdec[6765]:Frame# 474   A-V(ms) 1906  delay -52279 FrameT: P_t, dispTime(ms):
+</I>&gt;<i> 12.28
+</I>&gt;<i> mpegdec[6776]:Got pts: pictno 476  pts: 518270682 lastIdx 7
+</I>&gt;<i> mpegdec[6776]:video pts: 518270682, values.pkt : 518270682 pts - valid PTS: 0 pic
+</I>&gt;<i> tno: 476 idx: 6
+</I>&gt;<i> mpegdec[6802]:audio: count: 824  Length: 576 len: 576 a_size: 4608 a_delay: 1201
+</I>&gt;<i> mpegdec[6802]:audio pts 518274746 pkt-&gt;PTS : 518274746 pts - valid PTS: 0
+</I>&gt;<i> mpegdec[6802]:audio pts offset -149357279
+</I>&gt;<i> mpegdec[6802]:a_delay 1438 at end of decode
+</I>&gt;<i> mpegdec[6804]:audio: count: 825  Length: 576 len: 576 a_size: 4608 a_delay: 1426
+</I>&gt;<i> mpegdec[6804]:audio pts offset -149357279
+</I>&gt;<i> mpegdec[6804]:a_delay 1666 at end of decode
+</I>&gt;<i> mpegdec[6805]:audio: count: 826  Length: 576 len: 576 a_size: 4608 a_delay: 1656
+</I>&gt;<i> mpegdec[6805]:audio pts offset -149357279
+</I>&gt;<i> mpegdec[6805]:a_delay 1895 at end of decode
+</I>&gt;<i> mpegdec[6832]:Frame# 475   A-V(ms) 2249  delay -87990 FrameT: B_t, dispTime(ms):
+</I>&gt;<i> 56.33
+</I>&gt;<i> mpegdec[6843]:Got pts: pictno 477  pts: 518271082 lastIdx 8
+</I>&gt;<i> 
+</I>Ok, so the problem was not the nan's, but still I can not see anything
+wrong in mpeg2decoder. Unfortunatly some of the a-v sync debuging output
+has been removed by Stefan when he moved the waiting to the video out,
+and also the dispTime is meaningless.
+What I can say is that mpeg2decoder nows quite well that the A-V sync is
+bad and tries to compensate, in you log the video is behind the audio,
+and thus the delay is even negative which means there should be no delay
+at all. But still it takes more than 40 ms between two frames.
+I currently see two options: first, your computer is too slow, or second
+the video-out waits at some point even though the requested delay is
+negative.
+Probably you should try to switch of the wait on sync in the directFB-out.
+Stefan, is this easily possible?
+
+Unfortunalty I'm a bit short on time right now otherwise I would add
+some more debugging to be able to distinguish between the two options.
+But I will be away the next week, so I wont be able to read my e-mails
+until the next weekend :-/
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001260.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+	<LI>Next message: <A HREF="001264.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1263">[ date ]</a>
+              <a href="thread.html#1263">[ thread ]</a>
+              <a href="subject.html#1263">[ subject ]</a>
+              <a href="author.html#1263">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

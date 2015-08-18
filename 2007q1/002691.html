@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] improved lip sync with mgatv and viatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C200701242358.28010.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002690.html">
+   <LINK REL="Next"  HREF="002692.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] improved lip sync with mgatv and viatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C200701242358.28010.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] improved lip sync with mgatv and viatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jan 24 23:58:27 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002690.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+        <LI>Next message: <A HREF="002692.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2691">[ date ]</a>
+              <a href="thread.html#2691">[ thread ]</a>
+              <a href="subject.html#2691">[ subject ]</a>
+              <a href="author.html#2691">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 24 Januar 2007 22:45, Torgeir Veimo wrote:
+&gt;<i> 
+</I>&gt;<i> On 24 Jan 2007, at 20:01, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; On Dienstag 23 Januar 2007 01:25, Torgeir Veimo wrote:
+</I>&gt;<i> &gt;&gt; On 22 Jan 2007, at 20:26, Stefan Lucke wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;&gt; So my system skips around 9 to 10 frames per minute.
+</I>&gt;<i> &gt;&gt;&gt; 60 * 25 = 1500 frames.
+</I>&gt;<i> &gt;&gt;&gt; So the TV frame rate is 25 * 1490 / 1500 = 24.833 Hz .
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; I guess I've to ask Ville if there is a way to increase the dot  
+</I>&gt;<i> &gt;&gt;&gt; clock
+</I>&gt;<i> &gt;&gt;&gt; of my card in some way.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; This assumes your soundcard is perfectly clocked to the incoming DVB
+</I>&gt;<i> &gt;&gt; stream? I'd assume that eventually if the soundcard is a bit faster
+</I>&gt;<i> &gt;&gt; than the DVB stream, you'd get an xrun. Maybe it's an idea to add
+</I>&gt;<i> &gt;&gt; xrun counts as well.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Yes, there are e few assumptions which may slightly influence  
+</I>&gt;<i> &gt; calculation.
+</I>&gt;<i> &gt; These numbers are from recording playback. During live view, they are
+</I>&gt;<i> &gt; a bit different, but the direction is the same.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The other way, we have to issue additional delays, because of some
+</I>&gt;<i> &gt; errors we lost about 9 frames is bad too. Let's look at the code:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 1. calculate current audio / video offset:
+</I>&gt;<i> &gt;   if ( aPTS )
+</I>&gt;<i> &gt;     offset = aPTS - pts ;
+</I>&gt;<i> &gt;   else offset = 0;
+</I>&gt;<i> &gt;   if ( abs(offset) &gt; 100000)
+</I>&gt;<i> &gt;           offset=0;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; To my opinion thats ok.
+</I>&gt;<i> 
+</I>&gt;<i> Maybe use the term delay instead of offset. Eg. choosing the term &quot;A/ 
+</I>&gt;<i> V Offset&quot; in the setup was a bad choice of me.
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; Another thing which would be good to get statistics about: the
+</I>&gt;<i> &gt;&gt; average number of &quot;hurryup&quot;s after a channel change.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; After a channel change, I think we issue delays instead of hurryups.
+</I>&gt;<i> 
+</I>&gt;<i> Are you sure? Where's the code for that?
+</I>
+So after above code I inserted the following conditional fprintf.
+traceCounter is reset in constructor of cVideoStreamDecoder, needs to be
+defined in mpeg2decoder.h too.
+
+          offset=0;
+
+if (traceCounter &lt; 100) {
+fprintf (stderr, &quot;%d offset = %d\n&quot;, traceCounter, offset);
+++traceCounter;
+}
+
+  // this few lines does the whole syncing
+
+0 offset = 0
+1 offset = -400
+2 offset = -400
+3 offset = -400
+4 offset = -400
+5 offset = -5519
+6 offset = -5492
+7 offset = -5465
+..
+75 offset = -239
+76 offset = -425
+77 offset = -185
+78 offset = -159
+79 offset = -132
+80 offset = -105
+81 offset = -292
+82 offset = -52
+83 offset = -25
+84 offset = 1
+
+First positive number is after 85 frames. Thats a short test from xv-out.
+
+positive numbers -&gt; frame drop.
+negative numbers -&gt; frame repeat.
+
+&gt;<i> 
+</I>&gt;<i> I think it would be interesting to gather audio clock to DVB signal  
+</I>&gt;<i> clock drift over time and reprogram the audio output, if it has the  
+</I>&gt;<i> capability to do so. I think AC '97 compatible hardware has a  
+</I>&gt;<i> software programmable clock, but I'm not sure if it can be set using  
+</I>&gt;<i> an ioctl.
+</I>
+If sound cards would have the possibility to adjust the pll clock would
+be really nice, but I've never found a hint to do this. 
+Resampling for stereo could do a similar thing, but AC3 pass through ?
+Decode -&gt; Resample -&gt; Encode :-( .
+
+&gt;<i> 
+</I>&gt;<i> Additionally, why don't we try to make use of the available vsync  
+</I>&gt;<i> interrupt on the matroxfb in SyncTimer.c, when we don't use  
+</I>&gt;<i> DSFLIP_WAITFORSYNC?.
+</I>&gt;<i> 
+</I>&gt;<i> For reference, here's five minutes of log from my system. Maybe my  
+</I>&gt;<i> modeline is not properly adjusted to the DVB clock.
+</I>
+The tv-out feature of matrox tv-out is not based on modelines :-) .
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002690.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+	<LI>Next message: <A HREF="002692.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2691">[ date ]</a>
+              <a href="thread.html#2691">[ thread ]</a>
+              <a href="subject.html#2691">[ subject ]</a>
+              <a href="author.html#2691">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

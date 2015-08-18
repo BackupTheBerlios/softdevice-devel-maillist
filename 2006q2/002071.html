@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #7202] Illegal instruction
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%237202%5D%20Illegal%20instruction&In-Reply-To=%3C200605271123.k4RBNMJ0007483%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002070.html">
+   <LINK REL="Next"  HREF="002072.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #7202] Illegal instruction</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%237202%5D%20Illegal%20instruction&In-Reply-To=%3C200605271123.k4RBNMJ0007483%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #7202] Illegal instruction">admin at berlios.de
+       </A><BR>
+    <I>Sat May 27 13:23:22 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002070.html">[Softdevice-devel] [Bug #7534] MMX2 detected on VIA C3, does not exist
+</A></li>
+        <LI>Next message: <A HREF="002072.html">[Softdevice-devel] [Bug #7549] Fehlfarben im OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2071">[ date ]</a>
+              <a href="thread.html#2071">[ thread ]</a>
+              <a href="subject.html#2071">[ subject ]</a>
+              <a href="author.html#2071">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #7202, was updated on 2006-Apr-20 12:51
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Closed
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: drakon
+Assigned to : none
+Summary: Illegal instruction
+
+Details: Hallo!
+Wenn das Programm auf einem Rechner dessen Prozessor kein MMX2 unterst&#252;tzt kompiliert und ausgef&#252;hrt wird kommt es zu diesem Fehler.
+Das Problem habe ich hier beschrieben:
+
+<A HREF="http://vdr-portal.de/board/thread.php?threadid=48118">http://vdr-portal.de/board/thread.php?threadid=48118</A>
+
+Follow-Ups:
+
+Date: 2006-May-27 13:23
+By: wachm
+
+Comment:
+I assume this is now fixed...
+-------------------------------------------------------
+
+Date: 2006-Apr-23 22:31
+By: wachm
+
+Comment:
+Ich denke ich habe das Problem gel&#246;st, da wurde ein MMX2-Befehl trotzdem in utils.c und SoftOsd.c benutzt. Ich habe aber selbst kein Prozessor mit dem ich das ausprobieren k&#246;nnte... Bitte probier mal die CVS Version aus und sag bescheid ob's geht
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=7202&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=7202&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002070.html">[Softdevice-devel] [Bug #7534] MMX2 detected on VIA C3, does not exist
+</A></li>
+	<LI>Next message: <A HREF="002072.html">[Softdevice-devel] [Bug #7549] Fehlfarben im OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2071">[ date ]</a>
+              <a href="thread.html#2071">[ thread ]</a>
+              <a href="subject.html#2071">[ subject ]</a>
+              <a href="author.html#2071">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

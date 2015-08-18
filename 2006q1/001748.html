@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.2&In-Reply-To=%3C200602121936.53613.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001747.html">
+   <LINK REL="Next"  HREF="001749.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.2</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.2&In-Reply-To=%3C200602121936.53613.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.2">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Feb 12 19:36:53 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001747.html">[Softdevice-devel] x11 documentation links
+</A></li>
+        <LI>Next message: <A HREF="001749.html">[Softdevice-devel] desperate plea to stop dolby digital cut outs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1748">[ date ]</a>
+              <a href="thread.html#1748">[ thread ]</a>
+              <a href="subject.html#1748">[ subject ]</a>
+              <a href="author.html#1748">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+softdevice team (Torgeir Veimo, Martin Wache and me, Stefan Lucke)
+is pleased to announce a new release of vdr softdevice plugin.
+
+General info:
+&#160; Softdevice plugin enables vdr to run on your desktop with
+&#160; so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+&#160; DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+
+Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+
+Changelog since last release:
+2006-02-12: softdevice-0.2.2
+2006-02-11:
+   - some minor fixes:
+       - OSD redrawing with dfb-out when switching from StretchBlit to BES mode
+       - compiling with SoftOsd.c with gcc 2.95.3
+2006-02-06:
+   - don't start ShmClient in fullscreen mode by default
+   - some more documentation
+   - disable debuging information
+   - fix linking of ShmClient with vdr-1.3.42
+   - add usleep to ShmClient (to avoid busy loop in case there are no
+     semaphores)
+   - fix for vdr-1.3.42 compatibility
+   - disable some trace messages
+2006-02-03:
+   - remove unused code, variables and parameters from video-xv
+   - add more documentation to the readme
+   - fix ShmClient pixel[] array initialisation
+   - compile fix for video-shm.h
+   - some fixes in the osd handling of video-shm
+   - added NoVScaleCopyToBitmap() vor YUV mode
+   - fix thread termination in cSoftOsd
+   - make sure that strides are multiples of 16 in cSoftOsd
+2006-02-03:
+   - remove cSoftOsd and cOsd dependency from cVideoOut. Size and
+     Mode changes are now handled by a thread from cSoftOsd.
+   - introduce separate OSD layer in ShmClient/video-shm
+2006-01-19:
+   - now correct fix for CheckArea() not updating the aspect ratio
+2006-01-17:
+   - add video-shm and ShmClient, a simple server/client model for the
+     softdevice. See the file README for details.
+2006-01-15:
+   - compile fix for vdr-1.2.6
+   - fix for AMD64 builds (patch by Janne Huttunen, many thanks to him)
+2006-01-10:
+   - fix error message from DirectFB about wrong blitting area with new OSD
+2006-01-09:
+    - add missing sanity check in cSoftOsd::DrawConvertBitmap()
+      (many thanks to Andre Neumann for reporting the problem)
+2006-01-08:
+    - fix segfault in cSoftOsd for lines longer than 1024
+      (thanks to Andre Neumann for reporting the problem)
+    - updated video-dfb for the new OSD. Double buffered displays should
+work now as well and the OSD mode is set properly
+2006-01-07:
+    - completely rewritten OSD. Supports up- and down-scaleing in MMX
+    - add sfence and emms to yv12_to_yuy2()
+    - on resume try to open audio-out in non-blocking mode
+2005-12-15:
+    - use fast_memcpy in dfb out
+2005-11-30:
+    - g++-2.95 complaints about &quot;::&quot; in inline asm and wants &quot;: :&quot; instead.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001747.html">[Softdevice-devel] x11 documentation links
+</A></li>
+	<LI>Next message: <A HREF="001749.html">[Softdevice-devel] desperate plea to stop dolby digital cut outs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1748">[ date ]</a>
+              <a href="thread.html#1748">[ thread ]</a>
+              <a href="subject.html#1748">[ subject ]</a>
+              <a href="author.html#1748">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

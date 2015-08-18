@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Loop when jumping to cut marks ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Loop%20when%20jumping%20to%20cut%20marks%20%3F&In-Reply-To=%3C200710131209.44685.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002922.html">
+   <LINK REL="Next"  HREF="002917.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Loop when jumping to cut marks ?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Loop%20when%20jumping%20to%20cut%20marks%20%3F&In-Reply-To=%3C200710131209.44685.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Loop when jumping to cut marks ?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Oct 13 12:09:44 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002922.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+        <LI>Next message: <A HREF="002917.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2941">[ date ]</a>
+              <a href="thread.html#2941">[ thread ]</a>
+              <a href="subject.html#2941">[ subject ]</a>
+              <a href="author.html#2941">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 5. Oktober 2007, Stefan Lucke wrote:
+&gt;<i> On Donnerstag, 4. Oktober 2007, Stefan Lucke wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; hopefully ml works again.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I noticed a problem which happens now with several vdr versions 1.4.0, 1.5.5, 1.5.9.
+</I>&gt;<i> &gt; When trying to jump to cut marks of recordings, vdr enters a loop.
+</I>&gt;<i> &gt; The first glance OSD seems still to be responsive.
+</I>&gt;<i> 
+</I>&gt;<i> We loop in decoding still picture. For some reason ffmpeg changed their
+</I>&gt;<i> api :-) and now it is possible that when avcodec_decode_video() is
+</I>&gt;<i> called with buffer and length 4, it may return 0 bytes consumed from 
+</I>&gt;<i> decode buffer. That happend on 2007-08-02:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://svn.mplayerhq.hu/ffmpeg/trunk/libavcodec/mpeg12.c?view=diff&amp;r1=9869&amp;r2=9870">http://svn.mplayerhq.hu/ffmpeg/trunk/libavcodec/mpeg12.c?view=diff&amp;r1=9869&amp;r2=9870</A>
+</I>&gt;<i> 
+</I>&gt;<i> Lets see what fmpeg people think of attached patch.
+</I>&gt;<i> If they say no I fix (work around that) in mpeg2decoder.c
+</I>
+It is now fixed in ffmpeg:
+<A HREF="http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2007-October/036665.html">http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2007-October/036665.html</A>
+<A HREF="http://lists.mplayerhq.hu/pipermail/ffmpeg-cvslog/2007-October/009920.html">http://lists.mplayerhq.hu/pipermail/ffmpeg-cvslog/2007-October/009920.html</A>
+
+Ffmpegs svn versions &gt;= 9870 and &lt; 10720 have this error.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002922.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+	<LI>Next message: <A HREF="002917.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2941">[ date ]</a>
+              <a href="thread.html#2941">[ thread ]</a>
+              <a href="subject.html#2941">[ subject ]</a>
+              <a href="author.html#2941">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

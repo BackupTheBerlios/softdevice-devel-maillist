@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] audio delay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20audio%20delay&In-Reply-To=%3C200606212312.11684.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002196.html">
+   <LINK REL="Next"  HREF="002198.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] audio delay</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20audio%20delay&In-Reply-To=%3C200606212312.11684.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] audio delay">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Thu Jun 22 00:12:11 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002196.html">[Softdevice-devel] audio delay
+</A></li>
+        <LI>Next message: <A HREF="002198.html">[Softdevice-devel] audio delay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2197">[ date ]</a>
+              <a href="thread.html#2197">[ thread ]</a>
+              <a href="subject.html#2197">[ subject ]</a>
+              <a href="author.html#2197">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 21 June 2006 22:55, Torgeir Veimo wrote:
+&gt;<i> Laz wrote:
+</I>&gt;<i> &gt; On Wednesday 21 June 2006 13:13, Torgeir Veimo wrote:
+</I>&gt;<i> &gt;&gt; Hmm, I think this has been pretty constant since last summer, when
+</I>&gt;<i> &gt;&gt; there was some work done to do sound sync automatically. I always had
+</I>&gt;<i> &gt;&gt; the impression that there was one frame off or something. I'm not
+</I>&gt;<i> &gt;&gt; sure but wouldn't using double buffering with Xv lead to audio being
+</I>&gt;<i> &gt;&gt; a single frame being ahead of the picture?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm using triple buffering with dfb output and my audio usually seems to
+</I>&gt;<i> &gt; be slightly behind the video. Is the syncing such that A-V sync is worked
+</I>&gt;<i> &gt; out when a fame is blitted to a buffer, be it front or back, rather than
+</I>&gt;<i> &gt; when the buffers are flipped? I'm no expert on the A-V sync stuff but it
+</I>&gt;<i> &gt; might explain why some people need different amounts of A-V sync delay,
+</I>&gt;<i> &gt; depending on the number of buffers in use.
+</I>&gt;<i>
+</I>&gt;<i> Can you try setting the delay to either 80ms 120ms and see if it gives
+</I>&gt;<i> good sync? What country are you in? I'm suspecting the special situation
+</I>&gt;<i> in the uk with vdb-t requires med to add an additional 40ms audio delay.
+</I>
+I'm in the UK on DVB-T too. What do you mean by '80 or 120 ms'? All I have 
+with dfb output is an integer value. Do you mean +8 and +12? I've usually got 
+bored changing it before getting to the best value so I tend to just live 
+with the video being slightly ahead. I'll try your values, though. Any 
+thoughts on why it should be needed in the UK?
+
+&gt;<i> The delay is just added to the a/v sync code, so that with a positive
+</I>&gt;<i> number, the decoder thinks the audio is behind and delays the video
+</I>&gt;<i> until audio is ahead the number of ms specified.
+</I>
+So a more positive value moves the audio forward relative to the video? Just 
+looking at cAudioStreamDecoder::GetPTS(). The offset*10 gets added to the 
+audio pts so that the audio is slowed down relative to the video so that the 
+video and audio pts values match. Or that's how I see it!
+
+I thought the A/V Delay was an &quot;audio delay&quot; and the other way round, from 
+what someone said on this list the other day.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002196.html">[Softdevice-devel] audio delay
+</A></li>
+	<LI>Next message: <A HREF="002198.html">[Softdevice-devel] audio delay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2197">[ date ]</a>
+              <a href="thread.html#2197">[ thread ]</a>
+              <a href="subject.html#2197">[ subject ]</a>
+              <a href="author.html#2197">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

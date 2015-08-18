@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XvMC support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XvMC%20support&In-Reply-To=%3C200604261135.03615.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001930.html">
+   <LINK REL="Next"  HREF="001933.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XvMC support</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XvMC%20support&In-Reply-To=%3C200604261135.03615.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] XvMC support">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Wed Apr 26 12:35:03 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001930.html">[Softdevice-devel] XvMC support
+</A></li>
+        <LI>Next message: <A HREF="001933.html">[Softdevice-devel] XvMC support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1931">[ date ]</a>
+              <a href="thread.html#1931">[ thread ]</a>
+              <a href="subject.html#1931">[ subject ]</a>
+              <a href="author.html#1931">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 26 Apr 2006 10:59, Nicolas Huillard wrote:
+&gt;<i> Laz a &#233;crit :
+</I>&gt;<i> &gt; Nothing really to report yet: I now have a working-ish version of
+</I>&gt;<i> &gt; libsoftmpeg which uses the hardware decoder. It no longer needs to
+</I>&gt;<i> &gt; have things running as root (which is always nice!) and I eventually
+</I>&gt;<i> &gt; got it working with the demo app (plays back an MPEG2-TS file),
+</I>&gt;<i> &gt; albeit quite jerkily!
+</I>&gt;<i>
+</I>&gt;<i> Congratulations !
+</I>&gt;<i> Feel free to submit code to the ML (directfb, softdevice), to give a
+</I>&gt;<i> chance to test.
+</I>
+Still a bit early for that, I'm afraid!
+
+&gt;<i> If you modified libsoftmpeg, you can also upload your mods to the
+</I>&gt;<i> DirectFB CVS repository, to have a broader audience. I think DOK was
+</I>&gt;<i> interested (2005-09) in adding hardware support to the MPEG2 video
+</I>&gt;<i> provider in DirectFB. If he can do this using your modified
+</I>&gt;<i> libsoftmpeg, you will get much more testers and maybe developers.
+</I>
+That would be good. As it stands, libsoftmpeg does both the decoding and 
+displaying of an MPEG stream as separate threads (still not worked out 
+whether it will do MPEG1 as well as MPEG2...). The decoded frames end up 
+in DirectFB surfaces which are then flipped. I'm sure it would be much 
+simpler if I removed the display thread (or made it optional) and let 
+something else do the actual flipping step.
+
+I may also remove all traces of avcodec from my version so that it would 
+then only work with CLE266 (and CLE400?) chips. At the moment, there are 
+huge chunks of code which are ignored due to #defines.
+
+&gt;<i> &gt; I'll need to do a bit more testing with this and then I'll try to
+</I>&gt;<i> &gt; work it into an output method for softdevice.
+</I>&gt;<i>
+</I>&gt;<i> Great !
+</I>&gt;<i> I just though about something : if your code is a new output method, it
+</I>&gt;<i> will only handle MPEG1/2, preventing from using softplay to decode DivX
+</I>&gt;<i> et al. Maybe it's better implemented as an alternate decoder for the
+</I>&gt;<i> directfb output method, giving a chance to still use current libavcodec
+</I>&gt;<i> for other codecs.
+</I>
+I thought softplay was pretty much stand-alone and used ffmpeg to decode 
+stuff: softdevice also uses ffmpeg but only decodes MPEG streams.
+
+&gt;<i> &gt; I doubt I'll get much done before the weekend, though...
+</I>&gt;<i>
+</I>&gt;<i> Live your life, keep up the good work, and try to build a supporting
+</I>&gt;<i> community around your project.
+</I>
+:<i>)
+</I>
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001930.html">[Softdevice-devel] XvMC support
+</A></li>
+	<LI>Next message: <A HREF="001933.html">[Softdevice-devel] XvMC support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1931">[ date ]</a>
+              <a href="thread.html#1931">[ thread ]</a>
+              <a href="subject.html#1931">[ subject ]</a>
+              <a href="author.html#1931">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

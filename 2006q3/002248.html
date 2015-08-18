@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice + libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C200607120651.42052.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002246.html">
+   <LINK REL="Next"  HREF="002249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice + libcle266mpegdec</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C200607120651.42052.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice + libcle266mpegdec">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jul 12 06:51:41 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002246.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002249.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2248">[ date ]</a>
+              <a href="thread.html#2248">[ thread ]</a>
+              <a href="subject.html#2248">[ subject ]</a>
+              <a href="author.html#2248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 11 Juli 2006 22:52, Martin Wache wrote:
+&gt;<i> Per Mellander schrieb:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; #0  0xb58a4b4f in fast_memcpy (to=0xb501e800, from=0x9307db70, len=736) at utils.c:831
+</I>&gt;<i> &gt; 831                     : : &quot;r&quot; (from), &quot;r&quot; (to) : &quot;memory&quot;);
+</I>&gt;<i> &gt; (gdb) bt
+</I>&gt;<i> &gt; #0  0xb58a4b4f in fast_memcpy (to=0xb501e800, from=0x9307db70, len=736) at utils.c:831
+</I>&gt;<i> &gt; #1  0xb58a912f in cDFBVideoOut::YUV (this=0x8205620, buf=0xb78b33c0) at video-dfb.c:1355
+</I>&gt;<i> &gt; #2  0xb58a58ec in cVideoOut::DrawStill_420pl (this=0x8205620, buf=0xb78b33c0) at video.c:468
+</I>&gt;<i> &gt; #3  0xb58a60d5 in cVideoOut::Action (this=0x8205620) at video.c:133
+</I>&gt;<i> &gt; #4  0x080f33ec in cThread::StartThread (Thread=0x8205a7c) at thread.c:244
+</I>&gt;<i> &gt; #5  0x00a1b3b6 in start_thread () from /lib/libpthread.so.0
+</I>&gt;<i> &gt; #6  0x0096733e in clone () from /lib/libc.so.6
+</I>&gt;<i> &gt; Current language:  auto; currently c++
+</I>&gt;<i> &gt; (gdb) 
+</I>&gt;<i> 
+</I>&gt;<i> Ah, that's much better. So the crash comes from the video thread,
+</I>&gt;<i> redrawing the video layer...
+</I>&gt;<i> I'm still not sure what could go wrong.. Maybe the CheckArea() is not
+</I>&gt;<i> called properly?? Could you please post a &quot;bt full&quot;, or at least a
+</I>&gt;<i> &quot;print *buf&quot; and a if possible print of *vout or *this? I would like to
+</I>&gt;<i> see what the values the variables of cDFBVideoOut are.
+</I>
+edge_width &amp; edge_height are not initialized in case of redrawing
+without old_picture.
+So a:
+ tmpBuf.edge_width = tmpBuf.edge_height = 0;
+at line 124 in video.c should/could fix this.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002246.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002249.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2248">[ date ]</a>
+              <a href="thread.html#2248">[ thread ]</a>
+              <a href="subject.html#2248">[ subject ]</a>
+              <a href="author.html#2248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

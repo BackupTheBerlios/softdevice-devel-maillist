@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay does not compile
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20does%20not%20compile&In-Reply-To=%3C200505170003.51634.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000676.html">
+   <LINK REL="Next"  HREF="000678.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay does not compile</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20does%20not%20compile&In-Reply-To=%3C200505170003.51634.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softplay does not compile">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue May 17 00:03:51 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000676.html">[Softdevice-devel] softplay does not compile
+</A></li>
+        <LI>Next message: <A HREF="000678.html">[Softdevice-devel] softplay does not compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#677">[ date ]</a>
+              <a href="thread.html#677">[ thread ]</a>
+              <a href="subject.html#677">[ subject ]</a>
+              <a href="author.html#677">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 16. Mai 2005 23:25, Stefan Lucke wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> current cvs version doe not compile anymore. ffmpeg is at cvs from saturday.
+</I>&gt;<i> 
+</I>&gt;<i> make[1]: Entering directory `/home/nfs/extra/src/video/DVB/vdr-1.3.22.jarada/PLUGINS/src/softplay'
+</I>&gt;<i> g++ -O2 -Wall -Woverloaded-virtual -c -D_GNU_SOURCE -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/local/include/ffmpeg/ softplay.c
+</I>&gt;<i> softplay.c: In member function `virtual eOSState
+</I>&gt;<i>    cMenuDirectory::ProcessKey(eKeys)':
+</I>&gt;<i> softplay.c:183: Warnung: unused variable `cPlayListItem*Item'
+</I>&gt;<i> g++ -O2 -Wall -Woverloaded-virtual -c -D_GNU_SOURCE -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/local/include/ffmpeg/ SoftPlayer.c
+</I>&gt;<i> /usr/local/include/ffmpeg/avformat.h: In member function `virtual void
+</I>&gt;<i>    cSoftPlayer::Action()':
+</I>&gt;<i> /usr/local/include/ffmpeg/avformat.h:588: error: too few arguments to function
+</I>&gt;<i>    `int av_seek_frame(AVFormatContext*, int, long long int, int)'
+</I>&gt;<i> SoftPlayer.c:151: error: at this point in file
+</I>&gt;<i> SoftPlayer.c:179: Warnung: comparison between signed and unsigned integer
+</I>&gt;<i>    expressions
+</I>&gt;<i> make[1]: *** [SoftPlayer.o] Fehler 1
+</I>
+So you need to check for:
+#if LIBAVFORMAT_BUILD &gt;= 4619
+
+for passing the 4th  parameter.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000676.html">[Softdevice-devel] softplay does not compile
+</A></li>
+	<LI>Next message: <A HREF="000678.html">[Softdevice-devel] softplay does not compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#677">[ date ]</a>
+              <a href="thread.html#677">[ thread ]</a>
+              <a href="subject.html#677">[ subject ]</a>
+              <a href="author.html#677">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash with latest CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20with%20latest%20CVS&In-Reply-To=%3C20050606153334.GA133462%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000796.html">
+   <LINK REL="Next"  HREF="000824.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash with latest CVS</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20with%20latest%20CVS&In-Reply-To=%3C20050606153334.GA133462%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Repeatable crash with latest CVS">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Jun  6 17:33:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000796.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+        <LI>Next message: <A HREF="000824.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#819">[ date ]</a>
+              <a href="thread.html#819">[ thread ]</a>
+              <a href="subject.html#819">[ subject ]</a>
+              <a href="author.html#819">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Jun 04, 2005 at 09:36:44PM +0200, Martin Wache wrote:
+&gt;<i> Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt;I have a recording with a 4:3 -&gt; 16:9 transition.  When rewinding it at
+</I>&gt;<i> &gt;triple speed, a Signal 11 sometimes occurs.   I made a short clip that can 
+</I>&gt;<i> &gt;be
+</I>&gt;<i> &gt;fast-forwarded and rewinded some times (maybe 5-10) to trigger the crash
+</I>&gt;<i> &gt;on my system.  Here is the stack trace from the core dump:
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for your report, up to now I could not reproduce the crash on my 
+</I>&gt;<i> box, but I didn't try very hard yet ;-)
+</I>
+I got it twice today on the first try when rewinding the clip from the end
+to the beginning at triple speed.  The second time was within gdb, running
+vdr 1.3.24 with the patch from subtitles-0.3.7 and with only the softdevice
+plugin loaded, using DirectFB 0.9.22 playback on a Matrox G400 or G450 card
+on VGA monitor with 4:3 cropping:
+
+(gdb) bt full
+#0  0xb7dceb7f in memcpy () from /lib/libc.so.6
+No symbol table info available.
+#1  0xb79523da in cDFBVideoOut::YUV (this=0x82247c8,
+    Py=0xb64fcb30 '\200' &lt;repeats 200 times&gt;...,
+    Pu=0x8313bc8 '\200' &lt;repeats 200 times&gt;...,
+    Pv=0x83a0940 '\200' &lt;repeats 200 times&gt;..., Width=720, Height=576,
+    Ystride=752, UVstride=376) at video-dfb.c:1021
+        dst = (uint8_t *) 0xb779bee0 &lt;Address 0xb779bee0 out of bounds&gt;
+        pitch = 576
+        hi = 288
+#2  0xb7948e21 in cVideoStreamDecoder::DecodePacket (this=0x82d91c0,
+    pkt=0x82bdcd0) at mpeg2decoder.c:594
+        findPTS = -1216758048
+        aPTS = 13256359796953190256
+        pts_corr = 80
+        dispTime = 360
+        len = 0
+        got_picture = 32
+        data = (uint8_t *) 0x82a0f90 &quot;&quot;
+        size = 2029
+#3  0xb7947ca4 in cStreamDecoder::Action (this=0x82d91c0) at mpeg2decoder.c:185
+        pkt = (AVPacket *) 0x82bdcd0
+#4  0x080e3ca6 in cThread::StartThread (Thread=0x82d91c0) at thread.c:227
+No locals.
+#5  0xb7f77e51 in pthread_start_thread () from /lib/libpthread.so.0
+No symbol table info available.
+#6  0xb7f77ecf in pthread_start_thread_event () from /lib/libpthread.so.0
+No symbol table info available.
+#7  0xb7e2e92a in clone () from /lib/libc.so.6
+No symbol table info available.
+
+&gt;<i> From your stack trace it looks like this bug will be very difficult to 
+</I>&gt;<i> find (as always when the stack gets corrupted...)
+</I>
+The above stack trace doesn't look like totally corrupted.  Here's a bit
+more analysis:
+
+(gdb) up
+#1  0xb79523da in cDFBVideoOut::YUV (this=0x82247c8,
+    Py=0xb64fcb30 '\200' &lt;repeats 200 times&gt;...,
+    Pu=0x8313bc8 '\200' &lt;repeats 200 times&gt;...,
+    Pv=0x83a0940 '\200' &lt;repeats 200 times&gt;..., Width=720, Height=576,
+    Ystride=752, UVstride=376) at video-dfb.c:1021
+1021          memcpy(dst, Pv+sxoff/2, swidth/2);
+Current language:  auto; currently c++
+(gdb) p *this
+$1 = {&lt;cVideoOut&gt; = {&lt;cThread&gt; = {_vptr.cThread = 0xb7bf4fa8, running = true,
+      childTid = 49156, mutex = {mutex = {__m_reserved = 0, __m_count = 0,
+          __m_owner = 0x0, __m_kind = 2, __m_lock = {__status = 0,
+            __spinlock = 0}}, locked = 0}, description = 0x0,
+      static emergencyExitRequested = false}, osdMutex = {mutex = {
+        __m_reserved = 0, __m_count = 0, __m_owner = 0x0, __m_kind = 2,
+        __m_lock = {__status = 0, __spinlock = 0}}, locked = 0}, OSDxOfs = 54,
+    OSDyOfs = 427, OSDw = 624, OSDh = 104, OSDpresent = true,
+    OSDpseudo_alpha = true, current_osdMode = 0, Xres = 736, Yres = 576,
+    Bpp = 32, dx = 0, dy = 0, dwidth = 768, dheight = 576, old_x = 0,
+    old_y = 0, old_dwidth = 0, old_dheight = 0, screenPixelAspect = 0,
+    fwidth = 720, fheight = 576, swidth = 720, sheight = 576, sxoff = 0,
+    syoff = 0, lwidth = 768, lheight = 576, lxoff = 0, lyoff = 0, flags = 0,
+    display_aspect = 0, current_aspect = 1, currentPixelFormat = 0,
+    aspect_changed = 0, current_afd = 1, parValues = {1, 0.9375, 1,
+      1.3333333333333333, 1.2000000000000002}, setupStore = 0xb7c623e0,
+    osd = 0x83bf428, active = true, OSDdirty = false, freezeMode = false,
+    PixelMask = 0x0, Osd_changed = 0, OsdPy = 0xb6730008 &quot;&quot;,
+    OsdPu = 0x82280b0 '\177' &lt;repeats 200 times&gt;...,
+    OsdPv = 0x8241ec0 '\177' &lt;repeats 200 times&gt;...,
+    OsdPAlphaY = 0xb66c8008 &quot;&quot;, OsdPAlphaUV = 0x825bcd0 &quot;&quot;, OsdHeight = 576,
+    OsdWidth = 736, OsdRefreshCounter = 0}, osdLayer = 0x8278420,
+  videoLayer = 0x8278f88, scrDsc = {flags = 9, caps = 533, width = 0,
+    height = 0, pixelformat = DSPF_ARGB, preallocated = {{data = 0x0,
+        pitch = 0}, {data = 0x0, pitch = 0}}, palette = {entries = 0x0,
+      size = 0}}, osdDsc = {flags = 15, caps = 532, width = 736, height = 576,
+    pixelformat = DSPF_ARGB, preallocated = {{data = 0x0, pitch = 0}, {
+        data = 0x0, pitch = 0}}, palette = {entries = 0x0, size = 0}},
+  vidDsc = {flags = 15, caps = DSCAPS_VIDEOONLY, width = 540, height = 576,
+    pixelformat = DSPF_I420, preallocated = {{data = 0x0, pitch = 0}, {
+        data = 0x0, pitch = 0}}, palette = {entries = 0x0, size = 0}},
+  osdSurface = 0x8279880, videoSurface = 0xb6512cd8, scrSurface = 0x82794a8,
+  pixelformat = DSPF_I420, dfbRemote = 0x8279a00, events = 0x8279b90,
+  deinterlace = false, alphablend = false, useStretchBlit = false,
+  osdClrBack = false, isVIAUnichrome = false, clearAlpha = 0,
+  clearBackCount = 2, clearBackground = 0, dfb = 0x8277d00}
+(gdb) up
+#2  0xb7948e21 in cVideoStreamDecoder::DecodePacket (this=0x82d91c0,
+    pkt=0x82bdcd0) at mpeg2decoder.c:594
+594         videoOut-&gt;YUV(picture-&gt;data[0], picture-&gt;data[1],picture-&gt;data[2],
+(gdb) p *this
+$2 = {&lt;cStreamDecoder&gt; = {&lt;cThread&gt; = {_vptr.cThread = 0xb7bf3408,
+      running = true, childTid = 376844, mutex = {mutex = {__m_reserved = 0,
+          __m_count = 0, __m_owner = 0x0, __m_kind = 2, __m_lock = {
+            __status = 0, __spinlock = 0}}, locked = 0}, description = 0x0,
+      static emergencyExitRequested = false}, PacketQueue = {MaxPackets = 150,
+      queue = 0x82bce60, FirstPacket = 84, LastPacket = 61,
+      EnablePut = {&lt;cRelTimer&gt; = {_vptr.cRelTimer = 0xb7bf4610,
+          lastTime = 1394350295}, mutex = {__m_reserved = 0, __m_count = 0,
+          __m_owner = 0x0, __m_kind = 0, __m_lock = {__status = 0,
+            __spinlock = 0}}, cond = {__c_lock = {__status = 0,
+            __spinlock = 0}, __c_waiting = 0x0,
+          __padding = '\0' &lt;repeats 27 times&gt;, __align = 0},
+        got_signal = false}, EnableGet = {&lt;cRelTimer&gt; = {
+          _vptr.cRelTimer = 0xb7bf4610, lastTime = 1394176623}, mutex = {
+          __m_reserved = 0, __m_count = 0, __m_owner = 0x0, __m_kind = 0,
+          __m_lock = {__status = 0, __spinlock = 0}}, cond = {__c_lock = {
+            __status = 0, __spinlock = 0}, __c_waiting = 0x0,
+          __padding = '\0' &lt;repeats 27 times&gt;, __align = 0},
+        got_signal = true}}, syncTimer = 0x83deff8, freezeMode = false,
+    pts = 12884901888, frame = 3, codec = 0xb7c53b00, context = 0x82d8e78,
+    mutex = {mutex = {__m_reserved = 0, __m_count = 0, __m_owner = 0xbe3ffbe0,
+        __m_kind = 2, __m_lock = {__status = 1, __spinlock = 0}}, locked = 1},
+    active = true, running = true}, clock = 0x827a23c, pts_values = {{
+      coded_frame_no = 0, pts = 704986713, duration = 0}, {coded_frame_no = 1,
+      pts = 704981913, duration = 0}, {coded_frame_no = 2, pts = 704977113,
+      duration = 0}, {coded_frame_no = 3, pts = 704972313, duration = 0}, {
+      coded_frame_no = 4, pts = 704967513, duration = 0}, {coded_frame_no = 5,
+      pts = 704962713, duration = 0}, {coded_frame_no = -1, pts = -1,
+      duration = -1}, {coded_frame_no = -1, pts = -1, duration = -1}, {
+      coded_frame_no = -1, pts = -1, duration = -1}, {coded_frame_no = -1,
+      pts = -1, duration = -1}}, lastPTSidx = 6, lastCodedPictNo = 5,
+  lastPTS = 704957913, lastDuration = 0, picture = 0x8279ba0, avpic_src = {
+    data = {0x0, 0x0, 0x0, 0x0}, linesize = {0, 0, 0, 0}}, avpic_dest = {
+    data = {0x0, 0x0, 0x0, 0x0}, linesize = {0, 0, 0, 0}}, width = 720,
+  height = 576, currentDeintMethod = 0, currentMirrorMode = 0,
+  pic_buf_lavc = 0x0, pic_buf_pp = 0x0, pic_buf_mirror = 0x0, ppmode = 0x0,
+  ppcontext = 0x0, videoOut = 0x82247c8, hurry_up = 1, offset = 10301,
+  delay = -89966, trickspeed = 1, default_frametime = 400}
+(gdb) up
+#3  0xb7947ca4 in cStreamDecoder::Action (this=0x82d91c0) at mpeg2decoder.c:185
+185              DecodePacket(pkt);
+(gdb) p *this
+$3 = {&lt;cThread&gt; = {_vptr.cThread = 0xb7bf3408, running = true,
+    childTid = 376844, mutex = {mutex = {__m_reserved = 0, __m_count = 0,
+        __m_owner = 0x0, __m_kind = 2, __m_lock = {__status = 0,
+          __spinlock = 0}}, locked = 0}, description = 0x0,
+    static emergencyExitRequested = false}, PacketQueue = {MaxPackets = 150,
+    queue = 0x82bce60, FirstPacket = 84, LastPacket = 61,
+    EnablePut = {&lt;cRelTimer&gt; = {_vptr.cRelTimer = 0xb7bf4610,
+        lastTime = 1394350295}, mutex = {__m_reserved = 0, __m_count = 0,
+        __m_owner = 0x0, __m_kind = 0, __m_lock = {__status = 0,
+          __spinlock = 0}}, cond = {__c_lock = {__status = 0, __spinlock = 0},
+        __c_waiting = 0x0, __padding = '\0' &lt;repeats 27 times&gt;, __align = 0},
+      got_signal = false}, EnableGet = {&lt;cRelTimer&gt; = {
+        _vptr.cRelTimer = 0xb7bf4610, lastTime = 1394176623}, mutex = {
+        __m_reserved = 0, __m_count = 0, __m_owner = 0x0, __m_kind = 0,
+        __m_lock = {__status = 0, __spinlock = 0}}, cond = {__c_lock = {
+          __status = 0, __spinlock = 0}, __c_waiting = 0x0,
+        __padding = '\0' &lt;repeats 27 times&gt;, __align = 0},
+      got_signal = true}}, syncTimer = 0x83deff8, freezeMode = false,
+  pts = 12884901888, frame = 3, codec = 0xb7c53b00, context = 0x82d8e78,
+  mutex = {mutex = {__m_reserved = 0, __m_count = 0, __m_owner = 0xbe3ffbe0,
+      __m_kind = 2, __m_lock = {__status = 1, __spinlock = 0}}, locked = 1},
+  active = true, running = true}
+(gdb) up
+#4  0x080e3ca6 in cThread::StartThread (Thread=0x82d91c0) at thread.c:227
+227       Thread-&gt;Action();
+
+I hope that this will help you further.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000796.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+	<LI>Next message: <A HREF="000824.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#819">[ date ]</a>
+              <a href="thread.html#819">[ thread ]</a>
+              <a href="subject.html#819">[ subject ]</a>
+              <a href="author.html#819">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

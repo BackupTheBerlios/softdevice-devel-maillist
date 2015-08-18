@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] building on mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3CB1A5A738-C27C-4614-842B-F08A9BACCA34%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002838.html">
+   <LINK REL="Next"  HREF="002840.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] building on mac</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3CB1A5A738-C27C-4614-842B-F08A9BACCA34%40pobox.com%3E"
+       TITLE="[Softdevice-devel] building on mac">torgeir at pobox.com
+       </A><BR>
+    <I>Wed Apr  4 01:10:44 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002838.html">[Softdevice-devel] building on mac
+</A></li>
+        <LI>Next message: <A HREF="002840.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2839">[ date ]</a>
+              <a href="thread.html#2839">[ thread ]</a>
+              <a href="subject.html#2839">[ subject ]</a>
+              <a href="author.html#2839">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 3 Apr 2007, at 23:58, Torgeir Veimo wrote:
+
+&gt;<i>
+</I>&gt;<i> On 3 Apr 2007, at 22:32, Martin Wache wrote:
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> [...]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You have to remove the &quot;-mdynamic-no-pic&quot; option from ffmpeg
+</I>&gt;&gt;<i> config.mak
+</I>&gt;&gt;<i> and recompile ffmpeg.
+</I>&gt;<i>
+</I>&gt;<i> ffmpeg had to be configured with --disable-mmx as well.
+</I>&gt;<i>
+</I>&gt;<i> When I try running, I get a bus error;
+</I>&gt;<i>
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;<i> Bus error
+</I>&gt;<i>
+</I>&gt;<i> gdb shows:
+</I>&gt;<i>
+</I>&gt;<i> Program received signal EXC_BAD_ACCESS, Could not access memory.
+</I>&gt;<i> Reason: KERN_PROTECTION_FAILURE at address: 0x161c0000
+</I>&gt;<i> 0xffff07c7 in ___memcpy () at /System/Library/Frameworks/
+</I>&gt;<i> System.framework/PrivateHeaders/i386/cpu_capabilities.h:228
+</I>&gt;<i> 228     /System/Library/Frameworks/System.framework/PrivateHeaders/
+</I>&gt;<i> i386/cpu_capabilities.h: No such file or directory.
+</I>&gt;<i>          in /System/Library/Frameworks/System.framework/
+</I>&gt;<i> PrivateHeaders/i386/cpu_capabilities.h
+</I>&gt;<i>
+</I>&gt;<i> Could this be because I don't have any DVB device available on the  
+</I>&gt;<i> mac?
+</I>
+I forgot -vo..
+
+Using -vo shm: works with the shm stuff in /etc/rc, but when I start  
+MacVdrClient, I cannot move the window, and it refused to go on top  
+of my iterm window, even though it goes on top of other windows. I  
+also won't allow itself to be resized nor accept any key input.
+
+Shouldn't  -vo quartz: also work? I get the previous bus error as  
+without any -vo, so I guess that means -vo quartz: is default on mac?
+
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002838.html">[Softdevice-devel] building on mac
+</A></li>
+	<LI>Next message: <A HREF="002840.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2839">[ date ]</a>
+              <a href="thread.html#2839">[ thread ]</a>
+              <a href="subject.html#2839">[ subject ]</a>
+              <a href="author.html#2839">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

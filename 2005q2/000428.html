@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Thoughts on testing and standards compliance
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Thoughts%20on%20testing%20and%20standards%20compliance&In-Reply-To=%3C425136C8.20102%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000423.html">
+   <LINK REL="Next"  HREF="000495.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Thoughts on testing and standards compliance</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Thoughts%20on%20testing%20and%20standards%20compliance&In-Reply-To=%3C425136C8.20102%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Thoughts on testing and standards compliance">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Mon Apr  4 14:44:56 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000423.html">[Softdevice-devel] Thoughts on testing and standards compliance
+</A></li>
+        <LI>Next message: <A HREF="000495.html">[Softdevice-devel] Thoughts on testing and standards compliance
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; a &#233;crit :
+&gt;<i> On Fri, Apr 01, 2005 at 12:29:33PM +0200, Nicolas Huillard wrote:
+</I>
+&gt;&gt;<i>There were long threads on the VDR ML (look for Rainer Zocholl, who was 
+</I>&gt;&gt;<i>very active on this).
+</I>&gt;&gt;<i>I think it's changed semantics, along with thread-unsafe code all-over 
+</I>&gt;&gt;<i>VDR which didn't matter with LinuxThreads, but dead-lock with NPTL. 
+</I>&gt;&gt;<i>There was a huge work on this around VDR 1.3.18 or so, but the problem 
+</I>&gt;&gt;<i>is still not completely solved.
+</I>&gt;<i> 
+</I>&gt;<i> Thanks, I suspected something like that.  I'm not sure if I found the
+</I>&gt;<i> discussion you mentioned, but I found a long thread where he participated.
+</I>&gt;<i> This message from Klaus is a bit alarming, as he doesn't seem interested
+</I>&gt;<i> in these problems: <A HREF="http://linvdr.org/mailinglists/vdr/2004/11/msg00778.html">http://linvdr.org/mailinglists/vdr/2004/11/msg00778.html</A>
+</I>&gt;<i> Another thing that caught my attention when I installed VDR for the first time
+</I>&gt;<i> was the lack of UTF-8 support.
+</I>
+UTF-8 is something Klaus does not like. I also think that DVB did not 
+standardized over it, and simply uses 8-bit character sets (maybe 
+sometimes without even transmiting which character set is used, which 
+poses problems in some countries).
+
+&gt;<i> This is not the first time I encounter the &quot;we don't support that platform&quot;
+</I>&gt;<i> attitude.  I think it's best to try to follow standards as closely as possible
+</I>&gt;<i> with reasonable effort, and to test against as many implementations as
+</I>&gt;<i> possible.  That increases the overall quality and helps to identify rarely
+</I>&gt;<i> occurring bugs.
+</I>
+WRT NTPL, the fact is that Klaus does not support that platform. But he 
+will accept patches from anyone who can provide validated ones. The 
+patch provider will also have to be trusted, thus prove his skills... 
+The required level is quite high here, specially since the problem to 
+solve is very hard and Klaus won't accept to compromise VDR's stability 
+in the &quot;normal&quot; case.
+
+WTR UTF8, Klaus simply does not like it, and see the need to add many 
+transcoding frontiers to add in the core of VDR. The case is currently 
+&quot;let the user select which 8-bit character set he prefers&quot;. UTF8 would 
+add transcoding from DVB streams, from and to files, etc. Many 
+&quot;unnecessary&quot; steps (I regularly use UTF8, so I know what steps it 
+involves when you have to exchange data with other systems).
+
+&gt;<i> Well, excluding font bitmaps, VDR is only about 30,000 lines of code.  It
+</I>&gt;<i> shouldn't be too hard to implement something similar based on softdevice and
+</I>&gt;<i> budget cards like the Hauppauge Nova-T.
+</I>
+Well, that's still a lot of lines ! When I thought about what VDR really 
+is, or what is could be replaced by (reasoning in terms of what 
+libraries/programs provide the same core functionnality), I deduced that 
+it's not that much (live TV = xine/mplayer, timer = cron, EPG = DB + 
+scripting, recordings = xine/mplayer, OSD = the glue, etc...)
+But the real value of VDR is the fact that it's expandable, really 
+integrated, bug-free, has very few dependencies, has a strong community, 
+attracts many developers, thus new plug-ins, etc.
+
+&gt;<i> I'd like to have an easy to use
+</I>&gt;<i> media station that allows simple DV editing and DVD authoring in addition to
+</I>&gt;<i> recording, editing and playing DVB streams.  If VDR makes some inherent
+</I>&gt;<i> assumptions about the stream format being MPEG, this may be too hard to
+</I>&gt;<i> implement in the VDR framework.
+</I>
+Throwing the whole VDR just because the stream format is not expandable 
+is not the solution.
+Many people have ideas about improvements to VDR. I think the best bet 
+is to wait for the 1.4 release and try to convince Klaus about some core 
+things to add during the 1.5 cycle : some think about networking 
+(multiple clients connected to a single VDR server), some think about 
+streaming to anonymous clients, some think about handling more formats, 
+some think about HDTV, etc.
+I hope 1.5 will begin with a big brainstorming session !
+
+&gt;<i> But then again, the DV editing and DVD
+</I>&gt;<i> authoring are not needed very often, and existing software for those tasks
+</I>&gt;<i> is probably much more efficient to use than what can be achieved with a
+</I>&gt;<i> remote control.
+</I>
+I also wanted to do too much with my VDR : many things *could* be done 
+with a remote/OSD, but some are much better with a mouse, a 
+hi-resolution screen, and stable software.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000423.html">[Softdevice-devel] Thoughts on testing and standards compliance
+</A></li>
+	<LI>Next message: <A HREF="000495.html">[Softdevice-devel] Thoughts on testing and standards compliance
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

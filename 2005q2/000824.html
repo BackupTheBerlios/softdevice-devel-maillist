@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash with latest CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20with%20latest%20CVS&In-Reply-To=%3C200506062155.36956.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000819.html">
+   <LINK REL="Next"  HREF="000835.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash with latest CVS</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20with%20latest%20CVS&In-Reply-To=%3C200506062155.36956.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Repeatable crash with latest CVS">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Jun  6 21:55:36 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000819.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+        <LI>Next message: <A HREF="000835.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#824">[ date ]</a>
+              <a href="thread.html#824">[ thread ]</a>
+              <a href="subject.html#824">[ subject ]</a>
+              <a href="author.html#824">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 6. Juni 2005 17:33, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Jun 04, 2005 at 09:36:44PM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt;I have a recording with a 4:3 -&gt; 16:9 transition.  When rewinding it at
+</I>&gt;<i> &gt; &gt;triple speed, a Signal 11 sometimes occurs.   I made a short clip that can 
+</I>&gt;<i> &gt; &gt;be
+</I>&gt;<i> &gt; &gt;fast-forwarded and rewinded some times (maybe 5-10) to trigger the crash
+</I>&gt;<i> &gt; &gt;on my system.  Here is the stack trace from the core dump:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Thanks for your report, up to now I could not reproduce the crash on my 
+</I>&gt;<i> &gt; box, but I didn't try very hard yet ;-)
+</I>&gt;<i> 
+</I>&gt;<i> I got it twice today on the first try when rewinding the clip from the end
+</I>&gt;<i> to the beginning at triple speed.  The second time was within gdb, running
+</I>&gt;<i> vdr 1.3.24 with the patch from subtitles-0.3.7 and with only the softdevice
+</I>&gt;<i> plugin loaded, using DirectFB 0.9.22 playback on a Matrox G400 or G450 card
+</I>&gt;<i> on VGA monitor with 4:3 cropping:
+</I>&gt;<i> 
+</I>&gt;<i> (gdb) bt full
+</I>&gt;<i> #0  0xb7dceb7f in memcpy () from /lib/libc.so.6
+</I>&gt;<i> No symbol table info available.
+</I>&gt;<i> #1  0xb79523da in cDFBVideoOut::YUV (this=0x82247c8,
+</I>&gt;<i>     Py=0xb64fcb30 '\200' &lt;repeats 200 times&gt;...,
+</I>&gt;<i>     Pu=0x8313bc8 '\200' &lt;repeats 200 times&gt;...,
+</I>&gt;<i>     Pv=0x83a0940 '\200' &lt;repeats 200 times&gt;..., Width=720, Height=576,
+</I>&gt;<i>     Ystride=752, UVstride=376) at video-dfb.c:1021
+</I>&gt;<i>         dst = (uint8_t *) 0xb779bee0 &lt;Address 0xb779bee0 out of bounds&gt;
+</I>&gt;<i>         pitch = 576
+</I>&gt;<i>         hi = 288
+</I>
+I don't understand that: When hi = 288 we should have left the loop as
+hi &lt; sheight/2 (with sheight = 576) should be evaluate FALSE.
+pitch seems to strange too. When width is 720, pitch should be a
+reasonable value above that (768 ?).
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000819.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+	<LI>Next message: <A HREF="000835.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#824">[ date ]</a>
+              <a href="thread.html#824">[ thread ]</a>
+              <a href="subject.html#824">[ subject ]</a>
+              <a href="author.html#824">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

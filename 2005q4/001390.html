@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Sis 315
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Sis%20315&In-Reply-To=%3C49114.192.168.0.22.1130172660.squirrel%40192.168.0.22%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001397.html">
+   <LINK REL="Next"  HREF="001391.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Sis 315</H1>
+    <B>juanito at vioque.org</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Sis%20315&In-Reply-To=%3C49114.192.168.0.22.1130172660.squirrel%40192.168.0.22%3E"
+       TITLE="[Softdevice-devel] Sis 315">juanito at vioque.org
+       </A><BR>
+    <I>Mon Oct 24 18:51:00 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001397.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+        <LI>Next message: <A HREF="001391.html">[Softdevice-devel] Sis 315
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1390">[ date ]</a>
+              <a href="thread.html#1390">[ thread ]</a>
+              <a href="subject.html#1390">[ subject ]</a>
+              <a href="author.html#1390">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I am trying to use a SIS 315 (integrated in a Asus Pundit barebone) with
+Softdevice via Directfb.
+Directfb compiled and installed properly (demos are working).
+This is the output of modprobe:
+
+pundit:~# modprobe sisfb
+sisfb: Video ROM found and copied
+sisfb: Framebuffer at 0xe8000000, mapped to 0xdcc80000, size 65536k
+sisfb: MMIO at 0xe5800000, mapped to 0xdcc40000, size 128k
+sisfb: Memory heap starting at 64928K, size 32K
+sisfb: Detected SiS301B video bridge
+sisfb: CRT1 DDC probing failed
+sisfb: Default mode is 800x600x8 (60Hz)
+Console: switching to colour frame buffer device 100x37
+sisfb: 2D acceleration is enabled, y-panning enabled (auto-max)
+fb0: SiS 651 frame buffer device, Version 1.7.17
+sisfb: (C) 2001-2004 Thomas Winischhofer.
+
+And this is what I get when I start vdr (./vdr -P &quot;softdevice -vo dfb:&quot;:
+
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3277056)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.23 ---------------------
+                    (c) 2000-2002  convergence integrated media GmbH
+                                 (c) 2002-2004  convergence GmbH
+       -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-10-23 18:27)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 4237)...
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 4238)...
+(!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:797]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 4239)...
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 4240)...
+(*) DirectFB/Input: PS/2 Generic Mouse (2) 0.1 (convergence integrated
+media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 4241)...
+(*) DirectFB/Input: PC Speaker (3) 0.1 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 4242)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: SiS 315 0.1 (Andreas Oberritter &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">obi at saftware.de</A>&gt;)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 66486272 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine Blit All
+[dfb] Drawing Flags: none
+[dfb] Surface Blitting Flags: SrcColorkey
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>
+[dfb] Enumerating display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+  [surface capabilities] scrSurface: primary videoonly double-buffered
+flipping
+  [dfb]: could not find suitable videolayer
+   (!!!)  *** WARNING [Application exited without deinitialization of
+DirectFB!] *** [core.c:630 in dfb_core_deinit_check()]
+
+I am using softdevice 0.2.0 and vdr 1.3.34.
+And Linux version is Debian Sarge upgraded to testing:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">juanito at pundit</A>:~$ uname -a
+Linux pundit 2.6.12-1-686 #1 Tue Sep 27 12:52:50 JST 2005 i686 GNU/Linux
+
+
+Any idea?
+If this is not the right place to ask or if it is too obvious, please dont
+be cruel :-)
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001397.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+	<LI>Next message: <A HREF="001391.html">[Softdevice-devel] Sis 315
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1390">[ date ]</a>
+              <a href="thread.html#1390">[ thread ]</a>
+              <a href="subject.html#1390">[ subject ]</a>
+              <a href="author.html#1390">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

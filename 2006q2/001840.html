@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Packed color problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20color%20problem&In-Reply-To=%3C200604090838.41743.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001838.html">
+   <LINK REL="Next"  HREF="001841.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Packed color problem</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20color%20problem&In-Reply-To=%3C200604090838.41743.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Packed color problem">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr  9 08:38:41 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001838.html">[Softdevice-devel] Packed color problem
+</A></li>
+        <LI>Next message: <A HREF="001841.html">[Softdevice-devel] Packed color problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1840">[ date ]</a>
+              <a href="thread.html#1840">[ thread ]</a>
+              <a href="subject.html#1840">[ subject ]</a>
+              <a href="author.html#1840">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 09 April 2006 05:28, AgentX wrote:
+&gt;<i> Hello, Stefan Lucke &lt;....&gt;,
+</I>&gt;<i> 
+</I>&gt;<i> At Sat, 8 Apr 2006 19:49:53 +0200 you wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; On Samstag 08 April 2006 18:40, AgentX wrote:
+</I>&gt;<i> &gt; &gt; Hello !
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I think that I write to right place, I successefuly installed your plugin and it works without any bugs, except one - Packed color problem:
+</I>&gt;<i> &gt; &gt; I see the &quot;red lines&quot; on red color, &quot;blue lines&quot; on blue color, other interlacaing support (fields sync and etc) works well.
+</I>&gt;<i> &gt; &gt; In MPlayer you can fix that with mplayer -vf ilpack, but of course I can't do it in softdevice. 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Didn't find something about ilpack for -vf in mplayer docs.
+</I>&gt;<i> &gt; I guess I didn't understand how your error shows up ( &quot;red lines&quot; on red color ..).
+</I>&gt;<i> &gt; Could you place a screenshot picture of your problem somewhere ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; I tried to switch another colorspace (YV12, I420) in softdevice, but I after the picture goes away from screen and I don't see anything. 
+</I>&gt;<i> &gt; &gt; I set another colorspace in /etc/directfbrc but this don't take effect - the softdevice uses YUY2. 
+</I>&gt;<i> &gt; &gt; How I can fix this problem ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; TV-out works only in YUY2 format, as thats the only fromat which 
+</I>&gt;<i> &gt; supports ARGB destination surface format.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; My card: Matrox G450 RGB via VGA cable
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; For TV-out you need a self made cable.
+</I>&gt;<i> &gt; Whats the memory size of your card ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; For not subscribed people it is best to drop a note but about
+</I>&gt;<i> &gt; that, so that others could keep you on cc .
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; I am using the DirectFB (last from cvs 2006-03-27)
+</I>&gt;<i> &gt; &gt; Softdevice: Last from CVS too 2006-03-27
+</I>&gt;<i> &gt; &gt; Program: VDR 1.3.38
+</I>&gt;<i> &gt; &gt; I am running VDR with:
+</I>&gt;<i> &gt; &gt; vdr -P&quot;softdevice -vo dfb:mgatv:&quot;
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; My /etc/directfbrc
+</I>
+&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; With best regards 
+</I>&gt;<i> &gt; &gt; AgentX. 
+</I>&gt;<i> &gt; &gt; Thank you !
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; -- 
+</I>&gt;<i> &gt; Stefan Lucke
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for your answer !
+</I>&gt;<i> Yes, I my TV-out working via special cable (VGA-&gt;SCART), I am already make it. 
+</I>&gt;<i> And about the mplayer -fv ilpack filter:
+</I>&gt;<i> 
+</I>&gt;<i> When interlaced video is stored in YUV 4:2:0 formats, chroma interlacing does not line up properly due to 
+</I>&gt;<i> vertical downsampling of the chroma channels. This filter packs the planar 4:2:0 data into YUY2 (4:2:2) format 
+</I>&gt;<i> with the chroma lines in their proper locations, so that in any given scanline, the luma and chroma 
+</I>&gt;<i> data both come from the same field. The optional argument selects the sampling mode. 
+</I>&gt;<i> By default, linear interpolation (mode 1) is used. Mode 0 uses nearest-neighbor sampling, which is fast but incorrect.    
+</I>
+Assuming your TV is 4:3 format. 
+Do you get this allways or only when 16:9 video is downscaled to fit
+the 4:3 area of your TV ?
+
+During 420 to 422 conversion we just repeat chroma information. This is
+not the optimal way, when chroma information is field based. By default
+we assume chroma is frame based. The only PAL source 420 I know
+that used frame based chroma is DV. libdv at sourceforge is using 
+a field based approach for generating 422 data.
+
+&gt;<i> 
+</I>&gt;<i> It's from man page of mplayer, it's fully describing my problem : 
+</I>&gt;<i> 1)  chroma lines are not in their proper locations 
+</I>&gt;<i> 2) chroma interlacing does not line up properly. 
+</I>&gt;<i> If I applying this filter for videos in MPlayer - I don't have my problem with color - I don't see any color defects.   
+</I>&gt;<i> 
+</I>&gt;<i> I tried to set the yuy2 color in directfbrc, but nothing happens. 
+</I>
+We are selecting the surface pixel format, so this overrides your selection.
+
+&gt;<i> About screenshot - I don't have a camera. But my problem is it, that about I wrote above.  
+</I>
+Do you get this effect for all of your sources (DVB-x) ?
+Can you place a short recording (&lt;= 2 minutes) that shows up 
+your problem, for downloading ?
+
+Subscribing to our list may be a good idea too.
+
+&gt;<i> Waiting for your answer.
+</I>&gt;<i> With best regards.
+</I>&gt;<i> AgentX.
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001838.html">[Softdevice-devel] Packed color problem
+</A></li>
+	<LI>Next message: <A HREF="001841.html">[Softdevice-devel] Packed color problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1840">[ date ]</a>
+              <a href="thread.html#1840">[ thread ]</a>
+              <a href="subject.html#1840">[ subject ]</a>
+              <a href="author.html#1840">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200610010127.38153.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="002568.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200610010127.38153.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct  1 01:27:38 CEST 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="002568.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2567">[ date ]</a>
+              <a href="thread.html#2567">[ thread ]</a>
+              <a href="subject.html#2567">[ subject ]</a>
+              <a href="author.html#2567">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 30 September 2006 20:04, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Sep 30, 2006 at 05:32:06PM +0100, Laz wrote:
+</I>&gt;<i> &gt; I usually let mine turn itself on and off with nvram-wakeup! I see
+</I>&gt;<i> &gt; the problem when I leave it for a short while in the middle of something
+</I>&gt;<i> &gt; and get distracted!
+</I>&gt;<i> 
+</I>&gt;<i> Me too.  Sometimes, I hit the Power button followed by some other button
+</I>&gt;<i> to suspend the playback and to prevent the system from powering off.
+</I>&gt;<i> Then, I'd hit the Power button to resume.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Hmmm...if you're right about this, how long should it take to overflow? The 
+</I>&gt;<i> &gt; only counter I can see is a 64-bit integer which looks like it's counting in 
+</I>&gt;<i> &gt; useconds which would take a few million years to overflow, by my reckoning! 
+</I>&gt;<i> &gt; Maybe I'm looking in the wrong place and it's a 32-bit counter which would 
+</I>&gt;<i> &gt; take 1 h 12 min to overflow. Not sure it was taking that long but it's hard 
+</I>&gt;<i> &gt; to tell.
+</I>
+Negative values should not harm,as we would return immedeatly.
+
+&gt;<i> 
+</I>&gt;<i> I would have believed that one hang occurred after a 40-minute suspension.
+</I>&gt;<i> Could it perhaps be a signed counter, counting 1&lt;&lt;31 microseconds before
+</I>&gt;<i> overflow?
+</I>
+40 minute time frame is good. Had to wait a 2nd one, as I did not save my
+inserted trace messages :-( .
+
+Pause:
+Oct  1 00:28:47 jarada jarada vdr: [32130] setting audio track to 1 (0)
+Oct  1 00:28:47 jarada jarada vdr: [32133] [softdevice-audio]: xrun
+
+Play:
+Oct  1 01:11:37 jarada jarada vdr: [32133] [softdevice-audio]: xrun
+
+And now we'll wait for about 27 minutes (without getting signalled?):
+Pause:
+ -- 0  signalled :retcode -- : Invalid argument
+Play:
+-- Play --
+-- Play --
+ -- bad timeout 1665974591 634cc13f --
+
+/* --- cSigTimer --------------------------------------------------------------
+ */
+int cSigTimer::Sleep(int timeoutUS, int lowLimitUS)
+{
+  got_signal=false;
+  if ( timeoutUS &lt; lowLimitUS )
+    return GetRelTime();
+
+if (timeoutUS &gt; 1000000)
+fprintf(stderr, &quot; -- bad timeout %d %08x --\n&quot;, timeoutUS, timeoutUS);
+  struct timeval tv;
+  gettimeofday(&amp;tv,NULL);
+  struct timespec timeout;
+  timeout.tv_nsec=(tv.tv_usec+timeoutUS-lowLimitUS);//*1000;
+  timeout.tv_sec=tv.tv_sec + timeout.tv_nsec / 1000000;
+  timeout.tv_nsec%=1000000;
+  timeout.tv_nsec*=1000;
+  pthread_mutex_lock(&amp;mutex);
+  int retcode=0;
+  while ( retcode != ETIMEDOUT &amp;&amp; !got_signal ) {
+    retcode = pthread_cond_timedwait(&amp;cond, &amp;mutex, &amp;timeout);
+if (retcode != ETIMEDOUT &amp;&amp; retcode != EINTR)
+{fprintf(stderr, &quot; -- %d %s signalled :&quot;, retcode, (got_signal) ? &quot;&quot;: &quot;NOT &quot;);
+perror(&quot;retcode -- &quot;);}
+  }
+
+  got_signal = false;
+  pthread_mutex_unlock(&amp;mutex);
+  return GetRelTime();
+}
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="002568.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2567">[ date ]</a>
+              <a href="thread.html#2567">[ thread ]</a>
+              <a href="subject.html#2567">[ subject ]</a>
+              <a href="author.html#2567">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

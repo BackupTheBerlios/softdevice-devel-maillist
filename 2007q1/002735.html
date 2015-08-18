@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio from DVB settings and WSS	signalling. (WAS: Re: Zoom to 16:9)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20from%20DVB%20settings%20and%20WSS%0A%09signalling.%20%28WAS%3A%20Re%3A%20Zoom%20to%2016%3A9%29&In-Reply-To=%3C200702252118.39665.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002775.html">
+   <LINK REL="Next"  HREF="002736.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio from DVB settings and WSS	signalling. (WAS: Re: Zoom to 16:9)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20from%20DVB%20settings%20and%20WSS%0A%09signalling.%20%28WAS%3A%20Re%3A%20Zoom%20to%2016%3A9%29&In-Reply-To=%3C200702252118.39665.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Aspect ratio from DVB settings and WSS	signalling. (WAS: Re: Zoom to 16:9)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Feb 25 21:18:39 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002775.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002736.html">[Softdevice-devel] [PATCH] Suspend output when the user is inactive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2735">[ date ]</a>
+              <a href="thread.html#2735">[ thread ]</a>
+              <a href="subject.html#2735">[ subject ]</a>
+              <a href="author.html#2735">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 25 February 2007 20:21, Marko M&#228;kel&#228; wrote:
+
+&gt;<i> However, it could be nice if softdevice honored the aspect ratio setting
+</I>&gt;<i> from the DVB settings menu (VideoDisplayFormat and VideoFormat).
+</I>
+Answer is just simple:
+1st, There are more aspect ratios selectable via our setup menu 
+     (5:4, 16:10, 15:9) than vdr supports, and 
+2nd, I didn't ask Klaus for adding more A/Rs to his DVB menu as
+     his usual answer would be: &quot;It works for me and those A/Rs are
+     not supported by FF cards&quot;.
+
+&gt;<i> It could also optionally display the WSS on the topmost line, so that
+</I>&gt;<i> wide-screen TVs would automatically switch the aspect ratio.
+</I>
+If someone has a WSS capable TV for testing, we could do
+something on topmost two lines.
+
+But this is no solution in case of stations which do not provide correct
+signalling of their A/R (AFD - Active Format Display).
+If AFD info is be present, we use it.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002775.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002736.html">[Softdevice-devel] [PATCH] Suspend output when the user is inactive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2735">[ date ]</a>
+              <a href="thread.html#2735">[ thread ]</a>
+              <a href="subject.html#2735">[ subject ]</a>
+              <a href="author.html#2735">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

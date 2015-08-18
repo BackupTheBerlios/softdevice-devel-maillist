@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] New PicBuffer code sometimes crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20PicBuffer%20code%20sometimes%20crashes&In-Reply-To=%3C200605282128.31647.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002076.html">
+   <LINK REL="Next"  HREF="002078.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] New PicBuffer code sometimes crashes</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20PicBuffer%20code%20sometimes%20crashes&In-Reply-To=%3C200605282128.31647.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] New PicBuffer code sometimes crashes">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun May 28 21:28:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002076.html">[Softdevice-devel] [Bug #7637] Screenaspect
+</A></li>
+        <LI>Next message: <A HREF="002078.html">[Softdevice-devel] New PicBuffer code sometimes crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2077">[ date ]</a>
+              <a href="thread.html#2077">[ thread ]</a>
+              <a href="subject.html#2077">[ subject ]</a>
+              <a href="author.html#2077">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>With new PicBuffer code, vdr chrashes sometimes at startup. It seems
+to happen more often, when initial tuning takes a while.
+
+[Thread debugging using libthread_db enabled]
+[New Thread -1211340576 (LWP 19140)]
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: xv:
+[setup-softdevice] alsa ac3Mode set to: 3
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 1 lavc
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (16:9 wide)
+[New Thread -1216529488 (LWP 19143)]
+[New Thread -1224922192 (LWP 19144)]
+[New Thread -1233314896 (LWP 19145)]
+[New Thread -1241707600 (LWP 19146)]
+[New Thread -1250100304 (LWP 19147)]
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3344640 - 330900)
+Plugin file is ./PLUGINS/lib/libvdr-softdevice.so.1.4.0
+Plugin path is ./PLUGINS/lib/
+
+____ ./PLUGINS/lib/ ____
+
+[New Thread -1260549200 (LWP 19148)]
+[XvVideoOut]: osd_image shmid = 9797634
+[XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120
+[XvVideoOut]: max area size 2048 x 2048
+[XvVideoOut]: using area size 736 x 576
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[New Thread -1275253840 (LWP 19151)]
+[New Thread -1286014032 (LWP 19152)]
+[New Thread -1294406736 (LWP 19153)]
+[New Thread -1302799440 (LWP 19154)]
+[New Thread -1315001424 (LWP 19155)]
+[New Thread -1323394128 (LWP 19156)]
+[New Thread -1331786832 (LWP 19157)]
+warning unsupported pixel format!
+[softdevice] error, libavcodec deinterlacer failure
+[softdevice] switching deinterlacing off !
+[New Thread -1341539408 (LWP 19158)]
+reallocating buffer format 0-778986860 w: 720-720 h: 576-576
+warning unsupported pixel format!
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread -1331786832 (LWP 19157)]
+0xb79d6a7f in avcodec_get_chroma_sub_sample () from /usr/local/lib/libavcodec.so.51
+(gdb) bt
+#0  0xb79d6a7f in avcodec_get_chroma_sub_sample () from /usr/local/lib/libavcodec.so.51
+#1  0xb78bf898 in cLibAvPostProc::Filter (this=0x850e1b0, dest=@0xb09e8410, orig=0x841a884) at VideoFilter.c:366
+#2  0xb78ae8e4 in cVideoStreamDecoder::DecodePacket (this=0x850df40, pkt=0x85161e8) at mpeg2decoder.c:818
+#3  0xb78accc7 in cStreamDecoder::Action (this=0x850df40) at mpeg2decoder.c:192
+#4  0x081058d7 in cThread::StartThread (Thread=0x850df40) at thread.c:244
+#5  0xb7eea380 in start_thread () from /lib/tls/libpthread.so.0
+#6  0xb7d7fc6e in clone () from /lib/tls/libc.so.6
+(gdb) locals
+
+
+Sometimes there is no crash just strange messages:
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+warning unsupported pixel format!
+[softdevice] error, libavcodec deinterlacer failure
+[softdevice] switching deinterlacing off !
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002076.html">[Softdevice-devel] [Bug #7637] Screenaspect
+</A></li>
+	<LI>Next message: <A HREF="002078.html">[Softdevice-devel] New PicBuffer code sometimes crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2077">[ date ]</a>
+              <a href="thread.html#2077">[ thread ]</a>
+              <a href="subject.html#2077">[ subject ]</a>
+              <a href="author.html#2077">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

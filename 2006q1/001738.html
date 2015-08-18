@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #6298] ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%236298%5D%20ShmClient&In-Reply-To=%3C200602061918.k16JIOEI027135%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001737.html">
+   <LINK REL="Next"  HREF="001740.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #6298] ShmClient</H1>
+    <B>noreply at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%236298%5D%20ShmClient&In-Reply-To=%3C200602061918.k16JIOEI027135%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #6298] ShmClient">noreply at berlios.de
+       </A><BR>
+    <I>Mon Feb  6 20:18:24 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001737.html">[Softdevice-devel] [Bug #6298] ShmClient
+</A></li>
+        <LI>Next message: <A HREF="001740.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1738">[ date ]</a>
+              <a href="thread.html#1738">[ thread ]</a>
+              <a href="subject.html#1738">[ subject ]</a>
+              <a href="author.html#1738">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #6298, was updated on 2006-Feb-05 00:22
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: daliman
+Assigned to : none
+Summary: ShmClient
+
+Details: Mit der aktuellen CVS-Version ist des Compilieren von Softdevice mit ShmSupport m&#246;glich, jedoch kann man den ShmClient nicht compilieren.
+
+./../../tools.o: In function `RgbToJpeg(unsigned char*, int, int, int&amp;, int)':
+/usr/src/VDR/tools.c:759: undefined reference to `jpeg_std_error'
+/usr/src/VDR/tools.c:760: undefined reference to `jpeg_CreateCompress'
+/usr/src/VDR/tools.c:769: undefined reference to `jpeg_set_defaults'
+/usr/src/VDR/tools.c:770: undefined reference to `jpeg_set_quality'
+/usr/src/VDR/tools.c:771: undefined reference to `jpeg_start_compress'
+/usr/src/VDR/tools.c:777: undefined reference to `jpeg_write_scanlines'
+/usr/src/VDR/tools.c:778: undefined reference to `jpeg_finish_compress'
+/usr/src/VDR/tools.c:779: undefined reference to `jpeg_destroy_compress'
+../../../config.o: In function `cSetup::Save()':
+/usr/src/VDR/config.c:725: undefined reference to `cDevice::numDevices'
+/usr/src/VDR/config.c:726: undefined reference to `cDevice::numDevices'
+
+
+Follow-Ups:
+
+Date: 2006-Feb-06 20:18
+By: wachm
+
+Comment:
+Fixed for vdr-1.3.42, if it still doesn't work for you please report
+your vdr version.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=6298&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=6298&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001737.html">[Softdevice-devel] [Bug #6298] ShmClient
+</A></li>
+	<LI>Next message: <A HREF="001740.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1738">[ date ]</a>
+              <a href="thread.html#1738">[ thread ]</a>
+              <a href="subject.html#1738">[ subject ]</a>
+              <a href="author.html#1738">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

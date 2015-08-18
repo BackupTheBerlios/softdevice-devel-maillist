@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xv%20output%20and%20fullscreen%20issue%3A%20almost%20SOLVED.&In-Reply-To=%3C1119513402.42ba6b3a89a10%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000902.html">
+   <LINK REL="Next"  HREF="000904.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xv%20output%20and%20fullscreen%20issue%3A%20almost%20SOLVED.&In-Reply-To=%3C1119513402.42ba6b3a89a10%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Jun 23 09:56:42 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000902.html">[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+</A></li>
+        <LI>Next message: <A HREF="000904.html">[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#903">[ date ]</a>
+              <a href="thread.html#903">[ thread ]</a>
+              <a href="subject.html#903">[ subject ]</a>
+              <a href="author.html#903">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting &quot;A.O.&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">ospite at studenti.unina.it</A>&gt;:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> it seems i was able to solve the problem i had when going in and
+</I>&gt;<i> out of fullscreen mode very fast. The effect was that from time to time
+</I>&gt;<i> vdr stopped because of a buffering problem.
+</I>&gt;<i>
+</I>&gt;<i> I commented the call that sets the window Focus explicitly in
+</I>&gt;<i> xv-video.c, now the focus handling is demanded to the windows manager (i
+</I>&gt;<i> use blackbox, and my videocard is a savage IX/MX ARGH!). But.. there is
+</I>&gt;<i> always a &quot;but&quot;, playing insanely with the f-key now brings to another
+</I>&gt;<i> issue: sometimes when coming back to windowed mode the window size is
+</I>&gt;<i> not restored properly, the window seems to have the correct position but
+</I>&gt;<i> it has the &quot;fullscreen&quot; size. Maybe a locking problem? Should
+</I>&gt;<i> softdevice allow a fullscreen request when serving a fullscreen request?
+</I>
+Noticed that too when holding 'f' key, so that toggling is done at keyrepeat rate.
+Perhaps we have to ignore (count) toggle request until we get the corresponding
+ConfigureNotify event. I guess that counting toggle requests should solve
+your initial problem too.
+
+&gt;<i>
+</I>&gt;<i> The attached patch needs to be tested on other setups, i presume.
+</I>
+Setting input focus explicit is required for some window managers.
+Changing the toggle code, requires test on at least several (five+) WMs
+gnome, kde, windowmaker, .. .
+
+Sorry but for that reason: patch rejected.
+
+&gt;<i>
+</I>&gt;<i> Moreover, i noticed another odd behaviour (but i can live with that for
+</I>&gt;<i> now): when i move the softdevice window, if i keep the titlebar grabbed
+</I>&gt;<i> without releasing it for a while, the decodig thread seems to going mad.
+</I>&gt;<i> Please, can anyone else experiment this?
+</I>
+That is: no video update during that action ?
+I think thats a window manager issue. As far as I remember, mwm acts in
+a similar sane way upon resize events. Blocking events until the resize
+action complets :-( .
+
+&gt;<i>
+</I>&gt;<i> Thanks, softdevice is now usable on my crappy thinkpad :)
+</I>&gt;<i>
+</I>
+Stefan Lucke
+
+PS: please subscribe to avoid manual approve of postings.
+When I find that checkbox to autoreject mails from nonsubscribers
+I'll do that (to get rid of approve request from spammers).
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000902.html">[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+</A></li>
+	<LI>Next message: <A HREF="000904.html">[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#903">[ date ]</a>
+              <a href="thread.html#903">[ thread ]</a>
+              <a href="subject.html#903">[ subject ]</a>
+              <a href="author.html#903">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

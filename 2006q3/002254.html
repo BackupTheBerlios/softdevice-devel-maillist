@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Some issues regarding libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Some%20issues%20regarding%20libcle266mpegdec&In-Reply-To=%3C20060714093841.M9774%40mellander.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002259.html">
+   <LINK REL="Next"  HREF="002255.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Some issues regarding libcle266mpegdec</H1>
+    <B>Per Mellander</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Some%20issues%20regarding%20libcle266mpegdec&In-Reply-To=%3C20060714093841.M9774%40mellander.org%3E"
+       TITLE="[Softdevice-devel] Some issues regarding libcle266mpegdec">per at mellander.org
+       </A><BR>
+    <I>Fri Jul 14 12:48:34 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002259.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+        <LI>Next message: <A HREF="002255.html">[Softdevice-devel] Some issues regarding libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2254">[ date ]</a>
+              <a href="thread.html#2254">[ thread ]</a>
+              <a href="subject.html#2254">[ subject ]</a>
+              <a href="author.html#2254">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+
+As you probably know I've done some testing of the libcle266mpegdec lately and I've got
+a few questions.
+
+I've been doing the major testing against a 15&quot; (computer)LCD and lately started using
+my 40&quot; Samsung (TV). All my testing has been @ 1024x768 and there is a few issues I
+still haven't figured out.
+
+On the 40&quot; display ( btw. I use VGA output ), I have problems with the OSD. That is I
+get random black lines all over the OSD part. The same size as the underlaying text on
+the console. They disapper when I a) press 'Menu', b) OSD time out. I haven't seen it on
+the small LCD though? When the console screen saver kicks in, even when I have done
+'setterm -blank 0, I'm also getting this artifacts. As I said it only happens on my 40&quot; LCD.
+
+What is the status of the deinterlacing? I've tested a few setting but my screen get
+kind of blueish and it starts to framedrop. dfbinfo gives:
+
+Screen (00) FBDev Primary Screen            (primary screen)
+   Caps: VSYNC POWER_MANAGEMENT 
+
+     Layer (00) VIA CLE266 Graphics             (primary layer)
+        Type:    GRAPHICS 
+        Caps:    SURFACE OPACITY ALPHACHANNEL SRC_COLORKEY BRIGHTNESS CONTRAST SATURATION 
+
+     Layer (01) VIA Unichrome Video           
+        Type:    GRAPHICS VIDEO STILL_PICTURE 
+        Caps:    SURFACE OPACITY SCREEN_LOCATION DEINTERLACING DST_COLORKEY LEVELS
+FIELD_PARITY SCREEN_POSITION SCREEN_SIZE 
+
+     Layer (02) VIA Unichrome DVD Subpicture  
+        Type:    GRAPHICS VIDEO STILL_PICTURE 
+        Caps:    SURFACE OPACITY 
+
+
+I thought that DEINTERLACING referred to HW capabilities. Guess I'm wrong.
+
+Last question. Does anyone know how to make directfb/linux-viafb to comply to 1360x768?
+If I try to add it to fb.modes and do a fbset I'm getting,
+
+ioctl FBIOPUT_VSCREENINFO: Invalid argument
+
+wich I interpret that there is something to be done to linux-viafb. I can see that the
+resolution that I want is not listed ;) Can someone please put me in the right direction
+to add this resolution?
+
+/Per
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002259.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+	<LI>Next message: <A HREF="002255.html">[Softdevice-devel] Some issues regarding libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2254">[ date ]</a>
+              <a href="thread.html#2254">[ thread ]</a>
+              <a href="subject.html#2254">[ subject ]</a>
+              <a href="author.html#2254">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

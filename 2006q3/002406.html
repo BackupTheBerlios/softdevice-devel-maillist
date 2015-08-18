@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180609081301y63768487g9a34884dc03c570b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002402.html">
+   <LINK REL="Next"  HREF="002424.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Alasdair Campbell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180609081301y63768487g9a34884dc03c570b%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">ragawu at gmail.com
+       </A><BR>
+    <I>Fri Sep  8 22:01:40 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002402.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002424.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2406">[ date ]</a>
+              <a href="thread.html#2406">[ thread ]</a>
+              <a href="subject.html#2406">[ subject ]</a>
+              <a href="author.html#2406">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 08/09/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt; wrote:
+&gt;<i> Please post your vdr command line, /etc/directfb and the relevant part
+</I>&gt;<i> of /etc/fb.modes.
+</I>
+&quot;vdr command&quot;:
+vdr -c /etc/vdr/ -L /usr/lib/vdr/plugins/ -P&quot;softdevice -vo dfb:&quot;
+
+&quot;/etc/directfbrc&quot;:
+mode=768x576
+primary-layer=2
+depth=32
+matrox-crtc2
+matrox-tv-standard=pal
+matrox-cable-type=scart-rgb
+no-vt-switching
+no-vt-switch
+no-vt
+
+&quot;/etc/fb.modes&quot;:
+mode &quot;PAL&quot;
+    geometry 768 576 768 576 32
+    timings  67723 106 1 44 1 70 4
+    csync high
+    laced true
+    bcast true
+endmode
+
+I'm fairly sure the mode &quot;PAL&quot; came from the DirectFB readme.
+
+With softdevice -vo dfb:mgatv, the first head (I've still got a
+monitor connected) displays the text output of directfb/vdr and also 3
+copies of the video stream with the wrong colours. With -vo dfb: the
+console text goes purple and there is no video visible on the first
+head.
+
+2nd head display is identical, except -vo dfb: is marginally sharper
+with small white text on black, while -vo dfb:mgatv looks almost
+anti-aliased. The difference is slight, but exists.
+
+&gt;<i> I can see correct colours with a mode 768x576-75 (75 Hz frame rate,
+</I>&gt;<i> maybe 45 kHz line rate), but obviously my poor 15625 Hz/50 Hz monitor
+</I>&gt;<i> can't sync at that.  fbset my-pal-32 (the modeline from
+</I>&gt;<i> <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>) produces even less readable picture.
+</I>&gt;<i> Without an oscilloscope, I can't tell what is wrong with the signal.
+</I>&gt;<i> Softdevice produced a black picture when I tried to use that mode
+</I>&gt;<i> (renamed to 768x576-pal and put as the first entry in /etc/fb.modes).
+</I>&gt;<i> 768x576-75 produced sensible colours.  By switching the monitor to
+</I>&gt;<i> composite video mode (which should normally show a black picture),
+</I>&gt;<i> I could see a horizontal line moving vertically on the screen.  That
+</I>&gt;<i> made me suspect that there is no valid sync signal.
+</I>
+I don't know much about this sort of thing, but surely the sync signal
+must exist, otherwise I would see scrolling images?
+
+&gt;<i>
+</I>&gt;<i>         Marko
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+-- 
+A l a s d a i r   C a m p b e l l
+
+r a g a w u @ g m a i l . c o m
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002402.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002424.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2406">[ date ]</a>
+              <a href="thread.html#2406">[ thread ]</a>
+              <a href="subject.html#2406">[ subject ]</a>
+              <a href="author.html#2406">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

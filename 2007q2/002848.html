@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C461CC9E2.2000509%40mellander.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002843.html">
+   <LINK REL="Next"  HREF="002857.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay, unable to play (mpeg) movies.</H1>
+    <B>Per Mellander</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C461CC9E2.2000509%40mellander.org%3E"
+       TITLE="[Softdevice-devel] Softplay, unable to play (mpeg) movies.">per at mellander.org
+       </A><BR>
+    <I>Wed Apr 11 13:43:30 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002843.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+        <LI>Next message: <A HREF="002857.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2848">[ date ]</a>
+              <a href="thread.html#2848">[ thread ]</a>
+              <a href="subject.html#2848">[ subject ]</a>
+              <a href="author.html#2848">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+&gt;<i> Maybe you can add some printfs to libavformat av_open_input_file() (in
+</I>&gt;<i> libavformat/util.c, and #undef printf to get rid of the linking error)
+</I>&gt;<i> to find out what goes wrong...
+</I>&gt;<i> 
+</I>
+I've done som testing and this is what I've found out so far:
+
+I've added some printf's in av_open_input_file where the av_probe_input 
+call is done. When I start ffplay, the file is probed and fmt gets a 
+value in the second 'guess' ( see source of util.c )
+
+decode_thread
+av_probe_input_format(pd, 0): fmt=0
+av_probe_input_format(pd, 1): fmt=9528352
+
+I know fmt is an AVInputFormat pointer but I only print it as an int to 
+see if it's being initialized.
+
+When testing SoftPlay:
+
+open file '/transfer/download/film/Pettson och Findus - Kattonauten .mpg'
+av_probe_input_format(pd, 0): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+could not open file. Return value -84
+
+Isn't the real problem that you call av_open_input_file with a NULL for fmt?
+
+
+/Per
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002843.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+	<LI>Next message: <A HREF="002857.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2848">[ date ]</a>
+              <a href="thread.html#2848">[ thread ]</a>
+              <a href="subject.html#2848">[ subject ]</a>
+              <a href="author.html#2848">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Dolby Digital out via SPDIF
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C4239B53E.7060203%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000305.html">
+   <LINK REL="Next"  HREF="000311.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Dolby Digital out via SPDIF</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C4239B53E.7060203%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Dolby Digital out via SPDIF">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Mar 17 17:50:06 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000305.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+        <LI>Next message: <A HREF="000311.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#310">[ date ]</a>
+              <a href="thread.html#310">[ thread ]</a>
+              <a href="subject.html#310">[ subject ]</a>
+              <a href="author.html#310">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Carsten Kollmeier wrote:
+
+&gt;<i> 
+</I>&gt;<i> If I got it right, the bitstreamout isn't the best way to get DD into 
+</I>&gt;<i> my receiver, as it aims on FF-cards? The best way to handle this 
+</I>&gt;<i> would be to give the ac3-stream directly to the sound card? This 
+</I>&gt;<i> would be a nice feature (I think of an option like &quot;-ac hwac3&quot; on 
+</I>&gt;<i> mplayer or a configuration option like the xine plugin has).
+</I>&gt;<i>
+</I>I would prefer if the bitstreamout plugin would work with the 
+softdevice. The bitstreamout plugin seems to be well maintained, and 
+Werner Fink seems to know what he is doing. I don't know how to send the 
+ac3 directly to the soundcard... I guess it is not too difficult, but 
+what about mp2? As far as I know the bitstreamout plugin repacks the 
+stream and also sends it to SPDIF. Implementing that in the softdevice 
+would require a lot more work...
+
+&gt;<i> 
+</I>&gt;&gt;&gt;<i>Is it planned to get DD working?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Sure, but I don't own any DD equipment, so I can't test SPDIF out.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I own some and would be willing to test :-)
+</I>Ok, so lets try to get the bitstreamout plugin to work and if we fail, 
+we can still implement a ac3 passthrough in the softdevice.
+I will commit my changes to mpeg2decoder this evening - I wanted to do 
+more checks with older vdr versions, but I guess we can postpone them - 
+  I'm curiuous if my changes fix the crashs.
+I will send a message around when I've commited the changes containing a 
+description of what I've done.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000305.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+	<LI>Next message: <A HREF="000311.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#310">[ date ]</a>
+              <a href="thread.html#310">[ thread ]</a>
+              <a href="subject.html#310">[ subject ]</a>
+              <a href="author.html#310">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

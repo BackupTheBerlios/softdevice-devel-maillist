@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C200504291252.50097.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000577.html">
+   <LINK REL="Next"  HREF="000595.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C200504291252.50097.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Repeatable crash">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Apr 29 12:52:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000577.html">[Softdevice-devel] Repeatable crash
+</A></li>
+        <LI>Next message: <A HREF="000595.html">Audio auto Mute WAS:(Re: [Softdevice-devel] Repeatable crash)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#579">[ date ]</a>
+              <a href="thread.html#579">[ thread ]</a>
+              <a href="subject.html#579">[ subject ]</a>
+              <a href="author.html#579">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 28. April 2005 20:36, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Wed, Apr 27, 2005 at 09:13:47PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; Some similar crash here. And that is suprising, as my ffmpeg has
+</I>&gt;<i> &gt; a private fix for my samples when ffmpegs crashes at 4:3 -&gt; 16:9
+</I>&gt;<i> &gt; switch. Your stream has _no_ such switch and when reverting
+</I>&gt;<i> &gt; ffmpeg change of file mpeg12.c from 2004-04-03 (rev 1.227 -&gt; 1.228)
+</I>&gt;<i> &gt; the segfault has gone.
+</I>&gt;<i> 
+</I>&gt;<i> Well, I didn't try reverting anything yet, but indeed, I get a different
+</I>&gt;<i> crash with a self-compiled libavcodec, in mpeg1_decode_picture(), bswap.h:30
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; I've now confirmed that the &quot;mute&quot; setting is equivalent to the smallest
+</I>&gt;<i> &gt; &gt; possible volume level setting.  It is clearly audible from my speakers
+</I>&gt;<i> &gt; &gt; to at least 10 meters distance, maybe 20 meters.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Can you try to replace (audio.c):
+</I>&gt;<i> &gt;     setVol = (int) (((double)mixerMin+(mixerRange*volPercent))+0.5);
+</I>&gt;<i> &gt; by:
+</I>&gt;<i> &gt;     if(vol)
+</I>&gt;<i> &gt;       setVol = (int) (((double)mixerMin+(mixerRange*volPercent))+0.5);
+</I>&gt;<i> &gt;     else
+</I>&gt;<i> &gt;       setVol = mixerMin;
+</I>&gt;<i> 
+</I>&gt;<i> No difference.  You know the Finnish word &quot;vika&quot; (fault)?  Finnish people
+</I>&gt;<i> jokingly ask if the computer is &quot;VIAllinen&quot; (faulty, or with VIA chipset).
+</I>
+:<i>-)) .
+</I>
+&gt;<i> 
+</I>&gt;<i> Hmm, but in this case, it's not a hardware problem.  If I turn the volume
+</I>&gt;<i> down or hit the mute key, alsamixer will indicate that the PCM level drops
+</I>&gt;<i> to 0.  However, if I mute the PCM output or the master volume by pressing
+</I>&gt;<i> the M key in alsamixer, the sound will become inaudible (even when I place
+</I>&gt;<i> my ear next to the speaker).  Same thing if I turn the master volume to zero
+</I>&gt;<i> rather than pressing M.
+</I>
+I think that if &quot;volume_0&quot; != &quot;mute&quot; _is_ a hardware problem. But we could do
+something else for volume 0 for &quot;VIAllinen&quot;  chipsets.
+
+&gt;<i> 
+</I>&gt;<i> Would it be possible to map the mute function (or the minimum volume setting
+</I>&gt;<i> if the mute function is not directly accessible to the plugin) to the muting
+</I>&gt;<i> of the PCM channel?  Unfortunately I'm not familiar with multimedia stuff in
+</I>&gt;<i> Linux, but I could try learning enough for this simple change if you prefer
+</I>&gt;<i> to work on something else.
+</I>
+Patches are welcome.
+
+&gt;<i> 
+</I>&gt;<i> By the way, it looks like my patch to silence compiler warnings in
+</I>&gt;<i> mpeg2decoder.c hasn't been committed to CVS yet.  Here it is again:
+</I>
+No need to repost. I've slight modified version is in my working files.
+I got those warnings too with old gcc on my TV out system. 
+
+But commiting will need some time as I'm still fighting with ac3 out,
+which makes some progress. Now I get a downmixed 5.1-&gt; 2.0
+of old vdr (1.2.1 recordings too).
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000577.html">[Softdevice-devel] Repeatable crash
+</A></li>
+	<LI>Next message: <A HREF="000595.html">Audio auto Mute WAS:(Re: [Softdevice-devel] Repeatable crash)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#579">[ date ]</a>
+              <a href="thread.html#579">[ thread ]</a>
+              <a href="subject.html#579">[ subject ]</a>
+              <a href="author.html#579">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

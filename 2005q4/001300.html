@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] undefined variables in configure script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20undefined%20variables%20in%20configure%20script&In-Reply-To=%3C20051006020228.GA3151%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001297.html">
+   <LINK REL="Next"  HREF="001298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] undefined variables in configure script</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20undefined%20variables%20in%20configure%20script&In-Reply-To=%3C20051006020228.GA3151%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [PATCH] undefined variables in configure script">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Oct  6 04:02:28 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001297.html">[Softdevice-devel] [PATCH] undefined variables in configure script
+</A></li>
+        <LI>Next message: <A HREF="001298.html">[Softdevice-devel] Some AC3 progress.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1300">[ date ]</a>
+              <a href="thread.html#1300">[ thread ]</a>
+              <a href="subject.html#1300">[ subject ]</a>
+              <a href="author.html#1300">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Oct 05, 2005 at 08:55:04PM +0200, Stefan Lucke wrote:
+&gt;<i> DIEF_REPEAT part is in cvs. There is one change I don't understand:
+</I>&gt;<i> 
+</I>&gt;<i> -PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/
+</I>&gt;<i> +: ${PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/}
+</I>&gt;<i> +: ${CFLAGS=&quot;&quot;}
+</I>
+These are needed to avoid referencing unset variables.  My shell scripts
+usually have the shell builtin command &quot;set -eu&quot; in the beginning.
+Quoting bash(1):
+
+-e	Exit immediately if a simple command (see SHELL GRAMMAR above)
+        exits with a non-zero status.
+-u	Treat unset variables as an error when performing parameter
+	expansion.  If expansion is attempted on  an unset variable,
+	the shell prints an error message, and, if not interactive,
+	exits with a non-zero status.
+
+The : is the builtin null command, i.e., a command that does nothing:
+
+:<i> [arguments]
+</I>	No  effect; the command does nothing beyond expanding arguments
+	and performing any specified redirections.  A zero exit code
+	is returned.
+
+These builtin commands &quot;set&quot; and &quot;:&quot; should work on all Bourne shell
+derivatives (if softdevice ever needs to be compiled on something else
+than GNU/Linux).
+
+The ${VAR=value} is the same as $VAR, except that $VAR will be
+initialized to 'value' if it is unset.  In bash(1), see section
+EXPANSION, subsection Parameter Expansion:
+
+       In each of the cases below, word is subject to tilde expansion, parame-
+       ter  expansion,  command  substitution, and arithmetic expansion.  When
+       not performing substring expansion, bash tests for a parameter that  is
+       unset  or null; omitting the colon results in a test only for a parame-
+       ter that is unset.
+
+       ${parameter:-word}
+              Use Default Values.  If parameter is unset or null,  the  expan-
+              sion  of word is substituted.  Otherwise, the value of parameter
+              is substituted.
+       ${parameter:=word}
+              Assign Default Values.  If  parameter  is  unset  or  null,  the
+              expansion of word is assigned to parameter.  The value of param-
+              eter is then substituted.   Positional  parameters  and  special
+              parameters may not be assigned to in this way.
+
+Here is an example that you can try in an interactive shell:
+
+$ set -u
+$ i=1
+$ echo i=&quot;'$i'&quot; j=&quot;'$j'&quot;
+bash: j: unbound variable
+$ echo i=&quot;'${i=2}'&quot; j=&quot;'${j=3}'&quot;
+i='1' j='3'
+$ j=
+$ echo i=&quot;'${i=2}'&quot; j=&quot;'${j=3}'&quot;
+i='1' j=''
+
+&gt;<i> My intension was to add PKG_CONFIG_PATH with /usr/local/lib/pkgconfig/
+</I>&gt;<i> Do you run into problems, when PKG_CONFIG_PATH is not set ?
+</I>
+The &quot;set -eu&quot; I added will complain about unset variables.  I think it's
+best to enable at least &quot;set -u&quot;, because it would have caught the error
+in the DIEF_REPEAT test.  If the &quot;set -u&quot; is omitted, unset variables
+will expand to the empty string without warning.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001297.html">[Softdevice-devel] [PATCH] undefined variables in configure script
+</A></li>
+	<LI>Next message: <A HREF="001298.html">[Softdevice-devel] Some AC3 progress.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1300">[ date ]</a>
+              <a href="thread.html#1300">[ thread ]</a>
+              <a href="subject.html#1300">[ subject ]</a>
+              <a href="author.html#1300">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

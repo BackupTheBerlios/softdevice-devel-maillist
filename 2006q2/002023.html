@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 hardware decoding: a bit of progress
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20hardware%20decoding%3A%20a%20bit%20of%20progress&In-Reply-To=%3CPine.OSF.4.61.0605141234170.324914%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002022.html">
+   <LINK REL="Next"  HREF="002032.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 hardware decoding: a bit of progress</H1>
+    <B>Rolf Ahrenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20hardware%20decoding%3A%20a%20bit%20of%20progress&In-Reply-To=%3CPine.OSF.4.61.0605141234170.324914%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] CLE266 hardware decoding: a bit of progress">rahrenbe at cc.hut.fi
+       </A><BR>
+    <I>Sun May 14 11:43:28 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002022.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+        <LI>Next message: <A HREF="002032.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2023">[ date ]</a>
+              <a href="thread.html#2023">[ thread ]</a>
+              <a href="subject.html#2023">[ subject ]</a>
+              <a href="author.html#2023">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, 14 May 2006, Laz wrote:
+
+&gt;<i> I'm not convinced that your numbers here are correct: I get black borders at
+</I>&gt;<i> the top and bottom of my 16:9 TV now. I also found a channel which wasn't
+</I>&gt;<i> expanded properly horizontally. I'll see if I can find the relevant bits in
+</I>&gt;<i> ffmpeg and see what values are set there. I was seeing things like 64/45 when
+</I>&gt;<i> I looked at the output from software decoding.
+</I>
+My quick look at the ffmpeg code revealed that it's calculating the 
+num/den pair from the aspect ratio information that is a float. There's 
+a strange minor horizontal shift in my 16:9 TV set, if the softdevice's 
+aspect ratio is set to default or 16:9. However if I set the screen to 
+16:10 the video scaling seems to be correct and without any 
+vertical/horizontal shift.
+
+BR,
+--
+rofa
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002022.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+	<LI>Next message: <A HREF="002032.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2023">[ date ]</a>
+              <a href="thread.html#2023">[ thread ]</a>
+              <a href="subject.html#2023">[ subject ]</a>
+              <a href="author.html#2023">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

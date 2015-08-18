@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] New A-V sync
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C200411052326.22351.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000062.html">
+   <LINK REL="Next"  HREF="000076.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] New A-V sync</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C200411052326.22351.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] New A-V sync">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Nov  5 23:26:22 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000062.html">[Softdevice-devel] New A-V sync
+</A></li>
+        <LI>Next message: <A HREF="000076.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#69">[ date ]</a>
+              <a href="thread.html#69">[ thread ]</a>
+              <a href="subject.html#69">[ subject ]</a>
+              <a href="author.html#69">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 4. November 2004 16:46, Martin Wache wrote:
+&gt;<i> 
+</I>&gt;<i> &gt; I tested this with vdr-1.3.15 and vdr-1.2.1.
+</I>&gt;<i> &gt; with vdr-1.2.1 compile fails:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; ../../../include/vdr/ringbuffer.h: In member function `virtual void
+</I>&gt;<i> &gt;    cStreamDecoder::Clear()':
+</I>&gt;<i> &gt; ../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+</I>&gt;<i> &gt;    protected
+</I>&gt;<i> Ah, ok I just checked it with vdr-1.2.6, but I can fix this...
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I think there are some other issues even with newer vdrs due to
+</I>&gt;<i> &gt; CondVar handling.
+</I>&gt;<i> What do you mean? As far as I remember I didn't change anything concerning 
+</I>&gt;<i> CondVars.
+</I>
+Thats an error of mine. Drop that note.
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; A minor issue towards coding style: could you please replace tabs with
+</I>&gt;<i> &gt; blanks
+</I>&gt;<i> &gt; so that indentation (2 spaces) is kept independent of editor's tab
+</I>&gt;<i> &gt; settings ?
+</I>&gt;<i> I was about to ask if you agreed on some kind of coding style, I found
+</I>&gt;<i> different
+</I>&gt;<i> coding styles in different places and I was not sure which coding style to
+</I>&gt;<i> use.
+</I>&gt;<i> Are you using the vdr coding style?
+</I>
+Won't comment on this style.
+
+Yes in softdevice there are different styles.
+One of my rule is:
+Don't mix reformating (style change) with code change.
+
+When writing new code we should agree on one style so the it better readable.
+Are there other suggestions ?
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000062.html">[Softdevice-devel] New A-V sync
+</A></li>
+	<LI>Next message: <A HREF="000076.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#69">[ date ]</a>
+              <a href="thread.html#69">[ thread ]</a>
+              <a href="subject.html#69">[ subject ]</a>
+              <a href="author.html#69">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

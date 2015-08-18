@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nVidia hardware alpha blending for OSD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C20060908135953.GA421%40spork.qfe3.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002380.html">
+   <LINK REL="Next"  HREF="002384.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nVidia hardware alpha blending for OSD</H1>
+    <B>Chris Elsworth</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C20060908135953.GA421%40spork.qfe3.net%3E"
+       TITLE="[Softdevice-devel] nVidia hardware alpha blending for OSD">chris at shagged.org
+       </A><BR>
+    <I>Fri Sep  8 15:59:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002380.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+        <LI>Next message: <A HREF="002384.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2383">[ date ]</a>
+              <a href="thread.html#2383">[ thread ]</a>
+              <a href="subject.html#2383">[ subject ]</a>
+              <a href="author.html#2383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Sep 08, 2006 at 07:06:47AM +0200, Stefan Lucke wrote:
+&gt;<i> On Mittwoch 30 August 2006 11:56, CR wrote:
+</I>&gt;<i> &gt; Hi all,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Some of you on the VDR mailing list may have seen me struggling to get
+</I>&gt;<i> &gt; softdevice's OSD to work without odd artifacts.
+</I>&gt;<i> 
+</I>&gt;<i> Can you try current cvs ?
+</I>&gt;<i> Could be that limiting destination x/y offsets to even values may have some
+</I>&gt;<i> influence on nvidia cards too.
+</I>
+Hello,
+
+I haven't got much information to hand at the moment but current CVS
+breaks here; this is a pretty useless bug report I'm afraid, there's
+no diagnostic information given:
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: xv:aspect=wide:max-area:full
+[ProcessArgs] xv: startup aspect ratio set to wide (16:9)
+[ProcessArgs] xv: using max available area
+[ProcessArgs] xv: start up fullscreen
+[setup-softdevice] alsa ac3Mode set to: 1
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (80)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] mainMenu: 0
+[setup-softdevice] setting alpha blend mode to software
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 100
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (16:9 wide)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3345152)
+[XvVideoOut]: osd_image shmid = 9601025
+[XvVideoOut]: got osd_image: width 1024 height 768, bytes per line 4096
+[softdevice] Xv out failure !
+
+And vdr quits, no further errors. Pity I didn't keep the sources from
+the last cvs checkout I had, but it was around a
+month/month-and-a-half old. I just did cvs up and make all, then
+copied the new lib into place.
+
+-- 
+Chris
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002380.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+	<LI>Next message: <A HREF="002384.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2383">[ date ]</a>
+              <a href="thread.html#2383">[ thread ]</a>
+              <a href="subject.html#2383">[ subject ]</a>
+              <a href="author.html#2383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

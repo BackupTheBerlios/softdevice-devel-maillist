@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] New A-V sync
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C2460.1099391886%40www17.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000058.html">
+   <LINK REL="Next"  HREF="000060.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] New A-V sync</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C2460.1099391886%40www17.gmx.net%3E"
+       TITLE="[Softdevice-devel] New A-V sync">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Nov  2 11:38:06 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000058.html">[Softdevice-devel] audio troubles
+</A></li>
+        <LI>Next message: <A HREF="000060.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+&gt;<i> 
+</I>&gt;<i> Making the dvd plugin working was just a digression. It didn't work
+</I>&gt;<i> previously either.
+</I>Ah, ok, I was thinking it was working with the old code, but I didn't even
+get it to work with the old code... But anyway I think will spend some more
+work on it... I guess we can make it work...
+
+&gt;<i> &gt; I also changed the buffering of the audio part so I hope that issue
+</I>&gt;<i> should
+</I>&gt;<i> &gt; be fixed now.
+</I>&gt;<i> &gt; I don't know yet how much time I will have this evening, but maybe I can
+</I>&gt;<i> &gt; send an improved patch this evening.
+</I>
+I didn't make it last evening, but I have a new version for you now.
+Actually it's
+the my &quot;working&quot; version so it is quite experimental and there are also
+still a few
+known issues, eg. sometimes it takes ages to switch a channel and then
+something goes completly wrong the sound is corrupted and so on.
+But I got rid of this 80ms delay and the doubleing of audio samples and
+still there are almost no buffer underruns anymore.
+So if you have some time to spare, please try the patch and tell me your
+experience with it.
+
+Bye,
+Martin  
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen <A HREF="http://www.gmx.net/de/go/mail">http://www.gmx.net/de/go/mail</A> ++
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: AV-Patch2.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041102/18e98ba6/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041102/18e98ba6/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000058.html">[Softdevice-devel] audio troubles
+</A></li>
+	<LI>Next message: <A HREF="000060.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

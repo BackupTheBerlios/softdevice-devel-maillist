@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605231037.51211.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002003.html">
+   <LINK REL="Next"  HREF="002061.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605231037.51211.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue May 23 10:37:51 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002003.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+        <LI>Next message: <A HREF="002061.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2060">[ date ]</a>
+              <a href="thread.html#2060">[ thread ]</a>
+              <a href="subject.html#2060">[ subject ]</a>
+              <a href="author.html#2060">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 11 Mai 2006 07:30, Stefan Lucke wrote:
+&gt;<i> On Mittwoch 10 Mai 2006 19:18, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Mittwoch 10 Mai 2006 14:22, Laz wrote:
+</I>&gt;<i> &gt; &gt; On Wednesday 10 May 2006 11:57, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; Quoting Laz:
+</I>&gt;<i> &gt; &gt; &gt; &gt; I had a quick go at trying SetLevel(-1) after reading Readme.txt in
+</I>&gt;<i> &gt; &gt; &gt; &gt; the DirectFB unichrome driver source. I can't actually remember what
+</I>&gt;<i> &gt; &gt; &gt; &gt; that did but I lost either the OSD or the video layer completely!
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; From a look at directfb code, it should work with SetLevel(-1), if
+</I>&gt;<i> &gt; &gt; &gt; unichrome driver would report capability DLCAPS_ALPHACHANNEL. Reporting
+</I>&gt;<i> &gt; &gt; &gt; DLCAPS_ALPHACHANNEL has to be fixed in
+</I>&gt;<i> &gt; &gt; &gt; DirectFB/gfxdrivers/unichrome/uc_overlay.h line 5 or 6, by or'ing this
+</I>&gt;<i> &gt; &gt; &gt; together with other flags .
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Hmmmm... I'm sure that my setup does report 'alphachannel' on 
+</I>&gt;<i> &gt; &gt; initialisation for me (can't check right now, or which layer this is 
+</I>&gt;<i> &gt; &gt; for), and so presumably it does get enabled. Shouldn't this be enabled 
+</I>&gt;<i> &gt; &gt; for the primary layer and not the overlay, anyway? Looking at 
+</I>&gt;<i> &gt; &gt; video-dfb.c, DLCAPS_ALPHACHANNEL is being checked for and set for the 
+</I>&gt;<i> &gt; &gt; video layer rather than the primary layer.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Guess you are right. That's from November:
+</I>&gt;<i> &gt; <A HREF="http://mail.directfb.org/pipermail/directfb-dev/2005-November/000970.html">http://mail.directfb.org/pipermail/directfb-dev/2005-November/000970.html</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> But it's definitely more complicated :-( . So now with directfb cvs, I only
+</I>&gt;<i> have video when SetLayer(1) or OSD when SetLayer(-1). So I guess
+</I>&gt;<i> to fix this, many things may break. I cannot promise that it will work
+</I>&gt;<i> with other (older directfb versions) :-( .
+</I>&gt;<i> 
+</I>
+So here is the version that works current DirectFB (cvs from 2006-05-10)
+and softdevice cvs. Needs to be tested on _all_ other cards/configurations.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb-via-fix01.patch
+Type: text/x-diff
+Size: 11240 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060523/fe6526f6/attachment.patch">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060523/fe6526f6/attachment.patch</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002003.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+	<LI>Next message: <A HREF="002061.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2060">[ date ]</a>
+              <a href="thread.html#2060">[ thread ]</a>
+              <a href="subject.html#2060">[ subject ]</a>
+              <a href="author.html#2060">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

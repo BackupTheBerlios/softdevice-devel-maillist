@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Segfault%20with%20current%200.3.0%20release%20vs.%20cvs%0A%09from%202006-06-23&In-Reply-To=%3C20061010235322.GA28197%40MAIL.13thfloor.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002612.html">
+   <LINK REL="Next"  HREF="002615.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23</H1>
+    <B>Herbert Poetzl</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Segfault%20with%20current%200.3.0%20release%20vs.%20cvs%0A%09from%202006-06-23&In-Reply-To=%3C20061010235322.GA28197%40MAIL.13thfloor.at%3E"
+       TITLE="[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23">herbert at 13thfloor.at
+       </A><BR>
+    <I>Wed Oct 11 01:53:22 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002612.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+        <LI>Next message: <A HREF="002615.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2613">[ date ]</a>
+              <a href="thread.html#2613">[ thread ]</a>
+              <a href="subject.html#2613">[ subject ]</a>
+              <a href="author.html#2613">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Oct 10, 2006 at 11:57:57PM +0200, Stefan Lucke wrote:
+&gt;<i> On Dienstag 10 Oktober 2006 15:24, Herbert Poetzl wrote:
+</I>&gt;<i> &gt; On Tue, Oct 10, 2006 at 07:50:14AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; Quoting Herbert Poetzl &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">herbert at 13thfloor.at</A>&gt;:
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; On Mon, Oct 09, 2006 at 01:25:18AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; &gt; Hello,
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; the softdevice team (Torgeir Veimo, Martin Wache and me, Stefan
+</I>&gt;<i> &gt; &gt; &gt; &gt; Lucke) is pleased to announce a new release of vdr's softdevice
+</I>&gt;<i> &gt; &gt; &gt; &gt; plugin.
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; General info:
+</I>&gt;<i> &gt; &gt; &gt; &gt;   Softdevice plugin enables vdr to run on your desktop with so
+</I>&gt;<i> &gt; &gt; &gt; &gt;   called budget cards. You'll get vdr output via framebuffer
+</I>&gt;<i> &gt; &gt; &gt; &gt;   or X11-Xv or DirectFB or vidix to your screen. Decoding is
+</I>&gt;<i> &gt; &gt; &gt; &gt;   done via ffmpeg.
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; Supported vdr versions: (1.2.x,) 1.3.x and 1.4.x
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; segfaults here (100% reproducible) with or without
+</I>&gt;<i> &gt; &gt; &gt; alpha blending (i.e. pseudo and software). the only
+</I>&gt;<i> &gt; &gt; &gt; difference is the backtrace (CopyPicBuf vs *AlphaBlend)
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; # ./vdr -D1 -c/opt/CONFIG-1/ -P&quot;softdevice -vo xv:&quot;
+</I>&gt;<i> &gt; &gt; &gt; [softdevice] processing args
+</I>&gt;<i> &gt; &gt; &gt; [softdevice]   argv [0] = softdevice
+</I>&gt;<i> &gt; &gt; &gt; [softdevice]   argv [1] = -vo
+</I>&gt;<i> &gt; &gt; &gt; vo_argv: xv:
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] alsa ac3Mode set to: 0
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] alsa AC3 device set to: hw:0,1
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] alsa device set to: default
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] A/V Offset set to (0)
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] Cropping 2 lines from bottom
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] Cropping 2 columns from left
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] cropping mode set to 0 (none)
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] cropping mode toggle key set to 0 (none)
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] Cropping 2 columns from right
+</I>&gt;<i> &gt; &gt; &gt; [setup-softdevice] Cropping 2 lines from top
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Does it make a difference when setting crop line /coloumns to 0 ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; that was indeed a good hint, I completely removed the 
+</I>&gt;<i> &gt; configuration entries for the softdevice, and suddenly
+</I>&gt;<i> &gt; it started working. after analyzing the differences,
+</I>&gt;<i> &gt; here is the culprit:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; softdevice.PixelFormat = 2
+</I>&gt;<i> &gt; 			~~~
+</I>&gt;<i> 
+</I>&gt;<i> Yes changing pixelformat is the other way to circumvent this segfault.
+</I>&gt;<i> Please get an updated version from cvs, as the bug was reproducable
+</I>&gt;<i> for me and I commited a fix.
+</I>
+seems to work fine here, thanks!
+
+btw, a few things I noticed regarding softdevice
+but I didn't bother to mention (until now), but 
+maybe that input is appreciated:
+
+ - depending on the pixel format, the entire
+   picture and overlay shifts slightly left and
+   right, where:
+
+   - YV12 is one pixel right compared to YUY2
+   - YV12 and I420 are perfectly aligned
+
+ - the pseudo alpha blending never worked for me
+   neither with different nvidia cards nor with
+   matrox cards
+
+ - I would expect the overlay to be pixel aligned
+   (as it is on the full featured card) i.e.
+   without strange scaling/alignment effects
+   while in fact it changes slightly with each
+   channel (duplicating pixels and sometimes
+   even antialiasing pixels) see
+  
+   <A HREF="http://www.13thfloor.at/~herbert/chan{05,14,26">http://www.13thfloor.at/~herbert/chan{05,14,26</A>}.png
+
+that aside, I'm happy that softdevice was not
+abandoned and seems to be well maintained now
+
+thanks for your work and time,
+Herbert
+
+&gt;<i> -- 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002612.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+	<LI>Next message: <A HREF="002615.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2613">[ date ]</a>
+              <a href="thread.html#2613">[ thread ]</a>
+              <a href="subject.html#2613">[ subject ]</a>
+              <a href="author.html#2613">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

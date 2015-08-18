@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] use libavformat in mpeg2decoder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C1111091850.5513.3.camel%40africa.netenviron.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000328.html">
+   <LINK REL="Next"  HREF="000330.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] use libavformat in mpeg2decoder</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C1111091850.5513.3.camel%40africa.netenviron.com%3E"
+       TITLE="[Softdevice-devel] use libavformat in mpeg2decoder">torgeir at pobox.com
+       </A><BR>
+    <I>Thu Mar 17 21:37:30 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000328.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+        <LI>Next message: <A HREF="000330.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#316">[ date ]</a>
+              <a href="thread.html#316">[ thread ]</a>
+              <a href="subject.html#316">[ subject ]</a>
+              <a href="author.html#316">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>syslog output;
+
+Mar 17 20:33:52 vigor10 vdr[2115]: switching to channel 2
+Mar 17 20:33:53 vigor10 vdr[2128]: transfer thread started (pid=2128,
+tid=98311)
+Mar 17 20:33:53 vigor10 vdr[2129]: receiver on device 1 thread started
+(pid=2129, tid=114696)
+Mar 17 20:33:53 vigor10 vdr[2130]: TS buffer on device 1 thread started
+(pid=2130, tid=131081)
+Mar 17 20:33:54 vigor10 vdr[2124]: channel 8 (BBC THREE) event 20:30
+'BBC THREE News' status 4
+Mar 17 20:33:54 vigor10 vdr[2124]: channel 21 (CBBC Channel) event 19:00
+'This is CBBC!' status 4
+Mar 17 20:33:54 vigor10 vdr[2124]: channel 2 (BBC TWO) event 20:30 'The
+Reclaimers' status 4
+Mar 17 20:33:54 vigor10 vdr[2124]: channel 1 (BBC ONE) event 20:00 'The
+Inspector Lynley Mysteries' status 4
+Mar 17 20:33:54 vigor10 vdr[2124]: channel 20 (BBCi) event 18:00 'BBCi'
+status 4
+Mar 17 20:33:55 vigor10 vdr[2124]: channel 14 (BBC NEWS 24) event 20:00
+'BBC News' status 4
+Mar 17 20:33:57 vigor10 vdr[2115]: timer 3 (6 2029-2126 'American Idol')
+set to event Fri 18.03.2005 20:30-21:25
+'American Idol'
+Mar 17 20:33:57 vigor10 vdr[2115]: timer 4 (6 2124-2151 'American Idol
+Results') set to event Fri 18.03.2005 21:25-21:50 'American Idol
+Results'
+Mar 17 20:34:00 vigor10 vdr[2129]: buffer usage: 70% (tid=98311)
+Mar 17 20:34:00 vigor10 vdr[2129]: buffer usage: 80% (tid=98311)
+Mar 17 20:34:01 vigor10 vdr[2129]: buffer usage: 90% (tid=98311)
+Mar 17 20:34:01 vigor10 vdr[2129]: buffer usage: 100% (tid=98311)
+Mar 17 20:34:01 vigor10 vdr[2129]: ERROR: 1 ring buffer overflow (177
+bytes dropped)
+Mar 17 20:34:07 vigor10 vdr[2129]: ERROR: 14703 ring buffer overflows
+(2764164 bytes dropped)
+Mar 17 20:34:13 vigor10 vdr[2129]: ERROR: 16927 ring buffer overflows
+(3182276 bytes dropped)
+Mar 17 20:34:19 vigor10 vdr[2129]: ERROR: 17476 ring buffer overflows
+(3285488 bytes dropped)
+Mar 17 20:34:25 vigor10 vdr[2129]: ERROR: 17291 ring buffer overflows
+(3250708 bytes dropped)
+Mar 17 20:34:31 vigor10 vdr[2129]: ERROR: 20045 ring buffer overflows
+(3768460 bytes dropped)
+Mar 17 20:34:37 vigor10 vdr[2129]: ERROR: 19314 ring buffer overflows
+(3631032 bytes dropped)
+Mar 17 20:34:43 vigor10 vdr[2129]: ERROR: 19138 ring buffer overflows
+(3597944 bytes dropped)
+Mar 17 20:34:49 vigor10 vdr[2129]: ERROR: 15806 ring buffer overflows
+(2971528 bytes dropped)
+Mar 17 20:34:55 vigor10 vdr[2129]: ERROR: 19180 ring buffer overflows
+(3605840 bytes dropped)
+Mar 17 20:35:01 vigor10 vdr[2129]: ERROR: 17003 ring buffer overflows
+(3196564 bytes dropped)
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000328.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+	<LI>Next message: <A HREF="000330.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#316">[ date ]</a>
+              <a href="thread.html#316">[ thread ]</a>
+              <a href="subject.html#316">[ subject ]</a>
+              <a href="author.html#316">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

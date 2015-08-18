@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D&In-Reply-To=%3C42DB4ABA.90408%40registru.md%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000977.html">
+   <LINK REL="Next"  HREF="000994.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH]</H1>
+    <B>Vadim Catana</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D&In-Reply-To=%3C42DB4ABA.90408%40registru.md%3E"
+       TITLE="[Softdevice-devel] [PATCH]">vcatana at registru.md
+       </A><BR>
+    <I>Mon Jul 18 08:22:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000977.html">[Softdevice-devel] [PATCH]
+</A></li>
+        <LI>Next message: <A HREF="000994.html">[Softdevice-devel] [PATCH]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#993">[ date ]</a>
+              <a href="thread.html#993">[ thread ]</a>
+              <a href="subject.html#993">[ subject ]</a>
+              <a href="author.html#993">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Vadim Catana wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Just merged your patch in my local copy with some changes:
+</I>&gt;&gt;<i> 1. moved cutTop/cutBottom to video.h
+</I>&gt;&gt;<i> 2. REG_a define is driven by #ifdef __x86_64__
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and now I*m stumbling over the following change of video-dfb.c:
+</I>&gt;&gt;<i> @@ -600,8 +606,8 @@
+</I>&gt;&gt;<i>        else if (setupStore-&gt;pixelFormat == 2)
+</I>&gt;&gt;<i>        {
+</I>&gt;&gt;<i>          dlc.pixelformat = DSPF_YUY2;
+</I>&gt;&gt;<i> -        useStretchBlit = true;
+</I>&gt;&gt;<i> -        OSDpseudo_alpha = false;
+</I>&gt;&gt;<i> +//        useStretchBlit = true;
+</I>&gt;&gt;<i> +//        OSDpseudo_alpha = false;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What's the reason for that ?
+</I>&gt;&gt;<i> Perhaps we should make stretchBlit selectable via a separate OSD option.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> the reason is that the picture was flickering when I selected YUY2
+</I>&gt;<i> from softdevice menu. I searched why that might be and did some
+</I>&gt;<i> changes. The flickering disappeared, but don't remember if the reason
+</I>&gt;<i> was strechBlit or software alpha blending or changes in yv12_to_yuy2 
+</I>&gt;<i> function.
+</I>&gt;<i> I'll test this weekend how it works with and without those lines
+</I>&gt;<i> and report the results.
+</I>
+I tried softevice with a radeon card and those two lines uncommented.
+It doesn't work, video is not visible, sound stops every second.
+I looked at the radeon driver from DirectFB and the StretchBlit
+function is not implemented.
+Why is useStretchBlit=true only for YUY2 pixelformat ?
+
+--------------------------
+Vadim Catana
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000977.html">[Softdevice-devel] [PATCH]
+</A></li>
+	<LI>Next message: <A HREF="000994.html">[Softdevice-devel] [PATCH]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#993">[ date ]</a>
+              <a href="thread.html#993">[ thread ]</a>
+              <a href="subject.html#993">[ subject ]</a>
+              <a href="author.html#993">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

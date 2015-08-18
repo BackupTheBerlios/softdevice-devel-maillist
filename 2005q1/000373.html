@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503232247.08118.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000371.html">
+   <LINK REL="Next"  HREF="000376.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503232247.08118.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Mar 23 22:47:08 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000371.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000376.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#373">[ date ]</a>
+              <a href="thread.html#373">[ thread ]</a>
+              <a href="subject.html#373">[ subject ]</a>
+              <a href="author.html#373">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 23. M&#228;rz 2005 21:21, Tomi Hautakoski wrote:
+&gt;<i> First, I would like to thank everyone developing softdevice+DFB. After 
+</I>&gt;<i> upgrading dfb to 0.9.22 and softdevice to cvs the problems with 
+</I>&gt;<i> interlaced G400 tv-out and sync are gone. Excellent work! =)
+</I>
+Thanks.
+So your setup works better than mine (G400+celeronIII 1.2GHz, very old dfb).
+Whats your CPU power ?
+
+&gt;<i> 
+</I>&gt;<i> Now I'm just wondering if anyone else is having juddering picture when 
+</I>&gt;<i> using the OSD? Everything is fine until I open the OSD, then the 
+</I>&gt;<i> video+audio start to judder. After the OSD disappears, it takes a few 
+</I>&gt;<i> seconds until the video and audio are playing ok again. However the 
+</I>&gt;<i> a-vsync gets lost and I have to change to a different channel and back to 
+</I>&gt;<i> recover the a-vsync. The video seems to lag ~1 sec when using the OSD for 
+</I>&gt;<i> 3 secs to show the channel info.
+</I>
+OSD drawing with dfb has to be rewritten, as it always draws complete osd
+if only a small area has to be redrawn. To my experince this effect seems
+to be worse with the channel info osd, which in term is refreshed for about
+every frame. Vdr main menu menu is only refreshed after a few seconds.
+
+A/V sync checking has to be move to the ouput method instead of decoder.
+
+&gt;<i> 
+</I>&gt;<i> I'm guessing now but is there a chance that the OSD doesn't use the same 
+</I>&gt;<i> mechanism that the video does to sync the fields for TV? And somehow it's 
+</I>&gt;<i> affecting the audio+video layers too. Well, ask away any needed details if 
+</I>&gt;<i> anyone has suggestions.
+</I>&gt;<i> 
+</I>&gt;<i> My system is G400 w/ rgb-tvout, vdr 1.3.22, softdevice cvs from today and 
+</I>&gt;<i> DFB 0.9.22.
+</I>
+
+
+&gt;<i> Maybe these are somehow related to the problem. Noticed from the logs 
+</I>&gt;<i> after a longer run:
+</I>&gt;<i> alsa-audio: Xrun
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]00 motion_type at 16 15
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]ac-tex damaged at 1 16
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]Warning MVs not available
+</I>&gt;<i> [mpeg2video @ 0x407f56b0]concealing 135 DC, 135 AC, 135 MV errors
+</I>
+This is either related to a bad signal or some buffer problems.
+Do you get buffer overflow messages in syslog ?
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000371.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000376.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#373">[ date ]</a>
+              <a href="thread.html#373">[ thread ]</a>
+              <a href="subject.html#373">[ subject ]</a>
+              <a href="author.html#373">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

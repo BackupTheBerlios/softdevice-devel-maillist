@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OProfile success story and some performance measurement tips
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%20measurement%20tips&In-Reply-To=%3C20050524094620.GA386202%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000713.html">
+   <LINK REL="Next"  HREF="000728.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OProfile success story and some performance measurement tips</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%20measurement%20tips&In-Reply-To=%3C20050524094620.GA386202%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] OProfile success story and some performance measurement tips">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue May 24 11:46:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000713.html">[Softdevice-devel] Glitches with aspect ratio selection
+</A></li>
+        <LI>Next message: <A HREF="000728.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#714">[ date ]</a>
+              <a href="thread.html#714">[ thread ]</a>
+              <a href="subject.html#714">[ subject ]</a>
+              <a href="author.html#714">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+At times, my 900 MHz Celeron system used to use over 90% CPU in VDR, and it
+would drop frames in busy scenes.  After some profiling, I was able to cut
+the CPU consumption to 60-70% of the original.
+
+Last night I did some profiling with oprofile.  I had linked softdevice
+statically against ffmpeg (compiled from CVS about two weeks ago), so
+I could conveniently see which functions are consuming most of the time.
+I'm typing this from memory, so there may be inaccuracies.
+
+The biggest surprise was color space conversion.  If I remember correctly,
+there are three settings: I420, YUY2 and YV12.  One might have blue and red
+swapped on my Matrox G450 (I think) card, but the other two look okay.
+Until now, I had used YV12 (I think), and wasted some 20-30 percent of
+softdevice's CPU consumption in color space conversions.  After selecting
+I420, the CPU load dropped by maybe 20 percent.
+
+Another thing, which wasn't so surprising, was that lavc deinterlacing consumes
+about 40% of softdevice's time.  After disabling deinterlacing, I couldn't
+notice any dropped frames.  I didn't measure all the interlacing options that
+are available with libpostproc.
+
+My /root/.oprofile/daemonrc looks like this:
+
+CHOSEN_EVENTS[0]=CPU_CLK_UNHALTED:90000:0:1:1
+NR_CHOSEN=1
+SEPARATE_LIB=1
+SEPARATE_KERNEL=0
+SEPARATE_THREAD=0
+SEPARATE_CPU=0
+VMLINUX=none
+IMAGE_FILTER=
+CPU_BUF_SIZE=0
+CALLGRAPH=6
+
+I used the following commands as root:
+
+opcontrol --reset # clear the event log
+opcontrol --start # start collecting samples from the running system
+opcontrol --stop # stop collecting samples
+
+Between --stop and --reset, I used the following command as the vdr user:
+
+opreport -l PLUGINS/lib/libvdr-softdevice*.so | less
+
+I could also have used opstack and opannotate, but I was happy with these
+function-level results.  I believe that you will need at least kernel
+2.6.11 in order to use opstack.  OProfile is available also for 2.4 kernels,
+but it is not included in the kernel distribution.
+
+Try to view the same clip at the same position for the same duration when
+repeating the test with different settings.  After opcontrol --start,
+view the clip for at least 10 seconds, and try to issue opcontrol --stop
+at the same point of the clip each time.
+
+Of course, you can also measure CPU consumption with top, but the load
+will vary greatly, depending on the amount of activity on the screen.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000713.html">[Softdevice-devel] Glitches with aspect ratio selection
+</A></li>
+	<LI>Next message: <A HREF="000728.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#714">[ date ]</a>
+              <a href="thread.html#714">[ thread ]</a>
+              <a href="subject.html#714">[ subject ]</a>
+              <a href="author.html#714">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Towards softdevice-0.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C200504071959.38291.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000468.html">
+   <LINK REL="Next"  HREF="000470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Towards softdevice-0.1.1</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C200504071959.38291.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: Towards softdevice-0.1.1">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr  7 19:59:38 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000468.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+        <LI>Next message: <A HREF="000470.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#469">[ date ]</a>
+              <a href="thread.html#469">[ thread ]</a>
+              <a href="subject.html#469">[ subject ]</a>
+              <a href="author.html#469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 7. April 2005 17:46, Martin Wache wrote:
+&gt;<i> Torgeir Veimo wrote:
+</I>&gt;<i> &gt; On Thu, 2005-04-07 at 11:04 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;I get sometimes similar errors. I got them even in previous versions
+</I>&gt;<i> &gt;&gt;before
+</I>&gt;<i> &gt;&gt;I used the max available area. That happens when I had one or several
+</I>&gt;<i> &gt;&gt;browser
+</I>&gt;<i> &gt;&gt;windows of vdr-portal open. Closing them resolves the situation. It
+</I>&gt;<i> &gt;&gt;looks like
+</I>&gt;<i> &gt;&gt;card memory is used for caching of pixmaps and when the xv should be
+</I>&gt;<i> &gt;&gt;realized on
+</I>&gt;<i> &gt;&gt;screen, the xserver does not get enough contigues memory for that on
+</I>&gt;<i> &gt;&gt;the video
+</I>&gt;<i> &gt;&gt;card.
+</I>&gt;<i> For me this happens even when I only load gnome and vdr. I also tried 
+</I>&gt;<i> the resolution 1280x768, which fails. I guess the XServer reporting that 
+</I>&gt;<i> it is capable of doing 2048x2048 is just wrong.
+</I>
+One possibility. What card and what amount of memory does it have ?
+Do you have dri/drm enabled ? If yes, please retry with dri/drm diabled.
+
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; We might to install a special X error handler. X errors can happen when
+</I>&gt;<i> &gt; telling the screensaver to stay away as well. The one in xscreensaver.c
+</I>&gt;<i> &gt; can be extended a bit to handle fallback on those errors.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> I think this would be a good solution, we could fallback to the default 
+</I>&gt;<i> resolution if there is not enough memory for HDTV. If there is not even 
+</I>&gt;<i> enough for default resolution we can still give a meaningfull error message.
+</I>
+As you said XSync() spites out the error, this is very (too) late to take a
+reasonable error action. The only one is to my opinion is: suspending
+video-out.
+
+So we need an OSD option XV max-area [YES|NO] default no. To take effect
+restart vdr (immediate action would be something like suspend -&gt; resume).
+
+&gt;<i> Would it be difficult to do this? E.g will it be possible to include 
+</I>&gt;<i> this for the next release? I don't know programming X, but I will have a 
+</I>&gt;<i> look at your error handler. I didn't even know that it's possible to 
+</I>&gt;<i> install an error handler...
+</I>&gt;<i> 
+</I>
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000468.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+	<LI>Next message: <A HREF="000470.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#469">[ date ]</a>
+              <a href="thread.html#469">[ thread ]</a>
+              <a href="subject.html#469">[ subject ]</a>
+              <a href="author.html#469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

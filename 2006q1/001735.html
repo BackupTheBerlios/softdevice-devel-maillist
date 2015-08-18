@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> R: [Softdevice-devel] Softdevice-xv and OSD trouble
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20R%3A%20%5BSoftdevice-devel%5D%20Softdevice-xv%20and%20OSD%20trouble&In-Reply-To=%3C200602041021.55892.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001734.html">
+   <LINK REL="Next"  HREF="001736.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>R: [Softdevice-devel] Softdevice-xv and OSD trouble</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20R%3A%20%5BSoftdevice-devel%5D%20Softdevice-xv%20and%20OSD%20trouble&In-Reply-To=%3C200602041021.55892.stefan%40lucke.in-berlin.de%3E"
+       TITLE="R: [Softdevice-devel] Softdevice-xv and OSD trouble">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Feb  4 10:21:55 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001734.html">R: [Softdevice-devel] Softdevice-xv and OSD trouble
+</A></li>
+        <LI>Next message: <A HREF="001736.html">[Softdevice-devel] [Bug #6252] compiler fehler
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1735">[ date ]</a>
+              <a href="thread.html#1735">[ thread ]</a>
+              <a href="subject.html#1735">[ subject ]</a>
+              <a href="author.html#1735">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 4. Februar 2006 00:58, Eddi wrote:
+&gt;<i> Eddi schrieb:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt; I've a strange problem with vdr and softdevice using xv plugin.
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt; Softdevice works correctly, video-out using softdevice work, by pressing
+</I>&gt;<i> &gt; buttons on my remote or keyboard, appear OSD menu, but after about 10-15
+</I>&gt;<i> &gt; minutes, OSD doesn't appear any more.
+</I>&gt;<i> &gt; Keyboard/lirc input works even if OSD doesn't appear.
+</I>
+Broken color keying by driver (again) ?
+
+&gt;<i> &gt;  
+</I>&gt;<i> &gt;That is strange... I don't remember any similar bug report
+</I>&gt;<i> &gt;What graphics card are you using? 
+</I>&gt;<i> i815 graphic card integrated in i810 chipset
+</I>&gt;<i> 
+</I>&gt;<i> &gt;What's your X version?
+</I>&gt;<i> Problem first seen on Xorg on Debian sid.
+</I>&gt;<i> Debian xorg but I don't remember the version
+</I>&gt;<i> I upgraded/changed distro to Ubuntu Breezy and the problem persist 
+</I>&gt;<i> Ubuntu (6.8.2-77)
+</I>
+&gt;<i> 
+</I>&gt;<i> &gt;Does it help to restart vdr to get the OSD back?
+</I>&gt;<i> Yes by restarting vdr, I get OSD back
+</I>
+And moving the window around the screen ?
+Whats the color depth of your screen (15, 16, 24 or 32 bit) ?
+Please try 24 or 32 color depth.
+
+&gt;<i> 
+</I>&gt;<i> &gt;As a workaround you can probably use software alpha blending, or
+</I>&gt;<i> &gt;disappears the OSD there also?
+</I>&gt;<i> At the moment I tested with pseudo (and it is quite fast)
+</I>&gt;<i> Now you suggest me, I'm testing with software mode. But I think is very too
+</I>&gt;<i> slow.
+</I>&gt;<i> 
+</I>&gt;<i> It seems in software mode it doesn't hangs, but what may be that make OSD in
+</I>&gt;<i> pseudo mode to hang?
+</I>
+I guess it doesn't hang, but the drawing mechanism (the way OSD and video
+are mixed) is somehow broken in a few drivers. 
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001734.html">R: [Softdevice-devel] Softdevice-xv and OSD trouble
+</A></li>
+	<LI>Next message: <A HREF="001736.html">[Softdevice-devel] [Bug #6252] compiler fehler
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1735">[ date ]</a>
+              <a href="thread.html#1735">[ thread ]</a>
+              <a href="subject.html#1735">[ subject ]</a>
+              <a href="author.html#1735">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

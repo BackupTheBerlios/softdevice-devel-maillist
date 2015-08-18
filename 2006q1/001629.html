@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> AW: [Softdevice-devel] new OSD support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D144%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001657.html">
+   <LINK REL="Next"  HREF="001630.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>AW: [Softdevice-devel] new OSD support</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D144%40sbs2003.do-net.de%3E"
+       TITLE="AW: [Softdevice-devel] new OSD support">Neumann at do-net.de
+       </A><BR>
+    <I>Sat Jan  7 20:38:50 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001657.html">[Softdevice-devel] new OSD support; DirectFB issues
+</A></li>
+        <LI>Next message: <A HREF="001630.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1629">[ date ]</a>
+              <a href="thread.html#1629">[ thread ]</a>
+              <a href="subject.html#1629">[ subject ]</a>
+              <a href="author.html#1629">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Martin,
+
+Wow, this really sounds good. 2006 is starting great :)
+
+I checked out cvs und compiled the new version, but on startup vdr crashes. Here is the output.
+Im using dfb output with a matrox g550.
+
+vdr:/usr/local/bin # ./runvdr
+tzap: no process killed
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -ao
+[softdevice] using PCM alsa device spdif
+[softdevice] using AC3 alsa device spdif
+[softdevice]   argv [3] = -vo
+vo_argv: dfb:
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3342336)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.25 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2006-01-04 18:36)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 7197)...
+(!) Direct/Modules: Could not open module directory `/usr/local/lib/directfb-0.9.25/inputdrivers'!
+    --&gt; No such file or directory
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G550 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:853]
+[dfb] RAM: 33554432 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Src.premultiply
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey SrcPremultiply Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1920x1080 at 32</A>
+[dfb] Enumerating display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location surface
+[surface capabilities] scrSurface: primary videoonly double-buffered flipping
+[dfb] width = 1280, height = 720
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [1280x720])
+[surface capabilities] osdSurface: videoonly double-buffered flipping
+ (!!!)  *** WARNING [letting unprivileged IDirectFBDisplayLayer::GetSurface() call pass until cooperative level handling is finished] *** [idirectfbdisplaylayer.c:170 in IDirectFBDisplayLayer_GetSurface()]
+[surface capabilities] videoSurface: videoonly
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: Matrox Backend Scaler
+[dfb] Display frame time is 19974 microseconds
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping
+[dfb] (re)configured 0x08100609
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+mp3: filesource /opt/music includes (count=3): '*.mp3' '*.ogg' '*.wav'
+mp3: filesource /media/cdrom has no includes set
+mp3: filesource /mnt/cdfs includes (count=1): '*.wav'
+mp3: using MPEG Audio Decoder 0.15.1 (beta)
+mp3: compiled with 0.15.1 (beta)
+mp3: filesource /opt/videos has no includes set
+mp3: filesource /media/cdrom has no includes set
+Read list from /etc/vdr/plugins/softplay/Liste 1
+cSoftDevice::MakePrimaryDevice
+CMD[0375]:SetAudioMode 0
+status: volume=255 mute=0
+CMD[0376]:SetPlayMode PmAudioVideo
+CMD[0376]:Mpeg2Decoder Start IsSuspended 0  GetMutex 1
+CMD[0376]:init put byte finished
+CMD[0376]:mpeg2Decoder Start finishedCMD[0384]:Neuer Thread gestartet: Mpeg2Decoder pid 7206
+(!) [ 7207:    0.000] --&gt; Caught signal 11 (at 0xd9293ba9, invalid address) &lt;--
+Killed
+
+-------------
+Andre Neumann 
+
+-----Urspr&#252;ngliche Nachricht-----
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] Im Auftrag von Martin Wache
+Gesendet: Samstag, 7. Januar 2006 15:49
+An: Softdevice Maillinglist
+Betreff: [Softdevice-devel] new OSD support
+
+Hi all,
+
+I just committed the new OSD, which supports up- and down-scaleing, fixes some problems with software alpha blending mode and should also fix the shifted menu problem with the dvd-plugin. In most cases it is also much faster than the old OSD, and hopefully easier to maintain since it uses less global variables.
+
+I had to modify all four video-out methods, I tested them but of course I could have missed some new bugs. So please check out the latest cvs-version and test the softdevice with your favourite video-out methods.
+
+Have fun,
+
+Martin
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+<A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001657.html">[Softdevice-devel] new OSD support; DirectFB issues
+</A></li>
+	<LI>Next message: <A HREF="001630.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1629">[ date ]</a>
+              <a href="thread.html#1629">[ thread ]</a>
+              <a href="subject.html#1629">[ subject ]</a>
+              <a href="author.html#1629">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

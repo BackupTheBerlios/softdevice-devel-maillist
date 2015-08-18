@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060906211813.GB2844%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002357.html">
+   <LINK REL="Next"  HREF="002362.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060906211813.GB2844%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Sep  6 23:18:13 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002357.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002362.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2358">[ date ]</a>
+              <a href="thread.html#2358">[ thread ]</a>
+              <a href="subject.html#2358">[ subject ]</a>
+              <a href="author.html#2358">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Sep 06, 2006 at 11:44:17PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> The two problematic clips look correct now.  I tried setting
+</I>&gt;<i> cDFBVideoOut::fieldParity to 1 in the constructor, but it made them
+</I>&gt;<i> look worse.  The BBC News clip looks completely okay now, but the clip
+</I>&gt;<i> I made last week may merely be suffering from dropped frames now
+</I>&gt;<i> (due to very big movement).
+</I>
+Sorry, it seems nondeterministic.  Sometimes (at least after restarting
+vdr), the vertically scaled output (CropMode &quot;none&quot;, &quot;16:9&quot;, or &quot;14:9&quot;
+on 4:3 screen) looks similar to fieldParity==1 in CropMode 4:3, but
+other times it looks perfect.
+
+Stefan, could you please test that BBC News clip again?  Restart vdr
+several times.  Hmm, maybe you will need to kill vdr forcefully to
+leave DirectFB in an inconsistent state.  I saw changes of behaviour
+after recompiling softdevice with &quot;make plugins&quot;, which will cause
+vdr to dump core.  After three &quot;killall -KILL vdr&quot;, the problem
+appeared in 14:9 crop mode.  Screen aspect ratio is set to 4:3.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002357.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002362.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2358">[ date ]</a>
+              <a href="thread.html#2358">[ thread ]</a>
+              <a href="subject.html#2358">[ subject ]</a>
+              <a href="author.html#2358">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,46 @@
+From maik at fjordblau.de  Thu Aug 13 12:16:25 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Thu, 13 Aug 2009 12:16:25 +0200
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <49999E44.8070900@globall.ru>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<4995B958.4050906@globall.ru>
+	<20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+	<49965174.7070605@globall.ru>
+	<20090214214925.xme6b1f34goocc04@www.domaingo-webmail.de>
+	<20090215180438.b2zmvn9t0k44ogso@www.domaingo-webmail.de>
+	<49999E44.8070900@globall.ru>
+Message-ID: <20090813121625.10946avkushmsykg@www.domaingo-webmail.de>
+
+> On Friday 20 February 2009, Maik Opitz wrote:
+> > Zitat von Stefan Lucke <stefan at lucke.in-berlin.de>:
+> > > Commited it, as it works stable for me since a few months.
+> > > For av_read[frame|packet] switch, vdr has to be restarted.
+> > > Stefan, I forgot one thing:
+> > Did you take this
+> > http://lists.berlios.de/pipermail/softdevice-devel/2008q1/002986.html
+> > into account.
+>
+> I thought that was solved by using av_read_frame() :
+> http://lists.berlios.de/pipermail/softdevice-devel/2008q1/002989.html
+>
+> > > I had the same problem with my back-patched version to  
+> av_read_packet  > while playing back DVDs. By disabling this part, I  
+> was able to fix the  > problem.
+> > So I really should take a look at how to use vdr's repacker
+> or use ffmpegs parser.
+>
+> -- 
+> Stefan Lucke
+
+Hi,
+
+I would like to bring this problem back in mind.
+Or does it work with newer ffmepg versions? I dont think so.
+
+--
+Maik Opitz
+
+
+
+

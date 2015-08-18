@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C1147440041.44648ba9e9f70%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002005.html">
+   <LINK REL="Next"  HREF="002011.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C1147440041.44648ba9e9f70%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri May 12 15:20:41 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002005.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="002011.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2006">[ date ]</a>
+              <a href="thread.html#2006">[ thread ]</a>
+              <a href="subject.html#2006">[ subject ]</a>
+              <a href="author.html#2006">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+
+&gt;<i>
+</I>&gt;<i> &gt;&gt;&gt; But some information for aspect calculation and interlaced/progressive
+</I>&gt;<i> &gt;&gt;&gt; detection is taken from the decoded frame (AVFrame).
+</I>&gt;<i> &gt;&gt; I thought it might be a bit more complicated. Does any of the A-V sync
+</I>&gt;<i> &gt;&gt; stuff come from the decoding or is all of that from the libavformat bit?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt; Libavformat delivers the pts for the coded frame which starts in the
+</I>&gt;<i> &gt; packet. The difficult bit is to find the correct decoded frame to that
+</I>&gt;<i> &gt; pts, since they are reordered for displaying. I will try to have a look
+</I>&gt;<i> &gt; at it...
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> Ok, here is a patch to Rolfs version of libcle266mpegdec which
+</I>&gt;<i> implements pts handling. I would not call it a perfekt solution, but it
+</I>&gt;<i> is something to start with.
+</I>&gt;<i>
+</I>&gt;<i> I also had a look at the aspect ratio, it seems that the dtg active
+</I>&gt;<i> format is not parsed inside libcle266mpegdec. From ffmpeg the
+</I>&gt;<i> information should be inside of a user data block marked with
+</I>&gt;<i> 0x0000001b2, followed by the tag 'DTG1', have a look at the function
+</I>&gt;<i> mpeg_decode_user_data() in libavcodec/mpeg12.c.
+</I>&gt;<i> I tried to implement a parser in libcle266mpegdec, but somehow I don't
+</I>&gt;<i> understand the parser, or the information is not there ...
+</I>
+Do you have a test stream from which you know it has AFD data present ?
+I've only one and may upload it. In germany I havn't seen AFD data.
+
+&gt;<i>
+</I>&gt;<i> So I will now go on and have a look at the softdevice part. I guess I
+</I>&gt;<i> will move CheckAspectDimension() from video.c to mpegdecoder.c and
+</I>&gt;<i> reimplement it for the cle266 case.
+</I>
+Isn't it easier just to fill relevant info in AVFarme and codec ?
+I guess we allocated both.
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002005.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="002011.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2006">[ date ]</a>
+              <a href="thread.html#2006">[ thread ]</a>
+              <a href="subject.html#2006">[ subject ]</a>
+              <a href="author.html#2006">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

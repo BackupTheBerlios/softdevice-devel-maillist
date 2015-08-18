@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a	long time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Fiso-8859-1%3Fq%3FHang_after_suspending_MPEG_stre%3F%3D%0A%09%3D%3Fiso-8859-1%3Fq%3Fam_for_a%3D09long_time%3F%3D&In-Reply-To=%3C200609291024.20726.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002553.html">
+   <LINK REL="Next"  HREF="002562.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a	long time</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Fiso-8859-1%3Fq%3FHang_after_suspending_MPEG_stre%3F%3D%0A%09%3D%3Fiso-8859-1%3Fq%3Fam_for_a%3D09long_time%3F%3D&In-Reply-To=%3C200609291024.20726.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a	long time">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Fri Sep 29 11:24:20 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002553.html">[Softdevice-devel] Hang after suspending MPEG stream for a	long time
+</A></li>
+        <LI>Next message: <A HREF="002562.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2554">[ date ]</a>
+              <a href="thread.html#2554">[ thread ]</a>
+              <a href="subject.html#2554">[ subject ]</a>
+              <a href="author.html#2554">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 28 September 2006 22:40, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; Just another me too. If I remember my situation correct, I've
+</I>&gt;<i> &gt; had 2 or 3 times the same with xv-out: paused video, window blanked.
+</I>&gt;<i> &gt; After continuing playback, there was a short time with audio and
+</I>&gt;<i> &gt; nothing else. Had to CONTROL-C (killall -9) from command window.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; There are some essential operations in audio-alsa.c , which are
+</I>&gt;<i> &gt; not protected by handleMutex: Suspend(), Resume() and calling
+</I>&gt;<i> &gt; snd_pcm_mmap_writei() after while (paused) usleep(1000); .
+</I>&gt;<i>
+</I>&gt;<i> That is true, those calls are unprotected.
+</I>&gt;<i>
+</I>&gt;<i> However, the audio-out is during normal operation only called from one
+</I>&gt;<i> thread, namely the audio-decoder. Only if the user request a suspend,
+</I>&gt;<i> the mpegdecoder thread suspends the audio-out. But that wasn't the
+</I>&gt;<i> case, so that audio-out was only called by one thread, and that means
+</I>&gt;<i> locks should not be needed.
+</I>
+Hmmmm...I don't think I get this problem if I suspend decoding, if that's 
+what you mean here by 'suspend'. Having said that, I don't think I've 
+tried suspending the decoding for a long while... I see the effect when I 
+pause playback.
+
+As to whether I get audio only or video, I can't really say for certain. 
+This only happens occasionally and when it does I'm not usually expecting 
+it so I might not be looking at the TV when I press play. I definitely 
+get audio for about a second or less, and I _think_ I get video but I 
+could be making that up.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002553.html">[Softdevice-devel] Hang after suspending MPEG stream for a	long time
+</A></li>
+	<LI>Next message: <A HREF="002562.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2554">[ date ]</a>
+              <a href="thread.html#2554">[ thread ]</a>
+              <a href="subject.html#2554">[ subject ]</a>
+              <a href="author.html#2554">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

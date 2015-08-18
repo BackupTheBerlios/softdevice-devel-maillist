@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice xv and i915 Notebook
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C200609272055.02845.t-erdmann%40web.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002544.html">
+   <LINK REL="Next"  HREF="002517.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice xv and i915 Notebook</H1>
+    <B>Thomas Erdmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C200609272055.02845.t-erdmann%40web.de%3E"
+       TITLE="[Softdevice-devel] softdevice xv and i915 Notebook">t-erdmann at web.de
+       </A><BR>
+    <I>Wed Sep 27 20:55:02 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002544.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+        <LI>Next message: <A HREF="002517.html">[Softdevice-devel] [Bug #8863] vdr-softdevice and XGL gives weird	picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2545">[ date ]</a>
+              <a href="thread.html#2545">[ thread ]</a>
+              <a href="subject.html#2545">[ subject ]</a>
+              <a href="author.html#2545">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Am Mittwoch, 27. September 2006 19:30 schrieb Stefan Lucke:
+&gt;<i> But that's not the sequence I intendet to asked for. Command I wrote
+</I>&gt;<i> is buggy. From vdr's directrory I do:
+</I>&gt;<i>
+</I>&gt;<i> jarada vdr-1.4.0.jarada # gdb ./vdr
+</I>&gt;<i> GNU gdb 6.4
+</I>&gt;<i> Copyright 2005 Free Software Foundation, Inc.
+</I>&gt;<i> GDB is free software, covered by the GNU General Public License, and you
+</I>&gt;<i> are welcome to change it and/or distribute copies of it under certain
+</I>&gt;<i> conditions. Type &quot;show copying&quot; to see the conditions.
+</I>&gt;<i> There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.
+</I>&gt;<i> This GDB was configured as &quot;i686-pc-linux-gnu&quot;...Using host libthread_db
+</I>&gt;<i> library &quot;/lib/tls/libthread_db.so.1&quot;.
+</I>&gt;<i>
+</I>&gt;<i> (gdb) set args -P &quot;softdevice -vo xv:&quot; -E
+</I>&gt;<i> /net_data/vdr137-dvb-t-jarada/epg.data -c /net_data/vdr137-dvb-t-jarada -v
+</I>&gt;<i> /net_data/video/ -p 2010
+</I>&gt;<i> (gdb) run
+</I>
+Hello Stefan,
+with this setup some more Information is printed:
+
+[Thread debugging using libthread_db enabled]
+[New Thread -1211808064 (LWP 8438)]
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: xv:
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 40
+[setup-softdevice] vidContrast: 37
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+[New Thread -1219802192 (LWP 8439)]
+[New Thread -1228190800 (LWP 8440)]
+[New Thread -1236579408 (LWP 8442)]
+[New Thread -1244968016 (LWP 8443)]
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3344384)
+[New Thread -1255257168 (LWP 8444)]
+[XvVideoOut]: osd_image shmid = 3801090
+[XvVideoOut]: got osd_image: width 1400 height 1050, bytes per line 5600
+[XvVideoOut]: max area size 1920 x 1088
+[XvVideoOut]: using area size 736 x 576
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[New Thread -1270617168 (LWP 8447)]
+[New Thread -1281025104 (LWP 8448)]
+[Thread -1228190800 (LWP 8440) exited]
+[Thread -1219802192 (LWP 8439) exited]
+[Thread -1281025104 (LWP 8448) exited]
+[New Thread -1281025104 (LWP 8450)]
+[New Thread -1219802192 (LWP 8451)]
+[New Thread -1228190800 (LWP 8452)]
+[New Thread -1293616208 (LWP 8453)]
+[New Thread -1303712848 (LWP 8454)]
+[New Thread -1312101456 (LWP 8455)]
+[New Thread -1322255440 (LWP 8456)]
+[Thread -1303712848 (LWP 8454) exited]
+[mpeg2video @ 0xb7ac5304]ac-tex damaged at 13 25
+[mpeg2video @ 0xb7ac5304]Warning MVs not available
+[mpeg2video @ 0xb7ac5304]concealing 60 DC, 60 AC, 60 MV errors
+[mpeg2video @ 0xb7ac5304]ac-tex damaged at 24 19
+[mpeg2video @ 0xb7ac5304]Warning MVs not available
+[mpeg2video @ 0xb7ac5304]concealing 180 DC, 180 AC, 180 MV errors
+[New Thread -1303712848 (LWP 8457)]
+[Thread -1281025104 (LWP 8450) exited]
+[Thread -1312101456 (LWP 8455) exited]
+[Thread -1293616208 (LWP 8453) exited]
+[Thread -1322255440 (LWP 8456) exited]
+[Thread -1219802192 (LWP 8451) exited]
+[Thread -1228190800 (LWP 8452) exited]
+[New Thread -1228190800 (LWP 8458)]
+[New Thread -1219802192 (LWP 8459)]
+[New Thread -1322255440 (LWP 8460)]
+[New Thread -1293616208 (LWP 8462)]
+[New Thread -1312101456 (LWP 8463)]
+[New Thread -1285063760 (LWP 8464)]
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread -1303712848 (LWP 8457)]
+0xb7bf5067 in cSoftOsd::ScaleUpVert_MMX (this=0x87db5a0, dest=0x0, 
+linesize=5600, new_pixel_height=0,
+    start_pos=0, pixmap=0xb24ae33c, Pixel=1400) at SoftOsd.c:1640
+1640                                    &quot;r&quot; 
+(&amp;dest[ypos*linesize+currPixel*4]) );
+Current language:  auto; currently c++
+(gdb) bt
+#0  0xb7bf5067 in cSoftOsd::ScaleUpVert_MMX (this=0x87db5a0, dest=0x0, 
+linesize=5600, new_pixel_height=0,
+    start_pos=0, pixmap=0xb24ae33c, Pixel=1400) at SoftOsd.c:1640
+#1  0xb7bf599d in cSoftOsd::ScaleVUpCopyToBitmap (this=0x87db5a0, 
+dest=0xb4533000 &quot;&quot;, linesize=5600,
+    dest_Width=1400, dest_Height=1049, RefreshAll=true, dest_dirtyLines=0x0) 
+at SoftOsd.c:1091
+#2  0xb7bf65b0 in cSoftOsd::OsdCommit (this=0x87db5a0) at SoftOsd.c:181
+#3  0xb7bf6764 in cSoftOsd::Action (this=0x87db5a0) at SoftOsd.c:120
+#4  0x080f22ac in cThread::StartThread (Thread=0x87db5fc) at thread.c:244
+#5  0xb7eaeced in start_thread () from /lib/tls/libpthread.so.0
+#6  0xb7d27dee in clone () from /lib/tls/libc.so.6
+(gdb) bt full
+#0  0xb7bf5067 in cSoftOsd::ScaleUpVert_MMX (this=0x87db5a0, dest=0x0, 
+linesize=5600, new_pixel_height=0,
+    start_pos=0, pixmap=0xb24ae33c, Pixel=1400) at SoftOsd.c:1640
+        pos = 0
+        currPixel = 0
+#1  0xb7bf599d in cSoftOsd::ScaleVUpCopyToBitmap (this=0x87db5a0, 
+dest=0xb4533000 &quot;&quot;, linesize=5600,
+    dest_Width=1400, dest_Height=1049, RefreshAll=true, dest_dirtyLines=0x0) 
+at SoftOsd.c:1091
+        start_row = 0
+        start_pos = 0
+        src = (uint8_t *) 0x42a0201 &lt;Address 0x42a0201 out of bounds&gt;
+#2  0xb7bf65b0 in cSoftOsd::OsdCommit (this=0x87db5a0) at SoftOsd.c:181
+        osd = (uint8_t *) 0xb4533000 &quot;&quot;
+        stride = 5600
+        dirtyLines = (bool *) 0x0
+#3  0xb7bf6764 in cSoftOsd::Action (this=0x87db5a0) at SoftOsd.c:120
+        newYPan = 0
+        Depth = 32
+        HasAlpha = false
+        IsYUV = false
+        modeChanged = false
+        newOsdWidth = 1400
+        newOsdHeight = 1049
+        newXPan = 0
+        AlphaInversed = false
+        PixelMask = (uint8_t *) 0x0
+#4  0x080f22ac in cThread::StartThread (Thread=0x87db5fc) at thread.c:244
+No locals.
+#5  0xb7eaeced in start_thread () from /lib/tls/libpthread.so.0
+No symbol table info available.
+#6  0xb7d27dee in clone () from /lib/tls/libc.so.6
+No symbol table info available.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002544.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+	<LI>Next message: <A HREF="002517.html">[Softdevice-devel] [Bug #8863] vdr-softdevice and XGL gives weird	picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2545">[ date ]</a>
+              <a href="thread.html#2545">[ thread ]</a>
+              <a href="subject.html#2545">[ subject ]</a>
+              <a href="author.html#2545">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

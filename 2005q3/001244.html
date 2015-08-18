@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20video-dfb.c%3A%20handle%20key-repeat%20events&In-Reply-To=%3C200509152122.39547.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001243.html">
+   <LINK REL="Next"  HREF="001245.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20video-dfb.c%3A%20handle%20key-repeat%20events&In-Reply-To=%3C200509152122.39547.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Sep 15 21:22:39 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001243.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+        <LI>Next message: <A HREF="001245.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1244">[ date ]</a>
+              <a href="thread.html#1244">[ thread ]</a>
+              <a href="subject.html#1244">[ subject ]</a>
+              <a href="author.html#1244">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 15. September 2005 20:05, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Thu, Sep 15, 2005 at 12:41:49AM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; My patch to DirectFB was not accepted as such, but the feature was
+</I>&gt;<i> &gt; implemented in a slightly different way, by introducing a DIEF_REPEAT
+</I>&gt;<i> &gt; event flag.  (Note that it is an enum constant, not a #define.)
+</I>&gt;<i> &gt; The attached patch works against current DirectFB CVS.  A 0.9.23
+</I>&gt;<i> &gt; release should occur soon.
+</I>&gt;<i> 
+</I>&gt;<i> As Stefan suggested on the DirectFB list, it's better to make a
+</I>&gt;<i> configure test, to allow the code compile against older DirectFB CVS
+</I>&gt;<i> snapshots.
+</I>&gt;<i> 
+</I>&gt;<i> Here is a better patch.  While I was at it, I fixed a few minor things
+</I>&gt;<i> in the configure script.  I only tested the patch with a DirectFB CVS
+</I>&gt;<i> snapshot that defines DIEF_REPEAT, but I see no reason why it wouldn't
+</I>&gt;<i> work on older DirectFB versions.
+</I>
+Oh, that was some overlapping work. I adopted your previous version
+to configure. Thats now in cvs.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001243.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+	<LI>Next message: <A HREF="001245.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1244">[ date ]</a>
+              <a href="thread.html#1244">[ thread ]</a>
+              <a href="subject.html#1244">[ subject ]</a>
+              <a href="author.html#1244">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

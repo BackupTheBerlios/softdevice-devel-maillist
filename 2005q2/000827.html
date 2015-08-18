@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] An initial solution for bug #002971 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20An%20initial%20solution%20for%20bug%20%23002971%20%3F&In-Reply-To=%3C42A4B965.5000109%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000820.html">
+   <LINK REL="Next"  HREF="000836.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] An initial solution for bug #002971 ?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20An%20initial%20solution%20for%20bug%20%23002971%20%3F&In-Reply-To=%3C42A4B965.5000109%40gmx.net%3E"
+       TITLE="[Softdevice-devel] An initial solution for bug #002971 ?">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Jun  6 23:00:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000820.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+        <LI>Next message: <A HREF="000836.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#827">[ date ]</a>
+              <a href="thread.html#827">[ thread ]</a>
+              <a href="subject.html#827">[ subject ]</a>
+              <a href="author.html#827">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+&gt;<i> A.O. wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> maybe i found an initial solution for bug #002971, about the buzzy sound
+</I>&gt;&gt;<i> someone experienced with softdevice. I took the idea form mplayer
+</I>&gt;&gt;<i> libao2/ao_alsa.c, it seems that the Data buffer has to be aligned at
+</I>&gt;&gt;<i> sample boundary... but i'm not very expert in such things, maybe other
+</I>&gt;&gt;<i> things have to be checked before closing the bug.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Anyway, i attach here a little patch that cures the buzz effect on my
+</I>&gt;&gt;<i> setup (i use the snd_cs46xx alsa driver on a Thinkpad T20), the sound is
+</I>&gt;&gt;<i> now shiny and clear but i'm experiencing some crashes when going
+</I>&gt;&gt;<i> fullscreen or on channel change.
+</I>&gt;<i> 
+</I>&gt;<i> I'm not sure if the explanation and the patch is correct, but you 
+</I>&gt;<i> definitely found a bug in audio.c. The pointer Data has to be increased 
+</I>&gt;<i> for sure when not all data has been accepted by snd_pcm_wait. I will 
+</I>&gt;<i> check your patch... Thank you for reporting this!
+</I>
+I checked the patch, it looks correct and I applied it.
+Thank you again!
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000820.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+	<LI>Next message: <A HREF="000836.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#827">[ date ]</a>
+              <a href="thread.html#827">[ thread ]</a>
+              <a href="subject.html#827">[ subject ]</a>
+              <a href="author.html#827">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

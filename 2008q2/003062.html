@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problem with ac3 sound
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problem%20with%20ac3%20sound&In-Reply-To=%3C200804132009.39538.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003061.html">
+   <LINK REL="Next"  HREF="003053.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problem with ac3 sound</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problem%20with%20ac3%20sound&In-Reply-To=%3C200804132009.39538.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problem with ac3 sound">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr 13 20:09:39 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003061.html">[Softdevice-devel] Problem with ac3 sound
+</A></li>
+        <LI>Next message: <A HREF="003053.html">[Softdevice-devel] Matrox TV-out vs kernel version...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3062">[ date ]</a>
+              <a href="thread.html#3062">[ thread ]</a>
+              <a href="subject.html#3062">[ subject ]</a>
+              <a href="author.html#3062">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 13 April 2008, Vladimir Monchenko wrote:
+&gt;<i> Stefan Lucke &#1087;&#1080;&#1096;&#1077;&#1090;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Maybe it's the same I noticed just with regular recordings which
+</I>&gt;<i> &gt; have a ac3 track. Played sound seems to be from rear channels when
+</I>&gt;<i> &gt; a stereo 2CH downmix is requested from softdevice setup. This request
+</I>&gt;<i> &gt; is now ignored by ffmpeg and we get 6CH.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; In ffmpeg I found, that with revision 10199 member request_channels was
+</I>&gt;<i> &gt; introduced for selected number of output channels.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Please try attached patch.
+</I>&gt;<i> &gt;   
+</I>&gt;<i> Yes, you are right. After installation of patch mpeg_ac3_downmix_01.diff 
+</I>&gt;<i> ac3 sound plays correctly.
+</I>&gt;<i> I use FFmpeg version SVN-r12790.
+</I>&gt;<i> 
+</I>&gt;<i> Many thanks!
+</I>
+Slightly modified version is in cvs:
+
+old:
+#if 1 // find ffmpeg condition
+
+new:
+#if LIBAVCODEC_VERSION_INT &gt;= ((51&lt;&lt;16)+(41&lt;&lt;8)+0)
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003061.html">[Softdevice-devel] Problem with ac3 sound
+</A></li>
+	<LI>Next message: <A HREF="003053.html">[Softdevice-devel] Matrox TV-out vs kernel version...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3062">[ date ]</a>
+              <a href="thread.html#3062">[ thread ]</a>
+              <a href="subject.html#3062">[ subject ]</a>
+              <a href="author.html#3062">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

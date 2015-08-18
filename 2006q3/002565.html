@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C20060930180425.GB2818%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002563.html">
+   <LINK REL="Next"  HREF="002555.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C20060930180425.GB2818%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">marko.makela at hut.fi
+       </A><BR>
+    <I>Sat Sep 30 20:04:25 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002563.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002555.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2565">[ date ]</a>
+              <a href="thread.html#2565">[ thread ]</a>
+              <a href="subject.html#2565">[ subject ]</a>
+              <a href="author.html#2565">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Sep 30, 2006 at 05:36:45PM +0200, Martin Wache wrote:
+&gt;<i> And here is a patch which hopefully fixes the problem (I'm trying
+</I>&gt;<i> currently it out, which obviously takes some time... but I wanted to
+</I>&gt;<i> shared it with you in case someone else wants to join the testing)
+</I>
+Your patch might fix the &quot;long pause&quot; problem but not the hang that
+I am experiencing.  My vdr-suspend patch simply stops the delivery
+of MPEG packets to other than recorder threads.  Would it be possible
+to reset and stop the timers in cMpeg2Decoder::Clear() as well?
+
+As far as I know, several vdr packagers apply the vdr-suspend patch,
+but the feature is disabled in the default configuration.  I am
+afraid that several people could be affected by this.  Maybe the hang
+only occurs in conjunction with the vdr-subtitles plugin when there
+are DVB subtitles being displayed at resume time.
+
+On the other hand, I may need to rework the vdr-suspend patch anyway.
+In its current form, it does not work on full-featured cards, nor
+does it blank the screen.  (It used to blank the screen on softdevice,
+relying on its built-in blank timer.)
+
+On Sat, Sep 30, 2006 at 05:32:06PM +0100, Laz wrote:
+&gt;<i> I usually let mine turn itself on and off with nvram-wakeup! I see
+</I>&gt;<i> the problem when I leave it for a short while in the middle of something
+</I>&gt;<i> and get distracted!
+</I>
+Me too.  Sometimes, I hit the Power button followed by some other button
+to suspend the playback and to prevent the system from powering off.
+Then, I'd hit the Power button to resume.
+
+&gt;<i> Hmmm...if you're right about this, how long should it take to overflow? The 
+</I>&gt;<i> only counter I can see is a 64-bit integer which looks like it's counting in 
+</I>&gt;<i> useconds which would take a few million years to overflow, by my reckoning! 
+</I>&gt;<i> Maybe I'm looking in the wrong place and it's a 32-bit counter which would 
+</I>&gt;<i> take 1 h 12 min to overflow. Not sure it was taking that long but it's hard 
+</I>&gt;<i> to tell.
+</I>
+I would have believed that one hang occurred after a 40-minute suspension.
+Could it perhaps be a signed counter, counting 1&lt;&lt;31 microseconds before
+overflow?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002563.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002555.html">[Softdevice-devel] just recompiled, now fails to run..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2565">[ date ]</a>
+              <a href="thread.html#2565">[ thread ]</a>
+              <a href="subject.html#2565">[ subject ]</a>
+              <a href="author.html#2565">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

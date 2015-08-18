@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] EPIA-M DirectFB + Softdevice Configuration
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20EPIA-M%20DirectFB%20%2B%20Softdevice%20Configuration&In-Reply-To=%3CBAY102-DAV1044CC00691BC11F0DB4CDBCDC0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000991.html">
+   <LINK REL="Next"  HREF="000955.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] EPIA-M DirectFB + Softdevice Configuration</H1>
+    <B>Dikran Hovagimian</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20EPIA-M%20DirectFB%20%2B%20Softdevice%20Configuration&In-Reply-To=%3CBAY102-DAV1044CC00691BC11F0DB4CDBCDC0%40phx.gbl%3E"
+       TITLE="[Softdevice-devel] EPIA-M DirectFB + Softdevice Configuration">dikranh at hotmail.com
+       </A><BR>
+    <I>Mon Jul 11 23:15:26 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000991.html">[Softdevice-devel] [PATCH]
+</A></li>
+        <LI>Next message: <A HREF="000955.html">[Softdevice-devel] EPIA-M DirectFB + Softdevice Configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#948">[ date ]</a>
+              <a href="thread.html#948">[ thread ]</a>
+              <a href="subject.html#948">[ subject ]</a>
+              <a href="author.html#948">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I have been playing with my EPIA configuration for about a week, but I still have no good results.
+
+I am using 2.6.9 kernel and the viafb driver.
+When I load the viafb driver using &quot;insmod viafb&quot; and run:
+vdr -P&quot;softdevice -vo dfb:&quot; I get garbage on the screen.
+I've tried many different modes (720x576, 800x600, 640x480) but I always get the same results.
+Trying to run vdr with vidix I get a black screen.
+
+I read somewhere that I needed to install fbcon after installing viafb.  Running:
+&quot;insmod viafb&quot; 
+&quot;insmod fbcon&quot; 
+turns the screen black.  I figured after a while that the font color is turning black.  So, when I type (very carefully on the black screen):
+vdr -P&quot;softdevice -vo dfb:&quot; 
+I get &quot;panning buffer out of range&quot; bug and the yres,vyres and offset are all set to the same value (looking at the code, it seems that the virtual yres should not acceed yres + offset).
+
+But, running the vidix output:
+vdr -P&quot;softdevice -vo vidix:&quot; 
+I get a black screen with orange border and blue writings &quot;Learning Remote Control Keys&quot;.  Regardless of what I press, VDR exits in about 5 seconds.
+
+Can someone tell me what am I doing wrong or how to get VDR to work???
+
+Thanks in advance,
+Dikran Hovagimian
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050711/a6d8b430/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050711/a6d8b430/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000991.html">[Softdevice-devel] [PATCH]
+</A></li>
+	<LI>Next message: <A HREF="000955.html">[Softdevice-devel] EPIA-M DirectFB + Softdevice Configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#948">[ date ]</a>
+              <a href="thread.html#948">[ thread ]</a>
+              <a href="subject.html#948">[ subject ]</a>
+              <a href="author.html#948">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Way to get best image quality with MGA400 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C20060728110112.GA25514%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002306.html">
+   <LINK REL="Next"  HREF="002310.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Way to get best image quality with MGA400 ?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C20060728110112.GA25514%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Way to get best image quality with MGA400 ?">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Jul 28 13:01:13 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002306.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+        <LI>Next message: <A HREF="002310.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2307">[ date ]</a>
+              <a href="thread.html#2307">[ thread ]</a>
+              <a href="subject.html#2307">[ subject ]</a>
+              <a href="author.html#2307">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jul 28, 2006 at 11:13:49AM +0100, Laz wrote:
+&gt;<i> This might also be of interest to the dxr3 plugin developers: one revision 
+</I>&gt;<i> of the card can send the relevant control signals down the SCART 
+</I>&gt;<i> connector (embedded in the video or sync signals: can't remember what 
+</I>&gt;<i> they're called)
+</I>
+As far as I know, Wide-Screen-Signalling (WSS) is on the first visible line.
+It is a black&amp;white line, similar to CeeFax a.k.a. teletext, Bildschirmtext,
+text TV lines sent during vertical retrace.  At least one DVB-T sender here
+in Finland embeds the WSS signals in the video stream, even though it is
+redundant (the set-top-box should embed those signals or use the SCART
+line for signalling).  The same sender also burns subtitles to the video
+stream.
+
+&gt;<i> to change the aspect ratio but the other version can't so 
+</I>&gt;<i> being able to set it via the serial port and the pin on the SCART socket.
+</I>
+I'm interested in this, because some day, I'll replace the 15-year-old
+14&quot; monitor with a used 16:9 CRT TV, and I would prefer to power on the
+TV from the VDR box.
+
+It might make more sense to implement the actual I/O in a plugin, like
+I did with my relay plugin and the suspend patch
+(<A HREF="http://www.iki.fi/~msmakela/software/vdr/#suspend">http://www.iki.fi/~msmakela/software/vdr/#suspend</A>).  Some brave soul
+might want to use a spare GPIO pin on their DVB tuner card.  He'd then
+just write an own plugin instead of having to patch softdevice or vdr.
+
+I've done some bit-banging on the serial port and on the parallel port.
+See <A HREF="http://www.iki.fi/~msmakela/electronics/relay/">http://www.iki.fi/~msmakela/electronics/relay/</A> and in particular
+<A HREF="http://www.iki.fi/~msmakela/electronics/relay/bitbang.zip">http://www.iki.fi/~msmakela/electronics/relay/bitbang.zip</A> for an example
+how to control the serial lines on POSIX systems and on Win32.  For using
+the parallel port, see my POSIX/Win32 in-system programmer of Atmel AVR
+microcontrollers: <A HREF="http://www.iki.fi/~msmakela/software/cisp/">http://www.iki.fi/~msmakela/software/cisp/</A>
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002306.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+	<LI>Next message: <A HREF="002310.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2307">[ date ]</a>
+              <a href="thread.html#2307">[ thread ]</a>
+              <a href="subject.html#2307">[ subject ]</a>
+              <a href="author.html#2307">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

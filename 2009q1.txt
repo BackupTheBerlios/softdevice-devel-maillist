@@ -1,0 +1,2122 @@
+From admin at berlios.de  Fri Jan  2 10:51:15 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Fri, 2 Jan 2009 12:51:15 +0300 (MSK)
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg
+	(snapshot from 2008-12-19)
+Message-ID: <200901020951.n029pFx7011386@unicorn.berlios.de>
+
+Bug #14990, was updated on 2009-Jan-02 12:51
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: Problem with newest ffmpeg (snapshot from 2008-12-19)
+
+Details: I`m have a segfault with new snapshot of ffmpeg and softdevice (from cvs).
+Compiling fine, but don`t works.
+With snapshot of ffmpeg from 2008/10/14 works fine.
+
+Gentoo x86_64
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14990&group_id=2051
+
+
+From admin at berlios.de  Fri Feb 13 15:51:14 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Fri, 13 Feb 2009 15:51:14 +0100 (CET)
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg
+	(snapshot from 2008-12-19)
+Message-ID: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+
+Bug #14990, was updated on 2009-Jan-02 10:51
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: Problem with newest ffmpeg (snapshot from 2008-12-19)
+
+Details: I`m have a segfault with new snapshot of ffmpeg and softdevice (from cvs).
+Compiling fine, but don`t works.
+With snapshot of ffmpeg from 2008/10/14 works fine.
+
+Gentoo x86_64
+
+Follow-Ups:
+
+Date: 2009-Feb-13 15:51
+By: schrauber
+
+Comment:
+Same here. Compiling fine.
+When starting VDR the OSD is shown for a short moment. When the video comes in VDR crashes.
+With snapshot of ffmpeg from 2008/12/10.
+
+Archlinux x86
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14990&group_id=2051
+
+
+From bob at globall.ru  Fri Feb 13 19:18:00 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Fri, 13 Feb 2009 21:18:00 +0300
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+ ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+Message-ID: <4995B958.4050906@globall.ru>
+
+admin at berlios.de wrote:
+> Summary: Problem with newest ffmpeg (snapshot from 2008-12-19)
+>
+> Details: I`m have a segfault with new snapshot of ffmpeg and softdevice (from cvs).
+> Compiling fine, but don`t works.
+> With snapshot of ffmpeg from 2008/10/14 works fine.
+>
+> Gentoo x86_64
+>   
+I can confirm such behaviour.
+My system Gentoo x84_64 too, ffmpeg 20090201.
+
+Probably, it is a specific problem on x86_64 architecture.
+On my notebook x86 Transmeta Efficeon softdevice works with ffmpeg
+20090201 very well.
+
+
+From maik at fjordblau.de  Fri Feb 13 20:27:13 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Fri, 13 Feb 2009 20:27:13 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <4995B958.4050906@globall.ru>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<4995B958.4050906@globall.ru>
+Message-ID: <20090213202713.qdtr0ldnxckosko4@www.domaingo-webmail.de>
+
+Zitat von Vladimir Monchenko <bob at globall.ru>:
+
+> admin at berlios.de wrote:
+>> Summary: Problem with newest ffmpeg (snapshot from 2008-12-19)
+>>
+>> Details: I`m have a segfault with new snapshot of ffmpeg and   
+>> softdevice (from cvs).
+>> Compiling fine, but don`t works.
+>> With snapshot of ffmpeg from 2008/10/14 works fine.
+>>
+>> Gentoo x86_64
+>>
+> I can confirm such behaviour.
+> My system Gentoo x84_64 too, ffmpeg 20090201.
+>
+> Probably, it is a specific problem on x86_64 architecture.
+> On my notebook x86 Transmeta Efficeon softdevice works with ffmpeg
+> 20090201 very well.
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+>
+
+
+
+
+
+
+From maik at fjordblau.de  Fri Feb 13 20:28:30 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Fri, 13 Feb 2009 20:28:30 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <4995B958.4050906@globall.ru>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<4995B958.4050906@globall.ru>
+Message-ID: <20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+
+Zitat von Vladimir Monchenko <bob at globall.ru>:
+
+> admin at berlios.de wrote:
+>> Summary: Problem with newest ffmpeg (snapshot from 2008-12-19)
+>>
+>> Details: I`m have a segfault with new snapshot of ffmpeg and   
+>> softdevice (from cvs).
+>> Compiling fine, but don`t works.
+>> With snapshot of ffmpeg from 2008/10/14 works fine.
+>>
+>> Gentoo x86_64
+>>
+> I can confirm such behaviour.
+> My system Gentoo x84_64 too, ffmpeg 20090201.
+>
+> Probably, it is a specific problem on x86_64 architecture.
+> On my notebook x86 Transmeta Efficeon softdevice works with ffmpeg
+> 20090201 very well.
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+>
+
+It is not only related to x86_64. I run softdevice on x86 (Intel  
+Pentium III) with DirectFB. Same problem here.
+
+
+
+
+From maik at fjordblau.de  Fri Feb 13 22:22:53 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Fri, 13 Feb 2009 22:22:53 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<4995B958.4050906@globall.ru>
+	<20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+Message-ID: <20090213222253.3a01wfanwg8okgcc@www.domaingo-webmail.de>
+
+Here is a log of my VDR startup.
+I do not know how to fix the message of missing libavcodec.so.51. With  
+newer ffmpeg there is none. Only a libavcodec.so.52.
+
+Feb 13 21:13:04 Digitainer vdr: [2669] cTimeMs: using monotonic clock  
+(resolution is 1 ns)
+Feb 13 21:13:04 Digitainer vdr: [2669] VDR version 1.6.0-2 started
+Feb 13 21:13:04 Digitainer vdr: [2669] switched to user 'root'
+Feb 13 21:13:04 Digitainer vdr: [2669] codeset is 'UTF-8' - known
+Feb 13 21:13:04 Digitainer vdr: [2669] found 23 locales in /usr/share/locale
+Feb 13 21:13:04 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-wirbelscan.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-femon.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-epgsearch.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-extrecmenu.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-menuorg.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-devstatus.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-osdadjust.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-channellists.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-osdpip.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: libavcodec.so.51: Kann  
+die Shared-Object-Datei nicht ??ffnen: Datei oder Verzeichnis nicht  
+gefunden
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-osdteletext.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-streamdev-server.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-live.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-skinenigmang.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-dvd.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-systeminfo.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-admin.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-bgprocess.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading plugin:  
+/usr/lib/vdr/plugins/libvdr-yacoto.so.1.6.0
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/setup.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdDisplayMode = 1
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdDisplayZeros = 1
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdSpeedLimit = 0
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: DvdTrayMode = 0
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: softdevice.AlsaAC3Device = front
+Feb 13 21:13:05 Digitainer vdr: [2669] ERROR: unknown config  
+parameter: softdevice.AlsaDevice = front
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/sources.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/diseqc.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/channels.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/timers.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] Failed to load translated  
+'/etc/vdr/commands.conf.de_DE' for language (de_DE)
+Feb 13 21:13:05 Digitainer vdr: [2669] Falling back to default  
+'/etc/vdr/commands.conf' (if any)
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/commands.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] Failed to load translated  
+'/etc/vdr/reccmds.conf.de_DE' for language (de_DE)
+Feb 13 21:13:05 Digitainer vdr: [2669] Falling back to default  
+'/etc/vdr/reccmds.conf' (if any)
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/reccmds.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/svdrphosts.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/remote.conf
+Feb 13 21:13:05 Digitainer vdr: [2669] loading /etc/vdr/keymacros.conf
+Feb 13 21:13:05 Digitainer vdr: [2695] video directory scanner thread  
+started (pid=2669, tid=2695)
+Feb 13 21:13:05 Digitainer vdr: [2695] video directory scanner thread  
+ended (pid=2669, tid=2695)
+Feb 13 21:13:05 Digitainer vdr: [2696] video directory scanner thread  
+started (pid=2669, tid=2696)
+Feb 13 21:13:05 Digitainer vdr: [2696] video directory scanner thread  
+ended (pid=2669, tid=2696)
+Feb 13 21:13:05 Digitainer vdr: [2669] reading EPG data from  
+/var/cache/vdr/epg.data
+Feb 13 21:13:05 Digitainer vdr: [2669] probing /dev/dvb/adapter0/frontend0
+Feb 13 21:13:05 Digitainer vdr: [2698] tuner on device 1 thread  
+started (pid=2669, tid=2698)
+Feb 13 21:13:05 Digitainer vdr: [2699] section handler thread started  
+(pid=2669, tid=2699)
+Feb 13 21:13:05 Digitainer vdr: [2669] probing /dev/dvb/adapter1/frontend0
+Feb 13 21:13:05 Digitainer vdr: [2701] CI adapter on device 1 thread  
+started (pid=2669, tid=2701)
+Feb 13 21:13:05 Digitainer vdr: [2701] CAM 1: module present
+Feb 13 21:13:05 Digitainer dvb_ca adapter 1: DVB CAM detected and  
+initialised successfully
+Feb 13 21:13:06 Digitainer vdr: [2703] tuner on device 2 thread  
+started (pid=2669, tid=2703)
+Feb 13 21:13:06 Digitainer vdr: [2704] section handler thread started  
+(pid=2669, tid=2704)
+Feb 13 21:13:06 Digitainer vdr: [2669] found 2 video devices
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: softdevice  
+(0.5.0): Software-Ausgabeger??t
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] init
+Feb 13 21:13:06 Digitainer vdr: [2701] CAM 1: module ready
+Feb 13 21:13:06 Digitainer agpgart-via 0000:00:00.0: AGP 2.0 bridge
+Feb 13 21:13:06 Digitainer agpgart-via 0000:00:00.0: putting AGP V2  
+device into 4x mode
+Feb 13 21:13:06 Digitainer viafb 0000:01:00.0: putting AGP V2 device  
+into 4x mode
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Supported video Modes are:
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Enumerating display Layers
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Configuring  
+CooperativeLevel for OSD
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] (osdLayer): flags,  
+options, pixelformat: 0000000f, 00000000 80418c0d
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] (osdLayer): width,  
+height:               720 576
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] osdLayer has alpha channel
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Set DLBM_TRIPLE for layer  
+[VIA Unichrome Video]
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] DLOP_FIELD_PARITY  
+supported by layer [VIA Unichrome Video]
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Set layer [VIA Unichrome  
+Video] to (TOP field first)
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] width = 720, height = 576
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] got fmt = 0x80418c0d bpp = 32
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Using this layer for OSD:  
+(VIA CLE266 Graphics - [720x576])
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Configuring  
+CooperativeLevel for Overlay
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Using this layer for OSD:  
+        VIA CLE266 Graphics
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Using this layer for  
+Video out:  VIA Unichrome Video
+Feb 13 21:13:06 Digitainer vdr: [2669] [dfb] Display frame time is  
+16672 microseconds
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice] videoOut OK !
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice-audio] Opening alsa  
+device front
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice-audio] Using alsa  
+AC3 device front
+Feb 13 21:13:06 Digitainer vdr: [2669] [softdevice-audio] Device  
+opened! Ready to play
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: wirbelscan  
+(0.0.4a): dvb c/t/s/analog Kanalsuche
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: femon  
+(1.6.6): DVB Signal Informationsanzeige (OSD)
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: epgsearch  
+(0.9.24): Suche im EPG nach Wiederholungen und anderem
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: extrecmenu  
+(1.2-test1-am1): Erweitertes Aufzeichnungs-Men??
+Feb 13 21:13:06 Digitainer vdr: [2669] plugin 'extrecmenu' called  
+obsolete function RegisterI18n()
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: menuorg  
+(0.4.4): Reorganisiert das Haupmen??
+Feb 13 21:13:06 Digitainer vdr: [2669] loading menuorg config file  
+from /etc/vdr/plugins/menuorg.xml
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: devstatus  
+(0.3.0): DVB-Ger??testatus
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: osdadjust  
+(0.0.3): Anpassen von OSD Gr????e und Position
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+channellists (0.0.4): Verwalte deine Kanallisten
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+osdteletext (0.8.1): Zeigt den Videotext auf dem OSD an
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+streamdev-server (0.3.4): VDR Streaming Server
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: live  
+(0.2.0): Live Interactive VDR Environment
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin:  
+skinenigmang (0.0.6): EnigmaNG Oberfl??che
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: dvd  
+(0.3.6-b03): verwandelt VDR in einen (fast) vollst??ndigen DVD Spieler
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: systeminfo  
+(0.1.1): Anzeige von Systeminformationen
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: admin  
+(0.8.0): Administrative Aufgaben
+Feb 13 21:13:06 Digitainer vdr: [2669] Executing  
+</etc/vdr/plugins/admin/admin.sh -init>
+Feb 13 21:13:06 Digitainer logger: /etc/vdr/plugins/admin/admin.sh -init
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: bgprocess  
+(0.1.0): Collects and lists background processes and their status
+Feb 13 21:13:06 Digitainer vdr: [2669] initializing plugin: yacoto  
+(0.2.1): Converting recordings
+Feb 13 21:13:06 Digitainer vdr: [2669] setting primary device to 3
+Feb 13 21:13:06 Digitainer vdr: [2669] assuming manual start of VDR
+Feb 13 21:13:06 Digitainer vdr: [2669] SVDRP listening on port 2001
+Feb 13 21:13:06 Digitainer vdr: [2669] skin "EnigmaNG" not available -  
+using "classic" instead
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/themes/classic-default.theme
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: softdevice
+Feb 13 21:13:06 Digitainer vdr: [2669] plugin 'softdevice' called  
+obsolete function RegisterI18n()
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: wirbelscan
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: femon
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: epgsearch
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/epgsearchcats.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/epgsearchmenu.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] EPGSearch: loading  
+/etc/vdr/plugins/epgsearch/epgsearch.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/deftimerchkmodes.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/epgsearch/timersdone.conf
+Feb 13 21:13:06 Digitainer vdr: [2669] EPGSearch: loading  
+/etc/vdr/plugins/epgsearch/epgsearchupdmail.templ
+Feb 13 21:13:06 Digitainer vdr: [2712] EPGSearch: searchtimer thread  
+started (pid=2669, tid=2712)
+Feb 13 21:13:06 Digitainer vdr: [2713] EPGSearch: conflictcheck thread  
+started (pid=2669, tid=2713)
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: extrecmenu
+Feb 13 21:13:06 Digitainer vdr: [2714] extrecmenu worker thread thread  
+started (pid=2669, tid=2714)
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: menuorg
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: devstatus
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: osdadjust
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: channellists
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: osdteletext
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: streamdev-server
+Feb 13 21:13:06 Digitainer vdr: [2669] plugin 'streamdev-server'  
+called obsolete function RegisterI18n()
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/plugins/streamdevhosts.conf
+Feb 13 21:13:06 Digitainer vdr: [2715] streamdev server thread started  
+(pid=2669, tid=2715)
+Feb 13 21:13:06 Digitainer vdr: [2715] Streamdev: Listening (HTTP) on  
+port 3000
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: live
+Feb 13 21:13:06 Digitainer vdr: [2669] LIVE: initial file cache has 82  
+entries and needs 307017 bytes of data!
+Feb 13 21:13:06 Digitainer vdr: [2716] ERROR:  
+/etc/vdr/plugins/live/live.pem: Datei oder Verzeichnis nicht gefunden
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: skinenigmang
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: dvd
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: systeminfo
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: admin
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: bgprocess
+Feb 13 21:13:06 Digitainer vdr: [2669] starting plugin: yacoto
+Feb 13 21:13:06 Digitainer vdr: [2669] setting current skin to "EnigmaNG"
+Feb 13 21:13:06 Digitainer vdr: [2669] loading  
+/etc/vdr/themes/EnigmaNG-default.theme
+Feb 13 21:13:06 Digitainer vdr: [2718] LIRC remote control thread  
+started (pid=2669, tid=2718)
+Feb 13 21:13:06 Digitainer vdr: [2720] KBD remote control thread  
+started (pid=2669, tid=2720)
+Feb 13 21:13:06 Digitainer vdr: [2669] remote control softdevice-dfb -  
+keys known
+Feb 13 21:13:06 Digitainer vdr: [2669] remote control LIRC - keys known
+Feb 13 21:13:06 Digitainer vdr: [2669] remote control KBD - keys known
+Feb 13 21:13:08 Digitainer vdr: [2701] CAM 1: AlphaCrypt Light, 01, 4A20, 4A20
+Feb 13 21:13:08 Digitainer vdr: [2706] [VideoOut]: resolution changed:  
+W(720 -> 736); H(576 ->576)
+Feb 13 21:13:08 Digitainer vdr: [2706] [VideoOut]: 736x576 [0,0  
+736x576] -> 720x576 [100,0 518x576]
+Feb 13 21:13:10 Digitainer vdr: [2701] CAM 1: replies to QUERY - multi  
+channel decryption possible
+Feb 13 21:13:10 Digitainer vdr: [2669] switching to channel 1
+Feb 13 21:13:10 Digitainer vdr: [2727] receiver on device 2 thread  
+started (pid=2669, tid=2727)
+Feb 13 21:13:10 Digitainer vdr: [2728] TS buffer on device 2 thread  
+started (pid=2669, tid=2728)
+Feb 13 21:13:10 Digitainer vdr: [2731] livebuffer thread started  
+(pid=2669, tid=2731)
+Feb 13 21:13:10 Digitainer vdr: [2669] creating directory  
+/var/cache/vdr/vtx/C-1-1079-28006
+Feb 13 21:13:10 Digitainer vdr: [2732] osdteletext-receiver thread  
+started (pid=2669, tid=2732)
+Feb 13 21:13:10 Digitainer vdr: [2669] setting watchdog timer to 120 seconds
+Feb 13 21:13:10 Digitainer vdr: [2734] liveplayer thread started  
+(pid=2669, tid=2734)
+Feb 13 21:13:10 Digitainer vdr: [2735] EnigmaNG effects thread started  
+(pid=2669, tid=2735)
+Feb 13 21:13:11 Digitainer vdr: [2734] SetBrokenLink: no GOP header  
+found in video packet
+Feb 13 21:13:11 Digitainer vdr: [2706] [dfb] YUV:  
+action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*),  
+result=Resource was destroyed!
+Feb 13 21:13:11 Digitainer runvdr: [2041] VDR terminated (exit code:  
+134) - uptime was 0 d, 0 h, 0 m, 7 s
+Feb 13 21:13:11 Digitainer runvdr: [2041] VDR has crashed within the  
+first 15 seconds after program execution (crash counter: 3)
+Feb 13 21:13:11 Digitainer runvdr: [2041] restarting VDR
+Feb 13 21:13:11 Digitainer runvdr: [2041] unloading dvb modules
+Feb 13 21:13:11 Digitainer saa7146: unregister extension 'budget dvb'.
+Feb 13 21:13:11 Digitainer budget dvb 0000:00:07.0: PCI INT A disabled
+Feb 13 21:13:11 Digitainer saa7146: unregister extension 'budget_ci dvb'.
+Feb 13 21:13:11 Digitainer budget_ci dvb 0000:00:06.0: PCI INT A disabled
+Feb 13 21:13:11 Digitainer runvdr: [2041] unloaded modules: budget  
+budget_ci stv0299 budget_core dvb_core
+Feb 13 21:13:13 Digitainer runvdr: [2041] caught signal 15 - terminating VDR
+Feb 13 21:13:13 Digitainer runvdr: [2041] caught signal 0 - cleaning up
+Feb 13 21:13:13 Digitainer runvdr: [2041] exiting
+Feb 13 21:22:38 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3026', processed='center(received)=1033',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=514', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1027',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=1', processed='destination(authlog)=6',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=476',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1033'
+Feb 13 21:32:38 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3028', processed='center(received)=1034',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=514', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1028',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=2', processed='destination(authlog)=6',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=476',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1034'
+Feb 13 21:42:39 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3031', processed='center(received)=1036',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=514', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1029',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=3', processed='destination(authlog)=7',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=476',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1036'
+Feb 13 21:51:26 Digitainer softdevice-conf[10810]: segfault at fc ip  
+080484d1 sp bfd0cdd8 error 4 in  
+softdevice-conf-29295-10766-32541[8048000+1000]
+Feb 13 21:52:39 Digitainer syslog-ng[1696]: Log statistics;  
+processed='center(queued)=3036', processed='center(received)=1038',  
+processed='destination(acpid)=3', processed='destination(console)=0',  
+processed='destination(debug)=0', processed='destination(mail)=0',  
+processed='destination(user)=509', processed='destination(uucp)=0',  
+processed='destination(messages)=515', processed='destination(ppp)=0',  
+processed='destination(news)=0', processed='destination(iptables)=0',  
+processed='destination(everything)=1031',  
+processed='destination(lpr)=0', processed='destination(cron)=0',  
+processed='destination(syslog)=4', processed='destination(authlog)=7',  
+processed='destination(errors)=455',  
+processed='destination(kernel)=477',  
+processed='destination(daemon)=35',  
+processed='destination(console_all)=0', processed='source(src)=1038'
+Feb 13 21:55:04 Digitainer softdevice-conf[12307]: segfault at fc ip  
+080484d1 sp bfff30c8 error 4 in  
+softdevice-conf-15684-12263-680[8048000+1000]
+Feb 13 21:57:40 Digitainer softdevice-conf[13285]: segfault at fc ip  
+080484d1 sp bfcce5a8 error 4 in  
+softdevice-conf-27198-13241-25455[8048000+1000]
+Feb 13 21:58:33 Digitainer softdevice-conf[13794]: segfault at fc ip  
+080484d1 sp bf9281f8 error 4 in  
+softdevice-conf-32326-13750-28082[8048000+1000]
+Feb 13 21:59:29 Digitainer softdevice-conf[14303]: segfault at fc ip  
+080484d1 sp bfcf6dc8 error 4 in  
+softdevice-conf-5064-14259-16905[8048000+1000]
+
+
+
+
+
+From bob at globall.ru  Sat Feb 14 06:07:00 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Sat, 14 Feb 2009 08:07:00 +0300
+Subject: [Softdevice-devel] [Bug #14990] Problem with
+ newest	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>	<4995B958.4050906@globall.ru>
+	<20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+Message-ID: <49965174.7070605@globall.ru>
+
+Maik Opitz wrote:
+
+>> On my notebook x86 Transmeta Efficeon softdevice works with ffmpeg
+>> 20090201 very well.
+>>
+>>     
+>
+> It is not only related to x86_64. I am running it on x86 (Intel
+> Pentium III) with DirectFB output. Same problem.
+>
+>
+>   
+
+
+For check I anew have completely compiled vdr and sofftdevice. On a
+notebook all works.
+My system:
+
+bob at sharp /etc $ uname -a
+Linux sharp 2.6.27-gentoo-r7 #2 Sat Jan 17 11:51:39 MSK 2009 i686
+Transmeta Efficeon(tm) Processor TM8000 GenuineTMx86 GNU/Linux
+
+bob at sharp /etc $ cat /proc/cpuinfo
+processor       : 0
+vendor_id       : GenuineTMx86
+cpu family      : 15
+model           : 2
+model name      : Transmeta Efficeon(tm) Processor TM8000
+stepping        : 4
+cpu MHz         : 1000.000
+cache size      : 1024 KB
+fdiv_bug        : no
+hlt_bug         : no
+f00f_bug        : no
+coma_bug        : no
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 1
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca
+cmov pat pse36 clflush acpi mmx fxsr sse sse2 ss tm mmxext longrun lrti
+constant_tsc
+bogomips        : 1988.94
+clflush size    : 128
+power management:
+
+bob at sharp /etc $ cat /etc/make.conf
+CFLAGS="-Os -mtune=pentium3 -msse2 -pipe -fomit-frame-pointer
+-falign-functions=0 -falign-jumps=0 -falign-loops=0"
+CHOST="i686-pc-linux-gnu"
+CXXFLAGS="${CFLAGS}"
+USE="sse sse2 acpi imlib exif audiofile bluetooth moznopango gphoto2
+syslog pcmcia javascript amr enca wma dbus hal laptop ppds 7zip samba
+v4l userlocales usb mmx mmxext rdesktop samba xine unicode xvid tiff
+java browserplugin seamonkey a52 qt gtk xcomposite pdf wifi -arts
+-gstreamer -apm -dv -ldap -mng -ipv6 kde -gnome -sdl -esd -eds -oss"
+LINGUAS="ru"
+VIDEO_CARDS="radeon"
+INPUT_DEVICES="keyboard mouse"
+
+bob at sharp /etc $ emerge  -pv ffmpeg
+
+These are the packages that would be merged, in order:
+
+Calculating dependencies... done!
+[ebuild   R   ] media-video/ffmpeg-0.4.9_p20090201  USE="X alsa amr
+encode mmx mmxext mp3 v4l vorbis xvid zlib -3dnow -aac (-altivec)
+-bindist -debug -dirac -doc -gsm -hardcoded-tables -ieee1394 -ipv6
+-network -oss -schroedinger -sdl -speex -ssse3 -test -theora -threads
+-v4l2 -vhook -x264" 0 kB
+
+Total: 1 package (1 reinstall), Size of downloads: 0 kB
+
+Later I will try to refresh vdr+DirecFB+softdevice on Epia ME6000. Now I
+cannot leave a family without the TV   :)  .
+
+
+
+
+From maik at fjordblau.de  Sat Feb 14 21:49:25 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Sat, 14 Feb 2009 21:49:25 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <49965174.7070605@globall.ru>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<4995B958.4050906@globall.ru>
+	<20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+	<49965174.7070605@globall.ru>
+Message-ID: <20090214214925.xme6b1f34goocc04@www.domaingo-webmail.de>
+
+Zitat von Vladimir Monchenko <bob at globall.ru>:
+
+> Maik Opitz wrote:
+>
+>>> On my notebook x86 Transmeta Efficeon softdevice works with ffmpeg
+>>> 20090201 very well.
+>>>
+>>>
+>>
+>> It is not only related to x86_64. I am running it on x86 (Intel
+>> Pentium III) with DirectFB output. Same problem.
+>>
+>>
+>>
+>
+>
+> For check I anew have completely compiled vdr and sofftdevice. On a
+> notebook all works.
+> My system:
+>
+> bob at sharp /etc $ uname -a
+> Linux sharp 2.6.27-gentoo-r7 #2 Sat Jan 17 11:51:39 MSK 2009 i686
+> Transmeta Efficeon(tm) Processor TM8000 GenuineTMx86 GNU/Linux
+>
+> bob at sharp /etc $ cat /proc/cpuinfo
+> processor       : 0
+> vendor_id       : GenuineTMx86
+> cpu family      : 15
+> model           : 2
+> model name      : Transmeta Efficeon(tm) Processor TM8000
+> stepping        : 4
+> cpu MHz         : 1000.000
+> cache size      : 1024 KB
+> fdiv_bug        : no
+> hlt_bug         : no
+> f00f_bug        : no
+> coma_bug        : no
+> fpu             : yes
+> fpu_exception   : yes
+> cpuid level     : 1
+> wp              : yes
+> flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca
+> cmov pat pse36 clflush acpi mmx fxsr sse sse2 ss tm mmxext longrun lrti
+> constant_tsc
+> bogomips        : 1988.94
+> clflush size    : 128
+> power management:
+>
+> bob at sharp /etc $ cat /etc/make.conf
+> CFLAGS="-Os -mtune=pentium3 -msse2 -pipe -fomit-frame-pointer
+> -falign-functions=0 -falign-jumps=0 -falign-loops=0"
+> CHOST="i686-pc-linux-gnu"
+> CXXFLAGS="${CFLAGS}"
+> USE="sse sse2 acpi imlib exif audiofile bluetooth moznopango gphoto2
+> syslog pcmcia javascript amr enca wma dbus hal laptop ppds 7zip samba
+> v4l userlocales usb mmx mmxext rdesktop samba xine unicode xvid tiff
+> java browserplugin seamonkey a52 qt gtk xcomposite pdf wifi -arts
+> -gstreamer -apm -dv -ldap -mng -ipv6 kde -gnome -sdl -esd -eds -oss"
+> LINGUAS="ru"
+> VIDEO_CARDS="radeon"
+> INPUT_DEVICES="keyboard mouse"
+>
+> bob at sharp /etc $ emerge  -pv ffmpeg
+>
+> These are the packages that would be merged, in order:
+>
+> Calculating dependencies... done!
+> [ebuild   R   ] media-video/ffmpeg-0.4.9_p20090201  USE="X alsa amr
+> encode mmx mmxext mp3 v4l vorbis xvid zlib -3dnow -aac (-altivec)
+> -bindist -debug -dirac -doc -gsm -hardcoded-tables -ieee1394 -ipv6
+> -network -oss -schroedinger -sdl -speex -ssse3 -test -theora -threads
+> -v4l2 -vhook -x264" 0 kB
+>
+> Total: 1 package (1 reinstall), Size of downloads: 0 kB
+>
+> Later I will try to refresh vdr+DirecFB+softdevice on Epia ME6000. Now I
+> cannot leave a family without the TV   :)  .
+>
+>
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+>
+
+After some more tries:
+I further on have the problem that libavcodec.so.51 is missing.
+Maybe this is only with DirectFB?
+
+
+
+
+From maik at fjordblau.de  Sun Feb 15 18:04:38 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Sun, 15 Feb 2009 18:04:38 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <20090214214925.xme6b1f34goocc04@www.domaingo-webmail.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<4995B958.4050906@globall.ru>
+	<20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>
+	<49965174.7070605@globall.ru>
+	<20090214214925.xme6b1f34goocc04@www.domaingo-webmail.de>
+Message-ID: <20090215180438.b2zmvn9t0k44ogso@www.domaingo-webmail.de>
+
+I tried out on another system. AMD Athlon with Radeon graphics and XV-output.
+The same problem there. Segfault.
+
+Some more info:
+The VDR OSD is shown normaly. When there is no signal on DVB card (and  
+so no video is shown) all seems OK. When the video comes in it  
+segfaults.
+
+
+
+
+From bob at globall.ru  Mon Feb 16 18:11:32 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Mon, 16 Feb 2009 20:11:32 +0300
+Subject: [Softdevice-devel] [Bug #14990] Problem with
+ newest	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <20090215180438.b2zmvn9t0k44ogso@www.domaingo-webmail.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>	<4995B958.4050906@globall.ru>	<20090213202830.9p5bkam5w8soocs4@www.domaingo-webmail.de>	<49965174.7070605@globall.ru>	<20090214214925.xme6b1f34goocc04@www.domaingo-webmail.de>
+	<20090215180438.b2zmvn9t0k44ogso@www.domaingo-webmail.de>
+Message-ID: <49999E44.8070900@globall.ru>
+
+Maik Opitz wrote:
+> Some more info:
+> The VDR OSD is shown normaly. When there is no signal on DVB card (and  
+> so no video is shown) all seems OK. When the video comes in it  
+> segfaults.
+>   
+
+Yes, you are right. I did not connect  DVB USB adapter to laptop.
+After connection DVB card I have segfault.
+
+
+From stefan at lucke.in-berlin.de  Mon Feb 16 21:22:36 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 16 Feb 2009 21:22:36 +0100
+Subject: [Softdevice-devel]
+	=?iso-8859-1?q?=5BBug_=2314990=5D_Problem_with?=
+	=?iso-8859-1?q?_newest=09ffmpeg_=28snapshot_from_2008-12-19=29?=
+In-Reply-To: <49999E44.8070900@globall.ru>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<20090215180438.b2zmvn9t0k44ogso@www.domaingo-webmail.de>
+	<49999E44.8070900@globall.ru>
+Message-ID: <200902162122.36985.stefan@lucke.in-berlin.de>
+
+On Monday 16 February 2009, Vladimir Monchenko wrote:
+> Maik Opitz wrote:
+> > Some more info:
+> > The VDR OSD is shown normaly. When there is no signal on DVB card (and  
+> > so no video is shown) all seems OK. When the video comes in it  
+> > segfaults.
+> >   
+> 
+> Yes, you are right. I did not connect  DVB USB adapter to laptop.
+> After connection DVB card I have segfault.
+
+By default: I'm sorry for my delayed response.
+
+For summary: original bug reporter used a ffmpeg checkout from 2008-12-19.
+  That's about svn revision r16226 to r16244
+
+My last used ffmpeg version was r16128
+
+To reproduce errors with ffmpeg it is important to have exact
+revision numbers, like those you get from command ffplay:
+FFplay version SVN-r16128, Copyright (c) 2003-2008 Fabrice Bellard, et al.
+  configuration: --enable-shared --enable-postproc --enable-gpl --enable-swscale --enable-libfaac --enable-libfaad --enable-pthreads
+  libavutil     49.12. 0 / 49.12. 0
+  libavcodec    52. 6. 1 / 52. 6. 1
+  libavformat   52.23. 1 / 52.23. 1
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libswscale     0. 6. 1 /  0. 6. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Dec 14 2008 18:17:02, gcc: 4.1.2 (Gentoo 4.1.2 p1.1)
+An input file must be specified
+
+I upgraded to this version now:
+FFplay version SVN-r17385, Copyright (c) 2003-2009 Fabrice Bellard, et al.
+  configuration: --enable-shared --enable-postproc --enable-gpl --enable-swscale --enable-libfaac --enable-libfaad --enable-pthreads
+  libavutil     49.14. 0 / 49.14. 0
+  libavcodec    52.15. 0 / 52.15. 0
+  libavformat   52.29. 0 / 52.29. 0
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libswscale     0. 7. 0 /  0. 7. 0
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Feb 16 2009 20:50:07, gcc: 4.1.2 (Gentoo 4.1.2 p1.1)
+An input file must be specified
+
+But while upgrading ffmpeg my mind cleared a bit, and I remembered some
+reverted changes I did even for my old 16128 revision.
+
+Assuming you save attached patches above ffmpeg directory, please try to
+apply both inside ffmpeg's directory in sequence with the following commands:
+
+patch  -p1 -R <../r-15799.patch
+patch  -p1 -R <../r-15634.patch
+
+These patches fix my segfaults but I did only a short test.
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+--- trunk/libavformat/aviobuf.c	2008/10/18 17:30:37	15634
++++ trunk/libavformat/aviobuf.c	2008/11/10 21:41:35	15799
+@@ -290,7 +290,7 @@
+ 
+ static void fill_buffer(ByteIOContext *s)
+ {
+-    uint8_t *dst= s->buf_end - s->buffer < s->buffer_size ? s->buf_ptr : s->buffer;
++    uint8_t *dst= !s->max_packet_size && s->buf_end - s->buffer < s->buffer_size ? s->buf_ptr : s->buffer;
+     int len= s->buffer_size - (dst - s->buffer);
+ 
+     assert(s->buf_ptr == s->buf_end);
+-------------- next part --------------
+--- trunk/libavformat/aviobuf.c	2008/10/04 21:11:58	15555
++++ trunk/libavformat/aviobuf.c	2008/10/18 17:30:37	15634
+@@ -290,20 +290,25 @@
+ 
+ static void fill_buffer(ByteIOContext *s)
+ {
+-    int len=0;
++    uint8_t *dst= s->buf_end - s->buffer < s->buffer_size ? s->buf_ptr : s->buffer;
++    int len= s->buffer_size - (dst - s->buffer);
++
++    assert(s->buf_ptr == s->buf_end);
+ 
+     /* no need to do anything if EOF already reached */
+     if (s->eof_reached)
+         return;
+ 
+-    if(s->update_checksum){
++    if(s->update_checksum && dst == s->buffer){
+         if(s->buf_end > s->checksum_ptr)
+             s->checksum= s->update_checksum(s->checksum, s->checksum_ptr, s->buf_end - s->checksum_ptr);
+         s->checksum_ptr= s->buffer;
+     }
+ 
+     if(s->read_packet)
+-        len = s->read_packet(s->opaque, s->buffer, s->buffer_size);
++        len = s->read_packet(s->opaque, dst, len);
++    else
++        len = 0;
+     if (len <= 0) {
+         /* do not modify buffer if EOF reached so that a seek back can
+            be done without rereading data */
+@@ -312,8 +317,8 @@
+             s->error= len;
+     } else {
+         s->pos += len;
+-        s->buf_ptr = s->buffer;
+-        s->buf_end = s->buffer + len;
++        s->buf_ptr = dst;
++        s->buf_end = dst + len;
+     }
+ }
+ 
+
+From maik at fjordblau.de  Tue Feb 17 21:13:52 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Tue, 17 Feb 2009 21:13:52 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <200902162122.36985.stefan@lucke.in-berlin.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<20090215180438.b2zmvn9t0k44ogso@www.domaingo-webmail.de>
+	<49999E44.8070900@globall.ru>
+	<200902162122.36985.stefan@lucke.in-berlin.de>
+Message-ID: <20090217211352.m2gsz8br4044o0sk@www.domaingo-webmail.de>
+
+Hi,
+
+with the patches it works fine for me.
+But is this a bug in ffmpeg? Should we report it to them?
+
+And I still have the message thas libavcodec.so.51 is missing. But it  
+seems to mean nothing, because softdevice works.
+
+Here the Output of ffplay:
+FFplay version SVN-r17385, Copyright (c) 2003-2009 Fabrice Bellard, et al.
+   configuration: --prefix=/usr --enable-gpl --enable-libmp3lame  
+--enable-libvorbis --enable-libfaac --enable-libfaad --enable-libxvid  
+--enable-libtheora --enable-libx264 --enable-postproc --enable-shared  
+--enable-pthreads --enable-x11grab --enable-swscale
+   libavutil     49.14. 0 / 49.14. 0
+   libavcodec    52.15. 0 / 52.15. 0
+   libavformat   52.29. 0 / 52.29. 0
+   libavdevice   52. 1. 0 / 52. 1. 0
+   libswscale     0. 7. 0 /  0. 7. 0
+   libpostproc   51. 2. 0 / 51. 2. 0
+   built on Feb 17 2009 20:15:18, gcc: 4.3.3
+An input file must be specified
+
+
+
+
+From maik at fjordblau.de  Tue Feb 17 23:07:45 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Tue, 17 Feb 2009 23:07:45 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <200902162122.36985.stefan@lucke.in-berlin.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<20090215180438.b2zmvn9t0k44ogso@www.domaingo-webmail.de>
+	<49999E44.8070900@globall.ru>
+	<200902162122.36985.stefan@lucke.in-berlin.de>
+Message-ID: <20090217230745.xti21pg3r404w4cc@www.domaingo-webmail.de>
+
+OK, finaly I found the problem with libavcodec.so.51 missing. It was  
+not softdevice. It was another plugin I am using.
+
+
+
+
+From stefan at lucke.in-berlin.de  Wed Feb 18 00:33:38 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 18 Feb 2009 00:33:38 +0100
+Subject: [Softdevice-devel]
+	=?iso-8859-1?q?=5BBug_=2314990=5D_Problem_with?=
+	=?iso-8859-1?q?_newest_ffmpeg_=28snapshot_from_2008-12-19=29?=
+In-Reply-To: <20090217211352.m2gsz8br4044o0sk@www.domaingo-webmail.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<200902162122.36985.stefan@lucke.in-berlin.de>
+	<20090217211352.m2gsz8br4044o0sk@www.domaingo-webmail.de>
+Message-ID: <200902180033.38956.stefan@lucke.in-berlin.de>
+
+On Tuesday 17 February 2009, Maik Opitz wrote:
+> Hi,
+> 
+> with the patches it works fine for me.
+> But is this a bug in ffmpeg? Should we report it to them?
+
+I think we have to modify our ByteIOContext interface,
+so that we do an additional copy of data to decode.
+Currently we just adjust the pointers inside the ByteIOContext.
+
+Attached patch is a fix for softdevice, which works with
+unpatched ffmpeg.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.85
+diff -U3 -r1.85 mpeg2decoder.c
+--- mpeg2decoder.c	25 Oct 2008 10:23:49 -0000	1.85
++++ mpeg2decoder.c	17 Feb 2009 23:28:39 -0000
+@@ -41,6 +41,7 @@
+ // 0: save buffers, 1: good seeking, 2: HDTV buffers
+ int dvb_buf_size[] = {64*1024,32*1024,64*1024};
+ int packet_buf_size[] = {300,150,2000};
++unsigned char my_buf [64*1024];
+ 
+ //#define AV_STATS
+ 
+@@ -1117,7 +1118,7 @@
+          size=buf_size;
+ 
+ #if LIBAVFORMAT_BUILD >= ((52<<16)+(0<<8)+0)
+-       ic->pb->buffer=u;
++       memcpy (buf, u, size);
+ #else
+        ic->pb.buffer=u;
+ #endif
+@@ -1155,9 +1156,8 @@
+        fprintf (stderr, "Failed to open input stream.Error %d\n", err);
+    }
+ 
+-   init_put_byte(ic->pb, NULL,dvb_buf_size[setupStore->bufferMode]/2, 0, this,
++   init_put_byte(ic->pb, my_buf,dvb_buf_size[setupStore->bufferMode]/2, 0, this,
+        read_packet_RingBuffer,NULL,seek_RingBuffer);
+-   ic->pb->buf_end=NULL;
+    ic->pb->is_streamed=true;
+ #else
+    fmt->flags |= AVFMT_NOFILE;
+
+From bob at globall.ru  Wed Feb 18 05:31:34 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Wed, 18 Feb 2009 07:31:34 +0300
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg
+ (snapshot from 2008-12-19)
+In-Reply-To: <200902180033.38956.stefan@lucke.in-berlin.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>	<200902162122.36985.stefan@lucke.in-berlin.de>	<20090217211352.m2gsz8br4044o0sk@www.domaingo-webmail.de>
+	<200902180033.38956.stefan@lucke.in-berlin.de>
+Message-ID: <499B8F26.7070708@globall.ru>
+
+Stefan Lucke wrote:
+> Attached patch is a fix for softdevice, which works with
+> unpatched ffmpeg.
+>   
+Thanks, it works for me.
+I use ffmpeg version r16916:
+
+athlon vdr-1.6.0-2 # ffplay
+FFplay version SVN-r16916, Copyright (c) 2003-2009 Fabrice Bellard, et al.
+  configuration: --prefix=/usr --libdir=/usr/lib64 --shlibdir=/usr/lib64
+--mandir=/usr/share/man --enable-static --enable-shared
+--cc=x86_64-pc-linux-gnu-gcc --disable-debug --disable-network
+--disable-optimizations --enable-libmp3lame --enable-libvorbis
+--enable-libxvid --enable-libdc1394 --disable-demuxer=v4l
+--disable-demuxer=v4l2 --disable-demuxer=oss --disable-muxer=oss
+--enable-x11grab --enable-libamr-nb --enable-libamr-wb --enable-nonfree
+--disable-ssse3 --disable-altivec --cpu=k8 --disable-vhook --enable-gpl
+--enable-postproc --enable-avfilter --enable-avfilter-lavf
+--enable-swscale --disable-stripping
+  libavutil     49.14. 0 / 49.14. 0
+  libavcodec    52.11. 0 / 52.11. 0
+  libavformat   52.25. 0 / 52.25. 0
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libavfilter    0. 3. 0 /  0. 3. 0
+  libswscale     0. 6. 1 /  0. 6. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Feb  1 2009 22:42:50, gcc: 4.1.2 (Gentoo 4.1.2 p1.3)
+An input file must be specified
+
+
+
+From Neumann at do-net.de  Wed Feb 18 09:26:11 2009
+From: Neumann at do-net.de (Neumann, Andre [DO-net GmbH])
+Date: Wed, 18 Feb 2009 09:26:11 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg
+	(snapshot from 2008-12-19)
+Message-ID: <FB3B5DB3197CEA429E5FB8E83D01D039258AF4@sbs2003.do-net.de>
+
+Does softdevice works with vdr-1.7.4 ? (TS)
+
+-------------
+Andre Neumann
+
+-----Urspr?ngliche Nachricht-----
+Von: softdevice-devel-bounces at lists.berlios.de [mailto:softdevice-devel-bounces at lists.berlios.de] Im Auftrag von Stefan Lucke
+Gesendet: Mittwoch, 18. Februar 2009 00:34
+An: softdevice-devel at lists.berlios.de
+Betreff: Re: [Softdevice-devel][Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+
+On Tuesday 17 February 2009, Maik Opitz wrote:
+> Hi,
+> 
+> with the patches it works fine for me.
+> But is this a bug in ffmpeg? Should we report it to them?
+
+I think we have to modify our ByteIOContext interface, so that we do an additional copy of data to decode.
+Currently we just adjust the pointers inside the ByteIOContext.
+
+Attached patch is a fix for softdevice, which works with unpatched ffmpeg.
+
+--
+Stefan Lucke
+
+
+
+From maik at fjordblau.de  Wed Feb 18 20:12:36 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Wed, 18 Feb 2009 20:12:36 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest
+	ffmpeg	(snapshot from 2008-12-19)
+In-Reply-To: <200902180033.38956.stefan@lucke.in-berlin.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<200902162122.36985.stefan@lucke.in-berlin.de>
+	<20090217211352.m2gsz8br4044o0sk@www.domaingo-webmail.de>
+	<200902180033.38956.stefan@lucke.in-berlin.de>
+Message-ID: <20090218201236.mejjxeyroko8ss04@www.domaingo-webmail.de>
+
+The patch for softdevice works fine here with unpatched ffmpeg.
+Should go into CVS.
+
+Zitat von Stefan Lucke <stefan at lucke.in-berlin.de>:
+
+> On Tuesday 17 February 2009, Maik Opitz wrote:
+>> Hi,
+>>
+>> with the patches it works fine for me.
+>> But is this a bug in ffmpeg? Should we report it to them?
+>
+> I think we have to modify our ByteIOContext interface,
+> so that we do an additional copy of data to decode.
+> Currently we just adjust the pointers inside the ByteIOContext.
+>
+> Attached patch is a fix for softdevice, which works with
+> unpatched ffmpeg.
+>
+> --
+> Stefan Lucke
+>
+
+
+
+
+
+
+From stefan at lucke.in-berlin.de  Wed Feb 18 20:45:05 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 18 Feb 2009 20:45:05 +0100
+Subject: [Softdevice-devel]
+	=?iso-8859-1?q?=5BBug_=2314990=5D_Problem_with?=
+	=?iso-8859-1?q?_newest_ffmpeg_=28snapshot_from_2008-12-19=29?=
+In-Reply-To: <20090218201236.mejjxeyroko8ss04@www.domaingo-webmail.de>
+References: <200902131451.n1DEpEsp024754@unicorn.berlios.de>
+	<200902180033.38956.stefan@lucke.in-berlin.de>
+	<20090218201236.mejjxeyroko8ss04@www.domaingo-webmail.de>
+Message-ID: <200902182045.05279.stefan@lucke.in-berlin.de>
+
+On Wednesday 18 February 2009, Maik Opitz wrote:
+> The patch for softdevice works fine here with unpatched ffmpeg.
+> Should go into CVS.
+
+Commited a modified version of the patch.
+So you have to backout the patch before doing a "cvs update".
+
+-- 
+Stefan Lucke
+
+
+From admin at berlios.de  Wed Feb 18 20:48:25 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Wed, 18 Feb 2009 20:48:25 +0100 (CET)
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg
+	(snapshot from 2008-12-19)
+Message-ID: <200902181948.n1IJmPBH005164@unicorn.berlios.de>
+
+Bug #14990, was updated on 2009-Jan-02 10:51
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: Problem with newest ffmpeg (snapshot from 2008-12-19)
+
+Details: I`m have a segfault with new snapshot of ffmpeg and softdevice (from cvs).
+Compiling fine, but don`t works.
+With snapshot of ffmpeg from 2008/10/14 works fine.
+
+Gentoo x86_64
+
+Follow-Ups:
+
+Date: 2009-Feb-18 20:48
+By: lucke
+
+Comment:
+A fix for this has been commited to cvs.
+Please update your softdevice version.
+-------------------------------------------------------
+
+Date: 2009-Feb-13 15:51
+By: schrauber
+
+Comment:
+Same here. Compiling fine.
+When starting VDR the OSD is shown for a short moment. When the video comes in VDR crashes.
+With snapshot of ffmpeg from 2008/12/10.
+
+Archlinux x86
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14990&group_id=2051
+
+
+From maik at fjordblau.de  Wed Feb 18 20:54:37 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Wed, 18 Feb 2009 20:54:37 +0100
+Subject: [Softdevice-devel]  Problems with FastForward and Rewind
+Message-ID: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+
+Hi,
+
+I use softdevice in my VDR with DirectFB.
+Since some time I have the following problem when I replay an  
+recording. When I fast forward the recording, it runs forward  
+extremely fast for the first minute (of recording time) or so. Then it  
+goes to normal ff-speed. The same if I rewind. Also jumping forward or  
+backward by 1 minute (green and yellow button) is not a minute.  
+Forward it jumps more than 1 minute. Backwards it is less then 1 minute.
+
+I found out that this change came on 15. April 2008. After some more  
+investigating I found, it hat to do with the change from  
+av_read_packet to av_read_frame.
+
+The following patch changes back from av_read_frame to av_read_packet  
+and so fixes the problem.
+Could someone confirm this?
+And why did we change from av_read_packet to av_read_frame?
+
+
+diff -Nur softdevice-20080415/mpeg2decoder.c  
+softdevice-20080416/mpeg2decoder.c
+--- softdevice-20080415/mpeg2decoder.c  2008-04-12 14:27:58.000000000 +0200
++++ softdevice-20080416/mpeg2decoder.c  2008-04-15 19:34:30.000000000 +0200
+@@ -1191,15 +1191,15 @@
+            usleep(50000);
+
+          BUFDEB("av_read_frame start\n");
+-        ret = av_read_frame(ic, &pkt);
+-        //ret = av_read_packet(ic, &pkt);
++        //ret = av_read_frame(ic, &pkt);
++        ret = av_read_packet(ic, &pkt);
+          if (ret < 0) {
+              BUFDEB("cMpeg2Decoder Stream Error!\n");
+              if (ThreadActive)
+                     usleep(10000);
+              continue;
+          }
+-        av_dup_packet(&pkt);
++        //av_dup_packet(&pkt);
+          PacketCount++;
+          BUFDEB("got packet from av_read_frame!\n");
+
+
+
+
+From admin at berlios.de  Wed Feb 18 21:29:14 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Wed, 18 Feb 2009 23:29:14 +0300 (MSK)
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg
+	(snapshot from 2008-12-19)
+Message-ID: <200902182029.n1IKTEmC027042@unicorn.berlios.de>
+
+Bug #14990, was updated on 2009-Jan-02 12:51
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: Problem with newest ffmpeg (snapshot from 2008-12-19)
+
+Details: I`m have a segfault with new snapshot of ffmpeg and softdevice (from cvs).
+Compiling fine, but don`t works.
+With snapshot of ffmpeg from 2008/10/14 works fine.
+
+Gentoo x86_64
+
+Follow-Ups:
+
+Date: 2009-Feb-18 23:29
+By: axiator
+
+Comment:
+thank you, now works great!
+-------------------------------------------------------
+
+Date: 2009-Feb-18 22:48
+By: lucke
+
+Comment:
+A fix for this has been commited to cvs.
+Please update your softdevice version.
+-------------------------------------------------------
+
+Date: 2009-Feb-13 17:51
+By: schrauber
+
+Comment:
+Same here. Compiling fine.
+When starting VDR the OSD is shown for a short moment. When the video comes in VDR crashes.
+With snapshot of ffmpeg from 2008/12/10.
+
+Archlinux x86
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14990&group_id=2051
+
+
+From stefan at lucke.in-berlin.de  Wed Feb 18 21:55:32 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 18 Feb 2009 21:55:32 +0100
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+References: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+Message-ID: <200902182155.32797.stefan@lucke.in-berlin.de>
+
+On Wednesday 18 February 2009, Maik Opitz wrote:
+> Hi,
+> 
+> I use softdevice in my VDR with DirectFB.
+> Since some time I have the following problem when I replay an  
+> recording. When I fast forward the recording, it runs forward  
+> extremely fast for the first minute (of recording time) or so. Then it  
+> goes to normal ff-speed. The same if I rewind. Also jumping forward or  
+> backward by 1 minute (green and yellow button) is not a minute.  
+> Forward it jumps more than 1 minute. Backwards it is less then 1 minute.
+> 
+> I found out that this change came on 15. April 2008. After some more  
+> investigating I found, it hat to do with the change from  
+> av_read_packet to av_read_frame.
+> 
+> The following patch changes back from av_read_frame to av_read_packet  
+> and so fixes the problem.
+> Could someone confirm this?
+
+Yes, we had a discussion about this in september last year.
+
+1. http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003125.html
+2. http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003134.html
+
+On my main viewing system, I switched via that uncommited patch
+back to av_read_packet().
+
+> And why did we change from av_read_packet to av_read_frame?
+
+Hm, there were other problems, starting here:
+http://www.linuxtv.org/pipermail/vdr/2007-March/012473.html
+
+and original fix of Martin:
+http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html
+
+av_read_frame() has a bug in PTS handling of which Martin tried to
+convince ffmpeg developers, but he failed. Have a look at:
+http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2007-March/025553.html
+
+> 
+
+
+-- 
+Stefan Lucke
+
+
+From maik at fjordblau.de  Thu Feb 19 11:04:09 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Thu, 19 Feb 2009 11:04:09 +0100
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <200902182155.32797.stefan@lucke.in-berlin.de>
+References: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+	<200902182155.32797.stefan@lucke.in-berlin.de>
+Message-ID: <20090219110409.l8wjc9j5coo084og@www.domaingo-webmail.de>
+
+Zitat von Stefan Lucke <stefan at lucke.in-berlin.de>:
+
+> On Wednesday 18 February 2009, Maik Opitz wrote:
+>> Hi,
+>>
+>> I use softdevice in my VDR with DirectFB.
+>> Since some time I have the following problem when I replay an
+>> recording. When I fast forward the recording, it runs forward
+>> extremely fast for the first minute (of recording time) or so. Then it
+>> goes to normal ff-speed. The same if I rewind. Also jumping forward or
+>> backward by 1 minute (green and yellow button) is not a minute.
+>> Forward it jumps more than 1 minute. Backwards it is less then 1 minute.
+>>
+>> I found out that this change came on 15. April 2008. After some more
+>> investigating I found, it hat to do with the change from
+>> av_read_packet to av_read_frame.
+>>
+>> The following patch changes back from av_read_frame to av_read_packet
+>> and so fixes the problem.
+>> Could someone confirm this?
+>
+> Yes, we had a discussion about this in september last year.
+>
+> 1. http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003125.html
+> 2. http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003134.html
+>
+> On my main viewing system, I switched via that uncommited patch
+> back to av_read_packet().
+>
+>> And why did we change from av_read_packet to av_read_frame?
+>
+> Hm, there were other problems, starting here:
+> http://www.linuxtv.org/pipermail/vdr/2007-March/012473.html
+>
+> and original fix of Martin:
+> http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html
+>
+> av_read_frame() has a bug in PTS handling of which Martin tried to
+> convince ffmpeg developers, but he failed. Have a look at:
+> http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2007-March/025553.html
+>
+>>
+>
+>
+> --
+> Stefan Lucke
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+>
+
+OK, as I understand, the av_read_frame is more important for older recordings.
+And your patch builds a switch into softdevice's menu.
+So shouldnt it be commited? With standard setting to av_read_packet.  
+So, for most people it will work. And the ones with older recordings  
+which has problems can switch to av_read_frame.
+
+Or maybe there should be a new discussion with the ffmpeg develeopers  
+if the bug is realy on ffmpeg's side? But I can not start this.  
+Because my lack of the technical background.
+
+
+
+
+From stefan at lucke.in-berlin.de  Thu Feb 19 21:09:11 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 19 Feb 2009 21:09:11 +0100
+Subject: [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg
+	(snapshot from 2008-12-19)
+In-Reply-To: <FB3B5DB3197CEA429E5FB8E83D01D039258AF4@sbs2003.do-net.de>
+References: <FB3B5DB3197CEA429E5FB8E83D01D039258AF4@sbs2003.do-net.de>
+Message-ID: <200902192109.11472.stefan@lucke.in-berlin.de>
+
+On Wednesday 18 February 2009, Neumann, Andre [DO-net GmbH] wrote:
+> Does softdevice works with vdr-1.7.4 ? (TS)
+> 
+
+cvs not yet.
+
+I had a version running with vdr-1.7.2, but there were some decoding issues.
+I've to commit my other unfinished tasks first. Then I'll try vdr TS way.
+
+-- 
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Thu Feb 19 22:09:22 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 19 Feb 2009 22:09:22 +0100
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <20090219110409.l8wjc9j5coo084og@www.domaingo-webmail.de>
+References: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+	<200902182155.32797.stefan@lucke.in-berlin.de>
+	<20090219110409.l8wjc9j5coo084og@www.domaingo-webmail.de>
+Message-ID: <200902192209.22324.stefan@lucke.in-berlin.de>
+
+On Thursday 19 February 2009, Maik Opitz wrote:
+> Zitat von Stefan Lucke <stefan at lucke.in-berlin.de>:
+> 
+> > On Wednesday 18 February 2009, Maik Opitz wrote:
+> >> Hi,
+> >>
+> >> I use softdevice in my VDR with DirectFB.
+> >> Since some time I have the following problem when I replay an
+> >> recording. When I fast forward the recording, it runs forward
+> >> extremely fast for the first minute (of recording time) or so. Then it
+> >> goes to normal ff-speed. The same if I rewind. Also jumping forward or
+> >> backward by 1 minute (green and yellow button) is not a minute.
+> >> Forward it jumps more than 1 minute. Backwards it is less then 1 minute.
+> >>
+> >> I found out that this change came on 15. April 2008. After some more
+> >> investigating I found, it hat to do with the change from
+> >> av_read_packet to av_read_frame.
+> >>
+> >> The following patch changes back from av_read_frame to av_read_packet
+> >> and so fixes the problem.
+> >> Could someone confirm this?
+> >
+> > Yes, we had a discussion about this in september last year.
+> >
+> > 1. http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003125.html
+> > 2. http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003134.html
+> >
+> > On my main viewing system, I switched via that uncommited patch
+> > back to av_read_packet().
+> >
+> >> And why did we change from av_read_packet to av_read_frame?
+> >
+> > Hm, there were other problems, starting here:
+> > http://www.linuxtv.org/pipermail/vdr/2007-March/012473.html
+> >
+> > and original fix of Martin:
+> > http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html
+> >
+> > av_read_frame() has a bug in PTS handling of which Martin tried to
+> > convince ffmpeg developers, but he failed. Have a look at:
+> > http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2007-March/025553.html
+> >
+> >>
+
+> 
+> OK, as I understand, the av_read_frame is more important for older recordings.
+> And your patch builds a switch into softdevice's menu.
+> So shouldnt it be commited?
+
+Commited it, as it works stable for me since a few months.
+For av_read[frame|packet] switch, vdr has to be restarted.
+
+> With standard setting to av_read_packet.   
+> So, for most people it will work. And the ones with older recordings  
+> which has problems can switch to av_read_frame.
+
+I reread the thread on vdr list too (march 2007) and for some reasons now
+I like the idea for Reinhard Nissel of using/copying cAudioRepacker. ...
+
+> 
+> Or maybe there should be a new discussion with the ffmpeg develeopers  
+> if the bug is realy on ffmpeg's side? But I can not start this.  
+> Because my lack of the technical background.
+
+
+
+-- 
+Stefan Lucke
+
+
+From maik at fjordblau.de  Thu Feb 19 23:04:56 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Thu, 19 Feb 2009 23:04:56 +0100
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <200902192209.22324.stefan@lucke.in-berlin.de>
+References: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+	<200902182155.32797.stefan@lucke.in-berlin.de>
+	<20090219110409.l8wjc9j5coo084og@www.domaingo-webmail.de>
+	<200902192209.22324.stefan@lucke.in-berlin.de>
+Message-ID: <20090219230456.4y184h1v4o8gos0g@www.domaingo-webmail.de>
+
+Zitat von Stefan Lucke <stefan at lucke.in-berlin.de>:
+
+> I reread the thread on vdr list too (march 2007) and for some reasons now
+> I like the idea for Reinhard Nissel of using/copying cAudioRepacker. ...
+
+Maybe. If I understood right, the idea was to simply repack in every  
+case? As I said, I am not very firm with the technical background.
+I have no idea, how much CPU this costs.
+If I understood right, then VDR does it while recording. Is this right?
+I can not notice a significant higher CPU load on my PIII 1400 while  
+recording. Compared
+to simple replay. So it seems not to be that much.
+
+
+
+
+From maik at fjordblau.de  Fri Feb 20 10:24:06 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Fri, 20 Feb 2009 10:24:06 +0100
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <200902192209.22324.stefan@lucke.in-berlin.de>
+References: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+	<200902182155.32797.stefan@lucke.in-berlin.de>
+	<20090219110409.l8wjc9j5coo084og@www.domaingo-webmail.de>
+	<200902192209.22324.stefan@lucke.in-berlin.de>
+Message-ID: <20090220102406.cvpsu27xcgwkog4w@www.domaingo-webmail.de>
+
+Zitat von Stefan Lucke <stefan at lucke.in-berlin.de>:
+> Commited it, as it works stable for me since a few months.
+> For av_read[frame|packet] switch, vdr has to be restarted.
+
+Stefan, I forgot one thing:
+Did you take this
+http://lists.berlios.de/pipermail/softdevice-devel/2008q1/002986.html
+into account.
+
+I had the same problem with my back-patched version to av_read_packet  
+while playing back DVDs. By disabling this part, I was able to fix the  
+problem.
+
+
+
+
+From bob at globall.ru  Wed Feb 25 05:57:45 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Wed, 25 Feb 2009 07:57:45 +0300
+Subject: [Softdevice-devel] softdevice and latest DirectFB
+Message-ID: <49A4CFC9.3010900@globall.ru>
+
+Hi,
+
+I have started to update system on Epia ME6000 and have found out that
+softdevice does not work c DirectFB 1.2.7 and 1.3.0.
+With old snapshot DirectFB-2008-03-04-05-25-11-UTC all works normally.
+It is regression or change API?
+
+vdr-test  / # vdr -Psoftdevice
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] autodetectAspect 0
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (??????)
+[setup-softdevice] cropping mode toggle key set to 0 (??????)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 ??????
+[setup-softdevice] Expanding 0 columns at left and right
+[setup-softdevice] Expanding 0 columns at top and bottom
+[setup-softdevice] fieldOrderMode: Auto
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to ??????
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] preferredField: Both Fields
+[setup-softdevice] preferredFieldMarker: Off
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[setup-softdevice] useAVReadFrame: no
+[softdevice] UseSetSourceRectangle to off
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 ??????????)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3410688)
+21:06:14.0847 I [4893] [dfb] init
+commandline read: vdr
+commandline read: -Psoftdevice
+
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~| DirectFB 1.2.7 |~~~~~~~~~~~~~~~~~~~~~~~~~~
+        (c) 2001-2008  The world wide DirectFB Open Source Community
+        (c) 2000-2004  Convergence (integrated media) GmbH
+      ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2009-02-24 15:30)
+(*) Direct/Thread: Started 'VT Switcher' (4898) [CRITICAL OTHER/OTHER
+0/0] <8388608>...
+(*) Direct/Thread: Started 'Keyboard Input' (4900) [INPUT OTHER/OTHER
+0/0] <8388608>...
+(*) DirectFB/Input: Keyboard 0.9 (directfb.org)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+(*) FBDev/Surface: Allocated 720x576 32 bit RGB32 buffer (index 0) at
+offset 0 and pitch 2880.
+(*) FBDev/Mode: Setting 720x576 RGB32
+(*) FBDev/Mode: Switched to 720x576 (virtual 720x1152) at 32 bit
+(RGB32), pitch 2880
+(*) FBDev/Surface: Allocated 720x576 32 bit RGB32 buffer (index 1) at
+offset 1658880 and pitch 2880.
+[dfb] RAM: 33288192 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Xor
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize
+SrcColorkey DstColorkey Deinterlace
+21:06:14.0985 I [4893] [dfb] Supported video Modes are:
+720x576 at 32 872x576 at 16 640x480 at 8 640x480 at 8 640x480 at 8 640x480 at 8 640x480 at 8
+800x600 at 8 800x600 at 8 800x600 at 8 800x600@
+21:06:14.0993 I [4893] [dfb] Enumerating display Layers
+21:06:14.0994 I [4893] [dfb] Configuring CooperativeLevel for OSD
+Layer 0 VIA CLE266 Graphics  Type: graphics
+  Caps: alphachannel brightness contrast opacity saturation src_colorkey
+surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+  Caps: deinterlacing dst_colorkey levels field_parity opacity
+screen_location surface
+21:06:15.0001 I [4893] [dfb] (osdLayer): flags, options, pixelformat:
+0000000f, 00000000 00400c03
+21:06:15.0002 I [4893] [dfb] (osdLayer): width, height:              
+720 576
+21:06:15.0003 I [4893] [dfb] osdLayer has alpha channel
+(*) FBDev/Mode: Setting 720x576 RGB32
+(*) FBDev/Mode: Switched to 720x576 (virtual 720x576) at 32 bit (RGB32),
+pitch 2880
+(*) FBDev/Surface: Allocated 720x576 32 bit RGB32 buffer (index 0) at
+offset 0 and pitch 2880.
+21:06:15.0047 E [4893] [dfb] init
+EXITING:action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig
+ (!!!)  *** WARNING [Application exited without deinitialization of
+DirectFB!] *** [core.c:859 in dfb_core_dei
+ (!!!)  *** WARNING [still objects in 'Layer Region Pool'] ***
+[object.c:241 in fusion_object_pool_destroy()]
+ (!!!)  *** WARNING [still objects in 'Layer Context Pool'] ***
+[object.c:241 in fusion_object_pool_destroy()]
+ (!!!)  *** WARNING [still objects in 'Surface Pool'] *** [object.c:241
+in fusion_object_pool_destroy()]
+
+
+
+From stefan at lucke.in-berlin.de  Wed Feb 25 20:18:53 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 25 Feb 2009 20:18:53 +0100
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <20090220102406.cvpsu27xcgwkog4w@www.domaingo-webmail.de>
+References: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+	<200902192209.22324.stefan@lucke.in-berlin.de>
+	<20090220102406.cvpsu27xcgwkog4w@www.domaingo-webmail.de>
+Message-ID: <200902252018.54099.stefan@lucke.in-berlin.de>
+
+On Friday 20 February 2009, Maik Opitz wrote:
+> Zitat von Stefan Lucke <stefan at lucke.in-berlin.de>:
+> > Commited it, as it works stable for me since a few months.
+> > For av_read[frame|packet] switch, vdr has to be restarted.
+> 
+> Stefan, I forgot one thing:
+> Did you take this
+> http://lists.berlios.de/pipermail/softdevice-devel/2008q1/002986.html
+> into account.
+
+I thought that was solved by using av_read_frame() :
+http://lists.berlios.de/pipermail/softdevice-devel/2008q1/002989.html
+
+> 
+> I had the same problem with my back-patched version to av_read_packet  
+> while playing back DVDs. By disabling this part, I was able to fix the  
+> problem.
+> 
+
+So I really should take a look at how to use vdr's repacker
+or use ffmpegs parser.
+
+-- 
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Wed Feb 25 20:29:16 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 25 Feb 2009 20:29:16 +0100
+Subject: [Softdevice-devel] softdevice and latest DirectFB
+In-Reply-To: <49A4CFC9.3010900@globall.ru>
+References: <49A4CFC9.3010900@globall.ru>
+Message-ID: <200902252029.16267.stefan@lucke.in-berlin.de>
+
+On Wednesday 25 February 2009, Vladimir Monchenko wrote:
+> Hi,
+> 
+> I have started to update system on Epia ME6000 and have found out that
+> softdevice does not work c DirectFB 1.2.7 and 1.3.0.
+> With old snapshot DirectFB-2008-03-04-05-25-11-UTC all works normally.
+> It is regression or change API?
+
+Did you try other versions in between 2008-03-04 and DFB-1.2.7 ?
+Last time I tried DFB in 2008-09, and after fix it worked.
+
+Location of directfbrc may have changed depending on your configure
+options: from /etc/directfbrc to /usr/loca/etc/directfbrc
+
+My directfb version from 2008-09-26 with changes, which have been
+commited on 2008-10-14:
+	http://mail.directfb.org/pipermail/directfb-cvs/2008-October/004183.html
+is still working with current kernel 2.6.25-gentoo-r7.
+
+Have to check current git version of DirectFB.
+
+> 
+> (*) FBDev/Surface: Allocated 720x576 32 bit RGB32 buffer (index 0) at
+> offset 0 and pitch 2880.
+> 21:06:15.0047 E [4893] [dfb] init
+> EXITING:action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig
+>  (!!!)  *** WARNING [Application exited without deinitialization of
+
+Here is some text missing I guess:
+    softlog->Log(SOFT_LOG_ERROR, 0,
+              "[dfb] init EXITING:action=%s, result=%s\n",
+              ex->GetAction(), ex->GetResult());
+
+> DirectFB!] *** [core.c:859 in dfb_core_dei
+>  (!!!)  *** WARNING [still objects in 'Layer Region Pool'] ***
+> [object.c:241 in fusion_object_pool_destroy()]
+>  (!!!)  *** WARNING [still objects in 'Layer Context Pool'] ***
+> [object.c:241 in fusion_object_pool_destroy()]
+>  (!!!)  *** WARNING [still objects in 'Surface Pool'] *** [object.c:241
+> in fusion_object_pool_destroy()]
+> 
+
+
+-- 
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Wed Feb 25 23:03:53 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 25 Feb 2009 23:03:53 +0100
+Subject: [Softdevice-devel] softdevice and latest DirectFB
+In-Reply-To: <49A4CFC9.3010900@globall.ru>
+References: <49A4CFC9.3010900@globall.ru>
+Message-ID: <200902252303.53673.stefan@lucke.in-berlin.de>
+
+On Wednesday 25 February 2009, Vladimir Monchenko wrote:
+> Hi,
+> 
+> I have started to update system on Epia ME6000 and have found out that
+> softdevice does not work c DirectFB 1.2.7 and 1.3.0.
+> With old snapshot DirectFB-2008-03-04-05-25-11-UTC all works normally.
+> It is regression or change API?
+
+Current version still works. I did th cvs checkout, as git clone didn't work:
+
+cvs -d :pserver:anonymous at git.directfb.org:/git/directfb/core/DirectFB.git co -d DirectFB master
+cvs -d :pserver:anonymous at git.directfb.org:/git/directfb/extras/DFB++.git co -d DFB++ master
+
+My /usr/local/etc/directfbrc looks like (output method is vga out):
+-- cut
+#mode  = 1024x768
+mode = 1280x1024
+#mode = 800x480
+pixelformat=AiRGB
+#pixelformat=ARGB
+disable-module=cle266
+disable-module=mouse
+#disable-module=ps2mouse
+#mouse-protocol=touchkitPS/2
+disable-module=serialmouse
+#disable-module=keyboard
+#disable-module=linux_input
+#enable-module=MuTouch
+#unichrome-revision=3
+unichrome-revision=3
+#no-hardware
+#no-vt
+#vt-num=0
+#no-vt-switch
+-- cut
+
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3407872)
+commandline read: vdr
+commandline read: -P
+commandline read: softdevice -vo dfb:cle266
+commandline read: -c
+commandline read: /loc_data/vdr137-dvb-t-jarada/
+commandline read: -v
+commandline read: /loc_data/video
+commandline read: -E
+commandline read: /loc_data/vdr137-dvb-t-jarada/epg.data
+
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~| DirectFB 1.3.0 |~~~~~~~~~~~~~~~~~~~~~~~~~~
+        (c) 2001-2008  The world wide DirectFB Open Source Community
+        (c) 2000-2004  Convergence (integrated media) GmbH
+      ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2009-02-25 21:16)
+
+[snip]
+
+(*) Direct/Thread: Started 'Linux Input' (15267) [INPUT OTHER/OTHER 0/0] <8388608>...
+(*) DirectFB/Input: touchkitPS/2 eGalax Touchscreen (4) 0.1 (directfb.org)
+(*) Direct/Thread: Started 'Linux Input' (15268) [INPUT OTHER/OTHER 0/0] <8388608>...
+(*) DirectFB/Input: IR-receiver inside an USB DVB r (5) 0.1 (directfb.org)
+(*) Direct/Thread: Started 'Keyboard Input' (15269) [INPUT OTHER/OTHER 0/0] <8388608>...
+(*) DirectFB/Input: Keyboard 0.9 (directfb.org)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+(*) FBDev/Mode: Setting 1280x1024 AiRGB
+(*) FBDev/Mode: Switched to 1280x1024 (virtual 1280x2048) at 32 bit (AiRGB), pitch 5120
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 0) at offset 0 and pitch 5120.
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 1) at offset 5242880 and pitch 5120.
+[dfb] RAM: 66842624 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Xor
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey DstColorkey Deinterlace
+640x480 at 32 640x480 at 32 640x480 at 32 640x480 at 32 640x480 at 32 720x480 at 32 800x480 at 32 720x576 at 32 800x600 at 32 800x600 at 32 800x600 at 32 800x600 at 32 800x600 at 32 848x480 at 32 856x480 at 32 1024x512 at 32 1024x768 at 32 1024x768 at 32 1024x768 at 32 1024x768 at 32 1152x864 at 32 1152x864 at 32 1280x768 at 32 1280x800 at 32 1280x960 at 32 1280x1024 at 32 1280x1024 at 32 1280x1024 at 32 1440x1050 at 32 1600x1200 at 32 1600x1200 at 32 1280x720 at 32 1920x1080 at 32 1400x1050 at 32 1366x768 at 32
+Layer 0 VIA CLE266 Graphics  Type: graphics
+  Caps: alphachannel brightness contrast opacity saturation src_colorkey surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+  Caps: deinterlacing dst_colorkey levels field_parity opacity screen_location surface
+(*) FBDev/Mode: Setting 1280x1024 AiRGB
+(*) FBDev/Mode: Switched to 1280x1024 (virtual 1280x1024) at 32 bit (AiRGB), pitch 5120
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 0) at offset 0 and pitch 5120.
+(*) FBDev/Mode: Setting 1280x1024 AiRGB
+(*) FBDev/Mode: Switched to 1280x1024 (virtual 1280x2048) at 32 bit (AiRGB), pitch 5120
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 0) at offset 0 and pitch 5120.
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 1) at offset 5242880 and pitch 5120.
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+
+
+-- 
+Stefan Lucke
+
+
+From maik at fjordblau.de  Thu Feb 26 00:18:42 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Thu, 26 Feb 2009 00:18:42 +0100
+Subject: [Softdevice-devel] Problems with FastForward and Rewind
+In-Reply-To: <200902252018.54099.stefan@lucke.in-berlin.de>
+References: <20090218205437.blhgu751c4c4g88c@www.domaingo-webmail.de>
+	<200902192209.22324.stefan@lucke.in-berlin.de>
+	<20090220102406.cvpsu27xcgwkog4w@www.domaingo-webmail.de>
+	<200902252018.54099.stefan@lucke.in-berlin.de>
+Message-ID: <20090226001842.jipnpk8kwsssog8c@www.domaingo-webmail.de>
+
+> I thought that was solved by using av_read_frame() :
+> http://lists.berlios.de/pipermail/softdevice-devel/2008q1/002989.html
+I looked somewhat deeper into this. You are right.
+It is not the same problem. But the same symptoms.
+After some more investigating, I found that AC3 sound from DVD works fine.
+But my DVDs burned with yacoto or vdr-burn doesnt. There the sound is MP2.
+Any Idea?
+Commenting out the above section doesnt work here (logical).
+
+> So I really should take a look at how to use vdr's repacker
+> or use ffmpegs parser.
+This would be great.
+
+
+
+
+From maik at fjordblau.de  Thu Feb 26 00:21:05 2009
+From: maik at fjordblau.de (Maik Opitz)
+Date: Thu, 26 Feb 2009 00:21:05 +0100
+Subject: [Softdevice-devel] softdevice and latest DirectFB
+In-Reply-To: <200902252303.53673.stefan@lucke.in-berlin.de>
+References: <49A4CFC9.3010900@globall.ru>
+	<200902252303.53673.stefan@lucke.in-berlin.de>
+Message-ID: <20090226002105.b0cgy33ack4k8kw4@www.domaingo-webmail.de>
+
+Vladimir, are you sure that it is softdevice?
+I think the problem is with the viafb driver.
+I tried directfb 1.2.6 some time ago. But I switched back to 1.0.1  
+because I couldnt get it to work.
+
+
+
+
+
+From bob at globall.ru  Thu Feb 26 18:44:37 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Thu, 26 Feb 2009 20:44:37 +0300
+Subject: [Softdevice-devel] softdevice and latest DirectFB
+In-Reply-To: <200902252029.16267.stefan@lucke.in-berlin.de>
+References: <49A4CFC9.3010900@globall.ru>
+	<200902252029.16267.stefan@lucke.in-berlin.de>
+Message-ID: <49A6D505.4050105@globall.ru>
+
+Stefan Lucke wrote:
+> Location of directfbrc may have changed depending on your configure
+> options: from /etc/directfbrc to /usr/loca/etc/directfbrc
+>
+>   
+Bingo!!!
+I install DirectFB with --prefix=/usr and  system could not find
+configuration files in /usr/etc.
+After reinstall with --prefix=/usr and --sysconfdir=/etc current version
+from cvs works excellently.
+
+
+Maik Opitz wrote:
+> I think the problem is with the viafb driver.
+>
+>   
+I use linux-viafb from directfb.org long long time and it always worked
+very well.
+And now it works for me with a kernel 2.6.27-gentoo-r8 without any problem .
+In the last two years this driver remained without changes.
+
+All many thanks!
+I love softdevice ;)
+
+Regards,
+Vladimir Monchenko.
+
+
+From wallak at free.fr  Fri Mar  6 01:15:58 2009
+From: wallak at free.fr (wallak at free.fr)
+Date: Fri, 06 Mar 2009 01:15:58 +0100
+Subject: [Softdevice-devel] Trouble with glibc-2.9 and the current ffmpeg
+	repository
+Message-ID: <1236298558.49b06b3ebe324@imp.free.fr>
+
+
+'ve updated my linux configuration, with the last glibc available (2.9), and
+the new ffmpeg version available a few day ago. And than, everything compiled
+against the current softdevice branch. The compilation works fine.
+
+Softdevice runs, but the video rendering is no more fluid. The video
+rendering slow down, accelerate, and so on... The video rendering is quite
+jerky. ffplay and mplayer operate pretty well. This bug seems to be related to
+softdevice only.
+
+Any idea ?
+
+Best Regards.
+
+Wallak.
+
+
+From admin at berlios.de  Tue Mar 10 11:04:06 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Tue, 10 Mar 2009 13:04:06 +0300 (MSK)
+Subject: [Softdevice-devel] [Bug #15364] video freeze with ffmpeg 0.5
+Message-ID: <200903101004.n2AA46as017262@unicorn.berlios.de>
+
+Bug #15364, was updated on 2009-Mar-10 13:04
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: video freeze with ffmpeg 0.5
+
+Details: I have permanently strange freezes of picture with softdevice from cvs and ffmpeg 0.5.
+
+Can you fix it?
+
+Thanks.
+
+Gentoo, amd64, vdr-1.6.0-2
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=15364&group_id=2051
+
+
+From admin at berlios.de  Sun Mar 22 17:32:16 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 22 Mar 2009 19:32:16 +0300 (MSK)
+Subject: [Softdevice-devel] [Bug #15364] video freeze with ffmpeg 0.5
+Message-ID: <200903221632.n2MGWGRr015095@unicorn.berlios.de>
+
+Bug #15364, was updated on 2009-Mar-10 13:04
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: video freeze with ffmpeg 0.5
+
+Details: I have permanently strange freezes of picture with softdevice from cvs and ffmpeg 0.5.
+
+Can you fix it?
+
+Thanks.
+
+Gentoo, amd64, vdr-1.6.0-2
+
+Follow-Ups:
+
+Date: 2009-Mar-22 19:32
+By: axiator
+
+Comment:
+Sorry, with "Use av_read_frame() = no" works great.
+Thanks.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=15364&group_id=2051
+
+

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] I couldn't compile softdevice from cvs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20couldn%27t%20compile%20softdevice%20from%20cvs&In-Reply-To=%3C20081004001906.167b304c%40bk.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003156.html">
+   <LINK REL="Next"  HREF="003158.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] I couldn't compile softdevice from cvs</H1>
+    <B>Goga777</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20couldn%27t%20compile%20softdevice%20from%20cvs&In-Reply-To=%3C20081004001906.167b304c%40bk.ru%3E"
+       TITLE="[Softdevice-devel] I couldn't compile softdevice from cvs">goga777 at bk.ru
+       </A><BR>
+    <I>Fri Oct  3 22:19:06 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003156.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+        <LI>Next message: <A HREF="003158.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3157">[ date ]</a>
+              <a href="thread.html#3157">[ thread ]</a>
+              <a href="subject.html#3157">[ subject ]</a>
+              <a href="author.html#3157">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+I couldn't compile softdevice from cvs
+
+goga:/usr/src/vdr170/PLUGINS/src/softdevice# ./configure
+Testing system and cpu type... found Linux on i386 cpu.
+Checking for pkg-config... Found.
+Checking for ffmpeg... Ok.
+Checking for ffmpeg/libswscale... Not Found.
+Checking for pp_postprocess 1st arg ... is: const uint8_t **
+Checking ffmpeg for member of AVCodecContext: error_recognition ... ./configure: line 408: 26460 &#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1089;&#1077;&#1075;&#1084;&#1077;&#1085;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103;                   $TMPE
+ 'error_recognition' NOT found
+Checking for ALSA sound... Enabled audio-alsa.
+Checking for OSS sound... Enabled audio-oss.
+Checking for linux frambuffer... Enabled video-fb.
+Checking for yaepg patch... Not Found.
+Checking for DirectFB and DFB++... Not Found.
+Checking for vidix... Not found.
+Checking for Xv... Enabled video-xv.
+Checking for Xinerama... Enabled Xinerama.
+Creating temporary config.h and config.mak
+config.h is unchanged
+config.mak is unchanged
+Configure is finished. Please check config.log in case of problems.
+
+
+
+In config.log I can see these errors 
+
+
+Parameters ''
+PKG_CONFIG_PATH '/usr/local/lib/pkgconfig'
+Testing system and cpu type.----------------------------
+uname -a: Linux goga 2.6.22-2-686 #1 SMP Fri Aug 31 00:24:01 UTC 2007 i686 GNU/Linux
+g++ -dumpmache: i486-linux-gnu
+Checking for pkg-config.-------------------------------
+0.22
+Checking for ffmpeg.------------------------------------
+try to use pkg-config.
+-lpostproc
+In file included from /usr/local/include/libavutil/avutil.h:56,
+                 from /usr/include/libavcodec/avcodec.h:30,
+                 from /usr/include/avformat.h:40,
+                 from /tmp/softdevice-conf-21934-26988-14574.c:5:
+/usr/local/include/libavutil/common.h: In function &#8216;int av_log2(unsigned int)&#8217;:
+/usr/local/include/libavutil/common.h:123: error: redefinition of &#8216;int av_log2(unsigned int)&#8217;
+/usr/local/include/common.h:81: error: &#8216;int av_log2(unsigned int)&#8217; previously defined here
+/usr/local/include/libavutil/common.h: In function &#8216;int av_log2_16bit(unsigned int)&#8217;:
+/usr/local/include/libavutil/common.h:139: error: redefinition of &#8216;int av_log2_16bit(unsigned int)&#8217;
+/usr/local/include/common.h:99: error: &#8216;int av_log2_16bit(unsigned int)&#8217; previously defined here
+/usr/local/include/libavutil/common.h: In function &#8216;int mid_pred(int, int, int)&#8217;:
+/usr/local/include/libavutil/common.h:152: error: redefinition of &#8216;int mid_pred(int, int, int)&#8217;
+/usr/local/include/common.h:114: error: &#8216;int mid_pred(int, int, int)&#8217; previously defined here
+/usr/local/include/libavutil/common.h: In function &#8216;int av_clip(int, int, int)&#8217;:
+/usr/local/include/libavutil/common.h:199: error: redefinition of &#8216;int av_clip(int, int, int)&#8217;
+/usr/local/include/common.h:161: error: &#8216;int av_clip(int, int, int)&#8217; previously defined here
+/usr/local/include/libavutil/common.h: In function &#8216;uint8_t av_clip_uint8(int)&#8217;:
+/usr/local/include/libavutil/common.h:211: error: redefinition of &#8216;uint8_t av_clip_uint8(int)&#8217;
+/usr/local/include/common.h:173: error: &#8216;uint8_t av_clip_uint8(int)&#8217; previously defined here
+/usr/local/include/libavutil/common.h: In function &#8216;int ff_get_fourcc(const char*)&#8217;:
+/usr/local/include/libavutil/common.h:248: error: redefinition of &#8216;int ff_get_fourcc(const char*)&#8217;
+/usr/local/include/common.h:185: error: &#8216;int ff_get_fourcc(const char*)&#8217; previously defined here
+In file included from /usr/local/include/libavutil/mathematics.h:26,
+                 from /usr/local/include/libavutil/avutil.h:57,
+                 from /usr/include/libavcodec/avcodec.h:30,
+                 from /usr/include/avformat.h:40,
+                 from /tmp/softdevice-conf-21934-26988-14574.c:5:
+/usr/local/include/libavutil/rational.h: At global scope:
+/usr/local/include/libavutil/rational.h:37: error: redefinition of &#8216;struct AVRational&#8217;
+/usr/local/include/rational.h:36: error: previous definition of &#8216;struct AVRational&#8217;
+/usr/local/include/libavutil/rational.h:40: error: invalid type in declaration before &#8216;;&#8217; token
+/usr/local/include/libavutil/rational.h:40: error: conflicting declaration &#8216;typedef int AVRational&#8217;
+/usr/local/include/rational.h:39: error: &#8216;AVRational&#8217; has a previous declaration as &#8216;typedef struct AVRational AVRational&#8217;
+/usr/local/include/libavutil/rational.h: In function &#8216;int av_cmp_q(AVRational, AVRational)&#8217;
+
+{cutted}
+
+any advise ?
+
+
+Goga
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003156.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+	<LI>Next message: <A HREF="003158.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3157">[ date ]</a>
+              <a href="thread.html#3157">[ thread ]</a>
+              <a href="subject.html#3157">[ subject ]</a>
+              <a href="author.html#3157">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

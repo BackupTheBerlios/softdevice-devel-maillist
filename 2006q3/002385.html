@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nVidia hardware alpha blending for OSD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C20060908154300.GA3168%40spork.qfe3.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002384.html">
+   <LINK REL="Next"  HREF="002386.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nVidia hardware alpha blending for OSD</H1>
+    <B>Chris Elsworth</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C20060908154300.GA3168%40spork.qfe3.net%3E"
+       TITLE="[Softdevice-devel] nVidia hardware alpha blending for OSD">chris at shagged.org
+       </A><BR>
+    <I>Fri Sep  8 17:43:00 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002384.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+        <LI>Next message: <A HREF="002386.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2385">[ date ]</a>
+              <a href="thread.html#2385">[ thread ]</a>
+              <a href="subject.html#2385">[ subject ]</a>
+              <a href="author.html#2385">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Sep 08, 2006 at 05:14:26PM +0200, Martin Wache wrote:
+&gt;<i> Chris Elsworth schrieb:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I haven't got much information to hand at the moment but current CVS
+</I>&gt;<i> &gt; breaks here; this is a pretty useless bug report I'm afraid, there's
+</I>&gt;<i> &gt; no diagnostic information given:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;   
+</I>&gt;<i> Did you check the syslog for further information?
+</I>
+Hello,
+
+Here's syslog output with -l 3:
+
+Sep  8 16:42:10 media vdr: [12919] initializing plugin: softdevice (0.2.3): A software emulated MPEG2 device
+Sep  8 16:42:10 media vdr: [12919] [XvVideoOut]: patch version (2006-04-24)
+Sep  8 16:42:10 media vdr: [12919] [XvVideoOut]: Initialize XShmCreateImage Successful (0x2aaaab47de40)
+Sep  8 16:42:10 media vdr: [12919] [XvVideoOut]: Initialize shmget Successful (2359296 bytes)
+Sep  8 16:42:10 media vdr: [12919] [XvVideoOut]: Initialize shmat Successful
+Sep  8 16:42:10 media vdr: [12919] [softdevice-xscreensaver]: xscreensaver not running
+Sep  8 16:42:10 media vdr: [12919] [XvVideoOut]: initialized OK
+Sep  8 16:42:10 media vdr: [12929] tuner on device 3 thread started (pid=12919, tid=12929)
+Sep  8 16:42:10 media vdr: [12930] section handler thread started (pid=12919, tid=12930)
+Sep  8 16:42:10 media vdr: [12919] [softdevice-xscreensaver]: disabling DPMS
+Sep  8 16:42:10 media vdr: [12919] [softdevice-xscreensaver]: disabling DPMS stat: 1
+
+And then vdr exits with exit code 1. (from echo $?)
+
+
+-- 
+Chris
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002384.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+	<LI>Next message: <A HREF="002386.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2385">[ date ]</a>
+              <a href="thread.html#2385">[ thread ]</a>
+              <a href="subject.html#2385">[ subject ]</a>
+              <a href="author.html#2385">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Re%3A%20viafb%20kernel%20frame%20buffer%20vs.%20720x576%20tvout%20no-scale%20update...&In-Reply-To=%3Cb7f6d7370508250546263254f5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001138.html">
+   <LINK REL="Next"  HREF="001140.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...</H1>
+    <B>Mark Adams</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Re%3A%20viafb%20kernel%20frame%20buffer%20vs.%20720x576%20tvout%20no-scale%20update...&In-Reply-To=%3Cb7f6d7370508250546263254f5%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...">mark147m at gmail.com
+       </A><BR>
+    <I>Thu Aug 25 14:46:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001138.html">[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+        <LI>Next message: <A HREF="001140.html">[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1139">[ date ]</a>
+              <a href="thread.html#1139">[ thread ]</a>
+              <a href="subject.html#1139">[ subject ]</a>
+              <a href="author.html#1139">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> This patch is simply a side-effect of my researches for perfect 720x576
+</I>&gt;<i> (I first tried with this driver because it has 3 modes : overscan,
+</I>&gt;<i> undersan and fit-to-screen, which should have been quite noscale, but in
+</I>&gt;<i> fact isn't).
+</I>
+That got me interested too when I saw it but reading the documentation
+it was clear that what they called 'fit-to-screen' was not what I
+would have called 'fit-to-screen'!
+
+&gt;<i> I got the 28Mhz figure from the VT1622 spec sheet, found by Googling (I
+</I>&gt;<i> can provide the PDF if needed).
+</I>
+I haven't seen that (have got it now though).  I'd found details of
+the VT1621 but not the 1622.  Broadcast digital TV and DVDs are,
+however, most definitely sampled at 27 MHz and it seems to me that a
+28 MHz dot clock will give a horizontal squeeze to the picture (but
+nothing worse).
+
+&gt;<i> You also sent me an fb.modes section stating 28Mhz. fbset -s currently
+</I>&gt;<i> report the following (with the patcher2k driver) :
+</I>
+True but little of the information in fb.modes is used when TVout is
+enabled: the timings all come from the TVout tables and are looked up
+by the resolution (and the broadcast flag from fb.modes).
+
+&gt;<i> &gt; Try posting the output from the vt1622 utility from the unichrome
+</I>&gt;<i> &gt; project when you type 'D' and I'll see if I can spot anything obvious.
+</I>&gt;<i> 
+</I>&gt;<i> I'll do. Thanks.
+</I>
+What you could also do is make yourself some kind of test card and
+take a few pics of the result.  Something like a maximum sized diamond
+would be good so you can see how much of the picture you're missing at
+either side and top and bottom and whether there's any scaling going
+on.
+
+Regards,
+
+Mark
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001138.html">[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+	<LI>Next message: <A HREF="001140.html">[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1139">[ date ]</a>
+              <a href="thread.html#1139">[ thread ]</a>
+              <a href="subject.html#1139">[ subject ]</a>
+              <a href="author.html#1139">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

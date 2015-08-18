@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Packed Color - problem - Videofile of defects and log of VDR
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20Color%20-%20problem%20-%20Videofile%20of%20defects%20and%20log%20of%20VDR&In-Reply-To=%3C443B5CE6.000004.23780%40mfront7.yandex.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001850.html">
+   <LINK REL="Next"  HREF="001853.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Packed Color - problem - Videofile of defects and log of VDR</H1>
+    <B>jonis2006</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20Color%20-%20problem%20-%20Videofile%20of%20defects%20and%20log%20of%20VDR&In-Reply-To=%3C443B5CE6.000004.23780%40mfront7.yandex.ru%3E"
+       TITLE="[Softdevice-devel] Packed Color - problem - Videofile of defects and log of VDR">jonis2006 at yandex.ru
+       </A><BR>
+    <I>Tue Apr 11 09:38:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001850.html">[Softdevice-devel] Softdevice Matrox G450 YV12 problem.
+</A></li>
+        <LI>Next message: <A HREF="001853.html">[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1852">[ date ]</a>
+              <a href="thread.html#1852">[ thread ]</a>
+              <a href="subject.html#1852">[ subject ]</a>
+              <a href="author.html#1852">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello !
+I have already wrote to Softdevice mailing list about my problem, and Stefan Lucke requsted a vdr file with defects: 
+Here is:
+<A HREF="http://vm22.ufanet.ru/002.vdr">http://vm22.ufanet.ru/002.vdr</A>
+Look at the red human - If you will use yuy2 color with directfb, you will get red lines on TV screen. If you will use YV12 (He is not working on Matrox G450 with softdevice) picture will be displayed properly.
+With Mplayer DFB YV12 output works well.
+/etc/directfbrc
+# layer setup 
+# 
+mode=768x576-32
+primary-layer=2
+pixelformat=YV12
+depth=32
+
+# 
+# output setup 
+# 
+matrox-crtc2 
+matrox-tv-standard=pal 
+matrox-cable-type=scart-rgb
+# 
+# misc 
+# 
+#input=lirc
+#disable-module=keyboard
+disable-module=lirc
+disable-module=joystick
+disable-module=mutouch
+disable-module=ps2mouse
+disable-module=sdlinput
+disable-module=serialmouse
+disable-module=sonypi
+------------------
+LOG:
+INFO: loading ca cache from /video/plugins/ca.cache
+WARNING: no smartcard interface defined!
+cam 0: try to open ca device myself
+cam 0: no ca device, assuming budget card &amp; SoftCSA
+INFO: Using software decryption on card 0
+[dfb] (re)configuring Videolayer to 736 x 576 (720x576)
+[dfb] creating new surface (stretchBlit)
+[surface capabilities] videoSurface: videoonly
+[dfb] (re)configured 0x00200806
+[dfb] (re)configuring Videolayer to 736 x 576 (736x576)
+[dfb] creating new surface (stretchBlit)
+[surface capabilities] videoSurface: videoonly
+[dfb] (re)configured 0x00200806
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface (stretchBlit)
+
+
+How to fix that ?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001850.html">[Softdevice-devel] Softdevice Matrox G450 YV12 problem.
+</A></li>
+	<LI>Next message: <A HREF="001853.html">[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1852">[ date ]</a>
+              <a href="thread.html#1852">[ thread ]</a>
+              <a href="subject.html#1852">[ subject ]</a>
+              <a href="author.html#1852">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

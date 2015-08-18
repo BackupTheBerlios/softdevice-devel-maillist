@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OProfile success story and some performance measurement tips
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%0A%20measurement%20tips&In-Reply-To=%3C42964045.5010903%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000734.html">
+   <LINK REL="Next"  HREF="000751.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OProfile success story and some performance measurement tips</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%0A%20measurement%20tips&In-Reply-To=%3C42964045.5010903%40gmx.net%3E"
+       TITLE="[Softdevice-devel] OProfile success story and some performance measurement tips">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu May 26 23:31:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000734.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+        <LI>Next message: <A HREF="000751.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#743">[ date ]</a>
+              <a href="thread.html#743">[ thread ]</a>
+              <a href="subject.html#743">[ subject ]</a>
+              <a href="author.html#743">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+
+&gt;<i> 
+</I>&gt;<i> I guess so.  If not on the Celeron of my VDR box, I can play some recordings
+</I>&gt;<i> on this Pentium-M and look for DCU_MISS_OUTSTANDING
+</I>&gt;<i> (number of cycles while DCU miss outstanding; DCU=data cache unit) or
+</I>&gt;<i> DATA_MEM_REFS (all memory references, cachable and non).
+</I>&gt;<i> opcontrol --list-events lists all possible events, but I can't start up
+</I>&gt;<i> my VDR box now.
+</I>Sounds good. I never tried to do it until now but also my new AMD64 
+seems to have this option, but I will check again. Do you have any 
+experience on this? Maybe there is something on the web how to measure 
+the cache performance, I'll have a look. I started to use oprofile, it 
+seems to be a really powerfull tool. I didn't see any example on 
+measureing cache performance yet, although it should be possible.
+
+So if also Nicolas joins the profiling we will get quite a nice sample 
+of different processor/cache sizes :-)
+What video-out method do you prefer? I usually use Xv so my first step 
+would be to use Xv, but on my new box the X11 drivers are not in a good 
+shape. So maybe I will try DirectFB...
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>The reason I'm asking is that currently the softdevice decodes a 
+</I>&gt;&gt;<i>complete picture, sleeps until it is to be shown, copies the picture to 
+</I>&gt;&gt;<i>the video memory and flips the page.
+</I>&gt;&gt;<i>The sleep between decoding and copying is asking for cache misses.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> You could perhaps also add explicit prefetch instructions, i.e.,
+</I>&gt;<i> __builtin_prefetch().  I don't know which processors have the opcodes.
+</I>&gt;<i> At least the Pentium-M does.  But that would only help for reading
+</I>&gt;<i> the MPEG stream.
+</I>Prefetch calls are already used as far as I know (at least for the 
+software alpha blending I'm sure), but as you already said for copying 
+they don't help.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000734.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+	<LI>Next message: <A HREF="000751.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#743">[ date ]</a>
+              <a href="thread.html#743">[ thread ]</a>
+              <a href="subject.html#743">[ subject ]</a>
+              <a href="author.html#743">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

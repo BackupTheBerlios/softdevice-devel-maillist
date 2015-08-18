@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C20050530194011.GA100333%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000769.html">
+   <LINK REL="Next"  HREF="000786.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C20050530194011.GA100333%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon May 30 21:40:11 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000769.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+        <LI>Next message: <A HREF="000786.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#776">[ date ]</a>
+              <a href="thread.html#776">[ thread ]</a>
+              <a href="subject.html#776">[ subject ]</a>
+              <a href="author.html#776">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, May 30, 2005 at 05:51:46PM +0200, Martin Wache wrote:
+&gt;<i> Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt;Okay, I finally have completed the unit, but haven't integrated it to
+</I>&gt;<i> &gt;softdevice yet.  I would appreciate some insight there; how to implement
+</I>&gt;<i> &gt;this hook for all playback methods (DirectFB, Xv and so on).
+</I>&gt;<i> On suspend cMpeg2Decoder::Suspend() is called, on resume 
+</I>&gt;<i> cMpeg2Decoder::Resume(), is this what you wanted to know?
+</I>
+Yes, thanks a lot, Martin!  Attached is my patch for controlling the relay
+with the IsSuspended flag.  You will also need to add a line to
+/video/setup.conf that looks like this:
+
+softdevice.serialfd = /dev/ttyS0
+
+If this line is missing or if the open() call on the device fails, the ioctl
+to set or clear the BREAK condition will not be executed.  Consider the name
+of this option a working title; I'm not good at inventing names.
+
+The patch doesn't contain any close() call, but it could be added to the
+cSetupStore destructor, if there were one.  The file descriptor will be
+implicitly closed (and the equipment behind the relay box will be powered
+off) when the vdr process ends.
+
+Another question: what is the easiest way to bind the Suspend flag to
+remote control keys (toggle, on, off)?  I'll probably have my wake-on-remote
+device send fake &quot;suspend=off&quot; events once per second until the remote control
+is touched, if the system was powered up by the remote control.  So, I'd
+need to bind this fake keycode to suspend=off, and a real key on the remote
+to suspend=toggle.
+
+	Marko
+-------------- next part --------------
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.38
+diff -u -r1.38 mpeg2decoder.c
+--- mpeg2decoder.c	29 May 2005 10:13:59 -0000	1.38
++++ mpeg2decoder.c	30 May 2005 19:26:04 -0000
+@@ -8,6 +8,7 @@
+ 
+ #include &lt;math.h&gt;
+ #include &lt;sched.h&gt;
++#include &lt;sys/ioctl.h&gt;
+ 
+ #include &lt;vdr/plugin.h&gt;
+ 
+@@ -976,6 +977,7 @@
+   decoding=false;
+   IsSuspended=false;
+   Speed=1;
++  FlipRelay();
+ }
+ 
+ cMpeg2Decoder::~cMpeg2Decoder()
+@@ -1210,6 +1212,14 @@
+     mutex.Unlock();
+ }
+ 
++void cMpeg2Decoder::FlipRelay()
++{
++  int fd = setupStore.serialfd;
++fprintf(stderr, &quot;FlipRelay %d %d\n&quot;, fd, IsSuspended);
++  if (fd &gt;= 0)
++    ioctl(fd, IsSuspended ? TIOCCBRK : TIOCSBRK, 0);
++}
++
+ void cMpeg2Decoder::Suspend()
+ {
+   CMDDEB(&quot;Suspend\n&quot;);
+@@ -1217,6 +1227,7 @@
+   audioOut-&gt;Suspend();
+   videoOut-&gt;Suspend();
+   IsSuspended=true;
++  FlipRelay();
+ }
+ 
+ void cMpeg2Decoder::Resume()
+@@ -1241,6 +1252,7 @@
+ 
+   Start();
+   IsSuspended=false;
++  FlipRelay();
+ }
+ 
+ void cMpeg2Decoder::Play(void)
+Index: mpeg2decoder.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.h,v
+retrieving revision 1.24
+diff -u -r1.24 mpeg2decoder.h
+--- mpeg2decoder.h	29 May 2005 10:13:59 -0000	1.24
++++ mpeg2decoder.h	30 May 2005 19:26:04 -0000
+@@ -305,6 +305,7 @@
+     void Freeze(void);
+     void Stop(bool GetMutex=true);
+     void Clear(void);
++    void FlipRelay(void);
+     void Suspend(void);
+     void Resume(void);
+     void TrickSpeed(int Speed);
+Index: setup-softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.c,v
+retrieving revision 1.18
+diff -u -r1.18 setup-softdevice.c
+--- setup-softdevice.c	29 May 2005 19:50:44 -0000	1.18
++++ setup-softdevice.c	30 May 2005 19:26:04 -0000
+@@ -152,6 +152,7 @@
+   strcpy (alsaDevice, &quot;&quot;);
+   strcpy (alsaSPDIFDevice, &quot;hw:0,2&quot;);
+   voArgs = aoArgs = NULL;
++  serialfd = -1;
+ }
+ 
+ bool cSetupStore::SetupParse(const char *Name, const char *Value)
+@@ -246,6 +247,11 @@
+     ac3Mode = atoi (Value);
+     fprintf(stderr, &quot;[setup-softdevice] alsa ac3Mode set to: %d\n&quot;, ac3Mode);
+     ac3Mode = clamp (0, ac3Mode, 3);
++  } else if (!strcasecmp(Name, &quot;serialfd&quot;)) {
++    serialfd = open(Value, O_RDWR | O_NOCTTY | O_NONBLOCK);
++    if (serialfd &lt; 0)
++      fprintf(stderr, &quot;[setup-softdevice] serialfd %s open failed: %m\n&quot;,
++              Value, errno);
+   }  else  return false;
+ 
+   return true;
+Index: setup-softdevice.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.h,v
+retrieving revision 1.13
+diff -u -r1.13 setup-softdevice.h
+--- setup-softdevice.h	29 May 2005 19:50:44 -0000	1.13
++++ setup-softdevice.h	30 May 2005 19:26:04 -0000
+@@ -47,6 +47,7 @@
+     char  alsaSPDIFDevice [ALSA_DEVICE_NAME_LENGTH];
+     char  *voArgs;
+     char  *aoArgs;
++    int   serialfd;
+ };
+ 
+ #define OSDMODE_PSEUDO    0
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000769.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+	<LI>Next message: <A HREF="000786.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#776">[ date ]</a>
+              <a href="thread.html#776">[ thread ]</a>
+              <a href="subject.html#776">[ subject ]</a>
+              <a href="author.html#776">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

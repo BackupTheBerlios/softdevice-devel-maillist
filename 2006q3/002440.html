@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb:cle266 or dfb:viatv ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%3Acle266%20or%20dfb%3Aviatv%20%3F&In-Reply-To=%3C200609122006.43013.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002439.html">
+   <LINK REL="Next"  HREF="002441.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb:cle266 or dfb:viatv ?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%3Acle266%20or%20dfb%3Aviatv%20%3F&In-Reply-To=%3C200609122006.43013.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] dfb:cle266 or dfb:viatv ?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Sep 12 20:06:42 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002439.html">[Softdevice-devel] dfb:cle266 or dfb:viatv ?
+</A></li>
+        <LI>Next message: <A HREF="002441.html">[Softdevice-devel] dfb:cle266 or dfb:viatv ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2440">[ date ]</a>
+              <a href="thread.html#2440">[ thread ]</a>
+              <a href="subject.html#2440">[ subject ]</a>
+              <a href="author.html#2440">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 12 September 2006 14:20, Leo M&#225;rquez wrote:
+&gt;<i> Hi!,
+</I>&gt;<i> 
+</I>&gt;<i> I'm setting a vdr client with an epia-m mobo.
+</I>&gt;<i> I was thinking in follow this howto:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+</I>&gt;<i> 
+</I>&gt;<i> That uses the cle266 decoder.
+</I>&gt;<i> 
+</I>&gt;<i> Today I have seen that there is an softdevice option called -vo dfb:viatv.
+</I>&gt;<i> 
+</I>&gt;<i> I have to use the s-video out of the epia because I use a normal tv (not 
+</I>&gt;<i> lcd with vga input).
+</I>&gt;<i> 
+</I>&gt;<i> Whats the diference of this two output methods?
+</I>
+viatv is for TV-out. It sets some flip flags, handling exclusive access of output layer.
+cle266 enables use of hw-decoding when it is available.
+
+There is no _exclusive or_  between these option.
+For hw-accelerated decoding for TV-out use both:
+&quot;-vo dfb:cle266:viatv&quot;
+   
+&gt;<i> I get good performance with viatv?
+</I>&gt;<i> cle266 seems to be very good.
+</I>&gt;<i> 
+</I>&gt;<i> What do you think? I'm very confused at this time.
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002439.html">[Softdevice-devel] dfb:cle266 or dfb:viatv ?
+</A></li>
+	<LI>Next message: <A HREF="002441.html">[Softdevice-devel] dfb:cle266 or dfb:viatv ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2440">[ date ]</a>
+              <a href="thread.html#2440">[ thread ]</a>
+              <a href="subject.html#2440">[ subject ]</a>
+              <a href="author.html#2440">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

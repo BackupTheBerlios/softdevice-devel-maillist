@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice - When the yv12 I420 will work ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20-%20When%20the%20yv12%20I420%20will%20work%20%3F&In-Reply-To=%3C200605061428.24824.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001973.html">
+   <LINK REL="Next"  HREF="001978.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice - When the yv12 I420 will work ?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20-%20When%20the%20yv12%20I420%20will%20work%20%3F&In-Reply-To=%3C200605061428.24824.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice - When the yv12 I420 will work ?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat May  6 14:28:24 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001973.html">[Softdevice-devel] Softdevice - When the yv12 I420 will work ?
+</A></li>
+        <LI>Next message: <A HREF="001978.html">[Softdevice-devel] Softdevice - When the yv12 I420 will work ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1974">[ date ]</a>
+              <a href="thread.html#1974">[ thread ]</a>
+              <a href="subject.html#1974">[ subject ]</a>
+              <a href="author.html#1974">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 06 Mai 2006 09:43, jonis2006 wrote:
+&gt;<i> Hello !
+</I>&gt;<i> I want to ask developers of softdevice: When yv12 and i420 will be implemented in softdevice ? Because picture quality in yv12 and i420 colors MORE better than yuy2.
+</I>&gt;<i> Conversion of YV12 to yuy2 cause big loose of picture sharpness and less colors.
+</I>
+No, as there is no conversion between these formats. Data is just reordered.
+
+&gt;<i> I think you softdevice very need in YV12 and I420 output colorspace support woking (espcially on Matroxes like G450 ).
+</I>&gt;<i> 
+</I>&gt;<i> I know that YV12 working in MPlayer very good. But I can't understand why it not working in softdevice (yuy2 is working, but why others does't work ?).
+</I>
+YV12 and I420 do work with softdevice and matrox and VGA.
+These formats are _not_ supported for TV-out.
+
+See:
+<A HREF="http://www.directfb.org/index.php?path=Main%2FSupport%2FGraphics&amp;driver=matrox">http://www.directfb.org/index.php?path=Main%2FSupport%2FGraphics&amp;driver=matrox</A>
+
+In this matrix I see no highlighted entry for source format YV12/I420 and
+destination format ARGB.
+
+&gt;<i> 
+</I>&gt;<i> When yv12 (The quality is very good especially on with this colorspace) will be implemented in softdevice ?
+</I>&gt;<i> 
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001973.html">[Softdevice-devel] Softdevice - When the yv12 I420 will work ?
+</A></li>
+	<LI>Next message: <A HREF="001978.html">[Softdevice-devel] Softdevice - When the yv12 I420 will work ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1974">[ date ]</a>
+              <a href="thread.html#1974">[ thread ]</a>
+              <a href="subject.html#1974">[ subject ]</a>
+              <a href="author.html#1974">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

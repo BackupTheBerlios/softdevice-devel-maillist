@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] How to get 15 kHz SCART RGB output on Matrox G450?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20How%20to%20get%2015%20kHz%20SCART%20RGB%20output%20on%20Matrox%20G450%3F&In-Reply-To=%3C20050607221147.GC135019%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000833.html">
+   <LINK REL="Next"  HREF="000847.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] How to get 15 kHz SCART RGB output on Matrox G450?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20How%20to%20get%2015%20kHz%20SCART%20RGB%20output%20on%20Matrox%20G450%3F&In-Reply-To=%3C20050607221147.GC135019%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] How to get 15 kHz SCART RGB output on Matrox G450?">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Jun  8 00:11:47 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000833.html">AW: [Softdevice-devel] Softdevice 0.1.2 and vidix
+</A></li>
+        <LI>Next message: <A HREF="000847.html">[Softdevice-devel] No sound whit Softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#837">[ date ]</a>
+              <a href="thread.html#837">[ thread ]</a>
+              <a href="subject.html#837">[ subject ]</a>
+              <a href="author.html#837">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm sorry for asking this FAQ, but I couldn't figure out how to get a
+picture from the second head of my Matrox G450 card to a 50 Hz RGB monitor
+(Commodore 1084S a.k.a. Philips CM8833).  I believe I got the right
+directfbrc settings except for the video timings.  The colors are correct,
+but the video signal is clearly wrong (hsync looks like 30 kHz or 45 kHz
+instead of 15.625 kHz).
+
+The fbset command doesn't seem to allow the timings to be set independently
+for the second head.  fbset -fb /dev/fb1 mode_name seems to ignore the
+settings.  I also tried setting /dev/fb0 to the &quot;my-pal-32&quot; mode defined at
+<A HREF="http://softdevice.berlios.de/.">http://softdevice.berlios.de/.</A>  Although the output on the second head did
+change, the monitor was still unable to sync to it.
+
+When I tested the dfb:mgatv output, the first head showed the text console.
+When I tested the default DirectFB output, both heads showed the TV picture.
+On the second head, the timings were clearly different from what I would
+have with -vo dfb:mgatv.  It may have used the 768x576-75Hz timings on both
+heads.
+
+With the default DirectFB output, it seems that DirectFB will pick the first
+mode in /etc/fb.modes that matches the requested resolution.  -vo dfb:mgatv
+seems to behave differently.
+
+How is the dfb:mgatv output supposed to work?  Can anyone help me?
+I'm using kernel 2.6.11.7 if that matters.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000833.html">AW: [Softdevice-devel] Softdevice 0.1.2 and vidix
+</A></li>
+	<LI>Next message: <A HREF="000847.html">[Softdevice-devel] No sound whit Softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#837">[ date ]</a>
+              <a href="thread.html#837">[ thread ]</a>
+              <a href="subject.html#837">[ subject ]</a>
+              <a href="author.html#837">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

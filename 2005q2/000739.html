@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C20050526094747.GD3474%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000738.html">
+   <LINK REL="Next"  HREF="000740.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C20050526094747.GD3474%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu May 26 11:47:47 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000738.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+        <LI>Next message: <A HREF="000740.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#739">[ date ]</a>
+              <a href="thread.html#739">[ thread ]</a>
+              <a href="subject.html#739">[ subject ]</a>
+              <a href="author.html#739">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, May 26, 2005 at 11:31:50AM +0200, Nicolas Huillard wrote:
+&gt;<i> Marko M&#228;kel&#228; a &#233;crit :
+</I>&gt;<i> &gt;I have another idea.  As I'm going to build an ATtiny12 based IR decoder
+</I>&gt;<i> &gt;and wake-on-LAN trigger, I could monitor the system's +5V line with the
+</I>&gt;<i> &gt;ATtiny12.  If the +5V line was brought up as a result of pressing the
+</I>&gt;<i> &gt;Power key on the remote, we know that the box was powered up by the user.
+</I>&gt;<i> &gt;Otherwise it was powered up non-interactively, and softdevice should
+</I>&gt;<i> &gt;remain suspended.  (Let's pretend that the power button on the front panel
+</I>&gt;<i> &gt;does not exist or is not for interactive use.)
+</I>&gt;<i> 
+</I>&gt;<i> Than you got the hardware !
+</I>&gt;<i> You don't have to monitor the +5V line, since the ATtiny itself will 
+</I>&gt;<i> trigger the power-up, and will the only one to trigger an interactive 
+</I>&gt;<i> power-up.
+</I>&gt;<i> You can also connect the power button on the front panel to an input pin 
+</I>&gt;<i> on the ATtiny, to also trigger the wake-on-lan and pass that info to the 
+</I>&gt;<i> system.
+</I>
+Well, I'm aiming for a simple device that will have four connectors:
+to IR receiver module (+5V, GND, RC5 out), to TV card (+5V, GND, RC5 in),
+to network card (Wake-on-LAN), and to mainboard (Wake-on-LAN).  Ideally,
+I'd hotglue the circuit on the Hauppauge Nova-T card, but the prototype
+will be plugged to the IR receiver jack.  That way, I can return the
+card for warranty replacement if the smoke comes out. :-)
+
+&gt;<i> &gt;Maybe this information could be passed to VDR by having the ATtiny12 send
+</I>&gt;<i> &gt;manufactured &quot;unsuspend&quot; keycodes to the Hauppauge Nova-T IR receiver
+</I>&gt;<i> &gt;port until an IR code pulse arrives from the receiver module.
+</I>&gt;<i> 
+</I>&gt;<i> You can also input that information to the OS using the parallel or 
+</I>&gt;<i> serial port : just set some line up for a long enough delay (1 min), 
+</I>&gt;<i> letting VDR know why it was powered up.
+</I>
+True, or I could even input that information indefinitely on a spare
+input pin.  The cx23882 on the Hauppauge card might have a spare GPIO
+pin, but reading the pin would probably require changes to the kernel.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000738.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+	<LI>Next message: <A HREF="000740.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#739">[ date ]</a>
+              <a href="thread.html#739">[ thread ]</a>
+              <a href="subject.html#739">[ subject ]</a>
+              <a href="author.html#739">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

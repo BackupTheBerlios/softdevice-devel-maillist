@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Remote key press when vdr starts?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Remote%20key%20press%20when%20vdr%20starts%3F&In-Reply-To=%3C20050714125611.GC4266%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000965.html">
+   <LINK REL="Next"  HREF="000974.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Remote key press when vdr starts?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Remote%20key%20press%20when%20vdr%20starts%3F&In-Reply-To=%3C20050714125611.GC4266%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Remote key press when vdr starts?">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Jul 14 14:56:11 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000965.html">[Softdevice-devel] Remote key press when vdr starts?
+</A></li>
+        <LI>Next message: <A HREF="000974.html">[Softdevice-devel] crash after I changed the OSDAlpha mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#966">[ date ]</a>
+              <a href="thread.html#966">[ thread ]</a>
+              <a href="subject.html#966">[ subject ]</a>
+              <a href="author.html#966">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jul 14, 2005 at 03:41:41PM +0300, Seppo Ingalsuo wrote:
+&gt;<i> Do you have idea how to edit setup.conf to make softdevice happy with 
+</I>&gt;<i> already learnt lirc remote keys?
+</I>
+See the window title (first three lines in the OSD output).  It should
+say for which interface it is trying to learn the keys.  If it's KBD,
+recompile vdr.c with make NO_KBD=1.  If it's something else, add a
+dummy entry to setup.conf or change the prefix of the identifiers used
+for the lirc keys, whatever is appropriate.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000965.html">[Softdevice-devel] Remote key press when vdr starts?
+</A></li>
+	<LI>Next message: <A HREF="000974.html">[Softdevice-devel] crash after I changed the OSDAlpha mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#966">[ date ]</a>
+              <a href="thread.html#966">[ thread ]</a>
+              <a href="subject.html#966">[ subject ]</a>
+              <a href="author.html#966">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

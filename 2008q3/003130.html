@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice, VDR and Fast Forward
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809131750.51222.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003129.html">
+   <LINK REL="Next"  HREF="003131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice, VDR and Fast Forward</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809131750.51222.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Softdevice, VDR and Fast Forward">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat Sep 13 18:50:51 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003129.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+        <LI>Next message: <A HREF="003131.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3130">[ date ]</a>
+              <a href="thread.html#3130">[ thread ]</a>
+              <a href="subject.html#3130">[ subject ]</a>
+              <a href="author.html#3130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 13 September 2008 17:24:46 Laz wrote:
+&gt;<i> On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+</I>&gt;<i> &gt; Can you both try attached patch ?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; There are 2 changes:
+</I>&gt;<i> &gt; 1st Makes use of av_read_frame() selectable via OSD.
+</I>&gt;<i> &gt;     Thats because I noticed some serrious sync issues with my old ffmpeg
+</I>&gt;<i> &gt;     version I use on my prod system. Deactivating av_read_frame() and
+</I>&gt;<i> &gt;     using av_read_packed() instead solved that for me.
+</I>&gt;<i>
+</I>&gt;<i> Will try patch and get back with the results ASAP...
+</I>
+First impressions: will need proper testing &quot;in normal useage&quot;!
+
+Cut marks do now get set pretty much where I press 0.
+
+Fast forward (multispeed enabled): as I increase the fast-forward speed, the 
+time counter stays running forward at the same speed but the pictures shown 
+speed up with each increase. It looks like the counter is always going at the 
+maximum speed but the pictures shown do increase in speed form 2x to the 
+maximum (can't remember what that is!).
+
+I still lose A-V synch after slow motion.
+
+I'm pretty sure it does the same whether I have av_read_frame or not.
+
+I wouldn't be surprised if this was down to ffmpeg versions because its 
+behaviour seems to change quite regularly between versions! Any experience of 
+current svn? What configure options are you using when building it?
+
+I had a similar setup (DirectFB, G450) which I used on-and-off for several 
+years and I remember that the A-V synch was pretty rock solid on that.
+
+&gt;<i> &gt; 2nd Feature makes field selectable which is displayed in still picture
+</I>&gt;<i> &gt;     mode, but unfortunately this doesn't work at the moment.
+</I>&gt;<i>
+</I>
+Excellent: I had toyed with the idea of implementing that in the past but 
+never got anywhere! I take it that this will remove flicker from a paused 
+interlaced stream?
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003129.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+	<LI>Next message: <A HREF="003131.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3130">[ date ]</a>
+              <a href="thread.html#3130">[ thread ]</a>
+              <a href="subject.html#3130">[ subject ]</a>
+              <a href="author.html#3130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

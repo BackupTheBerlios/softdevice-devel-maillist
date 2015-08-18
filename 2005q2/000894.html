@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] How to link libsoftdevice.a?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20How%20to%20link%20libsoftdevice.a%3F&In-Reply-To=%3C20050615180925.GB3245%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000871.html">
+   <LINK REL="Next"  HREF="000895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] How to link libsoftdevice.a?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20How%20to%20link%20libsoftdevice.a%3F&In-Reply-To=%3C20050615180925.GB3245%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] How to link libsoftdevice.a?">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Jun 15 20:09:25 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000871.html">[Softdevice-devel] Inefficient synchronization when playing	back recordings
+</A></li>
+        <LI>Next message: <A HREF="000895.html">[Softdevice-devel] How to link libsoftdevice.a?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#894">[ date ]</a>
+              <a href="thread.html#894">[ thread ]</a>
+              <a href="subject.html#894">[ subject ]</a>
+              <a href="author.html#894">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin,
+
+&gt;<i> Sure, find attached the patch I already sent the last time, I assume not
+</I>&gt;<i> much changed from the old vdr version, so it should apply also to more
+</I>&gt;<i> recent vdr version.
+</I>
+The patch to plugin.c is still valid, but the Makefile seems to have
+changed a little (or your diffs were based on a modified copy).
+
+&gt;<i> You will have to modify vdr's makefile to link statically to the
+</I>&gt;<i> softdevice. As far as I remember I created a .a library with all the
+</I>&gt;<i> needed files from the softdevice and linked this to vdr.
+</I>
+This is problematic for me.  I keep getting tons of &quot;undefined
+reference&quot; errors when trying to link libsoftdevice.a.  Alternatively,
+I keep getting an error about -ldfb++ not being found (it only exists
+as .so, and I can't figure out how to convince libtool or other
+autotools-generated scripts and makefiles to create an .a for me).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000871.html">[Softdevice-devel] Inefficient synchronization when playing	back recordings
+</A></li>
+	<LI>Next message: <A HREF="000895.html">[Softdevice-devel] How to link libsoftdevice.a?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#894">[ date ]</a>
+              <a href="thread.html#894">[ thread ]</a>
+              <a href="subject.html#894">[ subject ]</a>
+              <a href="author.html#894">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

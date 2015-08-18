@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspending the playback at shutdown
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C20050331210419.GB113658%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000406.html">
+   <LINK REL="Next"  HREF="000383.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspending the playback at shutdown</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C20050331210419.GB113658%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Suspending the playback at shutdown">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Mar 31 23:04:19 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000406.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+        <LI>Next message: <A HREF="000383.html">[Softdevice-devel] Re: [vdr] cannot set volume with softdevice and vdr-1.3.23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#418">[ date ]</a>
+              <a href="thread.html#418">[ thread ]</a>
+              <a href="subject.html#418">[ subject ]</a>
+              <a href="author.html#418">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Mar 30, 2005 at 09:09:32PM +0200, Martin Wache wrote:
+&gt;<i> I was about to add a switch the last weekend, but now I'm thinking about 
+</I>&gt;<i> replacing the RTC timing by an signal triggered timing. I did not check 
+</I>&gt;<i> the precision of this method yet but it looks very promising to me. So 
+</I>&gt;<i> maybe we will get rid of the /dev/rtc usage at all.
+</I>
+I hope it won't consume more processing power than the RTC method.  I might
+give oprofile a try, because my 900 MHz Celeron system does not seem to be
+fast enough for fast moving scenes.  I recently ran oprofile on MySQL 5.0.3
+and managed to get some 10% performance improvement for my test case after
+some tweaks.
+
+&gt;<i> Check vdrs plugin.h/c: basically you should be able to use
+</I>&gt;<i> pluginMangager-&gt;GetPlugin(&quot;softdevice&quot;) to get a pointer to the 
+</I>&gt;<i> softdevice plugin. Then call softdevice-&gt;SetupParse(&quot;Suspend&quot;,&quot;1&quot;). 
+</I>&gt;<i> Check with setup-softdevice.c.
+</I>
+Thanks! Of course, a cleaner way would be to introduce a virtual method
+void suspendPlayback(bool) that all plugins could override.  That would
+have some chance of being included in some VDR release.  But let's hope
+first that you can get rid of /dev/rtc without sacrificing processing
+power.
+
+&gt;<i> Did you try that with the latest CVS? The parsing of the Suspend option 
+</I>&gt;<i> was missing, I added it a few days after your first mail.
+</I>
+Now I tried the latest CVS on VDR 1.3.22 and 1.3.23, and subtitles-plugin
+0.3.7 (<A HREF="http://www.virtanen.org/vdr/subtitles/">http://www.virtanen.org/vdr/subtitles/</A>).  Unfortunately, I don't
+see any subtitles with the latest CVS, neither from live stream nor from
+recordings.  I updated only the setup parsing code from the CVS version,
+and it worked.  On a related note, does softdevice implement the GetSTC
+method accurately?  The subtitles plugin needs that for displaying the
+subtitles at the right time.  (They are usually transmitted a couple of
+seconds before they should be displayed, and now it seems that the
+subtitles are displayed too early.)
+
+&gt;<i> Crashes caused by bad signal a mostly due to ffmpeg, so they are less 
+</I>&gt;<i> interesting for us. Although we might have some bugs ( or missing 
+</I>&gt;<i> checks) in our code too, which case crashes on bad signal.
+</I>
+Well, such crashes affect the overall usability of the product.  I think
+it's a design flaw to have assertions fail on garbage input.  It's so likely
+to get garbage DVB data.  Next time when I get such a crash, I promise to
+save the clip and to analyze it further.
+
+&gt;<i> &gt;When I try to edit it (hit 'Pause' and '9' to go to the first edit mark I
+</I>&gt;<i> &gt;managed to set), VDR will hang until the -w timeout, and on subsequent 
+</I>&gt;<i> &gt;runs,
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for your report, I'm currently not at home so I can not check it 
+</I>&gt;<i> and fix it. But this may be related to the pause-&gt;play deadlock Stefan 
+</I>&gt;<i> reported. I will try to fix it as soon as I'm at home again.
+</I>
+As someone suggested, using LinuxThreads instead of NPTL removed the hang.
+Does anyone know if this is a bug in NPTL, or just changed semantics that
+needs to be accounted for in the code?  I have the impression that also
+MySQL prefers LinuxThreads over NPTL, but I don't know exactly why.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000406.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+	<LI>Next message: <A HREF="000383.html">[Softdevice-devel] Re: [vdr] cannot set volume with softdevice and vdr-1.3.23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#418">[ date ]</a>
+              <a href="thread.html#418">[ thread ]</a>
+              <a href="subject.html#418">[ subject ]</a>
+              <a href="author.html#418">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

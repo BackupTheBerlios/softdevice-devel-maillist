@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio : my proposal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C42936DDA.3050309%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000720.html">
+   <LINK REL="Next"  HREF="000723.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio : my proposal</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C42936DDA.3050309%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio : my proposal">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Tue May 24 20:09:30 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000720.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+        <LI>Next message: <A HREF="000723.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#722">[ date ]</a>
+              <a href="thread.html#722">[ thread ]</a>
+              <a href="subject.html#722">[ subject ]</a>
+              <a href="author.html#722">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> Yes I have the point of view of current code. As I said I could not
+</I>&gt;<i> get the values for &quot;5:4 as 4:3&quot; recalculated, I think there is a bug
+</I>&gt;<i> in the code. Hopefully I found it. You are right in user definable
+</I>&gt;<i> aspect ratio selection. The attached patch is really preliminary.
+</I>
+I'll just insist a little bit : the label of the option should not be 
+&quot;4:3 as 16:9&quot;, but &quot;16:9&quot; as it truly represents only the screen ratio. 
+But you're working on this so I won't disturb you with this label 
+detail. The rest of the patch should demonstrate that you understood me 
+(if I had the point of view of the code...)
+
+I'll try this patch as soon as I get a proper and recent viafb 
+frame-buffer driver...
+
+&gt;<i> I won't do calulations for all possible screen resolutions and display
+</I>&gt;<i> geometrys. So output method has to calculate pixel aspect ratio
+</I>&gt;<i> based on given screen resolution, with a little help from the driver
+</I>&gt;<i> or user by specifying the display aspect.
+</I>
+Actually, the X driver should provide that information in 
+/etc/X11/XF86Config-4 :
+Section &quot;Monitor&quot;
+	...
+	DisplaySize     590     330
+
+I didn't ever see an equivalent in DirectFB, so user have to tell 
+softdevice what is the actual size ratio (or aspect ratio) of the screen.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000720.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+	<LI>Next message: <A HREF="000723.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#722">[ date ]</a>
+              <a href="thread.html#722">[ thread ]</a>
+              <a href="subject.html#722">[ subject ]</a>
+              <a href="author.html#722">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

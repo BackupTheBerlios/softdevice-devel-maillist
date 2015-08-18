@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Flicker when video is paused
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Flicker%20when%20video%20is%20paused&In-Reply-To=%3C443BFD1A.7040708%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001851.html">
+   <LINK REL="Next"  HREF="001856.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Flicker when video is paused</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Flicker%20when%20video%20is%20paused&In-Reply-To=%3C443BFD1A.7040708%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Flicker when video is paused">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr 11 21:01:46 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001851.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+        <LI>Next message: <A HREF="001856.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1855">[ date ]</a>
+              <a href="thread.html#1855">[ thread ]</a>
+              <a href="subject.html#1855">[ subject ]</a>
+              <a href="author.html#1855">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> On Montag 10 April 2006 22:13, Marko M&#228;kel&#228; wrote:
+</I>&gt;&gt;<i> On Sun, Apr 09, 2006 at 01:05:41PM +0200, Martin Wache wrote:
+</I>&gt;&gt;&gt;&gt;<i> I also noticed some flicker when the OSD is active.  Alpha blending is set
+</I>&gt;&gt;&gt;&gt;<i> to &quot;pseudo&quot;.  I don't remember experiencing such flicker before.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The alpha blending setting has no effect on directFB, it's only for
+</I>&gt;&gt;&gt;<i> vidix and Xv-video out. Is the OSD flickering or the video flickering?
+</I>&gt;&gt;<i> Now I got a repeatable test case for this.  While replaying a recording,
+</I>&gt;&gt;<i> hit Pause and wait at least 10 seconds.  Every now and then, the video
+</I>&gt;&gt;<i> image will be shortly filled with black, as if the screen were constantly
+</I>&gt;&gt;<i> redrawn with missing synchronization on vertical retrace.  I wonder why
+</I>&gt;&gt;<i> the screen would be redrawn, because there is absolutely no movement
+</I>&gt;&gt;<i> in the video or the OSD.
+</I>&gt;<i> 
+</I>&gt;<i> Try either commenting out line 97 of video.c :
+</I>&gt;<i> OsdRefreshCounter &gt; 80 || // blanks the screen after inactivity (4s)
+</I>&gt;<i> 
+</I>If we just comment that line the screen won't be blanked. I really
+wonder why it flickers just because the screen is redrawn. I mean
+exactly the same methods are used like we normally use for video, so one
+shouldn't see any flicker. Maybe redrawing on OSD change in software
+mode and blanking the screen should be handled separately.
+
+&gt;<i> Or make OsdRefreshCounter public (or protected) again and set
+</I>&gt;<i> it to 0 at the beginning of YUV in video-dfb.c
+</I>&gt;<i> 
+</I>That won't change anything, since OsdRefreshCounter is already set to
+Zero in
+DrawVideo and DrawStill and YUV is never called directly.
+
+So should we apply the workaround for the original issue with the
+vertical lines at the borders? I don't think that I will be able to fix
+the real problem soon...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001851.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+	<LI>Next message: <A HREF="001856.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1855">[ date ]</a>
+              <a href="thread.html#1855">[ thread ]</a>
+              <a href="subject.html#1855">[ subject ]</a>
+              <a href="author.html#1855">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

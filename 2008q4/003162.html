@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] the running X letter in console
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20the%20running%20X%20letter%20in%20console&In-Reply-To=%3C20081016204644.2d80a7d8%40bk.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003166.html">
+   <LINK REL="Next"  HREF="003163.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] the running X letter in console</H1>
+    <B>Goga777</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20the%20running%20X%20letter%20in%20console&In-Reply-To=%3C20081016204644.2d80a7d8%40bk.ru%3E"
+       TITLE="[Softdevice-devel] the running X letter in console">goga777 at bk.ru
+       </A><BR>
+    <I>Thu Oct 16 18:46:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003166.html">[Softdevice-devel] Fix for error &quot; &#8216;offset_t&#8217; has not been declared&quot; - cvs softdevice and cvs ffmpeg
+</A></li>
+        <LI>Next message: <A HREF="003163.html">[Softdevice-devel] the running X letter in console
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3162">[ date ]</a>
+              <a href="thread.html#3162">[ thread ]</a>
+              <a href="subject.html#3162">[ subject ]</a>
+              <a href="author.html#3162">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+sometimes I can see in console the running X letter
+
+
+[h264 @ 0xa134ae0]no frame!
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0xa134ae0]number of reference frames exceeds max (probably corrupt input), discarding one
+ALSA lib pcm.c:2144:(snd_pcm_open_noupdate) Unknown PCM CH2
+[XvVideoOut]: max area size 2048 x 2048
+[XvVideoOut]: using area size 1312 x 754
+#XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&#1054;&#1082;&#1090; 16 20:42:29 [core.pids] 0: tune to same source/transponder
+                                                  
+
+or
+
+
+[h264 @ 0x91a1e00]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0x91a1e00]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0x91a1e00]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0x91a1e00]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0x91a1e00]number of reference frames exceeds max (probably corrupt input), discarding one
+[h264 @ 0x91a1e00]mmco: unref short failure
+20:45:54.0062 D [9037] [softdevice-audio]: Xrun (at least 12268,454 ms long)
+[h264 @ 0x91a1e00]mmco: unref short failure
+[XvVideoOut]: max area size 2048 x 2048
+[XvVideoOut]: using area size 1952 x 1122
+[h264 @ 0x91a1e00]mmco: unref short failure
+#20:45:56.0335 D [9036] [VideoOut] video now synced (11 - 187)
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX20:46:03.0313 D [9037] [softdevice-audio]: Xrun (at least 9206,584 ms long)
+X20:46:03.0516 D [9037] [softdevice-audio]: Xrun (at least 174,541 ms long)
+X20:46:03.0716 D [9037] [softdevice-audio]: Xrun (at least 173,074 ms long)
+X20:46:03.0921 D [9037] [softdevice-audio]: Xrun (at least 174,845 ms long)
+XX20:46:04.0333 D [9037] [softdevice-audio]: Xrun (at least 372,885 ms long)
+X20:46:04.0540 D [9037] [softdevice-audio]: Xrun (at least 166,081 ms long)
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&#1054;&#1082;&#1090; 16 20:46:19 [core.pids] 0: tune to same source/transponder
+
+
+
+
+
+
+what's it ?
+
+
+Goga
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003166.html">[Softdevice-devel] Fix for error &quot; &#8216;offset_t&#8217; has not been declared&quot; - cvs softdevice and cvs ffmpeg
+</A></li>
+	<LI>Next message: <A HREF="003163.html">[Softdevice-devel] the running X letter in console
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3162">[ date ]</a>
+              <a href="thread.html#3162">[ thread ]</a>
+              <a href="subject.html#3162">[ subject ]</a>
+              <a href="author.html#3162">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

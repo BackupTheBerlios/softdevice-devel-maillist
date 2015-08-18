@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C4466E790.8090609%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002014.html">
+   <LINK REL="Next"  HREF="002030.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C4466E790.8090609%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun May 14 10:17:20 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002014.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="002030.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2020">[ date ]</a>
+              <a href="thread.html#2020">[ thread ]</a>
+              <a href="subject.html#2020">[ subject ]</a>
+              <a href="author.html#2020">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;&gt;&gt;&gt;<i> So I will now go on and have a look at the softdevice part. I guess I
+</I>&gt;&gt;&gt;&gt;<i> will move CheckAspectDimension() from video.c to mpegdecoder.c and
+</I>&gt;&gt;&gt;&gt;<i> reimplement it for the cle266 case.
+</I>&gt;&gt;&gt;<i> Isn't it easier just to fill relevant info in AVFarme and codec ?
+</I>&gt;&gt;&gt;<i> I guess we allocated both.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> Yes, that is definitely simpler, but in my opinion also much uncleaner.
+</I>&gt;<i> 
+</I>&gt;<i> I just want to avoid that mpeg2decoder grows and grows. It should
+</I>&gt;<i> be split in some smaller pieces instead.
+</I>&gt;<i> 
+</I>I agree with you that mpeg2decoder contains things which doesn't belong
+there, for example the filtering together with the filter contexts.
+
+&gt;<i> I guess at the current state, the whole cle266 code is a hack. But if I would get
+</I>&gt;<i> my via dfbout work again (then hw accelerated :-) ), I'd like to include
+</I>&gt;<i> that, even in some hackish state, into our cvs. Let's polish code later.
+</I>&gt;<i>
+</I>Here I don't understand you, on one hand you say mpeg2decoder should not
+grow anymore, on the other hand you want to include a hack into
+mpeg2decoder, which will certainly not make the code more readable. And
+who is going to do the clean up? I don't think that we will receive
+patches by other people which clean the mess up once the code is in. So
+it is either you or me who has to do the cleaning. Will you do this?
+
+Right now there seem several people interested in getting the cle266
+decoder work with the softdevice, you and me included. So in my opinion
+it is the best to do it right from the start, and not to include hacks.
+ To me that means that we should process all the information of the
+stream inside the decoders (inside mpeg2decoder) and pass only the
+relevant information (dimension, aspect ratio, the pictures,...) to the
+filters and the video out.
+
+&gt;<i> The only thing which must (should) be changed, is the layer index carried
+</I>&gt;<i> in setup store. This should be a public member in videoDecoder. Unused
+</I>&gt;<i> by others, so it doesn't harm.
+</I>&gt;<i> 
+</I>It doesn't have to be a public member in videoDecoder, it can also be a
+local variable in cVideoStreamDecoder::DecodePacker(), but the important
+point is how we pass it to the video-out. I think we need a structure
+here which can pass the pictures to the video out, which supports direct
+rendering.
+
+&gt;&gt;<i> The state of AVFrame and codec are undefined as long as we don't use
+</I>&gt;&gt;<i> libavcodec (of course we allocate it, but usually we don't fill it), so
+</I>&gt;&gt;<i> I think it's dangerous to pretend that everything is ok. 
+</I>&gt;<i> 
+</I>&gt;<i> Filling only those members which are sufficiant to make CheckAspect..
+</I>&gt;<i> and co. work, should be ok (setting only direct members, not those 
+</I>&gt;<i> accessed via pointers). 
+</I>&gt;<i> 
+</I>As you say it _should_ be ok, but _will_ it be ok? What will happen when
+we include the next hack? What will break? What happens if ffmpeg
+changes in some subtle way? No, I don't like this, it is a hack and
+nothing else.
+
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002014.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="002030.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2020">[ date ]</a>
+              <a href="thread.html#2020">[ thread ]</a>
+              <a href="subject.html#2020">[ subject ]</a>
+              <a href="author.html#2020">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Matrox G450 DirectFB output setup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20DirectFB%20output%20setup&In-Reply-To=%3C200510242328.08176.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001404.html">
+   <LINK REL="Next"  HREF="001399.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Matrox G450 DirectFB output setup</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20DirectFB%20output%20setup&In-Reply-To=%3C200510242328.08176.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Matrox G450 DirectFB output setup">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Tue Oct 25 00:28:08 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001404.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+        <LI>Next message: <A HREF="001399.html">[Softdevice-devel] Matrox G450 DirectFB output...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1395">[ date ]</a>
+              <a href="thread.html#1395">[ thread ]</a>
+              <a href="subject.html#1395">[ subject ]</a>
+              <a href="author.html#1395">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've just acquired a Matrox G450 and I'm trying to get it going with 
+vdr-softdevice with DirectFB output: it's half getting there but then hangs:
+
+vdr -P'softdevice -vo dfb:mgatv' gives the following output:
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.8) build(4680)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.23 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-10-23 19:39)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Modules: suppress module 'joystick'
+(*) Direct/Modules: suppress module 'lirc'
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 3197)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** 
+[../../../lib/fusion/reactor.c:797]
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence 
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 3198)...
+(*) DirectFB/Input: ImPS/2 Generic Wheel Mouse (2) 0.1 (convergence integrated 
+media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 16777216 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle 
+Blit StretchBlit All
+[dfb] Drawing Flags: Blend
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey 
+Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A>
+[dfb] Enumerating display Layers
+Layer 2 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location surface
+Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+  Caps: brightness contrast flicker_filtering hue field_parity saturation 
+surface
+[surface capabilities] scrSurface: videoonly flipping interlaced 
+triple-buffered
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (Matrox CRTC2 Layer - [720x576])
+[surface capabilities] osdSurface: videoonly double-buffered flipping
+[surface capabilities] videoSurface: videoonly
+[dfb] Using this layer for OSD: Matrox CRTC2 Layer
+[dfb] Using this layer for Video out: Matrox CRTC2 Layer
+[dfb] Display frame time is 19965 microseconds
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface
+[surface capabilities] videoSurface: videoonly
+[dfb] (re)configured 0x00200806
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+
+and then it just sits there! From my experiences with DirectFB and an Epia 
+board, the above looks OK to me.
+
+I have the following config (gleaned from various web pages):
+/etc/directfbrc:
+no-debug
+matrox-crtc2
+matrox-tv-standard=pal
+primary-layer=2
+mode=720x576
+depth=32
+no-vt
+pixelformat=ARGB
+matrox-cable-type=scart-rgb
+disable-module=lirc
+disable-module=joystick
+
+/etc/fb.modes:
+mode &quot;720x576-50&quot;
+    # D: 28.000 MHz, H: 32.250 kHz, V: 50.00 Hz
+    geometry 720 576 720 1152 32
+    timings 35714 32 8 46 0 136 3
+    rgba 8/16,8/8,8/0,8/24
+    bcast true
+endmode
+
+mode &quot;720x576 50Hz 32bit&quot;
+    geometry 720 576 720 576 16
+    timings 31208 144 40 32 10 128 3
+endmode
+
+mode &quot;my-pal-32&quot;
+    geometry 768 576 768 576 32
+    timings  67723 106 1 44 1 70 4
+    csync high
+    laced true
+    bcast true
+endmode
+
+Am I getting anywhere close with these modes? I hope to use a home-made 
+HD15-Scart RGB cable on the second head for this. There seem to be several 
+different versions of this cable to be found on the web so I'm not totally 
+convinced that the one I've made will work as it is but I would have hoped 
+that vdr would run fine regardless of whether anything is actually connected 
+to the output.
+
+At the moment, I lose control of the keyboard when running vdr or anything 
+else with DirectFB output: am I missing anything from my /etc/directfbrc? 
+CTRL-C etc. work fine on my Epia box to kill vdr with DirectFB output! I'm 
+also getting lots of kernel messages like:
+matroxfb: cannot set xres to 720, rounded up to 736
+
+This is with vdr-1.3.31, softdevice-0.2.0, DirectFB-0.9.23, and matroxfb built 
+into a 2.6.13.4 kernel (patched with the matrox-full-memory and 
+matrox-g400-clock patches.
+
+Any clues?
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001404.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+	<LI>Next message: <A HREF="001399.html">[Softdevice-devel] Matrox G450 DirectFB output...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1395">[ date ]</a>
+              <a href="thread.html#1395">[ thread ]</a>
+              <a href="subject.html#1395">[ subject ]</a>
+              <a href="author.html#1395">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

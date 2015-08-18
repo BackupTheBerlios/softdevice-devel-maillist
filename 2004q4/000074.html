@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A/V sync
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A/V%20sync&In-Reply-To=%3C1651.1099912382%40www62.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000072.html">
+   <LINK REL="Next"  HREF="000075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A/V sync</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A/V%20sync&In-Reply-To=%3C1651.1099912382%40www62.gmx.net%3E"
+       TITLE="[Softdevice-devel] A/V sync">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Nov  8 12:13:02 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000072.html">[Softdevice-devel] A/V sync
+</A></li>
+        <LI>Next message: <A HREF="000075.html">[Softdevice-devel] Recording VDR files in network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> todays work with dfb-out lead me to the the idea that current cvs logic to
+</I>&gt;<i> sync is wrong and some parts of Martin's work is wrong too.
+</I>Can you tell me which part is wrong?
+
+&gt;<i> device. Take a stream 25fps (50 half frames). Now we wait a certain
+</I>&gt;<i> time after a frame was decoded. But we do not know when the next
+</I>&gt;<i> horizontal retrace happens. So it could happen that after wait complets,
+</I>&gt;<i> the frame flip happens during copy process of YUV method and the device
+</I>&gt;<i> has to wait an additional frame to flip the picture contens.
+</I>Yes, that would be the correct way to do the syncing provided we have a
+display
+which uses a multiple of 25Hz for displaying. But for VGA output the are
+only a few modes which use a multiple of 25Hz. For all the other modes
+syncing on the refresh of 
+the display wont improve the A-V sync.
+
+&gt;<i> So I suggest a different interface to display frames.
+</I>&gt;<i> 
+</I>&gt;<i> // used if the device has no posibility to sync to frame retrace
+</I>&gt;<i> // the same has current delay method. should be used by fb-out
+</I>&gt;<i> framePrepare () 
+</I>I like the idea of a &quot;framePrepare()&quot; function very much, we should really
+try to do
+as much work we can do before sleeping, and the displaying should be as fast
+as
+possible.
+
+Martin Wache
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen <A HREF="http://www.gmx.net/de/go/mail">http://www.gmx.net/de/go/mail</A> ++
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000072.html">[Softdevice-devel] A/V sync
+</A></li>
+	<LI>Next message: <A HREF="000075.html">[Softdevice-devel] Recording VDR files in network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

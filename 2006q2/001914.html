@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C200604250700.38150.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001913.html">
+   <LINK REL="Next"  HREF="001915.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C200604250700.38150.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Apr 25 07:00:38 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001913.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+        <LI>Next message: <A HREF="001915.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1914">[ date ]</a>
+              <a href="thread.html#1914">[ thread ]</a>
+              <a href="subject.html#1914">[ subject ]</a>
+              <a href="author.html#1914">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag 24 April 2006 20:55, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sun, Apr 23, 2006 at 11:56:59PM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; I'm using the bundled remote control unit of the Hauppauge Nova-T PCI 90002
+</I>&gt;<i> &gt; via the following software stack:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;  cx88-input.c in Linux 2.6.16.9
+</I>&gt;<i> &gt;  libdirectfb_linux_input
+</I>&gt;<i> &gt;  video-dfb.c in softdevice
+</I>&gt;<i> &gt;  vdr 1.3.48
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Martin, how should I connect the RCU to VDR from now on?  I'd prefer not
+</I>&gt;<i> &gt; to install another plugin (vdr-remote?).
+</I>&gt;<i> 
+</I>&gt;<i> Okay, I see that the current version still constructs
+</I>&gt;<i> dfbRemote = new cSoftRemote (&quot;softdevice-dfb&quot;);
+</I>&gt;<i> but somehow it will deliver no events.  I added the line
+</I>&gt;<i> disable-module=linux_input
+</I>&gt;<i> to /etc/directfbrc and installed vdr-remote-0.3.6.  This has
+</I>&gt;<i> the benefit that the |&lt; and &gt;| keys can now be assigned;
+</I>&gt;<i> DirectFB maps the keysyms to same codes as some other keys on the RCU.
+</I>&gt;<i> 
+</I>&gt;<i> It was a bit irritating to define the RCU mapping.  First, I believed
+</I>&gt;<i> that the old deadlock bug still hasn't been fixed.  
+</I>
+Deadlock bug? Have to to search the archive (or give me a hint).
+
+&gt;<i> Then, I finally 
+</I>&gt;<i> understood that for some reason, in the &quot;learning remote codes&quot; screen,
+</I>&gt;<i> the OSD is updated at a delay of several seconds.  I could press the
+</I>&gt;<i> buttons very fast and they would be registered properly, but the screen
+</I>&gt;<i> would only be updated some 3 or 5 seconds later.  While using vdr, the
+</I>&gt;<i> OSD mostly responded fast, but at one occasion (after tuning to a radio
+</I>&gt;<i> channel), I got a similar delay.
+</I>&gt;<i> 
+</I>&gt;<i> Could it be that video-dfb.c triggers OSD updates by three things: new
+</I>&gt;<i> video frame, DFBInputEvent (cDFBVideoOut::ProcessEvents()), and a
+</I>&gt;<i> very slow timer?
+</I>
+Events were and are processed after each frame gets displayed.
+Additional they were and are processed from a background thread,
+previously from dfb-remote thread, now from video class, and that
+lacked an OSD refresh call. Should be fixed.
+
+Can you try to cvs update ?
+
+&gt;<i> 
+</I>&gt;<i> I suggest that dfbRemote be removed altogether.  If that cannot be done,
+</I>&gt;<i> the code should be fixed so that it will deliver events to VDR as before
+</I>&gt;<i> video-dfb.c -r1.54.
+</I>&gt;<i> 
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001913.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+	<LI>Next message: <A HREF="001915.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1914">[ date ]</a>
+              <a href="thread.html#1914">[ thread ]</a>
+              <a href="subject.html#1914">[ subject ]</a>
+              <a href="author.html#1914">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

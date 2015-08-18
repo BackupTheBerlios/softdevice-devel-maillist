@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay: pause handling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%3A%20pause%20handling&In-Reply-To=%3C200505080900.34737.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000616.html">
+   <LINK REL="Next"  HREF="000617.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay: pause handling</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%3A%20pause%20handling&In-Reply-To=%3C200505080900.34737.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softplay: pause handling">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun May  8 09:00:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000616.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+        <LI>Next message: <A HREF="000617.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#613">[ date ]</a>
+              <a href="thread.html#613">[ thread ]</a>
+              <a href="subject.html#613">[ subject ]</a>
+              <a href="author.html#613">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 7. Mai 2005 22:32, Martin Wache wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; hitting pause key in mp3 playback with softplay, I noticed that pause
+</I>&gt;<i> &gt; does not toggle pause state. So I've to hit play to resume. After
+</I>&gt;<i> &gt; resume, playback continues at offset: last_played+pause_time. Looks
+</I>&gt;<i> &gt; like an internal timer continues to count.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Thanks for you report about the file type handling, I incorporated your 
+</I>&gt;<i> fix in my changes to add basic playlist support.
+</I>&gt;<i> 
+</I>&gt;<i> I also noticed the strange behavior of the pause mode, but up to now I 
+</I>&gt;<i> have no idea what causes this... At least making pause toggle the pause 
+</I>&gt;<i> state is easy, I will do this.
+</I>
+The jump is not last_played+puse_time. It is always for about
+13 seconds as a new audio stream is reported after play. So the causer
+is located in softdevice. Softdevice Play() is calling Trickspeed(1)
+which in term sets:
+  if (trickSpeed!=1) {
+    if (aout)
+      aout-&gt;Clear();
+    AudioIdx=DONT_PLAY;
+  } //else AudioIdx=NO_STREAM;
+
+By commenting the else part like above, there are no jumps anymore
+in softplay mp3 playback. We have to check the influence on other
+playback types.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000616.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+	<LI>Next message: <A HREF="000617.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#613">[ date ]</a>
+              <a href="thread.html#613">[ thread ]</a>
+              <a href="subject.html#613">[ subject ]</a>
+              <a href="author.html#613">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

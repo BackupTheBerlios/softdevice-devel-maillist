@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dvd plugin working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dvd%20plugin%20working&In-Reply-To=%3C32127.1099853317%40www10.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000070.html">
+   <LINK REL="Next"  HREF="000073.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dvd plugin working</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dvd%20plugin%20working&In-Reply-To=%3C32127.1099853317%40www10.gmx.net%3E"
+       TITLE="[Softdevice-devel] dvd plugin working">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Nov  7 19:48:37 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000070.html">[Softdevice-devel] New A-V sync
+</A></li>
+        <LI>Next message: <A HREF="000073.html">[Softdevice-devel] dvd plugin working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#71">[ date ]</a>
+              <a href="thread.html#71">[ thread ]</a>
+              <a href="subject.html#71">[ subject ]</a>
+              <a href="author.html#71">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I found the problem why the dvd plugin was not working with the
+softdevice...
+The dvd plugin decodes the audio and sends pcm data to the primary device.
+Since the softdevice can't handle raw pcm data (yet), it parses all the 
+audio data and a crashes as soon as it finds something which looks like
+video
+data but isn't. 
+This is easy to fix, we just have to parse the headers for the raw pcm
+properly and send it directly to the audio device. But before doing this I
+would like to finish the new A-V sync...
+
+Bye,
+Martin
+
+-- 
+NEU +++ DSL Komplett von GMX +++ <A HREF="http://www.gmx.net/de/go/dsl">http://www.gmx.net/de/go/dsl</A>
+GMX DSL-Netzanschluss + Tarif zum superg&#252;nstigen Komplett-Preis!
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000070.html">[Softdevice-devel] New A-V sync
+</A></li>
+	<LI>Next message: <A HREF="000073.html">[Softdevice-devel] dvd plugin working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#71">[ date ]</a>
+              <a href="thread.html#71">[ thread ]</a>
+              <a href="subject.html#71">[ subject ]</a>
+              <a href="author.html#71">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

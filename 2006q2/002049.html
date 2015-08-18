@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] colored snow with softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3C446B8ADE.1040802%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002038.html">
+   <LINK REL="Next"  HREF="002050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] colored snow with softplay</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3C446B8ADE.1040802%40gmx.net%3E"
+       TITLE="[Softdevice-devel] colored snow with softplay">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed May 17 22:43:10 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002038.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+        <LI>Next message: <A HREF="002050.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2049">[ date ]</a>
+              <a href="thread.html#2049">[ thread ]</a>
+              <a href="subject.html#2049">[ subject ]</a>
+              <a href="author.html#2049">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Patrick Boettcher schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> This is the start output of vdr:
+</I>&gt;<i> 
+</I>&gt;<i> [softdevice] processing args
+</I>&gt;<i> [softdevice]   argv [0] = softdevice
+</I>&gt;<i> [softdevice]   argv [1] = -vo
+</I>&gt;<i> vo_argv: xv:
+</I>&gt;<i> [setup-softdevice] alsa ac3Mode set to: 0
+</I>&gt;<i> [setup-softdevice] alsa device set to: default
+</I>&gt;<i> [setup-softdevice] A/V Offset set to (0)
+</I>&gt;<i> [setup-softdevice] Cropping 0 lines from bottom
+</I>&gt;<i> [setup-softdevice] Cropping 0 columns from left
+</I>&gt;<i> [setup-softdevice] cropping mode set to 0 (none)
+</I>&gt;<i> [setup-softdevice] cropping mode toggle key set to 0 (none)
+</I>&gt;<i> [setup-softdevice] Cropping 0 columns from right
+</I>&gt;<i> [setup-softdevice] Cropping 0 lines from top
+</I>&gt;<i> [setup-softdevice] deinterlace method set to 0 none
+</I>&gt;<i> [setup-softdevice] setting alpha blend mode to pseudo
+</I>&gt;<i> [softdevice] picture mirroring set to 0 (off)
+</I>&gt;<i> [setup-softdevice] pixel format set to (I420)
+</I>&gt;<i> [setup-softdevice] shouldSuspend to: 0
+</I>&gt;<i> [softdevice] UseStretchBlitset to off
+</I>&gt;<i> [setup-softdevice] startup aspect set to (4:3 normal)
+</I>&gt;<i> [softdevice] initializing Plugin
+</I>&gt;<i> [softdevice] Initializing Video Out
+</I>&gt;<i> [softdevice] ffmpeg version(CVS) build(3211265)
+</I>&gt;<i> [XvVideoOut]: osd_image shmid = 753666
+</I>&gt;<i> [XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120
+</I>&gt;<i> [XvVideoOut]: max area size 2048 x 2048
+</I>&gt;<i> [XvVideoOut]: using area size 736 x 576
+</I>&gt;<i> [softdevice] Xv out OK !
+</I>&gt;<i> [softdevice] Video Out seems to be OK
+</I>&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;<i> 
+</I>&gt;<i> and this when I start a xvid-file:
+</I>&gt;<i> 
+</I>&gt;<i> could not find stream info
+</I>&gt;<i> PLDBG: GetPlayMode nb_streams 2
+</I>&gt;<i> PLDBG: GetPlayMode stream 0 codec_type 0
+</I>&gt;<i> PLDBG: GetPlayMode stream 1 codec_type 1
+</I>&gt;<i> #Input #0, avi, from 'test':
+</I>&gt;<i>   Duration: 00:44:05.6, start: 0.000000, bitrate: 1111 kb/s
+</I>&gt;<i> #  Stream #0.0, 23.98 fps(r): Video: mpeg4, yuv420p, 624x352
+</I>&gt;<i>   Stream #0.1: Audio: mp3, 48000 Hz, stereo, 128 kb/s
+</I>&gt;<i> ######
+</I>&gt;<i> 
+</I>&gt;<i> I hope this helps.
+</I>&gt;<i> 
+</I>I'm not sure about this one. You said that before switching to the
+debian packages those files played well?
+I would assume that there is something wrong with ffmpeg or there is
+some kind of library/header mismatch with the ffmpeg version. I don't
+think that I wrote that somewhere, but softplay assumes that it has been
+compiled with the same ffmpeg version like the softdevice, if this is
+not the case strange things may happen. Similar things can happen if you
+compile softplay with an avcodec.h and avformat.h which doesn't match
+the shared library...
+I assume that it's a bug or a mismatch in the debian package of
+softplay, softdevice or ffmpeg.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002038.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+	<LI>Next message: <A HREF="002050.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2049">[ date ]</a>
+              <a href="thread.html#2049">[ thread ]</a>
+              <a href="subject.html#2049">[ subject ]</a>
+              <a href="author.html#2049">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

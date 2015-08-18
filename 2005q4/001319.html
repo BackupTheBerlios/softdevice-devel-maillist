@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] 0.1.3 bug : 16/10 cropmode luma/chroma pb
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%200.1.3%20bug%20%3A%2016/10%20cropmode%20luma/chroma%20pb&In-Reply-To=%3C200510071513.48877.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001316.html">
+   <LINK REL="Next"  HREF="001323.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] 0.1.3 bug : 16/10 cropmode luma/chroma pb</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%200.1.3%20bug%20%3A%2016/10%20cropmode%20luma/chroma%20pb&In-Reply-To=%3C200510071513.48877.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] 0.1.3 bug : 16/10 cropmode luma/chroma pb">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Oct  7 15:13:48 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001316.html">[Softdevice-devel] 0.1.3 bug : 16/10 cropmode luma/chroma pb
+</A></li>
+        <LI>Next message: <A HREF="001323.html">[Softdevice-devel] [PATCH] Gentoo packaging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1319">[ date ]</a>
+              <a href="thread.html#1319">[ thread ]</a>
+              <a href="subject.html#1319">[ subject ]</a>
+              <a href="author.html#1319">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 7. Oktober 2005 00:06, Stefan Lucke wrote:
+&gt;<i> On Donnerstag, 6. Oktober 2005 23:22, Nicolas Huillard wrote:
+</I>&gt;<i> &gt; Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt; &gt; On Donnerstag, 6. Oktober 2005 21:12, Nicolas Huillard wrote:
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt;&gt;Hello again,
+</I>&gt;<i> &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt;&gt;When setting cropmode to 16/10 on a 16/9 display, the luma and chroma 
+</I>&gt;<i> &gt; &gt;&gt;planes seem to be detached : one is a good quarter of the screen on the 
+</I>&gt;<i> &gt; &gt;&gt;right of the other one. Maybe it's not luma/chroma, but a third of YUV, 
+</I>&gt;<i> &gt; &gt;&gt;because the &quot;main&quot; image remains at the same place, and only a ghost is 
+</I>&gt;<i> &gt; &gt;&gt;displaced to the right.
+</I>&gt;<i> &gt; &gt;&gt;This is the only cropmode setting with that problem. I didn't try other 
+</I>&gt;<i> &gt; &gt;&gt;display aspect ratios.
+</I>&gt;<i> &gt; &gt; 
+</I>
+&gt;<i> Ok I can confirm that on my epia bord. My test was done with an 5:4 LCD
+</I>&gt;<i> VGA monitor. The color shadow picture was seen on arbitray monitor
+</I>&gt;<i> aspect setups via softdevice OSD. But it was only present for me when
+</I>&gt;<i> setting crop mode to 14:9. Another precondition is
+</I>&gt;<i> &quot;HAVE_SetSourceLocation 0&quot;. This color shown picture is not present
+</I>&gt;<i> when video-dfb.c is compiled with &quot;HAVE_SetSourceLocation 1&quot;.
+</I>&gt;<i> This value is set, when configure script  detects that in direcfb source.
+</I>
+Vidix-out showed the same behaviour. It was an odd line offset (syoff).
+Fix is in cvs.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001316.html">[Softdevice-devel] 0.1.3 bug : 16/10 cropmode luma/chroma pb
+</A></li>
+	<LI>Next message: <A HREF="001323.html">[Softdevice-devel] [PATCH] Gentoo packaging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1319">[ date ]</a>
+              <a href="thread.html#1319">[ thread ]</a>
+              <a href="subject.html#1319">[ subject ]</a>
+              <a href="author.html#1319">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

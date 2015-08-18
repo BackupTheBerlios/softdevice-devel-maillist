@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OProfile success story and some performance measurement tips
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%20measurement%20tips&In-Reply-To=%3C200505252152.44421.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000728.html">
+   <LINK REL="Next"  HREF="000733.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OProfile success story and some performance measurement tips</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%20measurement%20tips&In-Reply-To=%3C200505252152.44421.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OProfile success story and some performance measurement tips">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed May 25 21:52:44 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000728.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+        <LI>Next message: <A HREF="000733.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#729">[ date ]</a>
+              <a href="thread.html#729">[ thread ]</a>
+              <a href="subject.html#729">[ subject ]</a>
+              <a href="author.html#729">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 25. Mai 2005 18:25, Martin Wache wrote:
+&gt;<i> Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; Hi all,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; At times, my 900 MHz Celeron system used to use over 90% CPU in VDR, and it
+</I>&gt;<i> &gt; would drop frames in busy scenes.  After some profiling, I was able to cut
+</I>&gt;<i> &gt; the CPU consumption to 60-70% of the original.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Last night I did some profiling with oprofile.  I had linked softdevice
+</I>&gt;<i> &gt; statically against ffmpeg (compiled from CVS about two weeks ago), so
+</I>&gt;<i> &gt; I could conveniently see which functions are consuming most of the time.
+</I>&gt;<i> &gt; I'm typing this from memory, so there may be inaccuracies.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; The biggest surprise was color space conversion.  If I remember correctly,
+</I>&gt;<i> &gt; there are three settings: I420, YUY2 and YV12.  One might have blue and red
+</I>&gt;<i> &gt; swapped on my Matrox G450 (I think) card, but the other two look okay.
+</I>&gt;<i> &gt; Until now, I had used YV12 (I think), and wasted some 20-30 percent of
+</I>&gt;<i> &gt; softdevice's CPU consumption in color space conversions.  After selecting
+</I>&gt;<i> &gt; I420, the CPU load dropped by maybe 20 percent.
+</I>&gt;<i> Maybe we should write somewhere that people should use I420 if possible 
+</I>&gt;<i> (it is the native colorspace for mpeg2). YV12 is only there for people 
+</I>&gt;<i> owning a graphics card which can't do I420 or YUV2. But I think 
+</I>&gt;<i> I420/YUV2 is the default, or am I wrong?
+</I>
+The native format is YV12. But someone does mess it up. That someone
+is either X11 or (directfb and vidix). For X11 we allocate and YV12 surface
+format and for the others I have to use I420 ;-) .
+
+For X11 it would be best to request data in YUY2 format from ffmpeg,
+as I believe their conversions are more optimized than X11 ones.
+Many X11xv-out drivers do a convert from YV12 to YUV2
+in plain c-code. Look for routine names like copymungeddata().
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000728.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+	<LI>Next message: <A HREF="000733.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#729">[ date ]</a>
+              <a href="thread.html#729">[ thread ]</a>
+              <a href="subject.html#729">[ subject ]</a>
+              <a href="author.html#729">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

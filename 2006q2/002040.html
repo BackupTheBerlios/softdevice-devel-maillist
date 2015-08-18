@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Error compiling softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%20compiling%20softplay&In-Reply-To=%3C4469C7D2.00000A.30189%40webmail9.yandex.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002039.html">
+   <LINK REL="Next"  HREF="002045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Error compiling softplay</H1>
+    <B>jonis2006</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%20compiling%20softplay&In-Reply-To=%3C4469C7D2.00000A.30189%40webmail9.yandex.ru%3E"
+       TITLE="[Softdevice-devel] Error compiling softplay">jonis2006 at yandex.ru
+       </A><BR>
+    <I>Tue May 16 14:38:42 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002039.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+        <LI>Next message: <A HREF="002045.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2040">[ date ]</a>
+              <a href="thread.html#2040">[ thread ]</a>
+              <a href="subject.html#2040">[ subject ]</a>
+              <a href="author.html#2040">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>Hi,
+</I>&gt;<i>
+</I>&gt;<i>I decided to try out softplay, but I'm unable to compile it. I think I 
+</I>&gt;<i>have recent enough ffmepg and all the other requirements shuld be 
+</I>&gt;<i>satisfied. Anybody have clue what's going on?
+</I>&gt;<i>
+</I>&gt;<i>TIA, juhis
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>make[1]: Entering directory 
+</I>&gt;<i>`/home/veehoo/src/dvb/vdr-1.3.37/PLUGINS/src/softplay'
+</I>&gt;<i>g++ -O2 -Wall -Woverloaded-virtual -c -D_GNU_SOURCE 
+</I>&gt;<i>-DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include 
+</I>&gt;<i>-I../../../../DVB/include -I/usr/local/include/ffmpeg/ SoftPlayer.c
+</I>&gt;<i>SoftPlayer.c: In member function &#9618;virtual void cSoftPlayer::Action()&#9619;:
+</I>&gt;<i>SoftPlayer.c:173: error: request for member &#9618;codec_type&#9619; in 
+</I>&gt;<i>&#9618;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[pkt.AVPacket::stream_index]-&gt;AVStream::codec&#9619;, 
+</I>&gt;<i>which is of non-class type &#9618;AVCodecContext*&#9619;
+</I>&gt;<i>SoftPlayer.c:178: error: request for member &#9618;codec_type&#9619; in 
+</I>&gt;<i>&#9618;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[pkt.AVPacket::stream_index]-&gt;AVStream::codec&#9619;, 
+</I>&gt;<i>which is of non-class type &#9618;AVCodecContext*&#9619;
+</I>&gt;<i>SoftPlayer.c:222: error: request for member &#9618;codec_id&#9619; in 
+</I>&gt;<i>&#9618;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#9619;, 
+</I>&gt;<i>which is of non-class type &#9618;AVCodecContext*&#9619;
+</I>&gt;<i>SoftPlayer.c: In member function &#9618;ePlayMode 
+</I>&gt;<i>cSoftPlayer::GetPlayMode(AVFormatContext*)&#9619;:
+</I>&gt;<i>SoftPlayer.c:248: error: request for member &#9618;codec_type&#9619; in 
+</I>&gt;<i>&#9618;IC-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#9619;, which is of 
+</I>&gt;<i>non-class type &#9618;AVCodecContext*&#9619;
+</I>&gt;<i>SoftPlayer.c:250: error: request for member &#9618;codec_type&#9619; in 
+</I>&gt;<i>&#9618;IC-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#9619;, which is of 
+</I>&gt;<i>non-class type &#9618;AVCodecContext*&#9619;
+</I>&gt;<i>make[1]: *** [SoftPlayer.o] Error 1
+</I>&gt;<i>
+</I>&gt;<i>_______________________________________________
+</I>&gt;<i>Softdevice-devel mailing list
+</I>&gt;<i><A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i><A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+I know.In all lines just do replacements like:
+
+ic-&gt;streams[pkt.stream_index]-&gt;codec.codec_type
+replace by:
+ic-&gt;streams[pkt.stream_index].codec.codec_type
+the &quot;-&gt;&quot; replace on &quot;.&quot;
+in all lines what have error. And softplay will be compiled and working. This softplay working well with my VDR 1.4.0. Have a nice day ! :)
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002039.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+	<LI>Next message: <A HREF="002045.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2040">[ date ]</a>
+              <a href="thread.html#2040">[ thread ]</a>
+              <a href="subject.html#2040">[ subject ]</a>
+              <a href="author.html#2040">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

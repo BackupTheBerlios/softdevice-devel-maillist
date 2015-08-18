@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C54420.5010101%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000915.html">
+   <LINK REL="Next"  HREF="000917.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C54420.5010101%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Jul  1 15:24:48 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000915.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000917.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#916">[ date ]</a>
+              <a href="thread.html#916">[ thread ]</a>
+              <a href="subject.html#916">[ subject ]</a>
+              <a href="author.html#916">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Patrick Boettcher schrieb:
+
+&gt;&gt;<i> I'm not yet sure how to cure that correctly. From how I understand
+</I>&gt;&gt;<i> Poll(), the softdevice should only sleep if a write to the softdevice
+</I>&gt;&gt;<i> would block because of full buffers, however the description in device.h
+</I>&gt;&gt;<i> is not completly clear.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Please try the attached patch which causes the softdevice to sleep in
+</I>&gt;&gt;<i> Poll() already if the buffers a 50% full (if you want you can even try
+</I>&gt;&gt;<i> smaller values). If this fixes problems during playback we can think
+</I>&gt;&gt;<i> about what the correct solution would be.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I tried your patch and it seems to cure the problem partially. Jerking
+</I>&gt;<i> picture is almost gone (when playing recordings) but sometimes the sound
+</I>&gt;<i> stutters.
+</I>I guess that's because the buffers are now not full enough.... As I
+already said, I don't think that this is patch is the correct solution...
+&gt;<i> 
+</I>&gt;<i> Lowering it to 40% reduces stuttering a little again.
+</I>&gt;<i> 
+</I>&gt;<i> Anything else I can do to debug?
+</I>You can play with different values, also some larger ones, or change the
+buffer sizes from the OSD.
+
+Alternativly you can try the untested attached patch for vdr-1.3.27 (if
+it doesn't compile, maybe you can fix it, I guess the idea is clear...).
+It will cause vdr to sleep when it doesn't have any new frame for the
+softdevice. That will hopefully break the busy loop, but please undo the
+previous patch for the softdevice when trying this.
+
+Martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: vdr-jerky-replay.patch
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050701/f5c07f10/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050701/f5c07f10/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000915.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000917.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#916">[ date ]</a>
+              <a href="thread.html#916">[ thread ]</a>
+              <a href="subject.html#916">[ subject ]</a>
+              <a href="author.html#916">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

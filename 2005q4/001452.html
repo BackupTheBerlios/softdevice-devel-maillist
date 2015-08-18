@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr + softdevice + Epia vt1622a A-V sync sorted (ish!)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%20%2B%20softdevice%20%2B%20Epia%20vt1622a%20A-V%20sync%20sorted%0A%20%28ish%21%29&In-Reply-To=%3C436A0AA9.7090309%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001451.html">
+   <LINK REL="Next"  HREF="001453.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr + softdevice + Epia vt1622a A-V sync sorted (ish!)</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%20%2B%20softdevice%20%2B%20Epia%20vt1622a%20A-V%20sync%20sorted%0A%20%28ish%21%29&In-Reply-To=%3C436A0AA9.7090309%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] vdr + softdevice + Epia vt1622a A-V sync sorted (ish!)">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu Nov  3 14:03:37 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001451.html">[Softdevice-devel] vdr + softdevice + Epia vt1622a A-V sync sorted (ish!)
+</A></li>
+        <LI>Next message: <A HREF="001453.html">[Softdevice-devel] vdr + softdevice + Epia vt1622a A-V sync	sorted (ish!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1452">[ date ]</a>
+              <a href="thread.html#1452">[ thread ]</a>
+              <a href="subject.html#1452">[ subject ]</a>
+              <a href="author.html#1452">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz a &#233;crit :
+&gt;<i> I also made some other changes to the rest of the code and found that I
+</I>&gt;<i> had an almost perfect output when I disabled my DLOP_FIELD_PARITY bits!
+</I>&gt;<i> What I had done was reenable a couple of sections of commented out code.
+</I>&gt;<i> I have reenabled both DLBM_TRIPLE and DLOP_DEINTERLACING, if supported.
+</I>&gt;<i> 
+</I>&gt;<i> (Why were these commented out? What did they break? ;))
+</I>
+DLOP_DEINTERLACING was deactivated to improve resolution on low-res
+streams, like <A HREF="http://nicolas.huillard.net/vdr/meteo-express.tar.gz">http://nicolas.huillard.net/vdr/meteo-express.tar.gz</A>
+I think it has the effect of reducing resolution by augmenting
+refresh-rate, which is not a good trade-off with TV-out.
+There is a real (visible) improvement by disabling DLOP_DEINTERLACING :
+image is much sharper, even on full-res streams.
+
+As Mark said, DLBM_TRIPLE would be a good point for field parity.
+
+&gt;<i> With this setup, i.e. triple buffering and deinterlacing enabled and
+</I>&gt;<i> field parity disabled, I get a good picture. It doesn't look as smooth
+</I>&gt;<i> as it might be, maybe, but that's probably because it isn't using the
+</I>&gt;<i> field sync stuff. A-V sync is now perfect (with a delay of -3).
+</I>&gt;<i> 
+</I>&gt;<i> This is a serious improvement on what I was getting! Maybe getting
+</I>&gt;<i> DLOP_FIELD_PARITY to work properly would be the icing on the cake but
+</I>&gt;<i> for now it's good.
+</I>
+DLOP_DEINTERLACING with no DLOP_FIELD_PARITY give a good result, but no
+DLOP_DEINTERLACING gives a better result, which should be perfect if
+DLOP_FIELD_PARITY is used. That should be your goal ;-)
+Reading what you posted about your AV-sync, I think there is another
+problems with your setup, but I can't figure what it is (except
+different hardware than mine - EPIA M10k, and different software than
+Mark Adams - no VDR)
+
+I hope you will find a good solution to this ;-)
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001451.html">[Softdevice-devel] vdr + softdevice + Epia vt1622a A-V sync sorted (ish!)
+</A></li>
+	<LI>Next message: <A HREF="001453.html">[Softdevice-devel] vdr + softdevice + Epia vt1622a A-V sync	sorted (ish!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1452">[ date ]</a>
+              <a href="thread.html#1452">[ thread ]</a>
+              <a href="subject.html#1452">[ subject ]</a>
+              <a href="author.html#1452">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

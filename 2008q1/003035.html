@@ -1,0 +1,483 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with softdevice (&amp;softplay) with	vdr-1.6.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20softdevice%20%28%26softplay%29%20with%0A%09vdr-1.6.0&In-Reply-To=%3C1206498607.16913.3.camel%40lychee.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003034.html">
+   <LINK REL="Next"  HREF="003036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with softdevice (&amp;softplay) with	vdr-1.6.0</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20softdevice%20%28%26softplay%29%20with%0A%09vdr-1.6.0&In-Reply-To=%3C1206498607.16913.3.camel%40lychee.local%3E"
+       TITLE="[Softdevice-devel] Problems with softdevice (&amp;softplay) with	vdr-1.6.0">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Wed Mar 26 03:30:07 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003034.html">[Softdevice-devel] Two Problems with vdr-1.6.0
+</A></li>
+        <LI>Next message: <A HREF="003036.html">[Softdevice-devel] Problems with softdevice (&amp;softplay) with vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3035">[ date ]</a>
+              <a href="thread.html#3035">[ thread ]</a>
+              <a href="subject.html#3035">[ subject ]</a>
+              <a href="author.html#3035">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I have just upgraded my vdr to 1.6.0
+
+I have two problems with softdevice:
+
+1.  Softplay does not work, it appears to segfault.  I tried compiling
+again with a fresh checkout of ffmpeg svn but it gives the same error:
+
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x92114f0
+IsStream .avi
+open(!) [13337:    0.000] --&gt; Caught signal 11 (at 0x8, invalid address)
+&lt;--
+
+This is with any file I try to play.  (Help: my kids need their movies!)
+
+See the end of this file for a gdb bt.
+
+
+
+2.  Old recordings have stuttering audio.  New recordings seem ok, but
+my old ones sound awful.  Livetv is also fine.  The question is &quot;Why are
+their Xruns only with old recordings&quot;.
+
+Recordings were made with vdr-1.4.3 with teletext and subtitles patch.
+(I suspect this is the cause of the problems, but need to ask here
+before I ask on the vdr list!)
+
+XXXX[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0382 D [14062] [VideoOut] reset: sync info: repF = 6, drpF = 5,
+totF = 8467
+No accelerated IMDCT transform found
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0458 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:24.0810 D [14065] [VideoOut] video now synced (9 - 0)
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:25.0780 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0035 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0112 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0222 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0332 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms
+long)
+01:51:26.0553 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0608 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0662 D [14066] [softdevice-audio]: Xrun (at least 0.003 ms
+long)
+01:51:26.0717 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0773 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0982 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:27.0092 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms
+long)
+01:51:27.0202 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms
+long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+
+
+Ok.  Here is the bt for my first problem:
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread -1414853744 (LWP 20444)]
+0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+pkt=@0xabab0304)
+    at SoftPlayer.c:73
+73              if ( AudioIdx== -1 &amp;&amp;
+Current language:  auto; currently c++
+
+
+
+
+
+Thread 33 (Thread -1404363888 (LWP 20447)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x081109aa in cPoller::Poll (this=0x1, TimeoutMs=100) at
+tools.c:1195
+#3  0x0809e9b4 in cTSBuffer::Action (this=0x8518cf0) at device.c:1599
+#4  0x0810b48c in cThread::StartThread (Thread=0x8518cf0) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 32 (Thread -1425343600 (LWP 20446)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bc6a in cCondWait::Wait (this=0x8516548, TimeoutMs=100)
+    at thread.c:69
+#3  0x080ef894 in cRingBuffer::WaitForGet (this=0x85164f8) at
+ringbuffer.c:64
+#4  0x080f031b in cRingBufferLinear::Get (this=0x85164f8,
+Count=@0xab0af300)
+    at ringbuffer.c:311
+#5  0x0809bf79 in cTSBuffer::Get (this=0x8518cf0) at device.c:1622
+#6  0x080a0b3d in cDvbDevice::GetTSPacket (this=0x84143e0,
+Data=@0xab0af378)
+    at dvbdevice.c:1205
+#7  0x0809f270 in cDevice::Action (this=0x84143e0) at device.c:1427
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#8  0x0810b48c in cThread::StartThread (Thread=0x84143e0) at
+thread.c:244
+#9  0x0081045b in start_thread () from /lib/libpthread.so.0
+#10 0x0076823e in clone () from /lib/libc.so.6
+
+Thread 31 (Thread -1379415152 (LWP 20445)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x003031e2 in cSoftplayReceiver::Action (this=0x86c8250) at
+Receiver.c:157
+#4  0x0810b48c in cThread::StartThread (Thread=0x86c8374) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 30 (Thread -1414853744 (LWP 20444)):
+#0  0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+pkt=@0xabab0304)
+    at SoftPlayer.c:73
+#1  0x002fc89c in cSoftPlayer::FileReplay (this=0x8536ff0) at
+SoftPlayer.c:290
+#2  0x002fcd82 in cSoftPlayer::Action (this=0x8536ff0) at
+SoftPlayer.c:358
+#3  0x0810b48c in cThread::StartThread (Thread=0x8536ffc) at
+thread.c:244
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 29 (Thread -1436775536 (LWP 20443)):
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0017213c in cSigTimer::Sleep (this=0x8479fc4, timeoutUS=50000, 
+    lowLimitUS=0) at sync-timer.c:75
+#3  0x001668b3 in cMpeg2Decoder::read_packet (this=0x8479ec8, buf=0x0, 
+    buf_size=32768) at mpeg2decoder.c:1061
+#4  0x001669b4 in read_packet_RingBuffer (opaque=0x19449, buf=0x0, 
+    buf_size=32768) at mpeg2decoder.c:988
+#5  0x0020b1f8 in get_byte () from /usr/local/lib/libavformat.so.52
+#6  0x00000000 in ?? ()
+
+Thread 27 (Thread 28269456 (LWP 19960)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bbce in cCondVar::TimedWait (this=0x8413ba0,
+Mutex=@0x8413b54, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x080a4d15 in cDvbTuner::Action (this=0x8413690) at dvbdevice.c:345
+#4  0x0810b48c in cThread::StartThread (Thread=0x8413690) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+Thread 26 (Thread 69180304 (LWP 19961)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x080f196d in cSectionHandler::Action (this=0x84134d8) at
+sections.c:184
+#3  0x0810b48c in cThread::StartThread (Thread=0x84134d8) at
+thread.c:244
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 25 (Thread 38759312 (LWP 19963)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bbce in cCondVar::TimedWait (this=0x82d58e8,
+Mutex=@0x82d589c, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x080a4d15 in cDvbTuner::Action (this=0x82d53d8) at dvbdevice.c:345
+#4  0x0810b48c in cThread::StartThread (Thread=0x82d53d8) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 24 (Thread 57072528 (LWP 19964)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x080f196d in cSectionHandler::Action (this=0x8413e30) at
+sections.c:184
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#3  0x0810b48c in cThread::StartThread (Thread=0x8413e30) at
+thread.c:244
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 23 (Thread 91270032 (LWP 19965)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00814256 in pthread_cond_wait@@GLIBC_2.3.2 ()
+from /lib/libpthread.so.0
+#2  0x00ac2594 in vt_thread ()
+   from /usr/local/lib/directfb-0.9.26/systems/libdirectfb_fbdev.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 22 (Thread 114228112 (LWP 19968)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x00acddd4 in ps2mouseEventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_ps2mouse.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 21 (Thread 124717968 (LWP 19969)):
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 20 (Thread -1229980784 (LWP 19970)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 19 (Thread -1240470640 (LWP 19971)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 18 (Thread -1250960496 (LWP 19972)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 17 (Thread -1261450352 (LWP 19973)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 16 (Thread -1271940208 (LWP 19974)):
+#0  0x00110402 in __kernel_vsyscall ()
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x00853ba7 in keyboardEventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_keyboard.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 15 (Thread -1282430064 (LWP 19975)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x00990eba in cVideoOut::Action (this=0x841fde0) at video.c:114
+#4  0x0810b48c in cThread::StartThread (Thread=0x842023c) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 14 (Thread -1293128816 (LWP 19976)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x0036b31b in cWapServer::Action ()
+from ./PLUGINS/lib/libvdr-wapd.so.1.6.0
+#4  0x0810b48c in cThread::StartThread (Thread=0x8497d80) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 13 (Thread -1303618672 (LWP 19977)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x005b1882 in cTBSelect::Select ()
+   from ./PLUGINS/lib/libvdr-streamdev-server.so.1.6.0
+#3  0x0059f46e in cStreamdevServer::Action ()
+   from ./PLUGINS/lib/libvdr-streamdev-server.so.1.6.0
+#4  0x0810b48c in cThread::StartThread (Thread=0x847a048) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 12 (Thread -1314108528 (LWP 19978)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bbce in cCondVar::TimedWait (this=0x848e0c4,
+Mutex=@0x848e0a8, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x0061db67 in vdr_burn::manager::Action ()
+   from ./PLUGINS/lib/libvdr-burn.so.1.6.0
+#4  0x0810b48c in cThread::StartThread (Thread=0x848e078) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 11 (Thread -1324598384 (LWP 19979)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bc6a in cCondWait::Wait (this=0xb10c30a4, TimeoutMs=1000)
+    at thread.c:69
+#3  0x0810be20 in cCondWait::SleepMs (TimeoutMs=1000) at thread.c:58
+#4  0x042def9d in sleepMSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#5  0x042defd1 in sleepSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#6  0x04329f45 in cSearchTimerThread::Action ()
+   from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#7  0x0810b48c in cThread::StartThread (Thread=0x84b6738) at
+thread.c:244
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 10 (Thread -1335088240 (LWP 19980)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bc6a in cCondWait::Wait (this=0xb06c2264, TimeoutMs=1000)
+    at thread.c:69
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#3  0x0810be20 in cCondWait::SleepMs (TimeoutMs=1000) at thread.c:58
+#4  0x042def9d in sleepMSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#5  0x042defd1 in sleepSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#6  0x042bac57 in cConflictCheckThread::Action ()
+   from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#7  0x0810b48c in cThread::StartThread (Thread=0x84b6308) at
+thread.c:244
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 9 (Thread -1345578096 (LWP 19981)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x08110705 in cFile::FileReady (FileDes=19, TimeoutMs=-1) at
+tools.c:1371
+#3  0x080bb1cc in cLircRemote::Action (this=0x84bb418) at lirc.c:73
+#4  0x0810b48c in cThread::StartThread (Thread=0x84bb428) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 8 (Thread -1356067952 (LWP 19982)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x08112473 in safe_read (filedes=0, buffer=0xaf2c0303, size=1)
+    at tools.c:56
+---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+#3  0x080ea2cf in cKbdRemote::ReadKey (this=0x84bb568) at remote.c:298
+#4  0x080ea33e in cKbdRemote::ReadKeySequence (this=0x84bb568) at
+remote.c:312
+#5  0x080eaa0e in cKbdRemote::Action (this=0x84bb568) at remote.c:353
+#6  0x0810b48c in cThread::StartThread (Thread=0x84bb578) at
+thread.c:244
+#7  0x0081045b in start_thread () from /lib/libpthread.so.0
+#8  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 1 (Thread -1208998192 (LWP 19955)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x0811082e in cFile::AnyFileReady (FileDes=22, TimeoutMs=0) at
+tools.c:1356
+#3  0x081108ad in cFile::Ready (this=0x848f104, Wait=false) at
+tools.c:1338
+#4  0x08109a29 in cSVDRP::Process (this=0x848f0f8) at svdrp.c:1613
+#5  0x080b98b7 in cInterface::GetKey (this=0x8484598, Wait=true)
+    at interface.c:37
+#6  0x0811698f in main (argc=4194304, argv=0xbf9f9e74) at vdr.c:907
+0x002fb187      73              if ( AudioIdx== -1 &amp;&amp;
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003034.html">[Softdevice-devel] Two Problems with vdr-1.6.0
+</A></li>
+	<LI>Next message: <A HREF="003036.html">[Softdevice-devel] Problems with softdevice (&amp;softplay) with vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3035">[ date ]</a>
+              <a href="thread.html#3035">[ thread ]</a>
+              <a href="subject.html#3035">[ subject ]</a>
+              <a href="author.html#3035">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

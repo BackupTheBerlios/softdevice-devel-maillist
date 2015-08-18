@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] New A-V patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20patch&In-Reply-To=%3C200411200856.33134.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000095.html">
+   <LINK REL="Next"  HREF="000097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] New A-V patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20patch&In-Reply-To=%3C200411200856.33134.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] New A-V patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Nov 20 08:56:32 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000095.html">[Softdevice-devel] New A-V patch
+</A></li>
+        <LI>Next message: <A HREF="000097.html">[Softdevice-devel] New A-V patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#96">[ date ]</a>
+              <a href="thread.html#96">[ thread ]</a>
+              <a href="subject.html#96">[ subject ]</a>
+              <a href="author.html#96">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 18. November 2004 00:24, Torgeir Veimo wrote:
+&gt;<i> On Tue, 2004-11-16 at 19:47 +0000, Torgeir Veimo wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I've uploaded a tgz of a vdr recording which demonstrates the problem.
+</I>&gt;<i> &gt; It would be good if one of you could try to view it and see if you have
+</I>&gt;<i> &gt; the same problems as I have, to actually test whether the problem is in
+</I>&gt;<i> &gt; my local setup or not. It's quite large, about 80mb, at
+</I>&gt;<i> &gt; <A HREF="http://nothome.com/avsynctest.tgz">http://nothome.com/avsynctest.tgz</A> 
+</I>&gt;<i> 
+</I>&gt;<i> Did anyone of you try the recording? It works about right with an
+</I>&gt;<i> additional audio delay of about 200ms in my setup. 200ms is still the
+</I>&gt;<i> delay that works best for most channels and programmes, but not always.
+</I>
+Now I was able to test this stream. It sound terrible. But maybe thats
+to the fact I got so many xrun messages:
+Nov 20 08:07:21 jarada vdr[2497]: [video-dfb] 1: 704x576 [0,0 704x576] -&gt; 1024x768 [0,15 1024x737]
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 80% (tid=229387)
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 85% (tid=229387)
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 90% (tid=229387)
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 95% (tid=229387)
+Nov 20 08:07:22 jarada vdr[2498]: buffer usage: 100% (tid=229387)
+Nov 20 08:07:45 jarada vdr[2496]: [softdevice-audio]: xrun
+
+Nov 20 08:08:16 jarada last message repeated 79 times
+Nov 20 08:09:04 jarada last message repeated 135 times
+
+Nov 20 08:09:04 jarada vdr[2478]: softdevice: no translation found for 'Softdevice' in language 1 (Deutsch)
+Nov 20 08:09:04 jarada vdr[2496]: [softdevice-audio]: xrun
+Nov 20 08:09:09 jarada last message repeated 14 times
+Nov 20 08:09:09 jarada vdr[2478]: confirm: Wirklich neu starten?
+
+mplayer has better sync but there are many suond glitches too
+(like a hissy background noise).
+
+I think the audio sample rate is not detected correct.
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000095.html">[Softdevice-devel] New A-V patch
+</A></li>
+	<LI>Next message: <A HREF="000097.html">[Softdevice-devel] New A-V patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#96">[ date ]</a>
+              <a href="thread.html#96">[ thread ]</a>
+              <a href="subject.html#96">[ subject ]</a>
+              <a href="author.html#96">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

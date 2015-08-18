@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice and HD-material
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801191041.28347.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003010.html">
+   <LINK REL="Next"  HREF="003014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice and HD-material</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801191041.28347.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice and HD-material">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jan 19 10:41:28 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003010.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+        <LI>Next message: <A HREF="003014.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3012">[ date ]</a>
+              <a href="thread.html#3012">[ thread ]</a>
+              <a href="subject.html#3012">[ subject ]</a>
+              <a href="author.html#3012">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 18 January 2008, Thomas Herrmann wrote:
+&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> I've patched VDR and softdevice plugins to give HDTV a try. I'm using VDR 1.5.13 together with the latest DVB-S2 HDTV patch on a 64bit system.
+</I>&gt;<i> 
+</I>&gt;<i> When switching to HDTV I get a still picture and VDR reports:
+</I>&gt;<i> 
+</I>
+These 2 are from softdevice:
+&gt;<i> [mpegdecoder] Error while decoding video frame 0
+</I>&gt;<i> [mpegdecoder] resetting codec
+</I>
+These are from ffmpeg:
+&gt;<i> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> [h264 @ 0x2ae30fde07e0]no frame!
+</I>
+I've such messages sometimes too. But I guess that's either
+signal quality or driver or a repacker issue.
+Switching to another channel and retune to HD solves this (sometimes).
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003010.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+	<LI>Next message: <A HREF="003014.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3012">[ date ]</a>
+              <a href="thread.html#3012">[ thread ]</a>
+              <a href="subject.html#3012">[ subject ]</a>
+              <a href="author.html#3012">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

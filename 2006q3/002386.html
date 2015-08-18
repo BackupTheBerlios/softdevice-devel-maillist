@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nVidia hardware alpha blending for OSD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C450193E0.1050400%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002385.html">
+   <LINK REL="Next"  HREF="002389.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nVidia hardware alpha blending for OSD</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C450193E0.1050400%40gmx.net%3E"
+       TITLE="[Softdevice-devel] nVidia hardware alpha blending for OSD">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Sep  8 18:01:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002385.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+        <LI>Next message: <A HREF="002389.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2386">[ date ]</a>
+              <a href="thread.html#2386">[ thread ]</a>
+              <a href="subject.html#2386">[ subject ]</a>
+              <a href="author.html#2386">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Chris Elsworth schrieb:
+&gt;<i> On Fri, Sep 08, 2006 at 05:14:26PM +0200, Martin Wache wrote:
+</I>&gt;&gt;<i> Chris Elsworth schrieb:
+</I>&gt;&gt;&gt;<i> I haven't got much information to hand at the moment but current CVS
+</I>&gt;&gt;&gt;<i> breaks here; this is a pretty useless bug report I'm afraid, there's
+</I>&gt;&gt;&gt;<i> no diagnostic information given:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;<i> Did you check the syslog for further information?
+</I>&gt;<i> 
+</I>&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> Here's syslog output with -l 3:
+</I>&gt;<i>
+</I>
+This is very strange:
+
+
+&gt;<i> Sep  8 16:42:10 media vdr: [12919] [XvVideoOut]: initialized OK
+</I>
+This line comes from video-xv.c line 1053 in the method Initialize().
+After that line the method _cannot_ return false. But as you posted before:
+
+&gt;<i> [softdevice] Xv out failure !
+</I>
+which belongs to softdevice.c line 252. This line can only be reached if
+Initialize() returns false.
+
+Or did I miss anything?
+
+Are you sure that you properly recompiled the softdevice? Do those two
+logs really belong together?
+You can also try to go back in the CVS using the -D switch of cvs.
+Interessting dates can be found in the CHANGELOG. Please do a &quot;make
+clean&quot; in the softdevice directory, if you do this. Just to be sure...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002385.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+	<LI>Next message: <A HREF="002389.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2386">[ date ]</a>
+              <a href="thread.html#2386">[ thread ]</a>
+              <a href="subject.html#2386">[ subject ]</a>
+              <a href="author.html#2386">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

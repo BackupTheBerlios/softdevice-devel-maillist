@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] live HDTV channel not playing smooth
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20live%20HDTV%20channel%20not%20playing%20smooth&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D0390D927F%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002223.html">
+   <LINK REL="Next"  HREF="002226.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] live HDTV channel not playing smooth</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20live%20HDTV%20channel%20not%20playing%20smooth&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D0390D927F%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] live HDTV channel not playing smooth">Neumann at do-net.de
+       </A><BR>
+    <I>Thu Jul  6 17:38:44 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002223.html">[Softdevice-devel] EPIA ME6000 and CPU usage
+</A></li>
+        <LI>Next message: <A HREF="002226.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2224">[ date ]</a>
+              <a href="thread.html#2224">[ thread ]</a>
+              <a href="subject.html#2224">[ subject ]</a>
+              <a href="author.html#2224">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I noticed the same problem on a 3,4 Ghz P4 HT machine (my VDR is a 2,8 GHz P4 without HT),
+so i think it has nothing to do with cpu power.
+It must be some buffer or something....
+
+Anyone ?
+
+-------------
+Andre Neumann
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> 
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] On Behalf Of Andre Neumann
+</I>&gt;<i> Sent: Monday, July 03, 2006 9:44 AM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+</I>&gt;<i> Subject: [Softdevice-devel] live HDTV channel not playing smooth
+</I>&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i>  
+</I>&gt;<i> I tested live HDTV output yesterday again with the patch 
+</I>&gt;<i> Marko M&#228;kel&#228; send to the list yesterday.
+</I>&gt;<i> Cpu is now at 70% when watching HD1 channel (1440x1080) here 
+</I>&gt;<i> in my cable network (ish).
+</I>&gt;<i> 
+</I>&gt;<i> The Problem is, that die playback is not smooth. It is 
+</I>&gt;<i> running only very slowly and every 5 seconds
+</I>&gt;<i> the output hangs. In the logfiles from vdr i see, that the 
+</I>&gt;<i> transfer buffer gets cleared when the
+</I>&gt;<i> video hangs. 
+</I>&gt;<i> 
+</I>&gt;<i> Softdevice is CVS, ffmpeg SVN. DirectFB 0.9.25.
+</I>&gt;<i> 
+</I>&gt;<i> Softdevice is operating with HDTV buffer method. I also tried 
+</I>&gt;<i> to change the buffers in vdr in transfer.c
+</I>&gt;<i> from 2 MB to 8 MB, but that has no effect.
+</I>&gt;<i> 
+</I>&gt;<i> I think, there is some problem beetween communication vdr --&gt; 
+</I>&gt;<i> softdevice. Because when i stream HD1 on my
+</I>&gt;<i> Notebook, i have no glitches in the video and the transfer 
+</I>&gt;<i> buffers dont fill so fast.
+</I>&gt;<i> 
+</I>&gt;<i> Is there something i can do to help to debug this ?
+</I>&gt;<i> 
+</I>&gt;<i> -------------
+</I>&gt;<i> Andre Neumann
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002223.html">[Softdevice-devel] EPIA ME6000 and CPU usage
+</A></li>
+	<LI>Next message: <A HREF="002226.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2224">[ date ]</a>
+              <a href="thread.html#2224">[ thread ]</a>
+              <a href="subject.html#2224">[ subject ]</a>
+              <a href="author.html#2224">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

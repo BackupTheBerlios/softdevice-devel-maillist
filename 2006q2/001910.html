@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200604241339.53264.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001909.html">
+   <LINK REL="Next"  HREF="001911.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200604241339.53264.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Mon Apr 24 14:39:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001909.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="001911.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1910">[ date ]</a>
+              <a href="thread.html#1910">[ thread ]</a>
+              <a href="subject.html#1910">[ subject ]</a>
+              <a href="author.html#1910">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 24 Apr 2006 13:34, Nicolas Huillard wrote:
+&gt;<i> Laz a &#233;crit :
+</I>&gt;<i> &gt; At the moment, I'm just trying to get something that works before
+</I>&gt;<i> &gt; trying to incorporate it into anything... Eventually, I hope to
+</I>&gt;<i> &gt; create either another output driver for softdevice or incorporate it
+</I>&gt;<i> &gt; into the existing video-dfb.c (although that might be more difficult
+</I>&gt;<i> &gt; because libsoftmpeg takes care of the A-V sync and the actual audio
+</I>&gt;<i> &gt; and video output).
+</I>&gt;<i>
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i> &gt; I have yet to get my head around how this would fit into either
+</I>&gt;<i> &gt; DirectFB or ffmpeg...
+</I>&gt;<i>
+</I>&gt;<i> Just a thought I had some time ago : what you try to achieve is using a
+</I>&gt;<i> standalone MPEG2 decoder... much like the EM8300 / DXR3 / Hollywood+
+</I>&gt;<i> card... Maybe looking at the DXR3 VDR plugin could help in some way
+</I>&gt;<i> (either implementing CLE266 in this plugin, or getting CLE266 + EM8300
+</I>&gt;<i> code inside softdevice...)
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.schluenss.de/DXR3.html">http://www.schluenss.de/DXR3.html</A>
+</I>&gt;<i> <A HREF="http://sourceforge.net/projects/dxr3plugin">http://sourceforge.net/projects/dxr3plugin</A>
+</I>
+I used to use a dxr3 for output!
+
+;)
+
+I think with that, you just send an MPEG stream at the device and it comes 
+nicely out of the tv-out connector. I don't think it's as easy with the 
+CLE266. With the CLE266, you feed it MPEG data and it ends up in a 
+framebuffer which you then need to blit or flip at the relevant time.
+
+The OSD on the dxr3 is done on the devices sub-picture unit, ratherh than 
+a 'real OSD', and so the number of colours, etc. is limited. I like the 
+way DirectFB gives a separate layer for using as the OSD, rather than 
+mixing the OSD in with the vidoe, which is I think how the xine and 
+related output plugins work.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001909.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="001911.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1910">[ date ]</a>
+              <a href="thread.html#1910">[ thread ]</a>
+              <a href="subject.html#1910">[ subject ]</a>
+              <a href="author.html#1910">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

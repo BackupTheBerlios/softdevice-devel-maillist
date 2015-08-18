@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703032340.24203.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002766.html">
+   <LINK REL="Next"  HREF="002772.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703032340.24203.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Mar  3 23:40:24 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002766.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002772.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2767">[ date ]</a>
+              <a href="thread.html#2767">[ thread ]</a>
+              <a href="subject.html#2767">[ subject ]</a>
+              <a href="author.html#2767">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 03 March 2007 21:56, Hugo Visser wrote:
+&gt;<i> &gt;&gt; So that would mean it's a bug in directfb or the framebuffer I'm
+</I>&gt;<i> &gt;&gt; using?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It's a bug (or missing feature) in the DirectFBs unichrome driver.
+</I>&gt;<i> &gt; With my epia I get the same when defining a 1024x768 resolution as  
+</I>&gt;<i> &gt; 16:9.
+</I>&gt;<i> &gt; Crop area is only stretched horizontally SetSourceLocation() is not
+</I>&gt;<i> &gt; taken into account.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Radeon driver does it correct.
+</I>&gt;<i> 
+</I>&gt;<i> :( That's really too bad. So I guess I have to move this to the  
+</I>&gt;<i> directfb list? Maybe you could explain the problem better to the devs?
+</I>&gt;<i> 
+</I>
+I already started a thread on directfb-dev list and Denis confirmed
+that it's a missing feature of the driver.
+So we'll see/have to wait what will happen in that direction.
+
+But there's another issue:
+I cannot confirm broadcasted 16:9 video with cropping set to 16:9 displayed wrong,
+which was shown on your screen shots (dsc00245lt9.jpg). Please shown
+me the syslog trace of that example.
+
+Unfortunatly using the old softdevice code with &quot;#define HAVE_SetSourceLocation 0&quot;
+does not work for me either as I get some exceptions there. Have to look at that.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002766.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002772.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2767">[ date ]</a>
+              <a href="thread.html#2767">[ thread ]</a>
+              <a href="subject.html#2767">[ subject ]</a>
+              <a href="author.html#2767">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice+dvd plugin - audio jerks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%2Bdvd%20plugin%20-%20audio%20jerks&In-Reply-To=%3C477A76CA.2020400%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002989.html">
+   <LINK REL="Next"  HREF="002991.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice+dvd plugin - audio jerks</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%2Bdvd%20plugin%20-%20audio%20jerks&In-Reply-To=%3C477A76CA.2020400%40globall.ru%3E"
+       TITLE="[Softdevice-devel] softdevice+dvd plugin - audio jerks">bob at globall.ru
+       </A><BR>
+    <I>Tue Jan  1 18:22:18 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002989.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+        <LI>Next message: <A HREF="002991.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2990">[ date ]</a>
+              <a href="thread.html#2990">[ thread ]</a>
+              <a href="subject.html#2990">[ subject ]</a>
+              <a href="author.html#2990">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke &#1087;&#1080;&#1096;&#1077;&#1090;:
+&gt;<i>
+</I>&gt;<i> If you keep this change and apply the attached diff,
+</I>&gt;<i> it should work too.
+</I>&gt;<i>   
+</I>
+Hm, it does not work. After start vdr video is frozen.
+
+My log:
+Jan  1 19:44:53 vdr vdr: [4708] Position Tracker thread started
+(pid=4708, tid=4708)
+Jan  1 19:44:53 vdr vdr: [4691] actuator: switch to channel 4255
+Jan  1 19:44:53 vdr vdr: [4709] transfer thread started (pid=4709, tid=4709)
+Jan  1 19:44:53 vdr vdr: [4710] receiver on device 1 thread started
+(pid=4710, tid=4710)
+Jan  1 19:44:53 vdr vdr: [4711] TS buffer on device 1 thread started
+(pid=4711, tid=4711)
+Jan  1 19:44:53 vdr vdr: [4712] [VideoOut] reset: sync info: repF = 0,
+drpF = 0, totF = 0
+Jan  1 19:44:53 vdr vdr: [4714] [VideoOut]: resolution changed: W(736 -&gt;
+720); H(576 -&gt;576)
+Jan  1 19:44:53 vdr vdr: [4714] [VideoOut]: aspect changed (0 -&gt; 0 ;
+1.366667 -&gt; 1.333333)
+Jan  1 19:44:53 vdr vdr: [4714] [VideoOut]: 720x576 [0,0 720x576] -&gt;
+720x576 [0,0 720x576]
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] (re)configuring Videolayer to 720
+x 576 (720x576)
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] SetParams: Enabling DLOP_FIELD_PARITY
+Jan  1 19:44:53 vdr vdr: [4709] setting audio track to 1 (0)
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] surface capabilities for
+(videoSurface): videoonly, flipping, triple-buffered, Pixel
+Format = 0x08100609
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] (re)configured 0x08100609
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Playback reopen
+error: CH2, &#1053;&#1077;&#1090; &#1090;&#1072;&#1082;&#1086;&#1075;&#1086; &#1092;&#1072;&#1081;&#1083;&#1072; &#1080;&#1083;&#1080; &#1082;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075;&#1072;
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] samplerate: 48000Hz,
+channels: #2
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Device 'default',
+Samplerate 48000 Channels 2
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Period size 1152
+Buffer size 9216
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Hardware initialized
+Jan  1 19:44:55 vdr vdr: [4708] Position Tracker thread ended (pid=4708,
+tid=4708)
+Jan  1 19:44:56 vdr vdr: [4710] buffer usage: 70% (tid=4709)
+Jan  1 19:44:56 vdr vdr: [4710] buffer usage: 80% (tid=4709)
+Jan  1 19:44:56 vdr vdr: [4710] buffer usage: 90% (tid=4709)
+Jan  1 19:44:57 vdr vdr: [4710] buffer usage: 100% (tid=4709)
+Jan  1 19:44:57 vdr vdr: [4710] ERROR: 1 ring buffer overflow (177 bytes
+dropped)
+Jan  1 19:45:03 vdr vdr: [4710] ERROR: 24285 ring buffer overflows
+(4565580 bytes dropped)
+Jan  1 19:45:09 vdr vdr: [4710] ERROR: 25005 ring buffer overflows
+(4700940 bytes dropped)
+Jan  1 19:45:15 vdr vdr: [4710] ERROR: 25013 ring buffer overflows
+(4702444 bytes dropped)
+...
+
+Regards,
+Vladimir Monchenko.
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002989.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+	<LI>Next message: <A HREF="002991.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2990">[ date ]</a>
+              <a href="thread.html#2990">[ thread ]</a>
+              <a href="subject.html#2990">[ subject ]</a>
+              <a href="author.html#2990">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

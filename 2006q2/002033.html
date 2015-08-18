@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] direct rendering
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20direct%20rendering&In-Reply-To=%3C4468E28F.60306%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002058.html">
+   <LINK REL="Next"  HREF="002069.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] direct rendering</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20direct%20rendering&In-Reply-To=%3C4468E28F.60306%40gmx.net%3E"
+       TITLE="[Softdevice-devel] [PATCH] direct rendering">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon May 15 22:20:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002058.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="002069.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2033">[ date ]</a>
+              <a href="thread.html#2033">[ thread ]</a>
+              <a href="subject.html#2033">[ subject ]</a>
+              <a href="author.html#2033">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+
+I'm sending you my first concept for direct rendering with the
+softdevice, meaning that the video-out allocates the picture buffes (not
+necessarily in video memory, which may be slower). There are many
+advantages of direct rendering, for example the pictures get allocated
+by the video out, so they can be used at any time by the video out,
+without having to fear that they have been deleted (because the
+mpeg2decoder has been reseted). Very nice for software alpha blending
+and we can also implement screenshots a lot easier :-). X11 XvMC needs
+direct rendering and I think Laz patches also could benefit from it. For
+Xv-out it would also be faster to use direct rendering.
+
+The main part is the PicBuffer structure:
+
+  typedef struct sPicBuffer {
+    PixelFormat format;
+    uint8_t *pixel[4];
+    int stride[4];
+    unsigned int use_count;
+    int max_width;
+    int max_height;
+    int edge_width;  // needed by ffmpeg
+    int edge_height; // needed by ffmpeg
+    int Width;
+    int Height;
+    int buf_num;      // video-out specific buffer number
+    int pic_num;     // needed by ffmpeg
+    void *priv_data;
+  };
+
+I want to propose to use this structure (which can of course be extended
+ by aspect ratio,pts etc..) for decoded pictures.
+If one uses filters, the decoder should allocate the picture buffers
+from the filters, the filters from the video out, else the decoder
+should directly use the buffers from the video out.
+My patch already overrides ffmpegs get_buffer()/release_buffer() to use
+picture buffes from the video out, the filters still have to be changed.
+
+In case of Laz hardware decoding patches the fb could be stored in
+buf_num, and if one sets up *pixel[] correctly even filtering would be
+possible (but most likely it would be slow...), however it would be nice
+for software alpha blending.
+
+There are still a lot of open questions, especially on the filtering...
+Comments are welcome :-)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002058.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="002069.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2033">[ date ]</a>
+              <a href="thread.html#2033">[ thread ]</a>
+              <a href="subject.html#2033">[ subject ]</a>
+              <a href="author.html#2033">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

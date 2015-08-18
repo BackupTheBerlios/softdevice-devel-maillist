@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] ac3 passthrough 1st try
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C200510080953.52831.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001321.html">
+   <LINK REL="Next"  HREF="001305.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] ac3 passthrough 1st try</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C200510080953.52831.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] ac3 passthrough 1st try">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Oct  8 09:53:52 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001321.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+        <LI>Next message: <A HREF="001305.html">[Softdevice-devel] Re: DFB with Matrox G450 cable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1322">[ date ]</a>
+              <a href="thread.html#1322">[ thread ]</a>
+              <a href="subject.html#1322">[ subject ]</a>
+              <a href="author.html#1322">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 8. Oktober 2005 09:35, Lucian Muresan wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; Can you try to change:
+</I>&gt;<i> &gt; osdLayer-&gt;SetFieldParity(0);
+</I>&gt;<i> &gt; to:
+</I>&gt;<i> &gt; osdLayer-&gt;SetFieldParity(1);
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; to see if fields are swapped on your card.
+</I>&gt;<i> 
+</I>&gt;<i> I tried that, and even to hack the similar code at a place where
+</I>&gt;<i> videoLayer is configured, and it did not help. BUT, then I played again
+</I>&gt;<i> with the softdevice setup options in the OSD!!!! Man, what a moron I was
+</I>&gt;<i> when I did it some time ago and changed the aspect ratio, I had the
+</I>&gt;<i> impression that 5:4 &quot;looked better&quot; on my 4:3 PAL TV (because of
+</I>&gt;<i> overscan - btw, is there a way to tweak this for G400 CRTC2 used with
+</I>&gt;<i> DirectFB?). 
+</I>
+Yup, that was the one thing I forgot to ask. Display aspect ratio
+has to be set correct. As it we are now talking about scaling, have a
+look at my postings at directfb-user. There are some hard things
+to be done ..
+
+&gt;<i> Well, the moment I switched back to 4:3, the image became
+</I>&gt;<i> crisp and clear, no judder, everything looks just as it should, only
+</I>&gt;<i> once in a while there seems to be a synchronisation catch up where
+</I>&gt;<i> horizontally scrolling text for example, speeds up a little bit and then
+</I>&gt;<i> moves with constant speed again, but it's not too obviously noticeable.
+</I>&gt;<i> 
+</I>&gt;<i> So my judder issue is solved now, I'm curious if A/V sync can still be
+</I>&gt;<i> improved.
+</I>
+Well in ac3 mode, there seems to be a slight offset for a short while.
+But a few seconds later the speaker seems to be lipsync again without
+any noticable frame dropping.
+Perhaps I'll delay that issue for a short time and release 0.2.0 version
+very soon, hopefully this evening, so that people can do tests over 
+the weekend.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001321.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+	<LI>Next message: <A HREF="001305.html">[Softdevice-devel] Re: DFB with Matrox G450 cable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1322">[ date ]</a>
+              <a href="thread.html#1322">[ thread ]</a>
+              <a href="subject.html#1322">[ subject ]</a>
+              <a href="author.html#1322">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

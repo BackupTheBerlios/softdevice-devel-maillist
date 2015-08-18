@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C444BE15E.2020106%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001882.html">
+   <LINK REL="Next"  HREF="001905.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C444BE15E.2020106%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Apr 23 22:19:42 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001882.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="001905.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1897">[ date ]</a>
+              <a href="thread.html#1897">[ thread ]</a>
+              <a href="subject.html#1897">[ subject ]</a>
+              <a href="author.html#1897">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> On Wednesday 19 Apr 2006 14:54, Nicolas Huillard wrote:
+</I>&gt;&gt;<i> Laz a &#233;crit :
+</I>&gt;&gt;&gt;<i> I know this has been mentioned several times in the past but I don't
+</I>&gt;&gt;&gt;<i> think anyone has made any progress in getting hardware MPEG decoding
+</I>&gt;&gt;&gt;<i> on the Via CLE266 and related chips from DirectFB apps. I have a Via
+</I>&gt;&gt;&gt;<i> Epia system running vdr with softdevice using DirectFB TV-out output,
+</I>&gt;&gt;&gt;<i> and this works really well but it is just on the limit of what the
+</I>&gt;&gt;&gt;<i> CPU can do when it is decoding the MPEG2 stream in software, so I get
+</I>&gt;&gt;&gt;<i> a few jerks and A-V sync isn't as good as it should be. I've started
+</I>&gt;&gt;&gt;<i> looking into this again now...
+</I>&gt;&gt;<i> It's really nice to see that there is still interest in this solution !
+</I>&gt;&gt;<i> Since I still didn't upgrade from vdr 1.3.33 / softdevice 0.2.0, I
+</I>&gt;&gt;<i> can't help very much with this, but I can still recall ancient threads,
+</I>&gt;&gt;<i> test, etc...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ...
+</I>&gt;<i> 
+</I>&gt;<i> It seems to be something which gets mentioned every now and then  but 
+</I>&gt;<i> nothing ever seems to come of it!
+</I>&gt;<i> 
+</I>I have to admit that the progress is currently slow, I don't have that
+much time to spent on the softdevice and there are many things to be
+done... What I plan is to integrate the Via Xvmc acceleration into the
+softdevice. Unfortunately the current design of the video out doesn't
+allow this (direct rendering is needed, different image formats...), so
+I have to change quite fundamental things in the softdevice. Since I
+want not to mess up the softdevice code I have to do that in small pieces...
+
+&gt;<i> 
+</I>&gt;<i> I think the information is there it just needs someone to pull it all 
+</I>&gt;<i> together!
+</I>&gt;<i>
+</I>Did I understand correctly, that you will try to do this? That would be
+great!
+
+
+&gt;&gt;&gt;<i> Has anyone made any more progress with this or am I starting from
+</I>&gt;&gt;&gt;<i> scratch? Ultimately, the best route would probably be to incorporate
+</I>&gt;&gt;&gt;<i> hardware decoding into ffmpeg or similar but, for now, I'd just be
+</I>&gt;&gt;&gt;<i> happy to get it working from softdevice!
+</I>&gt;&gt;<i> There are mainly two possible routes : the great and beautiful one,
+</I>&gt;&gt;<i> where you integrate all needed functionnaly inside one of ffmpeg,
+</I>&gt;&gt;<i> libavcodec, or similar library, remove X dependencies, etc. And the
+</I>&gt;&gt;<i> fast and hackish one, where you get small library parts, pack them
+</I>&gt;&gt;<i> together and have a working, albeit uncomplete thingy. That's how the
+</I>&gt;&gt;<i> viafb kernel module evolved... Once basic support is available, will
+</I>&gt;&gt;<i> come the time to write beautiful code...
+</I>&gt;<i> 
+</I>&gt;<i> Indeed. It seems that most of the effort ended up going into the 
+</I>&gt;<i> unichrome / openchrome projects rather than creating a nice, 
+</I>&gt;<i> self-contained library!
+</I>&gt;<i> 
+</I>I think I remember that the openchrome developers once search for
+someone who would integrate the mpeg2 hardware acceleration into
+DirectFB, but obviously the didn't find anyone...
+
+What I can say is that the patch to ffmpeg to use the VLD-Xvmc is rather
+small (it can be extracted from the mplayer patch on openchrome), so
+getting support form ffmpeg should not be difficult.
+Please keep us updated on your progress!
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001882.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="001905.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1897">[ date ]</a>
+              <a href="thread.html#1897">[ thread ]</a>
+              <a href="subject.html#1897">[ subject ]</a>
+              <a href="author.html#1897">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

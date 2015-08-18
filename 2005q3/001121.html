@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C200508162257.25449.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001118.html">
+   <LINK REL="Next"  HREF="001124.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C200508162257.25449.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Aug 16 22:57:25 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001118.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001124.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1121">[ date ]</a>
+              <a href="thread.html#1121">[ thread ]</a>
+              <a href="subject.html#1121">[ subject ]</a>
+              <a href="author.html#1121">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 16. August 2005 20:57, Stefan Lucke wrote:
+&gt;<i> On Montag, 15. August 2005 21:54, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Mon, Aug 15, 2005 at 04:48:34PM +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Strange, I'm useing also a via82xx, kernel 2.6.12 without any problems.
+</I>&gt;<i> &gt; &gt; But I'm useing an older alsa-library: 1.0.3b.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Can you try to update your ALSA library?
+</I>&gt;<i> 
+</I>&gt;<i> I gave alsa-1.0.9 a try which resulted in no sound at all. vdr startup
+</I>&gt;<i> reported a error:
+</I>&gt;<i> ALSA lib pcm_dmix.c:802:(snd_pcm_dmix_open) unable to open slave
+</I>&gt;<i> 
+</I>&gt;<i> So I'm now back on alsa-1.0.5(a) [with sound ;-) ].
+</I>
+I tried alsa-1.0.9 a 2'nd time and this was more successful no more error
+messages from pcm_dmix.c.
+But guess what happens:
+
+CMD[0903]:new Audio stream index.. old -1 new 1
+CMD[0903]:Neuer StreamDecoder Pid: 5763 context 0x8569208 type 1
+CMD[0903]:Neuer Thread gestartet: pid:5765 type 0
+CMD[0931]:Neuer Thread gestartet: pid:5766 type 1
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+audioPTS[1047]:delay 0 audio pts offset -1975670690 pts 240
+audioPTS[1048]:delay 0 audio pts offset -1975670922 pts 480
+audioPTS[1049]:delay 0 audio pts offset -1975671154 pts 720
+audioPTS[1050]:delay 0 audio pts offset -1975671386 pts 960
+
+NOOO audio delay any more :-((. That happens when using &quot;default&quot; as
+alsa device name (fromerly I changed the wrong one, we have two of
+them in setup.conf. one for PCM out and the other for the still missing
+ac3 out feature).
+
+When using (from vdr setup.conf)
+softdevice.AlsaDevice = hw:0,2
+audio delay is back :-)) .
+
+audioPTS[4892]:delay 1919 audio pts offset -2197036978 pts 225206895
+audioPTS[4916]:delay 1920 audio pts offset -2197036978 pts 225207135
+
+&gt;<i> 
+</I>&gt;<i> My soundcard is using alsa driver &quot;cmipci&quot;, info KAMix: CMI8738-MC6
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; I wonder how many people have this problems, as Stefan already stated if
+</I>&gt;<i> &gt; &gt; you build some alsa filter chains the delay is not reported correctly.
+</I>&gt;<i> &gt; &gt; Do you use by any chance some alsa filters?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I don't think so.  I have installed alsa-utils and alsa-base.  On startup,
+</I>&gt;<i> &gt; alsa-utils restores the mixer levels by executing alsactl and amixer.
+</I>&gt;<i> &gt; There are no other alsa related startup scripts.
+</I>&gt;<i> 
+</I>&gt;<i> Can you show us your /etc/asound.state ?
+</I>
+Saw no obvious strange thing in Marko's asound.state.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001118.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001124.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1121">[ date ]</a>
+              <a href="thread.html#1121">[ thread ]</a>
+              <a href="subject.html#1121">[ subject ]</a>
+              <a href="author.html#1121">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

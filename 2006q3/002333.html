@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nVidia hardware alpha blending for OSD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C44F5CA7D.6090809%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002332.html">
+   <LINK REL="Next"  HREF="002380.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nVidia hardware alpha blending for OSD</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nVidia%20hardware%20alpha%20blending%20for%20OSD&In-Reply-To=%3C44F5CA7D.6090809%40gmx.net%3E"
+       TITLE="[Softdevice-devel] nVidia hardware alpha blending for OSD">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Aug 30 19:27:25 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002332.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+        <LI>Next message: <A HREF="002380.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2333">[ date ]</a>
+              <a href="thread.html#2333">[ thread ]</a>
+              <a href="subject.html#2333">[ subject ]</a>
+              <a href="author.html#2333">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>CR schrieb:
+
+&gt;<i> To add nVidia alpha-blending support to softdevice for the OSD seems
+</I>&gt;<i> straightforward.
+</I>&gt;<i>
+</I>I fear that it is not that simple... But I wont stop you if you want to
+try ;-)
+
+
+&gt;<i> - Create an OSD buffer and store VDR's OSD with appropriate color weight
+</I>&gt;<i> 
+</I>&gt;<i> (i.e. if VDR uses 6-6-6 for RGB, left-shift RGB components into upper 6
+</I>&gt;<i> bits of each XRGB 8-bit color component)
+</I>&gt;<i> 
+</I>&gt;<i> - Store alpha value (menu settable?) in buffer
+</I>&gt;<i>
+</I>VDR uses ARGB32 for the OSD, but conversion routines exist. However you
+will loose the alpha channel for the pixels (there seems to be no mode
+with an alpha channel). _Every_ pixel has it's own alpha value, and this
+is needed for most of the skins. I'm also not sure how one could get
+transparent pixels with your method.. I doubt that colorkeys will work
+in this case.
+
+
+&gt;<i> - Call XvPutImage with second blitter port for OSD updates
+</I>&gt;<i> 
+</I>&gt;<i> - To clear or blank OSD perhaps use a second OSD buffer with alpha set to
+</I>&gt;<i> zero (0) and just call XvPutImage
+</I>&gt;<i> 
+</I>&gt;<i> Although this seems logical and easy in theory, I am having a very very
+</I>&gt;<i> hard time following softdevice's code.  I do not understand the
+</I>&gt;<i> partitioning of functions among files (video.c, video-xv.c, etc) and the
+</I>&gt;<i> lack of many comments makes it hard for me to reverse engineer the logic.
+</I>&gt;<i> 
+</I>Sorry, it is true that it is not simple to understand the code... If you
+have specific questions just go on and ask them.
+
+&gt;<i> I tried adding a menu item for &quot;nv_hardware&quot;, but immediately after
+</I>&gt;<i> setting that softdevice crashes.  That's about as far as I've gone.
+</I>&gt;<i> 
+</I>&gt;<i> Is there anyone on the list willing to work with me to add or test this
+</I>&gt;<i> theory out?
+</I>&gt;<i> 
+</I>I would rather suggest to try to use OpenGL. I know that most modern
+graphics cards support YUV modes in 2D textures. Unfortunately this is
+not standardized :-(. If one could solve these problems (either by using
+extensions of the standard, or by doing the conversion in the pixel
+shaders), it should be quite simple to add an other layer with ARGB32
+format for the OSD.
+In fact I have running code which does this for Mac OS X which I could
+make available. This code uses an extension of OpenGL which is only
+available for Mac OS X for the YUV modes, so this would have to be
+changed...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002332.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+	<LI>Next message: <A HREF="002380.html">[Softdevice-devel] nVidia hardware alpha blending for OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2333">[ date ]</a>
+              <a href="thread.html#2333">[ thread ]</a>
+              <a href="subject.html#2333">[ subject ]</a>
+              <a href="author.html#2333">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

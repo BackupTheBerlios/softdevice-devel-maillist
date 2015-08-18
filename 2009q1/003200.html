@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%0A%20newest%09ffmpeg%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C49965174.7070605%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003199.html">
+   <LINK REL="Next"  HREF="003201.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%0A%20newest%09ffmpeg%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C49965174.7070605%40globall.ru%3E"
+       TITLE="[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)">bob at globall.ru
+       </A><BR>
+    <I>Sat Feb 14 06:07:00 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003199.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003201.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3200">[ date ]</a>
+              <a href="thread.html#3200">[ thread ]</a>
+              <a href="subject.html#3200">[ subject ]</a>
+              <a href="author.html#3200">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Maik Opitz wrote:
+
+&gt;&gt;<i> On my notebook x86 Transmeta Efficeon softdevice works with ffmpeg
+</I>&gt;&gt;<i> 20090201 very well.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> It is not only related to x86_64. I am running it on x86 (Intel
+</I>&gt;<i> Pentium III) with DirectFB output. Same problem.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+For check I anew have completely compiled vdr and sofftdevice. On a
+notebook all works.
+My system:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">bob at sharp</A> /etc $ uname -a
+Linux sharp 2.6.27-gentoo-r7 #2 Sat Jan 17 11:51:39 MSK 2009 i686
+Transmeta Efficeon(tm) Processor TM8000 GenuineTMx86 GNU/Linux
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">bob at sharp</A> /etc $ cat /proc/cpuinfo
+processor       : 0
+vendor_id       : GenuineTMx86
+cpu family      : 15
+model           : 2
+model name      : Transmeta Efficeon(tm) Processor TM8000
+stepping        : 4
+cpu MHz         : 1000.000
+cache size      : 1024 KB
+fdiv_bug        : no
+hlt_bug         : no
+f00f_bug        : no
+coma_bug        : no
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 1
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca
+cmov pat pse36 clflush acpi mmx fxsr sse sse2 ss tm mmxext longrun lrti
+constant_tsc
+bogomips        : 1988.94
+clflush size    : 128
+power management:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">bob at sharp</A> /etc $ cat /etc/make.conf
+CFLAGS=&quot;-Os -mtune=pentium3 -msse2 -pipe -fomit-frame-pointer
+-falign-functions=0 -falign-jumps=0 -falign-loops=0&quot;
+CHOST=&quot;i686-pc-linux-gnu&quot;
+CXXFLAGS=&quot;${CFLAGS}&quot;
+USE=&quot;sse sse2 acpi imlib exif audiofile bluetooth moznopango gphoto2
+syslog pcmcia javascript amr enca wma dbus hal laptop ppds 7zip samba
+v4l userlocales usb mmx mmxext rdesktop samba xine unicode xvid tiff
+java browserplugin seamonkey a52 qt gtk xcomposite pdf wifi -arts
+-gstreamer -apm -dv -ldap -mng -ipv6 kde -gnome -sdl -esd -eds -oss&quot;
+LINGUAS=&quot;ru&quot;
+VIDEO_CARDS=&quot;radeon&quot;
+INPUT_DEVICES=&quot;keyboard mouse&quot;
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">bob at sharp</A> /etc $ emerge  -pv ffmpeg
+
+These are the packages that would be merged, in order:
+
+Calculating dependencies... done!
+[ebuild   R   ] media-video/ffmpeg-0.4.9_p20090201  USE=&quot;X alsa amr
+encode mmx mmxext mp3 v4l vorbis xvid zlib -3dnow -aac (-altivec)
+-bindist -debug -dirac -doc -gsm -hardcoded-tables -ieee1394 -ipv6
+-network -oss -schroedinger -sdl -speex -ssse3 -test -theora -threads
+-v4l2 -vhook -x264&quot; 0 kB
+
+Total: 1 package (1 reinstall), Size of downloads: 0 kB
+
+Later I will try to refresh vdr+DirecFB+softdevice on Epia ME6000. Now I
+cannot leave a family without the TV   :)  .
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003199.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003201.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3200">[ date ]</a>
+              <a href="thread.html#3200">[ thread ]</a>
+              <a href="subject.html#3200">[ subject ]</a>
+              <a href="author.html#3200">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

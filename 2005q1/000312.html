@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] use libavformat in mpeg2decoder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C4239E702.7000805%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000313.html">
+   <LINK REL="Next"  HREF="000315.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] use libavformat in mpeg2decoder</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C4239E702.7000805%40gmx.net%3E"
+       TITLE="[Softdevice-devel] use libavformat in mpeg2decoder">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Mar 17 21:22:26 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000313.html">[Softdevice-devel] [Bug #3588] softdevice-0.1.0 compiliert mit gcc-3.4 nicht
+</A></li>
+        <LI>Next message: <A HREF="000315.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#312">[ date ]</a>
+              <a href="thread.html#312">[ thread ]</a>
+              <a href="subject.html#312">[ subject ]</a>
+              <a href="author.html#312">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I just commited the new mpeg2decoder, now the PES stream is not parsed 
+anymore by the mpeg2decoder itself, but it is passed to libavformat.
+This meas we now support any format which is supported by ffmpeg, so pcm 
+, mp2 and ac3 in the PES stream is no longer any problem. If you want to 
+have ac3 decoding you have to enable it in ffmpeg, by default it is 
+disabled.
+So with the new cvs-head the dvd-plugin should work with ac3 and pcm. 
+Also the softdevice should no longer crash when ac3 audio is selected.
+
+I did not check that its running with all vdr versions, there have been 
+some changes recently in the interface, but it should work with vdr-1.3.22.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000313.html">[Softdevice-devel] [Bug #3588] softdevice-0.1.0 compiliert mit gcc-3.4 nicht
+</A></li>
+	<LI>Next message: <A HREF="000315.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#312">[ date ]</a>
+              <a href="thread.html#312">[ thread ]</a>
+              <a href="subject.html#312">[ subject ]</a>
+              <a href="author.html#312">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

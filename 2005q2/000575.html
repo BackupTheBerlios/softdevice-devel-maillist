@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio handling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C4271190B.9070002%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000564.html">
+   <LINK REL="Next"  HREF="000576.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio handling</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C4271190B.9070002%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Aspect ratio handling">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Apr 28 19:10:35 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000564.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+        <LI>Next message: <A HREF="000576.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#575">[ date ]</a>
+              <a href="thread.html#575">[ thread ]</a>
+              <a href="subject.html#575">[ subject ]</a>
+              <a href="author.html#575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nicolas Huillard wrote:
+
+&gt;<i> * is it possible to implement in softdevice aspect-ratio handling
+</I>&gt;<i> something like &quot;maximize the size of the image&quot;, along with the current
+</I>&gt;<i> &quot;make sure the image fits in the screen&quot; ? This way a scaling that
+</I>&gt;<i> currently scale an image to 750 wide with in-stream black bar on
+</I>&gt;<i> top/bottom, would scale it to 800 wide cropping a few black lines on top
+</I>&gt;<i> and bottom.
+</I>In principle everything is possible, we can crop/scale just like we want.
+
+The problems are to find a solution which works for as many users as 
+possible, and the detection of encoded black bars (ie 16:9 encoded as 
+4:3 and probably with a channel symbol in the black bar).
+
+I think an other problem is that almost all channels use different ways 
+to encode their 16:9 programms to 4:3. Some just add black bars on top 
+and bottom, others skip some parts (how much?) on the left and right and 
+add smaller black bars.
+So I guess the problem is that there is an endless list of possibilities 
+and it is difficult to autodetect them...
+
+&gt;<i> * can the softdevice plug-in receive LIRC events to change aspect ratio
+</I>&gt;<i> on a single remote keypress ?
+</I>No, vdr doesn't provide any keypress events to the plugins
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000564.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+	<LI>Next message: <A HREF="000576.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#575">[ date ]</a>
+              <a href="thread.html#575">[ thread ]</a>
+              <a href="subject.html#575">[ subject ]</a>
+              <a href="author.html#575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

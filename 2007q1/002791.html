@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 warning reseting decoder]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20warning%20reseting%20decoder%5D&In-Reply-To=%3CBAY138-F11E7E9811F6B8918E5B4F0B4730%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002790.html">
+   <LINK REL="Next"  HREF="002792.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 warning reseting decoder]</H1>
+    <B>mike n</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20warning%20reseting%20decoder%5D&In-Reply-To=%3CBAY138-F11E7E9811F6B8918E5B4F0B4730%40phx.gbl%3E"
+       TITLE="[Softdevice-devel] CLE266 warning reseting decoder]">poiux at hotmail.com
+       </A><BR>
+    <I>Wed Mar 14 19:16:57 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002790.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+        <LI>Next message: <A HREF="002792.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2791">[ date ]</a>
+              <a href="thread.html#2791">[ thread ]</a>
+              <a href="subject.html#2791">[ subject ]</a>
+              <a href="author.html#2791">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello again,
+
+I did further investigation about this &quot;non-working latest SVN version of 
+FFMPEG&quot; issue with VIA-Cle266+VDR+softdevice+DirectFB.
+
+Following FFMPEG version WORKS with latest CVS versions of 
+DirectFB/DFB/linux-viafb/softdevice VDR plugin (everything updated today 
+2007-03-14):
+  svn checkout -r {20070207} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A> ffmpeg
+
+However, the next day something has drastically changed in FFMPEG sources 
+and following version or the latest DOESN'T WORK (black screen or lots of 
+decoder reset error messages):
+  svn checkout -r {20070208} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A> ffmpeg
+
+Between these two versions I removed old /usr/lib/libav* and 
+/usr/lib/libpostproc* files to make sure no previous binary version was 
+hiding somewhere.  I also made &quot;make clean&quot; to VDR and softdevice plugin 
+sources between these tests.
+
+The next step was to re-configure, recompile and install FFMPEG.
+cd /usr/src/ffmpeg/
+./configure --prefix=/usr
+make
+make install
+
+Finally I recompiled VDR and VDR plugins:
+cd /usr/src/vdr/
+make
+make plugins
+
+Well, at the moment this is not a major problem for me because FFMPEG 
+20070207 version works and the picture is nice and smooth in CRT television. 
+Thanks for the good work with Softdevice vdr plugin and VIA-CLE266 
+accelerator support.
+
+Best regards,
+Mike N
+
+PS. Don't know whether re-compiling of DirectFB/DFB/linux-viafb would have 
+any change between 2007-02-07 and 2007-02-08 FFMPEG versions. However, 
+yeasterday I had re-compiled everything with the latest CVS/SVN versions and 
+it didn't work so probably DirectFB doesn't have to be re-compiled if new 
+FFMPEG library is installed.
+
+&gt;<i>From: Leo M&#225;rquez &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">leo at calidae.net</A>&gt;
+</I>&gt;<i>A lot of thanks Mike!!!!!
+</I>&gt;<i>I'm at work and could not test it now but I'm happy because i was
+</I>&gt;<i>thinking that I was alone in the world with this problem.
+</I>&gt;<i>
+</I>&gt;<i>I'll expose results here after test it.
+</I>&gt;<i>
+</I>&gt;<i>Leo.
+</I>&gt;<i>
+</I>
+&gt;<i>En/na mike n ha escrit:
+</I>&gt;<i> &gt;&gt; Leo M&#225;rquez wrote: Hi, I'm experimenting a lot of problems to run
+</I>&gt;<i> &gt;&gt; vdr, softdevice with  dfb:cle266:viatv The output is poor, I don't
+</I>&gt;<i> &gt;&gt; see live video, only a single frames each 2 seconds. It's very strange.
+</I>&gt;<i> &gt;
+</I>
+&gt;<i> &gt; Mike N wrote;
+</I>&gt;<i> &gt; Hello Leo,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have VIA M10000 and was experimenting the same problems. Fortunately
+</I>&gt;<i> &gt; I found a &quot;solution&quot;, but I don't know what is causing the problem.
+</I>&gt;<i> &gt; Maybe you have the same scenario.
+</I>&gt;&gt;<i>---snip snip snip---- &gt; &gt;
+</I>&gt;<i> &gt; I used following command to checkout older revision of FFMPEG:
+</I>&gt;<i> &gt; cd /usr/src/
+</I>&gt;<i> &gt; svn checkout -r {20061201} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A> ffmpeg
+</I>
+_________________________________________________________________
+The average US Credit Score is 675. The cost to see yours: $0 by Experian. 
+<A HREF="http://www.freecreditreport.com/pm/default.aspx?sc=660600&amp;bcd=EMAILFOOTERAVERAGE">http://www.freecreditreport.com/pm/default.aspx?sc=660600&amp;bcd=EMAILFOOTERAVERAGE</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002790.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+	<LI>Next message: <A HREF="002792.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2791">[ date ]</a>
+              <a href="thread.html#2791">[ thread ]</a>
+              <a href="subject.html#2791">[ subject ]</a>
+              <a href="author.html#2791">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Black square with DirectFB cvs + softdevice YUV2 + stretchblit (Was: Re: [Softdevice-devel] vidix with matrox g550 - no osd)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20Black%20square%20with%20DirectFB%20cvs%20%2B%20softdevice%20YUV2%20%2B%20stretchblit%20%28Was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20vidix%20with%20matrox%20g550%20-%20no%20osd%29&In-Reply-To=%3C200511050938.08883.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001476.html">
+   <LINK REL="Next"  HREF="001490.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Black square with DirectFB cvs + softdevice YUV2 + stretchblit (Was: Re: [Softdevice-devel] vidix with matrox g550 - no osd)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20Black%20square%20with%20DirectFB%20cvs%20%2B%20softdevice%20YUV2%20%2B%20stretchblit%20%28Was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20vidix%20with%20matrox%20g550%20-%20no%20osd%29&In-Reply-To=%3C200511050938.08883.stefan%40lucke.in-berlin.de%3E"
+       TITLE="Black square with DirectFB cvs + softdevice YUV2 + stretchblit (Was: Re: [Softdevice-devel] vidix with matrox g550 - no osd)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Nov  5 09:38:08 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001476.html">[Softdevice-devel] Re: vdr-softdevice-cvs-20051104-finnish
+</A></li>
+        <LI>Next message: <A HREF="001490.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1486">[ date ]</a>
+              <a href="thread.html#1486">[ thread ]</a>
+              <a href="subject.html#1486">[ subject ]</a>
+              <a href="author.html#1486">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 4. November 2005 22:31, Stefan Lucke wrote:
+&gt;<i> On Freitag, 4. November 2005 21:48, Andre Neumann wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt; i testet my setup today with vidix (before i used dfb). The video is
+</I>&gt;<i> &gt; shown, but i get no osd. Is there somethin i must do? with dfb
+</I>&gt;<i> &gt; everything is working fine. Anyone can 
+</I>&gt;<i> &gt; give me a quick hint ?
+</I>&gt;<i> 
+</I>&gt;<i> Vidix works fine here.
+</I>&gt;<i> 
+</I>&gt;<i> Did you use dfb in YUV2 + stretchblit mode before ?
+</I>&gt;<i> Try leaving dfb in I420 mode (with color keyed OSD).
+</I>&gt;<i> 
+</I>&gt;<i> For a couple of days I had a similar situation here and it drove me crazy.
+</I>&gt;<i> 
+</I>&gt;<i> Normally I start dfb mode within an  X session. When dfb mode was 
+</I>&gt;<i> started in YUV2 mode I had a big black sticky rectangle in the upper 
+</I>&gt;<i> left corner (about 720x576 ? thats a guess). Leaving dfb mode resulted in
+</I>&gt;<i> color keyed OSD with xv out did not work.
+</I>&gt;<i> Starting and ending dfb in I420 mode recovered that.
+</I>&gt;<i> Starting dfb in YUV2 stretchblit brought the black box again :-((( .
+</I>&gt;<i> I tried several versions of softdevice and directfb without any change.
+</I>&gt;<i> The black box survived even reboot and soft-poweroff (power disconnect
+</I>&gt;<i> was not tested).
+</I>&gt;<i> 
+</I>&gt;<i> Now my black box has gone and I do not know why.
+</I>&gt;<i> Only a small idea. The initial surface size at dfb startup is 720x576.
+</I>&gt;<i> I changed that once to 820x576, started in dfb YUV2-stretchblit mode
+</I>&gt;<i> and had a very bad behaviour within softdevice.
+</I>&gt;<i> A few frames video with sound followed by poll timeouts and codec
+</I>&gt;<i> reinitialisation (but no black box).
+</I>&gt;<i> Since the following vdr restart very thing is fine and smooth again.
+</I>
+Aiee, switched back to DirectFB cvs version from 2005-10-31,
+and the big black rect in upper left corner is back ;-(( , and color keyed
+OSD in xv is inoperable.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001476.html">[Softdevice-devel] Re: vdr-softdevice-cvs-20051104-finnish
+</A></li>
+	<LI>Next message: <A HREF="001490.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1486">[ date ]</a>
+              <a href="thread.html#1486">[ thread ]</a>
+              <a href="subject.html#1486">[ subject ]</a>
+              <a href="author.html#1486">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

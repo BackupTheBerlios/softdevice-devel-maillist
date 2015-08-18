@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C20060917201746.GB2753%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002468.html">
+   <LINK REL="Next"  HREF="002474.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Enable mgatv spic and YV12</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C20060917201746.GB2753%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [PATCH] Enable mgatv spic and YV12">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Sep 17 22:17:46 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002468.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+        <LI>Next message: <A HREF="002474.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2472">[ date ]</a>
+              <a href="thread.html#2472">[ thread ]</a>
+              <a href="subject.html#2472">[ subject ]</a>
+              <a href="author.html#2472">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Sep 17, 2006 at 08:33:37PM +0300, Heikki Lindholm wrote:
+&gt;<i> The included patch makes dfb:mgatv use YV12 colourspace for video and 
+</I>&gt;<i> the hardware subpicture layer for OSD. The patch is a prime example of 
+</I>&gt;<i> bad goal-oriented programming, but does what I wanted: improves 
+</I>&gt;<i> performance to the level that my 450 MHz P2 can now function as a DVB 
+</I>&gt;<i> box like no underpowered P2 has done before! Unfortunately, the patch 
+</I>&gt;<i> probably breaks everything else, but I'm too lazy to clean it up.
+</I>
+I'm very much interested in this.
+
+You didn't get rid of the CPU-burning Flip() calls, did you?  At least
+on my system, DirectFB spends about 10% of the CPU cycles waiting for
+MGA engine ready.  Adding a usleep(2000) right before the Flip() call
+reduces the CPU load but risks dropping frames.  I believe it would be
+much more efficient if the Flip() method blocked the thread until the
+hardware is ready.  That would require some new ioctl() in the kernel.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002468.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+	<LI>Next message: <A HREF="002474.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2472">[ date ]</a>
+              <a href="thread.html#2472">[ thread ]</a>
+              <a href="subject.html#2472">[ subject ]</a>
+              <a href="author.html#2472">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

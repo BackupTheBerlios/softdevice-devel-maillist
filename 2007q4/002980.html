@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice-cvs%20%2B%20DirectFB%201.1.1%20%2B%20i810fb%20on%0A%09SMT7020s&In-Reply-To=%3C986060718%40web.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002979.html">
+   <LINK REL="Next"  HREF="002981.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s</H1>
+    <B>Stefan D&#246;rmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice-cvs%20%2B%20DirectFB%201.1.1%20%2B%20i810fb%20on%0A%09SMT7020s&In-Reply-To=%3C986060718%40web.de%3E"
+       TITLE="[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s">stefan_doermann at web.de
+       </A><BR>
+    <I>Sun Dec 23 15:18:04 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002979.html">[Softdevice-devel] &lt;kein Betreff&gt;
+</A></li>
+        <LI>Next message: <A HREF="002981.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2980">[ date ]</a>
+              <a href="thread.html#2980">[ thread ]</a>
+              <a href="subject.html#2980">[ subject ]</a>
+              <a href="author.html#2980">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+Ok, i give it another try. I recently sent this message , but I couldn't find it on the list.
+
+I am using softdevice with vdr-1.4.7 on my samsung smt7020s with directfb on i810fb. It works good if the color depth in directfbrc is set on 16, but if I use 24 or 32 bit, the video is ok, but the osd is in the background, I mean on 16:9 I can see a bit of the upper and the lower part of the osd. In addition to this the osd colour in some areas is strange (with 16bit), e.g. the green button is invisible.
+DirectFB is cvs from 23.12.07, softdevice is cvs from today.
+I also tried xineliboutput. I couldn't notice anything like that, it doesn't matter which colour depth is defined, osd looks alright, but for some reasons video is slightly stuttering, so softdevice is first choice.
+
+By the way I have seen on vdrportal that some guys had the same issue with i810, but no solution yet.
+If this might be due to transparency, how can I switch off osd transparency.
+
+ dfbinfo:
+
+Screen (00) FBDev Primary Screen (primary screen)
+Caps: VSYNC POWER_MANAGEMENT
+
+Layer (00) FBDev Primary Layer (primary layer)
+Type: GRAPHICS
+Caps: SURFACE BRIGHTNESS CONTRAST SATURATION
+
+Layer (01) Intel 810/815 Overlay
+Type: GRAPHICS VIDEO STILL_PICTURE
+Caps: SURFACE OPACITY SCREEN_LOCATION DEINTERLACING DST_COLORKEY BRIGHTNESS CONTRAST SATURATION SCREEN_POSITION SCREEN_SIZE
+
+Regards and merry christmas,
+
+Stefan
+_____________________________________________________________________
+Der WEB.DE SmartSurfer hilft bis zu 70% Ihrer Onlinekosten zu sparen!
+<A HREF="http://smartsurfer.web.de/?mc=100071&amp;distributionid=000000000066">http://smartsurfer.web.de/?mc=100071&amp;distributionid=000000000066</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002979.html">[Softdevice-devel] &lt;kein Betreff&gt;
+</A></li>
+	<LI>Next message: <A HREF="002981.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2980">[ date ]</a>
+              <a href="thread.html#2980">[ thread ]</a>
+              <a href="subject.html#2980">[ subject ]</a>
+              <a href="author.html#2980">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

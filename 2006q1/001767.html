@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice and HDTV and OSD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HDTV%20and%20OSD&In-Reply-To=%3C200602202354.20100.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001765.html">
+   <LINK REL="Next"  HREF="001770.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice and HDTV and OSD</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HDTV%20and%20OSD&In-Reply-To=%3C200602202354.20100.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice and HDTV and OSD">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Feb 20 23:54:20 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001765.html">[Softdevice-devel] Softdevice and HDTV and OSD
+</A></li>
+        <LI>Next message: <A HREF="001770.html">[Softdevice-devel] Softdevice and HDTV and OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1767">[ date ]</a>
+              <a href="thread.html#1767">[ thread ]</a>
+              <a href="subject.html#1767">[ subject ]</a>
+              <a href="author.html#1767">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 20. Februar 2006 19:46, thomas erdmann wrote:
+&gt;<i> Hello List,
+</I>&gt;<i> i came to the Softdevice Plugin because of several Problems with the Xine 
+</I>&gt;<i> Plugin.
+</I>&gt;<i> The normal Functions for &quot;looking TV&quot; with only a Budget Card are implemented 
+</I>&gt;<i> better than then there i think, without the need to patch a large Project 
+</I>&gt;<i> like Xine Sources of a special Date with the use of a specific Version of the 
+</I>&gt;<i> Plugin. I've given it up before a couple of Weeks, because the same Problems 
+</I>&gt;<i> withover multiple Versions :-(
+</I>&gt;<i> Now i'm using Softdevice CVS several Weeks and it's working good -thank you !
+</I>&gt;<i> Now i am experimenting with HD(Free)TV on Astra and Hotbird. I found, that 
+</I>&gt;<i> with adjusting Softdevice to &quot;OSD Einblendung Pseudo&quot; it runs without crash 
+</I>&gt;<i> but it's very hard to read anything of the OSD Text - it only flickers while 
+</I>&gt;<i> key press event. So i looked at the Sources and tried some changes, without 
+</I>&gt;<i> the expected results :-(
+</I>&gt;<i> Can anyone give me a hint to
+</I>&gt;<i> a) Do a faster OSD Redraw in &quot;Pseude Mode&quot; 
+</I>
+In &quot;Pseudo Mode&quot; there should be no need for faster refreshs as the
+mixing OSD + video is done in hardware by color keying. If you get
+only a flickering OSD (nvidia card + driver ?)
+
+&gt;<i> b) Change the Software OSD for running at larger Resolutions without Crash
+</I>Does the crash happen too if you select max-area option for xv-out ?
+' ... -vo xv:max-area: ...'
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001765.html">[Softdevice-devel] Softdevice and HDTV and OSD
+</A></li>
+	<LI>Next message: <A HREF="001770.html">[Softdevice-devel] Softdevice and HDTV and OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1767">[ date ]</a>
+              <a href="thread.html#1767">[ thread ]</a>
+              <a href="subject.html#1767">[ subject ]</a>
+              <a href="author.html#1767">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

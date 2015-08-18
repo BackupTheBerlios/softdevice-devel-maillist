@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Unrepeatable crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C200505270011.39381.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000744.html">
+   <LINK REL="Next"  HREF="000747.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Unrepeatable crashes</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C200505270011.39381.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Unrepeatable crashes">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri May 27 00:11:39 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000744.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+        <LI>Next message: <A HREF="000747.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#746">[ date ]</a>
+              <a href="thread.html#746">[ thread ]</a>
+              <a href="subject.html#746">[ subject ]</a>
+              <a href="author.html#746">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 26. Mai 2005 23:31, Martin Wache wrote:
+&gt;<i> Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Wed, May 25, 2005 at 05:28:16PM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;Unfortunatly it is very difficult to find the reasons for these crashes 
+</I>&gt;<i> &gt;&gt;just with this information. It is possible to enable core dumps in your 
+</I>&gt;<i> &gt;&gt;system, so that we can have this additional information? It would make 
+</I>&gt;<i> &gt;&gt;finding the problem a lot easier...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Sure.  It seems it will be just a matter of adding ulimit -c unlimited
+</I>&gt;<i> &gt; to the runvdr script.  I'll also add &quot;sysctl kernel.core_pattern=core.%p&quot;
+</I>&gt;<i> &gt; to the startup scripts in order to ensure that the files are less likely
+</I>&gt;<i> &gt; to be overwritten (in case there are multiple crashes).  Both SIGABRT
+</I>&gt;<i> &gt; and SIGSEGV seem to create a core dump by default (I tested with /bin/cat
+</I>&gt;<i> &gt; and an explicit kill from another virtual console.)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> And please compile the softdevice with the -g switch enabled, it is not 
+</I>&gt;<i> the default!
+</I>
+We should add -g as a default to Makefile. 
+
+&gt;<i> 
+</I>&gt;<i> I played a bit crash-me yesterday, I moved my antenna to get a bad 
+</I>&gt;<i> signal and waited until the softdevice crashed. And indeed it payed off: 
+</I>&gt;<i> I found a few places where I forgot to check pointers and one _really_ 
+</I>&gt;<i> silly bug which caused a lot of problems on bad signal.
+</I>&gt;<i> Now I can watch a station with almost no signal ( mostly noise, 
+</I>&gt;<i> sometimes pieces of words, or parts of picture, or some movements 
+</I>&gt;<i> nothing someone would want to watch) for more than a quater of an hour. 
+</I>&gt;<i> There are still a few crashes which I couldn't track down yet, they 
+</I>&gt;<i> happen in ffmpeg but the cause may be in the softdevice.
+</I>&gt;<i> I will commit these fixes together with the HDTV patch (which I started 
+</I>&gt;<i> to merge, but is not fully completed yet) hopefully on sunday, but I 
+</I>
+Does this interfere with my posted aspect ratio patch ? 
+I'll do some aditional work on directfb out. Coupling YUV2 to
+stretchblit, and other formats to BES is eventually not required. So
+I'll try to separate this.
+You can even post a diff of an uncompleted state of work, as I somtimes
+have crashes with bad signal too. Not allways in ffmpeg. When a
+crash is in softdevice, it looks like a syncing issue between threads.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000744.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+	<LI>Next message: <A HREF="000747.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#746">[ date ]</a>
+              <a href="thread.html#746">[ thread ]</a>
+              <a href="subject.html#746">[ subject ]</a>
+              <a href="author.html#746">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

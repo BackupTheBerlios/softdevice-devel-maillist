@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Vertical line at right OSD border
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Vertical%20line%20at%20right%20OSD%20border&In-Reply-To=%3C200604091534.11888.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001843.html">
+   <LINK REL="Next"  HREF="001846.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Vertical line at right OSD border</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Vertical%20line%20at%20right%20OSD%20border&In-Reply-To=%3C200604091534.11888.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Vertical line at right OSD border">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr  9 15:34:11 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001843.html">[Softdevice-devel] Vertical line at right OSD border
+</A></li>
+        <LI>Next message: <A HREF="001846.html">[Softdevice-devel] Vertical line at right OSD border
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1844">[ date ]</a>
+              <a href="thread.html#1844">[ thread ]</a>
+              <a href="subject.html#1844">[ subject ]</a>
+              <a href="author.html#1844">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 09 April 2006 14:23, Stefan Lucke wrote:
+&gt;<i> On Sonntag 09 April 2006 13:05, Martin Wache wrote:
+</I>&gt;<i> &gt; Marko M&#228;kel&#228; schrieb:
+</I>&gt;<i> &gt; &gt; On Wed, Apr 05, 2006 at 07:54:10AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt;&gt; On Dienstag 04 April 2006 21:47, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt;&gt;&gt; Due to hardware failure, I had to switch from DirectFB mgatv output to
+</I>&gt;<i> &gt; &gt;&gt;&gt; DirectFB VGA on my Matrox G450 card.  No matter which color space or
+</I>&gt;<i> &gt; &gt;&gt;&gt; crop mode I choose, the right-hand border of the OSD layer contains a
+</I>&gt;<i> &gt; &gt;&gt;&gt; green line whenever a menu is open.  Every second scanline is bright
+</I>&gt;<i> &gt; &gt;&gt;&gt; green, and every other line is black or transparent.  Upgrading to
+</I>&gt;<i> &gt; &gt;&gt;&gt; softdevice CVS did not help.  Is this a known issue?
+</I>&gt;<i> &gt; &gt;&gt; It's the same her with xv-out. It happens only with pseudo OSD
+</I>&gt;<i> &gt; &gt;&gt; and it depends on selected screen aspect, only when set to 5:4 or 4:3
+</I>&gt;<i> &gt; &gt;&gt; on a 5:4 screen. 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I'm getting it on DirectFB VGA no matter what screen aspect or crop mode
+</I>&gt;<i> &gt; &gt; is selected.  Sometimes, the bar only fills part of the right border
+</I>&gt;<i> &gt; &gt; (e.g., when the &quot;||&quot; (Pause) symbol is displayed at the bottom of the screen
+</I>&gt;<i> &gt; &gt; when using the classic theme).
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; The bar is somewhat annoying, because it is displayed for a few seconds
+</I>&gt;<i> &gt; &gt; whenever subtitles appear or disappear (and that is practically always
+</I>&gt;<i> &gt; &gt; when watching a foreign program on any of the state-run channels in
+</I>&gt;<i> &gt; &gt; Finland).
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; Please try the attached patch, it won't fix the original problem (which
+</I>&gt;<i> &gt; I already tried to find some time ago) but it should cure the symptons
+</I>&gt;<i> 
+</I>&gt;<i> It does cure the sympton for xv-out with pseudo OSD, but it seems to
+</I>&gt;<i> have somebad effect when OSD drawing is set to software. Some
+</I>&gt;<i> chars ('a' and 'e') get hard readable ;-( .
+</I>&gt;<i> That depends on setting of &quot;Screen Aspect&quot; , see the screenshots at:
+</I>&gt;<i> <A HREF="http://lucke.in-berlin.de/OSD/">http://lucke.in-berlin.de/OSD/</A> 
+</I>&gt;<i> 
+</I>
+Scaling effect ('a', 'e') is the same without patch, so forget 2nd
+part of my comment.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001843.html">[Softdevice-devel] Vertical line at right OSD border
+</A></li>
+	<LI>Next message: <A HREF="001846.html">[Softdevice-devel] Vertical line at right OSD border
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1844">[ date ]</a>
+              <a href="thread.html#1844">[ thread ]</a>
+              <a href="subject.html#1844">[ subject ]</a>
+              <a href="author.html#1844">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] From todays changelog
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20From%20todays%20changelog&In-Reply-To=%3C1145319245.3565.10.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001876.html">
+   <LINK REL="Next"  HREF="001870.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] From todays changelog</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20From%20todays%20changelog&In-Reply-To=%3C1145319245.3565.10.camel%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] From todays changelog">Malcolm.Caldwell at cdu.edu.au
+       </A><BR>
+    <I>Tue Apr 18 02:14:05 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001876.html">[Softdevice-devel] From todays changelog
+</A></li>
+        <LI>Next message: <A HREF="001870.html">[Softdevice-devel] [Bug #7147] cvs - expand top/bottom lines
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1880">[ date ]</a>
+              <a href="thread.html#1880">[ thread ]</a>
+              <a href="subject.html#1880">[ subject ]</a>
+              <a href="author.html#1880">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK,
+
+Since I am one of those not on the cvs list...
+
+Has there been any work on the MGA TV non-field based StretchBlit bug?
+If not is anyone working on it?
+
+This bug *severely* affects the effectiveness of softdevice for me.  I
+have a 4:3 TV.  This bug means:
+      * I have to view all my channels as centre cut instead of
+        letterboxed.  I would prefer not to loose the sides of every
+        programme I watch
+      * softplay's output is 'broken' (because hardly any material is at
+        a resolution the same as softdevices output)
+      * ntsc material is 'broken' (I know there are framerate problems
+        as well, but I can put up with the bad frame rate, but not the
+        wobbly pictures)
+
+Basically, this bug means that MGA TV-Out softdevice is very limited.
+
+Now, I may get a chance to look at the code sometime, but I wanted to
+know if anyone is working on it at the moment.  (I have had a quick look
+and so far it is not obvious how the code works...)
+
+On Fri, 2006-04-14 at 23:33 +0200, Stefan Lucke wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> as there are only a few persons on cvs list (15 vs. 67)
+</I>&gt;<i> there is somthing new in cvs. Prehaps someone is interested in testing:
+</I>&gt;<i> 
+</I>&gt;<i> 2006-04-14:
+</I>&gt;<i>    - Expand top/bottom line and left/right coloumns (from vdr-portal).
+</I>&gt;<i>    - Zoom feature, zoomed area may be shifted around.
+</I>&gt;<i>    - yv12 -&gt; yuy2 converter for field based chroma.
+</I>&gt;<i>    - remember interlaced mode of current frame.
+</I>&gt;<i>    - some preparations for some more XvImage formats (not yet selectable).
+</I>&gt;<i>    - Restricted OSD alpha blend option to XV and VIDIX out.
+</I>&gt;<i>    - started some documentation of our various OSD options.
+</I>&gt;<i>    - applied patch for mono upmix from Lucian Muresan
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001876.html">[Softdevice-devel] From todays changelog
+</A></li>
+	<LI>Next message: <A HREF="001870.html">[Softdevice-devel] [Bug #7147] cvs - expand top/bottom lines
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1880">[ date ]</a>
+              <a href="thread.html#1880">[ thread ]</a>
+              <a href="subject.html#1880">[ subject ]</a>
+              <a href="author.html#1880">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

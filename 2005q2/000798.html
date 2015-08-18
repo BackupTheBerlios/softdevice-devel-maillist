@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems while playing recordings and in	startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%09startup&In-Reply-To=%3C42A202DF.6000707%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000774.html">
+   <LINK REL="Next"  HREF="000810.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems while playing recordings and in	startup</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%09startup&In-Reply-To=%3C42A202DF.6000707%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Problems while playing recordings and in	startup">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Jun  4 21:37:03 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000774.html">[Softdevice-devel] Problems while playing recordings and in	startup
+</A></li>
+        <LI>Next message: <A HREF="000810.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#798">[ date ]</a>
+              <a href="thread.html#798">[ thread ]</a>
+              <a href="subject.html#798">[ subject ]</a>
+              <a href="author.html#798">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo wrote:
+&gt;&gt;&gt;<i>Softplay also plays vdr recordings, so this would be the ultimate test
+</I>&gt;&gt;&gt;<i>to see if the problems are really just due to the data rate.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Interestingly Softplay seems to replay vdr recordings flawlessly! 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> This works very well on my system too..
+</I>&gt;<i> 
+</I>Sorry for my late answer, I was quite busy the last days...
+I guess it is proven that the problems are not due to slow harddisks.
+
+It must be something in the way vdr access the data, since the buffers 
+of the softdevice are full, it is either like Torgeir suspects some 
+interrupt handler which takes all the cpu time or some other process. 
+Are you starting vdr as root or non-root? When vdr is started as root it 
+uses real-time schedule policies, so maybe the problem fanishes if vdr 
+is started as root.
+What is the overall response of the computer during these &quot;hangs&quot;? Can 
+you move the mouse smoothly? What does top show on (how many vdr 
+processes are there and how much cpu time do they use?)
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000774.html">[Softdevice-devel] Problems while playing recordings and in	startup
+</A></li>
+	<LI>Next message: <A HREF="000810.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#798">[ date ]</a>
+              <a href="thread.html#798">[ thread ]</a>
+              <a href="subject.html#798">[ subject ]</a>
+              <a href="author.html#798">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

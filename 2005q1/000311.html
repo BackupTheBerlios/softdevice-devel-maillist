@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Dolby Digital out via SPDIF
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C4239BBD1.20806%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000310.html">
+   <LINK REL="Next"  HREF="000313.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Dolby Digital out via SPDIF</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C4239BBD1.20806%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] Dolby Digital out via SPDIF">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Thu Mar 17 18:18:09 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000310.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+        <LI>Next message: <A HREF="000313.html">[Softdevice-devel] [Bug #3588] softdevice-0.1.0 compiliert mit gcc-3.4 nicht
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#311">[ date ]</a>
+              <a href="thread.html#311">[ thread ]</a>
+              <a href="subject.html#311">[ subject ]</a>
+              <a href="author.html#311">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+&gt;<i> Carsten Kollmeier wrote:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>If I got it right, the bitstreamout isn't the best way to get DD into 
+</I>&gt;&gt;<i>my receiver, as it aims on FF-cards? The best way to handle this 
+</I>&gt;&gt;<i>would be to give the ac3-stream directly to the sound card? This 
+</I>&gt;&gt;<i>would be a nice feature (I think of an option like &quot;-ac hwac3&quot; on 
+</I>&gt;&gt;<i>mplayer or a configuration option like the xine plugin has).
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> I would prefer if the bitstreamout plugin would work with the 
+</I>&gt;<i> softdevice. The bitstreamout plugin seems to be well maintained, and 
+</I>&gt;<i> Werner Fink seems to know what he is doing. I don't know how to send the 
+</I>&gt;<i> ac3 directly to the soundcard... I guess it is not too difficult, but 
+</I>&gt;<i> what about mp2? As far as I know the bitstreamout plugin repacks the 
+</I>&gt;<i> stream and also sends it to SPDIF. Implementing that in the softdevice 
+</I>&gt;<i> would require a lot more work...
+</I>
+Isn't the bitstreamout meant only for FF cards with a J2 connector where 
+  one can get a SPDIF signal from? I understood that the bitreamout 
+plugin is some firmware for FF-cards which lets them manipulate the 
+stream before it gets to this physical connector, or didn't I understand 
+right? If I did, then it won't be of any use for me to use bitstreamout, 
+as I only have a budget card, so everything must be done in software.
+MP2 is decoded by the softdevice to PCM and sent to the soundcard, I 
+think it's the soundcard's setup who sends it to the SPDIF, I'm glad 
+that this works without having some SPDIF-related option in softdevice, 
+at least I didn't find one. The only problem right now are mono MP2 
+streams (yes, some DVB-S stations broadcast like this, too, if you want 
+to test, I can give you parameters from them, but those I know and want 
+to watch and record and replay ar not on Astra 19,2E), which after 
+decoding should be upmixed stereo PCM (I'm imagining that this should be 
+easy, the second channel should just be an identical copy of the first 
+one), then the external decoder would also get that PCM.
+I agree that DD passtrhough must be different, but not necessarily 
+complicated. Xine and mplayer do it without problems, I'll try and find 
+out how.
+
+Regards,
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000310.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+	<LI>Next message: <A HREF="000313.html">[Softdevice-devel] [Bug #3588] softdevice-0.1.0 compiliert mit gcc-3.4 nicht
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#311">[ date ]</a>
+              <a href="thread.html#311">[ thread ]</a>
+              <a href="subject.html#311">[ subject ]</a>
+              <a href="author.html#311">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] problems with mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20problems%20with%20mgatv&In-Reply-To=%3C200501052211.39103.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000126.html">
+   <LINK REL="Next"  HREF="000131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] problems with mgatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20problems%20with%20mgatv&In-Reply-To=%3C200501052211.39103.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] problems with mgatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jan  5 22:11:38 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000126.html">[Softdevice-devel] problems with mgatv
+</A></li>
+        <LI>Next message: <A HREF="000131.html">[Softdevice-devel] problems with mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#127">[ date ]</a>
+              <a href="thread.html#127">[ thread ]</a>
+              <a href="subject.html#127">[ subject ]</a>
+              <a href="author.html#127">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 5. Januar 2005 20:40, Ari Koponen wrote:
+&gt;<i> Hi guys,
+</I>&gt;<i> 
+</I>&gt;<i> Previously I had problems getting picture to TV with this but now I
+</I>&gt;<i> eventually managed to get it. The problem was in my directfbrc. I had a
+</I>&gt;<i> line
+</I>&gt;<i> 
+</I>&gt;<i> mode=720x576
+</I>
+But that should be the right one as this resolution is selected, see below.
+
+&gt;<i> 
+</I>&gt;<i> and I changed it to
+</I>&gt;<i> 
+</I>&gt;<i> mode=768x576
+</I>&gt;<i> 
+</I>&gt;<i> and voila! It worked,but next problem is that both video and audio
+</I>&gt;<i> streams choke very badly. I get only something like a frame per second
+</I>&gt;<i> and the video looks like it was in slow motion. Here's my log:
+</I>&gt;<i> 
+</I>&gt;<i> ---
+</I>&gt;<i> [<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at localhost</A> vdr-1.2.6]# ./vdr -P&quot;softdevice -vo dfb:mgatv&quot;
+</I>&gt;<i> [softdevice] processing args
+</I>&gt;<i> [softdevice]   argv [0] = softdevice
+</I>&gt;<i> [softdevice]   argv [1] = -vo
+</I>&gt;<i> [setup-softdevice] alsa device set to: default
+</I>&gt;<i> [setup-softdevice] A/V Offset set to (0)
+</I>&gt;<i> [setup-softdevice] cropping mode set to 0 (none)
+</I>&gt;<i> [setup-softdevice] deinterlace method set to 1 lavc
+</I>
+Turn deinterlace OFF. It is not needed in TV-out mode.
+
+&gt;<i> [softdevice] picture mirroring set to 0 (off)
+</I>&gt;<i> [setup-softdevice] pixel format set to (YUV2)
+</I>&gt;<i> [setup-softdevice] startup aspect set to (4:3 normal)
+</I>&gt;<i> [softdevice] initializing Plugin
+</I>&gt;<i> [softdevice] Initializing Video Out
+</I>&gt;<i> [softdevice] ffmpeg version(0.4.9-pre1) build(4736)
+</I>&gt;<i> [dfb] init
+</I>&gt;<i> (*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+</I>&gt;<i>  
+</I>&gt;<i>        ---------------------- DirectFB v0.9.21 ---------------------
+</I>&gt;<i>              (c) 2000-2002  convergence integrated media GmbH
+</I>&gt;<i>              (c) 2002-2004  convergence GmbH
+</I>&gt;<i>         -----------------------------------------------------------
+</I>&gt;<i>  
+</I>&gt;<i> (*) DirectFB/Core: Single Application Core. (2005-01-04 12:35)
+</I>&gt;<i> (*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+</I>&gt;<i> (*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 5559)...
+</I>&gt;<i> (*) Direct/Modules: suppress module 'joystick'
+</I>&gt;<i> (*) Direct/Modules: suppress module 'ps2mouse'
+</I>&gt;<i> (*) Direct/Thread: Running 'Keyboard Input' (INPUT, 5560)...
+</I>&gt;<i>  (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:802]
+</I>&gt;<i> (*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+</I>&gt;<i> (*) DirectFB/Genefx: MMX detected and enabled
+</I>&gt;<i> (*) DirectFB/Graphics: Matrox G450 0.7 (convergence integrated media
+</I>&gt;<i> GmbH)
+</I>&gt;<i> (*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+</I>&gt;<i> [dfb] RAM: 8388608 bytes
+</I>
+Only 8MB are reported, please use the matorx-full-memory patch from DirectFB.
+
+&gt;<i> [dfb] Accellerated Functions: FillRectange DrawRectange DrawLine
+</I>&gt;<i> FillTriangle Blit StretchBlit All
+</I>&gt;<i> [dfb] Drawing Flags: Blend
+</I>&gt;<i> [dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize
+</I>&gt;<i> SrcColorkey Deinterlace
+</I>&gt;<i> [dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 16</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A>
+</I>&gt;<i> [dfb] Enumeratig display Layers
+</I>&gt;<i> Layer 2 FBDev Primary Layer  Type: graphics
+</I>&gt;<i>   Caps: brightness contrast saturation surface
+</I>&gt;<i> Layer 1 Matrox Backend Scaler  Type: graphics picture video
+</I>&gt;<i>   Caps: brightness contrast deinterlacing dst_colorkey screen_location
+</I>&gt;<i> surface
+</I>&gt;<i> Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+</I>&gt;<i>   Caps: brightness contrast flicker_filtering hue saturation surface
+</I>&gt;<i> [dfb] width = 720, height = 576
+</I>&gt;<i> [dfb] got fmt = 0x00200806 bpp = 16
+</I>
+Mode 720x576 is selected, OK.
+Why the 16 bit mode ? Something from your directfbrc ?
+But the number 0x00200806 should be ok as I posted on vdr list ;-) .
+
+&gt;<i> [dfb] Using this layer for OSD: (Matrox CRTC2 Layer - [720x576])
+</I>&gt;<i> osdSurface::
+</I>&gt;<i>  - videoonly
+</I>&gt;<i>  - flipping
+</I>&gt;<i> videoSurface::
+</I>&gt;<i>  - videoonly
+</I>&gt;<i> [dfb] Configuring CooperativeLevel for Overlay
+</I>&gt;<i> [dfb] Configuring ColorKeying
+</I>&gt;<i> [dfb] Configuring CooperativeLevel for OSD
+</I>&gt;<i> [dfb] Using this layer for OSD: Matrox CRTC2 Layer
+</I>&gt;<i> [dfb] Using this layer for Video out: Matrox CRTC2 Layer
+</I>&gt;<i> [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+</I>&gt;<i> [dfb] creating new surface
+</I>&gt;<i> [dfb] (re)configured 0x00200806
+</I>&gt;<i> [softdevice] Video Out seems to be OK
+</I>&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;<i> [softdevice] OSD-Position at 54 x 396
+</I>&gt;<i> [video] Creating WindowLayer at 54 x 396, (624 x 135)
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 24 8
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 14
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 12
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 16
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]skiped MB in I frame at 1 18
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 19
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 21
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 22
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 25
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 1 26
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]invalid mb type in I Frame at 0 27
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 1 28
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 29
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 30
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 31
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 32
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 33
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]skiped MB in I frame at 1 34
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]ac-tex damaged at 0 35
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]concealing 2147483647 errors
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]Warning MVs not available
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]00 motion_type at 11 2
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]concealing 2147479327 errors
+</I>&gt;<i> [mpeg2video @ 0xb7d3a128]Warning MVs not available
+</I>&gt;<i> ---
+</I>&gt;<i> 
+</I>&gt;<i> And here's part of /var/log/messages
+</I>&gt;<i> ---
+</I>&gt;<i> Jan  5 21:20:46 localhost vdr[5546]: ERROR: ring buffer overflow (89
+</I>&gt;<i> bytes dropp ed)
+</I>&gt;<i> Jan  5 21:20:46 localhost vdr[5546]: ERROR: ring buffer overflow (188
+</I>&gt;<i> bytes drop ped)
+</I>&gt;<i> Jan  5 21:21:05 localhost last message repeated 21541 times
+</I>&gt;<i> Jan  5 21:21:05 localhost vdr[5546]: ERROR: skipped 99 byte to sync on
+</I>&gt;<i> TS packet
+</I>&gt;<i> Jan  5 21:21:05 localhost vdr[5546]: ERROR: ring buffer overflow (89
+</I>&gt;<i> bytes dropp ed)
+</I>&gt;<i> Jan  5 21:21:05 localhost vdr[5546]: ERROR: ring buffer overflow (188
+</I>&gt;<i> bytes drop ped)
+</I>&gt;<i> Jan  5 21:21:12 localhost last message repeated 8113 times
+</I>&gt;<i> ---
+</I>&gt;<i> 
+</I>&gt;<i> Normal dfb: driver doesn't cause these problems so I believe that this
+</I>&gt;<i> problem is not caused by ffmpeg as suggested in the VDR mailinglist.
+</I>&gt;<i> 
+</I>&gt;<i> And last some information about my system:
+</I>&gt;<i> 
+</I>&gt;<i> - Graphics card: Matrox G450 Dualhead 16 Mb
+</I>&gt;<i> - Kernel: 2.6.9 (vanilla)
+</I>&gt;<i> - Softdevice and ffmpeg are from today's CVS
+</I>&gt;<i> - Distro: FedoraCore 2
+</I>
+Whats the CPU type and speed ?
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000126.html">[Softdevice-devel] problems with mgatv
+</A></li>
+	<LI>Next message: <A HREF="000131.html">[Softdevice-devel] problems with mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#127">[ date ]</a>
+              <a href="thread.html#127">[ thread ]</a>
+              <a href="subject.html#127">[ subject ]</a>
+              <a href="author.html#127">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

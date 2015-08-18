@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Blue vertical bar on left side of the picture
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%20picture&In-Reply-To=%3C200506131845.02856.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000882.html">
+   <LINK REL="Next"  HREF="000887.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Blue vertical bar on left side of the picture</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%20picture&In-Reply-To=%3C200506131845.02856.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Blue vertical bar on left side of the picture">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Jun 13 18:45:02 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000882.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+        <LI>Next message: <A HREF="000887.html">Scaling with unusual source resolution WAS(Re: [Softdevice-devel] Can't get composite sync from G450)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#884">[ date ]</a>
+              <a href="thread.html#884">[ thread ]</a>
+              <a href="subject.html#884">[ subject ]</a>
+              <a href="author.html#884">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 13. Juni 2005 16:40, Voitto Tuomainen wrote:
+&gt;<i> Stefan Lucke kirjoitti 13.06.2005 kello 15:22:
+</I>&gt;<i> &gt; Quoting Voitto Tuomainen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">voitto.tuomainen at luukku.com</A>&gt;:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Hi,
+</I>&gt;<i> &gt; &gt; As stated in subject, there is a blue bar on left side of the picture in
+</I>&gt;<i> &gt; &gt; certain conditions. I think that if broadcasting picture is smaller than
+</I>&gt;<i> &gt; the
+</I>&gt;<i> &gt; &gt; maximum picture viewable area, this happens. This problem was not shown
+</I>&gt;<i> &gt; in a
+</I>&gt;<i> &gt; &gt; channel, I have an example in my web page
+</I>&gt;<i> &gt; &gt; <A HREF="http://kotisivu.mtv3.fi/vtuomain/blue_bar.jpg">http://kotisivu.mtv3.fi/vtuomain/blue_bar.jpg</A> in 0.1.2 or older releases,
+</I>&gt;<i> &gt; but
+</I>&gt;<i> &gt; &gt; it occurs on another channel, which I think is in different channel bunch.
+</I>&gt;<i> &gt; &gt; Problem in that channel is valid still.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Can you show us the messages from syslog which describe actual scaling
+</I>&gt;<i> &gt; parameters?
+</I>&gt;<i> &gt; Scaling parameters are usually reported after lines like:
+</I>&gt;<i> &gt; ... aspect changed (....
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Stefan Lucke
+</I>&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i> Following are lines, which printed to log during changing channels from 1 to 7. Third channel does not have blue bar, others have:
+</I>&gt;<i> Jun 13 17:07:13 miuvdr vdr[4737]: [VideoOut]: aspect changed (8 -&gt; 0 ; 1.333333 -&gt; 1.333333)
+</I>&gt;<i> Jun 13 17:07:21 miuvdr vdr[4745]: [VideoOut]: aspect changed (0 -&gt; 8 ; 1.333333 -&gt; 1.333333)
+</I>&gt;<i> Jun 13 17:07:27 miuvdr vdr[4757]: [VideoOut]: aspect changed (8 -&gt; 0 ; 1.333333 -&gt; 1.333333)
+</I>
+Just do a &quot;grep -A 1 'aspect changed' /var/log/messages&quot;.
+As stated above: scaling information is reported _after_ ..
+
+&gt;<i> 
+</I>&gt;<i> And finally something, which maybe does not relate to this at all
+</I>&gt;<i> Jun 11 23:54:11 miuvdr vdr[4322]: softdevice: no translation found for 'Xv startup aspect' in language 8 (suomi)
+</I>
+If you like translations for your language, prepare a patch :-) . File of interest is i18n.c
+
+Please subscribe. Maunal approve will cause delays.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000882.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+	<LI>Next message: <A HREF="000887.html">Scaling with unusual source resolution WAS(Re: [Softdevice-devel] Can't get composite sync from G450)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#884">[ date ]</a>
+              <a href="thread.html#884">[ thread ]</a>
+              <a href="subject.html#884">[ subject ]</a>
+              <a href="author.html#884">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606172246.10647.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002164.html">
+   <LINK REL="Next"  HREF="002166.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606172246.10647.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jun 17 22:46:10 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002164.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002166.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2165">[ date ]</a>
+              <a href="thread.html#2165">[ thread ]</a>
+              <a href="subject.html#2165">[ subject ]</a>
+              <a href="author.html#2165">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 17 Juni 2006 21:55, Rolf Ahrenberg wrote:
+&gt;<i> On Sat, 17 Jun 2006, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Hardcoded framebuffer device name is one thing which is not optimal.
+</I>&gt;<i> &gt; DirectFBs logic is:
+</I>&gt;<i> &gt; 1. get the name from config file
+</I>&gt;<i> &gt; 2. look for enviroment variable FRAMEBUFFER
+</I>&gt;<i> &gt; 3. probe /dev/fb0 or /dev/fb/0
+</I>&gt;<i> &gt; 2. and 3. is what we should do too. But in DirectFB, config file has higher
+</I>&gt;<i> &gt; precedence of enviroment variable and so it cannot be overwritten :-( .
+</I>&gt;<i> 
+</I>&gt;<i> Anyway, you cannot now specify it by configure and Makefile won't add 
+</I>&gt;<i> the FBDEV define into cflags if you've disabled fb or vidix 
+</I>&gt;<i> support. So currently none of the mentioned logic doesn't work.
+</I>&gt;<i> 
+</I>
+You can _now_ as described above (2. &amp; 3.) .
+
+&gt;<i> &gt;&gt; Howabout removing the cle266 commandline parameter and add an &quot;hardware
+</I>&gt;<i> &gt;&gt; decoding: yes/no&quot; option into setup menu?
+</I>&gt;<i> &gt; Or do you want to switch that on the fly ?
+</I>&gt;<i> 
+</I>&gt;<i> Yes, It would be very convenient to switch between software and hardware 
+</I>&gt;<i> decoding on the fly.
+</I>
+Let's first get current modification stable.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002164.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002166.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2165">[ date ]</a>
+              <a href="thread.html#2165">[ thread ]</a>
+              <a href="subject.html#2165">[ subject ]</a>
+              <a href="author.html#2165">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

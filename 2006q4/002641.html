@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C200611041517.30492.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002640.html">
+   <LINK REL="Next"  HREF="002644.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C200611041517.30492.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Nov  4 15:17:30 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002640.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+        <LI>Next message: <A HREF="002644.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2641">[ date ]</a>
+              <a href="thread.html#2641">[ thread ]</a>
+              <a href="subject.html#2641">[ subject ]</a>
+              <a href="author.html#2641">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 04 November 2006 13:56, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; On Donnerstag 02 November 2006 16:40, Juha Pahkala wrote:
+</I>&gt;<i> &gt;&gt; Stefan Lucke wrote:
+</I>&gt;<i> &gt;&gt;&gt; Quoting Juha Pahkala &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">jpahka at welho.com</A>&gt;:
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;   
+</I>&gt;<i> &gt;&gt;&gt;&gt; Just updated my softdevice from 0.2.2 to 0.3.0. Picture-wise, it seems
+</I>&gt;<i> &gt;&gt;&gt;&gt; to be an improvement, I'm not sure whether I'm imagining things but the
+</I>&gt;<i> &gt;&gt;&gt;&gt; picture does seem crispier on the primary head of my g400... although I
+</I>&gt;<i> &gt;&gt;&gt;&gt; also updated dfb so not sure who's to blame ;)
+</I>&gt;<i> &gt;&gt;&gt;&gt;     
+</I>&gt;<i> &gt;&gt;&gt; Can you try:
+</I>&gt;<i> &gt;&gt;&gt; a. unmute main pcm with alsamixer, or
+</I>&gt;<i> &gt;&gt;&gt; b. comment out line 15 of audio_alsa.c: #define NO_MIXER
+</I>&gt;<i> &gt;&gt;&gt;   
+</I>&gt;<i> &gt;&gt; Hi Stefan,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Option A didn't make a difference but commenting out the NO_MIXER define
+</I>&gt;<i> &gt;&gt; fixed the problem! So thank you for your help (as well as softdevice in
+</I>&gt;<i> &gt;&gt; general ;)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Can you try the following patch which makes use of alsa mixer 
+</I>&gt;<i> &gt; selectable via OSD ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> I fear some strange effects if one switches the use of alsa mixer via
+</I>&gt;<i> the osd. Consider the following, the volume of vdr is at some low
+</I>&gt;<i> position, the alsa mixer is in high volume position. One switches from
+</I>&gt;<i> no mixer to mixer. The audio wont be scaled any more so the volume goes
+</I>&gt;<i> dramatically up, since the alsa mixer is still in a high volume
+</I>&gt;<i> position.
+</I>
+Yes I'm aware of this, but this problem already exists. Think of
+an external amplifier connected via S/P-DIF. Volume is set to low position
+and controlled by either alsa mixer or software scaler. Then consider
+a switch to an AC3 station, for which volume control is done by
+external AC3 decoder/amplifier  only. User and his/her neighbours will
+notice a volume difference too.
+
+&gt;<i> Now one changes the volume of the vdr by one step, the volume 
+</I>&gt;<i> will jump to a low volume again, because the alsa mixer will go down to
+</I>&gt;<i> a low volume. If one now switches back to no alsa mixer option, the
+</I>&gt;<i> volume will instantly go down even more, since now the audio is scaled
+</I>&gt;<i> (or something else, scale_Factor is unset)...
+</I>&gt;<i> 
+</I>&gt;<i> Some of those problems can surely be fixed, but that will make it more
+</I>&gt;<i> complicated. If one has to be able to select to use the alsa mixer I
+</I>&gt;<i> would prefer a command line option.
+</I>
+A command line option has the disadvantage, that the calling script has
+to be edited. In a vdr only setup, a normal user has no chance to do this.
+
+&gt;<i> 
+</I>&gt;<i> But maybe you can explain me what actually the problem is? Of course if
+</I>&gt;<i> the AC3 data would be scaled, that would make the useless, but as far as
+</I>&gt;<i> I see, that is not the case. So the is the problem the alsa mixer setting?
+</I>
+Yes the problem is the mixer settings. on my other test box I noticed the situation
+too, but I could fix it by alsamixer and unmuting main + pcm mixer and give them
+a reasonable volume level than default.
+
+So there a many ways to control volume:
+a. external amplifier (S/P-DIF)
+b. external amplifier (via line out)
+c. PC-Speaker
+
+Things to be controlled by vdr / PC
+a. alsa master volume + mute
+b. alsa PCM mixer volume + mute
+c. alsa line out  + S/P-DIF out (mute ?)
+d. alsa output switches (s short summary from my setup)
+   - IEC958 5V, Copyright, In Monitor, Loop, ..
+   - Line-In Mode: Line-In, Rear Output, Bass output
+   - Mic-In Mode: Mic-in, Center/LFE Output, 
+
+Controlling alsa in total, is enough for separate plugin I guess.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002640.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+	<LI>Next message: <A HREF="002644.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2641">[ date ]</a>
+              <a href="thread.html#2641">[ thread ]</a>
+              <a href="subject.html#2641">[ subject ]</a>
+              <a href="author.html#2641">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

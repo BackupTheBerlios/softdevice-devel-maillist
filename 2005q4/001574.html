@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%3D%3FISO-8859-1%3FQ%3FRe%3A_%5BSoftdevice-devel%5D_softdevice_%26_HDTV_choppy/out-of-syn%3F%3D%0A%20%3D%3FISO-8859-1%3FQ%3Fc_video/audio_problem%3F%3D&In-Reply-To=%3C6395.1133982966%40www69.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001573.html">
+   <LINK REL="Next"  HREF="001575.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%3D%3FISO-8859-1%3FQ%3FRe%3A_%5BSoftdevice-devel%5D_softdevice_%26_HDTV_choppy/out-of-syn%3F%3D%0A%20%3D%3FISO-8859-1%3FQ%3Fc_video/audio_problem%3F%3D&In-Reply-To=%3C6395.1133982966%40www69.gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Dec  7 20:16:06 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001573.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+        <LI>Next message: <A HREF="001575.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1574">[ date ]</a>
+              <a href="thread.html#1574">[ thread ]</a>
+              <a href="subject.html#1574">[ subject ]</a>
+              <a href="author.html#1574">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> &gt; Did you switch the buffer size to HDTV? You can do
+</I>&gt;<i> &gt; that in the
+</I>&gt;<i> &gt; setup-menu of the softdevice. After changeing the
+</I>&gt;<i> &gt; buffer size you will
+</I>&gt;<i> &gt; have to switch the channel to let the change take
+</I>&gt;<i> &gt; effect.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Bye,
+</I>&gt;<i> &gt; Martin
+</I>&gt;<i> 
+</I>&gt;<i> yes, of course.
+</I>&gt;<i> 
+</I>
+Hmm, the symptons sound like a too small demuxing buffer, I would have
+betted that you forgot to switch the buffer size ;-).
+If you want you can try to increase the buffer size further, in the file
+mpeg2decoder, around line 40:
+
+int dvb_buf_size[] = {64*1024,32*1024,64*1024};
+int packet_buf_size[] = {300,150,2000};
+
+The first ist the default, the second the one for the good seeking and
+the last one is HDTV. The packet_buf_size should be the relevant size,
+but you can play around also with dvb_buf_size.
+Please tell me when you find a working buffersize. I'm not sure what
+else could cause that... It really sounds like the buffer. Normal streams
+play fine? What about recorded HDTV/normal streams?
+
+Bye,
+Martin
+
+-- 
+10 GB Mailbox, 100 FreeSMS/Monat <A HREF="http://www.gmx.net/de/go/topmail">http://www.gmx.net/de/go/topmail</A>
++++ GMX - die erste Adresse f&#252;r Mail, Message, More +++
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001573.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+	<LI>Next message: <A HREF="001575.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1574">[ date ]</a>
+              <a href="thread.html#1574">[ thread ]</a>
+              <a href="subject.html#1574">[ subject ]</a>
+              <a href="author.html#1574">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

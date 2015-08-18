@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Color hue and saturation with XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Color%20hue%20and%20saturation%20with%20XV&In-Reply-To=%3C200512112036.21032.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001588.html">
+   <LINK REL="Next"  HREF="001593.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Color hue and saturation with XV</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Color%20hue%20and%20saturation%20with%20XV&In-Reply-To=%3C200512112036.21032.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Color hue and saturation with XV">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Dec 11 20:36:20 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001588.html">[Softdevice-devel] Color hue and saturation with XV
+</A></li>
+        <LI>Next message: <A HREF="001593.html">[Softdevice-devel] probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1589">[ date ]</a>
+              <a href="thread.html#1589">[ thread ]</a>
+              <a href="subject.html#1589">[ subject ]</a>
+              <a href="author.html#1589">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 11. Dezember 2005 14:44, Seppo Ingalsuo wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> Since the introduction of these controls to softdevice CVS I get almost 
+</I>&gt;<i> black and white picture from Nvidia FX5200 s-video out when vdr starts 
+</I>&gt;<i> with default values (50,50). Is the problem present with other XV 
+</I>&gt;<i> drivers than Nvidia?
+</I>&gt;<i> 
+</I>&gt;<i> The colors become about correct with settings something like 80,80 but 
+</I>&gt;<i> as the settings are not stored I need to adjust them each time vdr 
+</I>&gt;<i> restarts. Would it be possible to read the default XV hue and saturation 
+</I>&gt;<i> settings from XV use them as default 50,50 values?
+</I>
+They are stored, but the way this is done is rather counter intuitive.
+Go to setup, change to the desired values.
+Press OK. So now you are at the previous menu.
+Press DOWN one time and OK again. So you are at vdr main menu
+and all setup values are stored. All setup values are stored only upon
+OK from our main setup menu (_not_ upon OK from a submenu).
+
+The startup messages are now:
+..
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 87
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (16:9 wide)
+[softdevice] initializing Plugin
+..
+
+
+&gt;<i> 
+</I>&gt;<i> BR,
+</I>&gt;<i> Seppo
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001588.html">[Softdevice-devel] Color hue and saturation with XV
+</A></li>
+	<LI>Next message: <A HREF="001593.html">[Softdevice-devel] probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1589">[ date ]</a>
+              <a href="thread.html#1589">[ thread ]</a>
+              <a href="subject.html#1589">[ subject ]</a>
+              <a href="author.html#1589">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

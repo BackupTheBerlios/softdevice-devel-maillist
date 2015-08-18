@@ -1,0 +1,3483 @@
+From per at mellander.org  Tue Apr  3 11:38:55 2007
+From: per at mellander.org (Per Mellander)
+Date: Tue, 03 Apr 2007 11:38:55 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+Message-ID: <461220AF.2070001@mellander.org>
+
+I started using softplay when I changed my output device to softdevice. 
+As I understand it I can't use mplayer plugin together with softdevice. 
+The problem is that some files are not playable with softplay, and what 
+concerns me is that it is mpeg files?
+
+For example this one ( mplayer output ):
+
+Playing NallePuhAdventure.mpg.
+MPEG-PS file format detected.
+VIDEO:  MPEG1  352x288  (aspect 8)  25.000 fps  1150.0 kbps (143.8 kbyte/s)
+
+and this one:
+
+Playing Pettson och Findus - Kattonauten .mpg.
+MPEG-PS file format detected.
+VIDEO:  MPEG1  352x288  (aspect 8)  25.000 fps  1150.0 kbps (143.8 kbyte/s)
+
+I have several other movies that works but it seems that all that I can 
+play are movies that are _not_ mpeg. Strange, or have I missed something 
+obvious?
+
+
+
+From M.Wache at gmx.net  Tue Apr  3 21:11:58 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Tue, 03 Apr 2007 21:11:58 +0200
+Subject: [Softdevice-devel] Feature Request: Autocrop and smooth	zoom
+ insoftdevice
+In-Reply-To: <pan.2007.03.26.03.49.13@cdu.edu.au>
+References: <FB3B5DB3197CEA429E5FB8E83D01D039D1F7@sbs2003.do-net.de>
+	<pan.2007.03.26.03.49.13@cdu.edu.au>
+Message-ID: <4612A6FE.8060801@gmx.net>
+
+Malcolm Caldwell schrieb:
+> On Sun, 25 Mar 2007 13:21:46 +0200, Andre Neumann wrote:
+> 
+>> I have it working now. You find the patch at
+>> http://www.do-net.de/softdevice_autocropsmooth.diff , which is againts
+>> CVS from around 08/08/2006.
+> 
+> Can someone tell me:
+> 
+> Does this code work for the case where there is I have a 4:3 Display, but 
+> my channel broadcasts all programming as 16:9 - even if it is 4:3 
+> content.  They also do not use AFD.
+> 
+> Does this patch 'zoom' such content to fill my screen?
+>  
+I'm not sure if I understand you correctly, but I think it is for the
+opposite case.
+The content is 16:9, it is broadcasted as 4:3 with black bars at top and
+bottom. In this case the black bars are detected and automatically
+cropped, so that it can be displayed without bars on a 16:9 screen.
+
+I applied an updated version of the patch to the cvs.
+
+Bye,
+Martin
+
+
+From M.Wache at gmx.net  Tue Apr  3 22:36:18 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Tue, 03 Apr 2007 22:36:18 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+In-Reply-To: <461220AF.2070001@mellander.org>
+References: <461220AF.2070001@mellander.org>
+Message-ID: <4612BAC2.4080909@gmx.net>
+
+Per Mellander schrieb:
+> I started using softplay when I changed my output device to softdevice. 
+> As I understand it I can't use mplayer plugin together with softdevice. 
+> The problem is that some files are not playable with softplay, and what 
+> concerns me is that it is mpeg files?
+> 
+> For example this one ( mplayer output ):
+> 
+> Playing NallePuhAdventure.mpg.
+> MPEG-PS file format detected.
+> VIDEO:  MPEG1  352x288  (aspect 8)  25.000 fps  1150.0 kbps (143.8 kbyte/s)
+> 
+> and this one:
+> 
+> Playing Pettson och Findus - Kattonauten .mpg.
+> MPEG-PS file format detected.
+> VIDEO:  MPEG1  352x288  (aspect 8)  25.000 fps  1150.0 kbps (143.8 kbyte/s)
+> 
+> I have several other movies that works but it seems that all that I can 
+> play are movies that are _not_ mpeg. Strange, or have I missed something 
+> obvious?
+> 
+In principle softplay should be able to replay those files without
+problems. I suspect that the auto detection of the file format fails.
+Could you please try if ffmpeg or ffplay detect the files correctly?
+What does softplay report when you've opened one of those files? There
+should be some lines starting with "Input #0, mpeg, from 'test'", could
+you please send me those lines?
+Which ffmpeg version do you use? (SVN revision?)
+
+Bye,
+Martin
+
+
+From torgeir at pobox.com  Tue Apr  3 22:52:33 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Tue, 3 Apr 2007 21:52:33 +0100
+Subject: [Softdevice-devel] building on mac
+Message-ID: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>
+
+Martin, I tried the latest cvs stuff, and am having a few compile  
+problems.
+
+I have to manually edit the .dependencies file to remove linux/dvb/ 
+dmx.h. Not sure why it ends up in that file. I also have to manually  
+set APIVERSION, since the sed macro doesn't work;
+
+sed: 1: "/define APIVERSION/ { s ...": extra characters at the end of  
+p command
+
+I then end up with
+
+/System/Library/Frameworks/CoreServices.framework/Frameworks/ 
+CarbonCore.framework/Headers/MachineExceptions.h:245: error:  
+declaration does not declare anything
+softdevice.c: In member function 'virtual bool  
+cPluginSoftDevice::ProcessArgs(int, char**)':
+softdevice.c:993: error: 'VOUT_QUARTZ' was not declared in this scope
+make: *** [softdevice.o] Error 1
+
+Is everything committed to CVS yet or do I have to wait a bit?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From M.Wache at gmx.net  Tue Apr  3 23:03:14 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Tue, 03 Apr 2007 23:03:14 +0200
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>
+Message-ID: <4612C112.6080702@gmx.net>
+
+Torgeir Veimo schrieb:
+> Martin, I tried the latest cvs stuff, and am having a few compile  
+> problems.
+> 
+> I have to manually edit the .dependencies file to remove linux/dvb/ 
+> dmx.h. Not sure why it ends up in that file. I also have to manually  
+> set APIVERSION, since the sed macro doesn't work;
+> 
+> sed: 1: "/define APIVERSION/ { s ...": extra characters at the end of  
+> p command
+> 
+I ignored this message up to now, and it worked for me... don't know why..
+
+> I then end up with
+> 
+> /System/Library/Frameworks/CoreServices.framework/Frameworks/ 
+> CarbonCore.framework/Headers/MachineExceptions.h:245: error:  
+> declaration does not declare anything
+
+Please disable video-xv if you are using an Intel-Mac. There are also a
+view endianness problems, so the colors are probably wrong...
+
+> softdevice.c: In member function 'virtual bool  
+> cPluginSoftDevice::ProcessArgs(int, char**)':
+> softdevice.c:993: error: 'VOUT_QUARTZ' was not declared in this scope
+> make: *** [softdevice.o] Error 1
+> 
+> Is everything committed to CVS yet or do I have to wait a bit?
+> 
+You are right, I forgot to commit one file. It should work now :-)
+
+Thanks for reporting,
+
+Martin
+
+
+From torgeir at pobox.com  Tue Apr  3 23:10:34 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Tue, 3 Apr 2007 22:10:34 +0100
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <4612C112.6080702@gmx.net>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>
+	<4612C112.6080702@gmx.net>
+Message-ID: <58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>
+
+
+On 3 Apr 2007, at 22:03, Martin Wache wrote:
+
+> Torgeir Veimo schrieb:
+>> Martin, I tried the latest cvs stuff, and am having a few compile
+>> problems.
+>>
+>> I have to manually edit the .dependencies file to remove linux/dvb/
+>> dmx.h. Not sure why it ends up in that file.
+
+This was due to VDR/include/remux.h. My mac VDR setup is prob not  
+waterproof.
+
+Now I get;
+
+Plugin softdevice:
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG - 
+D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' - 
+D_GNU_SOURCE -DPLUGINLIBDIR='"./PLUGINS/lib"' -DSHM_SUPPORT - 
+I../../../include -I../../../../DVB/include -I/usr/local/include -I/ 
+usr/local/include/ffmpeg   SoftOsd.c
+/usr/local/include/ffmpeg/avcodec.h:2439: warning: attribute ignored  
+in declaration of 'struct ImgReSampleContext'
+/usr/local/include/ffmpeg/avcodec.h:2439: warning: attribute for  
+'struct ImgReSampleContext' must follow the 'struct' keyword
+/usr/local/include/ffmpeg/avcodec.h:2444: warning:  
+'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+ffmpeg/avcodec.h:2441)
+/usr/local/include/ffmpeg/avcodec.h:2451: warning:  
+'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+ffmpeg/avcodec.h:2441)
+/usr/local/include/ffmpeg/avcodec.h:2455: warning:  
+'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+ffmpeg/avcodec.h:2441)
+/usr/local/include/ffmpeg/avcodec.h:2457: warning:  
+'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+ffmpeg/avcodec.h:2441)
+/var/tmp//ccpGFYQd.s:1399:Unimplemented segment type 5 in parse_operand
+
+I'll try updating my ffmpeg library. It's a shame it's not available  
+through fink.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From M.Wache at gmx.net  Tue Apr  3 23:15:58 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Tue, 03 Apr 2007 23:15:58 +0200
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>	<4612C112.6080702@gmx.net>
+	<58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>
+Message-ID: <4612C40E.2050603@gmx.net>
+
+Torgeir Veimo schrieb:
+> On 3 Apr 2007, at 22:03, Martin Wache wrote:
+> 
+>> Torgeir Veimo schrieb:
+>>> Martin, I tried the latest cvs stuff, and am having a few compile
+>>> problems.
+>>>
+>>> I have to manually edit the .dependencies file to remove linux/dvb/
+>>> dmx.h. Not sure why it ends up in that file.
+> 
+> This was due to VDR/include/remux.h. My mac VDR setup is prob not  
+> waterproof.
+> 
+> Now I get;
+> 
+> Plugin softdevice:
+> g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG - 
+> D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' - 
+> D_GNU_SOURCE -DPLUGINLIBDIR='"./PLUGINS/lib"' -DSHM_SUPPORT - 
+> I../../../include -I../../../../DVB/include -I/usr/local/include -I/ 
+> usr/local/include/ffmpeg   SoftOsd.c
+> /usr/local/include/ffmpeg/avcodec.h:2439: warning: attribute ignored  
+> in declaration of 'struct ImgReSampleContext'
+> /usr/local/include/ffmpeg/avcodec.h:2439: warning: attribute for  
+> 'struct ImgReSampleContext' must follow the 'struct' keyword
+> /usr/local/include/ffmpeg/avcodec.h:2444: warning:  
+> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+> ffmpeg/avcodec.h:2441)
+> /usr/local/include/ffmpeg/avcodec.h:2451: warning:  
+> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+> ffmpeg/avcodec.h:2441)
+> /usr/local/include/ffmpeg/avcodec.h:2455: warning:  
+> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+> ffmpeg/avcodec.h:2441)
+> /usr/local/include/ffmpeg/avcodec.h:2457: warning:  
+> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+> ffmpeg/avcodec.h:2441)
+> /var/tmp//ccpGFYQd.s:1399:Unimplemented segment type 5 in parse_operand
+> 
+> I'll try updating my ffmpeg library. It's a shame it's not available  
+> through fink.
+> 
+Please also try disable mmx optimizations, I'm not sure if Mac Os allows
+the same syntax as Linux.
+
+Bye,
+
+Martin
+
+
+From torgeir at pobox.com  Tue Apr  3 23:19:47 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Tue, 3 Apr 2007 22:19:47 +0100
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <4612C40E.2050603@gmx.net>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>
+	<4612C112.6080702@gmx.net>
+	<58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>
+	<4612C40E.2050603@gmx.net>
+Message-ID: <9E4B45A8-862E-457D-8821-9D2AF9663D08@pobox.com>
+
+
+On 3 Apr 2007, at 22:15, Martin Wache wrote:
+
+> Torgeir Veimo schrieb:
+>> Now I get;
+>>
+>> [...]
+
+>> /var/tmp//ccpGFYQd.s:1399:Unimplemented segment type 5 in  
+>> parse_operand
+>>
+>> I'll try updating my ffmpeg library. It's a shame it's not available
+>> through fink.
+>>
+> Please also try disable mmx optimizations, I'm not sure if Mac Os  
+> allows
+> the same syntax as Linux.
+
+Almost there..
+
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -dynamiclib -Wl,- 
+single_module,-undefined,dynamic_lookup  softdevice.o utils.o i18n.o  
+video.o mpeg2decoder.o audio.o video-dummy.o setup-softdevice.o setup- 
+softdevice-menu.o setup-softlog.o setup-softlog-menu.o sync-timer.o  
+SoftOsd.o PicBuffer.o VideoFilter.o audio-macos.o video-quartz.o  
+video-shm.o -L/usr/local/lib -lavformat -lavcodec -lz -lavutil   - 
+framework Carbon -framework CoreAudio -framework AudioUnit -framework  
+AudioToolbox  -framework Carbon -framework AGL -framework OpenGL  -o  
+libvdr-softdevice.so
+ld: /usr/local/lib/libavformat.a(utils.o) has local relocation  
+entries in non-writable section (__TEXT,__text)
+/usr/bin/libtool: internal link edit command failed
+make: *** [libvdr-softdevice.so] Error 1
+
+How do you configure and build your ffmpeg installation?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From M.Wache at gmx.net  Tue Apr  3 23:32:43 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Tue, 03 Apr 2007 23:32:43 +0200
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <9E4B45A8-862E-457D-8821-9D2AF9663D08@pobox.com>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>	<4612C112.6080702@gmx.net>	<58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>	<4612C40E.2050603@gmx.net>
+	<9E4B45A8-862E-457D-8821-9D2AF9663D08@pobox.com>
+Message-ID: <4612C7FB.3010808@gmx.net>
+
+Torgeir Veimo schrieb:
+> On 3 Apr 2007, at 22:15, Martin Wache wrote:
+> 
+>> Torgeir Veimo schrieb:
+>>> Now I get;
+>>>
+>>> [...]
+> 
+>>> /var/tmp//ccpGFYQd.s:1399:Unimplemented segment type 5 in  
+>>> parse_operand
+>>>
+>>> I'll try updating my ffmpeg library. It's a shame it's not available
+>>> through fink.
+>>>
+>> Please also try disable mmx optimizations, I'm not sure if Mac Os  
+>> allows
+>> the same syntax as Linux.
+> 
+> Almost there..
+> 
+> g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -dynamiclib -Wl,- 
+> single_module,-undefined,dynamic_lookup  softdevice.o utils.o i18n.o  
+> video.o mpeg2decoder.o audio.o video-dummy.o setup-softdevice.o setup- 
+> softdevice-menu.o setup-softlog.o setup-softlog-menu.o sync-timer.o  
+> SoftOsd.o PicBuffer.o VideoFilter.o audio-macos.o video-quartz.o  
+> video-shm.o -L/usr/local/lib -lavformat -lavcodec -lz -lavutil   - 
+> framework Carbon -framework CoreAudio -framework AudioUnit -framework  
+> AudioToolbox  -framework Carbon -framework AGL -framework OpenGL  -o  
+> libvdr-softdevice.so
+> ld: /usr/local/lib/libavformat.a(utils.o) has local relocation  
+> entries in non-writable section (__TEXT,__text)
+> /usr/bin/libtool: internal link edit command failed
+> make: *** [libvdr-softdevice.so] Error 1
+> 
+> How do you configure and build your ffmpeg installation?
+> 
+
+You have to remove the "-mdynamic-no-pic" option from ffmpeg config.mak
+and recompile ffmpeg.
+I have not yet committed the Readme-Macos, some things are already
+outdated, but maybe it is usefull:
+
+Problems with shmget:
+
+Change /etc/rc
+sysctl -w kern.sysv.shmmax=134217728
+sysctl -w kern.sysv.shmmin=1
+sysctl -w kern.sysv.shmmni=32
+sysctl -w kern.sysv.shmseg=8
+sysctl -w kern.sysv.shmall=32768
+
+shmall=shmmax/4096 (on 10.3 Panther)
+_Reboot_ after change, it is not possible to change the parameters on
+runtime!
+
+
+To compile the softdevice:
+
+- get ffmpeg (the SVN version is usually the best..)
+- configure and compile ffmpeg
+  ./configure --disable-encoders
+  make
+  (Note: you may have to remove "-mdynamic-no-pic" from config.mak
+before compil
+   ng if linking fails with the softdevice.)
+
+- configure the softdevice in the softdevice directory:
+  ./configure --with-ffmpeg-path path-to-your-ffmpeg --disable-subplugins
+- go back to vdr's directory and compile the plugins:
+  make plugins
+  (Note: you may have to set the deployment target to 10.3 with
+  "export MACOSX_DEPLOYMENT_TARGET=10.3" on MacOs X 10.3)
+
+To compile the client, change to the softdevice directory, type "make
+MacVdrClie
+nt".
+
+
+To start vdr with the softdevice use:
+"./vdr -P"softdevice -vo shm:" ", vdr will start and wait for connection of
+the client. To start the client, simply start it using
+"./MacVdrClient.app/Contents/MacOS/MacVdrClient " in the softdevice
+directory.
+
+This has been tested on a iBook G4 1.2GHz using MacOs 10.3.9 and a
+Powerbook G4
+using MacOsX 10.4.
+
+Bye,
+Martin
+
+
+From torgeir at pobox.com  Wed Apr  4 00:58:20 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Tue, 3 Apr 2007 23:58:20 +0100
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <4612C7FB.3010808@gmx.net>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>
+	<4612C112.6080702@gmx.net>	<58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>
+	<4612C40E.2050603@gmx.net>
+	<9E4B45A8-862E-457D-8821-9D2AF9663D08@pobox.com>
+	<4612C7FB.3010808@gmx.net>
+Message-ID: <9335ECA5-CD2B-4AAD-A6E5-1C3E1CBDBFED@pobox.com>
+
+
+On 3 Apr 2007, at 22:32, Martin Wache wrote:
+
+>> [...]
+>
+> You have to remove the "-mdynamic-no-pic" option from ffmpeg  
+> config.mak
+> and recompile ffmpeg.
+
+ffmpeg had to be configured with --disable-mmx as well.
+
+When I try running, I get a bus error;
+
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+Bus error
+
+gdb shows:
+
+Program received signal EXC_BAD_ACCESS, Could not access memory.
+Reason: KERN_PROTECTION_FAILURE at address: 0x161c0000
+0xffff07c7 in ___memcpy () at /System/Library/Frameworks/ 
+System.framework/PrivateHeaders/i386/cpu_capabilities.h:228
+228     /System/Library/Frameworks/System.framework/PrivateHeaders/ 
+i386/cpu_capabilities.h: No such file or directory.
+         in /System/Library/Frameworks/System.framework/ 
+PrivateHeaders/i386/cpu_capabilities.h
+
+Could this be because I don't have any DVB device available on the mac?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From torgeir at pobox.com  Wed Apr  4 01:10:44 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Wed, 4 Apr 2007 00:10:44 +0100
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <9335ECA5-CD2B-4AAD-A6E5-1C3E1CBDBFED@pobox.com>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>
+	<4612C112.6080702@gmx.net>	<58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>
+	<4612C40E.2050603@gmx.net>
+	<9E4B45A8-862E-457D-8821-9D2AF9663D08@pobox.com>
+	<4612C7FB.3010808@gmx.net>
+	<9335ECA5-CD2B-4AAD-A6E5-1C3E1CBDBFED@pobox.com>
+Message-ID: <B1A5A738-C27C-4614-842B-F08A9BACCA34@pobox.com>
+
+
+On 3 Apr 2007, at 23:58, Torgeir Veimo wrote:
+
+>
+> On 3 Apr 2007, at 22:32, Martin Wache wrote:
+>
+>>> [...]
+>>
+>> You have to remove the "-mdynamic-no-pic" option from ffmpeg
+>> config.mak
+>> and recompile ffmpeg.
+>
+> ffmpeg had to be configured with --disable-mmx as well.
+>
+> When I try running, I get a bus error;
+>
+> [softdevice] Audio out seems to be OK
+> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+> Bus error
+>
+> gdb shows:
+>
+> Program received signal EXC_BAD_ACCESS, Could not access memory.
+> Reason: KERN_PROTECTION_FAILURE at address: 0x161c0000
+> 0xffff07c7 in ___memcpy () at /System/Library/Frameworks/
+> System.framework/PrivateHeaders/i386/cpu_capabilities.h:228
+> 228     /System/Library/Frameworks/System.framework/PrivateHeaders/
+> i386/cpu_capabilities.h: No such file or directory.
+>          in /System/Library/Frameworks/System.framework/
+> PrivateHeaders/i386/cpu_capabilities.h
+>
+> Could this be because I don't have any DVB device available on the  
+> mac?
+
+I forgot -vo..
+
+Using -vo shm: works with the shm stuff in /etc/rc, but when I start  
+MacVdrClient, I cannot move the window, and it refused to go on top  
+of my iterm window, even though it goes on top of other windows. I  
+also won't allow itself to be resized nor accept any key input.
+
+Shouldn't  -vo quartz: also work? I get the previous bus error as  
+without any -vo, so I guess that means -vo quartz: is default on mac?
+
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From M.Wache at gmx.net  Wed Apr  4 08:51:23 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Wed, 04 Apr 2007 08:51:23 +0200
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <B1A5A738-C27C-4614-842B-F08A9BACCA34@pobox.com>
+References: <3C4DAF94-C87B-42A8-9FF3-23CCEC18F0A8@pobox.com>	<4612C112.6080702@gmx.net>	<58B9E35F-3867-4441-9322-FDE5725DD028@pobox.com>	<4612C40E.2050603@gmx.net>	<9E4B45A8-862E-457D-8821-9D2AF9663D08@pobox.com>	<4612C7FB.3010808@gmx.net>	<9335ECA5-CD2B-4AAD-A6E5-1C3E1CBDBFED@pobox.com>
+	<B1A5A738-C27C-4614-842B-F08A9BACCA34@pobox.com>
+Message-ID: <46134AEB.6040900@gmx.net>
+
+Torgeir Veimo schrieb:
+> On 3 Apr 2007, at 23:58, Torgeir Veimo wrote:
+> 
+>> On 3 Apr 2007, at 22:32, Martin Wache wrote:
+>>
+>>>> [...]
+>>> You have to remove the "-mdynamic-no-pic" option from ffmpeg
+>>> config.mak
+>>> and recompile ffmpeg.
+>> ffmpeg had to be configured with --disable-mmx as well.
+>>
+>> When I try running, I get a bus error;
+>>
+>> [softdevice] Audio out seems to be OK
+>> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+>> Bus error
+>>
+>> gdb shows:
+>>
+>> Program received signal EXC_BAD_ACCESS, Could not access memory.
+>> Reason: KERN_PROTECTION_FAILURE at address: 0x161c0000
+>> 0xffff07c7 in ___memcpy () at /System/Library/Frameworks/
+>> System.framework/PrivateHeaders/i386/cpu_capabilities.h:228
+>> 228     /System/Library/Frameworks/System.framework/PrivateHeaders/
+>> i386/cpu_capabilities.h: No such file or directory.
+>>          in /System/Library/Frameworks/System.framework/
+>> PrivateHeaders/i386/cpu_capabilities.h
+>>
+>> Could this be because I don't have any DVB device available on the  
+>> mac?
+> 
+> I forgot -vo..
+> 
+> Using -vo shm: works with the shm stuff in /etc/rc, but when I start  
+> MacVdrClient, I cannot move the window, and it refused to go on top  
+> of my iterm window, even though it goes on top of other windows. I  
+> also won't allow itself to be resized nor accept any key input.
+> 
+I guess this is because you didn't start the MacVdrClient from its .app
+folder. Please start it by clicking on the Folder from the Finder or, by
+typing "./MacVdrClient.app/Contents/MacOS/MacVdrClient " in the
+softdevice directory.
+
+> Shouldn't  -vo quartz: also work? I get the previous bus error as  
+> without any -vo, so I guess that means -vo quartz: is default on mac?
+> 
+In principle it should work, but I never had it working. I think Quartz
+doesn't like the threading in the softdevice and doesn't deliver the
+events to our event loop. I haven't tried it for some time, I will check
+if I also get a crash. Maybe it is the best to remove this option until
+it works, to avoid confusion.
+
+Bye,
+Martin
+
+
+From per at mellander.org  Wed Apr  4 11:20:49 2007
+From: per at mellander.org (Per Mellander)
+Date: Wed, 04 Apr 2007 11:20:49 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+In-Reply-To: <4612BAC2.4080909@gmx.net>
+References: <461220AF.2070001@mellander.org> <4612BAC2.4080909@gmx.net>
+Message-ID: <46136DF1.7020508@mellander.org>
+
+Martin Wache wrote:
+
+> In principle softplay should be able to replay those files without
+> problems. I suspect that the auto detection of the file format fails.
+> Could you please try if ffmpeg or ffplay detect the files correctly?
+> What does softplay report when you've opened one of those files? There
+> should be some lines starting with "Input #0, mpeg, from 'test'", could
+> you please send me those lines?
+
+@home with FFmpeg version SVN-r7991 and softplay CVS 20070312
+
+I don't see any messages that looks like that. Maybe I've got the wrong 
+setting for debug output or maybe it's because I'm running vdr from 
+.xinitrc and the messages from vdr is supressed somewhere. I 'm only 
+getting the 'X' output in my console where I do 'startx'. What I do find 
+is lines like ( in syslog):
+
+Apr  1 17:55:42 mm vdr: [14307] ERROR: Could not open file 
+/data2/movies/Teletubbies.mpg! <--------------- extra '!'
+Apr  1 17:55:57 mm vdr: [14318] ERROR: Could not open file 
+/data2/movies/Barn/NallePuhAdventure.mp <------ missing 'g'
+Apr  1 17:56:11 mm vdr: [14329] ERROR: Could not open file 
+/data2/movies/Barn/NallePuhChristofferR <------ missing rest of filename 
+'obin.mpg'
+
+There is something fishy here connected with the char str[60] used when 
+creating the error string. It seems that the last character(s) is 
+missed/overwritten/replaced in some way. Is the length of 60 choosen 
+because of the OSD?
+
+Haven't tested ffplay @home
+
+Later on I continued this message @work where I run FFmpeg version 
+SVN-r8487 and softplay CVS 20070323. Same problem with same files.
+
+console says:
+
+PLDBG: Activate 1
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0xa1468b8
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mpg
+open file '/transfer/download/film/Pettson och Findus - Kattonauten .mpg'
+PLDBG: ~cSoftControl()
+PLDBG: ~cSoftPlayer
+could not open file. Return value -84
+ic is null!!
+PLDBG: SoftPlayer not runnig. Looking for next file
+PLDBG: SoftPlayer not runnig. Looking for next file
+PLDBG: SoftPlayer not runnig. Looking for next file
+....
+------------8<-------------------------------------
+(Here I press stop)
+------------8<-------------------------------------
+....
+PLDBG: SoftPlayer not runnig. Looking for next file
+PLDBG: SoftPlayer not runnig. Looking for next file
+PLDBG: SoftPlayer not runnig. Looking for next file
+PLDBG: Thread beendet : SoftPlayer
+PLDBG: Activate 0
+
+
+ffplay playes the movie without problem
+
+ffplay -stats "Pettson och Findus - Kattonauten .mpg"
+Input #0, mpeg, from 'Pettson och Findus - Kattonauten .mpg':
+   Duration: 01:15:59.2, start: 0.346711, bitrate: 1394 kb/s
+   Stream #0.0[0x1e0]: Video: mpeg1video, yuv420p, 352x288, 1150 kb/s, 
+25.00 fps(r)
+   Stream #0.1[0x1c0]: Audio: mp2, 44100 Hz, stereo, 224 kb/s
+    3.95 A-V:  0.002 aq=   80KB vq=  420KB sq=    0B
+
+/Per
+
+
+ffpl	
+
+
+From malcolm.caldwell at cdu.edu.au  Wed Apr  4 15:44:34 2007
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Wed, 4 Apr 2007 13:44:34 +0000 (UTC)
+Subject: [Softdevice-devel] Feature Request: Autocrop and smooth	zoom
+	insoftdevice
+References: <FB3B5DB3197CEA429E5FB8E83D01D039D1F7@sbs2003.do-net.de>
+	<pan.2007.03.26.03.49.13@cdu.edu.au> <4612A6FE.8060801@gmx.net>
+Message-ID: <pan.2007.04.04.13.44.33@cdu.edu.au>
+
+On Tue, 03 Apr 2007 21:11:58 +0200, Martin Wache wrote:
+
+> Malcolm Caldwell schrieb:
+>> On Sun, 25 Mar 2007 13:21:46 +0200, Andre Neumann wrote:
+>> 
+>>> I have it working now. You find the patch at
+>>> http://www.do-net.de/softdevice_autocropsmooth.diff , which is againts
+>>> CVS from around 08/08/2006.
+>> 
+>> Can someone tell me:
+>> 
+>> Does this code work for the case where there is I have a 4:3 Display,
+>> but my channel broadcasts all programming as 16:9 - even if it is 4:3
+>> content.  They also do not use AFD.
+>> 
+>> Does this patch 'zoom' such content to fill my screen?
+>>  
+> I'm not sure if I understand you correctly, but I think it is for the
+> opposite case.
+> The content is 16:9, it is broadcasted as 4:3 with black bars at top and
+> bottom. In this case the black bars are detected and automatically
+> cropped, so that it can be displayed without bars on a 16:9 screen.
+
+You are correct in that this patch does the opposite of what I want.  
+
+Would it be possible to extend this to the case of a 4:3 picture within a 
+16:9 frame displayed on a 4:3 screen?  In this case there are black bars 
+on the top and bottom, and left and right of the picture.  It should be 
+zoomed to fill the screen.
+ 
+
+
+> I applied an updated version of the patch to the cvs.
+> 
+> Bye,
+> Martin
+
+
+
+From M.Wache at gmx.net  Wed Apr  4 18:38:25 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Wed, 04 Apr 2007 18:38:25 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+In-Reply-To: <46136DF1.7020508@mellander.org>
+References: <461220AF.2070001@mellander.org> <4612BAC2.4080909@gmx.net>
+	<46136DF1.7020508@mellander.org>
+Message-ID: <4613D481.4050308@gmx.net>
+
+Per Mellander schrieb:
+> Martin Wache wrote:
+> 
+>> In principle softplay should be able to replay those files without
+>> problems. I suspect that the auto detection of the file format fails.
+>> Could you please try if ffmpeg or ffplay detect the files correctly?
+>> What does softplay report when you've opened one of those files? There
+>> should be some lines starting with "Input #0, mpeg, from 'test'", could
+>> you please send me those lines?
+> 
+> @home with FFmpeg version SVN-r7991 and softplay CVS 20070312
+> 
+> I don't see any messages that looks like that. Maybe I've got the wrong 
+> setting for debug output or maybe it's because I'm running vdr from 
+> .xinitrc and the messages from vdr is supressed somewhere. I 'm only 
+> getting the 'X' output in my console where I do 'startx'. What I do find 
+> is lines like ( in syslog):
+> 
+> Apr  1 17:55:42 mm vdr: [14307] ERROR: Could not open file 
+> /data2/movies/Teletubbies.mpg! <--------------- extra '!'
+> Apr  1 17:55:57 mm vdr: [14318] ERROR: Could not open file 
+> /data2/movies/Barn/NallePuhAdventure.mp <------ missing 'g'
+> Apr  1 17:56:11 mm vdr: [14329] ERROR: Could not open file 
+> /data2/movies/Barn/NallePuhChristofferR <------ missing rest of filename 
+> 'obin.mpg'
+> 
+> There is something fishy here connected with the char str[60] used when 
+> creating the error string. It seems that the last character(s) is 
+> missed/overwritten/replaced in some way. Is the length of 60 choosen 
+> because of the OSD?
+> 
+> Haven't tested ffplay @home
+> 
+> Later on I continued this message @work where I run FFmpeg version 
+> SVN-r8487 and softplay CVS 20070323. Same problem with same files.
+> 
+> console says:
+> 
+> PLDBG: Activate 1
+> PLDBG: Thread started: SoftPlayer
+> softdevicePlugin 0xa1468b8
+> Service 'softdevice-GetPacketHandles-v1.0'
+> IsStream .mpg
+> open file '/transfer/download/film/Pettson och Findus - Kattonauten .mpg'
+> PLDBG: ~cSoftControl()
+> PLDBG: ~cSoftPlayer
+> could not open file. Return value -84
+
+-84= AVERROR_NOFMT, so the format is not correctly detected. That is
+strange, ffplay detects it, but softplay doesn't detect it. Maybe you
+can add some printfs to libavformat av_open_input_file() (in
+libavformat/util.c, and #undef printf to get rid of the linking error)
+to find out what goes wrong...
+
+I will try to reproduce the problems when I'm at home.
+
+Bye,
+
+Martin
+
+
+From M.Wache at gmx.net  Wed Apr  4 18:43:18 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Wed, 04 Apr 2007 18:43:18 +0200
+Subject: [Softdevice-devel] Feature Request: Autocrop and smooth	zoom
+ insoftdevice
+In-Reply-To: <pan.2007.04.04.13.44.33@cdu.edu.au>
+References: <FB3B5DB3197CEA429E5FB8E83D01D039D1F7@sbs2003.do-net.de>	<pan.2007.03.26.03.49.13@cdu.edu.au>
+	<4612A6FE.8060801@gmx.net> <pan.2007.04.04.13.44.33@cdu.edu.au>
+Message-ID: <4613D5A6.8080406@gmx.net>
+
+Malcolm Caldwell schrieb:
+> On Tue, 03 Apr 2007 21:11:58 +0200, Martin Wache wrote:
+> 
+>> Malcolm Caldwell schrieb:
+>>> On Sun, 25 Mar 2007 13:21:46 +0200, Andre Neumann wrote:
+>>>
+>>>> I have it working now. You find the patch at
+>>>> http://www.do-net.de/softdevice_autocropsmooth.diff , which is againts
+>>>> CVS from around 08/08/2006.
+>>> Can someone tell me:
+>>>
+>>> Does this code work for the case where there is I have a 4:3 Display,
+>>> but my channel broadcasts all programming as 16:9 - even if it is 4:3
+>>> content.  They also do not use AFD.
+>>>
+>>> Does this patch 'zoom' such content to fill my screen?
+>>>  
+>> I'm not sure if I understand you correctly, but I think it is for the
+>> opposite case.
+>> The content is 16:9, it is broadcasted as 4:3 with black bars at top and
+>> bottom. In this case the black bars are detected and automatically
+>> cropped, so that it can be displayed without bars on a 16:9 screen.
+> 
+> You are correct in that this patch does the opposite of what I want.  
+> 
+> Would it be possible to extend this to the case of a 4:3 picture within a 
+> 16:9 frame displayed on a 4:3 screen?  In this case there are black bars 
+> on the top and bottom, and left and right of the picture.  It should be 
+> zoomed to fill the screen.
+>  
+In principle it is possible to do this, but I think writing a separate
+filter would be simpler... but currently I don't think I will do this. I
+don't receive any broadcast which sen 4:3 pictures within a 16:9
+broadcast, so I can't test it and wouldn't use it.
+
+Bye,
+Martin
+
+
+From torgeir at pobox.com  Wed Apr  4 19:06:25 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Wed, 4 Apr 2007 18:06:25 +0100
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <4613D202.60301@gmx.net>
+References: <1DC3F512-A537-4A09-8D09-88DA45B289A2@pobox.com>
+	<7B355AD9-C7DD-41DB-AB25-3DE75DC8805D@pobox.com>
+	<4613D202.60301@gmx.net>
+Message-ID: <7C0D561D-06F8-4278-89E9-BD79FC471975@pobox.com>
+
+
+On 4 Apr 2007, at 17:27, Martin Wache wrote:
+
+> Torgeir Veimo schrieb:
+>>> Ok, that works. But I got an endian issue I guess. Are you  
+>>> working on
+>>> a ppc mac?
+>>>
+> Yes :-)
+>
+>>> Here's a screenshot;
+>>>
+> I had a chance to try it on an intel mac a few weeks ago, I didn't  
+> have
+> the time to fix those problems correctly, but this hack fixes the
+> problems...
+>
+> Bye,
+> Martin
+> Index: utils.c
+> ===================================================================
+> RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+> retrieving revision 1.25
+> diff -u -r1.25 utils.c
+> --- utils.c	15 Jan 2007 19:35:13 -0000	1.25
+> +++ utils.c	4 Apr 2007 16:24:06 -0000
+> @@ -172,9 +172,13 @@
+>     }
+>  #endif
+>     for ( ; i>=2; i-=2 ) {
+> +#if 1
+> +      *((uint32_t *)dest1) = (yc1[1] << 24)+ (vc[0] << 16) + (yc1 
+> [0] << 8) + (uc[0] << 0);
+> +      *((uint32_t *)dest2) = (yc2[1] << 24)+ (vc[0] << 16) + (yc2 
+> [0] << 8) + (uc[0] << 0);
+> +#else
+>        *((uint32_t *)dest1) = (yc1[0] << 0)+ (uc[0] << 8) + (yc1[1]  
+> << 16) + (vc[0] << 24);
+>        *((uint32_t *)dest2) = (yc2[0] << 0)+ (uc[0] << 8) + (yc2[1]  
+> << 16) + (vc[0] << 24);
+> -      //*idst++ = (yc[0] << 0)+ (uc[0] << 8) + (yc[1] << 16) + (vc 
+> [0] << 24);
+> +#endif
+>        dest1+=4;
+>        dest2+=4;
+>        yc1 += 2;
+>
+
+Ok, it works now. Here's a screenshot while running with streamdev. I  
+don't currently have any USB dvb device..
+
+http://nothome.com/mcvdr.png
+
+It would be interesting to see the client running on an apple tv. It  
+should have enough RAM for VDR to run in. The shm client could run as  
+an apple tv plugin, but I wonder if it would be more efficient to  
+just run it off streamdev, as it should be capable of decoding the  
+PES stream directly.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From jonis2006 at yandex.ru  Thu Apr  5 21:49:35 2007
+From: jonis2006 at yandex.ru (jonis2006)
+Date: Thu, 5 Apr 2007 23:49:35 +0400 (MSD)
+Subject: [Softdevice-devel] Softplay: DeSync in DIVX with 23.976 fps
+Message-ID: <461552CF.000003.01173@tide.yandex.ru>
+
+Hello !
+
+While I start play DIVX file (AVI) with 23.976 fps I was found desync with lips ? I tested mpg file with same frame rate and found no problems. Other 29.97 fps files played well. I tried last version of ffmpeg, but problem still exists. 
+
+With best regards.
+
+AgentX
+
+
+From stefan at lucke.in-berlin.de  Wed Apr 11 11:19:44 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 11 Apr 2007 11:19:44 +0200
+Subject: [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+Message-ID: <200704111119.44271.stefan@lucke.in-berlin.de>
+
+Hello,
+
+we got a new release :-) .
+
+Support of vdr versions earlier than vdr-1.3.7 has been removed.
+Supported vdr versions: 1.3.x, 1.4.x and 1.5.x
+
+Changelog since last release:
+2007-04-11: softdevice-0.4.0
+   - xv-out: activate suspend/resume key (r/R) via configure (by Artur Skawina).
+   - i18n: some german translations.
+   - osd: moved aspect detection entry to "Cropping" sub menu.
+2007-04-03:
+   - add automatic border detection, based on a patch by Roland Praml.
+   - altivec needs 16 byte alignment
+   - compile fix for Darwin
+   - make flag for shared linking a variable
+   - add BGRA32 mode to SoftOsd
+   - compile linux RTC syncing mode support only on Linux.
+   - detect cpu endianness and define CPU_BIGENDIAN if necessary.
+   - add video-quartz and audio-macos for Mac Os X support
+2007-03-25:
+   - fix types in GetTime().
+   - pts values are stored in uint64_t
+   - almost complete rewrite of video-fb. Supported are now 15,16,24 and 32 bit
+     depth framebuffers. The osd is rendered with software alpha blending,
+     and it is even faster :-)
+2007-03-12:
+   - compile fix for recent ffmpeg SVN
+   - include ffmpeg headers as 'extern "C"'
+   - enable and use as default the software mixer. The old behaviour (use the
+     system's mixer) can be selected via -vo oss:mixer.
+   - increase the stepsize of the software mixer.
+   - don't scale audio if the volume is at maximum.
+   - set edge_width/_height always to zero. Fixes picture shiftes with
+     the ShmClient. This is not the optimal(/final) solution...
+2007-03-04:
+   - video-dfb: Make use of SetSourceRectangle() runtime selectable,
+                changed *SetSourceLocation* to SetSourceRectangle.
+2007-02-26:
+   - softlog: sanitycheck for zero length filenames and fix use filename member
+              when changeing append mode.
+   - video-dfb: shifted most prints via softlog.
+   - video sync: preparation for new changeable sync parameters.
+2007-02-24:
+   - Makefile: add --remove-destination , so that "make plugins" does not
+     disturb a running vdr.
+   - softlog: added indicator for priority I(nfo), E(rror), D(ebug), T(race).
+   - video-vidix: shifted prints via softlog.
+2007-02-13:
+   - fix gettid compile error on some systems.
+2007-02-11:
+   - Some more options selectable via log menu.
+2007-02-10:
+   - Pause the playback of recordings when suspended (by Marko M?kel?)
+   - add configurable logging
+   - report Xrun audio duration
+2007-01-28:
+   - don't lock NULL pictures in cVideo::GetLockLastPic().
+   - implement avcodec_decode_audio2() interface to libavcodec.
+   - set ic->bp.is_streamed to true, to avoid calls to unimlemented seek method.
+   - add architecture "x86_64" to configure and report unsupported
+     architectures.
+   - add StealToBitmap() for OSD in grabbed image.
+   - add OSD with alpha blending to grabbed images.
+2007-01-27:
+   - video-dfb: - Limit VIA-unichrome name compare to 19 chars.
+                - Detect a patched DirectFB version for VIA CN700 support,
+                  and set some parameters for video layer V3:
+                    pixelformat YUY2, NO hardware decoding support .
+2007-01-20:
+   - Fixed video-dfb for VIA-unichrome with current DirectFB cvs. In directfbrc
+     pixelformat=AiRGB must be specified.
+2007-01-15:
+   - introduce yuv420_to_rgb15() (mmx acceleration still missing).
+   - properly start cShmRemote thread in ShmClient.
+   - avoid "BadWindow" errors by using an errror handler. Also fix
+     "BadWindow" errors which occur after the xscreensaver has once been
+     active.
+   - fix vidWin for non zero VidX1 and VidY1.
+2006-12-17:
+   - Silence some warnings with gcc 4.1.1.
+   - Adjust MMX and C version of fast_memcpy() to the same return type.
+   - Fix wrong colors in yuv420_to_yuy2() when all MMX is disabled.
+2006-12-13:
+   - don't undefine X cursur on keypresses, to prevent the fake shift key
+     press from producing flickering of the mouse cursor.
+   - fix possible segfault.
+   - fix possible division by zero.
+   - comment out fake key sending syslog message
+   - add cOSSAudioOut::GetDelay() (supplied by Lubos Novak).
+2006-12-03:
+   - applied patch from Matthias Schwarzott for vdr uint64 change.
+   - unify yuv420_to_rgbXX() and yv12_to_yuy2_line() functions to allow
+     usage in CopyScalePicBuf()
+   - change CopyPicBuf_YUV420P_to_YUY() to a general YUV420P to planar
+     conversion method
+   - introduce the possibility to scale the video window (for yaepg).
+   - detection of and support for the yaepg-patch.
+   - add open sound system support (contributed by Lubos Novak).
+     GetDelay() is commented out, this means the A/V synchronization
+     is broken.
+   - add open sound system detection to configure
+2006-11-26:
+   - use brackets in WRITE_RGB16 macro, introduce WRITE_RGB15 (untested)
+     and ARGB_TO_RGB.
+   - introduce FillPicBuffer()
+   - make it possible to use a color key other than 0x000000 for video-xv,
+     video-shm and ShmClient
+   - change the default color key of xv-out to 0x001a0f00LL
+   - add support for X11 drivers without xv support
+2006-11-22:
+   - remove cShmVideo::Process() method, and instead signal PICT_SIG
+     from cShmRemote to simulate a timeout.
+   - fix ShmClient not forwarding to key presses to vdr on AMD64
+     (patch by peterw2k at vdr-portal)
+2006-11-20:
+   - send fake key events to disable any screen saver (patch by
+     peterw2k at vdr-portal)
+2006-11-16:
+   - fix wrong colors when using GRAB with the cle266 hardware decoder
+     (patch by Laz)
+   - better colorkey support in SoftOsd.c, with interface to video.c
+   - fix a bug which causes bad resolution on upscaling
+   - fix a bug which causes segfaults when upscaling to huge images
+   - reintroduce the chessboard pattern for pseudo alpha blending
+   - use WRITE_RGB macros from utils.h
+2006-11-11:
+   - !! removed support for vdr versions older than vdr-1.3.7 !!
+2006-11-08:
+   - change PIX_FMT_RGB32 to PIX_FMT_RGBA32 to support older ffmpeg versions
+2006-11-07:
+   - add yuv to rgb conversion routines for rgb32, rgb24, bgr24 and rgb16
+   - audio-alsa: restore samplerate after a unsuccessfull change request
+   - add scaling methods with yuv to rgb conversion
+   - add packed pixel format support to ClearPicBuffer()
+   - move AllocatePicBuffer(), DeallocatePicBuffer(), GetFormatBPP and
+     GetChromaSubSample() out of cPicBufferManager
+   - add packed pixel format to PicBuffer
+   - add GetLockLastPic() to video.h
+   - add GrabImage() support. Currently there is no OSD in the grabbed
+     images.
+   - some more debugging info in softdevice.c
+   - add explanations to error messages in ShmClient.c
+   - use SEM_UNDO on PICT_MUT semaphore
+
+-- 
+Stefan Lucke
+
+
+From per at mellander.org  Wed Apr 11 13:43:30 2007
+From: per at mellander.org (Per Mellander)
+Date: Wed, 11 Apr 2007 13:43:30 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+In-Reply-To: <4613D481.4050308@gmx.net>
+References: <461220AF.2070001@mellander.org>
+	<4612BAC2.4080909@gmx.net>	<46136DF1.7020508@mellander.org>
+	<4613D481.4050308@gmx.net>
+Message-ID: <461CC9E2.2000509@mellander.org>
+
+Martin Wache wrote:
+> Maybe you can add some printfs to libavformat av_open_input_file() (in
+> libavformat/util.c, and #undef printf to get rid of the linking error)
+> to find out what goes wrong...
+> 
+
+I've done som testing and this is what I've found out so far:
+
+I've added some printf's in av_open_input_file where the av_probe_input 
+call is done. When I start ffplay, the file is probed and fmt gets a 
+value in the second 'guess' ( see source of util.c )
+
+decode_thread
+av_probe_input_format(pd, 0): fmt=0
+av_probe_input_format(pd, 1): fmt=9528352
+
+I know fmt is an AVInputFormat pointer but I only print it as an int to 
+see if it's being initialized.
+
+When testing SoftPlay:
+
+open file '/transfer/download/film/Pettson och Findus - Kattonauten .mpg'
+av_probe_input_format(pd, 0): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+av_probe_input_format(pd, 1): fmt=0
+could not open file. Return value -84
+
+Isn't the real problem that you call av_open_input_file with a NULL for fmt?
+
+
+/Per
+
+
+From stefan at lucke.in-berlin.de  Thu Apr 12 00:12:40 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 12 Apr 2007 00:12:40 +0200
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <7C0D561D-06F8-4278-89E9-BD79FC471975@pobox.com>
+References: <1DC3F512-A537-4A09-8D09-88DA45B289A2@pobox.com>
+	<4613D202.60301@gmx.net>
+	<7C0D561D-06F8-4278-89E9-BD79FC471975@pobox.com>
+Message-ID: <200704120012.40199.stefan@lucke.in-berlin.de>
+
+On Wednesday 04 April 2007 19:06, Torgeir Veimo wrote:
+> 
+> On 4 Apr 2007, at 17:27, Martin Wache wrote:
+> 
+> > Torgeir Veimo schrieb:
+> >>> Ok, that works. But I got an endian issue I guess. Are you  
+> >>> working on
+> >>> a ppc mac?
+> >>>
+> > Yes :-)
+> >
+> >>> Here's a screenshot;
+> >>>
+> > I had a chance to try it on an intel mac a few weeks ago, I didn't  
+> > have
+> > the time to fix those problems correctly, but this hack fixes the
+> > problems...
+> >
+> > Bye,
+> > Martin
+> > Index: utils.c
+> > ===================================================================
+> > RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+> > retrieving revision 1.25
+> > diff -u -r1.25 utils.c
+> > --- utils.c	15 Jan 2007 19:35:13 -0000	1.25
+> > +++ utils.c	4 Apr 2007 16:24:06 -0000
+> > @@ -172,9 +172,13 @@
+> >     }
+> >  #endif
+> >     for ( ; i>=2; i-=2 ) {
+> > +#if 1
+> > +      *((uint32_t *)dest1) = (yc1[1] << 24)+ (vc[0] << 16) + (yc1 
+> > [0] << 8) + (uc[0] << 0);
+> > +      *((uint32_t *)dest2) = (yc2[1] << 24)+ (vc[0] << 16) + (yc2 
+> > [0] << 8) + (uc[0] << 0);
+> > +#else
+
+Which one needs this: PowerMac or IntelMac ?
+
+Are you using the OpenGL output ?
+
+Maybe that using GL_UNSIGNED_SHORT_8_8_REV_APPLE instead of
+GL_UNSIGNED_SHORT_8_8_APPLE has the same effect (line 747 video-quartz.c). 
+
+OT: How much does the develoment enviroment for apple costs ?
+
+-- 
+Stefan Lucke
+
+
+From zzam at gentoo.org  Thu Apr 12 09:02:46 2007
+From: zzam at gentoo.org (Matthias Schwarzott)
+Date: Thu, 12 Apr 2007 09:02:46 +0200
+Subject: [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+In-Reply-To: <200704111119.44271.stefan@lucke.in-berlin.de>
+References: <200704111119.44271.stefan@lucke.in-berlin.de>
+Message-ID: <200704120902.46933.zzam@gentoo.org>
+
+On Mittwoch, 11. April 2007, Stefan Lucke wrote:
+> Hello,
+>
+Hi!
+
+> we got a new release :-) .
+>
+And I have some patches, that the gentoo ebuild uses that are not yet 
+contained :)
+
+vdr-softdevice-0.3.1-osdmode-software-default.diff:
+Correctly initialize the osdmode, as that var is normally uninitialized (with 
+luck it is initialized to 0 - but that corresponds to pseudo blending).
+
+vdr-softdevice-0.2.3-shm-fullscreen.diff:
+Hack to add cmd-line-option "-f" to ShmClient, to start it fullscreen.
+
+vdr-softdevice-0.4.0-xinerama-configure-opts.patch:
+Added option "--disable-xinerama" to configure to stop it linking against 
+libXinerama. This helps for example when creating binary packages and the 
+dev-system has xinerama lib installed, but not the dest.
+
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr-softdevice-0.3.1-osdmode-software-default.diff
+Type: text/x-diff
+Size: 537 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment.diff>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr-softdevice-0.4.0-xinerama-configure-opts.patch
+Type: text/x-diff
+Size: 787 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment.patch>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr-softdevice-0.2.3-shm-fullscreen.diff
+Type: text/x-diff
+Size: 826 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment-0001.diff>
+
+From stefan at lucke.in-berlin.de  Thu Apr 12 10:35:56 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 12 Apr 2007 10:35:56 +0200
+Subject: [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+In-Reply-To: <200704120902.46933.zzam@gentoo.org>
+References: <200704111119.44271.stefan@lucke.in-berlin.de>
+	<200704120902.46933.zzam@gentoo.org>
+Message-ID: <200704121035.56200.stefan@lucke.in-berlin.de>
+
+On Thursday 12 April 2007 09:02, Matthias Schwarzott wrote:
+> On Mittwoch, 11. April 2007, Stefan Lucke wrote:
+> > Hello,
+> >
+> Hi!
+> 
+> > we got a new release :-) .
+> >
+> And I have some patches, that the gentoo ebuild uses that are not yet 
+> contained :)
+> 
+> vdr-softdevice-0.3.1-osdmode-software-default.diff:
+> Correctly initialize the osdmode, as that var is normally uninitialized (with 
+> luck it is initialized to 0 - but that corresponds to pseudo blending).
+
+Applied.
+
+> 
+> vdr-softdevice-0.2.3-shm-fullscreen.diff:
+> Hack to add cmd-line-option "-f" to ShmClient, to start it fullscreen.
+
+Applied with change that every unknown option produces the help string.
+
+> 
+> vdr-softdevice-0.4.0-xinerama-configure-opts.patch:
+> Added option "--disable-xinerama" to configure to stop it linking against 
+> libXinerama. This helps for example when creating binary packages and the 
+> dev-system has xinerama lib installed, but not the dest.
+
+Applied.
+
+-- 
+Stefan Lucke
+
+
+From torgeir at pobox.com  Thu Apr 12 14:44:36 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 12 Apr 2007 13:44:36 +0100
+Subject: [Softdevice-devel] building on mac
+In-Reply-To: <200704120012.40199.stefan@lucke.in-berlin.de>
+References: <1DC3F512-A537-4A09-8D09-88DA45B289A2@pobox.com>
+	<4613D202.60301@gmx.net>
+	<7C0D561D-06F8-4278-89E9-BD79FC471975@pobox.com>
+	<200704120012.40199.stefan@lucke.in-berlin.de>
+Message-ID: <2510A7C7-DA0A-4267-B095-2FD68D5EE0AF@pobox.com>
+
+
+On 11 Apr 2007, at 23:12, Stefan Lucke wrote:
+
+> On Wednesday 04 April 2007 19:06, Torgeir Veimo wrote:
+>>
+>> On 4 Apr 2007, at 17:27, Martin Wache wrote:
+>>
+>>> Torgeir Veimo schrieb:
+>>>>> Ok, that works. But I got an endian issue I guess. Are you
+>>>>> working on
+>>>>> a ppc mac?
+>>>>>
+>>> Yes :-)
+>>>
+>>>>> Here's a screenshot;
+>>>>>
+>>> I had a chance to try it on an intel mac a few weeks ago, I didn't
+>>> have
+>>> the time to fix those problems correctly, but this hack fixes the
+>>> problems...
+>>>
+>>> Bye,
+>>> Martin
+>>> Index: utils.c
+>>> ===================================================================
+>>> RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+>>> retrieving revision 1.25
+>>> diff -u -r1.25 utils.c
+>>> --- utils.c	15 Jan 2007 19:35:13 -0000	1.25
+>>> +++ utils.c	4 Apr 2007 16:24:06 -0000
+>>> @@ -172,9 +172,13 @@
+>>>     }
+>>>  #endif
+>>>     for ( ; i>=2; i-=2 ) {
+>>> +#if 1
+>>> +      *((uint32_t *)dest1) = (yc1[1] << 24)+ (vc[0] << 16) + (yc1
+>>> [0] << 8) + (uc[0] << 0);
+>>> +      *((uint32_t *)dest2) = (yc2[1] << 24)+ (vc[0] << 16) + (yc2
+>>> [0] << 8) + (uc[0] << 0);
+>>> +#else
+>
+> Which one needs this: PowerMac or IntelMac ?
+
+IntelMac.
+
+> Are you using the OpenGL output ?
+
+Yes. It only works with the McVdrClient shm client. Martin indicated  
+that there are threading problems preventing normal usage.
+
+> Maybe that using GL_UNSIGNED_SHORT_8_8_REV_APPLE instead of
+> GL_UNSIGNED_SHORT_8_8_APPLE has the same effect (line 747 video- 
+> quartz.c).
+
+Yes that works as well. It would be nice if configure handled these  
+things automagically.
+
+> OT: How much does the develoment enviroment for apple costs ?
+
+It's free. My work supplied my macbook pro, which is the best machine  
+I've ever had, except for the missing home/end/pgup/pgdn keys..
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From t-erdmann at web.de  Thu Apr 12 15:14:38 2007
+From: t-erdmann at web.de (thomas erdmann)
+Date: Thu, 12 Apr 2007 15:14:38 +0200
+Subject: [Softdevice-devel] unsubscribe
+Message-ID: <1099627930@web.de>
+
+
+> -----Urspr?ngliche Nachricht-----
+> Von: softdevice-devel at lists.berlios.de
+> Gesendet: 12.04.07 14:43:03
+> An: softdevice-devel at lists.berlios.de
+> Betreff: Re: [Softdevice-devel] building on mac
+
+
+> 
+> On 11 Apr 2007, at 23:12, Stefan Lucke wrote:
+> 
+> > On Wednesday 04 April 2007 19:06, Torgeir Veimo wrote:
+> >>
+> >> On 4 Apr 2007, at 17:27, Martin Wache wrote:
+> >>
+> >>> Torgeir Veimo schrieb:
+> >>>>> Ok, that works. But I got an endian issue I guess. Are you
+> >>>>> working on
+> >>>>> a ppc mac?
+> >>>>>
+> >>> Yes :-)
+> >>>
+> >>>>> Here's a screenshot;
+> >>>>>
+> >>> I had a chance to try it on an intel mac a few weeks ago, I didn't
+> >>> have
+> >>> the time to fix those problems correctly, but this hack fixes the
+> >>> problems...
+> >>>
+> >>> Bye,
+> >>> Martin
+> >>> Index: utils.c
+> >>> ===================================================================
+> >>> RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+> >>> retrieving revision 1.25
+> >>> diff -u -r1.25 utils.c
+> >>> --- utils.c	15 Jan 2007 19:35:13 -0000	1.25
+> >>> +++ utils.c	4 Apr 2007 16:24:06 -0000
+> >>> @@ -172,9 +172,13 @@
+> >>>     }
+> >>>  #endif
+> >>>     for ( ; i>=2; i-=2 ) {
+> >>> +#if 1
+> >>> +      *((uint32_t *)dest1) = (yc1[1] << 24)+ (vc[0] << 16) + (yc1
+> >>> [0] << 8) + (uc[0] << 0);
+> >>> +      *((uint32_t *)dest2) = (yc2[1] << 24)+ (vc[0] << 16) + (yc2
+> >>> [0] << 8) + (uc[0] << 0);
+> >>> +#else
+> >
+> > Which one needs this: PowerMac or IntelMac ?
+> 
+> IntelMac.
+> 
+> > Are you using the OpenGL output ?
+> 
+> Yes. It only works with the McVdrClient shm client. Martin indicated  
+> that there are threading problems preventing normal usage.
+> 
+> > Maybe that using GL_UNSIGNED_SHORT_8_8_REV_APPLE instead of
+> > GL_UNSIGNED_SHORT_8_8_APPLE has the same effect (line 747 video- 
+> > quartz.c).
+> 
+> Yes that works as well. It would be nice if configure handled these  
+> things automagically.
+> 
+> > OT: How much does the develoment enviroment for apple costs ?
+> 
+> It's free. My work supplied my macbook pro, which is the best machine  
+> I've ever had, except for the missing home/end/pgup/pgdn keys..
+> 
+> -- 
+> Torgeir Veimo
+> torgeir at pobox.com
+> 
+> 
+> 
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+> 
+
+
+_______________________________________________________________
+SMS schreiben mit WEB.DE FreeMail - einfach, schnell und
+kostenguenstig. Jetzt gleich testen! http://f.web.de/?mc=021192
+
+
+
+From stefan at lucke.in-berlin.de  Thu Apr 12 15:59:54 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 12 Apr 2007 15:59:54 +0200
+Subject: [Softdevice-devel] unsubscribe (Done)
+In-Reply-To: <1099627930@web.de>
+References: <1099627930@web.de>
+Message-ID: <1176386394.461e3b5a78958@webmail.in-berlin.de>
+
+Good bye.
+
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Thu Apr 12 20:05:53 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 12 Apr 2007 20:05:53 +0200
+Subject: [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+In-Reply-To: <200704121035.56200.stefan@lucke.in-berlin.de>
+References: <200704111119.44271.stefan@lucke.in-berlin.de>
+	<200704120902.46933.zzam@gentoo.org>
+	<200704121035.56200.stefan@lucke.in-berlin.de>
+Message-ID: <200704122005.53936.stefan@lucke.in-berlin.de>
+
+On Thursday 12 April 2007 10:35, Stefan Lucke wrote:
+> On Thursday 12 April 2007 09:02, Matthias Schwarzott wrote:
+
+> > 
+> > vdr-softdevice-0.2.3-shm-fullscreen.diff:
+> > Hack to add cmd-line-option "-f" to ShmClient, to start it fullscreen.
+> 
+> Applied with change that every unknown option produces the help string.
+> 
+
+Revertet: it breaks argument style of softdevice.
+
+
+-- 
+Stefan Lucke
+
+
+From per at mellander.org  Fri Apr 13 07:51:32 2007
+From: per at mellander.org (Per Mellander)
+Date: Fri, 13 Apr 2007 07:51:32 +0200
+Subject: [Softdevice-devel] Buffer mode?
+Message-ID: <461F1A64.2060803@mellander.org>
+
+Could someone please explain what the difference is between 'HDTV' and 
+'safe' setting in 'Buffer Mode'? I've noticed problems with A/V sync, ( 
+see thread 'Is there a known A/V sync issue with current	softdevice.') 
+and I think it has to do with watching live (SD)TV and having buffer 
+mode set to HDTV.
+
+Per
+
+
+From per at mellander.org  Tue Apr 17 10:59:33 2007
+From: per at mellander.org (Per Mellander)
+Date: Tue, 17 Apr 2007 10:59:33 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+In-Reply-To: <461CC9E2.2000509@mellander.org>
+References: <461220AF.2070001@mellander.org>	<4612BAC2.4080909@gmx.net>	<46136DF1.7020508@mellander.org>	<4613D481.4050308@gmx.net>
+	<461CC9E2.2000509@mellander.org>
+Message-ID: <46248C75.2010500@mellander.org>
+
+Tested more and it seems that the there's a difference when opening a 
+file with av_open_input_file and setting AVInputFormat *fmt to NULL.
+
+
+From torgeir at pobox.com  Sun Apr 22 02:11:51 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 22 Apr 2007 01:11:51 +0100
+Subject: [Softdevice-devel] frames per second with lavc deinterlacing
+Message-ID: <1BB163B5-BC3E-4B18-990B-6DCE02716ABA@pobox.com>
+
+Does the lavc deinterlacer results in a frame rate of 25 FPS, or 50 FPS?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From torgeir at pobox.com  Sun Apr 22 02:17:33 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 22 Apr 2007 01:17:33 +0100
+Subject: [Softdevice-devel] frames per second with lavc deinterlacing
+In-Reply-To: <1BB163B5-BC3E-4B18-990B-6DCE02716ABA@pobox.com>
+References: <1BB163B5-BC3E-4B18-990B-6DCE02716ABA@pobox.com>
+Message-ID: <AC0794D5-BBAD-4E34-9E2E-F8314D835A26@pobox.com>
+
+
+On 22 Apr 2007, at 01:11, Torgeir Veimo wrote:
+
+> Does the lavc deinterlacer results in a frame rate of 25 FPS, or 50  
+> FPS?
+
+I'm really puzzled, since turning on lavc deinterlacing reduces CPU  
+consumption from about 70% down to just above 40%, so it seems the  
+most time is consumed by frame display, not decoding.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From lucianm at users.sourceforge.net  Sat Apr 28 11:33:07 2007
+From: lucianm at users.sourceforge.net (Lucian Muresan)
+Date: Sat, 28 Apr 2007 11:33:07 +0200
+Subject: [Softdevice-devel] no video (OSD works), stuttering audio (xruns)
+Message-ID: <463314D3.6030400@users.sourceforge.net>
+
+Hello folks,
+
+I did not really used VDR very often in past few weeks, so I can't 
+really know when this exactly happened, but maybe you guys could point 
+me on some known issue or something, before I start downgrading 
+everything...
+So here are the facts:
+I'm using Gentoo, the TV-Out (crtc2) of a Matrox G400 DH connected via 
+SCART-RGB cable to a normal PAL TV, and used to start VDR with the 
+softdevice plugin, over DirectFB, which is really well supported for 
+this card. Now, I have all these versions pulled from cvs/git/svn:
+DirectFB, linux-fusion, DFB++, softdevice. Furthermore, I have 
+media-video/ffmpeg-0.4.9_p20070330-r1.
+Now, xineliboutput compiled with the same versions works, but softdevice 
+only produces black video over DirectFB (OSD works) and stuttering audio 
+over ALSA (spdif, always worked) with lots of xruns.
+Any idea where I could start searching for the cause? I tried various 
+softdevice settings from the config menu, but I might not have found the 
+proper ones...
+
+TIA,
+Lucian
+
+
+From stefan at lucke.in-berlin.de  Sun Apr 29 15:44:40 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 29 Apr 2007 15:44:40 +0200
+Subject: [Softdevice-devel] no video (OSD works),
+	stuttering audio (xruns)
+In-Reply-To: <463314D3.6030400@users.sourceforge.net>
+References: <463314D3.6030400@users.sourceforge.net>
+Message-ID: <1177854280.4634a14850ad7@webmail.in-berlin.de>
+
+Quoting Lucian Muresan:
+
+> Hello folks,
+>
+> I did not really used VDR very often in past few weeks, so I can't
+> really know when this exactly happened, but maybe you guys could point
+> me on some known issue or something, before I start downgrading
+> everything...
+> So here are the facts:
+> I'm using Gentoo, the TV-Out (crtc2) of a Matrox G400 DH connected via
+> SCART-RGB cable to a normal PAL TV, and used to start VDR with the
+> softdevice plugin, over DirectFB, which is really well supported for
+> this card. Now, I have all these versions pulled from cvs/git/svn:
+> DirectFB, linux-fusion, DFB++, softdevice. Furthermore, I have
+> media-video/ffmpeg-0.4.9_p20070330-r1.
+
+Are you using the patched gentoo vdr-1.x.y  or a vanilla version ?
+In this gentoo bug:
+http://bugs.gentoo.org/show_bug.cgi?id=175490
+
+ffmpeg is at SVN-8560.
+
+"ffmpeg 2>&1 | grep SVN" for my system is:
+FFmpeg version SVN-r8627, Copyright (c) 2000-2007 Fabrice Bellard, et al.
+without these problems.
+
+> Now, xineliboutput compiled with the same versions works, but softdevice
+> only produces black video over DirectFB (OSD works) and stuttering audio
+> over ALSA (spdif, always worked) with lots of xruns.
+> Any idea where I could start searching for the cause? I tried various
+> softdevice settings from the config menu, but I might not have found the
+> proper ones...
+>
+
+Stefan Lucke
+
+
+From lucianm at users.sourceforge.net  Mon Apr 30 12:11:19 2007
+From: lucianm at users.sourceforge.net (Lucian Muresan)
+Date: Mon, 30 Apr 2007 12:11:19 +0200
+Subject: [Softdevice-devel] no video (OSD works),
+	stuttering audio (xruns)
+In-Reply-To: <1177854280.4634a14850ad7@webmail.in-berlin.de>
+References: <463314D3.6030400@users.sourceforge.net>
+	<1177854280.4634a14850ad7@webmail.in-berlin.de>
+Message-ID: <4635C0C7.5040900@users.sourceforge.net>
+
+Stefan Lucke wrote:
+> Quoting Lucian Muresan:
+> 
+>> Hello folks,
+>>
+>> I did not really used VDR very often in past few weeks, so I can't
+>> really know when this exactly happened, but maybe you guys could point
+>> me on some known issue or something, before I start downgrading
+>> everything...
+>> So here are the facts:
+>> I'm using Gentoo, the TV-Out (crtc2) of a Matrox G400 DH connected via
+>> SCART-RGB cable to a normal PAL TV, and used to start VDR with the
+>> softdevice plugin, over DirectFB, which is really well supported for
+>> this card. Now, I have all these versions pulled from cvs/git/svn:
+>> DirectFB, linux-fusion, DFB++, softdevice. Furthermore, I have
+>> media-video/ffmpeg-0.4.9_p20070330-r1.
+> 
+> Are you using the patched gentoo vdr-1.x.y  or a vanilla version ?
+> In this gentoo bug:
+
+I'm using the gentoo-patched vdr-1.4.6.
+
+> http://bugs.gentoo.org/show_bug.cgi?id=175490
+
+Unfortunately, I can't use the "bigpatch" USE flag, because I'm also 
+using local patches (UTF-8 stuff for example) which are adapted to the 
+patchset induced by the "aio" USE flag which can't be used at the same 
+time with "bigpatch". So I don't have the repacker code in my vdr, which 
+seems to be just a workaround, but not a solution to the problem, anyway.
+
+> ffmpeg is at SVN-8560.
+> 
+> "ffmpeg 2>&1 | grep SVN" for my system is:
+> FFmpeg version SVN-r8627, Copyright (c) 2000-2007 Fabrice Bellard, et al.
+> without these problems.
+
+
+So, my ffmpeg version is newer (unfortunately that command line does not 
+  give me a suitable version string, I'm pasting here the whole output 
+of "ffmpeg -version" instead), but it's most likely newer than what 
+you're using. Maybe it's worth having a look at what's actually wrong 
+with softdevice code if it can't keep up with ffmpeg changes, but 
+unfortunately I don't have the necessary knowledge for this.
+
+
+blues ~ # ffmpeg -version
+FFmpeg version SVN-rUNKNOWN, Copyright (c) 2000-2007 Fabrice Bellard, et al.
+   configuration: --prefix=/usr --libdir=/usr/lib --shlibdir=/usr/lib 
+--mandir=/usr/share/man --enable-static --enable-shared 
+--cc=i686-pc-linux-gnu-gcc --disable-altivec --disable-debug 
+--disable-opts --enable-libmp3lame --enable-libvorbis --enable-libogg 
+--enable-libtheora --enable-libogg --enable-liba52 --enable-dc1394 
+--enable-xvid --enable-x11grab --enable-libogg --enable-libdts 
+--enable-x264 --enable-libfaad --enable-libfaac --enable-gpl --enable-pp 
+--disable-strip
+   libavutil version: 49.4.0
+   libavcodec version: 51.40.2
+   libavformat version: 51.11.0
+   built on Apr 29 2007 10:52:21, gcc: 4.1.2 (Gentoo 4.1.2)
+ffmpeg      SVN-rUNKNOWN
+libavutil   3212288
+libavcodec  3352578
+libavformat 3345152
+
+
+Also, building softdevice-0.4.0 or CVS produces lots of warnings in 
+ffmpeg headers, telling about using deprecated stuff like in the 
+attached file (I stopped the build, it's not complete, and this was 
+produced on my desktop machine, on which I could ssh now, where I also 
+have X11 and stuff, but it's same ffmpeg version as on my DirectFB-only 
+htpc, and those warnings are also the same). Maybe that gives you 
+developers a hint on what's going on?
+
+Regards,
+Lucian
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: softdevice-cvs-gentoo-build.log
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070430/826f810b/attachment.ksh>
+
+From patrick.boettcher at desy.de  Sun May  6 18:54:51 2007
+From: patrick.boettcher at desy.de (Patrick Boettcher)
+Date: Sun, 6 May 2007 18:54:51 +0200 (CEST)
+Subject: [Softdevice-devel] E-tobi: vdr-plugin-softdevice-0.4.0 - no dfb
+	support
+Message-ID: <Pine.LNX.4.64.0705061845450.9265@pub4.ifh.de>
+
+Hi Tobias,
+
+Yesterday I updated to your recent packages and I found that 
+vdr-plugin-softdevice-0.4.0-1 has no dfb-support built-in.
+
+I rebuild the package locally and then it was there (I didn't modify 
+anything inside). (The configure script from softdevice is detecting 
+everything correctly). My machine is running fine again.
+
+After that I wanted to build the package on my new amd64-machine and I saw 
+that configure was not detecting DFB even though dfb++-dev and everything 
+required (as far to my knowledge) is installed. I suspect that the same 
+happens on i386-machine. But don't ask me for the reason. 
+
+regards,
+Patrick.
+
+
+From M.Wache at gmx.net  Thu May 10 23:39:05 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 10 May 2007 23:39:05 +0200
+Subject: [Softdevice-devel] Buffer mode?
+In-Reply-To: <461F1A64.2060803@mellander.org>
+References: <461F1A64.2060803@mellander.org>
+Message-ID: <464390F9.4090907@gmx.net>
+
+Per Mellander schrieb:
+> Could someone please explain what the difference is between 'HDTV' and 
+> 'safe' setting in 'Buffer Mode'? I've noticed problems with A/V sync, ( 
+> see thread 'Is there a known A/V sync issue with current	softdevice.') 
+> and I think it has to do with watching live (SD)TV and having buffer 
+> mode set to HDTV.
+> 
+
+The difference between HDTV buffer mode and safe is the size of the
+demuxing buffer. The audio and video packets are interleaved and because
+it takes some time to decode the video (eg. for b frames) the video is
+usually ahead of the audio. The demuxing splits audio and video into
+separate buffers, if they are too small A/V sync problems can happen.
+That is why there is the HDTV option, HDTV needs bigger buffers :-)
+
+So I would not expect that this is a problem, but it may be. What about
+the default buffer sizes? Do they work fine for you?
+
+Bye,
+Martin
+
+
+From M.Wache at gmx.net  Thu May 10 23:45:12 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 10 May 2007 23:45:12 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+In-Reply-To: <46248C75.2010500@mellander.org>
+References: <461220AF.2070001@mellander.org>	<4612BAC2.4080909@gmx.net>	<46136DF1.7020508@mellander.org>	<4613D481.4050308@gmx.net>	<461CC9E2.2000509@mellander.org>
+	<46248C75.2010500@mellander.org>
+Message-ID: <46439268.4080506@gmx.net>
+
+Hi Per,
+
+sorry for all the delay... first I was really busy with different stuff,
+and then I started reading a few really good books which I wanted to
+read for a long time ;-)
+
+Per Mellander schrieb:
+> Tested more and it seems that the there's a difference when opening a 
+> file with av_open_input_file and setting AVInputFormat *fmt to NULL.
+
+from avformat.h :
+
+/**
+ * Open a media file as input. The codec are not opened. Only the file
+ * header (if present) is read.
+ *
+ * @param ic_ptr the opened media file handle is put here
+ * @param filename filename to open.
+ * @param fmt if non NULL, force the file format to use
+ * @param buf_size optional buffer size (zero if default is OK)
+ * @param ap additional parameters needed when opening the file (NULL if
+default
+)
+ * @return 0 if OK. AVERROR_xxx otherwise.
+ */
+int av_open_input_file(AVFormatContext **ic_ptr, const char *filename,
+                       AVInputFormat *fmt,
+                       int buf_size,
+                       AVFormatParameters *ap);
+
+I don't see how calling av_open_input_file() with NULL for fmt and using
+a variable which is set to NULL could make any difference. Or am I
+missing anything?
+
+Of course one could try to force a format, but I have no idea how to
+make it easily possible to select the proper format.
+
+Bye,
+Martin
+
+
+From M.Wache at gmx.net  Thu May 10 23:51:00 2007
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 10 May 2007 23:51:00 +0200
+Subject: [Softdevice-devel] frames per second with lavc deinterlacing
+In-Reply-To: <AC0794D5-BBAD-4E34-9E2E-F8314D835A26@pobox.com>
+References: <1BB163B5-BC3E-4B18-990B-6DCE02716ABA@pobox.com>
+	<AC0794D5-BBAD-4E34-9E2E-F8314D835A26@pobox.com>
+Message-ID: <464393C4.1050009@gmx.net>
+
+Torgeir Veimo schrieb:
+> On 22 Apr 2007, at 01:11, Torgeir Veimo wrote:
+> 
+>> Does the lavc deinterlacer results in a frame rate of 25 FPS, or 50  
+>> FPS?
+> 
+the lavc deinterlace doesn't change the frame rate. Basically one field
+is dropped if it is too different from the other, so you have always 25 FPS.
+
+> I'm really puzzled, since turning on lavc deinterlacing reduces CPU  
+> consumption from about 70% down to just above 40%, so it seems the  
+> most time is consumed by frame display, not decoding.
+> 
+
+Hmm, that is strange...
+
+Bye,
+Martin
+
+
+From nicolas at huillard.net  Sun May 13 18:55:19 2007
+From: nicolas at huillard.net (Nicolas Huillard)
+Date: Sun, 13 May 2007 18:55:19 +0200
+Subject: [Softdevice-devel] MMX error on Celeron 466
+Message-ID: <464742F7.6000104@huillard.net>
+
+Hi all,
+
+I'm testing softdevice on a old Celeron box, which used to be a DVD 
+player. I hope it will be OK as a VDR box with softdevice...
+I'm trying to stick with binary Debian packages, but I have an MMX 
+problem here.
+
+The CPU:
+vdr at diskless-vdr:~$ cat /proc/cpuinfo
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 6
+model name      : Celeron (Mendocino)
+stepping        : 5
+cpu MHz         : 467.737
+cache size      : 128 KB
+fdiv_bug        : no
+hlt_bug         : no
+f00f_bug        : no
+coma_bug        : no
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 2
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca 
+cmov pat pse36 mmx fxsr
+bogomips        : 936.24
+
+GDB output:
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[New Thread -1250026576 (LWP 8291)]
+
+Program received signal SIGILL, Illegal instruction.
+[Switching to Thread -1210758496 (LWP 8282)]
+0xb7d2e340 in cSoftOsd::ScaleUpHoriz_MMX () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+(gdb) bt
+#0  0xb7d2e340 in cSoftOsd::ScaleUpHoriz_MMX () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#1  0xb7d2fc42 in cSoftOsd::ScaleVUpCopyToBitmap () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#2  0xb7d2ffc9 in cSoftOsd::CopyToBitmap () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#3  0xb7d30980 in cSoftOsd::OsdCommit () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#4  0xb7d30a78 in cSoftOsd::Flush () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#5  0x080e5d29 in cSkinSTTNGDisplayMenu::Flush ()
+#6  0x080a959e in cInterface::QueryKeys ()
+#7  0x080a9fc5 in cInterface::LearnKeys ()
+#8  0x080fc6d2 in main ()
+
+
+The ScaleUpHoriz_MMX method is full of __asm__() code, in which there 
+might be incompatible MMX instructions...
+
+Just for the record: Xv output on SiS6326 card, 1024x768x32 or 640x480x32
+
+I'd like to get the maximum out of this old box, using binary packages 
+if as much as possible (from http://e-tobi.net/)
+
+TIA,
+
+-- 
+NH
+
+
+From malcolm.caldwell at cdu.edu.au  Tue May 15 09:38:28 2007
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Tue, 15 May 2007 07:38:28 +0000 (UTC)
+Subject: [Softdevice-devel] No picture with latest cvs
+Message-ID: <pan.2007.05.15.07.38.27@cdu.edu.au>
+
+My system is built on Fedora Core 7, and I am using ffmpeg as supplied 
+via atrpms.
+
+Yesterday I did a yum upgrade, and ffmpeg was upgraded.  As a result 
+softdevice broke: it kept complaining about no symbol img_convert.
+
+So I tried to upgrade to the latest cvs of softdevice.  This compiled vdr 
+started just fine, with only one problem: there is no picture.
+
+I have tried to see how to get around the issue, but so far no luck.  
+Compiling always older versions always says that img_convert is 
+depreciated, which as far as I can tell actually means unsupported.
+
+My setup is mga tvout.  ffmpeg is ffmpeg-0.4.9-23_r8743.fc6.at
+
+Help...
+
+
+
+
+From malcolm.caldwell at cdu.edu.au  Tue May 15 16:50:02 2007
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Tue, 15 May 2007 14:50:02 +0000 (UTC)
+Subject: [Softdevice-devel] No picture with latest cvs
+References: <pan.2007.05.15.07.38.27@cdu.edu.au>
+Message-ID: <pan.2007.05.15.14.49.57@cdu.edu.au>
+
+On Tue, 15 May 2007 07:38:28 +0000, Malcolm Caldwell wrote:
+
+> My system is built on Fedora Core 7, and I am using ffmpeg as supplied
+> via atrpms.
+
+I should have read the archive! Just a few posts back the problem is 
+described and the solution offered is to downgrade ffmpeg.
+ 
+> Yesterday I did a yum upgrade, and ffmpeg was upgraded.  As a result
+> softdevice broke: it kept complaining about no symbol img_convert.
+> 
+> So I tried to upgrade to the latest cvs of softdevice.  This compiled
+> vdr started just fine, with only one problem: there is no picture.
+> 
+> I have tried to see how to get around the issue, but so far no luck.
+> Compiling always older versions always says that img_convert is
+> depreciated, which as far as I can tell actually means unsupported.
+> 
+> My setup is mga tvout.  ffmpeg is ffmpeg-0.4.9-23_r8743.fc6.at
+> 
+> Help...
+
+
+
+
+From j.taimr at chello.nl  Thu May 17 16:30:15 2007
+From: j.taimr at chello.nl (j.taimr)
+Date: Thu, 17 May 2007 16:30:15 +0200
+Subject: [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+Message-ID: <200705171630.15704.j.taimr@chello.nl>
+
+Apparently, I have the same problem as Per. The same symptoms, some additional 
+infos:
+Standard mpeg2 movie, nothing exceptional:
+ffplay works:
+gentoo Filmy # ffplay -stats Asterix-A.mpg
+Input #0, mpeg, from 'Asterix-A.mpg':vq=    0KB sq=    0B
+  Duration: 01:21:11.8, start: 0.264656, bitrate: 4658 kb/s
+  Stream #0.0[0x1e0]: Video: mpeg2video, yuv420p, 720x576, 4955 kb/s, 25.00 
+fps(r)
+  Stream #0.1[0x1c0]: Audio: mp2, 48000 Hz, stereo, 192 kb/s
+   2.29 A-V: -0.015 aq=   44KB vq= 1291KB sq=    0B
+(and everything is ok.)
+
+tcprobe from transcode detects all parameters correctly as well:
+gentoo Filmy # tcprobe -i Asterix-A.mpg
+[tcprobe] MPEG program stream (PS)
+[tcprobe] summary for Asterix-A.mpg, (*) = not default, 0 = not detected
+import frame size: -g 720x576 [720x576]
+     aspect ratio: 4:3 (*)
+       frame rate: -f 25.000 [25.000] frc=3
+                   PTS=0.2647, frame_time=40 ms, bitrate=5586 kbps
+      audio track: -a 0 [0] -e 48000,16,2 [48000,16,2] -n 0x50 [0x2000] (*)
+                   PTS=0.2647, bitrate=192 kbps
+                   -D 0 --av_fine_ms 0 (frames & ms) [0] [0]
+
+but softplay:
+./vdr -P "softdevice -vo xv: -ao 
+alsa:" -P "softplay --media-path /var/Data/Filmy"
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x6c37e0
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mpg
+open file '/var/Data/Filmy/Asterix-A.mpg'
+PLDBG: GetPlayMode nb_streams 1
+PLDBG: GetPlayMode (>4628) stream 0 codec_type 1
+PLDBG: Has_video=0, has_audio=1
+CMD[3936]:ResetDecoder 3
+CMD[3936]:new Audio stream index.. old -1 new 0
+CMD[3936]:Neuer StreamDecoder Pid: 1964 context 0x9f5e90 type 1
+CMD[3937]:Neuer Thread gestartet: pid:1964 type 1
+16:06:23.0989 D [47364899342318] [softdevice-audio]: Xrun (at least 0,000 ms 
+long)
+Input #0, mp3, from 'test':
+  Duration: 32:49:54.3, start: 0.000000, bitrate: 191 kb/s
+  Stream #0.0: Audio: mp2, 48000 Hz, stereo, 192 kb/s
+PLDBG: ~cSoftControl()
+PLDBG: ~cSoftPlayer
+So, contrary to ffplay, softplay did not detect ANY videostream and took 0.0 
+as mp3 audiostream instead! There is something seriously wrong...
+Jan
+
+
+From rahrenbe at cc.hut.fi  Thu May 17 23:44:08 2007
+From: rahrenbe at cc.hut.fi (Rolf Ahrenberg)
+Date: Fri, 18 May 2007 00:44:08 +0300 (EEST)
+Subject: [Softdevice-devel] (no subject)
+Message-ID: <Pine.OSF.4.64.0705180041100.448449@kosh.hut.fi>
+
+
+Hi,
+
+the current cvs snapshot won't compile on my setup (--disable-shm) 
+without the following patch.
+
+Rofa
+
+Index: softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.83
+diff -u -r1.83 softdevice.c
+--- softdevice.c        10 May 2007 19:54:44 -0000      1.83
++++ softdevice.c        17 May 2007 21:37:03 -0000
+@@ -786,7 +786,7 @@
+    runtimePluginPath = GetLibPath();
+
+    softlog = new cSetupSoftlog();
+-#ifndef VOUT_SHM
++#ifndef SHM_SUPPORT
+    setupStore = (cSetupStore *) malloc( sizeof(cSetupStore) );
+    setupStore->InitSetupStore();
+  #else
+
+
+From rahrenbe at cc.hut.fi  Fri May 18 21:32:54 2007
+From: rahrenbe at cc.hut.fi (Rolf Ahrenberg)
+Date: Fri, 18 May 2007 22:32:54 +0300 (EEST)
+Subject: [Softdevice-devel] [patch] SHM compilation fix
+In-Reply-To: <Pine.OSF.4.64.0705180041100.448449@kosh.hut.fi>
+References: <Pine.OSF.4.64.0705180041100.448449@kosh.hut.fi>
+Message-ID: <Pine.OSF.4.64.0705182231020.26758@kosh.hut.fi>
+
+
+Hi,
+
+somehow I forgot to include a subject line into my previous mail. :)
+
+--
+rofa
+
+
+From bob at globall.ru  Mon May 21 13:02:07 2007
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Mon, 21 May 2007 15:02:07 +0400
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+Message-ID: <46517C2F.1080507@globall.ru>
+
+Hi,
+
+I try to use old Celeron 850MHz and Matrox G450 DH together with
+softdevice.  I download  from CVS DirectFB, DFB++ and softdevice. FFmpeg
+build is 3349760, matroxfb built in kernel (2.6.20.7).
+After the attentive reading of guidance and tuning all began to work,
+but a few questions appeared.
+Output through head1 (19" LCD, 800x600-32), video is very smooth, overal
+CPU utilization 90% . Is it a normal CPU load or it very much?
+Output through head2 (PAL TV, crtc2 768x576-32), video is slow and 
+jerky, wrong  field order, CPU loaded on 70%.
+A few days of experiments and googling changed nothing. It can be there
+are what to specific requirements?
+I am lost :(
+
+Regards,
+Vladimit Monchenko.
+
+
+From torgeir at pobox.com  Mon May 21 15:05:22 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 21 May 2007 14:05:22 +0100
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <46517C2F.1080507@globall.ru>
+References: <46517C2F.1080507@globall.ru>
+Message-ID: <3C7E2F20-FB0E-4735-8A0E-A068AEDC56E7@pobox.com>
+
+
+On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+
+> Hi,
+>
+> I try to use old Celeron 850MHz and Matrox G450 DH together with
+> softdevice.  I download  from CVS DirectFB, DFB++ and softdevice.  
+> FFmpeg
+> build is 3349760, matroxfb built in kernel (2.6.20.7).
+> After the attentive reading of guidance and tuning all began to work,
+> but a few questions appeared.
+> Output through head1 (19" LCD, 800x600-32), video is very smooth,  
+> overal
+> CPU utilization 90% . Is it a normal CPU load or it very much?
+> Output through head2 (PAL TV, crtc2 768x576-32), video is slow and
+> jerky, wrong  field order, CPU loaded on 70%.
+> A few days of experiments and googling changed nothing. It can be  
+> there
+> are what to specific requirements?
+
+70% cpu sounds right with crtc2, but you should get the correct field  
+order. What's your /etc/directfb and what version of DirectFB do you  
+have?
+
+90% through crtc1 doesn't sound right, but I've never used crtc1 on a  
+matrox card before.. Can you try toggling between the different sync  
+impl in softdevice settings? Also, are you using mmx, and lavc  
+deinterlacing?
+
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From bob at globall.ru  Mon May 21 16:08:12 2007
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Mon, 21 May 2007 18:08:12 +0400
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <3C7E2F20-FB0E-4735-8A0E-A068AEDC56E7@pobox.com>
+References: <46517C2F.1080507@globall.ru>
+	<3C7E2F20-FB0E-4735-8A0E-A068AEDC56E7@pobox.com>
+Message-ID: <4651A7CC.2060704@globall.ru>
+
+Torgeir Veimo ?????:
+> On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+>
+>   
+>> Hi,
+>>
+>> I try to use old Celeron 850MHz and Matrox G450 DH together with
+>> softdevice.  I download  from CVS DirectFB, DFB++ and softdevice.  
+>> FFmpeg
+>> build is 3349760, matroxfb built in kernel (2.6.20.7).
+>> After the attentive reading of guidance and tuning all began to work,
+>> but a few questions appeared.
+>> Output through head1 (19" LCD, 800x600-32), video is very smooth,  
+>> overal
+>> CPU utilization 90% . Is it a normal CPU load or it very much?
+>> Output through head2 (PAL TV, crtc2 768x576-32), video is slow and
+>> jerky, wrong  field order, CPU loaded on 70%.
+>> A few days of experiments and googling changed nothing. It can be  
+>> there
+>> are what to specific requirements?
+>>     
+>
+> 70% cpu sounds right with crtc2, but you should get the correct field  
+> order. What's your /etc/directfb and what version of DirectFB do you  
+> have?
+>
+> 90% through crtc1 doesn't sound right, but I've never used crtc1 on a  
+> matrox card before.. Can you try toggling between the different sync  
+> impl in softdevice settings? Also, are you using mmx, and lavc  
+> deinterlacing?
+>
+>
+>   
+My /etc/directfbrc and /etc/fb.modes:
+
+mode=768x576
+#mode=800x600
+depth = 32
+matrox-crtc2
+matrox-tv-standard=pal
+primary-layer=2
+matrox-cable-type=composite
+#matrox-cable-type=scart-composite
+#matrox-cable-type=scart-rgb
+disable-module=lirc
+pixelformat=ARGB
+
+mode "768x576"
+# D: 30.274 MHz, H: 37.701 kHz, V: 50.001 Hz
+geometry 768 576 768 576 32
+timings 33032 30 5 110 55 48 13
+vsync high
+bcast true
+accel true
+rgba 8/16,8/8,8/0,8/24
+endmode
+
+mode "800x600"
+# D: 49.50 MHz, H: 46.875 kHz, V: 75.00 Hz
+geometry 800 600 800 600 32
+timings 20203 160 16 21 1 80 3
+hsync high
+vsync high
+endmode
+
+
+#mode "768x576"
+# geometry 768 576 768 576 32
+# timings 67723 106 1 44 1 70 4
+# csync high
+# laced true
+# bcast true
+#endmode
+
+DirectFB daily snapshot - DirectFB-2007-05-19-04-25-10-UTC.tar.gz from
+directfb.org. With the different sync settings a softdevice result is
+the same.
+Softdevice compiled with --disable-subplugins --disable-mmx2
+--disable-oss, all deinterlacing disabled.
+My vdr is started with next messages:
+
+[softdevice] processing args
+[softdevice] argv [0] = softdevice
+[softdevice] argv [1] = -ao
+[softdevice] argv [3] = -vo
+vo_argv: dfb:mgatv
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] Expanding 0 columns at left and right
+[setup-softdevice] Expanding 0 columns at top and bottom
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YUY2)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to on
+[setup-softdevice] vidBrightness: -1
+[setup-softdevice] vidContrast: -1
+[setup-softdevice] vidHue: -1
+[setup-softdevice] vidSaturation: -1
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3349760)
+07:51:49.0947 I [5186] [dfb] init
+
+=======================| DirectFB 1.0.0 |=======================
+(c) 2001-2007 The DirectFB Organization (directfb.org)
+(c) 2000-2004 Convergence (integrated media) GmbH
+------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2007-05-19 09:03)
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 5194)...
+(*) Direct/Modules: suppress module 'lirc'
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 5195)...
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (directfb.org)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 5196)...
+(*) DirectFB/Input: Keyboard 0.9 (directfb.org)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+(!) DirectFB/DirectFBCreate: Setting desktop resolution to 768x576 failed!
+-> Using default resolution.
+[dfb] RAM: 33554432 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Src.premultiply
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize
+SrcColorkey SrcPremultiply Deinterlace
+07:51:50.0126 I [5186] [dfb] Supported video Modes are:
+768x576 at 32 800x600 at 32
+07:51:50.0128 I [5186] [dfb] Enumerating display Layers
+Layer 2 FBDev Primary Layer Type: graphics
+Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler Type: graphics picture video
+Caps: brightness contrast deinterlacing dst_colorkey screen_location surface
+Layer 0 Matrox CRTC2 Layer Type: graphics picture video
+Caps: brightness contrast hue field_parity saturation surface
+07:51:50.0157 I [5186] [dfb] (osdLayer): flags, options, pixelformat:
+0000005f, 00000000 00418c04
+07:51:50.0158 I [5186] [dfb] (osdLayer): width, height: 720 576
+07:51:50.0158 I [5186] [dfb] osdLayer without !! alpha channel
+07:51:50.0195 I [5186] [dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+07:51:50.0196 I [5186] [dfb] DLOP_FIELD_PARITY supported by layer
+[Matrox CRTC2 Layer]
+07:51:50.0216 D [5186] [dfb] surface capabilities for (scrSurface):
+videoonly, flipping, interlaced, triple-buffered, PixelFormat = 0x00418c04
+07:51:50.0217 I [5186] [dfb] width = 720, height = 576
+07:51:50.0218 I [5186] [dfb] got fmt = 0x00418c04 bpp = 32
+07:51:50.0220 I [5186] [dfb] Using this layer for OSD: (Matrox CRTC2
+Layer - [720x576])
+07:51:50.0221 D [5186] [dfb] surface capabilities for (osdSurface):
+videoonly, double-buffered, flipping, PixelFormat = 0x00418c04
+07:51:50.0222 D [5186] [dfb] surface capabilities for (videoSurface):
+videoonly, PixelFormat = 0x00200806
+07:51:50.0223 I [5186] [dfb] Using this layer for OSD: Matrox CRTC2 Layer
+07:51:50.0224 I [5186] [dfb] Using this layer for Video out: Matrox
+CRTC2 Layer
+07:51:50.0254 I [5186] [dfb] Display frame time is 19966 microseconds
+07:51:50.0255 D [5186] [dfb] (re)configuring Videolayer to 720 x 576
+(720x576)
+07:51:50.0255 D [5186] [dfb] creating new surface (stretchBlit)
+07:51:50.0270 D [5186] [dfb] surface capabilities for (videoSurface):
+videoonly, interlaced, PixelFormat = 0x00200806
+07:51:50.0271 D [5186] [dfb] (re)configured 0x00200806
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+07:51:50.0504 D [5197] [dfb] (re)configuring Videolayer to 736 x 576
+(736x576)
+07:51:50.0505 D [5197] [dfb] creating new surface (stretchBlit)
+07:51:50.0520 D [5197] [dfb] surface capabilities for (videoSurface):
+videoonly, interlaced, PixelFormat = 0x00200806
+07:51:50.0521 D [5197] [dfb] (re)configured 0x00200806
+
+Regards,
+Vladimir Monchenko.
+
+
+
+From lucianm at users.sourceforge.net  Mon May 21 16:52:34 2007
+From: lucianm at users.sourceforge.net (Lucian Muresan)
+Date: Mon, 21 May 2007 16:52:34 +0200
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <4651A7CC.2060704@globall.ru>
+References: <46517C2F.1080507@globall.ru>	<3C7E2F20-FB0E-4735-8A0E-A068AEDC56E7@pobox.com>
+	<4651A7CC.2060704@globall.ru>
+Message-ID: <4651B232.8080501@users.sourceforge.net>
+
+Vladimir Monchenko wrote:
+> Torgeir Veimo ?????:
+>> On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+>>
+>>   
+>>> Hi,
+>>>
+>>> I try to use old Celeron 850MHz and Matrox G450 DH together with
+>>> softdevice.  I download  from CVS DirectFB, DFB++ and softdevice.  
+>>> FFmpeg
+>>> build is 3349760, matroxfb built in kernel (2.6.20.7).
+>>> After the attentive reading of guidance and tuning all began to work,
+>>> but a few questions appeared.
+>>> Output through head1 (19" LCD, 800x600-32), video is very smooth,  
+>>> overal
+>>> CPU utilization 90% . Is it a normal CPU load or it very much?
+>>> Output through head2 (PAL TV, crtc2 768x576-32), video is slow and
+>>> jerky, wrong  field order, CPU loaded on 70%.
+>>> A few days of experiments and googling changed nothing. It can be  
+>>> there
+>>> are what to specific requirements?
+>>>     
+>> 70% cpu sounds right with crtc2, but you should get the correct field  
+>> order. What's your /etc/directfb and what version of DirectFB do you  
+>> have?
+>>
+>> 90% through crtc1 doesn't sound right, but I've never used crtc1 on a  
+>> matrox card before.. Can you try toggling between the different sync  
+>> impl in softdevice settings? Also, are you using mmx, and lavc  
+>> deinterlacing?
+>>
+>>
+>>   
+> My /etc/directfbrc and /etc/fb.modes:
+> 
+> mode=768x576
+> #mode=800x600
+> depth = 32
+> matrox-crtc2
+> matrox-tv-standard=pal
+> primary-layer=2
+> matrox-cable-type=composite
+> #matrox-cable-type=scart-composite
+> #matrox-cable-type=scart-rgb
+> disable-module=lirc
+> pixelformat=ARGB
+
+With "matrox-crtc2" and "matrox-tv-standard=pal" in /etc/directfbrc,
+your "mode=768x576" is ignored by DirectFB itself, output is always
+hardcoded at 720x576 in the Matrox DirectFB driver(would be 720x480 for
+NTSC), just check the output in the vdr messages you posted yourself...
+Therefore, DirectFB does not care about youre "mode= " line in
+/etc/directfbrc, or about any modeline definitions in /etc/fb.modes.
+Nevertheless, softdevice might interpret that mode=768x576 line and
+therefore it may cause some unnecessary postprocessing to be done
+internally. Please try "mode=720x576" and turn off any deinterlacing
+(since you say you're using a PAL TV, it won't need any, and moreover,
+take care itself of this, by technical design), and also turn off
+postprocessing.
+
+This is a common confusion made between output on the first head, which
+is for the computer monitor (no crtc2 option in the directfbrc file,
+hence, in that case, mode settings do matter) and where the pixels are
+square (there is no "PAL" for this, PAL or NTSC always has to do with
+output to _conventional_TV_, so 768x576 in sqare pixels might look like
+PAL, but it's not).
+
+Please tell if that helps.
+
+Lucian
+
+
+
+
+From bob at globall.ru  Mon May 21 18:05:08 2007
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Mon, 21 May 2007 20:05:08 +0400
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <4651B232.8080501@users.sourceforge.net>
+References: <46517C2F.1080507@globall.ru>	<3C7E2F20-FB0E-4735-8A0E-A068AEDC56E7@pobox.com>	<4651A7CC.2060704@globall.ru>
+	<4651B232.8080501@users.sourceforge.net>
+Message-ID: <4651C334.8030000@globall.ru>
+
+Lucian Muresan ?????:
+> your "mode=768x576" is ignored by DirectFB itself, output is always
+> hardcoded at 720x576 in the Matrox DirectFB driver(would be 720x480 for
+> NTSC), just check the output in the vdr messages you posted yourself...
+> Therefore, DirectFB does not care about youre "mode= " line in
+> /etc/directfbrc, or about any modeline definitions in /etc/fb.modes.
+> Nevertheless, softdevice might interpret that mode=768x576 line and
+> therefore it may cause some unnecessary postprocessing to be done
+> internally. Please try "mode=720x576" and turn off any deinterlacing
+> (since you say you're using a PAL TV, it won't need any, and moreover,
+> take care itself of this, by technical design), and also turn off
+> postprocessing.
+>
+> This is a common confusion made between output on the first head, which
+> is for the computer monitor (no crtc2 option in the directfbrc file,
+> hence, in that case, mode settings do matter) and where the pixels are
+> square (there is no "PAL" for this, PAL or NTSC always has to do with
+> output to _conventional_TV_, so 768x576 in sqare pixels might look like
+> PAL, but it's not).
+>
+> Please tell if that helps.
+>
+> Lucian
+>
+>   
+I changed mode=768x576 on mode=720x576 in directfbrc. I already tried to
+do it before. Before, I tried similarly to apply patch
+matroxfb-g400-clock-2.6.6.patch. It did not help also. On progressive
+video and rapid motions an image moves jerks. On interlaced video added
+the effects of wrong order fields.
+I turn off any deinterlacing and postprocessing.
+Here content of file of setup.conf:
+
+softdevice.AC3Mode = 0
+softdevice.AlsaAC3Device = hw:0,1
+softdevice.AlsaDevice = default
+softdevice.autodetectAspect = 0
+softdevice.avOffset = 0
+softdevice.bufferMode = 2
+softdevice.CropBottomLines = 0
+softdevice.CropLeftCols = 0
+softdevice.CropMode = 0
+softdevice.CropModeToggleKey = 0
+softdevice.CropRightCols = 0
+softdevice.CropTopLines = 0
+softdevice.Deinterlace Method = 0
+softdevice.ExpandLeftRightCols = 0
+softdevice.ExpandTopBottomLines = 0
+softdevice.mainMenu = 1
+softdevice.OSDalphablend = 0
+softdevice.Picture mirroring = 0
+softdevice.PixelAspect = 1
+softdevice.PixelFormat = 2
+softdevice.Postprocess Method = 0
+softdevice.Postprocess Quality = 0
+softdevice.Suspend = 0
+softdevice.syncTimerMode = 0
+softdevice.UseSetSourceRectangle = 1
+softdevice.UseStretchBlit = 1
+softdevice.vidBrightness = -1
+softdevice.vidContrast = -1
+softdevice.vidHue = -1
+softdevice.vidSaturation = -1
+softdevice.Xv-Aspect = 1
+
+Regards,
+Vladimir Monchenko.
+
+
+
+From torgeir at pobox.com  Mon May 21 18:25:55 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 21 May 2007 17:25:55 +0100
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <46517C2F.1080507@globall.ru>
+References: <46517C2F.1080507@globall.ru>
+Message-ID: <471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>
+
+
+On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+
+> I try to use old Celeron 850MHz
+
+What does cat /rpco/cpuinfo say about your processor?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From bob at globall.ru  Mon May 21 20:44:01 2007
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Mon, 21 May 2007 22:44:01 +0400
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>
+References: <46517C2F.1080507@globall.ru>
+	<471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>
+Message-ID: <4651E871.7000105@globall.ru>
+
+Torgeir Veimo ?????:
+> On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+>
+>   
+>> I try to use old Celeron 850MHz
+>>     
+>
+> What does cat /rpco/cpuinfo say about your processor?
+>
+>   
+uname -a:
+
+Linux vdr-new 2.6.20-gentoo-r7 #7 PREEMPT Sat May 19 13:28:18 MSD 2007
+i686 Celeron (Coppermine) GenuineIntel GNU/Linux
+
+
+cat /proc/cpuinfo:
+
+processor : 0
+vendor_id : GenuineIntel
+cpu family : 6
+model : 8
+model name : Celeron (Coppermine)
+stepping : 6
+cpu MHz : 851.980
+cache size : 128 KB
+fdiv_bug : no
+hlt_bug : no
+f00f_bug : no
+coma_bug : no
+fpu : yes
+fpu_exception : yes
+cpuid level : 2
+wp : yes
+flags : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca cmov pat
+pse36 mmx fxsr sse
+bogomips : 1705.15
+clflush size : 32
+
+cat /proc/mtrr:
+
+reg00: base=0x00000000 ( 0MB), size= 128MB: write-back, count=1
+reg01: base=0xe0000000 (3584MB), size= 64MB: write-combining, count=1
+reg02: base=0xe4000000 (3648MB), size= 32MB: write-combining, count=1
+
+lspci:
+
+00:00.0 Host bridge: VIA Technologies, Inc. VT82C693A/694x [Apollo
+PRO133x] (rev c4)
+00:01.0 PCI bridge: VIA Technologies, Inc. VT82C598/694x [Apollo
+MVP3/Pro133x AGP]
+00:07.0 ISA bridge: VIA Technologies, Inc. VT82C686 [Apollo Super South]
+(rev 1b)
+00:07.1 IDE interface: VIA Technologies, Inc.
+VT82C586A/B/VT82C686/A/B/VT823x/A/C PIPC Bus Master IDE (rev 06)
+00:07.2 USB Controller: VIA Technologies, Inc. VT82xxxxx UHCI USB 1.1
+Controller (rev 0e)
+00:07.3 USB Controller: VIA Technologies, Inc. VT82xxxxx UHCI USB 1.1
+Controller (rev 0e)
+00:07.4 Bridge: VIA Technologies, Inc. VT82C686 [Apollo Super ACPI] (rev 20)
+00:07.5 Multimedia audio controller: VIA Technologies, Inc. VT82C686
+AC97 Audio Controller (rev 21)
+00:10.0 Ethernet controller: VIA Technologies, Inc. VT6105 [Rhine-III]
+(rev 86)
+01:00.0 VGA compatible controller: Matrox Graphics, Inc. MGA G400/G450
+(rev 82)
+
+Regards,
+Vladimir Monchenko.
+
+
+From torgeir at pobox.com  Mon May 21 21:10:03 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 21 May 2007 20:10:03 +0100
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <4651E871.7000105@globall.ru>
+References: <46517C2F.1080507@globall.ru>
+	<471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>
+	<4651E871.7000105@globall.ru>
+Message-ID: <A61AB388-C503-4DA8-BD51-53591A1A0907@pobox.com>
+
+Can you try enabling mmx2 in softdevice?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From bob at globall.ru  Tue May 22 05:38:03 2007
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Tue, 22 May 2007 07:38:03 +0400
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <A61AB388-C503-4DA8-BD51-53591A1A0907@pobox.com>
+References: <46517C2F.1080507@globall.ru>	<471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>	<4651E871.7000105@globall.ru>
+	<A61AB388-C503-4DA8-BD51-53591A1A0907@pobox.com>
+Message-ID: <4652659B.2090306@globall.ru>
+
+Torgeir Veimo ?????:
+> Can you try enabling mmx2 in softdevice?
+>
+>   
+Enable mmx2? Possibly, you about sse2?
+My CPU does not support it, but I made attempt enable sse2. Nothing changed.
+A problem is only with video, audio is always very good.
+I can set Pentium III 933MHz CPU, but it seems to me that it will not
+decide a problem. :(
+
+Regards,
+Vladimir Monchenko.
+
+
+From bob at globall.ru  Tue May 22 07:32:29 2007
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Tue, 22 May 2007 09:32:29 +0400
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <4652659B.2090306@globall.ru>
+References: <46517C2F.1080507@globall.ru>	<471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>	<4651E871.7000105@globall.ru>	<A61AB388-C503-4DA8-BD51-53591A1A0907@pobox.com>
+	<4652659B.2090306@globall.ru>
+Message-ID: <4652806D.8000905@globall.ru>
+
+Tell me, please, from your experience, with what versions of
+kernel(patches?)/DirectFB/ffmpeg/softdevice Matrox G450 DH works
+correctly? I will try to repeat your configuration.
+
+Regards,
+Vladimir Monchenko.
+
+
+From nicolas at huillard.net  Tue May 22 09:31:33 2007
+From: nicolas at huillard.net (Nicolas Huillard)
+Date: Tue, 22 May 2007 09:31:33 +0200
+Subject: [Softdevice-devel] MMX error on Celeron 466
+In-Reply-To: <464742F7.6000104@huillard.net>
+References: <464742F7.6000104@huillard.net>
+Message-ID: <46529C55.2000301@huillard.net>
+
+Nicolas Huillard a ?crit :
+> I'm testing softdevice on a old Celeron box, which used to be a DVD 
+> player. I hope it will be OK as a VDR box with softdevice...
+> I'm trying to stick with binary Debian packages, but I have an MMX 
+> problem here.
+
+...
+
+> flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca 
+> cmov pat pse36 mmx fxsr
+
+...
+
+> Program received signal SIGILL, Illegal instruction.
+> [Switching to Thread -1210758496 (LWP 8282)]
+> 0xb7d2e340 in cSoftOsd::ScaleUpHoriz_MMX () from 
+> /usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+
+Vladimir Monchenko have quite the same CPU, with added "sse" flag. I 
+didn't experiment more on this subject, but it seems that the MMX 
+#define in softdevice also refers to SSE instructions, which can be 
+misleading.
+
+Side note: I didn't experiment more with this box, because the Nova-T 
+DVB card I have doesn't work there. The PCI bus is sufficient for the 
+system to detect and use all devices on the card, but the tuner itself 
+is not activated: no antena pass-through, and every tuning attempt 
+fails. The red LED on the card is also off. Putting the card in another 
+box with 3.3V/5V PCI bus solves the problem.
+
+I think try to use older-than-reasonable hardware...
+
+-- 
+NH
+
+
+From nicolas at huillard.net  Tue May 22 09:23:24 2007
+From: nicolas at huillard.net (Nicolas Huillard)
+Date: Tue, 22 May 2007 09:23:24 +0200
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <4652806D.8000905@globall.ru>
+References: <46517C2F.1080507@globall.ru>	<471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>	<4651E871.7000105@globall.ru>	<A61AB388-C503-4DA8-BD51-53591A1A0907@pobox.com>	<4652659B.2090306@globall.ru>
+	<4652806D.8000905@globall.ru>
+Message-ID: <46529A6C.8010303@huillard.net>
+
+Vladimir Monchenko a ?crit :
+> Tell me, please, from your experience, with what versions of
+> kernel(patches?)/DirectFB/ffmpeg/softdevice Matrox G450 DH works
+> correctly? I will try to repeat your configuration.
+
+I was about to add that ffmpeg version really matters here... I can't 
+tell you a correct one since my setup is really different than yours.
+
+-- 
+NH
+
+
+From zzam at gentoo.org  Tue May 22 13:11:54 2007
+From: zzam at gentoo.org (Matthias Schwarzott)
+Date: Tue, 22 May 2007 13:11:54 +0200
+Subject: [Softdevice-devel] ShmClient: XvVideoOut.Reconfigure format > 3!
+Message-ID: <200705221311.54727.zzam@gentoo.org>
+
+Hi there!
+
+Using latest cvs snapshot, and starting vdr with:
+vdr -Psoftdevice" -vo shm:" [... other options]
+
+and then starting ShmClient gets me this output (of ShmClient):
+
+dsyslog:[XvVideoOut]: patch version (2006-11-05)
+[XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+dsyslog:[XvVideoOut]: Initialize XShmCreateImage Successful (0x80be610)
+[XvVideoOut]: osd_image shmid = 229379
+dsyslog:[XvVideoOut]: Initialize shmget Successful (2949120 bytes)
+dsyslog:[XvVideoOut]: Initialize shmat Successful
+[XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120, Bpp 
+32
+dsyslog:[softdevice-xscreensaver]: xscreensaver not running
+
+dsyslog:[XvVideoOut]: initialized OK
+XvVideoOut.Reconfigure format > 3!
+[XvVideoOut]: Xinerama-Screen changed to 0
+dsyslog:[VideoOut]: 736x576 [0,0 736x576] -> 1024x576 [122,0 778x576]
+XvVideoOut.Reconfigure format > 3!
+reconfigure failed
+dsyslog:[VideoOut]: resolution changed: W(736 -> 528); H(576 ->576)
+
+dsyslog:[VideoOut]: 528x576 [0,0 528x576] -> 1024x576 [132,0 759x576]
+XvVideoOut.Reconfigure format > 3!
+reconfigure failed
+XvVideoOut.Reconfigure format > 3!
+reconfigure failed
+XvVideoOut.Reconfigure format > 3!
+reconfigure failed
+XvVideoOut.Reconfigure format > 3!
+reconfigure failed
+XvVideoOut.Reconfigure format > 3!
+
+
+
+
+audio starts, but video is just black. The last two lines loop endlessly.
+Stopping and restarting ShmClient does not change anything.
+
+Stopping vdr, and then starting it DOES help.
+It can be reproduced then by stopping vdr, deleting the shared memory region, 
+and starting it.
+Some debugging showed me that the pixelformat var had the value 14 ?!?
+
+Greetings
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+
+
+From bob at globall.ru  Wed May 23 09:05:30 2007
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Wed, 23 May 2007 11:05:30 +0400
+Subject: [Softdevice-devel] A few questions - softdevice+G450
+In-Reply-To: <46529A6C.8010303@huillard.net>
+References: <46517C2F.1080507@globall.ru>	<471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>	<4651E871.7000105@globall.ru>	<A61AB388-C503-4DA8-BD51-53591A1A0907@pobox.com>	<4652659B.2090306@globall.ru>	<4652806D.8000905@globall.ru>
+	<46529A6C.8010303@huillard.net>
+Message-ID: <4653E7BA.8010403@globall.ru>
+
+I got some progress in the investigation.
+Files configuration of /etc/directfbrc, /etc/fb.modes and vdr/setup.conf
+remained without changes.
+After replacement CPU Celeron 850Mhz on Pentium III 933Mhz, I got the
+large improvement quality of video, but a problem did not decide fully.
+
+cat /proc/cpuinfo
+
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 8
+model name      : Pentium III (Coppermine)
+stepping        : 6
+cpu MHz         : 933.405
+cache size      : 256 KB
+fdiv_bug        : no
+hlt_bug         : no
+f00f_bug        : no
+coma_bug        : no
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 2
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca
+cmov pat pse36 mmx fxsr sse
+bogomips        : 1868.06
+clflush size    : 32
+
+I got a strange effect, when CPU load is related to quality of video. I
+will make attempt show it on the example vmstat messages.
+
+> Video is very good, without jerks, but CPU load ~80-85%
+ 3  0      0  18684  10368  72936    0    0     0     0 1166  396 83  0
+17  0
+ 3  0      0  16524  10368  75096    0    0  2160     0 1188  403 80  1
+19  0
+ 3  0      0  16524  10368  75096    0    0     0     0 1162  405 79  3
+18  0
+ 2  0      0  16524  10368  75096    0    0     0     0 1170  403 80  0
+20  0
+ 0  0      0  14340  10368  77280    0    0  2184     0 1179  395 80  2
+18  0
+ 0  0      0  22544  10368  69084    0    0     0     0 1161  410 83  0
+17  0
+ 0  0      0  20360  10368  71272    0    0  2188     0 1177  386 83  1
+16  0
+ 2  0      0  20360  10368  71272    0    0     0     0 1167  400 81  1
+18  0
+ 1  0      0  20276  10368  71272    0    0     0     0 1161  379 86  0
+14  0
+>  Oops! Video is played with  jerks, the effect of wrong field order
+appeared, CPU usage DECREASED to ~60%.
+ 3  0      0  20360  10368  71272    0    0     0     0 1181  442 63  0
+37  0
+ 0  0      0  18116  10368  73512    0    0  2240     0 1183  440 58  1
+41  0
+ 3  0      0  18116  10368  73512    0    0     0     0 1168  439 59  1
+40  0
+procs -----------memory---------- ---swap-- -----io---- -system--
+----cpu----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy
+id wa
+ 1  0      0  15944  10368  75692    0    0  2180     0 1162  440 57  1
+42  0
+ 0  0      0  15944  10368  75692    0    0     0     0 1178  439 58  2
+40  0
+ 2  0      0  15944  10368  75696    0    0     0     0 1171  452 59  0
+41  0
+ 5  0      0  13760  10420  77868    0    0  2172    60 1188  456 54  3
+43  0
+ 0  0      0  21912  10420  69656    0    0     0     0 1161  421 57  1
+42  0
+ 4  0      0  21912  10420  69656    0    0     0     0 1174  440 58  0
+42  0
+ 0  0      0  19752  10420  71816    0    0  2160     0 1179  449 57  1
+42  0
+ 2  0      0  19752  10420  71816    0    0     0     0 1172  423 60  0
+40  0
+ 2  0      0  19752  10420  71816    0    0     0     0 1170  427 56  1
+43  0
+ 0  0      0  17536  10420  73984    0    0  2168     0 1179  439 61  2
+37  0
+ 1  0      0  17200  10420  73984    0    0     0     0 1163  430 59  0
+41  0
+ 0  0      0  17592  10420  73984    0    0     0     0 1161  428 60  0
+40  0
+ 2  0      0  15420  10420  76148    0    0  2164     0 1184  453 58  1
+41  0
+ 0  0      0  15420  10420  76148    0    0     0     0 1161  442 57  1
+42  0
+ 1  0      0  15420  10420  76148    0    0     0     0 1161  432 59  0
+41  0
+ 1  0      0  21508  10420  70072    0    0  2172     0 1179  451 56  2
+42  0
+ 1  0      0  21508  10420  70072    0    0     0     0 1161  450 57  2
+41  0
+ 0  0      0  21508  10420  70072    0    0     0     0 1161  439 56  1
+43  0
+ 1  0      0  19280  10420  72248    0    0  2176     0 1178  425 77  1
+22  0
+ 2  0      0  19280  10420  72248    0    0     0     0 1172  440 60  0
+40  0
+ 0  0      0  19280  10420  72248    0    0     0     0 1161  448 57  1
+42  0
+ 1  0      0  17084  10420  74444    0    0  2196     0 1179  451 57  2
+41  0
+ 0  0      0  17084  10420  74444    0    0     0     0 1161  445 58  1
+41  0
+ 1  0      0  14924  10420  76604    0    0  2160     0 1182  435 58  0
+42  0
+ 0  0      0  14924  10420  76604    0    0     0     0 1161  440 58  1
+41  0
+ 3  0      0  14924  10420  76604    0    0     0     0 1167  422 66  1
+33  0
+> Video is very good again, but CPU usage INCREASED to ~80-85%
+ 0  0      0  20760  10420  70620    0    0  2212     0 1187  405 80  1
+19  0
+ 0  0      0  20760  10420  70620    0    0     0     0 1161  402 80  0
+20  0
+ 0  0      0  20760  10420  70620    0    0     0     0 1161  396 81  0
+19  0
+ 0  0      0  18576  10420  72804    0    0  2184     0 1179  402 83  3
+14  0
+ 2  0      0  18576  10420  72804    0    0     0     0 1167  399 82  1
+17  0
+ 4  0      0  18576  10420  72804    0    0     0     0 1168  394 83  0
+17  0
+ 2  0      0  16392  10420  74980    0    0  2176    44 1185  392 83  2
+15  0
+ 4  0      0  16392  10420  74980    0    0     0     0 1177  404 82  1
+17  0
+procs -----------memory---------- ---swap-- -----io---- -system--
+----cpu----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy
+id wa
+ 2  0      0  16392  10420  74980    0    0     0     0 1167  385 83  0
+17  0
+ 0  0      0  14232  10420  77140    0    0  2160     0 1180  399 80  1
+19  0
+ 0  0      0  14232  10420  77140    0    0     0     0 1162  409 80  0
+20  0
+ 0  0      0  22476  10420  68912    0    0     0     0 1161  385 79  1
+20  0
+ 0  0      0  20316  10420  71080    0    0  2168     0 1180  407 83  0
+17  0
+ 1  0      0  20316  10420  71080    0    0     0     0 1167  407 89  0
+11  0
+
+Why do I get large CPU usage? Is the hardware acceleration of video
+used? How can it be checked up?
+
+Regards,
+Vladimir Monchenko.
+
+
+
+From torgeir at pobox.com  Thu May 31 04:24:24 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 31 May 2007 03:24:24 +0100
+Subject: [Softdevice-devel] lots of repeated frames
+Message-ID: <7EC1DC39-D9A4-4246-8E6C-6829845AE141@pobox.com>
+
+I've recently upgraded my whole system to fc6 and some stuff from fc7- 
+pre, and now i'm getting a lot of repeated frames;
+
+02:47:20.0336 D [18957] [dfb] (re)configured 0x00200806
+02:47:23.0692 D [18957] [VideoOut] video now synced (72 - -82)
+02:52:20.0849 D [18957] [VideoOut] sync info: repF = 729, drpF = 0,  
+totF = 7500
+02:57:20.0849 D [18957] [VideoOut] sync info: repF = 1502, drpF = 0,  
+totF = 15000
+03:02:20.0967 D [18957] [VideoOut] sync info: repF = 2245, drpF = 0,  
+totF = 22500
+03:07:20.0965 D [18957] [VideoOut] sync info: repF = 2912, drpF = 0,  
+totF = 30000
+03:12:21.0003 D [18957] [VideoOut] sync info: repF = 3506, drpF = 0,  
+totF = 37500
+
+- which is about 1 repeated frame per 10 frames.
+
+My output frequency is quite accurate,
+
+[root at htpc src]# ./vsynctest
+testing refresh rate using FB_WAITFORVSYNC ioctl, standby while i  
+loop 5000 times..
+time elapsed: 100.04 secs, refresh rate is 49.98 Hz
+
+- so I think it must be due to a skewed clock on my sound card (intel  
+HDA). Have any of you tried to read out the accuracy of the sound  
+card clock in some way? The intel audio hardware is quite  
+programmable, but probably not from userland. I'm trying to  
+experiment with both oss and also output, but so far i'm getting the  
+same result with both.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+From Neumann at do-net.de  Thu May 31 21:35:10 2007
+From: Neumann at do-net.de (Andre Neumann)
+Date: Thu, 31 May 2007 21:35:10 +0200
+Subject: [Softdevice-devel] PicBuffer Problem?!?
+Message-ID: <FB3B5DB3197CEA429E5FB8E83D01D03901A16E@sbs2003.do-net.de>
+
+Hi,
+ 
+2 minutes ago i tried to play back an h264 trailer with aac audio with softplay. This is what i get:
+ 
+PLDBG: Activate 1
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x81d3e80
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mp4
+open file '/opt/export/Cars - Trailer.mp4'
+could not find stream info
+PLDBG: GetPlayMode nb_streams 2
+PLDBG: GetPlayMode stream 0 codec_type 0
+PLDBG: GetPlayMode stream 1 codec_type 1
+21:32:52.0996 D [30441] [VideoOut] reset: sync info: repF = 988, drpF = 0, totF = 1054
+21:32:53.0057 D [30441] [VideoOut] reset: sync info: repF = 0, drpF = 0, totF = 0
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'test':
+  Duration: 00:02:33.3, start: 0.000000, bitrate: 2891 kb/s
+  Stream #0.0(und): Video: h264, yuv420p, 1280x532, 23.98 fps(r)
+  Stream #0.1(eng): Audio: aac, 44100 Hz, stereo
+#allocating buffer format orig->format 0
+21:32:53.0082 D [30448] [dfb] (re)configuring Videolayer to 1280 x 532 (1280x532)
+21:32:53.0083 D [30448] [dfb] surface capabilities for (videoSurface): videoonly, double-buffered, flipping, PixelFormat = 0x08100609
+21:32:53.0083 D [30448] [dfb] (re)configured 0x08100609
+[h264 @ 0x4078c1a8]warning: first frame is no keyframe
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+error finding PicBuffer!
+ (!!!)  *** WARNING [Application exited without deinitialization of DirectFB!] *** [core.c:775 in dfb_core_deinit_check()]
+
+Seems to be a problem with the PicBuffer code in softdevice. Martin, could you please take a look at it?
+ 
+-----------------------
+Andre Neumann
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070531/b882f0ef/attachment.html>
+
+From laz at club-burniston.co.uk  Fri Jun  1 10:13:30 2007
+From: laz at club-burniston.co.uk (Laz)
+Date: Fri, 1 Jun 2007 09:13:30 +0100
+Subject: [Softdevice-devel] PicBuffer Problem?!?
+In-Reply-To: <FB3B5DB3197CEA429E5FB8E83D01D03901A16E@sbs2003.do-net.de>
+References: <FB3B5DB3197CEA429E5FB8E83D01D03901A16E@sbs2003.do-net.de>
+Message-ID: <200706010913.31075.laz@club-burniston.co.uk>
+
+On Thursday 31 May 2007 20:35, Andre Neumann wrote:
+> Hi,
+>
+> 2 minutes ago i tried to play back an h264 trailer with aac audio with
+> softplay. This is what i get:
+>
+> PLDBG: Activate 1
+> PLDBG: Thread started: SoftPlayer
+> softdevicePlugin 0x81d3e80
+> Service 'softdevice-GetPacketHandles-v1.0'
+> IsStream .mp4
+> open file '/opt/export/Cars - Trailer.mp4'
+> could not find stream info
+> PLDBG: GetPlayMode nb_streams 2
+> PLDBG: GetPlayMode stream 0 codec_type 0
+> PLDBG: GetPlayMode stream 1 codec_type 1
+> 21:32:52.0996 D [30441] [VideoOut] reset: sync info: repF = 988, drpF =
+> 0, totF = 1054 21:32:53.0057 D [30441] [VideoOut] reset: sync info:
+> repF = 0, drpF = 0, totF = 0 Input #0, mov,mp4,m4a,3gp,3g2,mj2, from
+> 'test':
+>   Duration: 00:02:33.3, start: 0.000000, bitrate: 2891 kb/s
+>   Stream #0.0(und): Video: h264, yuv420p, 1280x532, 23.98 fps(r)
+>   Stream #0.1(eng): Audio: aac, 44100 Hz, stereo
+> #allocating buffer format orig->format 0
+> 21:32:53.0082 D [30448] [dfb] (re)configuring Videolayer to 1280 x 532
+> (1280x532) 21:32:53.0083 D [30448] [dfb] surface capabilities for
+> (videoSurface): videoonly, double-buffered, flipping, PixelFormat =
+> 0x08100609 21:32:53.0083 D [30448] [dfb] (re)configured 0x08100609
+> [h264 @ 0x4078c1a8]warning: first frame is no keyframe
+> [h264 @ 0x4078c1a8]reference picture missing during reorder
+> [h264 @ 0x4078c1a8]reference picture missing during reorder
+
+{SNIP}
+
+> error finding PicBuffer!
+>  (!!!)  *** WARNING [Application exited without deinitialization of
+> DirectFB!] *** [core.c:775 in dfb_core_deinit_check()]
+>
+> Seems to be a problem with the PicBuffer code in softdevice. Martin,
+> could you please take a look at it?
+
+I saw something like that the other week with an h264 video. Even mplayer 
+wouldn't play it (maybe would have if I'd got a newer version?). The only 
+thing I could find to play it was xine, which claimed it was using ffmpeg 
+for decoding, even though ffplay refused to play it itself!
+
+Cheers,
+
+Laz
+
+
+From Neumann at do-net.de  Sat Jun  2 22:17:51 2007
+From: Neumann at do-net.de (Andre Neumann)
+Date: Sat, 2 Jun 2007 22:17:51 +0200
+Subject: [Softdevice-devel] PATCH: add progressive frame detection (with
+	on/off switch in setup)
+Message-ID: <FB3B5DB3197CEA429E5FB8E83D01D03901A16F@sbs2003.do-net.de>
+
+Hi,
+ 
+i created a very small patch for enabling the ffmpeg interlaced_frame detection to softdevice. My programming
+skills are very limited or not there :)
+ 
+So please be nice to me, if i have done very stupid thinks here. But the patch works for me, maybe it can
+be integrated into softdevice.
+ 
+-----------------------
+Andre Neumann
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070602/13dc8ccb/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: softdevice-detect_progressive_frame.diff
+Type: application/octet-stream
+Size: 3662 bytes
+Desc: softdevice-detect_progressive_frame.diff
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070602/13dc8ccb/attachment.obj>
+
+From torgeir at pobox.com  Sat Jun 16 19:17:16 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sat, 16 Jun 2007 18:17:16 +0100
+Subject: [Softdevice-devel] libpostproc dependency not resolved..
+Message-ID: <FE1EB369-B22B-45B0-85A2-8EF24DA1DBE8@pobox.com>
+
+I'm having some troubles setting up on a new box; shouldn't libvdr- 
+softdevice.so.* depend on libpostproc.so?
+
+I've got
+
+[root at htpc2 VDR]# ldd /usr/local/src/VDR/PLUGINS/lib/libvdr- 
+softdevice.so.1.5.1
+         linux-gate.so.1 =>  (0x00eec000)
+         libavformat.so.51 => /usr/local/lib/libavformat.so.51  
+(0x00cba000)
+         libavcodec.so.51 => /usr/local/lib/libavcodec.so.51  
+(0x007ac000)
+         libz.so.1 => /lib/libz.so.1 (0x002f8000)
+         libavutil.so.49 => /usr/local/lib/libavutil.so.49 (0x00112000)
+         libasound.so.2 => /lib/libasound.so.2 (0x00394000)
+         libcle266mpegdec-0.5.so => /usr/local/lib/ 
+libcle266mpegdec-0.5.so (0x00f59000)
+         libstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x00679000)
+         libm.so.6 => /lib/libm.so.6 (0x0011c000)
+         libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x00145000)
+         libc.so.6 => /lib/libc.so.6 (0x00472000)
+         libdl.so.2 => /lib/libdl.so.2 (0x0031f000)
+         libpthread.so.0 => /lib/libpthread.so.0 (0x00151000)
+         /lib/ld-linux.so.2 (0x80000000)
+
+and running VDR gives me this error:
+
+[root at htpc2 VDR]# ./vdr -P"softdevice -vo dfb:cle266"
+vdr: ./PLUGINS/lib/libvdr-softdevice.so.1.5.1: undefined symbol:  
+_Z12pp_free_modePv
+
+ From what I can see, shouldn't we link with -lpostproc during the  
+build, in addition to -lavcodec and -lavformat ?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070616/cecc6ce8/attachment.html>
+
+From torgeir at pobox.com  Sun Jun 17 23:20:42 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 17 Jun 2007 22:20:42 +0100
+Subject: [Softdevice-devel] cle266 playback
+Message-ID: <0A5E07C8-9267-4B43-A963-A17404189689@pobox.com>
+
+I've just set up a cle266 test system, but I'm getting jerky  
+playback. My symptoms seems equal to those described by Laurence  
+Abbot in september 05;
+
+> Playback of live TV is the correct speed but quite jerky: not sure  
+> it's actually missing any frames but the speed seemed a
+> tad uneven (A-V sync was also off which may have helped it to look  
+> worse than it actually was!). Bizarrely, playing back recordings  
+> (from vdr)
+> played them at what looked like double speed. I think these are  
+> problems with softdevice, though, from looking throught the  
+> softdevice list archives.
+
+Am wondering how to fix this? I only see the double speed on  
+recording playback for about 5 seconds, then it goes back to jerky  
+playback as with live TV. My CPU utilisation is around 30%, so  
+everything seems OK otherwise.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070617/1de03102/attachment.html>
+
+From torgeir at pobox.com  Fri Jun 29 00:01:41 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 28 Jun 2007 23:01:41 +0100
+Subject: [Softdevice-devel] cle266 hw decoding - field parity
+Message-ID: <0AFCFB43-5A47-40D7-8113-96E5CF3E9A32@pobox.com>
+
+Field parity issues seems to come and go with cle266 hw decoding. Are  
+there anyone working on improving this? It seems to be somewhat  
+program dependent.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070628/378f7107/attachment.html>
+
+From nicolas at huillard.net  Fri Jun 29 08:08:38 2007
+From: nicolas at huillard.net (Nicolas Huillard)
+Date: Fri, 29 Jun 2007 08:08:38 +0200
+Subject: [Softdevice-devel] cle266 hw decoding - field parity
+In-Reply-To: <0AFCFB43-5A47-40D7-8113-96E5CF3E9A32@pobox.com>
+References: <0AFCFB43-5A47-40D7-8113-96E5CF3E9A32@pobox.com>
+Message-ID: <4684A1E6.5040204@huillard.net>
+
+Torgeir Veimo a ?crit :
+> Field parity issues seems to come and go with cle266 hw decoding. Are 
+> there anyone working on improving this? It seems to be somewhat program 
+> dependent.
+
+Many programs are in fact broadcast without interlacing : movies, some 
+series, etc.
+They come with 2 identical fields, thus are in fact 25 images/sec.
+
+Re. the field parity issue, I still have this, and I guess the problem 
+comes from ffmpeg/libavcodec. That's the only one I did not ever 
+recompile, and download binary from debian-multimedia...
+
+-- 
+NH
+
+
+From torgeir at pobox.com  Fri Jun 29 10:08:07 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Jun 2007 09:08:07 +0100
+Subject: [Softdevice-devel] cle266 hw decoding - field parity
+In-Reply-To: <4684A1E6.5040204@huillard.net>
+References: <0AFCFB43-5A47-40D7-8113-96E5CF3E9A32@pobox.com>
+	<4684A1E6.5040204@huillard.net>
+Message-ID: <B541D359-1208-4941-8E68-A369D7FA1B80@pobox.com>
+
+
+On 29 Jun 2007, at 07:08, Nicolas Huillard wrote:
+
+> Torgeir Veimo a ?crit :
+>> Field parity issues seems to come and go with cle266 hw decoding. Are
+>> there anyone working on improving this? It seems to be somewhat  
+>> program
+>> dependent.
+>
+> Many programs are in fact broadcast without interlacing : movies, some
+> series, etc.
+> They come with 2 identical fields, thus are in fact 25 images/sec.
+
+Ok. The thing is that the first week after setting up the system, I  
+didn't have any field parity issues at all, with any program.
+
+> Re. the field parity issue, I still have this, and I guess the problem
+> comes from ffmpeg/libavcodec. That's the only one I did not ever
+> recompile, and download binary from debian-multimedia...
+
+Only libavformat is involved when using cle266 decoding? The problem  
+is probably in libcle266mpegdec's scanner.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070629/2470f874/attachment.html>
+
+From torgeir at pobox.com  Fri Jun 29 23:44:21 2007
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Jun 2007 22:44:21 +0100
+Subject: [Softdevice-devel] cle266 hw decoding - field parity
+In-Reply-To: <4684A1E6.5040204@huillard.net>
+References: <0AFCFB43-5A47-40D7-8113-96E5CF3E9A32@pobox.com>
+	<4684A1E6.5040204@huillard.net>
+Message-ID: <2BB2566F-683C-4AA6-9B87-CB9C3A87DEF6@pobox.com>
+
+
+On 29 Jun 2007, at 07:08, Nicolas Huillard wrote:
+
+>> Field parity issues seems to come and go with cle266 hw decoding. Are
+>> there anyone working on improving this? It seems to be somewhat  
+>> program
+>> dependent.
+>
+> Many programs are in fact broadcast without interlacing : movies, some
+> series, etc.
+> They come with 2 identical fields, thus are in fact 25 images/sec.
+>
+> Re. the field parity issue, I still have this, and I guess the problem
+> comes from ffmpeg/libavcodec. That's the only one I did not ever
+> recompile, and download binary from debian-multimedia...
+
+Restarted VDR (it had been running continuously for more than a  
+week), and all field parity issues are now gone. Maybe there's a  
+short counter in the library that overflows / flips sign after  
+certain number of frames?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070629/fc8f81ed/attachment.html>
+

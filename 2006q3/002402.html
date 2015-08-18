@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060908190545.GA3224%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002395.html">
+   <LINK REL="Next"  HREF="002406.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060908190545.GA3224%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Sep  8 21:05:45 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002395.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002406.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2402">[ date ]</a>
+              <a href="thread.html#2402">[ thread ]</a>
+              <a href="subject.html#2402">[ subject ]</a>
+              <a href="author.html#2402">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Sep 07, 2006 at 09:09:20PM +0100, Alasdair Campbell wrote:
+&gt;<i> I remember you saying your cable didn't work with &quot;-vo dfb:&quot; because
+</I>&gt;<i> that option didn't generate a composite sync signal - well I don't
+</I>&gt;<i> think I made it clear enough that I _did_ see a picture of comparable
+</I>&gt;<i> (slightly sharper) quality using &quot;-vo dfb:&quot; &amp; the cable from the
+</I>&gt;<i> diagram we both used.
+</I>
+Please post your vdr command line, /etc/directfb and the relevant part
+of /etc/fb.modes.
+
+I can see correct colours with a mode 768x576-75 (75 Hz frame rate,
+maybe 45 kHz line rate), but obviously my poor 15625 Hz/50 Hz monitor
+can't sync at that.  fbset my-pal-32 (the modeline from
+<A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>) produces even less readable picture.
+Without an oscilloscope, I can't tell what is wrong with the signal.
+Softdevice produced a black picture when I tried to use that mode
+(renamed to 768x576-pal and put as the first entry in /etc/fb.modes).
+768x576-75 produced sensible colours.  By switching the monitor to
+composite video mode (which should normally show a black picture),
+I could see a horizontal line moving vertically on the screen.  That
+made me suspect that there is no valid sync signal.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002395.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002406.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2402">[ date ]</a>
+              <a href="thread.html#2402">[ thread ]</a>
+              <a href="subject.html#2402">[ subject ]</a>
+              <a href="author.html#2402">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

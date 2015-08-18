@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] RE: [directfb-users] Re: df_xine with Matrox G450 TV-out
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20RE%3A%20%5Bdirectfb-users%5D%20Re%3A%20df_xine%20with%20Matrox%20G450%20TV-out&In-Reply-To=%3CEBECIPPNBDCCLOJFHAJLGEEMCDAA.lucianm%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000225.html">
+   <LINK REL="Next"  HREF="000227.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] RE: [directfb-users] Re: df_xine with Matrox G450 TV-out</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20RE%3A%20%5Bdirectfb-users%5D%20Re%3A%20df_xine%20with%20Matrox%20G450%20TV-out&In-Reply-To=%3CEBECIPPNBDCCLOJFHAJLGEEMCDAA.lucianm%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] RE: [directfb-users] Re: df_xine with Matrox G450 TV-out">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Wed Feb  9 14:54:56 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000225.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+        <LI>Next message: <A HREF="000227.html">[Softdevice-devel] latest field parity improvements on Matrox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#226">[ date ]</a>
+              <a href="thread.html#226">[ thread ]</a>
+              <a href="subject.html#226">[ subject ]</a>
+              <a href="author.html#226">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Ville Syrj&#228;l&#228; [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">syrjala at sci.fi</A>]
+</I>&gt;<i> Sent: Tuesday, February 08, 2005 8:47 PM
+</I>&gt;<i> To: Lucian Muresan
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">directfb-users at directfb.org</A>
+</I>&gt;<i> Subject: Re: [directfb-users] Re: df_xine with Matrox G450 TV-out
+</I>&gt;<i>
+</I>...
+&gt;<i> &gt; &gt;When my information is correct, the subpicturelayer is of depth 8bit
+</I>&gt;<i> &gt; &gt;with 4bit alpha and 4bit  color information (-&gt; 16 colors). So I think
+</I>&gt;<i> &gt; &gt;it's not much useful.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; You might be right, I don't know, I'd suggest Ville should tell
+</I>&gt;<i> us here.
+</I>&gt;<i> &gt; If the situation is like this, I must admit, there's no fun having such
+</I>&gt;<i> &gt; an OSD in VDR.
+</I>&gt;<i>
+</I>&gt;<i> Yes the sub-picture layer support only ALUT44 format. That means 4 bit
+</I>&gt;<i> alpha + 4 bit palette. Furthermore the sub-picture layer only works when
+</I>&gt;<i> CRTC2 is displaying YV12/I420 data. For other pixel formats you could use
+</I>&gt;<i> an ARGB surface for the OSD which you would blit after the video frame to
+</I>&gt;<i> the CRTC2 surface. dfbmga doesn't currently do that (ie. it draws the OSD
+</I>&gt;<i> directly to CRTC2 surface. Fortunately mplayer doesn't make heavy use of
+</I>&gt;<i> OSD stuff (only subtitles, time display and some occasional status bars)
+</I>&gt;<i> so it doesn't take too much CPU power to blend them.
+</I>&gt;<i>
+</I>
+Ok, then aybe such kind of OSD displaying would only be useful in the
+default &quot;classic&quot; VDR theme. I think I will investigate this myself further,
+as I hopefully will get closer to understand DirectFB, maybe something in
+the direction I pointed out using drawing primitives and such is feasable
+too, who knows...
+
+Lucian
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000225.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+	<LI>Next message: <A HREF="000227.html">[Softdevice-devel] latest field parity improvements on Matrox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#226">[ date ]</a>
+              <a href="thread.html#226">[ thread ]</a>
+              <a href="subject.html#226">[ subject ]</a>
+              <a href="author.html#226">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

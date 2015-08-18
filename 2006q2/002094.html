@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [vdr] G450 softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606011246.53223.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002090.html">
+   <LINK REL="Next"  HREF="002095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [vdr] G450 softdevice</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606011246.53223.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Re: [vdr] G450 softdevice">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Thu Jun  1 13:46:52 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002090.html">[Softdevice-devel] softplay &amp; vdr-1.4.0?
+</A></li>
+        <LI>Next message: <A HREF="002095.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2094">[ date ]</a>
+              <a href="thread.html#2094">[ thread ]</a>
+              <a href="subject.html#2094">[ subject ]</a>
+              <a href="author.html#2094">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 01 Jun 2006 11:01, Stuart Morris wrote:
+&gt;<i> I have been reading the 'TV-out, softdevice' thread and it appears
+</I>&gt;<i> there are users out there happy with their G450 + softdevice setup.
+</I>&gt;<i> I have a G450 but have been put off using it with VDR because
+</I>&gt;<i> information on how to get this combination to work on the net is
+</I>&gt;<i> poor. Googling gives information that is very old. Can anyone
+</I>&gt;<i> provide a concise howto describing everything required to set up
+</I>&gt;<i> a G450 head2 rgb-scart with softdevice on a recent 2.6.x kernel?
+</I>
+Have you looked at the TV-out info on the softdevice web page:
+<A HREF="http://softdevice.berlios.de/#TV-Out">http://softdevice.berlios.de/#TV-Out</A>
+
+It was a while ago that I set my G450 up but I think it was pretty 
+straightforward. Here's hoping that someone will correct me here!
+
+One thing I _can't_ remember is whether the stock matroxfb in the kernel 
+source works or whether it needs replacing with a different version 
+(maybe someone else can enlighten us on this!). You will need a couple of 
+patches which are to be found in the DirectFB source:
+
+matroxfb-g400-clock-2.6.6.patch.bz2 (not quite sure what this one does)
+matroxfb-full-memory-linux-2.6.6.patch.bz2 (this lets you use all of the 
+RAM literally changes a couple of lines)
+
+It looks like the matroxfb-vsync-irq patch has been included in the stock 
+kernel so isn't needed now.
+
+I made a component RGB cable from the schematics at:
+<A HREF="http://forum.matrox.com/mga/viewforum.php?f=52&amp;sid=a1c50e38759f99f96d4bf184cfef9c78">http://forum.matrox.com/mga/viewforum.php?f=52&amp;sid=a1c50e38759f99f96d4bf184cfef9c78</A>
+(pretty sure it was the &quot;Scart-RGB cable for the Millennium G450&quot; one 
+which I bodged from a lead pinched off an old monitor.
+
+Apart from that, I think I just built CVS DirectFB, CVS softdevice and it 
+all just worked, apart from I was seeing lots of horizontal lines when 
+scaling to a 4:3 TV (fixed by setting softdevice to 16:9 and setting my 
+TV to 16:9 or 4:3 as needed!), although I think that has been resolved 
+now.
+
+As I mentioned in a previous posting it was working perfectly until I 
+updated softdevice a few weeks back. Now the A-V sync sometimes wanders 
+and interlaced streams aren't always smooth. Yet to track down the cause 
+of this...
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002090.html">[Softdevice-devel] softplay &amp; vdr-1.4.0?
+</A></li>
+	<LI>Next message: <A HREF="002095.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2094">[ date ]</a>
+              <a href="thread.html#2094">[ thread ]</a>
+              <a href="subject.html#2094">[ subject ]</a>
+              <a href="author.html#2094">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

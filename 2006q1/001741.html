@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Strange compile error in SoftOsd.c
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C43EE170A.60109%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001740.html">
+   <LINK REL="Next"  HREF="001742.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Strange compile error in SoftOsd.c</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C43EE170A.60109%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Strange compile error in SoftOsd.c">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Feb 11 17:55:38 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001740.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+        <LI>Next message: <A HREF="001742.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1741">[ date ]</a>
+              <a href="thread.html#1741">[ thread ]</a>
+              <a href="subject.html#1741">[ subject ]</a>
+              <a href="author.html#1741">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> Martin I guess the following change is aquivalent:
+</I>&gt;<i> Index: SoftOsd.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> RCS file: /cvsroot/softdevice/softdevice/SoftOsd.c,v
+</I>&gt;<i> retrieving revision 1.6
+</I>&gt;<i> diff -b -B -U3 -r1.6 SoftOsd.c
+</I>&gt;<i> --- SoftOsd.c   4 Feb 2006 10:05:09 -0000       1.6
+</I>&gt;<i> +++ SoftOsd.c   11 Feb 2006 15:25:18 -0000
+</I>&gt;<i> @@ -1347,9 +1347,7 @@
+</I>&gt;<i>          int16_t g2=0;
+</I>&gt;<i>          int16_t r2=0;
+</I>&gt;<i>  #else
+</I>&gt;<i> -        __asm__(
+</I>&gt;<i> -                 &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+</I>&gt;<i> -                 : :   );
+</I>&gt;<i> +        pxor_r2r (mm7,mm7);
+</I>&gt;<i>  #endif
+</I>&gt;<i> 
+</I>&gt;<i>          int32_t pos=start_pos;
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Without that, I get the following error with gcc 2.95.3:
+</I>&gt;<i> g++ -O2 -g -Wall -fPIC -Woverloaded-virtual -c -DHAVE_CONFIG -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/ffmpeg -I/usr/local/include/postproc   -D_REENTRANT -D_GNU_SOURCE -I/usr/local/include/directfb -I/usr/local/include/dfb++   SoftOsd.c
+</I>&gt;<i> /tmp/cciMiMh0.s: Assembler messages:
+</I>&gt;<i> /tmp/cciMiMh0.s:6269: Error: bad register name `%%mm7'
+</I>&gt;<i> 
+</I>&gt;<i> :-(( .
+</I>&gt;<i> 
+</I>I guess you mean g++ 2.95.3, the debian gcc 2.95.4 I tried compiled my
+test case fine, while g++ 2.95.4 didn't. g++ 2.95.4 is getting on my
+nerves......
+
+Technically what your're proposing is the same, but I really dislike
+that macro mmx programming style. I tried to find a simple solution
+avoiding to use the macros but I failed. Here are some examples:
+
+__asm__ __volatile__ (&quot;pxor&quot; &quot; %&quot; &quot;mm7&quot; &quot;, %&quot; &quot;mm7&quot; : : );
+
+fails on g++ 3.3.5 (Debian) but works on  g++ 2.95.4 (Debian) and gcc 2.95.4
+
+__asm__ __volatile__ (&quot;pxor&quot; &quot; %&quot; &quot;mm7&quot; &quot;, %&quot; &quot;mm7&quot; );
+indeed works on all and is what pxor_r2r(mm7,mm7) translates into.
+
+But you call that readable? Well try to remove the extra '&quot;' and it will
+fail to compile on g++ 3.3.5....
+
+Ok, another try... I know that code like this exits for some time in the
+softdevice, like the software alpha blend code. There we have:
+
+       __asm__(&quot; pxor %%mm3,%%mm3\n&quot;
+#ifdef USE_MMX2
+                PREFETCH&quot;(%0)\n&quot;
+                PREFETCH&quot;(%1)\n&quot;
+                PREFETCH&quot;(%2)\n&quot;
+                PREFETCH&quot;64(%0)\n&quot;
+                PREFETCH&quot;64(%1)\n&quot;
+                PREFETCH&quot;64(%2)\n&quot;
+                PREFETCH&quot;128(%0)\n&quot;
+                PREFETCH&quot;128(%1)\n&quot;
+                PREFETCH&quot;128(%2)\n&quot;
+#endif //USE_MMX2
+                : : &quot;r&quot; (P1), &quot;r&quot; (P2), &quot;r&quot; (alpha) : &quot;memory&quot;);
+
+which is exactly the same which failes now on g++ 2.95.4, no not exactly
+the failures were for:
+
+__asm__(
+               &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+                : :   );
+which has an empty register list. So I added a register:
+
+       int dummy;
+       __asm__(
+                &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+                 : : &quot;r&quot;(dummy)   );
+
+Guess what? That works...
+So I tried to remove the &quot;:&quot; which indicates the start of the empty
+register list (maybe it doesn't like empty lists?) Doesn't work. No
+surprise to me anymore...
+
+Now can anyone explain that to me? That is *really* the strangest
+behaviour I've _ever_ seen!
+
+Stefan, I like the option of some dummy registers much more than the mmx
+macros... Converting all mmx calculations is _not_ an option to me, and
+I don't like mixing them in the same function.
+I have only limited access to a computer running g++ 2.95.4, so can you
+prepare a patch which fixes this? I will try to find a simpler solution
+and faster, but I can't promise :-(
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001740.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+	<LI>Next message: <A HREF="001742.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1741">[ date ]</a>
+              <a href="thread.html#1741">[ thread ]</a>
+              <a href="subject.html#1741">[ subject ]</a>
+              <a href="author.html#1741">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

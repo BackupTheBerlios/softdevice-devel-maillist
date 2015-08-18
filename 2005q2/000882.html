@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Blue vertical bar on left side of the picture
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%0A%20picture&In-Reply-To=%3C1118673633918.voitto.tuomainen.74440.nsoEK_cj4C45vS1qGqkPxg%40luukku.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000880.html">
+   <LINK REL="Next"  HREF="000884.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Blue vertical bar on left side of the picture</H1>
+    <B>Voitto Tuomainen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%0A%20picture&In-Reply-To=%3C1118673633918.voitto.tuomainen.74440.nsoEK_cj4C45vS1qGqkPxg%40luukku.com%3E"
+       TITLE="[Softdevice-devel] Blue vertical bar on left side of the picture">voitto.tuomainen at luukku.com
+       </A><BR>
+    <I>Mon Jun 13 16:40:33 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000880.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+        <LI>Next message: <A HREF="000884.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#882">[ date ]</a>
+              <a href="thread.html#882">[ thread ]</a>
+              <a href="subject.html#882">[ subject ]</a>
+              <a href="author.html#882">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke kirjoitti 13.06.2005 kello 15:22:
+&gt;<i> Quoting Voitto Tuomainen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">voitto.tuomainen at luukku.com</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; As stated in subject, there is a blue bar on left side of the picture in
+</I>&gt;<i> &gt; certain conditions. I think that if broadcasting picture is smaller than
+</I>&gt;<i> the
+</I>&gt;<i> &gt; maximum picture viewable area, this happens. This problem was not shown
+</I>&gt;<i> in a
+</I>&gt;<i> &gt; channel, I have an example in my web page
+</I>&gt;<i> &gt; <A HREF="http://kotisivu.mtv3.fi/vtuomain/blue_bar.jpg">http://kotisivu.mtv3.fi/vtuomain/blue_bar.jpg</A> in 0.1.2 or older releases,
+</I>&gt;<i> but
+</I>&gt;<i> &gt; it occurs on another channel, which I think is in different channel bunch.
+</I>&gt;<i> &gt; Problem in that channel is valid still.
+</I>&gt;<i> 
+</I>&gt;<i> Can you show us the messages from syslog which describe actual scaling
+</I>&gt;<i> parameters?
+</I>&gt;<i> Scaling parameters are usually reported after lines like:
+</I>&gt;<i> ... aspect changed (....
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>
+Hi,
+Following are lines, which printed to log during changing channels from 1 to 7. Third channel does not have blue bar, others have:
+Jun 13 17:07:13 miuvdr vdr[4737]: [VideoOut]: aspect changed (8 -&gt; 0 ; 1.333333 -&gt; 1.333333)
+Jun 13 17:07:21 miuvdr vdr[4745]: [VideoOut]: aspect changed (0 -&gt; 8 ; 1.333333 -&gt; 1.333333)
+Jun 13 17:07:27 miuvdr vdr[4757]: [VideoOut]: aspect changed (8 -&gt; 0 ; 1.333333 -&gt; 1.333333)
+Jun 13 17:07:30 miuvdr vdr[4762]: [VideoOut]: aspect changed (0 -&gt; 8 ; 1.333333 -&gt; 1.333333)
+Jun 13 17:07:35 miuvdr vdr[4770]: [VideoOut]: aspect changed (8 -&gt; 8 ; 1.333333 -&gt; 1.777778)
+Jun 13 17:07:39 miuvdr vdr[4776]: [VideoOut]: aspect changed (8 -&gt; 8 ; 1.777778 -&gt; 1.333333)
+Jun 13 17:07:43 miuvdr vdr[4782]: [VideoOut]: aspect changed (8 -&gt; 0 ; 1.333333 -&gt; 1.333333)
+
+When I booted PC (vdr starts at channel 3), I got 
+Jun 13 16:41:55 miuvdr vdr[4282]: [VideoOut]: aspect changed (-100 -&gt; 0 ; -100.000000 -&gt; 1.333333)
+
+Then there are some other lines like
+Jun 12 19:50:52 miuvdr vdr[4423]: [VideoOut]: aspect changed (0 -&gt; 0 ; 1.333333 -&gt; 1.777778)
+Jun 12 23:08:48 miuvdr vdr[4457]: [VideoOut]: aspect changed (-100 -&gt; 0 ; -100.000000 -&gt; 1.333333)
+
+And finally something, which maybe does not relate to this at all
+Jun 11 23:54:11 miuvdr vdr[4322]: softdevice: no translation found for 'Xv startup aspect' in language 8 (suomi)
+
+
+______
+BR, Voitto
+
+...................................................................
+Luukku Plus paketilla p&#228;&#228;set eroon tila- ja turvallisuusongelmista.
+Hanki Luukku Plus ja helpotat el&#228;m&#228;&#228;si. <A HREF="http://www.mtv3.fi/luukku">http://www.mtv3.fi/luukku</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000880.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+	<LI>Next message: <A HREF="000884.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#882">[ date ]</a>
+              <a href="thread.html#882">[ thread ]</a>
+              <a href="subject.html#882">[ subject ]</a>
+              <a href="author.html#882">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

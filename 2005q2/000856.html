@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash in exit() on vanilla vdr 1.3.25 and DirectFB 0.9.22
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20in%20exit%28%29%20on%20vanilla%20vdr%201.3.25%20and%20DirectFB%200.9.22&In-Reply-To=%3C20050610205457.GA232416%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000895.html">
+   <LINK REL="Next"  HREF="000876.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash in exit() on vanilla vdr 1.3.25 and DirectFB 0.9.22</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20in%20exit%28%29%20on%20vanilla%20vdr%201.3.25%20and%20DirectFB%200.9.22&In-Reply-To=%3C20050610205457.GA232416%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Crash in exit() on vanilla vdr 1.3.25 and DirectFB 0.9.22">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Jun 10 22:54:57 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000895.html">[Softdevice-devel] How to link libsoftdevice.a?
+</A></li>
+        <LI>Next message: <A HREF="000876.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#856">[ date ]</a>
+              <a href="thread.html#856">[ thread ]</a>
+              <a href="subject.html#856">[ subject ]</a>
+              <a href="author.html#856">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+When I hit Setup Right OK OK to exit VDR (it'd restart when running inside
+a run-vdr script), I get this crash on VDR 1.3.25:
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 16384 (LWP 5931)]
+0xb7944cf0 in ?? ()
+(gdb) i thr
+  2 Thread 32769 (LWP 5935)  0xb7e25ada in poll () from /lib/libc.so.6
+* 1 Thread 16384 (LWP 5931)  0xb7944cf0 in ?? ()
+(gdb) bt
+#0  0xb7944cf0 in ?? ()
+#1  0xb7d82b62 in exit () from /lib/libc.so.6
+#2  0xb7d6ce3e in __libc_start_main () from /lib/libc.so.6
+#3  0x08081361 in _start () at ../sysdeps/i386/elf/start.S:102
+(gdb) thr 2
+[Switching to thread 2 (Thread 32769 (LWP 5935))]#0  0xb7e25ada in poll ()
+   from /lib/libc.so.6
+(gdb) bt
+#0  0xb7e25ada in poll () from /lib/libc.so.6
+#1  0xb7f77b50 in __pthread_manager () from /lib/libpthread.so.0
+#2  0xb7f77d57 in __pthread_manager_event () from /lib/libpthread.so.0
+#3  0xb7e2e92a in clone () from /lib/libc.so.6
+
+vdr has been compiled with -g, but it doesn't help.  I set a breakpoint in
+exit() and re-ran (vdr -P'softdevice -vo dfb:mgatv'):
+
+Breakpoint 2, 0xb7d82b06 in exit () from /lib/libc.so.6
+(gdb)
+(gdb) display/i $pc
+1: x/i $pc  0xb7d82b06 &lt;exit+6&gt;:        sub    $0xc,%esp
+(gdb) ni
+0xb7d82b09 in exit () from /lib/libc.so.6
+1: x/i $pc  0xb7d82b09 &lt;exit+9&gt;:        call   0xb7d6cc8d &lt;z_errmsg+5524237&gt;
+...
+0xb7d82bcf in exit () from /lib/libc.so.6
+1: x/i $pc  0xb7d82bcf &lt;exit+207&gt;:      jmp    0xb7d82b5c &lt;exit+92&gt;
+(gdb)
+0xb7d82b5c in exit () from /lib/libc.so.6
+1: x/i $pc  0xb7d82b5c &lt;exit+92&gt;:       mov    %eax,(%esp)
+(gdb)
+0xb7d82b5f in exit () from /lib/libc.so.6
+1: x/i $pc  0xb7d82b5f &lt;exit+95&gt;:       call   *0x4(%esi)
+(gdb) si
+0xb77df630 in dfb_core_deinit_check ()
+   from /usr/local/lib/libdirectfb-0.9.so.22
+1: x/i $pc  0xb77df630 &lt;dfb_core_deinit_check&gt;: push   %ebp
+(gdb) up
+#1  0xb7d82b62 in exit () from /lib/libc.so.6
+
+Note that this is the address in the backtrace.  I think this
+is the atexit handler.  It won't crash in dfb_core_deinit_check(),
+but at some later call.  Let us trace this a bit further:
+
+gdb vdr
+(gdb) break exit
+(gdb) set env LD_ASSUME_KERNEL=2.4.1
+(gdb) set env LD_LIBRARY_PATH=/usr/local/lib
+(gdb) r -P'softdevice -vo dfb:mgatv'
+Breakpoint 1, 0xb7d82b06 in exit () from /lib/libc.so.6
+(gdb) break *0xb7d82b5f
+(gdb) c
+Breakpoint 2, 0xb7d82b5f in exit () from /lib/libc.so.6
+(gdb) si
+0xb77df630 in dfb_core_deinit_check ()
+   from /usr/local/lib/libdirectfb-0.9.so.22
+(gdb) c
+Continuing.
+
+Breakpoint 2, 0xb7d82b5f in exit () from /lib/libc.so.6
+(gdb) si
+0xb7944cf0 in ?? ()
+
+So, something has entered a junk pointer (0xb7944cf0) to the atexit()
+chain.  Unfortunately, I can't see any calls to atexit().  Hmm, at
+the time when dfb_core_deinit_check() is called, the array dereferenced
+
+1: x/i $pc  0xb7d82b5f &lt;exit+95&gt;:       call   *0x4(%esi)
+
+has the following entries:
+
+(gdb) p/x *((unsigned*)$esi)@3
+$8 = {0x4, 0xb77df630, 0x0}
+(gdb) p/x $esi
+$9 = 0x81cfed0
+
+On the next call, $esi will be 0x81cfec0.  The data pointed to by $esi
+doesn't seem to change: it's
+
+(gdb) p/x *((unsigned*)0x81cfec0)@8
+$15 = {0x4, 0xb7944cf0, 0x0, 0xb7c52000, 0x4, 0xb77df630, 0x0, 0xb77f9000}
+
+both before and after the dfb_core_deinit_check() call.
+
+Any ideas?  Should I compile libc with -g, or what?
+
+BTW, -Psubtitles refuses to start on vdr 1.3.25.  The vdr patch didn't
+apply cleanly either, but it was trivial to apply the two rejects.
+I'll ask the plugin author about that.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000895.html">[Softdevice-devel] How to link libsoftdevice.a?
+</A></li>
+	<LI>Next message: <A HREF="000876.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#856">[ date ]</a>
+              <a href="thread.html#856">[ thread ]</a>
+              <a href="subject.html#856">[ subject ]</a>
+              <a href="author.html#856">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

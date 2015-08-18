@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C4463934D.9080507%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002002.html">
+   <LINK REL="Next"  HREF="002006.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C4463934D.9080507%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu May 11 21:41:01 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002002.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="002006.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2005">[ date ]</a>
+              <a href="thread.html#2005">[ thread ]</a>
+              <a href="subject.html#2005">[ subject ]</a>
+              <a href="author.html#2005">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+&gt;&gt;&gt;<i> But some information for aspect calculation and interlaced/progressive
+</I>&gt;&gt;&gt;<i> detection is taken from the decoded frame (AVFrame).
+</I>&gt;&gt;<i> I thought it might be a bit more complicated. Does any of the A-V sync 
+</I>&gt;&gt;<i> stuff come from the decoding or is all of that from the libavformat bit?
+</I>&gt;&gt;<i>
+</I>&gt;<i> Libavformat delivers the pts for the coded frame which starts in the
+</I>&gt;<i> packet. The difficult bit is to find the correct decoded frame to that
+</I>&gt;<i> pts, since they are reordered for displaying. I will try to have a look
+</I>&gt;<i> at it...
+</I>&gt;<i> 
+</I>
+Ok, here is a patch to Rolfs version of libcle266mpegdec which
+implements pts handling. I would not call it a perfekt solution, but it
+is something to start with.
+
+I also had a look at the aspect ratio, it seems that the dtg active
+format is not parsed inside libcle266mpegdec. From ffmpeg the
+information should be inside of a user data block marked with
+0x0000001b2, followed by the tag 'DTG1', have a look at the function
+mpeg_decode_user_data() in libavcodec/mpeg12.c.
+I tried to implement a parser in libcle266mpegdec, but somehow I don't
+understand the parser, or the information is not there ...
+
+So I will now go on and have a look at the softdevice part. I guess I
+will move CheckAspectDimension() from video.c to mpegdecoder.c and
+reimplement it for the cle266 case.
+
+Bye,
+Martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: pts.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060511/62c748db/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060511/62c748db/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002002.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="002006.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2005">[ date ]</a>
+              <a href="thread.html#2005">[ thread ]</a>
+              <a href="subject.html#2005">[ subject ]</a>
+              <a href="author.html#2005">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

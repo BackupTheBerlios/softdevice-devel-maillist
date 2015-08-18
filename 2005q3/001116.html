@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050815195421.GC3176%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001115.html">
+   <LINK REL="Next"  HREF="001117.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050815195421.GC3176%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Aug 15 21:54:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001115.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001117.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1116">[ date ]</a>
+              <a href="thread.html#1116">[ thread ]</a>
+              <a href="subject.html#1116">[ subject ]</a>
+              <a href="author.html#1116">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Aug 15, 2005 at 04:48:34PM +0200, Martin Wache wrote:
+&gt;<i> &gt; With kernel 2.6.11.6, I get delay=0 as well, but I feel that the lip
+</I>&gt;<i> &gt; sync is better than with kernel 2.6.12.3.  With softdevice 0.1.2
+</I>&gt;<i> &gt; on kernel 2.6.12.3, the lip sync is better than with softdevice-cvs.
+</I>&gt;<i> &gt; On kernel 2.6.11.6, there is a slightly visible sync problem with
+</I>&gt;<i> &gt; softdevice-cvs, but softdevice-0.1.2 looks perfect.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Hmm so it is not the kernel which did the change but the softdevice
+</I>&gt;<i> version.
+</I>
+I would say that it is both, but I'm not good at estimating how much the
+audio is out of sync.
+
+&gt;<i> I attached another patch which is for the softdevice cvs but I think it
+</I>&gt;<i> should apply as well to softdevice-0.1.2, it prints the raw delay like
+</I>&gt;<i> the softdevice gets it from libasound as well as the delay like it is
+</I>&gt;<i> used for the A-V synchronisation.
+</I>
+Thanks, I'll try the patch later when my system is not recording
+anything.
+
+&gt;<i> Strange, I'm useing also a via82xx, kernel 2.6.12 without any problems.
+</I>&gt;<i> But I'm useing an older alsa-library: 1.0.3b.
+</I>
+Can you try to update your ALSA library?
+
+&gt;<i> I wonder how many people have this problems, as Stefan already stated if
+</I>&gt;<i> you build some alsa filter chains the delay is not reported correctly.
+</I>&gt;<i> Do you use by any chance some alsa filters?
+</I>
+I don't think so.  I have installed alsa-utils and alsa-base.  On startup,
+alsa-utils restores the mixer levels by executing alsactl and amixer.
+There are no other alsa related startup scripts.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001115.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001117.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1116">[ date ]</a>
+              <a href="thread.html#1116">[ thread ]</a>
+              <a href="subject.html#1116">[ subject ]</a>
+              <a href="author.html#1116">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

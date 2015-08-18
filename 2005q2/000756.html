@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20pure%20virtual%20method%20called%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes%29&In-Reply-To=%3C20050529063859.GA3073%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000755.html">
+   <LINK REL="Next"  HREF="000757.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20pure%20virtual%20method%20called%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes%29&In-Reply-To=%3C20050529063859.GA3073%40localhost.localdomain%3E"
+       TITLE="pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun May 29 08:38:59 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000755.html">pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+</A></li>
+        <LI>Next message: <A HREF="000757.html">pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#756">[ date ]</a>
+              <a href="thread.html#756">[ thread ]</a>
+              <a href="subject.html#756">[ subject ]</a>
+              <a href="author.html#756">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, May 28, 2005 at 06:24:20PM +0200, Stefan Lucke wrote:
+&gt;<i> On Samstag, 28. Mai 2005 14:56, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Thu, May 26, 2005 at 11:31:56PM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; &gt; I found a few places where I forgot to check pointers and one _really_ 
+</I>&gt;<i> &gt; &gt; silly bug which caused a lot of problems on bad signal.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; You told me not to report bugs for the old code, but I thought I'd share
+</I>&gt;<i> &gt; this.  I got a crash this morning, when my 23-month-old son pressed the
+</I>&gt;<i> &gt; Power button for too long time, so that it would repeat 3 or 4 times.
+</I>&gt;<i> &gt; VDR crashed with SIGABRT.  In the log, a few lines before the SIGABRT
+</I>&gt;<i> &gt; notice, I saw a message &quot;pure virtual method called&quot;. 
+</I>&gt;<i> 
+</I>&gt;<i> Whats the list of your loaded plugins ?
+</I>
+-Psoftdevice -Psubtitles.  I'm running vdr 1.3.24 with the patches from
+subtitles 0.3.7.
+
+&gt;<i> I saw this message some time ago with streamdev plugin. I think we
+</I>&gt;<i> need a gdb bt for such a crash.
+</I>
+I found the core file.  Here is a backtrace:
+
+bt full
+#0  0xb794a961 in cSoftOsd::~cSoftOsd ()
+   from ./PLUGINS/lib/libvdr-softdevice.so.1.3.24
+No symbol table info available.
+#1  0xb779b0c9 in SubtitlesViewer::Hide (this=0x82fe330) at viewer.c:51
+        lock = {mutex = 0x82d44a0, locked = true}
+#2  0x080ef348 in NonInteractiveOsdPatch::cOsdController::Unsubscribe (
+    this=0x81b4e98, listener=0x82fe330) at osdcontroller.c:93
+        llo = (NonInteractiveOsdPatch::cListenerListObject *) 0x84e27f8
+        iMutex = {mutex = 0x0, locked = false}
+#3  0xb7799685 in ~cSubtitlesReceiver (this=0x82fe1f0) at receiver.c:36
+No locals.
+#4  0xb77a2008 in ~cSubtitlesChangedHandler (this=0xb77ad0c0)
+    at subfilter.c:329
+No locals.
+#5  0xb77a5602 in __tcf_0 () at subfilter.c:449
+No locals.
+#6  0xb7d82de1 in __cxa_finalize () from /lib/libc.so.6
+No symbol table info available.
+#7  0xb7798980 in __do_global_dtors_aux ()
+   from ./PLUGINS/lib/libvdr-subtitles.so.1.3.24
+No symbol table info available.
+#8  0xb77a71b6 in _fini () from ./PLUGINS/lib/libvdr-subtitles.so.1.3.24
+No symbol table info available.
+#9  0xb7e5f4a8 in _dl_close () from /lib/libc.so.6
+No symbol table info available.
+#10 0x00000033 in ?? ()
+No symbol table info available.
+
+
+It looks like I'll have to report this to the author of libvdr-subtitles.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000755.html">pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+</A></li>
+	<LI>Next message: <A HREF="000757.html">pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#756">[ date ]</a>
+              <a href="thread.html#756">[ thread ]</a>
+              <a href="subject.html#756">[ subject ]</a>
+              <a href="author.html#756">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

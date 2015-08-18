@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] some issues with current cvs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20some%20issues%20with%20current%20cvs&In-Reply-To=%3C200504091739.30134.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000477.html">
+   <LINK REL="Next"  HREF="000480.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] some issues with current cvs</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20some%20issues%20with%20current%20cvs&In-Reply-To=%3C200504091739.30134.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] some issues with current cvs">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr  9 17:39:30 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000477.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+        <LI>Next message: <A HREF="000480.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#478">[ date ]</a>
+              <a href="thread.html#478">[ thread ]</a>
+              <a href="subject.html#478">[ subject ]</a>
+              <a href="author.html#478">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 9. April 2005 17:07, Stefan Lucke wrote:
+&gt;<i> On Samstag, 9. April 2005 16:17, Martin Wache wrote:
+</I>&gt;<i> &gt; Martin Wache wrote:
+</I>&gt;<i> &gt; &gt; Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt;&gt; vdr-1.2.1 + vdr-1.3.22
+</I>&gt;<i> &gt; &gt;&gt; 1. fast forward and rewind only work when multispeed mode is enabled.
+</I>&gt;<i> &gt; &gt;&gt; 2. sometimes when entering pause mode, cpu usage goes up to 100%
+</I>&gt;<i> &gt; &gt;&gt;    but that is not exact reproducable (50:50).
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I will have a look at this.
+</I>&gt;<i> &gt; &gt; I just updated the README, it seem to ages old, could you please have a 
+</I>&gt;<i> &gt; &gt; look at it and crosscheck my changes?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I fixed both issues, well fix is probably not the right word, I &quot;got 
+</I>&gt;<i> &gt; around&quot; the problems sounds better.
+</I>&gt;<i> &gt; I need more time to check what vdr actually does in the different 
+</I>&gt;<i> &gt; versions...
+</I>&gt;<i> 
+</I>&gt;<i> Yes _most_ of them. No cpu busy any more and most speed changes
+</I>&gt;<i> are ok :-) . 
+</I>&gt;<i> My test was with vdr-1.3.22. Multispeed mode is disabled:
+</I>&gt;<i> When entering slow forward from pause mode, picture
+</I>&gt;<i> stays as it is. then after pressing rewind, back speed is faster than 1x
+</I>&gt;<i> and then pressing forward. Forward speed is slowmotion now which is ok.
+</I>&gt;<i> 
+</I>&gt;<i> In vdr-1.2.1 it is the same except that audio is not muted &quot;pmVideoOnly ??&quot;
+</I>&gt;<i> during slow forward. But that should not be a major issue.
+</I>&gt;<i> 
+</I>&gt;<i> But I come to a more serious bug. When aspect ratio changes in recordings.
+</I>&gt;<i> changes from 4:3 to 16:9 gives a few frames garbage and on change from
+</I>&gt;<i> 16:9 to 4:3 (thats Torgeir's test stream) I get segfaults. When skipping back
+</I>&gt;<i> a few (2 or 3) times (back over 4:3-&gt; 16:9 transition) viewable garbadge
+</I>&gt;<i> dissapears.
+</I>&gt;<i> 
+</I>&gt;<i> The funny thing is: this happens only with vdr-1.3.22.
+</I>&gt;<i> vdr-1.2.1 has not such problems.
+</I>
+Even more funny: after compiling with option -g it is gone (without gdb)!?
+So I could not get a backtrace neiter with or without -g option from gdb
+without -g and run from gdb I get an segfault at program termination.
+
+add on:
+upon the 2nd try I get a segfault when run with gdb and compiled with -g:
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 491551 (LWP 5833)]
+0x4046c9e1 in ff_mpeg1_find_frame_end () from /usr/local/lib/libavcodec.so
+(gdb) bt
+#0  0x4046c9e1 in ff_mpeg1_find_frame_end () from /usr/local/lib/libavcodec.so
+#1  0x4046c0b9 in ff_mpeg1_find_frame_end () from /usr/local/lib/libavcodec.so
+#2  0x40372974 in avcodec_decode_video () from /usr/local/lib/libavcodec.so
+#3  0x40309993 in cVideoStreamDecoder::DecodePacket(AVPacket*) (this=0x85ab6d0, pkt=0x85af8d4) at mpeg2decoder.c:480
+#4  0x40308b89 in cStreamDecoder::Action() (this=0x85ab6d0) at mpeg2decoder.c:199
+#5  0x080dbc40 in cThread::StartThread(cThread*) (Thread=0x85ab6d0) at thread.c:227
+#6  0x40059f60 in pthread_start_thread () from /lib/i686/libpthread.so.0
+#7  0x4005a0fe in pthread_start_thread_event () from /lib/i686/libpthread.so.0
+#8  0x40270327 in clone () from /lib/i686/libc.so.6
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000477.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+	<LI>Next message: <A HREF="000480.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#478">[ date ]</a>
+              <a href="thread.html#478">[ thread ]</a>
+              <a href="subject.html#478">[ subject ]</a>
+              <a href="author.html#478">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

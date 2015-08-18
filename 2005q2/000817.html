@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] why I don't see anything?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20why%20I%20don%27t%20see%20anything%3F&In-Reply-To=%3C42A4522A.8010902%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000814.html">
+   <LINK REL="Next"  HREF="000791.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] why I don't see anything?</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20why%20I%20don%27t%20see%20anything%3F&In-Reply-To=%3C42A4522A.8010902%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] why I don't see anything?">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Mon Jun  6 15:39:54 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000814.html">[Softdevice-devel] why I don't see anything?
+</A></li>
+        <LI>Next message: <A HREF="000791.html">[Softdevice-devel] Softdevice 0.1.2 and vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#817">[ date ]</a>
+              <a href="thread.html#817">[ thread ]</a>
+              <a href="subject.html#817">[ subject ]</a>
+              <a href="author.html#817">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Leo M&#225;rquez a &#233;crit :
+&gt;<i> Hi again,
+</I>&gt;<i> 
+</I>&gt;<i> I think that my problem is with my /etc/directfbrc. I haven't touch it.
+</I>&gt;<i> I have connected the epia s-video to a Tv and I see ok the console. But 
+</I>&gt;<i> when I do modprobe viafb I lost the image and see white lines. I have 
+</I>&gt;<i> taked a look to the epia bios and no see the option LCD+TV (i have a lcd 
+</I>&gt;<i> 15&quot; monitor and my TV).
+</I>
+The BIOS option would have enabled the TV-out at boot-up. There is also 
+an auto-detect feature in the VT1622 chip, that can activate TV-out when 
+a TV is actually connected. I think I've upgraded the BIOS of my board, 
+and maybe that option appeared at that time.
+So : you're OK on the BIOS front.
+
+&gt;<i> Then I can't probe the two outputs at same time.
+</I>
+Did you pass the TV-out parameter when loading the viafb module ? When 
+you load it, it overrides the BIOS defaults, and may activate a wrong setup.
+My modprobe is (for kernel 2.6):
+
+modprobe viafb mode=720x576 bpp=32 refresh=50 TVon=1 TVoverscan=1
+
+This *may* relies on /etc/fb.modes, where I have :
+
+mode &quot;720x576-74&quot;
+     # D: 41.475 MHz, H: 44.693 kHz, V: 74.488 Hz
+     geometry 720 576 720 1152 32
+     timings 24111 88 32 16 4 88 4
+     rgba 8/16,8/8,8/0,8/24
+endmode
+
+DirectFB tests will also rely on /etc/directfbrc :
+
+mode=720x576
+depth=32
+pixelformat=ARGB
+disable-module=lirc
+disable-module=joystick
+disable-module=cle266
+no-vt
+
+&gt;<i> I understand I have to set up the /etc/directfbrc file with corrects 
+</I>&gt;<i> values to see VDR in my lcd or TV.
+</I>
+Only modprobe params are used to set output device type (TV and/or VGA). 
+frame-buffer manipulation programs also rely on /etc/fb.modes (timings, 
+geometry). Maybe differing options will make TV out useless.
+All those stuff are still a bit unclear for me, and also a little buggy...
+
+&gt;<i> How can I know this values for my TV? For the LCD I supose that any 
+</I>&gt;<i> habitual resolution works (1024x768 for example).
+</I>
+TV-out mist work only if you set TVon=1 on the modprobe line (add maybe 
+also TVtype et al. : check those options), *and* the selected mode have 
+a TV-out settings ready-made (1024x768 works, 800x600 also, some modes 
+work only in PAL, others only in NTSC, many in both). This may also only 
+work if the /etc/fb.modes have right timings.
+
+&gt;<i> Now I'm at work and I don't know that I have in /etc/directfbrc and 
+</I>&gt;<i> can't probe it.
+</I>&gt;<i> Any additional orientation to my suppositions will be thanked for.
+</I>
+The viafb tarball from viaarena contains a fb.modes file with mode 
+sections that could work better than mine (they do not work better in my 
+case, though).
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000814.html">[Softdevice-devel] why I don't see anything?
+</A></li>
+	<LI>Next message: <A HREF="000791.html">[Softdevice-devel] Softdevice 0.1.2 and vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#817">[ date ]</a>
+              <a href="thread.html#817">[ thread ]</a>
+              <a href="subject.html#817">[ subject ]</a>
+              <a href="author.html#817">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

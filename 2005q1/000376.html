@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3CPine.LNX.4.61.0503240038050.16692%40tuomi.oulu.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000373.html">
+   <LINK REL="Next"  HREF="000384.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Tomi Hautakoski</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3CPine.LNX.4.61.0503240038050.16692%40tuomi.oulu.fi%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">thauta at iki.fi
+       </A><BR>
+    <I>Wed Mar 23 23:54:28 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000373.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000384.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#376">[ date ]</a>
+              <a href="thread.html#376">[ thread ]</a>
+              <a href="subject.html#376">[ subject ]</a>
+              <a href="author.html#376">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, 23 Mar 2005, Stefan Lucke wrote:
+&gt;<i> So your setup works better than mine (G400+celeronIII 1.2GHz, very old dfb).
+</I>&gt;<i> Whats your CPU power ?
+</I>
+The same. I'm not sure if it was the new dfb or softdevice which made 
+the difference but now I tested the system with live hockey (which seems 
+to be good material for testing) and the picture was perfect.
+
+&gt;<i> OSD drawing with dfb has to be rewritten, as it always draws complete osd
+</I>&gt;<i> if only a small area has to be redrawn. To my experince this effect seems
+</I>&gt;<i> to be worse with the channel info osd, which in term is refreshed for about
+</I>&gt;<i> every frame. Vdr main menu menu is only refreshed after a few seconds.
+</I>
+Yes, I have exactly the same symptoms here. I had to remove the EPG 
+description field from the channel info and change the display time to 1 
+sec to be able to change my channel without loosing the a-vsync 
+completely. Still, nice to know that you have a hint what is causing the 
+problem. =)
+
+&gt;&gt;<i> Maybe these are somehow related to the problem. Noticed from the logs
+</I>&gt;&gt;<i> after a longer run:
+</I>&gt;&gt;<i> alsa-audio: Xrun
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]00 motion_type at 16 15
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]ac-tex damaged at 1 16
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]Warning MVs not available
+</I>&gt;&gt;<i> [mpeg2video @ 0x407f56b0]concealing 135 DC, 135 AC, 135 MV errors
+</I>&gt;<i>
+</I>&gt;<i> This is either related to a bad signal or some buffer problems.
+</I>&gt;<i> Do you get buffer overflow messages in syslog ?
+</I>
+Now that I know these don't have something to do with OSD I'm sure it's 
+the fridge which makes the DVB-T signal go wild every time it starts. So 
+we can ignore these. =)
+
+Tomi Hautakoski
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">thauta at iki.fi</A>
+                            Queen Elizabeth rules, UK?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000373.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000384.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#376">[ date ]</a>
+              <a href="thread.html#376">[ thread ]</a>
+              <a href="subject.html#376">[ subject ]</a>
+              <a href="author.html#376">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

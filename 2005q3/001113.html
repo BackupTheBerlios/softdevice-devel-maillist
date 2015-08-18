@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050815124041.GA3213%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001112.html">
+   <LINK REL="Next"  HREF="001114.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050815124041.GA3213%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Aug 15 14:40:41 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001112.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001114.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1113">[ date ]</a>
+              <a href="thread.html#1113">[ thread ]</a>
+              <a href="subject.html#1113">[ subject ]</a>
+              <a href="author.html#1113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin, Patrick,
+
+&gt;<i> audioPTS[7208]:delay 0 audio pts offset 66453061 pts 478705143
+</I>&gt;<i> audioPTS[7253]:new chunk 240
+</I>&gt;<i> audioPTS[7253]:delay 0 audio pts offset 66453271 pts 478705383
+</I>&gt;<i> audioPTS[7268]:new chunk 240
+</I>&gt;<i> audioPTS[7268]:delay 0 audio pts offset 66453181 pts 478705623
+</I>&gt;<i> audioPTS[7297]:new chunk 240
+</I>&gt;<i> audioPTS[7297]:delay 0 audio pts offset 66453231 pts 478705863
+</I>&gt;<i> audioPTS[7311]:new chunk 240
+</I>&gt;<i> audioPTS[7311]:delay 0 audio pts offset 66453127 pts 478706103
+</I>&gt;<i> 
+</I>&gt;<i> The audio delay is always zero, no wonder that there are problems with
+</I>&gt;<i> the A-V sync. The audio delay is the time the actual playback is behind
+</I>&gt;<i> the sound buffer top.
+</I>&gt;<i> We get this value almost directly from the alsa driver, did you change
+</I>&gt;<i> something in the alsa setup recently? A new kernel, or alsa libraries?
+</I>&gt;<i> Which driver are you useing?
+</I>
+I have the same symptoms:
+
+audioPTS[1312]:new chunk 240
+audioPTS[1312]:delay 0 audio pts offset 408435107 pts 753064385
+audioPTS[1328]:new chunk 240
+audioPTS[1328]:delay 0 audio pts offset 408435032 pts 753064625
+audioPTS[1353]:new chunk 240
+audioPTS[1353]:delay 0 audio pts offset 408435036 pts 753064865
+audioPTS[1372]:new chunk 240
+
+It could well be that the problems appeared after I upgraded the kernel
+from 2.6.11.6 to 2.6.12.3.  I haven't tried the old kernel.
+
+I use Debian GNU/Linux, DirectFB 0.9.22, ffmpeg CVS from May or June,
+alsa-utils 1.0.9a-4, alsa-base 1.0.9b-4 as packaged by Debian.
+(Is alsa-utils needed?  Does softdevice program the mixer settings as
+required?)
+
+Next, I'll try to downgrade the kernel and softdevice, one at a time.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001112.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001114.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1113">[ date ]</a>
+              <a href="thread.html#1113">[ thread ]</a>
+              <a href="subject.html#1113">[ subject ]</a>
+              <a href="author.html#1113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

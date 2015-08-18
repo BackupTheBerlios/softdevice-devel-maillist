@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] PicBuffer Problem?!?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PicBuffer%20Problem%3F%21%3F&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D03901A16E%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002887.html">
+   <LINK REL="Next"  HREF="002889.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] PicBuffer Problem?!?</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PicBuffer%20Problem%3F%21%3F&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D03901A16E%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] PicBuffer Problem?!?">Neumann at do-net.de
+       </A><BR>
+    <I>Thu May 31 21:35:10 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002887.html">[Softdevice-devel] lots of repeated frames
+</A></li>
+        <LI>Next message: <A HREF="002889.html">[Softdevice-devel] PicBuffer Problem?!?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2888">[ date ]</a>
+              <a href="thread.html#2888">[ thread ]</a>
+              <a href="subject.html#2888">[ subject ]</a>
+              <a href="author.html#2888">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+ 
+2 minutes ago i tried to play back an h264 trailer with aac audio with softplay. This is what i get:
+ 
+PLDBG: Activate 1
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x81d3e80
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mp4
+open file '/opt/export/Cars - Trailer.mp4'
+could not find stream info
+PLDBG: GetPlayMode nb_streams 2
+PLDBG: GetPlayMode stream 0 codec_type 0
+PLDBG: GetPlayMode stream 1 codec_type 1
+21:32:52.0996 D [30441] [VideoOut] reset: sync info: repF = 988, drpF = 0, totF = 1054
+21:32:53.0057 D [30441] [VideoOut] reset: sync info: repF = 0, drpF = 0, totF = 0
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'test':
+  Duration: 00:02:33.3, start: 0.000000, bitrate: 2891 kb/s
+  Stream #0.0(und): Video: h264, yuv420p, 1280x532, 23.98 fps(r)
+  Stream #0.1(eng): Audio: aac, 44100 Hz, stereo
+#allocating buffer format orig-&gt;format 0
+21:32:53.0082 D [30448] [dfb] (re)configuring Videolayer to 1280 x 532 (1280x532)
+21:32:53.0083 D [30448] [dfb] surface capabilities for (videoSurface): videoonly, double-buffered, flipping, PixelFormat = 0x08100609
+21:32:53.0083 D [30448] [dfb] (re)configured 0x08100609
+[h264 @ 0x4078c1a8]warning: first frame is no keyframe
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+[h264 @ 0x4078c1a8]reference picture missing during reorder
+error finding PicBuffer!
+ (!!!)  *** WARNING [Application exited without deinitialization of DirectFB!] *** [core.c:775 in dfb_core_deinit_check()]
+
+Seems to be a problem with the PicBuffer code in softdevice. Martin, could you please take a look at it?
+ 
+-----------------------
+Andre Neumann
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070531/b882f0ef/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070531/b882f0ef/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002887.html">[Softdevice-devel] lots of repeated frames
+</A></li>
+	<LI>Next message: <A HREF="002889.html">[Softdevice-devel] PicBuffer Problem?!?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2888">[ date ]</a>
+              <a href="thread.html#2888">[ thread ]</a>
+              <a href="subject.html#2888">[ subject ]</a>
+              <a href="author.html#2888">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

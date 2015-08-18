@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Error compiling softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%20compiling%20softplay&In-Reply-To=%3C4469C3A5.30705%40welho.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002069.html">
+   <LINK REL="Next"  HREF="002040.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Error compiling softplay</H1>
+    <B>Juha Pahkala</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%20compiling%20softplay&In-Reply-To=%3C4469C3A5.30705%40welho.com%3E"
+       TITLE="[Softdevice-devel] Error compiling softplay">jpahka at welho.com
+       </A><BR>
+    <I>Tue May 16 14:20:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002069.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+        <LI>Next message: <A HREF="002040.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2039">[ date ]</a>
+              <a href="thread.html#2039">[ thread ]</a>
+              <a href="subject.html#2039">[ subject ]</a>
+              <a href="author.html#2039">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I decided to try out softplay, but I'm unable to compile it. I think I 
+have recent enough ffmepg and all the other requirements shuld be 
+satisfied. Anybody have clue what's going on?
+
+TIA, juhis
+
+
+make[1]: Entering directory 
+`/home/veehoo/src/dvb/vdr-1.3.37/PLUGINS/src/softplay'
+g++ -O2 -Wall -Woverloaded-virtual -c -D_GNU_SOURCE 
+-DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include 
+-I../../../../DVB/include -I/usr/local/include/ffmpeg/ SoftPlayer.c
+SoftPlayer.c: In member function &#8216;virtual void cSoftPlayer::Action()&#8217;:
+SoftPlayer.c:173: error: request for member &#8216;codec_type&#8217; in 
+&#8216;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[pkt.AVPacket::stream_index]-&gt;AVStream::codec&#8217;, 
+which is of non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c:178: error: request for member &#8216;codec_type&#8217; in 
+&#8216;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[pkt.AVPacket::stream_index]-&gt;AVStream::codec&#8217;, 
+which is of non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c:222: error: request for member &#8216;codec_id&#8217; in 
+&#8216;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#8217;, 
+which is of non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c: In member function &#8216;ePlayMode 
+cSoftPlayer::GetPlayMode(AVFormatContext*)&#8217;:
+SoftPlayer.c:248: error: request for member &#8216;codec_type&#8217; in 
+&#8216;IC-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#8217;, which is of 
+non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c:250: error: request for member &#8216;codec_type&#8217; in 
+&#8216;IC-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#8217;, which is of 
+non-class type &#8216;AVCodecContext*&#8217;
+make[1]: *** [SoftPlayer.o] Error 1
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002069.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+	<LI>Next message: <A HREF="002040.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2039">[ date ]</a>
+              <a href="thread.html#2039">[ thread ]</a>
+              <a href="subject.html#2039">[ subject ]</a>
+              <a href="author.html#2039">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

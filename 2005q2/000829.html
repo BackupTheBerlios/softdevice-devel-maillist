@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Many xrun(s) with latest cvs changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C200506062346.16419.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000826.html">
+   <LINK REL="Next"  HREF="000832.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Many xrun(s) with latest cvs changes.</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C200506062346.16419.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Many xrun(s) with latest cvs changes.">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Jun  6 23:46:16 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000826.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+        <LI>Next message: <A HREF="000832.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#829">[ date ]</a>
+              <a href="thread.html#829">[ thread ]</a>
+              <a href="subject.html#829">[ subject ]</a>
+              <a href="author.html#829">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 6. Juni 2005 23:00, Martin Wache wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt;The cause for this is that I reduced the buffer sizes, I plan to make it 
+</I>&gt;<i> &gt;&gt;possible to choose between &quot;good seeking&quot; (that is currently the 
+</I>&gt;<i> &gt;&gt;default), a save buffer (like it was bevore), and HDTV buffers.
+</I>&gt;<i> &gt;&gt;The good seeking buffer is as large as the FF card buffers, that means 
+</I>&gt;<i> &gt;&gt;that when seeking backward vdr will correctly guess the current position.
+</I>&gt;<i> &gt;&gt;Right now the switch to choose the buffer size is still missing, so one 
+</I>&gt;<i> &gt;&gt;can't chosse yet :-(, but I'll add this feature soon.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; un  5 14:34:04 jarada vdr[3189]: buffer usage: 60% (tid=294919)
+</I>&gt;<i> &gt; Jun  5 14:34:04 jarada vdr[3189]: buffer usage: 70% (tid=294919)
+</I>&gt;<i> &gt; Jun  5 14:34:05 jarada vdr[3189]: buffer usage: 80% (tid=294919)
+</I>&gt;<i> &gt; Jun  5 14:34:06 jarada vdr[3193]: [softdevice-audio]: xrun
+</I>&gt;<i> &gt; Jun  5 14:34:14 jarada vdr[3189]: buffer usage: 90% (tid=294919)
+</I>&gt;<i> &gt; Jun  5 14:34:14 jarada vdr[3188]: clearing transfer buffer to avoid overflows
+</I>&gt;<i> &gt; Jun  5 14:34:14 jarada vdr[3189]: buffer usage: 0% (tid=294919)
+</I>&gt;<i> &gt; Jun  5 14:34:15 jarada vdr[3219]: [softdevice-audio]: xrun
+</I>&gt;<i> &gt; Jun  5 14:34:25 jarada vdr[3219]: [softdevice-audio]: xrun
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; There must be something else. I played around with various buffer sizes,
+</I>&gt;<i> &gt; without success.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Sorry, I have not finished the buffer size selection yet. Which buffer 
+</I>&gt;<i> size did you increase? Did you choose one of the combinations from 
+</I>&gt;<i> mpeg2decoder.h?
+</I>
+Yes.
+MIN_BUF_SIZE is used as buffer size for init_but_byte and as a threshold
+for enabling a signal.
+I'm wondering if I'm the only one who noticed that, could that be caused
+by my old/ stable kernel 2.4.27 ?
+
+But:
+
+#define PACKET_BUF_SIZE 150
+
+This one is unused as:
+public:
+    cPacketQueue(int maxPackets=150);
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000826.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+	<LI>Next message: <A HREF="000832.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#829">[ date ]</a>
+              <a href="thread.html#829">[ thread ]</a>
+              <a href="subject.html#829">[ subject ]</a>
+              <a href="author.html#829">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

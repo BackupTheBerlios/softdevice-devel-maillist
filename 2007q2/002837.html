@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] building on mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C4612C7FB.3010808%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002836.html">
+   <LINK REL="Next"  HREF="002838.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] building on mac</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C4612C7FB.3010808%40gmx.net%3E"
+       TITLE="[Softdevice-devel] building on mac">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr  3 23:32:43 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002836.html">[Softdevice-devel] building on mac
+</A></li>
+        <LI>Next message: <A HREF="002838.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2837">[ date ]</a>
+              <a href="thread.html#2837">[ thread ]</a>
+              <a href="subject.html#2837">[ subject ]</a>
+              <a href="author.html#2837">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo schrieb:
+&gt;<i> On 3 Apr 2007, at 22:15, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Torgeir Veimo schrieb:
+</I>&gt;&gt;&gt;<i> Now I get;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [...]
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i> /var/tmp//ccpGFYQd.s:1399:Unimplemented segment type 5 in  
+</I>&gt;&gt;&gt;<i> parse_operand
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'll try updating my ffmpeg library. It's a shame it's not available
+</I>&gt;&gt;&gt;<i> through fink.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> Please also try disable mmx optimizations, I'm not sure if Mac Os  
+</I>&gt;&gt;<i> allows
+</I>&gt;&gt;<i> the same syntax as Linux.
+</I>&gt;<i> 
+</I>&gt;<i> Almost there..
+</I>&gt;<i> 
+</I>&gt;<i> g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -dynamiclib -Wl,- 
+</I>&gt;<i> single_module,-undefined,dynamic_lookup  softdevice.o utils.o i18n.o  
+</I>&gt;<i> video.o mpeg2decoder.o audio.o video-dummy.o setup-softdevice.o setup- 
+</I>&gt;<i> softdevice-menu.o setup-softlog.o setup-softlog-menu.o sync-timer.o  
+</I>&gt;<i> SoftOsd.o PicBuffer.o VideoFilter.o audio-macos.o video-quartz.o  
+</I>&gt;<i> video-shm.o -L/usr/local/lib -lavformat -lavcodec -lz -lavutil   - 
+</I>&gt;<i> framework Carbon -framework CoreAudio -framework AudioUnit -framework  
+</I>&gt;<i> AudioToolbox  -framework Carbon -framework AGL -framework OpenGL  -o  
+</I>&gt;<i> libvdr-softdevice.so
+</I>&gt;<i> ld: /usr/local/lib/libavformat.a(utils.o) has local relocation  
+</I>&gt;<i> entries in non-writable section (__TEXT,__text)
+</I>&gt;<i> /usr/bin/libtool: internal link edit command failed
+</I>&gt;<i> make: *** [libvdr-softdevice.so] Error 1
+</I>&gt;<i> 
+</I>&gt;<i> How do you configure and build your ffmpeg installation?
+</I>&gt;<i> 
+</I>
+You have to remove the &quot;-mdynamic-no-pic&quot; option from ffmpeg config.mak
+and recompile ffmpeg.
+I have not yet committed the Readme-Macos, some things are already
+outdated, but maybe it is usefull:
+
+Problems with shmget:
+
+Change /etc/rc
+sysctl -w kern.sysv.shmmax=134217728
+sysctl -w kern.sysv.shmmin=1
+sysctl -w kern.sysv.shmmni=32
+sysctl -w kern.sysv.shmseg=8
+sysctl -w kern.sysv.shmall=32768
+
+shmall=shmmax/4096 (on 10.3 Panther)
+_Reboot_ after change, it is not possible to change the parameters on
+runtime!
+
+
+To compile the softdevice:
+
+- get ffmpeg (the SVN version is usually the best..)
+- configure and compile ffmpeg
+  ./configure --disable-encoders
+  make
+  (Note: you may have to remove &quot;-mdynamic-no-pic&quot; from config.mak
+before compil
+   ng if linking fails with the softdevice.)
+
+- configure the softdevice in the softdevice directory:
+  ./configure --with-ffmpeg-path path-to-your-ffmpeg --disable-subplugins
+- go back to vdr's directory and compile the plugins:
+  make plugins
+  (Note: you may have to set the deployment target to 10.3 with
+  &quot;export MACOSX_DEPLOYMENT_TARGET=10.3&quot; on MacOs X 10.3)
+
+To compile the client, change to the softdevice directory, type &quot;make
+MacVdrClie
+nt&quot;.
+
+
+To start vdr with the softdevice use:
+&quot;./vdr -P&quot;softdevice -vo shm:&quot; &quot;, vdr will start and wait for connection of
+the client. To start the client, simply start it using
+&quot;./MacVdrClient.app/Contents/MacOS/MacVdrClient &quot; in the softdevice
+directory.
+
+This has been tested on a iBook G4 1.2GHz using MacOs 10.3.9 and a
+Powerbook G4
+using MacOsX 10.4.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002836.html">[Softdevice-devel] building on mac
+</A></li>
+	<LI>Next message: <A HREF="002838.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2837">[ date ]</a>
+              <a href="thread.html#2837">[ thread ]</a>
+              <a href="subject.html#2837">[ subject ]</a>
+              <a href="author.html#2837">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

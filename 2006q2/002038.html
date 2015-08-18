@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] colored snow with softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3CPine.LNX.4.64.0605160754240.32374%40pub6.ifh.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002029.html">
+   <LINK REL="Next"  HREF="002049.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] colored snow with softplay</H1>
+    <B>Patrick Boettcher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3CPine.LNX.4.64.0605160754240.32374%40pub6.ifh.de%3E"
+       TITLE="[Softdevice-devel] colored snow with softplay">patrick.boettcher at desy.de
+       </A><BR>
+    <I>Tue May 16 07:58:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002029.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+        <LI>Next message: <A HREF="002049.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2038">[ date ]</a>
+              <a href="thread.html#2038">[ thread ]</a>
+              <a href="subject.html#2038">[ subject ]</a>
+              <a href="author.html#2038">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+This is the start output of vdr:
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: xv:
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3211265)
+[XvVideoOut]: osd_image shmid = 753666
+[XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120
+[XvVideoOut]: max area size 2048 x 2048
+[XvVideoOut]: using area size 736 x 576
+[softdevice] Xv out OK !
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+
+and this when I start a xvid-file:
+
+could not find stream info
+PLDBG: GetPlayMode nb_streams 2
+PLDBG: GetPlayMode stream 0 codec_type 0
+PLDBG: GetPlayMode stream 1 codec_type 1
+#Input #0, avi, from 'test':
+  Duration: 00:44:05.6, start: 0.000000, bitrate: 1111 kb/s
+#  Stream #0.0, 23.98 fps(r): Video: mpeg4, yuv420p, 624x352
+  Stream #0.1: Audio: mp3, 48000 Hz, stereo, 128 kb/s
+######
+
+I hope this helps.
+
+On Sun, 14 May 2006, Stefan Lucke wrote:
+&gt;<i> Assuming they played previously fine.
+</I>
+Yes.
+&gt;<i> Did you upgrade your ffmpeg version too ?
+</I>&gt;<i> So which version is reported at startup from softdevice ?
+</I>
+See above, please.
+
+regards,
+Patrick.
+
+--
+  Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">patrick.boettcher at desy.de</A>
+  WWW:  <A HREF="http://www.wi-bw.tfh-wildau.de/~pboettch/">http://www.wi-bw.tfh-wildau.de/~pboettch/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002029.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+	<LI>Next message: <A HREF="002049.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2038">[ date ]</a>
+              <a href="thread.html#2038">[ thread ]</a>
+              <a href="subject.html#2038">[ subject ]</a>
+              <a href="author.html#2038">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

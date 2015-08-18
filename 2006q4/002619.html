@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [directfb-users]  viafb + cle266mpegdec +	TVout : field parity status and patches [update]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%20%3D%3Fiso-8859-15%3Fq%3F%3D5Bdirectfb-users%3D5D__viafb_%2B_%3F%3D%0A%20%3D%3Fiso-8859-15%3Fq%3Fcle266mpegdec_%2B%3D09TVout_%3D3A_field_parity_status_and_patch%3F%3D%0A%20%3D%3Fiso-8859-15%3Fq%3Fes_%3D5Bupdate%3D5D%3F%3D&In-Reply-To=%3C200610140922.12874.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002616.html">
+   <LINK REL="Next"  HREF="002620.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [directfb-users]  viafb + cle266mpegdec +	TVout : field parity status and patches [update]</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%20%3D%3Fiso-8859-15%3Fq%3F%3D5Bdirectfb-users%3D5D__viafb_%2B_%3F%3D%0A%20%3D%3Fiso-8859-15%3Fq%3Fcle266mpegdec_%2B%3D09TVout_%3D3A_field_parity_status_and_patch%3F%3D%0A%20%3D%3Fiso-8859-15%3Fq%3Fes_%3D5Bupdate%3D5D%3F%3D&In-Reply-To=%3C200610140922.12874.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] [directfb-users]  viafb + cle266mpegdec +	TVout : field parity status and patches [update]">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat Oct 14 10:22:12 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002616.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+        <LI>Next message: <A HREF="002620.html">[Softdevice-devel] [directfb-users] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2619">[ date ]</a>
+              <a href="thread.html#2619">[ thread ]</a>
+              <a href="subject.html#2619">[ subject ]</a>
+              <a href="author.html#2619">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 14 October 2006 00:17, Nicolas Huillard wrote:
+&gt;<i> Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt; That looks more like some interrupts are lost.
+</I>&gt;<i> &gt; Is VGA IRQ shared with other devices (/proc/interrupts) ?
+</I>&gt;<i>
+</I>&gt;<i> Please excuse me for this late answer. I didn't check that post on the
+</I>&gt;<i> DFB ML.
+</I>&gt;<i>
+</I>&gt;<i> IRQ 11 is shared with USB (not used) and eth (heavily used, but not when
+</I>&gt;<i> I watch TV....):
+</I>&gt;<i>   11:   23638023          XT-PIC  uhci_hcd:usb1, viafb, eth0
+</I>
+On my system:
+  5:      16739          XT-PIC  viafb, uhci_hcd:usb1, uhci_hcd:usb3, VIA8233, 
+eth0
+
+For me, it's sharing the same interrupt for the sound chip and eth0. Eth0 can 
+get quite a hammering when I'm using vdrsync over nfs from another box, and I 
+hardly see any effects.
+
+&gt;<i> Answer to Mark : it's not a multiprocessor system (&quot;SMP alternatives:
+</I>&gt;<i> switching to UP code&quot;; &quot;Freeing SMP alternatives: 0k freed&quot;)
+</I>
+I don't have SMP stuff in my (self-built 2.6.15.5) kernel.
+
+&gt;<i> When modprobing viafb, it report the following IRQ (dmesg):
+</I>&gt;<i>  viafb: irq handler installed, IRQ(0x200) = 80080c02
+</I>
+Here's what I see in dmesg:
+viafb: VIA UNICHROME framebuffer 1.0 initializing
+viafb: viafb : CC900000
+viafb: framebuffer size = 64 Mb
+viafb: Found Device Rev:0
+mtrr: MTRR 4 not used
+mtrr: 0xd8000000,0x4000000 overlaps existing 0xd8000000,0x800000
+viafb: X:720 Y:576
+viafb: detected VT1622A (7)
+viafb: mode=720  bpp=32  refresh=50  TVon=1  TVtype=2
+viafb: VQ start:3FC0000  end:3FFFFFF  size:40000
+viafb: Cursor start:3FBF000  end:3FBFFFF  size:1000
+viafb: detected VT1622A (7)
+viafb: mode=720  bpp=32  refresh=50  TVon=1  TVtype=2
+viafb: irq handler installed, IRQ(0x200) = 80080c02
+
+&gt;<i> I actually see those high IRQ numbers on other hosts, when the APIC is
+</I>&gt;<i> enabled:
+</I>&gt;<i>  185:   30244076   IO-APIC-level  eth0
+</I>&gt;<i>
+</I>&gt;<i> On the EPIA VDR host, dmesg says :
+</I>&gt;<i>  No local APIC present or hardware disabled
+</I>&gt;<i>  mapped APIC to ffffd000 (011c1000)
+</I>&gt;<i> Should it be that I have partly working IRQ routing. My kernel is
+</I>&gt;<i> self-compiled 2.6.17 (from Debian source package).
+</I>
+Hmm...I'm losing all of the IRQ routing stuff from the top of dmesg. Has the 
+size of the buffer shrunk, or something?
+
+:<i>-s
+</I>
+Ahhh...just discovered CONFIG_LOG_BUF_SHIFT=14 in my kernel config!! Don't 
+think I've touched that but buffer size used to be 16k! Next time I upgrade 
+my kernel I'll have to tweak that.
+
+Looking at my config, I do have the following set:
+CONFIG_X86_UP_APIC=y
+CONFIG_X86_UP_IOAPIC=y
+CONFIG_X86_LOCAL_APIC=y
+CONFIG_X86_IO_APIC=y
+
+but I don't see any mention of APIC in /proc/interrupts.
+
+Not sure any of the above helps but it's what I'm getting here!
+
+Did you try printing out viafb_wait_for_sync as Mark suggested to see if it 
+changes or not?
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002616.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+	<LI>Next message: <A HREF="002620.html">[Softdevice-devel] [directfb-users] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2619">[ date ]</a>
+              <a href="thread.html#2619">[ thread ]</a>
+              <a href="subject.html#2619">[ subject ]</a>
+              <a href="author.html#2619">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

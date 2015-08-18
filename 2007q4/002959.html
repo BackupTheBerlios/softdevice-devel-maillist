@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #12224] openSUSE 10.3 throws X_ShmPutImage	BadValue with softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2312224%5D%20openSUSE%2010.3%20throws%20X_ShmPutImage%0A%09BadValue%20with%20softdevice&In-Reply-To=%3C200710281059.l9SAxUq4000136%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002958.html">
+   <LINK REL="Next"  HREF="002960.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #12224] openSUSE 10.3 throws X_ShmPutImage	BadValue with softdevice</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2312224%5D%20openSUSE%2010.3%20throws%20X_ShmPutImage%0A%09BadValue%20with%20softdevice&In-Reply-To=%3C200710281059.l9SAxUq4000136%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #12224] openSUSE 10.3 throws X_ShmPutImage	BadValue with softdevice">admin at berlios.de
+       </A><BR>
+    <I>Sun Oct 28 11:59:30 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002958.html">[Softdevice-devel] [Bug #12224] openSUSE 10.3 throws X_ShmPutImage	BadValue with softdevice
+</A></li>
+        <LI>Next message: <A HREF="002960.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2959">[ date ]</a>
+              <a href="thread.html#2959">[ thread ]</a>
+              <a href="subject.html#2959">[ subject ]</a>
+              <a href="author.html#2959">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #12224, was updated on 2007-Oct-20 12:12
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: hkirschk
+Assigned to : lucke
+Summary: openSUSE 10.3 throws X_ShmPutImage BadValue with softdevice 
+
+Details: Moin Stefan,
+
+switching over from OpenSUSE 10.2 to 10.3 I've encountered a problem
+with your softdevice. On 10.2, everything worked fine, on 10.3 I
+encountered an error. Here now the detailed description:
+
+Configuration
+=============
+
+OpenSUSE 10.3, X Windows version 11, revision 7.2 (&lt;- this could be
+one of the reasons for the error to occur, 10.2 had something like
+revision 7.19)
+
+softdevice 0.4.0 checkout of 2007-10-06
+
+nVidia proprietary graphics driver, most actual version
+
+FX5200 nVidia-compatible graphic card operated with 2 screens:
+
+1. CRT-0 with LCD monitor, 1280x1024 resolution, X display :0.0
+
+2. TV-0 with composite TV set, 800x600 resolution, X display :0.1
+
+When running vdr+softdevice on DISPLAY :0.0, everything works fine.
+
+The problem
+===========
+
+When running vdr+softdevice with DISPLAY on :0.1, I encounter an error:
+
+X Error of failed request:  BadValue (integer parameter out of range for operation)
+  Major opcode of failed request:  147 (MIT-SHM)
+  Minor opcode of failed request:  3 (X_ShmPutImage)
+  Value in failed request:  0x4ff
+  Serial number of failed request:  132
+  Current serial number in output stream:  134
+
+(find the complete output of vdr at the end of this posting.)
+
+The `Value in failed request' corresponds to the X resolution of the
+:<i>0.0 screen, therefore I thought this could have to do with the
+</I>Xinerama settings of the X server. Unfortunately, I did not find a
+sufficient methods to convince the X server NOT to enable Xinerama.
+
+Tracing down the error I found that in video-xv.c, in method
+cXvVideoOut::ProcessEvents () (in video-xv.c(562)) gets called with an
+event.type (in video-xv.c(585)) of ConfigureNotify ((in
+video-xv.c(603)) several times. The code:
+
+      case ConfigureNotify:
+        EVDEB(&quot;ConfigureNotify\n&quot;);
+        map_count++;
+        dx = event.xconfigure.x;
+        dy = event.xconfigure.y;
+	dwidth = event.xconfigure.width;
+	dheight = event.xconfigure.height;
+        AdjustXineramaScreen();
+        RecalculateAspect();
+
+sets the dwidth and dheight to the parameters attached to the
+event. Very strange, the 4th or 5th call here delivers a
+event.xconfigure.width of 1280, this is stored as dwidth and dheight,
+and leads in turn to the error described above. I'm using a
+quick-and-dirty fix like:
+
+      case ConfigureNotify:
+        EVDEB(&quot;ConfigureNotify\n&quot;);
+        map_count++;
+        dx = event.xconfigure.x;
+        dy = event.xconfigure.y;
+	/* 2007-10-16 hkirschk: */
+	if ( event.xconfigure.width &lt; dwidth &amp;&amp;
+	     event.xconfigure.height &lt; dheight ) {
+	  dwidth = event.xconfigure.width;
+	  dheight = event.xconfigure.height;
+	}
+        AdjustXineramaScreen();
+        RecalculateAspect();
+
+This works only if the TV-0 screen is configured to be smaller than
+the CRT-0 one. IMHO, dwidth and dheight should be set in some
+initialization method by requesting the values directly from the X
+server.
+
+Workarounds
+===========
+
+1. my quick-and-dirty-fix above, with the explained restrictions
+
+2. setting both resolutions the same (i.e., 800x600 for TV-0 and
+   CRT-0) bypasses the bug (I've tested it, and it works)
+
+3. I guess that switching off Xinerama might also do the trick, but I
+   didn't manage to get Xinerama switched off, so I've not tested this.
+
+Attachments
+===========
+
+Attachment 1: complete output of vdr
+Attachment 2: my /etc/X11/xorg.conf
+--
+Attachment 1: complete output of vdr:
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -ao
+[softdevice] using alsa mixer for volume control
+[softdevice]   argv [3] = -vo
+[ProcessArgs] xv: start up fullscreen
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] autodetectAspect 0
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] Expanding 0 columns at left and right
+[setup-softdevice] Expanding 0 columns at top and bottom
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to software
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseSetSourceRectangle to off
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 0
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+arg: /home/media/vdr/plugins/dvdswitch/dvdlink
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3353600)
+[XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+[XvVideoOut]: dispName = :0.1
+[XvVideoOut]: osd_max_width = 800,osd_max_height = 600, useShm = 1
+[XvVideoOut]: osd_image shmid = 655375
+[XvVideoOut]: got osd_image: width 800 height 600, bytes per line 3200, Bpp 32
+[XvVideoOut]: max area size 2046 x 2046
+[XvVideoOut]: using area size 736 x 576
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[XvVideoOut]: Xinerama-Screen changed to 0
+X Error of failed request:  BadValue (integer parameter out of range for operation)
+  Major opcode of failed request:  147 (MIT-SHM)
+  Minor opcode of failed request:  3 (X_ShmPutImage)
+  Value in failed request:  0x4ff
+  Serial number of failed request:  132
+  Current serial number in output stream:  134
+Read list from /home/media/vdr/plugins/softplay/current.playlist
+could not open /home/media/vdr/plugins/softplay/current.playlist for reading!
+Sat Oct 13 13:08:21 CEST 2007 reloading DVB driver
+Sat Oct 13 13:08:31 CEST 2007 restarting VDR
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -ao
+[softdevice] using alsa mixer for volume control
+[softdevice]   argv [3] = -vo
+[ProcessArgs] xv: start up fullscreen
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] autodetectAspect 0
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] Expanding 0 columns at left and right
+[setup-softdevice] Expanding 0 columns at top and bottom
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to software
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseSetSourceRectangle to off
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 0
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+arg: /home/media/vdr/plugins/dvdswitch/dvdlink
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3353600)
+[XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+[XvVideoOut]: dispName = :0.1
+[XvVideoOut]: osd_max_width = 800,osd_max_height = 600, useShm = 1
+[XvVideoOut]: osd_image shmid = 819218
+[XvVideoOut]: got osd_image: width 800 height 600, bytes per line 3200, Bpp 32
+[XvVideoOut]: max area size 2046 x 2046
+[XvVideoOut]: using area size 736 x 576
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[XvVideoOut]: Xinerama-Screen changed to 0
+X Error of failed request:  BadValue (integer parameter out of range for operation)
+  Major opcode of failed request:  147 (MIT-SHM)
+  Minor opcode of failed request:  3 (X_ShmPutImage)
+  Value in failed request:  0x4ff
+  Serial number of failed request:  132
+  Current serial number in output stream:  134
+--
+Attachment 2: My /etc/X11/xorg.conf:
+
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">buildmeister at builder3</A>)  Sat May 26 01:05:11 PDT 2007
+
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">buildmeister at builder3</A>)  Sat May 26 01:04:16 PDT 2007
+# /.../
+# SaX generated X11 config file
+# Created on: 2007-02-06T21:32:22+0100.
+#
+# Version: 8.1
+# Contact: Marcus Schaefer &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">sax at suse.de</A>&gt;, 2005
+# Contact: SaX-User list &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sax-users">https://lists.berlios.de/mailman/listinfo/sax-users</A>&gt;
+#
+# Automatically generated by [ISaX] (8.1)
+# PLEASE DO NOT EDIT THIS FILE!
+#
+
+Section &quot;ServerLayout&quot;
+    Identifier     &quot;Layout[all]&quot;
+    Screen      0  &quot;Screen0&quot; RightOf &quot;Screen1&quot;
+    Screen      1  &quot;Screen1&quot; 0 0
+    InputDevice    &quot;Keyboard[0]&quot; &quot;CoreKeyboard&quot;
+    InputDevice    &quot;Mouse[1]&quot; &quot;CorePointer&quot;
+    Option         &quot;Clone&quot; &quot;off&quot;
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+EndSection
+
+Section &quot;Files&quot;
+    InputDevices      &quot;/dev/gpmdata&quot;
+    InputDevices      &quot;/dev/input/mice&quot;
+    FontPath        &quot;/usr/share/fonts/misc:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/local&quot;
+    FontPath        &quot;/usr/share/fonts/75dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/100dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/Type1&quot;
+    FontPath        &quot;/usr/share/fonts/URW&quot;
+    FontPath        &quot;/usr/share/fonts/Speedo&quot;
+    FontPath        &quot;/usr/share/fonts/PEX&quot;
+    FontPath        &quot;/usr/share/fonts/cyrillic&quot;
+    FontPath        &quot;/usr/share/fonts/latin2/misc:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/latin2/75dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/latin2/100dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/latin2/Type1&quot;
+    FontPath        &quot;/usr/share/fonts/latin7/75dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/baekmuk:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/japanese:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/kwintv&quot;
+    FontPath        &quot;/usr/share/fonts/truetype&quot;
+    FontPath        &quot;/usr/share/fonts/uni:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/CID&quot;
+    FontPath        &quot;/usr/share/fonts/ucs/misc:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/ucs/75dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/ucs/100dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/hellas/misc:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/hellas/75dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/hellas/100dpi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/hellas/Type1&quot;
+    FontPath        &quot;/usr/share/fonts/misc/sgi:unscaled&quot;
+    FontPath        &quot;/usr/share/fonts/xtest&quot;
+    FontPath        &quot;/opt/kde3/share/fonts&quot;
+    FontPath        &quot;unix/:7100&quot;
+EndSection
+
+Section &quot;Module&quot;
+    Load           &quot;dbe&quot;
+    Load           &quot;type1&quot;
+    Load           &quot;freetype&quot;
+    Load           &quot;extmod&quot;
+    Load           &quot;glx&quot;
+    Load           &quot;v4l&quot;
+EndSection
+
+Section &quot;ServerFlags&quot;
+    Option         &quot;AllowMouseOpenFail&quot; &quot;on&quot;
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+EndSection
+
+Section &quot;InputDevice&quot;
+    Identifier     &quot;Keyboard[0]&quot;
+    Driver         &quot;kbd&quot;
+    Option         &quot;Protocol&quot; &quot;Standard&quot;
+    Option         &quot;XkbLayout&quot; &quot;de&quot;
+    Option         &quot;XkbModel&quot; &quot;microsoftpro&quot;
+    Option         &quot;XkbRules&quot; &quot;xfree86&quot;
+    Option         &quot;XkbVariant&quot; &quot;nodeadkeys&quot;
+EndSection
+
+Section &quot;InputDevice&quot;
+    Identifier     &quot;Mouse[1]&quot;
+    Driver         &quot;mouse&quot;
+    Option         &quot;AutoSoft&quot; &quot;on&quot;
+    Option         &quot;Device&quot; &quot;/dev/input/mice&quot;
+    Option         &quot;Emulate3Buttons&quot; &quot;on&quot;
+    Option         &quot;Name&quot; &quot;&lt;undefined&gt;&quot;
+    Option         &quot;Protocol&quot; &quot;Auto&quot;
+    Option         &quot;Vendor&quot; &quot;Sysp&quot;
+EndSection
+
+Section &quot;Modes&quot;
+    Identifier         &quot;Modes[0]&quot;
+    ModeLine     &quot;1280x1024&quot; 107.0 1280 1360 1496 1712 1024 1025 1028 1059
+    ModeLine     &quot;1280x1024&quot; 87.8 1280 1328 1360 1440 1024 1027 1034 1053 +hsync -vsync
+    ModeLine     &quot;1280x960&quot; 107.3 1280 1360 1496 1712 960 961 964 995
+    ModeLine     &quot;1280x960&quot; 88.2 1280 1328 1360 1440 960 963 967 989 +hsync -vsync
+    ModeLine     &quot;1280x800&quot; 107.2 1280 1360 1496 1712 800 801 804 835
+    ModeLine     &quot;1280x800&quot; 98.9 1280 1352 1488 1696 800 801 804 833
+    ModeLine     &quot;1280x800&quot; 91.6 1280 1352 1488 1696 800 801 804 831
+    ModeLine     &quot;1280x800&quot; 88.2 1280 1328 1360 1440 800 803 809 829 +hsync -vsync
+    ModeLine     &quot;1280x800&quot; 83.5 1280 1344 1480 1680 800 801 804 828
+    ModeLine     &quot;1152x864&quot; 105.0 1152 1224 1352 1552 864 865 868 902
+    ModeLine     &quot;1152x864&quot; 96.8 1152 1224 1344 1536 864 865 868 900
+    ModeLine     &quot;1152x864&quot; 89.6 1152 1224 1344 1536 864 865 868 897
+    ModeLine     &quot;1152x864&quot; 86.8 1152 1200 1232 1312 864 867 871 895 +hsync -vsync
+    ModeLine     &quot;1152x864&quot; 81.6 1152 1216 1336 1520 864 865 868 895
+    ModeLine     &quot;1280x768&quot; 103.0 1280 1360 1496 1712 768 769 772 802
+    ModeLine     &quot;1280x768&quot; 95.0 1280 1352 1488 1696 768 769 772 800
+    ModeLine     &quot;1280x768&quot; 88.0 1280 1352 1488 1696 768 769 772 798
+    ModeLine     &quot;1280x768&quot; 84.8 1280 1328 1360 1440 768 771 778 796 +hsync -vsync
+    ModeLine     &quot;1280x768&quot; 80.1 1280 1344 1480 1680 768 769 772 795
+    ModeLine     &quot;1024x768&quot; 81.8 1024 1080 1192 1360 768 769 772 802
+    ModeLine     &quot;1024x768&quot; 76.2 1024 1080 1192 1360 768 769 772 800
+    ModeLine     &quot;1024x768&quot; 69.7 1024 1080 1184 1344 768 769 772 798
+    ModeLine     &quot;1024x768&quot; 69.5 1024 1072 1104 1184 768 771 775 796 +hsync -vsync
+    ModeLine     &quot;1024x768&quot; 64.1 1024 1080 1184 1344 768 769 772 795
+    ModeLine     &quot;1280x600&quot; 79.0 1280 1344 1480 1680 600 601 604 627
+    ModeLine     &quot;1280x600&quot; 72.8 1280 1336 1472 1664 600 601 604 625
+    ModeLine     &quot;1280x600&quot; 66.7 1280 1336 1464 1648 600 601 604 623
+    ModeLine     &quot;1280x600&quot; 66.2 1280 1328 1360 1440 600 603 613 622 +hsync -vsync
+    ModeLine     &quot;1280x600&quot; 61.5 1280 1336 1464 1648 600 601 604 622
+    ModeLine     &quot;1024x600&quot; 63.2 1024 1080 1184 1344 600 601 604 627
+    ModeLine     &quot;1024x600&quot; 58.1 1024 1072 1176 1328 600 601 604 625
+    ModeLine     &quot;1024x600&quot; 54.2 1024 1072 1104 1184 600 603 613 622 +hsync -vsync
+    ModeLine     &quot;1024x600&quot; 53.8 1024 1072 1176 1328 600 601 604 623
+    ModeLine     &quot;1024x600&quot; 49.0 1024 1064 1168 1312 600 601 604 622
+    ModeLine     &quot;800x600&quot; 48.9 800 840 920 1040 600 601 604 627
+    ModeLine     &quot;800x600&quot; 45.5 800 840 920 1040 600 601 604 625
+    ModeLine     &quot;800x600&quot; 44.0 800 848 880 960 600 603 607 622 +hsync -vsync
+    ModeLine     &quot;800x600&quot; 42.1 800 840 920 1040 600 601 604 623
+    ModeLine     &quot;800x600&quot; 38.2 800 832 912 1024 600 601 604 622
+    ModeLine     &quot;768x576&quot; 45.5 768 808 888 1008 576 577 580 602
+    ModeLine     &quot;768x576&quot; 41.7 768 800 880 992 576 577 580 600
+    ModeLine     &quot;768x576&quot; 40.8 768 816 848 928 576 579 583 597 +hsync -vsync
+    ModeLine     &quot;768x576&quot; 38.6 768 800 880 992 576 577 580 598
+    ModeLine     &quot;768x576&quot; 35.0 768 792 872 976 576 577 580 597
+    ModeLine     &quot;640x480&quot; 30.7 640 664 728 816 480 481 484 502
+    ModeLine     &quot;640x480&quot; 29.2 640 688 720 800 480 483 487 497 +hsync -vsync
+    ModeLine     &quot;640x480&quot; 28.6 640 664 728 816 480 481 484 500
+    ModeLine     &quot;640x480&quot; 25.9 640 656 720 800 480 481 484 499
+    ModeLine     &quot;640x480&quot; 23.9 640 656 720 800 480 481 484 497
+EndSection
+
+Section &quot;Monitor&quot;
+    Identifier     &quot;Monitor0&quot;
+    VendorName     &quot;Unknown&quot;
+    ModelName      &quot;CRT-0&quot;
+    DisplaySize     337    270
+    HorizSync       29.0 - 83.0
+    VertRefresh     43.0 - 75.0
+    Option         &quot;DPMS&quot;
+EndSection
+
+Section &quot;Monitor&quot;
+    Identifier     &quot;Monitor1&quot;
+    VendorName     &quot;Unknown&quot;
+    ModelName      &quot;TV-0&quot;
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+EndSection
+
+Section &quot;Device&quot;
+    Identifier     &quot;Videocard0&quot;
+    Driver         &quot;nvidia&quot;
+    VendorName     &quot;NVIDIA Corporation&quot;
+    BoardName      &quot;GeForce FX 5200&quot;
+    BusID          &quot;PCI:1:0:0&quot;
+    Screen          0
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+EndSection
+
+Section &quot;Device&quot;
+    Identifier     &quot;Videocard1&quot;
+    Driver         &quot;nvidia&quot;
+    VendorName     &quot;NVIDIA Corporation&quot;
+    BoardName      &quot;GeForce FX 5200&quot;
+    BusID          &quot;PCI:1:0:0&quot;
+    Screen          1
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+EndSection
+
+Section &quot;Screen&quot;
+
+# Removed Option &quot;metamodes&quot; &quot;CRT: 1280x1024 +0+0; CRT: 1280x960 +0+0; CRT: 1152x864 +0+0; CRT: 1024x768 +0+0; CRT: 800x600 +0+0; CRT: 640x480 +0+0&quot;
+    Identifier     &quot;Screen0&quot;
+    Device         &quot;Videocard1&quot;
+    Monitor        &quot;Monitor0&quot;
+    DefaultDepth    24
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+    Option         &quot;ConnectedMonitor&quot; &quot;CRT,TV&quot;
+    Option         &quot;IgnoreDisplayDevices&quot; &quot;DFP&quot;
+    Option         &quot;TwinView&quot; &quot;0&quot;
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+    Option         &quot;metamodes&quot; &quot;CRT: 1280x1024_60 +0+0; CRT: 1280x1024 +0+0; CRT: 1280x960 +0+0; CRT: 1152x864 +0+0; CRT: 1024x768 +0+0; CRT: 800x600 +0+0; CRT: 640x480 +0+0&quot;
+    SubSection     &quot;Display&quot;
+        Depth       24
+        Modes      &quot;1600x1200&quot; &quot;1280x1024&quot; &quot;1024x768&quot; &quot;800x600&quot; &quot;640x480&quot;
+    EndSubSection
+EndSection
+
+Section &quot;Screen&quot;
+    Identifier     &quot;Screen1&quot;
+    Device         &quot;Videocard0&quot;
+    Monitor        &quot;Monitor1&quot;
+    DefaultDepth    24
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+    Option         &quot;ConnectedMonitor&quot; &quot;CRT,TV&quot;
+    Option         &quot;IgnoreDisplayDevices&quot; &quot;DFP&quot;
+#    Option         &quot;TVOutFormat&quot; &quot;SVIDEO&quot;
+    Option         &quot;TVOutFormat&quot; &quot;COMPOSITE&quot;
+    Option         &quot;TVStandard&quot; &quot;PAL-B&quot;
+    Option         &quot;TwinView&quot; &quot;0&quot;
+    Option         &quot;Xinerama&quot; &quot;off&quot;
+    Option         &quot;metamodes&quot; &quot;TV: 800x600 +0+0&quot;
+    SubSection     &quot;Display&quot;
+        Depth       24
+        Modes      &quot;1600x1200&quot; &quot;1280x1024&quot; &quot;1024x768&quot; &quot;800x600&quot; &quot;640x480&quot;
+    EndSubSection
+EndSection
+
+Greeting &amp; happy bug fixing,
+Heiko Kirschke
+
+
+Follow-Ups:
+
+Date: 2007-Oct-28 11:59
+By: hkirschk
+
+Comment:
+Moin Stefan,
+
+I've reduced the modes in xorg.conf to those actually used, i.e. 1280x1024 for :0.0 and 800x600 for :0.1. With the unmodified video-xv.c I get the same X_ShmPutImage error.
+
+Regarding the Xinerama setting indicated in the log file, this also looks very strange to me (esp. since I tried to switch Xinerama off in xorg.conf). Although DISPLAY is set to :0.1, the resolution of DISPLAY :0.0 is shown. Maybe there's a bug in X Windows' Xinerama?
+-------------------------------------------------------
+
+Date: 2007-Oct-25 13:33
+By: lucke
+
+Comment:
+Thanks for your detailed analysis.
+
+Can you check your X configuration.
+You've 2 screens defined and both screens are of the same size.
+Please drop modes &quot;1600x1200&quot; &quot;1280x1024&quot; &quot;1024x768&quot; from subsection display of screen1 and try an unmodified softdevice version.
+
+A bit strange are the following messages:
+[XvVideoOut]: Xinerama Screen 0: 0,0 1280x1024
+[XvVideoOut]: dispName = :0.1
+
+-&gt; There is only one screen with 1280x1024 dimensions.
+That should be screen0 I guess, but the name you diplayed is from screen1.
+
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=12224&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=12224&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002958.html">[Softdevice-devel] [Bug #12224] openSUSE 10.3 throws X_ShmPutImage	BadValue with softdevice
+</A></li>
+	<LI>Next message: <A HREF="002960.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2959">[ date ]</a>
+              <a href="thread.html#2959">[ thread ]</a>
+              <a href="subject.html#2959">[ subject ]</a>
+              <a href="author.html#2959">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and nvram-wakeup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20nvram-wakeup&In-Reply-To=%3C20051104171435.GA6992%40seneca.muc.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001468.html">
+   <LINK REL="Next"  HREF="001470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and nvram-wakeup</H1>
+    <B>Harald Milz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20nvram-wakeup&In-Reply-To=%3C20051104171435.GA6992%40seneca.muc.de%3E"
+       TITLE="[Softdevice-devel] softdevice and nvram-wakeup">hm at seneca.muc.de
+       </A><BR>
+    <I>Fri Nov  4 18:14:35 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001468.html">[Softdevice-devel] Rescaling for a large LCD TV
+</A></li>
+        <LI>Next message: <A HREF="001470.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1469">[ date ]</a>
+              <a href="thread.html#1469">[ thread ]</a>
+              <a href="subject.html#1469">[ subject ]</a>
+              <a href="author.html#1469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+is it known that softdevice will not cooperate well with nvram-wakeup? The
+latter will always try to open /dev/rtc, as documented in the man page: 
+
+       -A, --directisa
+              Use direct I/O port  access  to  access  the  nvram  instead of
+              /dev/nvram.   This  option  must  be  used  if the configuration
+              option upper_method is set. The device /dev/rtc is still used.
+
+and softdevice opens it and keeps it open:
+
+softdevice-0.2.0/sync-timer.c:      if ( (rtcFd = open(&quot;/dev/rtc&quot;,O_RDONLY)) &lt; 0 )
+
+# lsof|grep /dev/rtc
+vdr        7875       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7989       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7990       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7991       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7993       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7994       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7995       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7996       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7997       root   40r      CHR     10,135             352286 /dev/rtc
+vdr        7998       root   40r      CHR     10,135             352286 /dev/rtc
+
+... etc. ad lib. 
+
+Doubleplusoops. 
+
+What gives? Does softdevice really need to keep it open? 
+
+Or is there a workaround? I can't imagine being the first person to stumble
+across this problem. 
+
+Ciao,
+hm
+
+
+-- 
+Alex Haley was adopted!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001468.html">[Softdevice-devel] Rescaling for a large LCD TV
+</A></li>
+	<LI>Next message: <A HREF="001470.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1469">[ date ]</a>
+              <a href="thread.html#1469">[ thread ]</a>
+              <a href="subject.html#1469">[ subject ]</a>
+              <a href="author.html#1469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

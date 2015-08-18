@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Packed color problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20color%20problem&In-Reply-To=%3C200604081949.53581.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001837.html">
+   <LINK REL="Next"  HREF="001840.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Packed color problem</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20color%20problem&In-Reply-To=%3C200604081949.53581.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Packed color problem">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr  8 19:49:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001837.html">[Softdevice-devel] Packed color problem
+</A></li>
+        <LI>Next message: <A HREF="001840.html">[Softdevice-devel] Packed color problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1838">[ date ]</a>
+              <a href="thread.html#1838">[ thread ]</a>
+              <a href="subject.html#1838">[ subject ]</a>
+              <a href="author.html#1838">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 08 April 2006 18:40, AgentX wrote:
+&gt;<i> Hello !
+</I>&gt;<i> 
+</I>&gt;<i> I think that I write to right place, I successefuly installed your plugin and it works without any bugs, except one - Packed color problem:
+</I>&gt;<i> I see the &quot;red lines&quot; on red color, &quot;blue lines&quot; on blue color, other interlacaing support (fields sync and etc) works well.
+</I>&gt;<i> In MPlayer you can fix that with mplayer -vf ilpack, but of course I can't do it in softdevice. 
+</I>
+Didn't find something about ilpack for -vf in mplayer docs.
+I guess I didn't understand how your error shows up ( &quot;red lines&quot; on red color ..).
+Could you place a screenshot picture of your problem somewhere ?
+
+&gt;<i> I tried to switch another colorspace (YV12, I420) in softdevice, but I after the picture goes away from screen and I don't see anything. 
+</I>&gt;<i> I set another colorspace in /etc/directfbrc but this don't take effect - the softdevice uses YUY2. 
+</I>&gt;<i> How I can fix this problem ?
+</I>
+TV-out works only in YUY2 format, as thats the only fromat which 
+supports ARGB destination surface format.
+
+&gt;<i> 
+</I>&gt;<i> My card: Matrox G450 RGB via VGA cable
+</I>
+For TV-out you need a self made cable.
+Whats the memory size of your card ?
+
+For not subscribed people it is best to drop a note but about
+that, so that others could keep you on cc .
+
+&gt;<i> I am using the DirectFB (last from cvs 2006-03-27)
+</I>&gt;<i> Softdevice: Last from CVS too 2006-03-27
+</I>&gt;<i> Program: VDR 1.3.38
+</I>&gt;<i> I am running VDR with:
+</I>&gt;<i> vdr -P&quot;softdevice -vo dfb:mgatv:&quot;
+</I>&gt;<i> 
+</I>&gt;<i> My /etc/directfbrc
+</I>&gt;<i> 
+</I>&gt;<i> mode=720x576
+</I>&gt;<i> primary-layer=2
+</I>&gt;<i> pixelformat=YV12
+</I>&gt;<i> #
+</I>&gt;<i> # output setup
+</I>&gt;<i> #
+</I>&gt;<i> matrox-crtc2
+</I>&gt;<i> matrox-tv-standard=pal
+</I>&gt;<i> matrox-cable-type=scart-rgb
+</I>&gt;<i> #
+</I>&gt;<i> # misc
+</I>&gt;<i> #
+</I>&gt;<i> #input=lirc
+</I>&gt;<i> #disable-module=keyboard
+</I>&gt;<i> disable-module=lirc
+</I>&gt;<i> disable-module=joystick
+</I>&gt;<i> disable-module=mutouch
+</I>&gt;<i> disable-module=ps2mouse
+</I>&gt;<i> disable-module=sdlinput
+</I>&gt;<i> disable-module=serialmouse
+</I>&gt;<i> disable-module=sonypi
+</I>&gt;<i> 
+</I>&gt;<i> With best regards 
+</I>&gt;<i> AgentX. 
+</I>&gt;<i> Thank you !
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001837.html">[Softdevice-devel] Packed color problem
+</A></li>
+	<LI>Next message: <A HREF="001840.html">[Softdevice-devel] Packed color problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1838">[ date ]</a>
+              <a href="thread.html#1838">[ thread ]</a>
+              <a href="subject.html#1838">[ subject ]</a>
+              <a href="author.html#1838">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

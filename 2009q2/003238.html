@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3 passthrough mode no longer working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-0.5.0.20090218%20and%20CVS%3A%20AC3%0A%20passthrough%20mode%20no%20longer%20working&In-Reply-To=%3C4A23CF30.4000503%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003245.html">
+   <LINK REL="Next"  HREF="003239.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3 passthrough mode no longer working</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-0.5.0.20090218%20and%20CVS%3A%20AC3%0A%20passthrough%20mode%20no%20longer%20working&In-Reply-To=%3C4A23CF30.4000503%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3 passthrough mode no longer working">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Mon Jun  1 14:53:04 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003245.html">[Softdevice-devel] Patch useful with the latest ffmpeg release	(r29288 05-2009)
+</A></li>
+        <LI>Next message: <A HREF="003239.html">[Softdevice-devel] softdevice-0.5.0.20090218 and CVS:	AC3	passthrough mode no longer working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3238">[ date ]</a>
+              <a href="thread.html#3238">[ thread ]</a>
+              <a href="subject.html#3238">[ subject ]</a>
+              <a href="author.html#3238">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there,
+
+well, I haven't used softdevice anymore for a long time, because I had some
+strange video issues (only black screen with OSD, no video), and after I
+decided to start with a fresh new system on my VDR machine, now I'm giving
+vdr-1.7.7 a try, with the plugins that work already with it, softdevice
+being one of them.
+I tried this with softdevice-0.5.0.20090218 (as packaged in gentoo) and
+CVS,
+and my problem is that my external amplifier hooked up via optical SPDIF
+detects no signal when switching to AC3 audio tracks of channels or
+recordings. This works however when playing a video file with an AC3 track
+in fbxine for example. I mostly copied over the settings from my old
+system,
+where even this ac3 passtrhrough with softdevice used to work. Here are
+some
+settings and outputs that might be relevant:
+
+
+In /etc/vdr/setup.conf, I have:
+CurrentDolby = 1
+DolbyTransferFix = 0  # don't know what this does, there is no difference
+UseDolbyDigital = 1
+UseDolbyInRecordings = 1
+softdevice.AC3Mode = 1 # should be passthrough, right?
+
+
+'aplay -l' shows:
+**** List of PLAYBACK Hardware Devices ****
+card 0: CMI8738 [C-Media CMI8738], device 0: CMI8738-MC6 [C-Media PCI
+DAC/ADC]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: CMI8738 [C-Media CMI8738], device 1: CMI8738-MC6 [C-Media PCI 2nd
+DAC]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: CMI8738 [C-Media CMI8738], device 2: CMI8738-MC6 [C-Media PCI
+IEC958]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+
+
+'aplay -L' shows:
+front:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI DAC/ADC
+    Front speakers
+rear:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    Rear speakers
+surround40:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    4.0 Surround output to Front and Rear speakers
+surround41:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    4.1 Surround output to Front, Rear and Subwoofer speakers
+surround50:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    5.0 Surround output to Front, Center and Rear speakers
+surround51:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    5.1 Surround output to Front, Center, Rear and Subwoofer speakers
+iec958:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI DAC/ADC
+    IEC958 (S/PDIF) Digital Audio Output
+null
+    Discard all samples (playback) or generate zero samples (capture)
+
+
+
+And the most important, the parameters given to the softdevice plugin:
+'--plugin=softdevice -vo dfb:mgatv -ao alsa:pcm=default#ac3=hw:0,2#'
+
+I have to mention that normal mpeg audio is decoded and sent as PCM to the
+SPDIF, only AC3 and only with vdr softdevice is the problem. I tried hw:0,0
+and hw:0,1 as well, but no sound. How to deal with this, did I miss
+something?
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003245.html">[Softdevice-devel] Patch useful with the latest ffmpeg release	(r29288 05-2009)
+</A></li>
+	<LI>Next message: <A HREF="003239.html">[Softdevice-devel] softdevice-0.5.0.20090218 and CVS:	AC3	passthrough mode no longer working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3238">[ date ]</a>
+              <a href="thread.html#3238">[ thread ]</a>
+              <a href="subject.html#3238">[ subject ]</a>
+              <a href="author.html#3238">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] configure now in cvs (WAS: Re: Softdevice-0.1.3 &amp; i18n fix)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20configure%20now%20in%20cvs%20%28WAS%3A%20Re%3A%20Softdevice-0.1.3%20%26%20i18n%20fix%29&In-Reply-To=%3C200509102224.10610.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001240.html">
+   <LINK REL="Next"  HREF="001237.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] configure now in cvs (WAS: Re: Softdevice-0.1.3 &amp; i18n fix)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20configure%20now%20in%20cvs%20%28WAS%3A%20Re%3A%20Softdevice-0.1.3%20%26%20i18n%20fix%29&In-Reply-To=%3C200509102224.10610.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] configure now in cvs (WAS: Re: Softdevice-0.1.3 &amp; i18n fix)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Sep 10 22:24:10 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001240.html">[Softdevice-devel] Crash while recording and playing live program
+</A></li>
+        <LI>Next message: <A HREF="001237.html">[Softdevice-devel] configure now in cvs (WAS: Re: Softdevice-0.1.3 &amp; i18n fix)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1235">[ date ]</a>
+              <a href="thread.html#1235">[ thread ]</a>
+              <a href="subject.html#1235">[ subject ]</a>
+              <a href="author.html#1235">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 10. September 2005 20:08, Rolf Ahrenberg wrote:
+&gt;<i> On Sat, 10 Sep 2005, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> Thanks. BTW, any news about Makefile rewrite? I'd like to use
+</I>&gt;<i> SOFTDEVICE_USE_DFB/FB/VIDIX/XV define in my Make.config and library
+</I>&gt;<i> paths detected automatically by pkg-config.
+</I>
+A simple configure script is now in cvs.
+With vidix there is no vidix.pc file whitch could be checked for. So 
+a path to vidix is hard coded int configure too.
+
+There are some TODOS like the whole --enable / -- disable stuff.
+
+DirectFB and ffmpeg stuff is done via pkg-config.
+
+The rule is, and should be to be my opinion, that all available
+output methods which present at the build system, should be build when
+not explict disabled (TODO). But this has to be done via configure.
+
+Hopefully we get some comments, that is bug reports including a fix/patch,
+on this :-) .
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001240.html">[Softdevice-devel] Crash while recording and playing live program
+</A></li>
+	<LI>Next message: <A HREF="001237.html">[Softdevice-devel] configure now in cvs (WAS: Re: Softdevice-0.1.3 &amp; i18n fix)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1235">[ date ]</a>
+              <a href="thread.html#1235">[ thread ]</a>
+              <a href="subject.html#1235">[ subject ]</a>
+              <a href="author.html#1235">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

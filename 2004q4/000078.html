@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb support using overlay?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20support%20using%20overlay%3F&In-Reply-To=%3C1099931001.24436.19.camel%40atlantis.netenviron.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000077.html">
+   <LINK REL="Next"  HREF="000079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb support using overlay?</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20support%20using%20overlay%3F&In-Reply-To=%3C1099931001.24436.19.camel%40atlantis.netenviron.com%3E"
+       TITLE="[Softdevice-devel] dfb support using overlay?">torgeir at pobox.com
+       </A><BR>
+    <I>Mon Nov  8 17:23:21 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000077.html">[Softdevice-devel] Recording VDR files in network
+</A></li>
+        <LI>Next message: <A HREF="000079.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've been trying to get a directfb setup running and have temporarily
+given up on my radeon.
+
+I've tried with a g450 card with better results, but softdevice doesn't
+seem to use the scaler on the card; I'd like to use the native
+resolution of my projector. Is this possible? 
+
+720x576 works, but gives me tearing. Is there anything I can do to avoid
+this?
+
+[VDR]# fbset -i
+
+mode &quot;720x576-50&quot;
+    # D: 32.043 MHz, H: 31.049 kHz, V: 49.999 Hz
+    geometry 720 576 736 1152 32
+    timings 31208 144 40 32 10 128 3
+    rgba 8/16,8/8,8/0,8/24
+endmode
+
+Frame buffer device information:
+    Name        : MATROX
+    Address     : 0xd0000000
+    Size        : 16777216
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 8
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 2944
+    MMIO Address: 0xd3000000
+    MMIO Size   : 16384
+    Accelerator : Matrox G400
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at vigor10</A> VDR]# dfbinfo
+
+[...]
+
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (convergence integrated media
+GmbH)
+(!) Direct/Modules: Unable to dlopen
+`/usr/local/lib/directfb-0.9.21/wm/libdirectfbwm_unique.so'!
+    --&gt; libuniquewm-0.9.so.21: cannot open shared object file: No such
+file or directory
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+
+
+Screen (00) FBDev Primary Screen            (primary screen)
+   Caps: VSYNC POWER_MANAGEMENT
+
+     Layer (00) FBDev Primary Layer             (primary layer)
+        Type: GRAPHICS
+        Caps: SURFACE BRIGHTNESS CONTRAST SATURATION
+
+     Layer (01) Matrox Backend Scaler
+        Type: GRAPHICS VIDEO STILL_PICTURE
+        Caps: SURFACE SCREEN_LOCATION DEINTERLACING DST_COLORKEY
+BRIGHTNESS CONTRAST
+
+[...]
+
+
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (convergence integrated media
+GmbH)
+(!) Direct/Modules: Unable to dlopen
+`/usr/local/lib/directfb-0.9.21/wm/libdirectfbwm_unique.so'!
+    --&gt; libuniquewm-0.9.so.21: cannot open shared object file: No such
+file or directory
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 16777216 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize
+SrcColorkey Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A>
+[dfb] Enumeratig display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location
+surface
+  This is our videoLayer
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [720x576])
+osdSurface::
+ - videoonly
+ - flipping
+videoSurface::
+ - videoonly
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring ColorKeying
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: Matrox Backend Scaler
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] (re)configured 0x08100609
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+[softdevice] should set volume to 255
+cStreamDecoder... ID: 0x0
+cStreamDecoder... ID: 0x1c0 fertig
+cStreamDecoder... ID: 0x0
+cStreamDecoder... ID: 0x1e0 fertig
+Set up to use linux RTC
+Neuer Thread geatartet: pid:7311 ID: 0x1c0
+Neuer Thread geatartet: pid:7311 ID: 0x1e0
+Buffer underrun
+[softdevice] allocating picture buffer for resolution 720x576
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] (re)configured 0x08100609
+
+Any ideas?
+
+
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000077.html">[Softdevice-devel] Recording VDR files in network
+</A></li>
+	<LI>Next message: <A HREF="000079.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

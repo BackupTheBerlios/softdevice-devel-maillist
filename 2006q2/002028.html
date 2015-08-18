@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] colored snow with softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3CPine.LNX.4.64.0605141809570.9954%40pub4.ifh.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002027.html">
+   <LINK REL="Next"  HREF="002029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] colored snow with softplay</H1>
+    <B>Patrick Boettcher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3CPine.LNX.4.64.0605141809570.9954%40pub4.ifh.de%3E"
+       TITLE="[Softdevice-devel] colored snow with softplay">patrick.boettcher at desy.de
+       </A><BR>
+    <I>Sun May 14 18:16:12 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002027.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+        <LI>Next message: <A HREF="002029.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2028">[ date ]</a>
+              <a href="thread.html#2028">[ thread ]</a>
+              <a href="subject.html#2028">[ subject ]</a>
+              <a href="author.html#2028">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, 14 May 2006, Tobias Grimm wrote:
+
+&gt;<i> Patrick Boettcher wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; vdr-plugin-softplay: Conflicts: vdr (&gt; 1.3.41-9999) but 1.4.0-1ctvdr1 is
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;to be installed
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> Please do an &quot;apt-get update&quot; and try to install softplay again.
+</I>
+OK. Installing it from the repository worked. Thanks. I misunderstood the 
+concept of your vdr repository and that's why I haven't reported that 
+earlier to you. Sorry.
+
+But my original problem persists.
+
+It is quite easy to reproduce:
+
+On my desktop I just ran 
+
+vdr -v /var/lib/video.00 -c /var/lib/vdr -L /usr/lib/vdr/plugins 
+-P&quot;softdevice -vo xv:&quot; -P&quot;softplay --media-path /media-softplay&quot;
+
+(even without having a dvb card)
+
+In /media-softplay there is a normal xvid/divx and when I run it I have 
+sound but the video is garbage.
+
+Patrick.
+
+--
+  Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">patrick.boettcher at desy.de</A>
+  WWW:  <A HREF="http://www.wi-bw.tfh-wildau.de/~pboettch/">http://www.wi-bw.tfh-wildau.de/~pboettch/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002027.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+	<LI>Next message: <A HREF="002029.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2028">[ date ]</a>
+              <a href="thread.html#2028">[ thread ]</a>
+              <a href="subject.html#2028">[ subject ]</a>
+              <a href="author.html#2028">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

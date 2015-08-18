@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb:cle266 serious problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%3Acle266%20serious%20problems&In-Reply-To=%3C45EA0CB5.3020005%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002769.html">
+   <LINK REL="Next"  HREF="002779.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb:cle266 serious problems</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%3Acle266%20serious%20problems&In-Reply-To=%3C45EA0CB5.3020005%40calidae.net%3E"
+       TITLE="[Softdevice-devel] dfb:cle266 serious problems">leo at calidae.net
+       </A><BR>
+    <I>Sun Mar  4 01:03:01 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002769.html">[Softdevice-devel] dfb:cle266 serious problems
+</A></li>
+        <LI>Next message: <A HREF="002779.html">[Softdevice-devel] [Bug #10575] softplay + vdr-1.5.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2768">[ date ]</a>
+              <a href="thread.html#2768">[ thread ]</a>
+              <a href="subject.html#2768">[ subject ]</a>
+              <a href="author.html#2768">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>More info when vdr starts....
+
+[dfb] (re)configuring Videolayer to 736 x 576 (736x576)
+[dfb] SetParams: Enabling DLOP_FIELD_PARITY
+[surface capabilities] videoSurface: videoonly flipping triple-buffered 
+PixelFormat = 0x08100609
+[dfb] (re)configured 0x08100609
+allocating buffer format orig-&gt;format 0
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] SetParams: Enabling DLOP_FIELD_PARITY
+[surface capabilities] videoSurface: videoonly flipping triple-buffered 
+PixelFormat = 0x08100609
+[dfb] (re)configured 0x08100609
+01:02:08.0035 D [4629] [softdevice-audio]: Xrun (at least 10,294 ms long)
+allocating buffer format orig-&gt;format 0
+01:02:08.0493 D [4632] [softdevice-audio]: Xrun (at least 336,756 ms long)
+++01:02:09.0743 D [4632] [softdevice-audio]: Xrun (at least 0,074 ms long)
+01:02:09.0947 D [4632] [softdevice-audio]: Xrun (at least 11,747 ms long)
+
+I hope this information helps to find the problem.
+
+Thanks
+
+Leo M&#225;rquez escribi&#243;:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I'm running vdr (1.4.3) with softdevice (cvs) direcfb 1.0, 
+</I>&gt;<i> libcle266mpegdec-0.5.
+</I>&gt;<i>
+</I>&gt;<i> I see osd and live tv but with a lot of interruptions and cpu is at 
+</I>&gt;<i> 90-100%
+</I>&gt;<i> This say me that cle266 is not working properly. In vdr console I see 
+</I>&gt;<i> all time:
+</I>&gt;<i>
+</I>&gt;<i> ++00:33:57.0581 D [4354] [softdevice-audio]: Xrun (at least 199,779 ms 
+</I>&gt;<i> long)
+</I>&gt;<i> +00:33:57.0693 D [4354] [softdevice-audio]: Xrun (at least 39,813 ms 
+</I>&gt;<i> long)
+</I>&gt;<i> 00:33:57.0805 D [4354] [softdevice-audio]: Xrun (at least 63,813 ms long)
+</I>&gt;<i> +00:33:57.0917 D [4354] [softdevice-audio]: Xrun (at least 87,791 ms 
+</I>&gt;<i> long)
+</I>&gt;<i> +00:33:58.0118 D [4354] [softdevice-audio]: Xrun (at least 152,208 ms 
+</I>&gt;<i> long)
+</I>&gt;<i> ++allocating buffer format orig-&gt;format 0
+</I>&gt;<i> CLE266 warning: frame had errors, resetting decoder
+</I>&gt;<i> 00:33:58.0918 D [4357] [softdevice-audio]: Xrun (at least 487,504 ms 
+</I>&gt;<i> long)
+</I>&gt;<i> +++++++00:34:01.0126 D [4357] [softdevice-audio]: Xrun (at least 
+</I>&gt;<i> 95,792 ms long)
+</I>&gt;<i> ++00:34:01.0398 D [4357] [softdevice-audio]: Xrun (at least 7,821 ms 
+</I>&gt;<i> long)
+</I>&gt;<i> 00:34:01.0510 D [4357] [softdevice-audio]: Xrun (at least 63,865 ms long)
+</I>&gt;<i>
+</I>&gt;<i> I don't have set the remote yet but I don't think that it can be the 
+</I>&gt;<i> problem.
+</I>&gt;<i> Do you know what can be the problem?
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002769.html">[Softdevice-devel] dfb:cle266 serious problems
+</A></li>
+	<LI>Next message: <A HREF="002779.html">[Softdevice-devel] [Bug #10575] softplay + vdr-1.5.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2768">[ date ]</a>
+              <a href="thread.html#2768">[ thread ]</a>
+              <a href="subject.html#2768">[ subject ]</a>
+              <a href="author.html#2768">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

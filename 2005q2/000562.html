@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C1114587566.426f41ae0c0b6%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000561.html">
+   <LINK REL="Next"  HREF="000563.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C1114587566.426f41ae0c0b6%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Repeatable crash">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Apr 27 09:39:26 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000561.html">[Softdevice-devel] Repeatable crash
+</A></li>
+        <LI>Next message: <A HREF="000563.html">[Softdevice-devel] Repeatable crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#562">[ date ]</a>
+              <a href="thread.html#562">[ thread ]</a>
+              <a href="subject.html#562">[ subject ]</a>
+              <a href="author.html#562">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Marko M&#228;kel&#228;:
+
+&gt;<i> On Fri, Apr 01, 2005 at 12:04:19AM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; Well, such crashes affect the overall usability of the product.  I think
+</I>&gt;<i> &gt; it's a design flaw to have assertions fail on garbage input.  It's so
+</I>&gt;<i> likely
+</I>&gt;<i> &gt; to get garbage DVB data.  Next time when I get such a crash, I promise to
+</I>&gt;<i> &gt; save the clip and to analyze it further.
+</I>&gt;<i>
+</I>&gt;<i> Now I managed to get a repeatable crash with one particular clip.  It could
+</I>&gt;<i> be related to aspect ratio change (4:3 for the announcement, 16:9 for the
+</I>&gt;<i> program) or subtitles (although it still crashes without the &quot;subtitles&quot;
+</I>&gt;<i> plugin being loaded in VDR 1.3.23).
+</I>
+I've some of crash situation my self. But I'll ve a look at your test
+stream later this evening. For me it happens upon 4:3 -&gt; 16:9 switch.
+I think it is related to this:
+
+<A HREF="http://mplayerhq.hu/pipermail/ffmpeg-devel/2005-April/000027.html">http://mplayerhq.hu/pipermail/ffmpeg-devel/2005-April/000027.html</A>
+
+You may try that with vdr running for gdb too.
+
+&gt;<i>
+</I>&gt;<i> I also got some other crashes recently, especially when using the pause,
+</I>&gt;<i> fast forward, rewind, and slow motion functions in rapid succession.  Maybe
+</I>&gt;<i> libavcodec can be left in inconsistent state during these functions?
+</I>
+Please run vdr from gdb to get a back trace.
+example:
+  gdb ./ vdr
+  set args your_usual_commandline for vdr
+
+if vdr crashed:
+  bt
+
+&gt;<i>
+</I>&gt;<i> It's kind of funny and lucky that a crash of the player thread does not
+</I>&gt;<i> always
+</I>&gt;<i> stop the recording thread, but today it unfortunately did once, even though
+</I>&gt;<i> the svdrp thread was still running.  On Sunday, there was a crash during or
+</I>&gt;<i> after unattended recording.  The recording was complete.
+</I>&gt;<i>
+</I>&gt;<i> I can upload the repeatably-crashing clip to an http server, but I don't want
+</I>&gt;<i> to announce the URL in public.  So, could the interested parties please
+</I>&gt;<i> reply?
+</I>
+Thanks for your link I'll check that this evening.
+
+&gt;<i>
+</I>&gt;<i> By the way, the &quot;mute&quot; function does not interrupt audio playback or make the
+</I>&gt;<i> sound completely inaudible.  Can someone look at that?
+</I>
+But you can controll volume setting via vdr ?
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000561.html">[Softdevice-devel] Repeatable crash
+</A></li>
+	<LI>Next message: <A HREF="000563.html">[Softdevice-devel] Repeatable crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#562">[ date ]</a>
+              <a href="thread.html#562">[ thread ]</a>
+              <a href="subject.html#562">[ subject ]</a>
+              <a href="author.html#562">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

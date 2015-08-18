@@ -1,0 +1,396 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] a lot of warnings with cvs softdevice version	and ffmpeg from svn
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%20version%0A%09and%20ffmpeg%20from%20svn&In-Reply-To=%3C20081030155952.2e66f6b8%40bk.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003165.html">
+   <LINK REL="Next"  HREF="003168.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] a lot of warnings with cvs softdevice version	and ffmpeg from svn</H1>
+    <B>Goga777</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%20version%0A%09and%20ffmpeg%20from%20svn&In-Reply-To=%3C20081030155952.2e66f6b8%40bk.ru%3E"
+       TITLE="[Softdevice-devel] a lot of warnings with cvs softdevice version	and ffmpeg from svn">goga777 at bk.ru
+       </A><BR>
+    <I>Thu Oct 30 13:59:52 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003165.html">[Softdevice-devel] [Patch #2578] fix build with latest libavformat
+</A></li>
+        <LI>Next message: <A HREF="003168.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3167">[ date ]</a>
+              <a href="thread.html#3167">[ thread ]</a>
+              <a href="subject.html#3167">[ subject ]</a>
+              <a href="author.html#3167">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+
+I have a lot of warnings during of cvs softdevice compilation 
+Is it ok ?   
+
+
+Goga
+
+
+
+make[1]: Leaving directory `/usr/src/vdr1_70/PLUGINS/src/sc'
+Plugin softdevice:
+make[1]: Entering directory `/usr/src/vdr1_70/PLUGINS/src/softdevice'
+g++ -MM -MG -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   softdevice.c utils.c i18n.c video.c mpeg2decoder.c audio.c video-dummy.c setup-softdevice.c setup-softdevice-menu.c setup-softlog.c setup-softlog-menu.c sync-timer.c SoftOsd.c PicBuffer.c VideoFilter.c audio-alsa.c audio-ac3pt.c audio-oss.c &gt; .dependencies
+make[1]: Leaving directory `/usr/src/vdr1_70/PLUGINS/src/softdevice'
+make[1]: Entering directory `/usr/src/vdr1_70/PLUGINS/src/softdevice'
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   softdevice.c
+In file included from video.h:25,
+                 from mpeg2decoder.h:30,
+                 from softdevice.h:17,
+                 from softdevice.c:8:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+softdevice.c: In constructor &#8216;cSoftDevice::cSoftDevice(int, int, char*)&#8217;:
+softdevice.c:188: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+softdevice.c:194: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+softdevice.c:209: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+softdevice.c: In constructor &#8216;cPluginSoftDevice::cPluginSoftDevice()&#8217;:
+softdevice.c:819: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   utils.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   i18n.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   video.c
+In file included from video.h:25,
+                 from video.c:16:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+video.c: In member function &#8216;virtual void cVideoOut::EvaluateDelay(uint64_t, uint64_t, int)&#8217;:
+video.c:558: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c:586: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c:595: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c:602: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c: In member function &#8216;virtual void cVideoOut::ResetDelay()&#8217;:
+video.c:619: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   mpeg2decoder.c
+In file included from video.h:25,
+                 from mpeg2decoder.h:30,
+                 from mpeg2decoder.c:14:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+mpeg2decoder.c: In member function &#8216;void cMpeg2Decoder::Freeze(int, bool)&#8217;:
+mpeg2decoder.c:1472: warning: suggest parentheses around comparison in operand of &amp;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   audio.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   video-dummy.c
+In file included from video.h:25,
+                 from video-dummy.h:11,
+                 from video-dummy.c:12:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   setup-softdevice.c
+setup-softdevice.c: In member function &#8216;char* cSetupStore::getPPdeintValue()&#8217;:
+setup-softdevice.c:410: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:411: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:412: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:413: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:414: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c: In member function &#8216;char* cSetupStore::getPPValue()&#8217;:
+setup-softdevice.c:423: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:424: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:425: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   setup-softdevice-menu.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   setup-softlog.c
+setup-softlog.c: In member function &#8216;virtual int cSetupSoftlog::SetLogFile(const char*)&#8217;:
+setup-softlog.c:162: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softlog.c:189: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   setup-softlog-menu.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   sync-timer.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   SoftOsd.c
+In file included from video.h:25,
+                 from SoftOsd.h:31,
+                 from SoftOsd.c:12:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+SoftOsd.c: In member function &#8216;void cSoftOsd::CopyToBitmap(uint8_t*, uint8_t*, uint8_t*, uint8_t*, uint8_t*, int, int, int, int, bool)&#8217;:
+SoftOsd.c:980: warning: suggest parentheses around comparison in operand of &amp;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   PicBuffer.c
+In file included from PicBuffer.c:14:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+PicBuffer.c: In function &#8216;void CopyScalePicBuf(sPicBuffer*, sPicBuffer*, int, int, int, int, int, int, int, int, int, int, int, int)&#8217;:
+PicBuffer.c:825: warning: suggest parentheses around + or - in operand of &amp;
+PicBuffer.c: In function &#8216;void CopyScalePicBufAlphaBlend(sPicBuffer*, sPicBuffer*, int, int, int, int, int, int, int, int, uint8_t*, uint8_t*, uint8_t*, uint8_t*, uint8_t*, int, int, int, int, int)&#8217;:
+PicBuffer.c:974: warning: suggest parentheses around + or - in operand of &amp;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   VideoFilter.c
+In file included from video.h:25,
+                 from VideoFilter.h:28,
+                 from VideoFilter.c:8:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   audio-alsa.c
+audio-alsa.c: In member function &#8216;void cAlsaAudioOut::Xrun()&#8217;:
+audio-alsa.c:269: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+audio-alsa.c: In member function &#8216;virtual int cAlsaAudioOut::SetParams(SampleContext&amp;)&#8217;:
+audio-alsa.c:439: warning: &#8216;int snd_pcm_sw_params_get_xfer_align(const snd_pcm_sw_params_t*, snd_pcm_uframes_t*)&#8217; is deprecated (declared at /usr/include/alsa/pcm.h:1105)
+audio-alsa.c:439: warning: &#8216;int snd_pcm_sw_params_get_xfer_align(const snd_pcm_sw_params_t*, snd_pcm_uframes_t*)&#8217; is deprecated (declared at /usr/include/alsa/pcm.h:1105)
+audio-alsa.c: In member function &#8216;virtual void cAlsaAudioOut::SetVolume(int)&#8217;:
+audio-alsa.c:466: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+audio-alsa.c:467: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   audio-ac3pt.c
+audio-ac3pt.c: In member function &#8216;unsigned int cAlsaAC3pt::SpdifInitAC3(snd_pcm_t**, char*, bool)&#8217;:
+audio-ac3pt.c:670: warning: &#8216;int snd_pcm_sw_params_set_xfer_align(snd_pcm_t*, snd_pcm_sw_params_t*, snd_pcm_uframes_t)&#8217; is deprecated (declared at /usr/include/alsa/pcm.h:1104)
+audio-ac3pt.c:670: warning: &#8216;int snd_pcm_sw_params_set_xfer_align(snd_pcm_t*, snd_pcm_sw_params_t*, snd_pcm_uframes_t)&#8217; is deprecated (declared at /usr/include/alsa/pcm.h:1104)
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   audio-oss.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -shared softdevice.o utils.o i18n.o video.o mpeg2decoder.o audio.o video-dummy.o setup-softdevice.o setup-softdevice-menu.o setup-softlog.o setup-softlog-menu.o sync-timer.o SoftOsd.o PicBuffer.o VideoFilter.o audio-alsa.o audio-ac3pt.o audio-oss.o -L/usr/local/lib -lavformat -lavcodec -lpostproc   -lasound -o libvdr-softdevice.so
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   video-fb.c
+In file included from video.h:25,
+                 from video-fb.h:11,
+                 from video-fb.c:17:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -shared utils.o video.o video-fb.o PicBuffer.o  -o libsoftdevice-fb.so
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   video-xv.c
+In file included from video.h:25,
+                 from video-xv.h:20,
+                 from video-xv.c:27:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+video-xv.c: In member function &#8216;void cXvPortAttributeStore::CheckVideoParmChange()&#8217;:
+video-xv.c:310: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:316: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:322: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:328: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c: In member function &#8216;virtual void cXvVideoOut::ProcessEvents()&#8217;:
+video-xv.c:638: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:642: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:646: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:650: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:654: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:658: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:662: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:666: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:670: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:674: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:678: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:682: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:686: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:690: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c: In constructor &#8216;cXvVideoOut::cXvVideoOut(cSetupStore*, cSetupSoftlog*)&#8217;:
+video-xv.c:781: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:782: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c: In member function &#8216;virtual bool cXvVideoOut::Reconfigure(int, int, int)&#8217;:
+video-xv.c:1258: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   xscreensaver.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -shared utils.o video.o video-xv.o xscreensaver.o PicBuffer.o -L/usr/X11R6/lib -lXext -lX11 -lm -lXv -lXinerama -o libsoftdevice-xv.so
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   video-shm.c
+In file included from video.h:25,
+                 from video-shm.h:15,
+                 from video-shm.c:12:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -shared utils.o video.o video-shm.o PicBuffer.o  -o libsoftdevice-shm.so
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   video.c -o video_shm.o
+In file included from video.h:25,
+                 from video.c:16:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+video.c: In member function &#8216;virtual void cVideoOut::EvaluateDelay(uint64_t, uint64_t, int)&#8217;:
+video.c:558: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c:586: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c:595: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c:602: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video.c: In member function &#8216;virtual void cVideoOut::ResetDelay()&#8217;:
+video.c:619: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   video-xv.c -o video-xv_shm.o
+In file included from video.h:25,
+                 from video-xv.h:20,
+                 from video-xv.c:27:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+video-xv.c: In member function &#8216;void cXvPortAttributeStore::CheckVideoParmChange()&#8217;:
+video-xv.c:310: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:316: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:322: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:328: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c: In member function &#8216;virtual void cXvVideoOut::ProcessEvents()&#8217;:
+video-xv.c:638: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:642: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:646: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:650: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:654: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:658: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:662: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:666: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:670: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:674: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:678: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:682: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:686: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:690: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c: In constructor &#8216;cXvVideoOut::cXvVideoOut(cSetupStore*, cSetupSoftlog*)&#8217;:
+video-xv.c:781: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c:782: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+video-xv.c: In member function &#8216;virtual bool cXvVideoOut::Reconfigure(int, int, int)&#8217;:
+video-xv.c:1258: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   setup-softdevice.c -o setup-softdevice_shm.o
+setup-softdevice.c: In member function &#8216;char* cSetupStore::getPPdeintValue()&#8217;:
+setup-softdevice.c:410: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:411: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:412: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:413: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:414: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c: In member function &#8216;char* cSetupStore::getPPValue()&#8217;:
+setup-softdevice.c:423: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:424: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softdevice.c:425: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   setup-softlog.c -o setup-softlog_shm.o
+setup-softlog.c: In member function &#8216;virtual int cSetupSoftlog::SetLogFile(const char*)&#8217;:
+setup-softlog.c:162: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+setup-softlog.c:189: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   xscreensaver.c -o xscreensaver_shm.o
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   utils.c -o utils_shm.o
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   VdrReplacements.c -o VdrReplacements_shm.o
+VdrReplacements.c: In member function &#8216;void cThread::Cancel(int)&#8217;:
+VdrReplacements.c:80: warning: format &#8216;%d&#8217; expects type &#8216;int&#8217;, but argument 3 has type &#8216;pthread_t&#8217;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   ShmClient.c -o ShmClient_shm.o
+In file included from video.h:25,
+                 from video-xv.h:20,
+                 from ShmClient.c:17:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -DSTAND_ALONE -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/postproc   PicBuffer.c -o PicBuffer_shm.o
+In file included from PicBuffer.c:14:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+PicBuffer.c: In function &#8216;void CopyScalePicBuf(sPicBuffer*, sPicBuffer*, int, int, int, int, int, int, int, int, int, int, int, int)&#8217;:
+PicBuffer.c:825: warning: suggest parentheses around + or - in operand of &amp;
+PicBuffer.c: In function &#8216;void CopyScalePicBufAlphaBlend(sPicBuffer*, sPicBuffer*, int, int, int, int, int, int, int, int, uint8_t*, uint8_t*, uint8_t*, uint8_t*, uint8_t*, int, int, int, int, int)&#8217;:
+PicBuffer.c:974: warning: suggest parentheses around + or - in operand of &amp;
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -L/usr/X11R6/lib -lXext -lX11 -lm -lXv -lXinerama  video_shm.o video-xv_shm.o setup-softdevice_shm.o setup-softlog_shm.o xscreensaver_shm.o utils_shm.o VdrReplacements_shm.o ShmClient_shm.o PicBuffer_shm.o -lpthread -o ShmClient
+xgettext -C -cTRANSLATORS --no-wrap --no-location -k -ktr -ktrNOOP --msgid-bugs-address='&lt;softdevice-devel at lists.berlios.de&gt;' -o po/softdevice.pot audio-ac3pt.c audio-alsa.c audio.c audio-macos.c audio-oss.c i18n.c MacVdrClient.c mpeg2decoder.c PicBuffer.c setup-softdevice.c setup-softdevice-menu.c setup-softlog.c setup-softlog-menu.c ShmClient.c softdevice.c SoftOsd.c sync-timer.c utils.c VdrReplacements.c video.c video-dfb.c video-dummy.c video-fb.c VideoFilter.c video-quartz.c video-shm.c video-vidix.c video-xv.c xscreensaver.c
+msgmerge -U --no-wrap --no-location --backup=none -q po/ca_ES.po po/softdevice.pot
+msgfmt -c -o po/ca_ES.mo po/ca_ES.po
+cp po/ca_ES.mo ../../../locale/ca_ES/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/cs_CZ.po po/softdevice.pot
+msgfmt -c -o po/cs_CZ.mo po/cs_CZ.po
+cp po/cs_CZ.mo ../../../locale/cs_CZ/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/da_DK.po po/softdevice.pot
+msgfmt -c -o po/da_DK.mo po/da_DK.po
+cp po/da_DK.mo ../../../locale/da_DK/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/de_DE.po po/softdevice.pot
+msgfmt -c -o po/de_DE.mo po/de_DE.po
+cp po/de_DE.mo ../../../locale/de_DE/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/el_GR.po po/softdevice.pot
+msgfmt -c -o po/el_GR.mo po/el_GR.po
+cp po/el_GR.mo ../../../locale/el_GR/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/es_ES.po po/softdevice.pot
+msgfmt -c -o po/es_ES.mo po/es_ES.po
+cp po/es_ES.mo ../../../locale/es_ES/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/et_EE.po po/softdevice.pot
+msgfmt -c -o po/et_EE.mo po/et_EE.po
+cp po/et_EE.mo ../../../locale/et_EE/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/fi_FI.po po/softdevice.pot
+msgfmt -c -o po/fi_FI.mo po/fi_FI.po
+cp po/fi_FI.mo ../../../locale/fi_FI/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/fr_FR.po po/softdevice.pot
+msgfmt -c -o po/fr_FR.mo po/fr_FR.po
+cp po/fr_FR.mo ../../../locale/fr_FR/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/hr_HR.po po/softdevice.pot
+msgfmt -c -o po/hr_HR.mo po/hr_HR.po
+cp po/hr_HR.mo ../../../locale/hr_HR/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/hu_HU.po po/softdevice.pot
+msgfmt -c -o po/hu_HU.mo po/hu_HU.po
+cp po/hu_HU.mo ../../../locale/hu_HU/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/it_IT.po po/softdevice.pot
+msgfmt -c -o po/it_IT.mo po/it_IT.po
+cp po/it_IT.mo ../../../locale/it_IT/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/nl_NL.po po/softdevice.pot
+msgfmt -c -o po/nl_NL.mo po/nl_NL.po
+cp po/nl_NL.mo ../../../locale/nl_NL/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/nn_NO.po po/softdevice.pot
+msgfmt -c -o po/nn_NO.mo po/nn_NO.po
+cp po/nn_NO.mo ../../../locale/nn_NO/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/pl_PL.po po/softdevice.pot
+msgfmt -c -o po/pl_PL.mo po/pl_PL.po
+cp po/pl_PL.mo ../../../locale/pl_PL/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/pt_PT.po po/softdevice.pot
+msgfmt -c -o po/pt_PT.mo po/pt_PT.po
+cp po/pt_PT.mo ../../../locale/pt_PT/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/ro_RO.po po/softdevice.pot
+msgfmt -c -o po/ro_RO.mo po/ro_RO.po
+cp po/ro_RO.mo ../../../locale/ro_RO/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/ru_RU.po po/softdevice.pot
+msgfmt -c -o po/ru_RU.mo po/ru_RU.po
+cp po/ru_RU.mo ../../../locale/ru_RU/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/sl_SI.po po/softdevice.pot
+msgfmt -c -o po/sl_SI.mo po/sl_SI.po
+cp po/sl_SI.mo ../../../locale/sl_SI/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/sv_SE.po po/softdevice.pot
+msgfmt -c -o po/sv_SE.mo po/sv_SE.po
+cp po/sv_SE.mo ../../../locale/sv_SE/LC_MESSAGES/vdr-softdevice.mo
+msgmerge -U --no-wrap --no-location --backup=none -q po/tr_TR.po po/softdevice.pot
+msgfmt -c -o po/tr_TR.mo po/tr_TR.po
+cp po/tr_TR.mo ../../../locale/tr_TR/LC_MESSAGES/vdr-softdevice.mo
+make[1]: Leaving directory `/usr/src/vdr1_70/PLUGINS/src/softdevice'
+
+
+config.log 
+
+
+Parameters ''
+PKG_CONFIG_PATH '/usr/local/lib/pkgconfig'
+Testing system and cpu type.----------------------------
+uname -a: Linux goga 2.6.27.1-custom-default1 #1 SMP Sun Oct 19 16:02:32 MSD 2008 i686 GNU/Linux
+g++ -dumpmache: i486-linux-gnu
+Checking for pkg-config.-------------------------------
+0.22
+Checking for ffmpeg.------------------------------------
+try to use pkg-config.
+-L/usr/local/lib -lpostproc
+Checking for ffmpeg/libswscale.------------------------------------
+Package 'libswscale' requires 'libavcodec = 52.0.0' but version of libavcodec is 52.1.0
+Package 'libswscale' requires 'libavcodec = 52.0.0' but version of libavcodec is 52.1.0
+Checking for pp_postprocess 1st arg. -----
+Checking ffmpeg for member of AVCodecContext: error_recognition ----
+Checking for ALSA sound.------------------
+Checking for OSS sound.------------------
+Checking for linux framebuffer.------------------
+Checking for yaepg patch.------------------
+g++ -O2 -g -Wall  -D_GNU_SOURCE -I../../.. -c -o /tmp/softdevice-conf-3661-3488-6117 /tmp/softdevice-conf-4054-3488-24986.c
+/tmp/softdevice-conf-4054-3488-24986.c: In function &#8216;int test_func(cOsd*)&#8217;:
+/tmp/softdevice-conf-4054-3488-24986.c:3: error: &#8216;class cOsd&#8217; has no member named &#8216;vidWin&#8217;
+make: *** [/tmp/softdevice-conf-3661-3488-6117] &#1054;&#1096;&#1080;&#1073;&#1082;&#1072; 1
+Checking for DirectFB and DFB++.------------------
+Package dfb++ was not found in the pkg-config search path.
+Perhaps you should add the directory containing `dfb++.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'dfb++' found
+Checking for vidix.------------------------
+/tmp/softdevice-conf-4054-3488-24986.c:2:22: error: vidixlib.h: &#1053;&#1077;&#1090; &#1090;&#1072;&#1082;&#1086;&#1075;&#1086; &#1092;&#1072;&#1081;&#1083;&#1072; &#1080;&#1083;&#1080; &#1082;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075;&#1072;
+/tmp/softdevice-conf-4054-3488-24986.c: In function &#8216;int main()&#8217;:
+/tmp/softdevice-conf-4054-3488-24986.c:4: error: &#8216;vidix_capability_t&#8217; was not declared in this scope
+/tmp/softdevice-conf-4054-3488-24986.c:4: error: expected `;' before &#8216;vidix_cap&#8217;
+Checking for Xv.-----------------------------
+Checking for Xinerama.-----------------------------
+
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003165.html">[Softdevice-devel] [Patch #2578] fix build with latest libavformat
+</A></li>
+	<LI>Next message: <A HREF="003168.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3167">[ date ]</a>
+              <a href="thread.html#3167">[ thread ]</a>
+              <a href="subject.html#3167">[ subject ]</a>
+              <a href="author.html#3167">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

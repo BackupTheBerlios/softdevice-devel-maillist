@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Feature Request: Autocrop and smooth	zoom	insoftdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Feature%20Request%3A%20Autocrop%20and%20smooth%09zoom%0A%09insoftdevice&In-Reply-To=%3Cpan.2007.04.04.13.44.33%40cdu.edu.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002830.html">
+   <LINK REL="Next"  HREF="002844.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Feature Request: Autocrop and smooth	zoom	insoftdevice</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Feature%20Request%3A%20Autocrop%20and%20smooth%09zoom%0A%09insoftdevice&In-Reply-To=%3Cpan.2007.04.04.13.44.33%40cdu.edu.au%3E"
+       TITLE="[Softdevice-devel] Feature Request: Autocrop and smooth	zoom	insoftdevice">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Wed Apr  4 15:44:34 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002830.html">[Softdevice-devel] Feature Request: Autocrop and smooth	zoom insoftdevice
+</A></li>
+        <LI>Next message: <A HREF="002844.html">[Softdevice-devel] Feature Request: Autocrop and smooth	zoom insoftdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2842">[ date ]</a>
+              <a href="thread.html#2842">[ thread ]</a>
+              <a href="subject.html#2842">[ subject ]</a>
+              <a href="author.html#2842">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, 03 Apr 2007 21:11:58 +0200, Martin Wache wrote:
+
+&gt;<i> Malcolm Caldwell schrieb:
+</I>&gt;&gt;<i> On Sun, 25 Mar 2007 13:21:46 +0200, Andre Neumann wrote:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> I have it working now. You find the patch at
+</I>&gt;&gt;&gt;<i> <A HREF="http://www.do-net.de/softdevice_autocropsmooth.diff">http://www.do-net.de/softdevice_autocropsmooth.diff</A> , which is againts
+</I>&gt;&gt;&gt;<i> CVS from around 08/08/2006.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Can someone tell me:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Does this code work for the case where there is I have a 4:3 Display,
+</I>&gt;&gt;<i> but my channel broadcasts all programming as 16:9 - even if it is 4:3
+</I>&gt;&gt;<i> content.  They also do not use AFD.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Does this patch 'zoom' such content to fill my screen?
+</I>&gt;&gt;<i>  
+</I>&gt;<i> I'm not sure if I understand you correctly, but I think it is for the
+</I>&gt;<i> opposite case.
+</I>&gt;<i> The content is 16:9, it is broadcasted as 4:3 with black bars at top and
+</I>&gt;<i> bottom. In this case the black bars are detected and automatically
+</I>&gt;<i> cropped, so that it can be displayed without bars on a 16:9 screen.
+</I>
+You are correct in that this patch does the opposite of what I want.  
+
+Would it be possible to extend this to the case of a 4:3 picture within a 
+16:9 frame displayed on a 4:3 screen?  In this case there are black bars 
+on the top and bottom, and left and right of the picture.  It should be 
+zoomed to fill the screen.
+ 
+
+
+&gt;<i> I applied an updated version of the patch to the cvs.
+</I>&gt;<i> 
+</I>&gt;<i> Bye,
+</I>&gt;<i> Martin
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002830.html">[Softdevice-devel] Feature Request: Autocrop and smooth	zoom insoftdevice
+</A></li>
+	<LI>Next message: <A HREF="002844.html">[Softdevice-devel] Feature Request: Autocrop and smooth	zoom insoftdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2842">[ date ]</a>
+              <a href="thread.html#2842">[ thread ]</a>
+              <a href="subject.html#2842">[ subject ]</a>
+              <a href="author.html#2842">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] pseudo OSD background
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20OSD%20background&In-Reply-To=%3C200410250015.53033.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000008.html">
+   <LINK REL="Next"  HREF="000009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] pseudo OSD background</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20OSD%20background&In-Reply-To=%3C200410250015.53033.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] pseudo OSD background">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Oct 25 00:15:53 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000008.html">[Softdevice-devel] pseudo OSD background
+</A></li>
+        <LI>Next message: <A HREF="000009.html">[Softdevice-devel] pseudo OSD background
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 24. Oktober 2004 14:57, Martin Wache wrote:
+&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; based on Togeir's patch I want to suggest the following diff for
+</I>&gt;<i> &gt; pseudo OSD backgound drawing.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; It is enabled allways for all output methods when OSD is drawn and
+</I>&gt;<i> &gt; OSD has no alpha plane. When there is an alpha plane, each output
+</I>&gt;<i> &gt; method can disable that feature if it knows that true alpha blending
+</I>&gt;<i> &gt; could be done (that part is not implemented yet) .
+</I>&gt;<i> 
+</I>&gt;<i> Hey, this pseudo alpha blend looks suprisingly good! And it takes almost no
+</I>&gt;<i> cpu-time! Great thing...
+</I>&gt;<i> Did you already thing about trying to do real alpha blend in software? On a
+</I>&gt;<i> reasonable powerfull cpu this should be feasonable. For example for Xv
+</I>&gt;<i> output,
+</I>&gt;<i> one could transform the RGB osd image to YUV and then do the alpha blending
+</I>&gt;<i> in the YUV colorspace when copying the video-image to the shared memory.
+</I>&gt;<i> I think this combined copy/alpha blending should be possible in a few ms, 
+</I>&gt;<i> provided we use MMX optimized code. Maybe this works also for other output
+</I>&gt;<i> methods like Vidix, or FB.
+</I>&gt;<i> And this way we would get osd scaling for free, since it is scaled together
+</I>&gt;<i> with the video ;-)
+</I>
+Yes, but scaling with video has the disadvantage when displaying 16:9 on a 4:3
+area, OSD would be only visible in 16:9 letterbox area too :-( .
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000008.html">[Softdevice-devel] pseudo OSD background
+</A></li>
+	<LI>Next message: <A HREF="000009.html">[Softdevice-devel] pseudo OSD background
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

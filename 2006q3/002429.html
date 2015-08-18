@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Contrast%2C%20brightness%2C%20saturation%2C%0A%09etc.%20on%20dfb%20output...&In-Reply-To=%3C200609092350.20065.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002421.html">
+   <LINK REL="Next"  HREF="002417.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Contrast%2C%20brightness%2C%20saturation%2C%0A%09etc.%20on%20dfb%20output...&In-Reply-To=%3C200609092350.20065.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Sep  9 23:50:19 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002421.html">[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+</A></li>
+        <LI>Next message: <A HREF="002417.html">[Softdevice-devel] VIA unichrome TV-out on P4V8X-MX
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2429">[ date ]</a>
+              <a href="thread.html#2429">[ thread ]</a>
+              <a href="subject.html#2429">[ subject ]</a>
+              <a href="author.html#2429">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 09 September 2006 16:59, Laz wrote:
+&gt;<i> On Saturday 09 September 2006 13:05, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Samstag 09 September 2006 13:29, Laz wrote:
+</I>&gt;<i> &gt; &gt; Is any one working on implementing vidCaps for the DirectFB output of
+</I>&gt;<i> &gt; &gt; softdevice (I see it has just been added to the vidix driver). If no one
+</I>&gt;<i> &gt; &gt; is, I'll have a go at implementing it.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The reasons I did not go further in this directtion were:
+</I>&gt;<i> &gt; - At the time I tried, DFB++ had a bug and need a patch to call
+</I>&gt;<i> &gt; SetColorAdjustment() - When working with TV-out and touching color
+</I>&gt;<i> &gt; registers, it was not possible for me to get the original values back.
+</I>&gt;<i> &gt; Maybe that's due to our 0 .. 100% logic. Value range of DirectFB is
+</I>&gt;<i> &gt; unsigned short.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Attached is my old diff (2005-11-10) , untested with current cvs.
+</I>&gt;<i> 
+</I>&gt;<i> I was originally thinking of using this on my main vdr system which uses viatv 
+</I>&gt;<i> output but I've since found out that the primary layer supports this but the 
+</I>&gt;<i> video overlay layer doesn't! I could have adjusted my OSD but not the video! 
+</I>&gt;<i> Still, I've now had a go on my Matox system.
+</I>
+Funny, with nearly original version on my radeon, I only could adjust
+the values of the videoLayer. Attached version is for current cvs and
+does adjust settings for both: video and osd layer.
+
+&gt;<i> 
+</I>&gt;<i> The actual settings bit seems to work on my Matrox system but it still needs a 
+</I>&gt;<i> bit of tweaking because I think things have been reordered since the patch 
+</I>&gt;<i> was written: your patch calls CheckVideoParmChange() before SetParam() is 
+</I>&gt;<i> called and so videoParmLayer is unset when CheckVideoParmChange() is called 
+</I>&gt;<i> so it returns straight away.
+</I>
+CheckVideoParmChange() is now called at end of SetParams(), 
+and it is done allways.
+
+-- 
+Stefan Lucke
+
+PS: Mail volume is really high in the past few days.
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb-color-adjust-02.diff
+Type: text/x-diff
+Size: 5538 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060909/28bd9e6a/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060909/28bd9e6a/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002421.html">[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+</A></li>
+	<LI>Next message: <A HREF="002417.html">[Softdevice-devel] VIA unichrome TV-out on P4V8X-MX
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2429">[ date ]</a>
+              <a href="thread.html#2429">[ thread ]</a>
+              <a href="subject.html#2429">[ subject ]</a>
+              <a href="author.html#2429">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

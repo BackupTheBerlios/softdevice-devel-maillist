@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Dolby Digital out via SPDIF
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C42387709.4010708%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000301.html">
+   <LINK REL="Next"  HREF="000304.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Dolby Digital out via SPDIF</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C42387709.4010708%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] Dolby Digital out via SPDIF">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Wed Mar 16 19:12:25 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000301.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+        <LI>Next message: <A HREF="000304.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#303">[ date ]</a>
+              <a href="thread.html#303">[ thread ]</a>
+              <a href="subject.html#303">[ subject ]</a>
+              <a href="author.html#303">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+&gt;<i> Carsten Kollmeier wrote:
+</I>&gt;&gt;<i> Hi!
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Me again, thought it was better to handle this in a seperate thread.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> As I understand, DD out could be done via Bitstreamout, but this is 
+</I>&gt;&gt;<i> not developed yet?
+</I>&gt;<i> In principle it should work since the softdevice tries to behave just 
+</I>&gt;<i> like a FF-card, but as far as I know noone ever tried to use the 
+</I>&gt;<i> Bitstreamout with the softdevice.
+</I>
+Hi!
+
+I tried to use softdevice &amp; bitstreamout on my single budget (Nova-S) 
+system with CMI8738 SPDIF-out and external decoder, and I think the 
+crash I get is due to the fact that both bitstreamout and softdevice try 
+to access the SPDIF.
+For me, as I do not have a FF-card with a physical SPDIF output to loop 
+through my soundcard and control this with bitstreamout, the best 
+solution would be if softdevice could just passthrough DD as well.
+Forgot to mention, it's working for  stereo MP2, but not for mono. If 
+you could please have a look on this mono issue too (besides DD of 
+course ;-), I think the decoded PCM must also be upmixed to stereo, I'm 
+suspecting that libavcodec or ffmpeg or whatever you use for decoding in 
+softdevice just tries to pass the decoded PCM to the SPDIF as is, and 
+I'm not aware of any external decoder to handle mono PCM, as it has to 
+be exactly like the stereo PCM on Audio-CDs by the Red book (mono 
+material is just too identical channels, too).
+
+
+Keep up the good work!
+
+Lucian
+
+P.S. this surely belongs to a new thread, but what about DirectFB output 
+on interlaced devices (TV-out of a Matrox G400 for example), has there 
+been any improvement in the field parity issues? The output is still 
+jerky compared with 'mplayer -vo dfbmga' on the TV. Is it possible to 
+completely turn of deinterlacing (as it is not needed at all on a an 
+&quot;interlaced-by-nature&quot; device like a standard PAL TV with no fancy 
+feateres) and just take care of the right field order?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000301.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+	<LI>Next message: <A HREF="000304.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#303">[ date ]</a>
+              <a href="thread.html#303">[ thread ]</a>
+              <a href="subject.html#303">[ subject ]</a>
+              <a href="author.html#303">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

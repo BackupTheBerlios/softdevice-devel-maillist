@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503281709.38450.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000385.html">
+   <LINK REL="Next"  HREF="000387.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503281709.38450.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Mar 28 17:09:38 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000385.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000387.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#386">[ date ]</a>
+              <a href="thread.html#386">[ thread ]</a>
+              <a href="subject.html#386">[ subject ]</a>
+              <a href="author.html#386">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 28. M&#228;rz 2005 14:56, Lucian Muresan wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> ...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; So hopefully I got it. OSD drawing is changed. Now there is no slowmotion
+</I>&gt;<i> &gt; of video while the channel info OSD is shown on my epia. Tested that
+</I>&gt;<i> &gt; also with Radeon-9200, G550 vga + tv-out and G400 as mentioned above.
+</I>&gt;<i> &gt; On G400 I've still some problems but this is probably caused by the old
+</I>&gt;<i> &gt; DFB version on that system (0.9.20). Other tests were done with DirectFB
+</I>&gt;<i> &gt; cvs from 2005-02-26.
+</I>&gt;<i> &gt; 
+</I>
+Now I'm on DFB-cvs 2005-02-26 with my G400 system too. Had to comment
+out build of wm97xx and sis315.
+
+&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i> I just tested today's CVS of softdevice with DirectFB-0.9.22 on my G400
+</I>&gt;<i> DH TV-out and I must admit that the audio sync is OK now for supported
+</I>&gt;<i> formats (stereo MP2 and AC3 software-decoded), even if on channel
+</I>&gt;<i> switching it sometimes takes 1-2 seconds until it syncs, but that's OK
+</I>&gt;<i> with me. OSD is OK, too, I'm seeing no problems. Unfortunately, the
+</I>&gt;<i> field parity problems in the video are back again. So what could I try
+</I>&gt;<i> to modify to have them sorted out again, but keep AV sync as it is now?
+</I>&gt;<i> Keep up the good work!
+</I>
+Field parity issue seems to be randomly either correct or wrong as my
+recent changes should have no effect on interlaced/parity handling.
+Did you try serveral channels and/or serval invocations of vdr ?
+
+But I'll suggest the following change too, as it may have influence
+on that issue (only compile checked).
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb-interl-01.diff
+Type: text/x-diff
+Size: 1227 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050328/26fd3f14/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050328/26fd3f14/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000385.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000387.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#386">[ date ]</a>
+              <a href="thread.html#386">[ thread ]</a>
+              <a href="subject.html#386">[ subject ]</a>
+              <a href="author.html#386">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

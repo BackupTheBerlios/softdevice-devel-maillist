@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Towards softdevice-0.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C1112864659.4254f79309f67%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000460.html">
+   <LINK REL="Next"  HREF="000462.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Towards softdevice-0.1.1</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C1112864659.4254f79309f67%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: Towards softdevice-0.1.1">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr  7 11:04:19 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000460.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+        <LI>Next message: <A HREF="000462.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#461">[ date ]</a>
+              <a href="thread.html#461">[ thread ]</a>
+              <a href="subject.html#461">[ subject ]</a>
+              <a href="author.html#461">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+
+&gt;<i>
+</I>&gt;<i> The second issue is not really a bug in the softdevice, but a bug in the
+</I>&gt;<i> XServer:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+&gt;<i> [softdevice] ffmpeg version(0.4.9-pre1) build(4718)
+</I>&gt;<i> [XvVideoOut]: max area size 2048 x 2048
+</I>&gt;<i> [XvVideoOut]: using area size 2048 x 2048
+</I>&gt;<i> X Error of failed request:  BadAlloc (insufficient resources for operation)
+</I>&gt;<i>    Major opcode of failed request:  141 (XVideo)
+</I>&gt;<i>    Minor opcode of failed request:  19 ()
+</I>&gt;<i>    Serial number of failed request:  150
+</I>&gt;<i>    Current serial number in output stream:  152
+</I>
+&gt;<i> When I discovered this I spend some time trying to debug it but I did
+</I>&gt;<i> not succced, hardcoded the default resolution and forgot about it.
+</I>&gt;<i> The strange thing is that everything goes fine, and then on the XSync we
+</I>&gt;<i> get the &quot;Bad Alloc&quot; error which seems to be uncatchable.
+</I>&gt;<i>
+</I>&gt;<i> Can we do anything to get around this? Maybe a ENABLE_HDTV switch?
+</I>&gt;<i>
+</I>
+I get sometimes similar errors. I got them even in previous versions before
+I used the max available area. That happens when I had one or several browser
+windows of vdr-portal open. Closing them resolves the situation. It looks like
+card memory is used for caching of pixmaps and when the xv should be realized on
+screen, the xserver does not get enough contigues memory for that on the video
+card.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000460.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+	<LI>Next message: <A HREF="000462.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#461">[ date ]</a>
+              <a href="thread.html#461">[ thread ]</a>
+              <a href="subject.html#461">[ subject ]</a>
+              <a href="author.html#461">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: Via Unichrome TV-out
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Via%20Unichrome%20TV-out&In-Reply-To=%3C200511061556.14438.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001493.html">
+   <LINK REL="Next"  HREF="001496.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: Via Unichrome TV-out</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Via%20Unichrome%20TV-out&In-Reply-To=%3C200511061556.14438.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Patch: Via Unichrome TV-out">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Nov  6 15:56:14 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001493.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+        <LI>Next message: <A HREF="001496.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1495">[ date ]</a>
+              <a href="thread.html#1495">[ thread ]</a>
+              <a href="subject.html#1495">[ subject ]</a>
+              <a href="author.html#1495">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 6. November 2005 15:17, Laz wrote:
+&gt;<i> On Sunday 06 November 2005 13:26, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Sonntag, 6. November 2005 12:24, Laz wrote:
+</I>&gt;<i> &gt; Thanks.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; As I learned, Testconfiguration _must_ be protected by try {} catch{}
+</I>&gt;<i> &gt; to take action upon failures. Thats already in my version, so I'll
+</I>&gt;<i> &gt; change that.
+</I>&gt;<i> 
+</I>&gt;<i> I added a couple of try {} and catch {} bits after your comments the other 
+</I>&gt;<i> day.
+</I>&gt;<i> 
+</I>
+That's what I was wondering on one directfb lists. Testconfiguration()
+throws a exception when one parameter is not supported. I had
+that with matrox BES when I tried to display 1920x1080 video. BES has
+a limit of 1024 (height) :-(  .
+
+&gt;<i> &gt; Only small things, but with the last hunk I have some questions:
+</I>&gt;<i> &gt; &gt; @@ -1257,7 +1305,10 @@
+</I>&gt;<i> &gt; &gt; &#160; &#160; &#160;}
+</I>&gt;<i> &gt; &gt; &#160; &#160; &#160;else
+</I>&gt;<i> &gt; &gt; &#160; &#160; &#160;{
+</I>&gt;<i> &gt; &gt; - &#160; &#160; &#160;videoSurface-&gt;Flip(NULL, DSFLIP_ONSYNC);
+</I>&gt;<i> &gt; &gt; + &#160; &#160; &#160;if (setupStore-&gt;useUnichrometv)
+</I>&gt;<i> &gt; &gt; + &#160; &#160; &#160; &#160; &#160;videoSurface-&gt;Flip();
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Did you try ONSYNC in your enviroment ?
+</I>&gt;<i> &gt; If yes whats the impact, if no please try as it would us allow to keep the
+</I>&gt;<i> &gt; default.
+</I>&gt;<i> 
+</I>&gt;<i> I have tried various Flip calls but I think I've only tried the Flip() one 
+</I>&gt;<i> with the current viafb and DierctFB patches. I'll give it a go in  afew 
+</I>&gt;<i> minutes. Previously, I didn't see any difference.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; + &#160; &#160; &#160;else
+</I>&gt;<i> &gt; &gt; + &#160; &#160; &#160; &#160; &#160;videoSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Here you change the default for others from ONSYNC to WAITFORSYNC.
+</I>&gt;<i> &gt; I guess it's better to keep ONSYNC.
+</I>&gt;<i> 
+</I>&gt;<i> Probably something hanging over from when I was testing stuff before: I was 
+</I>&gt;<i> trying not to change anything else. Oops!
+</I>&gt;<i> 
+</I>&gt;<i> After more testing,
+</I>
+Is that the test you mentioned above ?
+
+&gt;<i> maybe it isn't yet _quite_ as good as it could be but is a 
+</I>&gt;<i> big improvement over what I have had. One thing I have noticed is that 
+</I>&gt;<i> pausing can give a very flickery picture, looking like it is alternating 
+</I>&gt;<i> between two fields, or frames, or the sync is reversing, or something like 
+</I>&gt;<i> that.
+</I>
+Thats normal when displaying interlaced still pictures (both fields 
+at the same time). 
+
+I think I'll rename 'usUnichrometv' to 'viatv'. That is not hardware
+vendor VIA, just a mor general via, as that mode just does:
+- enables field parity for primary layer
+- changes double buffering from double to triple
+
+Perhaps I have to add a separate option which enables
+triple buffering and viatv switches to trple buffering too.
+
+Just unified some actions of setting field parity (mga + via).
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001493.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+	<LI>Next message: <A HREF="001496.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1495">[ date ]</a>
+              <a href="thread.html#1495">[ thread ]</a>
+              <a href="subject.html#1495">[ subject ]</a>
+              <a href="author.html#1495">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xv%20output%20and%20fullscreen%20issue%3A%20almost%0A%20SOLVED.&In-Reply-To=%3C20050727105221.2f00cc89.ospite%40studenti.unina.it%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001034.html">
+   <LINK REL="Next"  HREF="001059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.</H1>
+    <B>A.O.</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xv%20output%20and%20fullscreen%20issue%3A%20almost%0A%20SOLVED.&In-Reply-To=%3C20050727105221.2f00cc89.ospite%40studenti.unina.it%3E"
+       TITLE="[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.">ospite at studenti.unina.it
+       </A><BR>
+    <I>Wed Jul 27 10:52:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001034.html">[Softdevice-devel] Softdevice and ac3
+</A></li>
+        <LI>Next message: <A HREF="001059.html">[Softdevice-devel] SkyStar2 module, device 3 has no lock
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1044">[ date ]</a>
+              <a href="thread.html#1044">[ thread ]</a>
+              <a href="subject.html#1044">[ subject ]</a>
+              <a href="author.html#1044">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, 28 Jun 2005 20:14:57 +0200
+Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+
+&gt;<i> On Donnerstag, 23. Juni 2005 09:56, Stefan Lucke wrote:
+</I>&gt;<i> &gt; Quoting &quot;A.O.&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">ospite at studenti.unina.it</A>&gt;:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Hi,
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; it seems i was able to solve the problem i had when going in and
+</I>&gt;<i> &gt; &gt; out of fullscreen mode very fast. The effect was that from time to
+</I>&gt;<i> &gt; &gt; time vdr stopped because of a buffering problem.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I commented the call that sets the window Focus explicitly in
+</I>&gt;<i> &gt; &gt; xv-video.c, now the focus handling is demanded to the windows
+</I>&gt;<i> &gt; &gt; manager (i use blackbox, and my videocard is a savage IX/MX
+</I>&gt;<i> &gt; &gt; ARGH!). But.. there is always a &quot;but&quot;, playing insanely with the
+</I>&gt;<i> &gt; &gt; f-key now brings to another issue: sometimes when coming back to
+</I>&gt;<i> &gt; &gt; windowed mode the window size is not restored properly, the window
+</I>&gt;<i> &gt; &gt; seems to have the correct position but it has the &quot;fullscreen&quot;
+</I>&gt;<i> &gt; &gt; size. Maybe a locking problem? Should softdevice allow a
+</I>&gt;<i> &gt; &gt; fullscreen request when serving a fullscreen request?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Noticed that too when holding 'f' key, so that toggling is done at
+</I>&gt;<i> &gt; keyrepeat rate. Perhaps we have to ignore (count) toggle request
+</I>&gt;<i> &gt; until we get the corresponding ConfigureNotify event. I guess that
+</I>&gt;<i> &gt; counting toggle requests should solve your initial problem too.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> A fix for loosing window dimension is in cvs now. By this sometimes
+</I>&gt;<i> a toggle is ignored (while already in progress). In addition to this
+</I>&gt;<i> we may define a &quot;min toggle repeat intervall&quot; to reduce amount
+</I>&gt;<i> of toggle requests if you still get sometimes in trouble.
+</I>&gt;<i> Toggleing fullscreen, windowed mode at keyrepeat rate is not a 
+</I>&gt;<i> typical &quot;use case&quot; of softdevice.
+</I>&gt;<i> 
+</I>
+The fix does not worked as expected for me, after several fullscreen
+requests softdevice crashes. To have a stable behaviour I have always
+to comment the XSetInputFocus call, but at this point i'm inclined to
+think to a WM's problem, so i will not bother you anymore on that.
+
+Thanks again,
+   Antonio.
+
+-- 
+Public key: <A HREF="http://studenti.unina.it/~ospite/aopubkey.asc">http://studenti.unina.it/~ospite/aopubkey.asc</A>
+  Web Site: <A HREF="http://studenti.unina.it/~ospite">http://studenti.unina.it/~ospite</A>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050727/59536215/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050727/59536215/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001034.html">[Softdevice-devel] Softdevice and ac3
+</A></li>
+	<LI>Next message: <A HREF="001059.html">[Softdevice-devel] SkyStar2 module, device 3 has no lock
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1044">[ date ]</a>
+              <a href="thread.html#1044">[ thread ]</a>
+              <a href="subject.html#1044">[ subject ]</a>
+              <a href="author.html#1044">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] blank screen after some time with no signal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C200505162323.24854.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000674.html">
+   <LINK REL="Next"  HREF="000679.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] blank screen after some time with no signal</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C200505162323.24854.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] blank screen after some time with no signal">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon May 16 23:23:24 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000674.html">[Softdevice-devel] blank screen after some time with no signal (WAS: [Softdevice-cvs] softdevice video-dfb.c,1.25,1.26 ..)
+</A></li>
+        <LI>Next message: <A HREF="000679.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#675">[ date ]</a>
+              <a href="thread.html#675">[ thread ]</a>
+              <a href="subject.html#675">[ subject ]</a>
+              <a href="author.html#675">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 16. Mai 2005 21:40, Martin Wache wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Montag, 16. Mai 2005 17:53, wachm wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;Update of /cvsroot/softdevice/softdevice
+</I>&gt;<i> &gt;&gt;In directory sheep:/tmp/cvs-serv29824
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;Modified Files:
+</I>&gt;<i> &gt;&gt;	video-dfb.c video-vidix.c video-xv.c video.c video.h 
+</I>&gt;<i> &gt;&gt;Log Message:
+</I>&gt;<i> &gt;&gt;- blank screen after some time with no signal
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; CHANGELOG entry is missing.
+</I>&gt;<i> I just added it.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Can I deactivate this behaviour ?
+</I>&gt;<i> Not yet. I guess because you ask you want to be able to deactivate it?
+</I>
+Yes. In pause mode I want to look a bit more than 2 or 3 seconds at
+the picture.
+
+&gt;<i> &gt; I was just wondering why, when I use xv-out screen gets blanked when
+</I>&gt;<i> &gt; I'm watching a recording and enter pause. Now that's the same with
+</I>&gt;<i> &gt; dfb-out. This happens within a few seconds.
+</I>&gt;<i> Good point I missed this, it should be like this. Up to now there is no 
+</I>&gt;<i> way to distinguish between pause mode and no signal. I will change this.
+</I>
+As that's a desired behaviour and not a bug as I original thought, we
+should have a device method, so that each out-method can act on it's
+own upon idle calls. When xv-out is started by commandline in fullscreen
+mode, we deactivate the screensaver and any power save modes. Even
+with dfb there could be done more than a simple black screen.
+
+&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; With xv it is even stranger. Minimizing and restoring, brings back an
+</I>&gt;<i> &gt; old picture with rendered old OSD.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> That is strange, I never had this behavior. Is there any recipe to 
+</I>&gt;<i> reproduce this? Is this with pseudo alpha or software alpha?
+</I>
+That is with software osd drawing. Hmm, that was with MP3 playback
+don't know if softplay or mp3 plugin. But now I cannot not reproduce
+that now neither with softplay nor with mp3.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000674.html">[Softdevice-devel] blank screen after some time with no signal (WAS: [Softdevice-cvs] softdevice video-dfb.c,1.25,1.26 ..)
+</A></li>
+	<LI>Next message: <A HREF="000679.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#675">[ date ]</a>
+              <a href="thread.html#675">[ thread ]</a>
+              <a href="subject.html#675">[ subject ]</a>
+              <a href="author.html#675">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

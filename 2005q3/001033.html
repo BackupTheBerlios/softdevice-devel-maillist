@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20crash&In-Reply-To=%3C42E5F5B2.3010104%40iki.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001032.html">
+   <LINK REL="Next"  HREF="001038.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice crash</H1>
+    <B>Seppo Ingalsuo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20crash&In-Reply-To=%3C42E5F5B2.3010104%40iki.fi%3E"
+       TITLE="[Softdevice-devel] Softdevice crash">seppo.ingalsuo at iki.fi
+       </A><BR>
+    <I>Tue Jul 26 10:34:58 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001032.html">[Softdevice-devel] WORC5 works
+</A></li>
+        <LI>Next message: <A HREF="001038.html">[Softdevice-devel] Softdevice crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1033">[ date ]</a>
+              <a href="thread.html#1033">[ thread ]</a>
+              <a href="subject.html#1033">[ subject ]</a>
+              <a href="author.html#1033">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Here is core file information about a softdevice-cvs (2005-07-23) crash
+
+(gdb) where
+#0  0x087fd768 in ?? ()
+#1  0xb7c6fc53 in cMpeg2Decoder::BufferFill (this=0x84edbe8) at 
+mpeg2decoder.c:1492
+#2  0xb7c67d43 in cSoftDevice::Poll (this=0x848b3f8, Poller=@0xbdbffa04, 
+TimeoutMs=100)
+    at softdevice.c:516
+#3  0x080985da in cDvbPlayer::Action (this=0xb575b4a0) at dvbplayer.c:493
+#4  0x080e66b6 in cThread::StartThread (Thread=0xb575b4ac) at thread.c:233
+#5  0xb7ea1e51 in pthread_start_thread () from /lib/libpthread.so.0
+#6  0xb7d5892a in clone () from /lib/libc.so.6
+
+If I recall right vdr got stuck when attempting to resume paused 
+recording playback. I'm currently running vdr with 
+LD_ASSUME_KERNEL=2.4.1. There was nothing interesting in vdr log files 
+when crash happened.
+
+BR,
+Seppo
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001032.html">[Softdevice-devel] WORC5 works
+</A></li>
+	<LI>Next message: <A HREF="001038.html">[Softdevice-devel] Softdevice crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1033">[ date ]</a>
+              <a href="thread.html#1033">[ thread ]</a>
+              <a href="subject.html#1033">[ subject ]</a>
+              <a href="author.html#1033">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems while playing recordings and in startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%20startup&In-Reply-To=%3Cb7bb3641050530110227f2b313%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000771.html">
+   <LINK REL="Next"  HREF="000774.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems while playing recordings and in startup</H1>
+    <B>Ari Koponen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%20startup&In-Reply-To=%3Cb7bb3641050530110227f2b313%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] Problems while playing recordings and in startup">juniper81 at gmail.com
+       </A><BR>
+    <I>Mon May 30 20:02:18 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000771.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+        <LI>Next message: <A HREF="000774.html">[Softdevice-devel] Problems while playing recordings and in	startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#772">[ date ]</a>
+              <a href="thread.html#772">[ thread ]</a>
+              <a href="subject.html#772">[ subject ]</a>
+              <a href="author.html#772">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 5/30/05, Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt; wrote:
+&gt;<i> Ari Koponen wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I see that my HDD is pretty slow but anyway softplay seems to play
+</I>&gt;<i> &gt; DivX avi-files very well so I don't think that the problem is in my
+</I>&gt;<i> &gt; HDD.
+</I>&gt;<i> Softplay also plays vdr recordings, so this would be the ultimate test
+</I>&gt;<i> to see if the problems are really just due to the data rate.
+</I>
+Interestingly Softplay seems to replay vdr recordings flawlessly! 
+
+&gt;<i> 
+</I>&gt;<i> You can also uncomment the printfs in cSoftdevice::Poll (file softdevice.c):
+</I>&gt;<i> 
+</I>&gt;<i>    if ( decoder-&gt;BufferFill() &gt; 90 ) {
+</I>&gt;<i>       //fprintf(stderr,&quot;[softdevice] Buffer filled, TimeoutMs %d, fill
+</I>&gt;<i> %d\n&quot;,
+</I>&gt;<i>       //  TimeoutMs,decoder-&gt;BufferFill());
+</I>&gt;<i> 
+</I>&gt;<i> maybe you can move them even before the &quot;if&quot;-statement, so you will
+</I>&gt;<i> always get the buffer fill messages. They will come about every 100ms,
+</I>&gt;<i> so they will probably flood your console. In case of replay of a
+</I>&gt;<i> recording the buffer fill should always be above 80 percent or so.
+</I>
+I also tried uncommenting those statements inside the &quot;if&quot; block and
+with softplay the buffer fill was constantly 91% and with softdevice
+output it varied somewhat but was all the time over 90 %.
+
+- Ari
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000771.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+	<LI>Next message: <A HREF="000774.html">[Softdevice-devel] Problems while playing recordings and in	startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#772">[ date ]</a>
+              <a href="thread.html#772">[ thread ]</a>
+              <a href="subject.html#772">[ subject ]</a>
+              <a href="author.html#772">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C200502271210.18815.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000250.html">
+   <LINK REL="Next"  HREF="000253.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C200502271210.18815.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Feb 27 12:10:18 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000250.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+        <LI>Next message: <A HREF="000253.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#252">[ date ]</a>
+              <a href="thread.html#252">[ thread ]</a>
+              <a href="subject.html#252">[ subject ]</a>
+              <a href="author.html#252">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 25. Februar 2005 11:48, Martin Wache wrote:
+&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> thanks for fixing all those bugs while I was away!!! It seems you did 
+</I>&gt;<i> not leave much for me to fix ;-)
+</I>
+But there are a few things. With xv-out and startup aspect wide, and crop
+mode 16:9 the full OSD is scaled correct and full visible, but the
+info OSD at bottom of the screen is mostly invisible.
+With fb-out there are some positioning problems when I tried it at
+1280x1024x16.
+
+&gt;<i> I had a short look at the softdevice yesterday, but I did not have the 
+</I>&gt;<i> time to test anything.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I'll leave vidix color key for now. We have to check that later. If you
+</I>&gt;<i> &gt; are using a rage128 for your test, this maybe a driver bug as they (vidix)
+</I>&gt;<i> &gt; treat rage128 a bit different.
+</I>&gt;<i> &gt; if function set_gr_key (..)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; #ifdef RAGE128
+</I>&gt;<i> &gt; 	besr.graphics_key_msk=(1&lt;&lt;dbpp)-1;
+</I>&gt;<i> &gt; 	besr.ckey_cntl = VIDEO_KEY_FN_TRUE|GRAPHIC_KEY_FN_NE|CMP_MIX_AND;
+</I>&gt;<i> &gt; #else
+</I>&gt;<i> &gt; 	besr.graphics_key_msk=besr.graphics_key_clr;
+</I>&gt;<i> &gt; 	besr.ckey_cntl = VIDEO_KEY_FN_TRUE|CMP_MIX_AND|GRAPHIC_KEY_FN_EQ;
+</I>&gt;<i> &gt; #endif
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Yes, for some reason my Rage128pro seems to behave quite different than 
+</I>&gt;<i> other cards, it's similar for vidix and dfb. I guess I have to talk to 
+</I>&gt;<i> the vidix guys and ask them.
+</I>
+I wondered if changing the GRAPHIC_KEY function is correct. Did you try
+it with &quot;#if 0&quot; instead of &quot;#if RAGE128&quot;. In total there are only a very
+few applications out there, which use and rely on colorkeying working
+correct.
+
+&gt;<i> I did not inted to change the color key in vidix, I was just playing 
+</I>&gt;<i> around with it and I missed that I didn't take back the changes before 
+</I>&gt;<i> commiting :-o. Hehm, so I think it is the best to put the old values back.
+</I>&gt;<i> 
+</I>&gt;<i> I saw that you commited a subplugin concept for the video out methods, 
+</I>&gt;<i> after takeing a first glance at it, it looks very promising. Great work! 
+</I>&gt;<i> I will try it when I'm at home.
+</I>&gt;<i> Do you plan to go further? I could imagine to move all video out method 
+</I>&gt;<i> specific comandline parsing to the video clases just by passing the 
+</I>&gt;<i> string following the &quot;-vo xxx:&quot; to the constructor of video out methods. 
+</I>
+Done. Pointer to remaining option string is now in setup store
+(for vo and ao).
+
+&gt;<i> We could get rid of most of the ugly #ifdefs in softdevice.c.
+</I>&gt;<i> I don't now if this is possible, but I would also like to have to 
+</I>&gt;<i> possibility to create menu items from the video clases. This way for 
+</I>&gt;<i> example Xv could create menu items for saturation,hue,... at runtime 
+</I>&gt;<i> corresponding to the capabilities of the graphics card to have them 
+</I>&gt;<i> modified from OSD. And we would get rid of all those shortcut keys which 
+</I>&gt;<i> are used right now in Xv-out to modify the values :-).
+</I>
+That would be nice too. But the most important thing to my opinion is:
+AC3 out .
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000250.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+	<LI>Next message: <A HREF="000253.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#252">[ date ]</a>
+              <a href="thread.html#252">[ thread ]</a>
+              <a href="subject.html#252">[ subject ]</a>
+              <a href="author.html#252">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

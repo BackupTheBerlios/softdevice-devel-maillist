@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] PicBuffer Problem?!?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PicBuffer%20Problem%3F%21%3F&In-Reply-To=%3C200706010913.31075.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002888.html">
+   <LINK REL="Next"  HREF="002890.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] PicBuffer Problem?!?</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PicBuffer%20Problem%3F%21%3F&In-Reply-To=%3C200706010913.31075.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] PicBuffer Problem?!?">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Fri Jun  1 10:13:30 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002888.html">[Softdevice-devel] PicBuffer Problem?!?
+</A></li>
+        <LI>Next message: <A HREF="002890.html">[Softdevice-devel] PATCH: add progressive frame detection (with	on/off switch in setup)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2889">[ date ]</a>
+              <a href="thread.html#2889">[ thread ]</a>
+              <a href="subject.html#2889">[ subject ]</a>
+              <a href="author.html#2889">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 31 May 2007 20:35, Andre Neumann wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> 2 minutes ago i tried to play back an h264 trailer with aac audio with
+</I>&gt;<i> softplay. This is what i get:
+</I>&gt;<i>
+</I>&gt;<i> PLDBG: Activate 1
+</I>&gt;<i> PLDBG: Thread started: SoftPlayer
+</I>&gt;<i> softdevicePlugin 0x81d3e80
+</I>&gt;<i> Service 'softdevice-GetPacketHandles-v1.0'
+</I>&gt;<i> IsStream .mp4
+</I>&gt;<i> open file '/opt/export/Cars - Trailer.mp4'
+</I>&gt;<i> could not find stream info
+</I>&gt;<i> PLDBG: GetPlayMode nb_streams 2
+</I>&gt;<i> PLDBG: GetPlayMode stream 0 codec_type 0
+</I>&gt;<i> PLDBG: GetPlayMode stream 1 codec_type 1
+</I>&gt;<i> 21:32:52.0996 D [30441] [VideoOut] reset: sync info: repF = 988, drpF =
+</I>&gt;<i> 0, totF = 1054 21:32:53.0057 D [30441] [VideoOut] reset: sync info:
+</I>&gt;<i> repF = 0, drpF = 0, totF = 0 Input #0, mov,mp4,m4a,3gp,3g2,mj2, from
+</I>&gt;<i> 'test':
+</I>&gt;<i>   Duration: 00:02:33.3, start: 0.000000, bitrate: 2891 kb/s
+</I>&gt;<i>   Stream #0.0(und): Video: h264, yuv420p, 1280x532, 23.98 fps(r)
+</I>&gt;<i>   Stream #0.1(eng): Audio: aac, 44100 Hz, stereo
+</I>&gt;<i> #allocating buffer format orig-&gt;format 0
+</I>&gt;<i> 21:32:53.0082 D [30448] [dfb] (re)configuring Videolayer to 1280 x 532
+</I>&gt;<i> (1280x532) 21:32:53.0083 D [30448] [dfb] surface capabilities for
+</I>&gt;<i> (videoSurface): videoonly, double-buffered, flipping, PixelFormat =
+</I>&gt;<i> 0x08100609 21:32:53.0083 D [30448] [dfb] (re)configured 0x08100609
+</I>&gt;<i> [h264 @ 0x4078c1a8]warning: first frame is no keyframe
+</I>&gt;<i> [h264 @ 0x4078c1a8]reference picture missing during reorder
+</I>&gt;<i> [h264 @ 0x4078c1a8]reference picture missing during reorder
+</I>
+{SNIP}
+
+&gt;<i> error finding PicBuffer!
+</I>&gt;<i>  (!!!)  *** WARNING [Application exited without deinitialization of
+</I>&gt;<i> DirectFB!] *** [core.c:775 in dfb_core_deinit_check()]
+</I>&gt;<i>
+</I>&gt;<i> Seems to be a problem with the PicBuffer code in softdevice. Martin,
+</I>&gt;<i> could you please take a look at it?
+</I>
+I saw something like that the other week with an h264 video. Even mplayer 
+wouldn't play it (maybe would have if I'd got a newer version?). The only 
+thing I could find to play it was xine, which claimed it was using ffmpeg 
+for decoding, even though ffplay refused to play it itself!
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002888.html">[Softdevice-devel] PicBuffer Problem?!?
+</A></li>
+	<LI>Next message: <A HREF="002890.html">[Softdevice-devel] PATCH: add progressive frame detection (with	on/off switch in setup)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2889">[ date ]</a>
+              <a href="thread.html#2889">[ thread ]</a>
+              <a href="subject.html#2889">[ subject ]</a>
+              <a href="author.html#2889">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

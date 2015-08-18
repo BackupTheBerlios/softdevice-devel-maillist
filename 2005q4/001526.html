@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] cropmode toggle key
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cropmode%20toggle%20key&In-Reply-To=%3C4375F080.5020500%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001524.html">
+   <LINK REL="Next"  HREF="001533.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] cropmode toggle key</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cropmode%20toggle%20key&In-Reply-To=%3C4375F080.5020500%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] cropmode toggle key">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Sat Nov 12 14:39:12 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001524.html">[Softdevice-devel] cropmode toggle key
+</A></li>
+        <LI>Next message: <A HREF="001533.html">[Softdevice-devel] cropmode toggle key
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1526">[ date ]</a>
+              <a href="thread.html#1526">[ thread ]</a>
+              <a href="subject.html#1526">[ subject ]</a>
+              <a href="author.html#1526">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> On Freitag, 11. November 2005 17:45, Harald Milz wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>if I understand the sourcecode right, the toggle button should cycle
+</I>&gt;&gt;<i>through the 4 crop modes (softdevice-0.2.0), right? 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Unfortunately, nothing happens on my system. I use the &quot;User3&quot; button with
+</I>&gt;&gt;<i>LIRC. irw displays &quot;user3&quot; right
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         user3                    0x3E00
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>and it's in remote.conf
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>LIRC.User3      user3
+</I>&gt;<i> 
+</I>&gt;<i> From my remote.conf:
+</I>&gt;<i> softdevice-dfb.User3 	some_key_value
+</I>
+To be more precise, what I've got in my remote.conf :
+
+LIRC.User2      AB
+softdevice-dfb.User2      000000000000F04F
+
+&quot;LIRC.User2&quot; has teh value you have configured in LIRC, whereas
+&quot;softdevice-dfb.User2&quot; has a hardcoded value, which you can retreive in
+the DirectFB code. You will get this value if you activate DirectFB's
+LIRC input module (no disable-module=lirc in /etc/directfbrc) AND the
+remote code configured in LIRC is recognized by DirectFB.
+I had the problem that the remote key labelled &quot;A/B&quot; was configured
+as... &quot;A/B&quot; in /etc/lirc/lircd.conf... which is not in the list of valid
+DirectFB keys...
+Once I changed the LIRC conf to send &quot;AB&quot; instead of &quot;A/B&quot;, the remote
+key went up from LIRC to DirectFB, then softdevice, and everything was OK...
+
+All that is not really simple. What I would have expected is that the
+running remote thread in VDR just send keystrokes to subscribed listener
+plugins, and that softdevice would use the VDR remotes, whatever they are.
+Instead, softdevice runs another VDR remote thread, which listens to
+another input source, leading to 2 LIRCD connected clients, the fact
+that only DirectFB remotes will be recognized (no VDR-specific remote
+plugins or so), and that key-codes are not the same...
+
+&gt;&gt;<i>and in setup.conf
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>softdevice.CropModeToggleKey = 3
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>but nothing happens... everything else on the remote control works fine.
+</I>&gt;&gt;<i>What am I missing? 
+</I>&gt;<i> 
+</I>&gt;<i> Unfortunately this works only, if you use directfb's remote .
+</I>
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001524.html">[Softdevice-devel] cropmode toggle key
+</A></li>
+	<LI>Next message: <A HREF="001533.html">[Softdevice-devel] cropmode toggle key
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1526">[ date ]</a>
+              <a href="thread.html#1526">[ thread ]</a>
+              <a href="subject.html#1526">[ subject ]</a>
+              <a href="author.html#1526">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel]  Problems with FastForward and Rewind
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%20Problems%20with%20FastForward%20and%20Rewind&In-Reply-To=%3C20090218205437.blhgu751c4c4g88c%40www.domaingo-webmail.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003212.html">
+   <LINK REL="Next"  HREF="003215.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel]  Problems with FastForward and Rewind</H1>
+    <B>Maik Opitz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%20Problems%20with%20FastForward%20and%20Rewind&In-Reply-To=%3C20090218205437.blhgu751c4c4g88c%40www.domaingo-webmail.de%3E"
+       TITLE="[Softdevice-devel]  Problems with FastForward and Rewind">maik at fjordblau.de
+       </A><BR>
+    <I>Wed Feb 18 20:54:37 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003212.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003215.html">[Softdevice-devel] Problems with FastForward and Rewind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3213">[ date ]</a>
+              <a href="thread.html#3213">[ thread ]</a>
+              <a href="subject.html#3213">[ subject ]</a>
+              <a href="author.html#3213">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I use softdevice in my VDR with DirectFB.
+Since some time I have the following problem when I replay an  
+recording. When I fast forward the recording, it runs forward  
+extremely fast for the first minute (of recording time) or so. Then it  
+goes to normal ff-speed. The same if I rewind. Also jumping forward or  
+backward by 1 minute (green and yellow button) is not a minute.  
+Forward it jumps more than 1 minute. Backwards it is less then 1 minute.
+
+I found out that this change came on 15. April 2008. After some more  
+investigating I found, it hat to do with the change from  
+av_read_packet to av_read_frame.
+
+The following patch changes back from av_read_frame to av_read_packet  
+and so fixes the problem.
+Could someone confirm this?
+And why did we change from av_read_packet to av_read_frame?
+
+
+diff -Nur softdevice-20080415/mpeg2decoder.c  
+softdevice-20080416/mpeg2decoder.c
+--- softdevice-20080415/mpeg2decoder.c  2008-04-12 14:27:58.000000000 +0200
++++ softdevice-20080416/mpeg2decoder.c  2008-04-15 19:34:30.000000000 +0200
+@@ -1191,15 +1191,15 @@
+            usleep(50000);
+
+          BUFDEB(&quot;av_read_frame start\n&quot;);
+-        ret = av_read_frame(ic, &amp;pkt);
+-        //ret = av_read_packet(ic, &amp;pkt);
++        //ret = av_read_frame(ic, &amp;pkt);
++        ret = av_read_packet(ic, &amp;pkt);
+          if (ret &lt; 0) {
+              BUFDEB(&quot;cMpeg2Decoder Stream Error!\n&quot;);
+              if (ThreadActive)
+                     usleep(10000);
+              continue;
+          }
+-        av_dup_packet(&amp;pkt);
++        //av_dup_packet(&amp;pkt);
+          PacketCount++;
+          BUFDEB(&quot;got packet from av_read_frame!\n&quot;);
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003212.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003215.html">[Softdevice-devel] Problems with FastForward and Rewind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3213">[ date ]</a>
+              <a href="thread.html#3213">[ thread ]</a>
+              <a href="subject.html#3213">[ subject ]</a>
+              <a href="author.html#3213">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

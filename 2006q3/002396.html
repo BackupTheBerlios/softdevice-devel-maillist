@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060908174026.GD2833%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002382.html">
+   <LINK REL="Next"  HREF="002397.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060908174026.GD2833%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Sep  8 19:40:26 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002382.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002397.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2396">[ date ]</a>
+              <a href="thread.html#2396">[ thread ]</a>
+              <a href="subject.html#2396">[ subject ]</a>
+              <a href="author.html#2396">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Sep 08, 2006 at 12:11:18PM +0100, Stuart Morris wrote:
+&gt;<i> I have however noticed a few problems:
+</I>&gt;<i> 
+</I>&gt;<i> I am getting 60% cpu usage on a Duron900 however video frames are being
+</I>&gt;<i> dropped. Video 'jumps' occur aproximately every 10-20seconds.
+</I>&gt;<i> I have tried using a multimedia kernel and vdr running at nice -5 but
+</I>&gt;<i> I noticed only a small improvement.
+</I>
+Have you tried adding a usleep(1000) or usleep(2000) right before the
+scrSurface-&gt;Flip() calls in cDFBVideoOut::ShowOSD() and cDFBVideoOut::YUV()?
+The Flip() call is busy-waiting for MGA DMA engine ready.
+
+The sleeps should free about 10% of the CPU for other processes or threads.
+The right fix would be to introduce an ioctl() in the kernel that would
+allow Flip() to sleep until the MGA DMA engine triggers an interrupt.
+
+&gt;<i> If I exit from vdr and then run vdr with softdevice for a second time, the system
+</I>&gt;<i> appears to lock up with no tv or monitor output, forcing a system reboot.
+</I>&gt;<i> It seems I can run softdevice only once before having to reboot the system.
+</I>
+Last night, I restarted vdr dozens of times without problem.
+
+&gt;<i> Softdevice can only work with VDR run with root privelages. Is this correct?
+</I>
+No.  You probably need no-vt in /etc/directfbrc.  Here's my file in its
+entirety:
+
+matrox-crtc2
+matrox-tv-standard=pal
+matrox-cable-type=scart-rgb
+primary-layer=2
+hardware
+mmx
+no-banner
+no-vt
+linux-input-ir-only
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002382.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002397.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2396">[ date ]</a>
+              <a href="thread.html#2396">[ thread ]</a>
+              <a href="subject.html#2396">[ subject ]</a>
+              <a href="author.html#2396">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

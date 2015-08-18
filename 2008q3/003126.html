@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice, VDR and Fast Forward
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809131617.09495.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003124.html">
+   <LINK REL="Next"  HREF="003127.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice, VDR and Fast Forward</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809131617.09495.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Softdevice, VDR and Fast Forward">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat Sep 13 17:17:09 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003124.html">[Softdevice-devel]  Softdevice, VDR and Fast Forward
+</A></li>
+        <LI>Next message: <A HREF="003127.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3126">[ date ]</a>
+              <a href="thread.html#3126">[ thread ]</a>
+              <a href="subject.html#3126">[ subject ]</a>
+              <a href="author.html#3126">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 12 September 2008 22:38:02 Fabio Bordin wrote:
+&gt;<i> Hi!
+</I>&gt;<i> Recently I have returned to use softdevice and I have remained indeed
+</I>&gt;<i> surprised by the footsteps before that it has done.
+</I>&gt;<i> I have noticed an annoying problem with the recordings.
+</I>&gt;<i> If I quickly advance the timecode is not correctly adjourned and  when I
+</I>&gt;<i> press the key play I find very more ahead than what I expected.
+</I>&gt;<i> To make an example:
+</I>&gt;<i> I begin to see the recording and I make to go fast forward the first
+</I>&gt;<i> minute. At the desired point the timecode points out 00:03:00 but the
+</I>&gt;<i> images don't correspond. If I restart and I see the recording to normal
+</I>&gt;<i> speed the point in which I had pressed the key play had to point out
+</I>&gt;<i> once inferior, around 00:01:30.
+</I>
+I've been seeing the same thing since back in May with DirectFB / Matrox G450 
+output with softdevice (see thread &quot;Trickspeed jumps huge distances...&quot; back 
+in May). This was a newly built system but I've not had this problem before 
+with the same type of hardware.
+
+My initial suspicions were that it had to do with the virtual function
+cDevice::HasIBPTrickSpeed which was introduced in vdr 1.5.15. However, I've 
+played about enabling and disabling that in softdevice but get the same 
+outcome as you describe.
+
+I also see poor A-V synch after using fast or slow speeds: this can be 
+corrected by jumping backwards or forwards! I think there is a limit to the 
+A-V offset so that if the offset is greater than that value it is set to 
+zero: I'm pretty sure this is connected with the &quot;position&quot; in the file and 
+the current frames being shown being so far apart after using a fast or slow 
+speed.
+
+If I jump forward or backwards by a minute, the actual position jumped (as 
+shown by the counter) is something like 1:12 forwards and 50 s backwards, 
+rather than a minute as it should be. Also, when setting a cut mark, the 
+position jumps forward quite a few I-frames, rather than just to the next 
+one.
+
+I'm pretty sure that all of these are connected but whether it's down to 
+changes in vdr or in softdevice...
+
+Any clues?
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003124.html">[Softdevice-devel]  Softdevice, VDR and Fast Forward
+</A></li>
+	<LI>Next message: <A HREF="003127.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3126">[ date ]</a>
+              <a href="thread.html#3126">[ thread ]</a>
+              <a href="subject.html#3126">[ subject ]</a>
+              <a href="author.html#3126">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

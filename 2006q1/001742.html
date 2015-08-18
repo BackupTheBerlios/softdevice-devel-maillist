@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Strange compile error in SoftOsd.c
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C43EE191C.6000809%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001741.html">
+   <LINK REL="Next"  HREF="001743.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Strange compile error in SoftOsd.c</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C43EE191C.6000809%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Strange compile error in SoftOsd.c">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Feb 11 18:04:28 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001741.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+        <LI>Next message: <A HREF="001743.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1742">[ date ]</a>
+              <a href="thread.html#1742">[ thread ]</a>
+              <a href="subject.html#1742">[ subject ]</a>
+              <a href="author.html#1742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache schrieb:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Martin I guess the following change is aquivalent:
+</I>&gt;&gt;<i> Index: SoftOsd.c
+</I>&gt;&gt;<i> ===================================================================
+</I>&gt;&gt;<i> RCS file: /cvsroot/softdevice/softdevice/SoftOsd.c,v
+</I>&gt;&gt;<i> retrieving revision 1.6
+</I>&gt;&gt;<i> diff -b -B -U3 -r1.6 SoftOsd.c
+</I>&gt;&gt;<i> --- SoftOsd.c   4 Feb 2006 10:05:09 -0000       1.6
+</I>&gt;&gt;<i> +++ SoftOsd.c   11 Feb 2006 15:25:18 -0000
+</I>&gt;&gt;<i> @@ -1347,9 +1347,7 @@
+</I>&gt;&gt;<i>          int16_t g2=0;
+</I>&gt;&gt;<i>          int16_t r2=0;
+</I>&gt;&gt;<i>  #else
+</I>&gt;&gt;<i> -        __asm__(
+</I>&gt;&gt;<i> -                 &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+</I>&gt;&gt;<i> -                 : :   );
+</I>&gt;&gt;<i> +        pxor_r2r (mm7,mm7);
+</I>&gt;&gt;<i>  #endif
+</I>&gt;&gt;<i>
+</I>
+Ok, I think this is the best solution:
+        __asm__(
+                 &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+                  : : : &quot;memory&quot;  );
+
+It just adds memory to the clobber list, which is not entirely correct,
+but it should also not be wrong. And since it is at the beginning of the
+function there should not be a speed disadvantage with this solutions.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001741.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+	<LI>Next message: <A HREF="001743.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1742">[ date ]</a>
+              <a href="thread.html#1742">[ thread ]</a>
+              <a href="subject.html#1742">[ subject ]</a>
+              <a href="author.html#1742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

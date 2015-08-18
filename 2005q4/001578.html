@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> AW: [Softdevice-devel] Speeding up softdevice?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20Speeding%20up%20softdevice%3F&In-Reply-To=%3C5940.1133995938%40www68.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001577.html">
+   <LINK REL="Next"  HREF="001580.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>AW: [Softdevice-devel] Speeding up softdevice?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20Speeding%20up%20softdevice%3F&In-Reply-To=%3C5940.1133995938%40www68.gmx.net%3E"
+       TITLE="AW: [Softdevice-devel] Speeding up softdevice?">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Dec  7 23:52:18 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001577.html">AW: [Softdevice-devel] Speeding up softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001580.html">[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1578">[ date ]</a>
+              <a href="thread.html#1578">[ thread ]</a>
+              <a href="subject.html#1578">[ subject ]</a>
+              <a href="author.html#1578">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> --- Urspr&#252;ngliche Nachricht ---
+</I>&gt;<i> Von: &quot;Andre Neumann&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Neumann at do-net.de</A>&gt;
+</I>&gt;<i> An: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>&gt;
+</I>&gt;<i> Betreff: AW: [Softdevice-devel] Speeding up softdevice?
+</I>&gt;<i> Datum: Wed, 7 Dec 2005 22:00:40 +0100
+</I>&gt;<i> 
+</I>&gt;<i> I've replaced all memcpy calls to fast_memcpy in video-dfb.c and
+</I>&gt;<i> mpeg2decoder.c and now
+</I>&gt;<i> its a lot better. Still not perfect, but better.
+</I>&gt;<i> 
+</I>&gt;<i> Are there any other things i could do to speed up decoding ?
+</I>&gt;<i> 
+</I>One could try to convince ffmpeg to decode the video directly into 
+the buffer the softdevice uses to display the video, that would save us
+the time we spend copying. I'm not really sure if this would work for
+DirectFB, but for Xv out should improve the situation. Unfortunatly doing
+this is not that simple. But it is on the list of things that I wanted to
+try once I have the time...
+
+By the way, I'm not sure if I explained that correctly, but fast_memcpy is 
+not always faster than memcpy. Only when a large amount of data has to
+be transfered which don't fit into the cache fast_memcpy is faster.
+So it is not the best to change all memcpy calls to fast_memcpy, I think
+only the ones in the YUV() method should be replaced.
+
+Bye,
+Martin
+
+-- 
+10 GB Mailbox, 100 FreeSMS/Monat <A HREF="http://www.gmx.net/de/go/topmail">http://www.gmx.net/de/go/topmail</A>
++++ GMX - die erste Adresse f&#252;r Mail, Message, More +++
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001577.html">AW: [Softdevice-devel] Speeding up softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001580.html">[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1578">[ date ]</a>
+              <a href="thread.html#1578">[ thread ]</a>
+              <a href="subject.html#1578">[ subject ]</a>
+              <a href="author.html#1578">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

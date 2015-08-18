@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and nvram-wakeup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20nvram-wakeup&In-Reply-To=%3C200511042339.20029.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001484.html">
+   <LINK REL="Next"  HREF="001489.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and nvram-wakeup</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20nvram-wakeup&In-Reply-To=%3C200511042339.20029.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice and nvram-wakeup">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Nov  4 23:39:19 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001484.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+        <LI>Next message: <A HREF="001489.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1485">[ date ]</a>
+              <a href="thread.html#1485">[ thread ]</a>
+              <a href="subject.html#1485">[ subject ]</a>
+              <a href="author.html#1485">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 4. November 2005 23:04, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Fri, Nov 04, 2005 at 10:55:02PM +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; setup-softdevice.c: In constructor `
+</I>&gt;<i> &gt; &gt;    cMenuSetupCropping::cMenuSetupCropping(const char*)':
+</I>&gt;<i> &gt; &gt; setup-softdevice.c:434: error: no matching function for call to `cOsdItem::
+</I>&gt;<i> &gt; &gt;    cOsdItem(const char[2], eOSState, bool)'
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; compiles fine here.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Ah,whats that :
+</I>&gt;<i> &gt; new cOsdItem(&quot; &quot;, osUnknown, false);
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Whats your compiler version ? 
+</I>&gt;<i> &gt; &quot; &quot; not of type const char * 
+</I>&gt;<i> 
+</I>&gt;<i> I think it's perfectly fine for the compiler to interpret &quot; &quot; as equivalent
+</I>&gt;<i> to const char unnamed[2] = &quot; &quot;.  The compiler can make an implicit cast
+</I>&gt;<i> to const char*.  GCC has done this for a long time, perhaps at least
+</I>&gt;<i> since 2.95.
+</I>&gt;<i> 
+</I>&gt;<i> I believe that the problem simply is that there is no matching cOsdItem
+</I>&gt;<i> constructor.  I'd rather drop the third argument, i.e.,
+</I>&gt;<i> #if VDR_VERSNUM &gt;= xxxxx
+</I>&gt;<i> new cOsdItem(&quot; &quot;, osUnknown, false);
+</I>&gt;<i> #else
+</I>&gt;<i> new cOsdItem(&quot; &quot;, osUnknown);
+</I>&gt;<i> #endif
+</I>&gt;<i> 
+</I>
+I guess you are right. The third argument was not in vdr.1.3.32 but
+is now in 1.3.34.
+
+&gt;<i> (But is there any point in supporting old vdr versions?)
+</I>
+CVS version of softdevice does compile and work with vdr-1.2.1
+again :-) .
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001484.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+	<LI>Next message: <A HREF="001489.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1485">[ date ]</a>
+              <a href="thread.html#1485">[ thread ]</a>
+              <a href="subject.html#1485">[ subject ]</a>
+              <a href="author.html#1485">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

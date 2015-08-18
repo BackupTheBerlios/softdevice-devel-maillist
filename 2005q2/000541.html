@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Running softdevice:dfb as not root
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Running%20softdevice%3Adfb%20as%20not%20root&In-Reply-To=%3C426BEE2D.2010806%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000540.html">
+   <LINK REL="Next"  HREF="000542.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Running softdevice:dfb as not root</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Running%20softdevice%3Adfb%20as%20not%20root&In-Reply-To=%3C426BEE2D.2010806%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Running softdevice:dfb as not root">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Sun Apr 24 21:06:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000540.html">[Softdevice-devel] Running softdevice:dfb as not root
+</A></li>
+        <LI>Next message: <A HREF="000542.html">[Softdevice-devel] Running softdevice:dfb as not root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#541">[ date ]</a>
+              <a href="thread.html#541">[ thread ]</a>
+              <a href="subject.html#541">[ subject ]</a>
+              <a href="author.html#541">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo a &#233;crit :
+&gt;<i> On Sun, 2005-04-24 at 20:15 +0200, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Hello,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>I finally managed to compile and run 0.1.1, and plan to go in production 
+</I>&gt;&gt;<i>with it (leaving vdr-xine behind) : you all did a great job with 
+</I>&gt;&gt;<i>softdevice ! Lot of thanks !
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>As the subject tells : did anyone manage to regularly run softdevice as 
+</I>&gt;&gt;<i>a non-root user ?
+</I>&gt;&gt;<i>When running as root, DirectFB stops like below. I know it's a 
+</I>&gt;&gt;<i>long-lasting thread, and I thought it was possible, but I can't manage 
+</I>&gt;&gt;<i>to get the right conf.
+</I>&gt;&gt;<i>My /etc/directfbrc :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>fbdev=/dev/fb0
+</I>&gt;<i> 
+</I>&gt;<i> Do you really need this one?
+</I>
+This is reminiscent of my first tests, a looooong tome ago. Not needed.
+
+&gt;&gt;<i>(!) DirectFB/FBDev/vt: FBIOGET_CON2FBMAP failed!
+</I>&gt;&gt;<i>     --&gt; Inappropriate ioctl for device
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> What does dfbinfo say?
+</I>
+See below. As root, as the vdr user, with the without the no-vt option.
+
+I also digged into my mail archive, and found a thread about that :
+	Date: Fri, 7 Jan 2005 00:22:20 +0000
+	From: Tony Houghton &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">h at realh.co.uk</A>&gt;
+	To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">directfb-users at directfb.org</A>
+	Subject: [directfb-users] Running without root privileges
+Basically, the no-vt-* I put would work if vdr is run from the console, 
+instead of my habit to run it from an SSH session.
+The undocumented &quot;no-vt&quot; option allows to not manipulate /dev/tty at 
+all, and VDR works from SSH, but the console cursor still blinks, the 
+console screensaver timeout also disables the output, etc...
+I run VDR from the run-vdr script written by Darren Salt in C for his 
+Debian packages.
+How is your /etc/directfbrc in that kind of production setup ?
+
+-- 
+NH
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: dfbinfo.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050424/5708b0e9/attachment.txt">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050424/5708b0e9/attachment.txt</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000540.html">[Softdevice-devel] Running softdevice:dfb as not root
+</A></li>
+	<LI>Next message: <A HREF="000542.html">[Softdevice-devel] Running softdevice:dfb as not root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#541">[ date ]</a>
+              <a href="thread.html#541">[ thread ]</a>
+              <a href="subject.html#541">[ subject ]</a>
+              <a href="author.html#541">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

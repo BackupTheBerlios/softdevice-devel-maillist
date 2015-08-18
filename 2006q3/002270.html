@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060717121919.GA3692%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002265.html">
+   <LINK REL="Next"  HREF="002286.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060717121919.GA3692%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Jul 17 14:19:20 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002265.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002286.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2270">[ date ]</a>
+              <a href="thread.html#2270">[ thread ]</a>
+              <a href="subject.html#2270">[ subject ]</a>
+              <a href="author.html#2270">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jul 16, 2006 at 09:34:32PM +0100, Alasdair Campbell wrote:
+&gt;<i> On 16/07/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt; wrote:
+</I>&gt;<i> &gt; On Sun, Jul 16, 2006 at 05:37:00PM +0100, Alasdair Campbell wrote:
+</I>&gt;<i> &gt; &gt; I've been having trouble getting the interlaced output of the G450
+</I>&gt;<i> &gt; &gt; working correctly.
+</I>&gt;<i> &gt; &gt; With current CVS, DirectFB 0..25.1 &amp; current CVS FFMPEG no matter
+</I>&gt;<i> &gt; &gt; whether I set the post-processing option &quot;Deinterlace method&quot; to
+</I>&gt;<i> &gt; &gt; 'none' or 'FB-intern' I still see lines (interlacing artifacts) where
+</I>&gt;<i> &gt; &gt; there is quick movement or scrolling text/credits.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Stefan Lucke replaced the scaler one or two months ago.  It works for me,
+</I>&gt;<i> &gt; although with DirectFB CVS the OSD is broken since some weeks.  I think
+</I>&gt;<i> &gt; I'll revert to the latest official release of DirectFB.
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> I had the problem with the broken OSD, seemed like it was linked to
+</I>&gt;<i> the interlacing as only half was visible and it flickered like crazy.
+</I>&gt;<i> 
+</I>&gt;<i> If it works for you then I must be doing something stupid, which
+</I>&gt;<i> wouldn't surprise me, as I'm flying by the seat of my pants where
+</I>&gt;<i> linux is concerned.
+</I>
+I reverted to DirectFB 0.9.25.1 today morning, and OSD is flicker free again.
+DirectFB CVS is rather useless for me on -vo dfb:mgatv, because
+DVB subtitles would be unavailable.
+
+Note that when compiling DirectFB from source, you should install DirectFB
+first and only then compile and install DFB++.  Otherwise, DFB++ will
+depend on the wrong DirectFB library.
+
+&gt;<i> How did you compile FFMPEG?
+</I>
+./configure --extra-cflags='-march=pentium3 -ffast-math' --disable-encoders --disable-strip --disable-network --enable-gpl
+
+For DirectFB, I use the following configuration:
+
+./configure --disable-{unique,multi,fusion,text,mpeg,jpeg,gif,png,freetype,video4linux,video4linux2} --with-inputdrivers=linuxinput --with-gfxdrivers=matrox C{,XX}FLAGS=-march=pentium3
+
+For softdevice, I use the following:
+
+./configure --disable-{vidix,fb,xv,shm,subplugins}
+
+If you have multiple versions of the libraries laying around, you should
+perhaps check the dependencies
+(ldd vdr-1.4.0/PLUGINS/lib/libvdr-softdevice.so.1.4.0).
+
+&gt;<i> If I set CropMode to 4:3 then the overscan is too severe.
+</I>
+I guess it's a matter of taste.
+
+&gt;<i> *If someone knows a definitive answer to this I would be greatful for
+</I>&gt;<i> the email.
+</I>
+According to cvs log video-dfb.c, the field-based scaler was introduced
+in revision 1.60 on May 7, 2006.  Last Matrox related changes were in
+the most recent revision (1.68).  The last release (0.2.3) should be
+based on revision 1.58.  So, you will need the CVS version of softdevice.
+
+&gt;<i> Hardware is biostar nforce2 based motherboard, underclocked &amp;
+</I>&gt;<i> undervolted athlon 2500 barton, 512MB ram, one atapi disk, two kworld
+</I>&gt;<i> vstream dvb-t pci cards
+</I>
+Okay, neither the CPU nor the I/O should be overloaded.  I think you should
+double check that you are running the correct version of DirectFB and
+softdevice.  I don't think that ffmpeg version is that important.  Mine
+is a CVS snapshot from a few months ago.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002265.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002286.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2270">[ date ]</a>
+              <a href="thread.html#2270">[ thread ]</a>
+              <a href="subject.html#2270">[ subject ]</a>
+              <a href="author.html#2270">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

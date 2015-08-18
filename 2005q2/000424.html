@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspending the playback at shutdown
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C424EACFF.1080505%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000421.html">
+   <LINK REL="Next"  HREF="000431.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspending the playback at shutdown</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C424EACFF.1080505%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Suspending the playback at shutdown">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Apr  2 16:32:31 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000421.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+        <LI>Next message: <A HREF="000431.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#424">[ date ]</a>
+              <a href="thread.html#424">[ thread ]</a>
+              <a href="subject.html#424">[ subject ]</a>
+              <a href="author.html#424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i>
+</I>&gt;<i> I hope it won't consume more processing power than the RTC method.  I might
+</I>&gt;<i> give oprofile a try, because my 900 MHz Celeron system does not seem to be
+</I>&gt;<i> fast enough for fast moving scenes.  I recently ran oprofile on MySQL 5.0.3
+</I>&gt;<i> and managed to get some 10% performance improvement for my test case after
+</I>&gt;<i> some tweaks.
+</I>Go ahead, if there is an easy way to improve the performance of the 
+softdevice we will certainly accept a patch.
+What I was thinking about to introduce at some point is direct 
+rendering, i.e. let ffmpeg write directly to the video memory. That 
+would save some time since there would be no need of copying the 
+pictures any more, but I want to finish the audio things first...
+
+&gt;<i> Thanks! Of course, a cleaner way would be to introduce a virtual method
+</I>&gt;<i> void suspendPlayback(bool) that all plugins could override.  That would
+</I>&gt;<i> have some chance of being included in some VDR release. 
+</I>I doubt that a function like that would be included in the VDR. I think 
+there was a discussion about this kind of function some time ago..
+
+&gt;<i> 
+</I>&gt;<i> Now I tried the latest CVS on VDR 1.3.22 and 1.3.23, and subtitles-plugin
+</I>&gt;<i> 0.3.7 (<A HREF="http://www.virtanen.org/vdr/subtitles/">http://www.virtanen.org/vdr/subtitles/</A>).  Unfortunately, I don't
+</I>&gt;<i> see any subtitles with the latest CVS, neither from live stream nor from
+</I>&gt;<i> recordings.  I updated only the setup parsing code from the CVS version,
+</I>&gt;<i> and it worked.  
+</I>Just to be sure that I understand correctly: before the setup parsing 
+update the subtitles plugin was working and now it's not working 
+anymore? Strange, that's hard to explain. Did you try to go back to the 
+old version?
+On a related note, does softdevice implement the GetSTC
+&gt;<i> method accurately?  The subtitles plugin needs that for displaying the
+</I>&gt;<i> subtitles at the right time.  (They are usually transmitted a couple of
+</I>&gt;<i> seconds before they should be displayed, and now it seems that the
+</I>&gt;<i> subtitles are displayed too early.)
+</I>&gt;<i> 
+</I>I thought GetSTC was implemented correctly, but I may be wrong. By the 
+way I experienced an similar effect with subtitles in dvds, but I did 
+not investigate it further...
+
+&gt;<i> 
+</I>&gt;&gt;<i>Crashes caused by bad signal a mostly due to ffmpeg, so they are less 
+</I>&gt;&gt;<i>interesting for us. Although we might have some bugs ( or missing 
+</I>&gt;&gt;<i>checks) in our code too, which case crashes on bad signal.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Well, such crashes affect the overall usability of the product.  I think
+</I>&gt;<i> it's a design flaw to have assertions fail on garbage input.  It's so likely
+</I>&gt;<i> to get garbage DVB data.  Next time when I get such a crash, I promise to
+</I>&gt;<i> save the clip and to analyze it further.
+</I>I guess you are right. Every crash we can avoid it's worth working on it.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000421.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+	<LI>Next message: <A HREF="000431.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#424">[ date ]</a>
+              <a href="thread.html#424">[ thread ]</a>
+              <a href="subject.html#424">[ subject ]</a>
+              <a href="author.html#424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

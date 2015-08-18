@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice xv and i915 Notebook
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C200610112216.48921.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002630.html">
+   <LINK REL="Next"  HREF="002619.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice xv and i915 Notebook</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C200610112216.48921.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice xv and i915 Notebook">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Oct 11 22:16:48 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002630.html">[Softdevice-devel] DVD menu problem with softdevice+dvd-plugin
+</A></li>
+        <LI>Next message: <A HREF="002619.html">[Softdevice-devel] [directfb-users]  viafb + cle266mpegdec +	TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2616">[ date ]</a>
+              <a href="thread.html#2616">[ thread ]</a>
+              <a href="subject.html#2616">[ subject ]</a>
+              <a href="author.html#2616">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 27 September 2006 20:55, Thomas Erdmann wrote:
+&gt;<i> Am Mittwoch, 27. September 2006 19:30 schrieb Stefan Lucke:
+</I>&gt;<i> &gt; But that's not the sequence I intendet to asked for. Command I wrote
+</I>&gt;<i> &gt; is buggy. From vdr's directrory I do:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; jarada vdr-1.4.0.jarada # gdb ./vdr
+</I>&gt;<i> &gt; GNU gdb 6.4
+</I>&gt;<i> &gt; Copyright 2005 Free Software Foundation, Inc.
+</I>&gt;<i> &gt; GDB is free software, covered by the GNU General Public License, and you
+</I>&gt;<i> &gt; are welcome to change it and/or distribute copies of it under certain
+</I>&gt;<i> &gt; conditions. Type &quot;show copying&quot; to see the conditions.
+</I>&gt;<i> &gt; There is absolutely no warranty for GDB. &#160;Type &quot;show warranty&quot; for details.
+</I>&gt;<i> &gt; This GDB was configured as &quot;i686-pc-linux-gnu&quot;...Using host libthread_db
+</I>&gt;<i> &gt; library &quot;/lib/tls/libthread_db.so.1&quot;.
+</I>&gt;<i> &gt;
+</I>
+&gt;<i> Program received signal SIGSEGV, Segmentation fault.
+</I>&gt;<i> [Switching to Thread -1303712848 (LWP 8457)]
+</I>&gt;<i> 0xb7bf5067 in cSoftOsd::ScaleUpVert_MMX (this=0x87db5a0, dest=0x0, 
+</I>&gt;<i> linesize=5600, new_pixel_height=0,
+</I>&gt;<i> &#160; &#160; start_pos=0, pixmap=0xb24ae33c, Pixel=1400) at SoftOsd.c:1640
+</I>&gt;<i> 1640 &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;&quot;r&quot; 
+</I>&gt;<i> (&amp;dest[ypos*linesize+currPixel*4]) );
+</I>&gt;<i> Current language: &#160;auto; currently c++
+</I>
+Can you recheck that with current cvs, as shown line (1640) has been changed
+and is now at a different location (line 1745).
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002630.html">[Softdevice-devel] DVD menu problem with softdevice+dvd-plugin
+</A></li>
+	<LI>Next message: <A HREF="002619.html">[Softdevice-devel] [directfb-users]  viafb + cle266mpegdec +	TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2616">[ date ]</a>
+              <a href="thread.html#2616">[ thread ]</a>
+              <a href="subject.html#2616">[ subject ]</a>
+              <a href="author.html#2616">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

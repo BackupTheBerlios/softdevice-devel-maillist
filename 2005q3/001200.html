@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay issue ( ie. ffmpeg )
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20issue%20%28%20ie.%20ffmpeg%20%29&In-Reply-To=%3C20050907095121.M96473%40mellander.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001195.html">
+   <LINK REL="Next"  HREF="001203.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay issue ( ie. ffmpeg )</H1>
+    <B>Per Mellander</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20issue%20%28%20ie.%20ffmpeg%20%29&In-Reply-To=%3C20050907095121.M96473%40mellander.org%3E"
+       TITLE="[Softdevice-devel] Softplay issue ( ie. ffmpeg )">per at mellander.org
+       </A><BR>
+    <I>Wed Sep  7 12:17:22 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001195.html">[Softdevice-devel] Compile against ffmpeg CVS
+</A></li>
+        <LI>Next message: <A HREF="001203.html">[Softdevice-devel] Softplay issue ( ie. ffmpeg )
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1200">[ date ]</a>
+              <a href="thread.html#1200">[ thread ]</a>
+              <a href="subject.html#1200">[ subject ]</a>
+              <a href="author.html#1200">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm running vdr-1.3.31 with softdevice (xv ) and softplay. ffmpeg and the 
+plugins are from CVS 20050905. ffmpeg is compiled with:
+
+./configure  --enable-pp \
+             --enable-xvid \  # xvidcore-1.1.0-beta2
+             --enable-shared \
+             --enable-shared-pp \
+             --enable-gpl \
+             --enable-mp3lame # lame-devel-0.lvn.1.3.rpm
+
+I have a mpeg movie that plays well with MPlayer but not with softplay. It 
+starts ok with softplay and I can stop the replay by pressing 'stop'. The 
+problem is that the sound is all messed ( cracks 'n pops ) and I only get a 
+black picture. I'm not that great at ffmpeg but I really would like to know 
+what I'm missing to get this movie running under softplay.
+
+As I see it mplayer is using libmpeg2 for this but I understood it as ffmpeg 
+would be able to handle this?
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at ponton</A> ~]# more softplay.log 
+PLDBG: Thread started: SoftPlayer
+CMD[8821]:SetPlayMode PmAudioOnly
+CMD[8821]:Start IsSuspended 0
+CMD[8822]:init put byte finished
+CMD[8832]:new Audio stream index.. old -1 new 0
+CMD[8832]:Neuer StreamDecoder Pid: 4494 context 0x8321420 type 1
+Streams: 1
+Codec 0 ID: 69640
+CMD[8837]:Neuer Thread gestartet: pid:4494 type 1
+Input #0, psxstr, from 'test':
+  Duration: N/A, bitrate: N/A
+  Stream #0.0: Audio: adpcm_xa, 18900 Hz, stereo
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at ponton</A> ~]# more mplayer.log 
+MPEG-PS file format detected.
+VIDEO:  MPEG2  480x576  (aspect 2)  25.000 fps  2530.0 kbps (316.2 kbyte/s)
+==========================================================================
+Opening audio decoder: [mp3lib] MPEG layer-2, layer-3
+AUDIO: 44100 Hz, 2 ch, s16le, 224.0 kbit/15.87% (ratio: 28000-&gt;176400)
+Selected audio codec: [mp3] afm:mp3lib (mp3lib MPEG layer-2, layer-3)
+==========================================================================
+vo: X11 running at 1280x1024 with depth 16 and 16 bpp (&quot;:0.0&quot; =&gt; local 
+display)
+==========================================================================
+Opening video decoder: [mpegpes] MPEG 1/2 Video passthrough
+VDec: vo config request - 480 x 576 (preferred csp: Mpeg PES)
+Could not find matching colorspace - retrying with -vf scale...
+Opening video filter: [scale]
+The selected video_out device is incompatible with this codec.
+VDecoder init failed :(
+Opening video decoder: [libmpeg2] MPEG 1/2 Video decoder libmpeg2-v0.4.0b
+Selected video codec: [mpeg12] vfm:libmpeg2 (MPEG-1 or 2 (libmpeg2))
+==========================================================================
+
+
+BTW!
+
+Thanks for a very good software, soft[play|device].
+
+/Mel
+
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001195.html">[Softdevice-devel] Compile against ffmpeg CVS
+</A></li>
+	<LI>Next message: <A HREF="001203.html">[Softdevice-devel] Softplay issue ( ie. ffmpeg )
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1200">[ date ]</a>
+              <a href="thread.html#1200">[ thread ]</a>
+              <a href="subject.html#1200">[ subject ]</a>
+              <a href="author.html#1200">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

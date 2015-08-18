@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice and HD-material
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801171829.03295.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003002.html">
+   <LINK REL="Next"  HREF="003010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice and HD-material</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801171829.03295.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice and HD-material">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Jan 17 18:29:03 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003002.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+        <LI>Next message: <A HREF="003010.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3003">[ date ]</a>
+              <a href="thread.html#3003">[ thread ]</a>
+              <a href="subject.html#3003">[ subject ]</a>
+              <a href="author.html#3003">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 16 January 2008, Per Mellander wrote:
+&gt;<i> Stefan Lucke skrev:
+</I>&gt;<i> &gt;&gt; Would it be of any help if I test it on my Intel Core 2 Duo 6600?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Yes.
+</I>&gt;<i> 
+</I>&gt;<i> Well my first impression is that it works a bit smoother than using xine 
+</I>&gt;<i> as output. I'm getting a load of about 100-110% on VDR and an idle 
+</I>&gt;<i> that's quite higher than before ( ~35-50% on each CPU ).
+</I>
+My previously test with ffmpeg thread decodings was wrong :-) .
+A different version now shows up to 140% for vdr + 20 %X11.
+Both CPUs look balanced used.
+
+&gt;<i> The decoder  
+</I>&gt;<i> bail out like you mentioned but the sound remains intact. I have 
+</I>&gt;<i> sometimes quite a problem switching to a HD channel and don't get the 
+</I>&gt;<i> video. Zapping around SD-HD-SD-HD usually fix the problem.
+</I>&gt;<i> 
+</I>&gt;<i> What kind of logging do you need?
+</I>
+None. You'll see messages like:
+Jan 17 18:03:32 jarada vdr: [12589] buffer usage: 80% (tid=12588)
+Jan 17 18:03:33 jarada vdr: [12589] buffer usage: 90% (tid=12588)
+Jan 17 18:03:33 jarada vdr: [12588] clearing transfer buffer to avoid overflows
+Jan 17 18:03:33 jarada vdr: [12589] buffer usage: 0% (tid=12588)
+
+Thats the point we need our own h264 detection to generate a PSM pack
+for ffmpegs h264 detection.
+
+dvb-s2 reception seems to be sensible for reception issues.
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.78
+diff -U3 -r1.78 mpeg2decoder.c
+--- mpeg2decoder.c	24 Dec 2007 11:43:31 -0000	1.78
++++ mpeg2decoder.c	17 Jan 2008 17:20:48 -0000
+@@ -294,6 +294,13 @@
+     codec=NULL;
+     return false;
+   }
++
++  int thCount = 3;
++  if (thCount &gt; 1) {
++    avcodec_thread_init (context, thCount);
++    context-&gt;thread_count = thCount;
++  }
++
+   MPGDEB(&quot;Codec %d initialized.\n&quot;,context-&gt;codec_id);
+   return true;
+ };
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003002.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+	<LI>Next message: <A HREF="003010.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3003">[ date ]</a>
+              <a href="thread.html#3003">[ thread ]</a>
+              <a href="subject.html#3003">[ subject ]</a>
+              <a href="author.html#3003">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

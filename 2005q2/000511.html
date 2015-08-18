@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] terrible judder and stuttering
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20terrible%20judder%20and%20stuttering&In-Reply-To=%3C425B7A3C.4060102%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000510.html">
+   <LINK REL="Next"  HREF="000512.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] terrible judder and stuttering</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20terrible%20judder%20and%20stuttering&In-Reply-To=%3C425B7A3C.4060102%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] terrible judder and stuttering">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Tue Apr 12 09:35:24 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000510.html">[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??
+</A></li>
+        <LI>Next message: <A HREF="000512.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#511">[ date ]</a>
+              <a href="thread.html#511">[ thread ]</a>
+              <a href="subject.html#511">[ subject ]</a>
+              <a href="author.html#511">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+
+Well, I promised another thread, now here it is. I tried the latest CVS 
+of softdevice, and softdevice-0.1.1 as well, (tried the CVS version 
+which I think is not yet too different from 0.1.1 also with 
+DirectFB/DFB++ 0.9.22 and last CVS checkout, 0.9.23 as you know from my 
+other posting), and it's no longer usable for me. I'm experiencing the 
+biggest judder (looks like slow motion) and stuttering and AV 
+off-syncronicity I've seen so far in softdevice, on my G400 TV-out. This 
+time I invoked properly, I hope:
+
+vdr -c /etc/vdr -L /usr/lib/vdr -P'graphlcd -d noritake800' 
+-P'softdevice -L /usr/lib/vdr -vo dfb:mgatv'
+
+
+I did not find any noticeable debug output in the console or in the log.
+
+Stefan, if I understood correctly, you have a Matrox card too but do not 
+use it all the time? And you hooked it on the TV from the first head, 
+not from the second, with RGB BNC cable? If you happen to try the Matrox 
+card again, could you also please try the TV-out with DirectFB (either 
+Composite, SCART/RGB or S-video will do, I only hope you've got that 
+Matrox breakout cable(peitsche :-) )? I'm suspecting it's not related to 
+differences between Matrox G400 and G450 or what else your card is, but 
+it has to do with the Matrox TV-out in general, interlaced diplaying in 
+the right field parity order (which now actually seems to be right, 
+thanks for that) and syncing to audio...
+
+Otherwise, thanks for the whole work up to now.
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000510.html">[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??
+</A></li>
+	<LI>Next message: <A HREF="000512.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#511">[ date ]</a>
+              <a href="thread.html#511">[ thread ]</a>
+              <a href="subject.html#511">[ subject ]</a>
+              <a href="author.html#511">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

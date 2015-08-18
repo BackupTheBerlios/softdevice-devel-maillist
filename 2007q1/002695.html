@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%20cle266%20HW%20decoding&In-Reply-To=%3C45B8C823.7090004%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002694.html">
+   <LINK REL="Next"  HREF="002696.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%20cle266%20HW%20decoding&In-Reply-To=%3C45B8C823.7090004%40huillard.net%3E"
+       TITLE="[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding">nicolas at huillard.net
+       </A><BR>
+    <I>Thu Jan 25 16:09:23 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002694.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+        <LI>Next message: <A HREF="002696.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2695">[ date ]</a>
+              <a href="thread.html#2695">[ thread ]</a>
+              <a href="subject.html#2695">[ subject ]</a>
+              <a href="author.html#2695">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz a &#233;crit :
+&gt;&gt;<i>viafb 2006-10-08
+</I>&gt;&gt;<i>DirectFB 1.0.0rc2 patched for field parity ioctl
+</I>&gt;&gt;<i>DFB++ 2007-01-24
+</I>&gt;&gt;<i>libcle266mpegdec 0.5
+</I>&gt;&gt;<i>softdevice 0.3.1
+</I>&gt;&gt;<i>VDR 1.4.5
+</I>&gt;<i> 
+</I>&gt;<i> Is viafb patched to actually &quot;listen for&quot; the synching ioctl?
+</I>
+I'm using viafb from DirectFB CVS 2006-10-08, which seems to be the
+lastest one.
+
+Maybe you're talking about this patch to DirectFB, which makes DFB talk
+to viafb's ioctl :
+<A HREF="http://www.directfb.org/index.php/viewcvs.cgi/linux-viafb/patches/directfb-viafb-assisted-field-parity.patch?rev=1.1&amp;content-type=text/vnd.viewcvs-markup">http://www.directfb.org/index.php/viewcvs.cgi/linux-viafb/patches/directfb-viafb-assisted-field-parity.patch?rev=1.1&amp;content-type=text/vnd.viewcvs-markup</A>
+
+Yes, I'm using it, in an older form, which seems to be the same, tough.
+
+Software decoding leaves no interlacing artifacts, so it should be OK on
+the lower levels (DirectFB / viafb).
+
+&gt;<i> I'm using vdr-1.5.0 with softdevice cvs from last October (patched with 
+</I>&gt;<i> the lip-sync patch from yesterday), DirectFB, DFB++, and viafb from cvs 
+</I>&gt;<i> back from last October (with Mark Adams' patches from a long while back), 
+</I>&gt;<i> and libcle266mpegdec 0.5.
+</I>
+Can you elaborate on DirectFB/DFB++ versions ?
+It seems we have quite the same setup. You also said earlier that field
+parity works for you since a long time, with earlier versions.
+
+&gt;<i> I'm running vdr with &quot;-vo dfb:viatv:cle266&quot; and TV-out to connect to a CRT 
+</I>&gt;<i> TV and, apart from the odd glitches and A-V sync wandering a bit, I get 
+</I>&gt;<i> nice, smooth scrolling text (BBC News 24 is good for testing this!).
+</I>
+What kernel version do you run ?
+
+&gt;<i> If I get a chance this weekend, I might have a go at upgrading some bits 
+</I>&gt;<i> to see if something has changed to break this...
+</I>
+If you could recall all patches you applied to everything, that could
+help. Not that much, these times, I think.
+I only patched DirectFB with something named
+&quot;dfb_unichrome_flip_ioctl-libcle266mpegdec&quot; from Mark Adams, which
+happens to be the one in linux-viafb CVS now (commited by Mark, BTW).
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002694.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+	<LI>Next message: <A HREF="002696.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2695">[ date ]</a>
+              <a href="thread.html#2695">[ thread ]</a>
+              <a href="subject.html#2695">[ subject ]</a>
+              <a href="author.html#2695">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

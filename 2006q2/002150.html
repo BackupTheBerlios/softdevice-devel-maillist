@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] I only see osd
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20only%20see%20osd&In-Reply-To=%3C200606160710.29160.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002148.html">
+   <LINK REL="Next"  HREF="002207.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] I only see osd</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20only%20see%20osd&In-Reply-To=%3C200606160710.29160.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] I only see osd">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jun 16 07:10:29 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002148.html">[Softdevice-devel] I only see osd
+</A></li>
+        <LI>Next message: <A HREF="002207.html">[Softdevice-devel] I only see osd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2150">[ date ]</a>
+              <a href="thread.html#2150">[ thread ]</a>
+              <a href="subject.html#2150">[ subject ]</a>
+              <a href="author.html#2150">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 15 Juni 2006 16:59, Leo M&#225;rquez wrote:
+&gt;<i> More info. This is my fbset -i:
+</I>&gt;<i> 
+</I>&gt;<i> mode &quot;640x480-60&quot;
+</I>&gt;<i>     # D: 25.176 MHz, H: 31.469 kHz, V: 59.942 Hz
+</I>&gt;<i>     geometry 640 480 640 32767 8
+</I>&gt;<i>     timings 39721 40 24 32 11 96 2
+</I>&gt;<i>     accel true
+</I>&gt;<i>     rgba 8/0,8/0,8/0,0/0
+</I>&gt;<i> endmode
+</I>&gt;<i> 
+</I>&gt;<i> Frame buffer device information:
+</I>&gt;<i>     Name        : NV2
+</I>&gt;<i>     Address     : 0xe4000000
+</I>&gt;<i>     Size        : 33554432
+</I>&gt;<i>     Type        : PACKED PIXELS
+</I>&gt;<i>     Visual      : PSEUDOCOLOR
+</I>&gt;<i>     XPanStep    : 8
+</I>&gt;<i>     YPanStep    : 1
+</I>&gt;<i>     YWrapStep   : 0
+</I>&gt;<i>     LineLength  : 640
+</I>&gt;<i>     MMIO Address: 0xe6000000
+</I>&gt;<i>     MMIO Size   : 16777216
+</I>&gt;<i>     Accelerator : nVidia RIVA TNT
+</I>&gt;<i> 
+</I>&gt;<i> I hope you could help me.
+</I>&gt;<i> 
+</I>
+So the only info which is missing, is the messages written to stderr.
+Up to now everything looks ok. At least there is no obious error.
+
+Please try to avoid top posts.
+
+
+&gt;<i> Thanks,
+</I>&gt;<i> 
+</I>&gt;<i> Leo
+</I>&gt;<i> 
+</I>&gt;<i> Leo M&#225;rquez wrote:
+</I>&gt;<i> &gt; Hi again,
+</I>&gt;<i> &gt; Some logs I see in syslog:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; switching to channel 6
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3606] transfer thread ended (pid=3577, 
+</I>&gt;<i> &gt; tid=3606)
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3609] TS buffer on device 1 thread ended 
+</I>&gt;<i> &gt; (pid=3577, tid=3609)
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3607] buffer stats: 67680 (3%) used
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3607] receiver on device 1 thread ended 
+</I>&gt;<i> &gt; (pid=3577, tid=3607)
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3577] cTS2PES got 0 TS errors, 1 TS 
+</I>&gt;<i> &gt; continuity errors
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3577] buffer stats: 68056 (3%) used
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3614] transfer thread started (pid=3577, 
+</I>&gt;<i> &gt; tid=3614)
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3615] receiver on device 1 thread started 
+</I>&gt;<i> &gt; (pid=3577, tid=3615)
+</I>&gt;<i> &gt; Jun 15 15:51:35 vdr vdr: [3617] TS buffer on device 1 thread started 
+</I>&gt;<i> &gt; (pid=3577, tid=3617)
+</I>&gt;<i> &gt; Jun 15 15:51:36 vdr vdr: [3614] setting audio track to 1 (0)
+</I>&gt;<i> &gt; Jun 15 15:51:36 vdr vdr: [3619] [softdevice-audio]: xrun
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3577] switching to channel 7
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3614] transfer thread ended (pid=3577, 
+</I>&gt;<i> &gt; tid=3614)
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3617] TS buffer on device 1 thread ended 
+</I>&gt;<i> &gt; (pid=3577, tid=3617)
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3615] buffer stats: 57528 (2%) used
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3615] receiver on device 1 thread ended 
+</I>&gt;<i> &gt; (pid=3577, tid=3615)
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3577] cTS2PES got 0 TS errors, 1 TS 
+</I>&gt;<i> &gt; continuity errors
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3577] cTS2PES got 1 TS errors, 1 TS 
+</I>&gt;<i> &gt; continuity errors
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3577] buffer stats: 57904 (2%) used
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3620] transfer thread started (pid=3577, 
+</I>&gt;<i> &gt; tid=3620)
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3621] receiver on device 1 thread started 
+</I>&gt;<i> &gt; (pid=3577, tid=3621)
+</I>&gt;<i> &gt; Jun 15 15:51:39 vdr vdr: [3623] TS buffer on device 1 thread started 
+</I>&gt;<i> &gt; (pid=3577, tid=3623)
+</I>&gt;<i> &gt; Jun 15 15:51:40 vdr vdr: [3624] [VideoOut]: resolution changed: W(720 
+</I>&gt;<i> &gt; -&gt; 528); H(576 -&gt;576)
+</I>&gt;<i> &gt; Jun 15 15:51:40 vdr vdr: [3624] [VideoOut]: 528x576 [0,0 528x576] -&gt; 
+</I>&gt;<i> &gt; 768x576 [0,0 768x576]
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Can be related to my problem?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks again.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Leo
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Leo M&#225;rquez wrote:
+</I>&gt;<i> &gt;&gt; Hi,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Well I'm setted up a vdr with softdevice, directfb but when I start 
+</I>&gt;<i> &gt;&gt; vdr with:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; ./vdr -P&quot;softdevice -vo dfb:&quot;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I only see the osd menus, but no tv image.
+</I>&gt;<i> &gt;&gt; My directfbrc file contains:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; mode  = 768x576
+</I>&gt;<i> &gt;&gt; depth = 32
+</I>&gt;<i> &gt;&gt; pixelformat=ARGB
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; My hardware is a nvidia tnt2 M64.
+</I>&gt;<i> &gt;&gt; The framebuffer module I use is nvidiafb
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; In var/log/syslog I don't see anything strange.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; In the other hand if I start vdr with only -Pstreamdev-server the 
+</I>&gt;<i> &gt;&gt; clients can watch TV.
+</I>&gt;<i> &gt;&gt; In the server few days a go I use -vo fb: as output and It works.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I supose the problem is related to the directfb configuration but... 
+</I>&gt;<i> &gt;&gt; why can I see osd and not TV?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Thanks,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Leo
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Softdevice-devel mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Softdevice-devel mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002148.html">[Softdevice-devel] I only see osd
+</A></li>
+	<LI>Next message: <A HREF="002207.html">[Softdevice-devel] I only see osd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2150">[ date ]</a>
+              <a href="thread.html#2150">[ thread ]</a>
+              <a href="subject.html#2150">[ subject ]</a>
+              <a href="author.html#2150">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

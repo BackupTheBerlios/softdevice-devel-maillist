@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] use libavformat in mpeg2decoder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C200503181857.39918.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000331.html">
+   <LINK REL="Next"  HREF="000340.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] use libavformat in mpeg2decoder</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C200503181857.39918.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] use libavformat in mpeg2decoder">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Mar 18 18:57:39 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000331.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+        <LI>Next message: <A HREF="000340.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#338">[ date ]</a>
+              <a href="thread.html#338">[ thread ]</a>
+              <a href="subject.html#338">[ subject ]</a>
+              <a href="author.html#338">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 18. M&#228;rz 2005 15:52, Martin Wache wrote:
+&gt;<i> Carsten Kollmeier wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I checked out the changes in the cvs, but I can't get vdr to work 
+</I>&gt;<i> &gt; with softdevice. Here is, what it tells me: (The last part of it, 
+</I>&gt;<i> &gt; tell me if you need more)
+</I>&gt;<i> More information would be nice, I have some things which I would like 
+</I>&gt;<i> you to do:
+</I>&gt;<i> 
+</I>&gt;<i> Just to be sure, did you do a make clean in the softdevice directory?
+</I>&gt;<i> 
+</I>&gt;<i> I guess you don't have a core dump, but maybe you can produce one and 
+</I>&gt;<i> post a backtrace and print out of the line where the softdevice crashed?
+</I>
+Update cvs with your change a few minutes ago.
+I with dfb-out I get the same error. Running from gdb I got the following:
+
+[New Thread 180236 (LWP 3510)]
+[New Thread 196621 (LWP 3511)]
+CMD[5226]:Start IsSuspended 0
+init put byte finished
+[New Thread 213006 (LWP 3512)]
+CMD[5231]:Neuer Thread gestartet: Mpeg2Decoder pid 3512
+CMD[5764]:Neuer StreamDecoder type 3512
+[New Thread 229391 (LWP 3513)]
+CMD[5769]:Neuer Thread gestartet: pid:3513 type 0
+Could not open /dev/rtc
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] (re)configured 0x08100609
+player set audio track
+NON player set audio track device
+CMD[6524]:Neuer StreamDecoder type 3512
+[New Thread 245776 (LWP 3514)]
+CMD[6550]:Neuer Thread gestartet: pid:3514 type 1
+
+Program received signal SIGFPE, Arithmetic exception.
+[Switching to Thread 229391 (LWP 3513)]
+0x40340e60 in cAlsaAudioOut::GetDelay() (this=0x8369190) at audio.c:111
+111         return snd_pcm_status_get_delay(status) *1000 / currContext.samplerate;
+Current language:  auto; currently c++
+(gdb)
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000331.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+	<LI>Next message: <A HREF="000340.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#338">[ date ]</a>
+              <a href="thread.html#338">[ thread ]</a>
+              <a href="subject.html#338">[ subject ]</a>
+              <a href="author.html#338">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

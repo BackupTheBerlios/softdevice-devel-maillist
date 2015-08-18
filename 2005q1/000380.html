@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3CPine.LNX.4.61.0503242001310.11673%40tuomi.oulu.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000379.html">
+   <LINK REL="Next"  HREF="000381.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Tomi Hautakoski</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3CPine.LNX.4.61.0503242001310.11673%40tuomi.oulu.fi%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">thauta at iki.fi
+       </A><BR>
+    <I>Thu Mar 24 20:02:43 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000379.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000381.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#380">[ date ]</a>
+              <a href="thread.html#380">[ thread ]</a>
+              <a href="subject.html#380">[ subject ]</a>
+              <a href="author.html#380">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, 24 Mar 2005, Torgeir Veimo wrote:
+&gt;<i> Just curious, can you try replacing any Flip() operations in video-dfb.c
+</I>&gt;<i> which uses DSFLIP_WAITFORSYNC or DSFLIP_ONSYNC semantics, with just
+</I>&gt;<i> empty Flip(), operations? Eg. line 1074 (cvs version);
+</I>&gt;<i>
+</I>&gt;<i> scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ?
+</I>&gt;<i> DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
+</I>&gt;<i>
+</I>&gt;<i> with
+</I>&gt;<i>
+</I>&gt;<i> scrSurface-&gt;Flip();
+</I>&gt;<i>
+</I>&gt;<i> and the same in line 903 and see if it improves the av sync issue with
+</I>&gt;<i> OSD displayed?
+</I>
+Yes this fixed that issue but on the other hand it breaks the 
+fieldparity and also causes the bottom third part of the OSD to 
+flicker very much when the OSD is on.
+
+Tomi Hautakoski
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">thauta at iki.fi</A>
+                  Do NOT look into laser with remaining eyeball!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000379.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000381.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#380">[ date ]</a>
+              <a href="thread.html#380">[ thread ]</a>
+              <a href="subject.html#380">[ subject ]</a>
+              <a href="author.html#380">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

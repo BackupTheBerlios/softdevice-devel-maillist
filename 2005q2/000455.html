@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] crash with latest cvs code
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20crash%20with%20latest%20cvs%20code&In-Reply-To=%3C16530.1112769906%40www1.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000440.html">
+   <LINK REL="Next"  HREF="000442.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] crash with latest cvs code</H1>
+    <B>Thomas Herrmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20crash%20with%20latest%20cvs%20code&In-Reply-To=%3C16530.1112769906%40www1.gmx.net%3E"
+       TITLE="[Softdevice-devel] crash with latest cvs code">ollo.diab at gmx.de
+       </A><BR>
+    <I>Wed Apr  6 08:45:06 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000440.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+        <LI>Next message: <A HREF="000442.html">[Softdevice-devel] Profiling tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#455">[ date ]</a>
+              <a href="thread.html#455">[ thread ]</a>
+              <a href="subject.html#455">[ subject ]</a>
+              <a href="author.html#455">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Torgeir,
+
+&gt;<i> 
+</I>&gt;<i> I've reverted back to ffmpeg 0.4.9pre1 which works ok. I might try to
+</I>&gt;<i> find which ffmpeg update that broke it, but am a bit short of time
+</I>&gt;<i> currently.
+</I>
+Please check which libavcodec library get actually linked to the
+libsoftdevice. There might quite a few laying around on your harddisk,
+because mplayer, xine, ffmpeg, ... each brings its own version. Take care to
+not mix different versions of the libavcodec library and the header files
+while compiling softdevice!
+
+I currently use a ffmpeg cvs checkout from 04/04/2005 which works fine using
+XV video out driver!
+
+Regards,   Thomas
+
+&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>
+-- 
+Handyrechnung zu hoch? Tipp: SMS und MMS mit GMX
+Seien Sie so frei: Alle Infos unter <A HREF="http://www.gmx.net/de/go/freesms">http://www.gmx.net/de/go/freesms</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000440.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+	<LI>Next message: <A HREF="000442.html">[Softdevice-devel] Profiling tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#455">[ date ]</a>
+              <a href="thread.html#455">[ thread ]</a>
+              <a href="subject.html#455">[ subject ]</a>
+              <a href="author.html#455">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

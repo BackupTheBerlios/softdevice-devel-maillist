@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bdirectfb-users%5D%20field%20parity%20%3A%20viafb%2C%20TVout%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C45CF5DF4.7070002%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002719.html">
+   <LINK REL="Next"  HREF="002722.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bdirectfb-users%5D%20field%20parity%20%3A%20viafb%2C%20TVout%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C45CF5DF4.7070002%40huillard.net%3E"
+       TITLE="[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding">nicolas at huillard.net
+       </A><BR>
+    <I>Sun Feb 11 19:18:28 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002719.html">[Softdevice-devel] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+        <LI>Next message: <A HREF="002722.html">[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2720">[ date ]</a>
+              <a href="thread.html#2720">[ thread ]</a>
+              <a href="subject.html#2720">[ subject ]</a>
+              <a href="author.html#2720">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Mark Adams a &#233;crit :
+&gt;<i> No patches should be required any more.  All this stuff should work if you
+</I>&gt;<i> have linux-viafb from DirectFB CVS and DirectFB-rc4 or later.
+</I>
+I actually used DirectFB rc2, which needs
+&quot;dfb_unichrome_flip_ioctl-libcle266mpegdec_GetFBOffset.patch&quot;. I didn't
+upgraded this one since Laz said it was working with an even older
+version (2006-10).
+DFB++ needed a similar patch, but latest CVS didn't need it.
+I upgraded viafb to get rid of it's latest patch.
+So you're correct : no more patches.
+
+I'll test 1.0rc4
+
+&gt;&gt;<i> ------------------------
+</I>&gt;&gt;<i> Try adding a printk in viafb_wait_for_sync (via_fbobj.c), just before it
+</I>&gt;&gt;<i> returns:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> printk(KERN_INFO &quot;wait vsync: %d %d %d\n&quot;, field_option, p-&gt;irq_cnt &amp; 1,
+</I>&gt;&gt;<i> ret);
+</I>&gt;<i> 
+</I>&gt;<i> OK, so we see this:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr kernel: wait vsync: 3 0 25
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr last message repeated 2 times
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr kernel: wait vsync: 3 1 25
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr last message repeated 2 times
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr kernel: wait vsync: 3 0 25
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr last message repeated 2 times
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr kernel: wait vsync: 3 1 25
+</I>&gt;&gt;<i> Feb 11 11:39:47 vdr kernel: wait vsync: 3 1 25
+</I>&gt;<i> 
+</I>&gt;<i> field_option 3 is a wait for a kernel-assisted flip to complete.  The 25's
+</I>&gt;<i> (HZ/10) mean that the wait calls are returning immediately (presumably
+</I>&gt;<i> because a fair amount of processing was required to get the next frame
+</I>&gt;<i> ready
+</I>&gt;<i> and the previous frame had been displayed by that point).  The mixture of
+</I>&gt;<i> 0's and 1's means that the video is sometimes on the top field and
+</I>&gt;<i> sometimes
+</I>&gt;<i> on the bottom when the wait happens.
+</I>&gt;<i> 
+</I>&gt;<i> All that is fine provided that you're using triple buffering.  That's
+</I>&gt;<i> perhaps something I should enforce when this method is being used and fall
+</I>&gt;<i> back to the old method if not.
+</I>&gt;<i> 
+</I>&gt;<i> Are you using triple buffering?
+</I>
+Softdevice developpers should give a sound answer.
+The logs say :
+
+[surface capabilities] videoSurface: videoonly flipping triple-buffered
+PixelFormat = 0x08100609
+
+&gt;<i> Can you try using df_xine (from DirectFB-extra)?  This I know to work
+</I>&gt;<i> perfectly on my hardware and it would be a good starting point to see if
+</I>&gt;<i> this works for you before going much further.  I think I've asked this
+</I>&gt;<i> before but I don't remember you reporting back what the result was.  Use
+</I>&gt;<i> something like:
+</I>&gt;<i> 
+</I>&gt;<i> df_xine -m 720x576 -l 1 -b triple -f top &lt;filename&gt;
+</I>&gt;<i> 
+</I>&gt;<i> There are some more useful tests we can do if we still don't find out
+</I>&gt;<i> what's
+</I>&gt;<i> happening but try the above first.
+</I>
+I'll do that and report.
+
+Thank you very much for all your help.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002719.html">[Softdevice-devel] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+	<LI>Next message: <A HREF="002722.html">[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2720">[ date ]</a>
+              <a href="thread.html#2720">[ thread ]</a>
+              <a href="subject.html#2720">[ subject ]</a>
+              <a href="author.html#2720">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

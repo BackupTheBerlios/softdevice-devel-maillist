@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Contribute to vdr-softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Contribute%20to%20vdr-softdevice&In-Reply-To=%3C200410210043.27617.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000001.html">
+   <LINK REL="Next"  HREF="000003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Contribute to vdr-softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Contribute%20to%20vdr-softdevice&In-Reply-To=%3C200410210043.27617.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: Contribute to vdr-softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Oct 21 00:43:27 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000001.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+        <LI>Next message: <A HREF="000003.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 20. Oktober 2004 22:58, Torgeir Veimo wrote:
+&gt;<i> On Wed, 2004-10-20 at 22:46 +0200, Stefan Lucke wrote:
+</I>
+[ .. ]
+
+&gt;<i> &gt; Is it possible that your clicks and pops may have some other reasons ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; With 02_Fix_Ringbuffer_Locking.diff patch I get partly corrupted stillpictures
+</I>&gt;<i> &gt; when a jump_to_mark_key is pressed during playback.
+</I>&gt;<i> 
+</I>&gt;<i> It might be that I mixed up things when patching. I don't hear any
+</I>&gt;<i> difference with and without the Mutex patch now. But I do have a great
+</I>&gt;<i> improvement with the other two patches though.
+</I>
+Patch 03_.. affects your avOffset. If it is acceptable for you we should commit it
+like patch 01_.. .
+
+But keep in mind my original comment on &quot;delay + avOffset&quot; from 2004-08-21
+(delay += avOffset vs. delay -= avOffset):
+
+&gt;<i> On Donnerstag, 19. August 2004 17:11, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; Here's a patch that adds an adjustable av offset to softdevice. It's
+</I>&gt;<i> &gt; possible to adjust offset +/- 250 ms. There might be issues with buffer
+</I>&gt;<i> &gt; underruns however. You need to restart for the change to take effect.
+</I>&gt;<i> 
+</I>&gt;<i>      int delay = audioOut-&gt;GetDelay();
+</I>&gt;<i> -    if (delay &lt; 20)// if we have less than 20 ms in buffer we double frames
+</I>&gt;<i> +    if (delay + avOffset &lt; 20) { // if we have less than 20 ms in buffer we double frames
+</I>&gt;<i>        audioOut-&gt;Write(audiosamples,audio_size);
+</I>&gt;<i> 
+</I>&gt;<i> Takeing that: it is something like:
+</I>&gt;<i>         delay += avOffset;
+</I>&gt;<i>         if (delay &lt; 20)
+</I>&gt;<i> 
+</I>&gt;<i>      //  printf(&quot;Audiodelay: %d \n&quot;,delay);
+</I>&gt;<i> -    *cPTS = pts - delay; // Das ist die Master-PTS die wird an den video Teil &#252;bergeben,
+</I>&gt;<i> +    *cPTS = pts - delay + avOffset; // Das ist die Master-PTS die wird an den video Teil &#252;bergeben,
+</I>&gt;<i> 
+</I>&gt;<i> and taking that it is the same as
+</I>&gt;<i>         delay -= avOffset;
+</I>&gt;<i>         *cPTS = pts - delay;
+</I>&gt;<i> 
+</I>&gt;<i> Finaly replaceing 1st 'delay += avOffset' by 'delay += setupStore.avOffset' would
+</I>&gt;<i> result in immediate changing avOffset from OSD _without_ required vdr restart.
+</I>
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000001.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+	<LI>Next message: <A HREF="000003.html">[Softdevice-devel] Re: Contribute to vdr-softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

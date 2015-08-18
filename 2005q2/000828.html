@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20%2B%20directfb%20%2B%20g400%20TV%20out%20problem.&In-Reply-To=%3C42A4C06A.6070204%40kapsi.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000823.html">
+   <LINK REL="Next"  HREF="000840.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice + directfb + g400 TV out problem.</H1>
+    <B>prelude</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20%2B%20directfb%20%2B%20g400%20TV%20out%20problem.&In-Reply-To=%3C42A4C06A.6070204%40kapsi.fi%3E"
+       TITLE="[Softdevice-devel] Softdevice + directfb + g400 TV out problem.">prelude at kapsi.fi
+       </A><BR>
+    <I>Mon Jun  6 23:30:18 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000823.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+        <LI>Next message: <A HREF="000840.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#828">[ date ]</a>
+              <a href="thread.html#828">[ thread ]</a>
+              <a href="subject.html#828">[ subject ]</a>
+              <a href="author.html#828">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;<i>Could you check that your &quot;matrox full memory patch&quot; is still present ?
+</I>&gt;<i>At my system (G550) I've only /dev/fb0. /dev/fb1 is reportet with
+</I>&gt;<i>&quot;no such device&quot;. With my G400 system fb0 is reported as 32M and
+</I>&gt;<i>fb1 with 8M :-). Yes card has only 32M
+</I>&gt;<i>
+</I>&gt;<i>Are the matrox drivers compiled in or loaded as modules, as they should ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+I checked that pach from 
+&quot;/usr/src/linux/drivers/video/matrox/matroxfb_base.c&quot; and patch is ok.
+        fix-&gt;smem_start = ACCESS_FBINFO(video.base) + 
+ACCESS_FBINFO(curr.ydstorg.bytes);
+       fix-&gt;smem_len = ACCESS_FBINFO(video.len) - 
+ACCESS_FBINFO(curr.ydstorg.bytes);
+
+And &quot;.config&quot; i have:
+# Graphics support
+#
+CONFIG_FB=y
+CONFIG_FB_MODE_HELPERS=y
+CONFIG_FB_TILEBLITTING=y
+CONFIG_FB_VGA16=m
+CONFIG_VIDEO_SELECT=y
+CONFIG_FB_INTEL=m
+CONFIG_FB_MATROX=y
+CONFIG_FB_MATROX_G100A=y
+CONFIG_FB_MATROX_G100=y
+CONFIG_FB_MATROX_I2C=m
+CONFIG_FB_MATROX_MAVEN=m
+CONFIG_FB_MATROX_MULTIHEAD=y
+CONFIG_FB_VIRTUAL=m
+
+#
+# Console display driver support
+#
+CONFIG_VGA_CONSOLE=y
+CONFIG_DUMMY_CONSOLE=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_FONT_8x8=y
+CONFIG_FONT_8x16=y
+
+#
+# Logo configuration
+#
+CONFIG_LOGO=y
+CONFIG_LOGO_LINUX_MONO=y
+CONFIG_LOGO_LINUX_VGA16=y
+CONFIG_LOGO_LINUX_CLUT224=y
+
+__________
+lsmod:
+matroxfb_crtc2         10432  0
+i2c_matroxfb            5056  0
+i2c_algo_bit            9928  2 cx88xx,i2c_matroxfb
+i2c_dev                 9856  0
+fusion                 32324  0
+
+
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000823.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+	<LI>Next message: <A HREF="000840.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#828">[ date ]</a>
+              <a href="thread.html#828">[ thread ]</a>
+              <a href="subject.html#828">[ subject ]</a>
+              <a href="author.html#828">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

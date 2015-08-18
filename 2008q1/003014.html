@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice and HD-material
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C20080119153530.294360%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003012.html">
+   <LINK REL="Next"  HREF="002993.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice and HD-material</H1>
+    <B>Thomas Herrmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C20080119153530.294360%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softdevice and HD-material">ollo.diab at gmx.de
+       </A><BR>
+    <I>Sat Jan 19 16:35:30 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003012.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+        <LI>Next message: <A HREF="002993.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3014">[ date ]</a>
+              <a href="thread.html#3014">[ thread ]</a>
+              <a href="subject.html#3014">[ subject ]</a>
+              <a href="author.html#3014">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Stefan,
+
+ok, fine. I just realized AstraHD is not on Air anymore - thus the failures. AstraHD+ is still transmitting and here I do get a picture - sometimes.
+
+Thomas
+
+
+-------- Original-Nachricht --------
+&gt;<i> Datum: Sat, 19 Jan 2008 10:41:28 +0100
+</I>&gt;<i> Von: Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;
+</I>&gt;<i> An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> Betreff: Re: [Softdevice-devel] Softdevice and HD-material
+</I>
+&gt;<i> On Friday 18 January 2008, Thomas Herrmann wrote:
+</I>&gt;<i> &gt; Hi Stefan,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I've patched VDR and softdevice plugins to give HDTV a try. I'm using
+</I>&gt;<i> VDR 1.5.13 together with the latest DVB-S2 HDTV patch on a 64bit system.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; When switching to HDTV I get a still picture and VDR reports:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> These 2 are from softdevice:
+</I>&gt;<i> &gt; [mpegdecoder] Error while decoding video frame 0
+</I>&gt;<i> &gt; [mpegdecoder] resetting codec
+</I>&gt;<i> 
+</I>&gt;<i> These are from ffmpeg:
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]decode_slice_header error
+</I>&gt;<i> &gt; [h264 @ 0x2ae30fde07e0]no frame!
+</I>&gt;<i> 
+</I>&gt;<i> I've such messages sometimes too. But I guess that's either
+</I>&gt;<i> signal quality or driver or a repacker issue.
+</I>&gt;<i> Switching to another channel and retune to HD solves this (sometimes).
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+-- 
+Ist Ihr Browser Vista-kompatibel? Jetzt die neuesten 
+Browser-Versionen downloaden: <A HREF="http://www.gmx.net/de/go/browser">http://www.gmx.net/de/go/browser</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003012.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+	<LI>Next message: <A HREF="002993.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3014">[ date ]</a>
+              <a href="thread.html#3014">[ thread ]</a>
+              <a href="subject.html#3014">[ subject ]</a>
+              <a href="author.html#3014">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

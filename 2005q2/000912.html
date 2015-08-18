@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C467E6.1010806%40kapsi.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000910.html">
+   <LINK REL="Next"  HREF="000911.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Tommi Lundell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C467E6.1010806%40kapsi.fi%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">prelude at kapsi.fi
+       </A><BR>
+    <I>Thu Jun 30 23:45:10 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000910.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000911.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#912">[ date ]</a>
+              <a href="thread.html#912">[ thread ]</a>
+              <a href="subject.html#912">[ subject ]</a>
+              <a href="author.html#912">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;<i>I think it's the same we talked about some days (week) ago.
+</I>&gt;<i>I changed clamping low limit and added a fprintf in case we drop frames.
+</I>&gt;<i>
+</I>&gt;<i>Tommi can you try this change ?
+</I>&gt;<i>
+</I>&gt;<i>Stefan Lucke
+</I>&gt;<i>
+</I>&gt;<i>_______________________________________________
+</I>&gt;<i>Softdevice-devel mailing list
+</I>&gt;<i><A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i><A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>I made test whit current CVS (taken from CVS 30 mins ago) and result is 
+same i don t see any different behavior that before.
+And in syslog i don t see anything unfamiliar (no errors or warnings or 
+anything about frame dropping)
+I try to look logs someday when i have time but if someone want to look 
+log what i made (uncommenting #define BUFDEB(out...) 
+{printf(&quot;BUF[%04d]:&quot;,(int)(getTimeMilis() % 10000));printf(out);} line 
+from mpeg2decoder.c) then you can download it from:
+<A HREF="http://prelude.kapsi.fi/jerky.tar.gz">http://prelude.kapsi.fi/jerky.tar.gz</A> (about 500kB)
+
+I take that log about 30 sec after stabilaton (starting vdr and starting 
+playback ) and both logs was timed about 15sec...but still those logs 
+are hugs.
+
+Tommi
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000910.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000911.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#912">[ date ]</a>
+              <a href="thread.html#912">[ thread ]</a>
+              <a href="subject.html#912">[ subject ]</a>
+              <a href="author.html#912">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

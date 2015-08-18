@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Rescaling for a large LCD TV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3C200511020257.54800.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001517.html">
+   <LINK REL="Next"  HREF="001439.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Rescaling for a large LCD TV</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3C200511020257.54800.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Rescaling for a large LCD TV">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Nov  2 02:57:54 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001517.html">[Softdevice-devel] PATCH: i18n german translations
+</A></li>
+        <LI>Next message: <A HREF="001439.html">[Softdevice-devel] Restructured OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1438">[ date ]</a>
+              <a href="thread.html#1438">[ thread ]</a>
+              <a href="subject.html#1438">[ subject ]</a>
+              <a href="author.html#1438">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 2. November 2005 00:30, Harald Milz wrote:
+&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> I finally managed to implement your hints, and voila: it works. 
+</I>&gt;<i> 
+</I>&gt;<i> Setup: 
+</I>&gt;<i> BenQ DV3250 LCD TV w/ various inputs (DVI, PC, 2x Scart, YUV, etc. etc.)  
+</I>&gt;<i> G550 w/ DVI out
+</I>&gt;<i> Asus A7V8X board w/ VT8235 sound w/ SPDIF bracket
+</I>&gt;<i> softdevice-0.2.0
+</I>&gt;<i> directfb 0.9.22
+</I>&gt;<i> vdr-1.3.26
+</I>&gt;<i> DVI-D cable between G550 and TV set. Nix TV out and such things. 
+</I>&gt;<i> 
+</I>&gt;<i> /etc/fb.modes:
+</I>&gt;<i> mode &quot;1280x720-60&quot;
+</I>&gt;<i>    # D: 74.25 MHz, H: 45.00 kHz, V: 60.00 Hz
+</I>&gt;<i>    geometry 1280 720 1280 720 16
+</I>&gt;<i>    timings 13468 220 110 20 5 40 5
+</I>&gt;<i> endmode
+</I>&gt;<i> 
+</I>&gt;<i> /etc/directfbrc:
+</I>&gt;<i> mode=1280x720
+</I>&gt;<i> depth=32
+</I>&gt;<i> pixelformat=ARGB
+</I>
+Thats really good news, that you found a mode that fits to your TV.
+
+&gt;<i> 
+</I>&gt;<i> in runvdr it says: 
+</I>&gt;<i> VDRCMD=&quot;$VDRCMD -P 'softdevice -ao alsa:pcm=plug:spdif#ac3=plug:spdif# -vo dfb:'&quot;
+</I>&gt;<i> 
+</I>&gt;<i> Soooooo - 
+</I>&gt;<i> 
+</I>&gt;<i> PAL TV (720x576) is rescaled fine to 960x720. A widescreen broadcast just
+</I>&gt;<i> some minutes ago on ZDF is displayed as widescreen (1280x720)
+</I>&gt;<i> automatically. I don't need to change the scaling on the TV set itself. It
+</I>&gt;<i> displays everything in its native resolution (&quot;Real&quot;). This does not work
+</I>&gt;<i> using the FF card's composite out - there I need to reselect the resolution
+</I>&gt;<i> every other broadcasting. Here it's automatic. This is great! 
+</I>&gt;<i> 
+</I>&gt;<i> Wow. 
+</I>&gt;<i> 
+</I>&gt;<i> The CPU is an Athlon XP 2400+ running at 1800 MHz natively. By now I only
+</I>&gt;<i> see little artifacts and staircase patterns (no action film yet). CPU load
+</I>&gt;<i> is between 65 and 70% all the time. 
+</I>&gt;<i> 
+</I>&gt;<i> Question: does this line
+</I>&gt;<i> 
+</I>&gt;<i> Nov  1 22:48:25 linvdr vdr[10694]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 1280x720 [0,0 1280x720]
+</I>&gt;<i> 
+</I>&gt;<i> mean the broadcasting was sent in 720x576 and is rescaled to 1280x720? How
+</I>&gt;<i> do they broadcast widescreen in 720x576? No black bars here. And 
+</I>
+They do it correct (tm). They broadcast anamorphic video (horizontally 
+compressed). But they do this not allways :-( . So from time to time
+you'll see movies with black bars on all sides. That's the moment you'll
+either need to correct this via TV settings or with softdevice crop mode
+selection.
+
+&gt;<i> 
+</I>&gt;<i> Nov  1 23:16:44 linvdr vdr[10694]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 1280x720 [160,0 960x720]
+</I>&gt;<i> 
+</I>&gt;<i> means a normal 4:3 720x576 picture is rescaled to 960x720 and offset by 160
+</I>&gt;<i> pixels? 
+</I>
+Exact.
+
+&gt;<i> 
+</I>&gt;<i> How much horsepower does the rescaling need compared to decoding HDTV? 
+</I>
+That rescaling is done via hardware acceleration (StretchBlit() ). So
+it still cost something. At DirectFB devel list, Ville Syrj&#228;l&#228; reports some 
+improvments with matrox irq handling which seems to be very promising.
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; After having a look at the user manual, the BenQ devices are rather
+</I>&gt;<i> &gt; limited in possible display resolutions. They mention only very few
+</I>&gt;<i> &gt; resolutions for graphic input. the largest is 1024x768 :-( . All of
+</I>&gt;<i> &gt; mentioned resolution have refresh rates &gt;= 60 Hz .
+</I>&gt;<i> 
+</I>&gt;<i> 60 Hz actually helped but don't mix'em up with the 3250 which really works
+</I>&gt;<i> fine here. And the colours are much more realistic that with that crappy
+</I>&gt;<i> composite signal - which can best be seen watching human skin tones. Using
+</I>&gt;<i> the composite out skins sometimes look like on poorly rendered 8-bit GIF
+</I>&gt;<i> images. 
+</I>&gt;<i> 
+</I>&gt;<i> Sound: the DD receiver shows a DD signal on ZDF all the time. I'm using a
+</I>&gt;<i> coax cable from the Asus SPDIF bracket to the receiver. 
+</I>
+They transmit a DD stream, but most of the time it is DD 2.0 :-) . On my
+logitech Z680 it is usually displayed as dolby and only on some special
+transmissions it switches to display 5.1 .
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001517.html">[Softdevice-devel] PATCH: i18n german translations
+</A></li>
+	<LI>Next message: <A HREF="001439.html">[Softdevice-devel] Restructured OSD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1438">[ date ]</a>
+              <a href="thread.html#1438">[ thread ]</a>
+              <a href="subject.html#1438">[ subject ]</a>
+              <a href="author.html#1438">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

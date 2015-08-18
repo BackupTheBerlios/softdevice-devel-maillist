@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb-out: square with different colours
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb-out%3A%20square%20with%20different%20colours&In-Reply-To=%3C200609072330.32408.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002370.html">
+   <LINK REL="Next"  HREF="002407.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb-out: square with different colours</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb-out%3A%20square%20with%20different%20colours&In-Reply-To=%3C200609072330.32408.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] dfb-out: square with different colours">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Sep  7 23:30:32 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002370.html">[Softdevice-devel] dfb-out: square with different colours (Was:	Re: g450 interlaced output)
+</A></li>
+        <LI>Next message: <A HREF="002407.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2371">[ date ]</a>
+              <a href="thread.html#2371">[ thread ]</a>
+              <a href="subject.html#2371">[ subject ]</a>
+              <a href="author.html#2371">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 07 September 2006 22:48, Alasdair Campbell wrote:
+&gt;<i> On 07/09/06, Alasdair Campbell &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">ragawu at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; On 06/09/06, Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; I know it's hard, but is it possible to make a screen shot from this ?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'll need to learn how to do that but as soon as I do, I'll stick one
+</I>&gt;<i> &gt; up for everyone to see.
+</I>&gt;<i> 
+</I>&gt;<i> Not figured out how to do a scren shot, but my description was all
+</I>&gt;<i> wrong initally - I was far too tired. Infact, the small box is an
+</I>&gt;<i> enlarged one character display of the flashing cursor. sometimes I see
+</I>&gt;<i> it normal sized and white on black as usual. I've also seen 2 or 3
+</I>&gt;<i> lines of text from DFB's output appearing.
+</I>&gt;<i> 
+</I>&gt;<i> These glitches are only visible when DFB outputs to the console,
+</I>&gt;<i> usually after changing a channel. They vanish shortly after the OSD
+</I>&gt;<i> hides.
+</I>
+You are using the no-vt* options in your directfbrc. A good way to avoid
+any interruptions from text written you should redirect stdout and stderr
+to a log file  vdr_call &gt;vdr_log 2&gt;&amp;1.
+
+For hiding cursor etc.. I once suggested the following which may be
+useful for vidix users too:
+
+-- snip --
+# setup logfile name
+LOGFILE=/var/log/my_vdr_logfile
+#
+# save prompt mode, hide prompt and switch cursor off
+PSSAVE=${PS1}
+export PS1=''
+setterm -cursor off
+#
+# deactivate powersaving mode and clear screen
+setterm -powersave off
+clear
+#
+# start vdr
+vdr WITH_DESIRED_PARAMETERS  &gt;${LOGFILE} 2&gt;&amp;1
+# restore settings
+export PS1=${PSSAVE}
+setterm -default
+-- snip --
+
+&gt;<i> 
+</I>&gt;<i> Also, (this is something I have seen with the gentoo ebuilds and
+</I>&gt;<i> unpatched DirectFb cvs) on the first head, along with the console off
+</I>&gt;<i> center, I see three instances of the same video image, with the wrong
+</I>&gt;<i> colours.
+</I>&gt;<i> 
+</I>&gt;<i> I don't know if this is simply a configuration error, I've attached
+</I>&gt;<i> the config files / outputs I thought were relevant.
+</I>&gt;<i> 
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002370.html">[Softdevice-devel] dfb-out: square with different colours (Was:	Re: g450 interlaced output)
+</A></li>
+	<LI>Next message: <A HREF="002407.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2371">[ date ]</a>
+              <a href="thread.html#2371">[ thread ]</a>
+              <a href="subject.html#2371">[ subject ]</a>
+              <a href="author.html#2371">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

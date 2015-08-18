@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problem%20compiling%20softdevice%20v0.1.2%20and%20also%20CVS&In-Reply-To=%3C42E2D58C.70008%40brainhawk.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001029.html">
+   <LINK REL="Next"  HREF="001036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS</H1>
+    <B>Bjoern Adler</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problem%20compiling%20softdevice%20v0.1.2%20and%20also%20CVS&In-Reply-To=%3C42E2D58C.70008%40brainhawk.de%3E"
+       TITLE="[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS">babble at brainhawk.de
+       </A><BR>
+    <I>Sun Jul 24 01:41:00 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001029.html">[Softdevice-devel] Next release ?!
+</A></li>
+        <LI>Next message: <A HREF="001036.html">[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1022">[ date ]</a>
+              <a href="thread.html#1022">[ thread ]</a>
+              <a href="subject.html#1022">[ subject ]</a>
+              <a href="author.html#1022">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I'm not really sure whether the problem is between my ears or in the 
+sourcecode.
+
+Whenn trying to compile softdevice 0.1.2 or the CVS version, it always 
+stops with error.
+
+&quot;
+mpeg2decoder.c: In member function `void cMpeg2Decoder::initStream()':
+mpeg2decoder.c:1030: error: invalid conversion from `int (*)(void*, long 
+long
+    int, int)' to `offset_t (*)(void*, long long int, int)'
+mpeg2decoder.c: In member function `void cMpeg2Decoder::QueuePacket(const
+    AVFormatContext*, AVPacket&amp;)':
+mpeg2decoder.c:1100: error: request for member `codec_type' in `
+ 
+ic-&gt;AVFormatContext::streams[pkt-&gt;AVPacket::stream_index]-&gt;AVStream::codec',
+    which is of non-class type `AVCodecContext*'
+mpeg2decoder.c:1112: error: no matching function for call to `
+    cAudioStreamDecoder::cAudioStreamDecoder(AVCodecContext**, 
+cAudioOut*&amp;, int&amp;
+    )'
+mpeg2decoder.h:136: error: candidates are:
+    cAudioStreamDecoder::cAudioStreamDecoder(const cAudioStreamDecoder&amp;)
+mpeg2decoder.c:236: error:
+    cAudioStreamDecoder::cAudioStreamDecoder(AVCodecContext*, 
+cAudioOut*, int)
+mpeg2decoder.c:1115: error: request for member `codec_type' in `
+ 
+ic-&gt;AVFormatContext::streams[pkt-&gt;AVPacket::stream_index]-&gt;AVStream::codec',
+    which is of non-class type `AVCodecContext*'
+mpeg2decoder.c:1127: error: no matching function for call to `
+    cVideoStreamDecoder::cVideoStreamDecoder(AVCodecContext**, cVideoOut*&amp;,
+    cClock*, int&amp;)'
+mpeg2decoder.h:162: error: candidates are:
+    cVideoStreamDecoder::cVideoStreamDecoder(const cVideoStreamDecoder&amp;)
+mpeg2decoder.c:383: error:
+    cVideoStreamDecoder::cVideoStreamDecoder(AVCodecContext*, cVideoOut*,
+    cClock*, int)
+&quot;
+
+My enviroment is as following:
+
+Suse 9.3 32bit
+gcc 3.3.5
+kernel 2.6.11.4-21.7 (compiled with Matrox FB support)
+
+I am no C programmer, so I have no clue, what this nice error message 
+should tell me...
+
+Any help is appreciated!
+
+Thanks a lot in advance
+
+Greetz
+
+Bj&#246;rn Adler
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001029.html">[Softdevice-devel] Next release ?!
+</A></li>
+	<LI>Next message: <A HREF="001036.html">[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1022">[ date ]</a>
+              <a href="thread.html#1022">[ thread ]</a>
+              <a href="subject.html#1022">[ subject ]</a>
+              <a href="author.html#1022">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

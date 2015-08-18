@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] An initial solution for bug #002971 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20An%20initial%20solution%20for%20bug%20%23002971%20%3F&In-Reply-To=%3C42A46E26.9060705%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000818.html">
+   <LINK REL="Next"  HREF="000827.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] An initial solution for bug #002971 ?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20An%20initial%20solution%20for%20bug%20%23002971%20%3F&In-Reply-To=%3C42A46E26.9060705%40gmx.net%3E"
+       TITLE="[Softdevice-devel] An initial solution for bug #002971 ?">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Jun  6 17:39:18 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000818.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+        <LI>Next message: <A HREF="000827.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#820">[ date ]</a>
+              <a href="thread.html#820">[ thread ]</a>
+              <a href="subject.html#820">[ subject ]</a>
+              <a href="author.html#820">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A.O. wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> maybe i found an initial solution for bug #002971, about the buzzy sound
+</I>&gt;<i> someone experienced with softdevice. I took the idea form mplayer
+</I>&gt;<i> libao2/ao_alsa.c, it seems that the Data buffer has to be aligned at
+</I>&gt;<i> sample boundary... but i'm not very expert in such things, maybe other
+</I>&gt;<i> things have to be checked before closing the bug.
+</I>&gt;<i> 
+</I>&gt;<i> Anyway, i attach here a little patch that cures the buzz effect on my
+</I>&gt;<i> setup (i use the snd_cs46xx alsa driver on a Thinkpad T20), the sound is
+</I>&gt;<i> now shiny and clear but i'm experiencing some crashes when going
+</I>&gt;<i> fullscreen or on channel change.
+</I>I'm not sure if the explanation and the patch is correct, but you 
+definitely found a bug in audio.c. The pointer Data has to be increased 
+for sure when not all data has been accepted by snd_pcm_wait. I will 
+check your patch... Thank you for reporting this!
+
+By the way I own a soundcard with a cs46xx chipset and to me the driver 
+seems not to be stable, at first I thougth it would be due to the 
+softdevice, but I also had some hard crashes (-&gt;_no_ response at all 
+from the computer) when playing mp3 with xmms. Now all these issues are 
+gone after a change of the soundcard.
+
+&gt;<i> 
+</I>&gt;<i> [OT] Is it planned a key-passthrough feature in softdevice? Let me be
+</I>&gt;<i> clearer: when i push a key when the softdevice window has the focus i
+</I>&gt;<i> wish that the keypress is delivered to vdr itself, i know there
+</I>&gt;<i> could be some conflicts with keys undestood by softdevice, but we can
+</I>&gt;<i> avoid these using a modifier key for softdevice key-commands.
+</I>Are you using Xv-out? Xv-out currently takes some keys (for brightness 
+etc. control) which are not passed to vdr. Is this what you mean?
+All other keys are passed to vdr, and the long term plan is to make 
+these brightness etc. controls available from the osd, so that we can 
+stop using those keys.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000818.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+	<LI>Next message: <A HREF="000827.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#820">[ date ]</a>
+              <a href="thread.html#820">[ thread ]</a>
+              <a href="subject.html#820">[ subject ]</a>
+              <a href="author.html#820">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

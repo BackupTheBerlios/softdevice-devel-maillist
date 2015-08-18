@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame%20buffer%20vs.%20720x576%20tvout%20no-scale%20update...&In-Reply-To=%3C430D87C8.1010101%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001146.html">
+   <LINK REL="Next"  HREF="001137.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb kernel frame buffer vs. 720x576 tvout no-scale update...</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame%20buffer%20vs.%20720x576%20tvout%20no-scale%20update...&In-Reply-To=%3C430D87C8.1010101%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] viafb kernel frame buffer vs. 720x576 tvout no-scale update...">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu Aug 25 10:56:40 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001146.html">[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems
+</A></li>
+        <LI>Next message: <A HREF="001137.html">[Softdevice-devel] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1136">[ date ]</a>
+              <a href="thread.html#1136">[ thread ]</a>
+              <a href="subject.html#1136">[ subject ]</a>
+              <a href="author.html#1136">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Just a little note :
+I finally got the kernel frame-buffer driver from viaarena to work with
+DirectFB. I can provide a patch against that viafb code to anyone
+(change accelerator ID to match DirectFB + yvirtres reporting).
+Drawback is that that viafb doesnt seem to handle virtual Y resolution
+correctly, thus no double-buffering can work.
+
+On the tv-out 720x576 no-scale front, I'm stuck... I understood a lot
+about that VT1622 registers and their behaviour, but I still need advice
+about the CRTC registers.
+For what I know : I need to adjust CRTC (Unichrome chip) registers to
+generate a 720x576 or 800x600 timing at 50hz, 28.000Mhz dotclock,
+non-interlaced. Then the VT1622 will drive the Unichrome chip clock and
+convert the VGA signal into S-Video signals, merging pixels vertically
+(lines) or horizontally), to fit exact PAL timing (keeping one line out
+of two to generate an interlaced signal).
+Since the VT1622 does not have a frame buffer, it must receive at the
+input a similar timing than the PAL output.
+
+What I have with various sort of CRTC timing is a &quot;out-of-range scan&quot; on
+the VGA monitor (thus black screen), and a totally disturbed &quot;image&quot; on
+the TV (when it does not blank the screen the same way the monitor does).
+I'm nearly giving-up... Any advice regarding CRTC registers, docs about
+them, different variant of chips in the VIA Unichrome line, is welcome.
+
+(I have an EPIA M10k with a CLE266 + VT1622)
+
+(end of &quot;little&quot; note)
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001146.html">[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems
+</A></li>
+	<LI>Next message: <A HREF="001137.html">[Softdevice-devel] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1136">[ date ]</a>
+              <a href="thread.html#1136">[ thread ]</a>
+              <a href="subject.html#1136">[ subject ]</a>
+              <a href="author.html#1136">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

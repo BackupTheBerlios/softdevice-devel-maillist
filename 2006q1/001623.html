@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] MPEG4/H.264 w/ softdevice?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MPEG4/H.264%20w/%20softdevice%3F&In-Reply-To=%3C43BAADEB.3050200%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001621.html">
+   <LINK REL="Next"  HREF="001622.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] MPEG4/H.264 w/ softdevice?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MPEG4/H.264%20w/%20softdevice%3F&In-Reply-To=%3C43BAADEB.3050200%40gmx.net%3E"
+       TITLE="[Softdevice-devel] MPEG4/H.264 w/ softdevice?">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Jan  3 18:01:31 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001621.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001622.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1623">[ date ]</a>
+              <a href="thread.html#1623">[ thread ]</a>
+              <a href="subject.html#1623">[ subject ]</a>
+              <a href="author.html#1623">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Harald Milz schrieb:
+&gt;<i> On Wed, Dec 28, 2005 at 08:33:12AM +0100, Andre Neumann wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>MPEG4/H.264 decoding is supported by ffmpeg, but i think you muste use
+</I>&gt;&gt;<i>some dual xeon system or better to get 720p/1080i H.264 material
+</I>&gt;&gt;<i>decoded.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Does softdevice make use of multiple cores directly? Has anyone tried a
+</I>&gt;<i> dual-core A64? 
+</I>&gt;<i> 
+</I>The softdevice uses multiple threads so it make use of multiple cores.
+However the decoding of the video is currently done in one thread, so
+the gain would be small.
+To my knowledge ffmpeg supports decoding in mutliple threads so it
+should be not that difficult to use more than one video decoding thread
+in the softdevice, but I never had a closer look at that.
+
+Bye,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001621.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001622.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1623">[ date ]</a>
+              <a href="thread.html#1623">[ thread ]</a>
+              <a href="subject.html#1623">[ subject ]</a>
+              <a href="author.html#1623">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

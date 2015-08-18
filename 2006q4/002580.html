@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a	long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%09long%0A%09time&In-Reply-To=%3C1159877359.452252ef89ecc%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002579.html">
+   <LINK REL="Next"  HREF="002569.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a	long	time</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%09long%0A%09time&In-Reply-To=%3C1159877359.452252ef89ecc%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a	long	time">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Oct  3 14:09:19 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002579.html">[Softdevice-devel] Hang after suspending MPEG stream for a	long time
+</A></li>
+        <LI>Next message: <A HREF="002569.html">[Softdevice-devel] Problems with field parity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2580">[ date ]</a>
+              <a href="thread.html#2580">[ thread ]</a>
+              <a href="subject.html#2580">[ subject ]</a>
+              <a href="author.html#2580">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zitat von Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; Zitat von Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Zitat von Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Stefan Lucke schrieb:
+</I>&gt;<i> &gt;&gt;&gt;&gt; On Samstag 30 September 2006 20:04, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; On Sat, Sep 30, 2006 at 05:32:06PM +0100, Laz wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; I usually let mine turn itself on and off with nvram-wakeup! I see
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; the problem when I leave it for a short while in the middle of something
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; and get distracted!
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; Me too.  Sometimes, I hit the Power button followed by some other button
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; to suspend the playback and to prevent the system from powering off.
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; Then, I'd hit the Power button to resume.
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; Hmmm...if you're right about this, how long should it take to overflow? The
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; only counter I can see is a 64-bit integer which looks like it's counting in
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; useconds which would take a few million years to overflow, by my reckoning!
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; Maybe I'm looking in the wrong place and it's a 32-bit counter which would
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; take 1 h 12 min to overflow. Not sure it was taking that long but it's hard
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt; to tell.
+</I>&gt;<i> &gt;&gt;&gt;&gt; Negative values should not harm,as we would return immedeatly.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; I think the problem is in cSyncTimer::GetRelTime() which returns an
+</I>&gt;<i> &gt;&gt;&gt; signed int. If GetRelTime() returns a negative number because of an
+</I>&gt;<i> &gt;&gt;&gt; overflow we will actually add that value to delay instead of
+</I>&gt;<i> &gt;&gt;&gt; substracting, when we do the ususal delay-=GetRelTime().
+</I>&gt;<i> &gt;&gt; The -= operator is the one which is causing troubles.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; That computed value is not only issue in that situation. I managed to
+</I>&gt;<i> &gt; avoid hang by some other changes. With current code we are loosing a signal to
+</I>&gt;<i> &gt; the condition variable.
+</I>&gt;<i> &gt; I did the following changes to sync_timer.c
+</I>&gt;<i> &gt; 1. cSigTimer::Sleep() clear signal &quot;got_signal=false;&quot; only if would not sleep.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -- snip --
+</I>&gt;<i> &gt; /* --- cSigTimer --------------------------------------------------------------
+</I>&gt;<i> &gt;  */
+</I>&gt;<i> &gt; int cSigTimer::Sleep(int timeoutUS, int lowLimitUS)
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt;   if ( timeoutUS &lt; lowLimitUS ) {
+</I>&gt;<i> &gt;     got_signal=false;
+</I>&gt;<i> &gt;     return GetRelTime();
+</I>&gt;<i> &gt;   }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -- snip --
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 2. cSyncTimer::Sleep(): clear signals &quot;got_signal=false;&quot; only in case of
+</I>&gt;<i> &gt;    emUsleepTimer and emRtcTimer.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -- snip --
+</I>&gt;<i> &gt; /* ----------------------------------------------------------------------------
+</I>&gt;<i> &gt;  */
+</I>&gt;<i> &gt; void cSyncTimer::Sleep(int *timeoutUS, int lowLimitUS)
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt;   switch(syncMode)
+</I>&gt;<i> &gt;   {
+</I>&gt;<i> &gt;     case emUsleepTimer: // usleep timer mode
+</I>&gt;<i> &gt;       while ((*timeoutUS - lowLimitUS) &gt; 2200 &amp;&amp; !got_signal)
+</I>&gt;<i> &gt;       {
+</I>&gt;<i> &gt;         usleep (2200);
+</I>&gt;<i> &gt;         *timeoutUS -= GetRelTime ();
+</I>&gt;<i> &gt;       }
+</I>&gt;<i> &gt;       break;
+</I>&gt;<i> &gt;       got_signal=false;
+</I>&gt;<i>
+</I>&gt;<i> This line is never executed.
+</I>
+Obvious. These lines have to be exchanged. Thats due to the fact, the enviroment here
+at my wife's father has a crippled internet access, and I cannot post cvs diffs. The code I ran
+had these lines swapped (sig timer mode).
+
+The key for sigtimer is, that got_signal must not be cleared at entry of sleep to avoid
+loosing pending signals. For other timers it sould be done like sig timer: clear that at
+end of sleep action.
+
+There may be still an issue with syncing after that long pause and so your suggestion may still
+be required.
+
+As all (your's and mine) seems to fix the situation and all address real issues, we should apply
+all of them.
+
+[ -- snip -- ]
+
+&gt;<i> &gt;
+</I>&gt;<i> &gt; With these two modifications vdr did _not_ hang after the 40min sleep.
+</I>&gt;<i> &gt;
+</I>&gt;<i> because got_signal is never set to false... And thus there is no
+</I>&gt;<i> sleeping at all.
+</I>&gt;<i> This will break the syncing completely. Maybe you don't notice it with
+</I>&gt;<i> DirectFB, because there is still the syncing to the Refreshrate.
+</I>&gt;<i>
+</I>&gt;<i> &gt; One thing I did not test in case of real long Sync() is in video.c.
+</I>&gt;<i> &gt; Sync() is protected by oldPictureMutex and would lock video thread from
+</I>&gt;<i> &gt; event processing.
+</I>
+In between I did that test (reverted hang fix, changed oldPictureMutex lock
+start) and result was as expected: video is hanging, but OSD interaction is ok.
+
+&gt;<i> &gt;
+</I>&gt;<i> Well, maybe we should move the whole syncing to cVideo::Action() and
+</I>&gt;<i> introduce a picture queue, then we could get rid of the oldPictureMutex
+</I>&gt;<i> at all... I will think about this..
+</I>&gt;<i>
+</I>&gt;<i> &gt;&gt; I guess we should
+</I>&gt;<i> &gt;&gt; introduce a private member &quot;clampValue&quot; , and return values of TimePassed()
+</I>&gt;<i> &gt;&gt; and GetRelTime() should be clamped to +/- clampValue if it is nonzero.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> GetRelTime() and TimePassed() is anyway a code duplication, that should
+</I>&gt;<i> be fixed too.
+</I>
+They only differ in setting the refence time marker.
+
+&gt;<i> I would just limit the time which on can measure with
+</I>&gt;<i> GetRelTime() and TimePassed() to a reasonable time, lets say 15min or
+</I>&gt;<i> so. That is save to keep in 32bit. On longer waits GetRelTime() should
+</I>&gt;<i> just return the max value for 15min.
+</I>&gt;<i> I will send a patch this evening.
+</I>&gt;<i>
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002579.html">[Softdevice-devel] Hang after suspending MPEG stream for a	long time
+</A></li>
+	<LI>Next message: <A HREF="002569.html">[Softdevice-devel] Problems with field parity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2580">[ date ]</a>
+              <a href="thread.html#2580">[ thread ]</a>
+              <a href="subject.html#2580">[ subject ]</a>
+              <a href="author.html#2580">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C200611032337.11008.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002634.html">
+   <LINK REL="Next"  HREF="002640.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C200611032337.11008.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Nov  3 23:37:10 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002634.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+        <LI>Next message: <A HREF="002640.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2638">[ date ]</a>
+              <a href="thread.html#2638">[ thread ]</a>
+              <a href="subject.html#2638">[ subject ]</a>
+              <a href="author.html#2638">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 02 November 2006 16:40, Juha Pahkala wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt; Quoting Juha Pahkala &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">jpahka at welho.com</A>&gt;:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;   
+</I>&gt;<i> &gt;&gt; Just updated my softdevice from 0.2.2 to 0.3.0. Picture-wise, it seems
+</I>&gt;<i> &gt;&gt; to be an improvement, I'm not sure whether I'm imagining things but the
+</I>&gt;<i> &gt;&gt; picture does seem crispier on the primary head of my g400... although I
+</I>&gt;<i> &gt;&gt; also updated dfb so not sure who's to blame ;)
+</I>&gt;<i> &gt;&gt;     
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Can you try:
+</I>&gt;<i> &gt; a. unmute main pcm with alsamixer, or
+</I>&gt;<i> &gt; b. comment out line 15 of audio_alsa.c: #define NO_MIXER
+</I>&gt;<i> &gt;   
+</I>&gt;<i> 
+</I>&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> Option A didn't make a difference but commenting out the NO_MIXER define
+</I>&gt;<i> fixed the problem! So thank you for your help (as well as softdevice in
+</I>&gt;<i> general ;)
+</I>
+Can you try the following patch which makes use of alsa mixer 
+selectable via OSD ?
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: audio-alsa.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/audio-alsa.c,v
+retrieving revision 1.2
+diff -U3 -r1.2 audio-alsa.c
+--- audio-alsa.c	25 Jul 2006 19:45:37 -0000	1.2
++++ audio-alsa.c	3 Nov 2006 22:31:46 -0000
+@@ -12,7 +12,6 @@
+ #include &lt;alsa/asoundlib.h&gt;
+ 
+ #define PCM_FMT SND_PCM_FORMAT_S16_LE
+-#define NO_MIXER
+ 
+ //#define AUDIODEB(out...) {printf(&quot;AUDIO-ALSA[%04d]:&quot;,(int)(getTimeMilis() % 10000));printf(out);}
+ 
+@@ -50,6 +49,7 @@
+     oldContext.samplerate = currContext.samplerate=48000;
+     dsyslog(&quot;[softdevice-audio] Device opened! Ready to play&quot;);
+     scale_Factor=0x7FFF;
++    this-&gt;setupStore = setupStore;
+ }
+ 
+ /* ----------------------------------------------------------------------------
+@@ -80,14 +80,14 @@
+              device, snd_strerror(err));
+      return false;
+    }
+-   //force setting of the parameters after resume 
++   //force setting of the parameters after resume
+    currContext.channels=0;
+    return true;
+ };
+ 
+ /* ----------------------------------------------------------------------------
+  */
+-  
++
+ void cAlsaAudioOut::Write(uchar *Data, int Length)
+ {
+     int     err;
+@@ -111,10 +111,9 @@
+   else
+     size = Length/(2*currContext.channels);
+ 
+-#ifdef NO_MIXER
+-  // change the volume
+-  Scale((int16_t*)Data,Length/2,scale_Factor);
+-#endif
++  // change the volume without mixer
++  if (!setupStore-&gt;useMixer)
++    Scale((int16_t*)Data,Length/2,scale_Factor);
+ 
+   while (size) {
+     while (paused) usleep(1000); // block
+@@ -225,7 +224,7 @@
+           handleMutex.Unlock();
+           return 0;
+   };
+-          
++
+   if (!snd_pcm_delay(handle, &amp;r) &amp;&amp;
+       currContext.samplerate) {
+     // successfully got delay
+@@ -278,12 +277,12 @@
+     };
+     //printf(&quot;alsa-audio: SetParams\n&quot;);
+     currContext=context;
+- 
++
+     handleMutex.Lock();
+-    
+-    if (handle) 
++
++    if (handle)
+             snd_pcm_close(handle);
+-    
++
+     if ((err = snd_pcm_open(&amp;handle,
+                             device,
+                             SND_PCM_STREAM_PLAYBACK, 0)) &lt; 0) {
+@@ -410,56 +409,58 @@
+  */
+ void cAlsaAudioOut::SetVolume (int vol)
+ {
+-#ifdef NO_MIXER
+-  scale_Factor = CalcScaleFactor(vol);
+-  //printf(&quot;vol %d scale_Factor 0x%04x\n&quot;,vol,scale_Factor);
+-  //scale_Factor = vol;
+-#else
+-    int                   err;
+-    long                  mixerMin, mixerMax,
+-                          setVol;
+-    double                mixerRange,
+-                          volPercent;
+-    char                  *mName = &quot;PCM&quot;,
+-                          *cardName = &quot;default&quot;;
+-    snd_mixer_t           *mHandle;
+-    snd_mixer_elem_t      *mElem;
+-    snd_mixer_selem_id_t  *sId;
+-
+-  snd_mixer_selem_id_alloca(&amp;sId);
+-  snd_mixer_selem_id_set_name(sId, mName);
+-  if ((err = snd_mixer_open(&amp;mHandle, 0)) &lt; 0) {
+-      static int once = 0;
+-    if (!once) {
+-      dsyslog(&quot;[softdevice-audio]: cannot open mixer: %s (%s)&quot;,
+-              mName,snd_strerror(err));
+-      once = 1;
++  if (!setupStore-&gt;useMixer) {
++    scale_Factor = CalcScaleFactor(vol);
++    //printf(&quot;vol %d scale_Factor 0x%04x\n&quot;,vol,scale_Factor);
++    //scale_Factor = vol;
++  } else {
++      int                   err;
++      long                  mixerMin, mixerMax,
++                            setVol;
++      double                mixerRange,
++                            volPercent;
++      char                  *mName = &quot;PCM&quot;,
++                            *cardName = &quot;default&quot;;
++      snd_mixer_t           *mHandle;
++      snd_mixer_elem_t      *mElem;
++      snd_mixer_selem_id_t  *sId;
++
++    snd_mixer_selem_id_alloca(&amp;sId);
++    snd_mixer_selem_id_set_name(sId, mName);
++    if ((err = snd_mixer_open(&amp;mHandle, 0)) &lt; 0) {
++        static int once = 0;
++      if (!once) {
++        dsyslog(&quot;[softdevice-audio]: cannot open mixer: %s (%s)&quot;,
++                mName,snd_strerror(err));
++        once = 1;
++      }
++      return;
+     }
+-    return;
+-  }
+ 
+-  snd_mixer_attach(mHandle, cardName);
+-  snd_mixer_selem_register(mHandle, NULL, NULL);
+-  snd_mixer_load(mHandle);
+-  mElem = snd_mixer_find_selem(mHandle,sId);
+-  /* --------------------------------------------------------------------------
+-   * some cards don't have any master volume. so check return value
+-   */
+-  if (mElem)
+-  {
+-    snd_mixer_selem_get_playback_volume_range(mElem,&amp;mixerMin,&amp;mixerMax);
+-    mixerRange = mixerMax - mixerMin;
+-    volPercent = (double) vol / 255.0;
+-    setVol = (int) (((double)mixerMin+(mixerRange*volPercent))+0.5);
+-    snd_mixer_selem_set_playback_volume(mElem,SND_MIXER_SCHN_FRONT_LEFT,setVol);
+-    snd_mixer_selem_set_playback_volume(mElem,SND_MIXER_SCHN_FRONT_RIGHT,setVol);
+-    if (snd_mixer_selem_has_playback_switch(mElem))
+-    {
+-      snd_mixer_selem_set_playback_switch_all(mElem, (vol) ? 1 : 0);
++    snd_mixer_attach(mHandle, cardName);
++    snd_mixer_selem_register(mHandle, NULL, NULL);
++    snd_mixer_load(mHandle);
++    mElem = snd_mixer_find_selem(mHandle,sId);
++    /* ------------------------------------------------------------------------
++     * some cards don't have any master volume. so check return value
++     */
++    if (mElem) {
++      snd_mixer_selem_get_playback_volume_range(mElem,&amp;mixerMin,&amp;mixerMax);
++      mixerRange = mixerMax - mixerMin;
++      volPercent = (double) vol / 255.0;
++      setVol = (int) (((double)mixerMin+(mixerRange*volPercent))+0.5);
++      snd_mixer_selem_set_playback_volume(mElem,
++                                          SND_MIXER_SCHN_FRONT_LEFT,
++                                          setVol);
++      snd_mixer_selem_set_playback_volume(mElem,
++                                          SND_MIXER_SCHN_FRONT_RIGHT,
++                                          setVol);
++      if (snd_mixer_selem_has_playback_switch(mElem)) {
++        snd_mixer_selem_set_playback_switch_all(mElem, (vol) ? 1 : 0);
++      }
+     }
+-  }
+ 
+-  snd_mixer_close(mHandle);
+-#endif
++    snd_mixer_close(mHandle);
++  }
+ }
+ 
+Index: audio-alsa.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/audio-alsa.h,v
+retrieving revision 1.1
+diff -U3 -r1.1 audio-alsa.h
+--- audio-alsa.h	10 Jul 2006 19:40:25 -0000	1.1
++++ audio-alsa.h	3 Nov 2006 22:31:46 -0000
+@@ -29,6 +29,7 @@
+                     ac3SpdifPro;
+   SampleContext     oldContext;
+   cAlsaAC3pt        ac3pt;
++  cSetupStore       *setupStore;
+ 
+   bool  SetAC3PassThroughMode(bool on);
+   void  Xrun(void);
+@@ -52,4 +53,4 @@
+ };
+ 
+ 
+-#endif 
++#endif
+Index: setup-softdevice-menu.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice-menu.c,v
+retrieving revision 1.8
+diff -U3 -r1.8 setup-softdevice-menu.c
+--- setup-softdevice-menu.c	9 Sep 2006 10:35:37 -0000	1.8
++++ setup-softdevice-menu.c	3 Nov 2006 22:31:47 -0000
+@@ -352,6 +352,9 @@
+                             (SETUP_AC3MODENAMES-1),
+                             ac3ModeNames));
+ 
++  Add(new cMenuEditBoolItem(tr(&quot;Volume via H/W Mixer&quot;),
++                            &amp;data-&gt;useMixer, tr(&quot;no&quot;), tr(&quot;yes&quot;)));
++
+   Add(new cMenuEditStraItem(tr(&quot;Sync Mode&quot;),
+                             &amp;data-&gt;syncTimerMode,
+                             (SETUP_SYNC_TIMER_NAMES-1),
+@@ -462,6 +465,7 @@
+   SetupStore (&quot;Suspend&quot;,            setupStore.shouldSuspend);
+   SetupStore (&quot;OSDalphablend&quot;,      setupStore.osdMode);
+   SetupStore (&quot;AC3Mode&quot;,            setupStore.ac3Mode);
++  SetupStore (&quot;UseMixer&quot;,             setupStore.useMixer);
+   SetupStore (&quot;bufferMode&quot;,           setupStore.bufferMode);
+   SetupStore (&quot;mainMenu&quot;,             setupStore.mainMenu);
+   SetupStore (&quot;syncTimerMode&quot;,        setupStore.syncTimerMode);
+Index: setup-softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.c,v
+retrieving revision 1.46
+diff -U3 -r1.46 setup-softdevice.c
+--- setup-softdevice.c	25 Jul 2006 19:58:12 -0000	1.46
++++ setup-softdevice.c	3 Nov 2006 22:31:48 -0000
+@@ -109,6 +109,7 @@
+   avOffset      = 0;
+   shouldSuspend = 0;
+   ac3Mode       = 0;
++  useMixer      = 0;
+   useMGAtv      = 0;
+   viaTv         = 0;
+   cle266HWdecode  = 0;
+@@ -346,6 +347,10 @@
+     ac3Mode = atoi (Value);
+     fprintf(stderr, &quot;[setup-softdevice] alsa ac3Mode set to: %d\n&quot;, ac3Mode);
+     ac3Mode = clamp (0, ac3Mode, 3);
++  } else if (!strcasecmp(Name, &quot;UseMixer&quot;)) {
++    useMixer = atoi (Value);
++    useMixer = clamp (0, useMixer, 1);
++    fprintf(stderr, &quot;[setup-softdevice] alsa useMixer set to: %d\n&quot;, useMixer);
+   } else if (!strcasecmp(Name, &quot;AlsaAC3Device&quot;) &amp;&amp; strlen(alsaAC3Device) == 0) {
+     strncpy(alsaAC3Device, Value, ALSA_DEVICE_NAME_LENGTH);
+     alsaAC3Device [ALSA_DEVICE_NAME_LENGTH-1] = 0;
+Index: setup-softdevice.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.h,v
+retrieving revision 1.34
+diff -U3 -r1.34 setup-softdevice.h
+--- setup-softdevice.h	9 Sep 2006 10:35:37 -0000	1.34
++++ setup-softdevice.h	3 Nov 2006 22:31:49 -0000
+@@ -158,6 +158,7 @@
+     int   shouldSuspend;
+     int   osdMode;
+     int   ac3Mode;
++    int   useMixer;
+     int   bufferMode;
+     int   mainMenu;
+     int   syncTimerMode;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002634.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+	<LI>Next message: <A HREF="002640.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2638">[ date ]</a>
+              <a href="thread.html#2638">[ thread ]</a>
+              <a href="subject.html#2638">[ subject ]</a>
+              <a href="author.html#2638">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

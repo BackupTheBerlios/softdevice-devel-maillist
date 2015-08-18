@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] softdevice xv autosuspend
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%20xv%20autosuspend&In-Reply-To=%3C200703252013.25256.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002809.html">
+   <LINK REL="Next"  HREF="002812.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] softdevice xv autosuspend</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%20xv%20autosuspend&In-Reply-To=%3C200703252013.25256.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] softdevice xv autosuspend">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Mar 25 20:13:25 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002809.html">[Softdevice-devel] [PATCH] softdevice configure SUSPEND_BY_KEY	support
+</A></li>
+        <LI>Next message: <A HREF="002812.html">[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2810">[ date ]</a>
+              <a href="thread.html#2810">[ thread ]</a>
+              <a href="subject.html#2810">[ subject ]</a>
+              <a href="author.html#2810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 23 March 2007 13:37, Artur Skawina wrote:
+&gt;<i> Turns off the decoder when the video window isn't visible (when you switch to another
+</I>&gt;<i> (virtual) desktop, other windows cover it or screensaver kicks in etc).
+</I>&gt;<i> 
+</I>&gt;<i> Note this will unsuspend on vdr startup when using XV even when the previously saved
+</I>&gt;<i> config value was 0 - this is probably the desired behaviour; to start XV in suspended
+</I>&gt;<i> mode make sure the window isn't visible by placing it appropriately (using geometry/WM).
+</I>&gt;<i> 
+</I>
+Thanks for your patch.
+
+We should be prepared to act on VisibilityNotify, but I don't think this should
+be done automagically mapped to suspend/resume action.
+Comments welcome.
+
+Example:
+- 'r' did a suspend action (video and audio stopped).
+- touching the window will bring back both.
+
+and switching to another desktop with kde does not deliver
+VisibilityFullyObscured :-( . 
+
+&gt;<i> 
+</I>&gt;<i> diff -urp softdevice-cvs.org/video-xv.c softdevice-cvs/video-xv.c
+</I>&gt;<i> --- softdevice-cvs.org/video-xv.c	2006-12-18 00:03:46.000000000 +0100
+</I>&gt;<i> +++ softdevice-cvs/video-xv.c	2007-03-23 11:09:48.000000000 +0100
+</I>&gt;<i> @@ -579,7 +579,8 @@ void cXvVideoOut::ProcessEvents ()
+</I>&gt;<i>                                   KeyPressMask |
+</I>&gt;<i>                                   ExposureMask |
+</I>&gt;<i>                                   ConfigureNotify |
+</I>&gt;<i> -                                 StructureNotifyMask,
+</I>&gt;<i> +                                 StructureNotifyMask |
+</I>&gt;<i> +                                 VisibilityChangeMask,
+</I>&gt;<i>                                   &amp;event))
+</I>&gt;<i>    {
+</I>&gt;<i>      switch (event.type)
+</I>&gt;<i> @@ -703,6 +704,11 @@ void cXvVideoOut::ProcessEvents ()
+</I>&gt;<i>          }
+</I>&gt;<i>          break;
+</I>&gt;<i> 
+</I>&gt;<i> +      case VisibilityNotify:
+</I>&gt;<i> +        EVDEB(&quot;VisibilityNotify\n&quot;);
+</I>&gt;<i> +        setupStore-&gt;shouldSuspend = event.xvisibility.state==VisibilityFullyObscured;
+</I>&gt;<i> +        break;
+</I>&gt;<i> +
+</I>&gt;<i>        case MapNotify:
+</I>&gt;<i>          EVDEB(&quot;MapNotify\n&quot;);
+</I>&gt;<i>          map_count++;
+</I>&gt;<i> @@ -920,7 +926,8 @@ bool cXvVideoOut::Initialize (void)
+</I>&gt;<i> 
+</I>&gt;<i>    XSelectInput(dpy, win, KeyPressMask | ExposureMask |
+</I>&gt;<i>                           ConfigureNotify | StructureNotifyMask |
+</I>&gt;<i> -                         PointerMotionMask | ButtonPressMask);
+</I>&gt;<i> +                         PointerMotionMask | ButtonPressMask |
+</I>&gt;<i> +                         VisibilityChangeMask);
+</I>&gt;<i> 
+</I>&gt;<i>    XMapRaised(dpy, win);
+</I>&gt;<i>    //XNextEvent(dpy, &amp;event);
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002809.html">[Softdevice-devel] [PATCH] softdevice configure SUSPEND_BY_KEY	support
+</A></li>
+	<LI>Next message: <A HREF="002812.html">[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2810">[ date ]</a>
+              <a href="thread.html#2810">[ thread ]</a>
+              <a href="subject.html#2810">[ subject ]</a>
+              <a href="author.html#2810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio : my proposal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C42848191.7010405%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000656.html">
+   <LINK REL="Next"  HREF="000700.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio : my proposal</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C42848191.7010405%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio : my proposal">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Fri May 13 12:29:37 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000656.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+        <LI>Next message: <A HREF="000700.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#657">[ date ]</a>
+              <a href="thread.html#657">[ thread ]</a>
+              <a href="subject.html#657">[ subject ]</a>
+              <a href="author.html#657">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jari H a &#233;crit :
+&gt;<i> I spoke with Stefan Lucke at begining of april conserning about aspect ratio. My proposal was:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Proposal for aspect ratios:
+</I>&gt;&gt;<i>4:3 Pan&amp;scan
+</I>&gt;&gt;<i>4:3 letterbox
+</I>&gt;&gt;<i>16:9 letterbox
+</I>&gt;&gt;<i>16:9 pan&amp;scan
+</I>&gt;&gt;<i>16:9 full ( no scaling )
+</I>&gt;&gt;<i>HQ scaling= maybe we could add some advanced(better that graphics gard)
+</I>&gt;&gt;<i>scaling methods for scaling to lcd/plasmas native resolution. There could be
+</I>&gt;&gt;<i>sinc and lanzos as methods and adjustment for resolution. And option for
+</I>&gt;&gt;<i>pan&amp;scan and letterbox.
+</I>&gt;<i> 
+</I>&gt;<i> In other words,
+</I>&gt;<i> In menu should be options:
+</I>&gt;<i> 
+</I>&gt;<i> Monitor Aspect:  4:3, 16:9, HQ
+</I>
+&quot;HQ&quot; is not a monitor aspect ratio. It is best described as a 
+resolution. But softdevice already knows the actual frame-buffer 
+resolution : no use for the user to set this.
+I think part of the problem with current 0.1.1 softdevice ratio handling 
+is that actual aspect ratio is confused with actual screen resolution. 
+Many screen have no standard pixel aspect (like 1024x1024 plasma at a 
+16:9 aspect ratio, ie. pixels are really wide)
+
+&gt;<i> View mode: Letterbox, Pan&amp;scan, Full
+</I>
+In a perfect world, those simple setup would work automagically... if 
+the broadcaster provides correct streams and information.
+In my world (in France), a channel apparently always send the same video 
+format, but add various black bars on various sides to fit the image in, 
+taking for granted that everyone has the same old 4:3 TV set... To make 
+things worse, each channel decides what it take for granted (some even 
+broadcast a tiny image surrounded with black bars on every four sides, 
+with the logo on the channel outside the movie).
+
+I'll try to summarize my common cases with actual examples in a future 
+thread.
+
+&gt;<i> -------------------
+</I>&gt;<i> HQ scaling method: Hardware, Sinc, Lanzos, ...
+</I>&gt;<i> HQ scaling X: 640 -&gt; 1600
+</I>&gt;<i> HQ scaling Y: 400 -&gt; 1200
+</I>&gt;<i> 
+</I>&gt;<i> &quot;Monitor Aspect&quot; would decide desired aspect. And &quot;View mode&quot;   how to implement aspect ratio. 
+</I>&gt;<i> Letterbox; adds black bars if videos aspect is different than monitors aspect
+</I>&gt;<i> Pan&Scan; cuts picture if videos aspect is different than monitors aspect
+</I>&gt;<i> Full; If somebody wants or not, to correct aspect via tv remote control
+</I>&gt;<i> These View mode options would be nice to be controlled via softdevice remote.
+</I>
+I think we agree, but the words are different, and sample cases might be 
+different in our minds too.
+
+&gt;<i> Information about &quot;hq scaling&quot;:
+</I>&gt;<i> <A HREF="http://htpcnews.com/main.php?id=ffdshowdvd_1">http://htpcnews.com/main.php?id=ffdshowdvd_1</A>
+</I>
+Interesting.
+I already experienced DVB recording viewed in Xine with a nVidia FX5200 
+hardware accelerated, displayed on a 17&quot; CRT at 1600x1200 : that really 
+is astounding, compared to the crap TV technology we still all have.
+
+&gt;<i> I think my proposal could be hard to implement right. But I think too that current aspect ratio controlling is quite poor :(
+</I>
+Agreed.
+
+&gt;<i> btw. I think that aspect ratio wont always work right with dvd-plugin. And should ac3 passtrough work? My wont :(
+</I>
+Stefan is working on AC/3. He'll make it work at it's best sooner or later.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000656.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+	<LI>Next message: <A HREF="000700.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#657">[ date ]</a>
+              <a href="thread.html#657">[ thread ]</a>
+              <a href="subject.html#657">[ subject ]</a>
+              <a href="author.html#657">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

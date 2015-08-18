@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C445DA886.7020700%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001968.html">
+   <LINK REL="Next"  HREF="001979.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C445DA886.7020700%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun May  7 09:57:58 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001968.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="001979.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> On Sunday 30 Apr 2006 14:04, Laz wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> I tried forcing fwidth, dwidth, fheight, and dheight to fixed values at
+</I>&gt;&gt;<i> the start of SetParams but it is still squashed into the corner.
+</I>&gt;&gt;<i> Bizarrely, that change makes the video flicker madly!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Do you think my best bet is setting the width and height values in the
+</I>&gt;&gt;<i> AVCodec context structure (even if just to fixed values for now)? What
+</I>&gt;&gt;<i> other bits would also need values elsewhere? I think I convinced myself
+</I>&gt;&gt;<i> that PTS values, etc. are set where the audio and video are separated,
+</I>&gt;&gt;<i> rather than during the frame decoding.
+</I>&gt;<i> 
+</I>&gt;<i> I've had a private email from Rolf Ahrenberg who got this working and had 
+</I>&gt;<i> the same quarter-sized image. However, he tells me that setting 
+</I>&gt;<i> &quot;context-&gt;width = 720; context-&gt;height = 576;&quot; around where the decoder 
+</I>&gt;<i> is called gives a full-screen picture.
+</I>&gt;<i> 
+</I>&gt;<i> I haven't tested this yet but this is what I was going to try next! Not 
+</I>&gt;<i> sure what happens like this if the stream changes resolution or aspect 
+</I>&gt;<i> ratio, though! That's the next step...
+</I>&gt;<i> 
+</I>Hi Laz,
+
+finally I have some time to work on the softdevice again, and I wanted
+to have a look at your patch. I know that I downloaded it and had a
+quick look, but I can't find it anymore and the link isn't working for
+me anymore. Can you please post the patch again? Maybe you already have
+an updated version?
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001968.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="001979.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

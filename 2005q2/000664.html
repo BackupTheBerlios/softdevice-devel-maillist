@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20%28SOLVED%2C%20VERIFIED%20%21%21%29&In-Reply-To=%3C20050515085508.GC417715%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000663.html">
+   <LINK REL="Next"  HREF="000645.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20%28SOLVED%2C%20VERIFIED%20%21%21%29&In-Reply-To=%3C20050515085508.GC417715%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun May 15 10:55:08 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000663.html">[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+</A></li>
+        <LI>Next message: <A HREF="000645.html">[Softdevice-devel] How to break threads
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#664">[ date ]</a>
+              <a href="thread.html#664">[ thread ]</a>
+              <a href="subject.html#664">[ subject ]</a>
+              <a href="author.html#664">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, May 14, 2005 at 11:24:08PM +0200, Stefan Lucke wrote:
+&gt;<i> &gt; &gt; Do you have any opinion or educated guess how good the fix in ffmpeg's cvs
+</I>&gt;<i> &gt; &gt; is?  Does it fix this problem once and for all, or is it just a kludge?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; My opinion is that it really _fixes_ the problem, as the errounuosly freed
+</I>&gt;<i> &gt; parse buffer to which other functions still hold pointers, is not freed
+</I>&gt;<i> &gt; anymore when stream info changes.
+</I>&gt;<i> 
+</I>&gt;<i> And it will fix even more crashes. Think of bad signal quality when
+</I>&gt;<i> width or high are decoded wrong. This would previously cause freeing
+</I>&gt;<i> of parse buffers too.
+</I>
+How are memory leaks prevented?  Does it make use of some memory allocation
+pool?  If there is some function to clean up the pool?  If yes, how often is
+it called by softdevice?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000663.html">[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+</A></li>
+	<LI>Next message: <A HREF="000645.html">[Softdevice-devel] How to break threads
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#664">[ date ]</a>
+              <a href="thread.html#664">[ thread ]</a>
+              <a href="subject.html#664">[ subject ]</a>
+              <a href="author.html#664">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

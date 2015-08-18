@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606160005070.468619%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002143.html">
+   <LINK REL="Next"  HREF="002149.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Rolf Ahrenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606160005070.468619%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">rahrenbe at cc.hut.fi
+       </A><BR>
+    <I>Thu Jun 15 23:17:48 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002143.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002149.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2145">[ date ]</a>
+              <a href="thread.html#2145">[ thread ]</a>
+              <a href="subject.html#2145">[ subject ]</a>
+              <a href="author.html#2145">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, 15 Jun 2006, Martin Wache wrote:
+
+&gt;<i> That are great news! Can you please tell me which change did the trick?
+</I>&gt;<i> I only found two differences to the patch I send, the pixelformat is
+</I>&gt;<i> changed back, and BesColorKeyState() is not called for the unichrome
+</I>&gt;<i> anymore. I tried both changes, but for me the cpu load is still high.
+</I>
+It was the pixelformat. As the comment in patch says, CLE266 seems to 
+require YV12 format. However, I also did enable the viaTV variable for 
+cle266, made that BesColorKeyState() modification just in case, and
+corrected the configuration script.
+
+BR,
+--
+rofa
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002143.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002149.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2145">[ date ]</a>
+              <a href="thread.html#2145">[ thread ]</a>
+              <a href="subject.html#2145">[ subject ]</a>
+              <a href="author.html#2145">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

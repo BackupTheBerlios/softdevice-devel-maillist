@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [vdr] G450 softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C20060607120132.GA13524%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002111.html">
+   <LINK REL="Next"  HREF="002115.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [vdr] G450 softdevice</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C20060607120132.GA13524%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Re: [vdr] G450 softdevice">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Jun  7 14:01:32 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002111.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+        <LI>Next message: <A HREF="002115.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2113">[ date ]</a>
+              <a href="thread.html#2113">[ thread ]</a>
+              <a href="subject.html#2113">[ subject ]</a>
+              <a href="author.html#2113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jun 06, 2006 at 10:59:37PM +0200, Stefan Lucke wrote:
+&gt;<i> On Dienstag 06 Juni 2006 22:19, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Tue, Jun 06, 2006 at 10:10:53PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; So I did, but benchmarking is strange.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Indeed (VIA outperforming Intel at lower clock), but I'm glad that the
+</I>&gt;<i> &gt; MMX version (delta2) outperforms the C version (delta3) by an order of
+</I>&gt;<i> &gt; magnitude on both platforms you tested.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Could you publish your test program?
+</I>&gt;<i> 
+</I>&gt;<i> Is attached.
+</I>
+I got softdevice from cvs and vdr 1.4.0.  I didn't build vdr or softdevice,
+because I didn't want to install all dependencies (libavcodec et al).
+Then I did the following in the softdevice directory:
+
+touch config.h
+comment out #include &quot;setup-softdevice.h&quot; in utils.c
+gcc -O9 -std=c99 -march=pentium-m -combine softbench.c utils.c -o softbench
+./softbench
+
+Results on Pentium-M with userspace governor set to 1400 MHz:
+
+delta1 = 29527
+delta2 = 28911
+delta3 = 122932
+delta4 = 89013
+delta5 = 26602
+
+The two first digits seem constant over repeated runs.
+
+gcc --version says:
+gcc (GCC) 4.0.4 20060507 (prerelease) (Debian 4.0.3-3)
+dpkg --status gcc says:
+Version: 4:4.0.3-4
+
+&gt;<i> &gt; Did you commit the MMX version already? 
+</I>&gt;<i> 
+</I>&gt;<i> It is now, but not yet called. Have to sort out some changes which
+</I>&gt;<i> are waiting.
+</I>
+Please announce it on this list, as I believe I'm not the only interested
+party who is not subscribed to the CVS commit list.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002111.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+	<LI>Next message: <A HREF="002115.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2113">[ date ]</a>
+              <a href="thread.html#2113">[ thread ]</a>
+              <a href="subject.html#2113">[ subject ]</a>
+              <a href="author.html#2113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

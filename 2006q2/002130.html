@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice/softplay clipping picture
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice/softplay%20clipping%20picture&In-Reply-To=%3C200606141701.04031.prakash%40punnoor.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002124.html">
+   <LINK REL="Next"  HREF="002129.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice/softplay clipping picture</H1>
+    <B>Prakash Punnoor</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice/softplay%20clipping%20picture&In-Reply-To=%3C200606141701.04031.prakash%40punnoor.de%3E"
+       TITLE="[Softdevice-devel] softdevice/softplay clipping picture">prakash at punnoor.de
+       </A><BR>
+    <I>Wed Jun 14 17:01:03 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002124.html">[Softdevice-devel] softdevice/softplay clipping picture
+</A></li>
+        <LI>Next message: <A HREF="002129.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2130">[ date ]</a>
+              <a href="thread.html#2130">[ thread ]</a>
+              <a href="subject.html#2130">[ subject ]</a>
+              <a href="author.html#2130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Am Dienstag Juni 13 2006 18:35 schrieb Martin Wache:
+&gt;<i> Prakash Punnoor schrieb:
+</I>&gt;<i> &gt; Am Montag Juni 12 2006 20:28 schrieb Prakash Punnoor:
+</I>&gt;<i> &gt;&gt; I just installed softplay 0.0.2 slightly patched (see other post) with
+</I>&gt;<i> &gt;&gt; gentoo's ffmpeg-0.4.9_p20060302 and softdevice 0.2.3 using XV. In dvb
+</I>&gt;<i> &gt;&gt; mode everything nearly seems fine (only the OSD sometimes tends to
+</I>&gt;<i> &gt;&gt; show/leave some horizontal pink lines when I move the selection.)
+</I>&gt;<i> &gt;&gt; Playing back an xvid (720p) OSD show a lot of wrong colours, but the
+</I>&gt;<i> &gt;&gt; main problem is, I can only see about 60% of the picture the rest of the
+</I>&gt;<i> &gt;&gt; right side is left black. Any idea?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Uhm to be precise: I can only see 60% of the video. The OSD is shown full
+</I>&gt;<i> &gt; (but wrongly coloured), IIRC.
+</I>&gt;<i>
+</I>
+Hi Stefan, hi Martin. I couldn't test earlier, so here the infos you 
+requested:
+
+&gt;<i> For Xv-out there is an option to use the maximum available area:
+</I>&gt;<i> -vo:xv:max-area
+</I>
+Tried, no difference, or rather softdevice doesn't know it:
+Jun 14 16:44:02 inter vdr: [1764] [softdevice] ignoring unrecognized 
+option &quot;-vo:xv:max-area&quot;
+&gt;<i>
+</I>&gt;<i> Do you use a nvidia card ?
+</I>
+Yes, Geforce 6600.
+
+&gt;<i> Video colors are correct but only OSD colors wrong ?
+</I>
+Yes - but only using softplay.
+
+&gt;<i> Can you try to play around with the HUE value setting available in our OSD
+</I>
+Actually I don't know where to find this setting. :-)
+
+
+
+&gt;<i> Are you using software alpha blending mode?
+</I>
+Yes, the other one makes OSD disappear.
+
+&gt;<i> Which graphics card/drivers 
+</I>&gt;<i> are you using?
+</I>
+...w/ Nvidia binary driver 8762 (nv is no good for HD content...)
+
+&gt;<i> Can you please post the system logfile when you start to play the xvid?
+</I>&gt;<i> There should be some messages with the src and dest size of the video,
+</I>&gt;<i> it would be interresting what is reported by the softdevice, and of
+</I>&gt;<i> course also what the actual dimensions of the stream are.
+</I>
+Following the log. Before start a dvb channel was tuned in. Then I played the 
+stream in 16:9 mode, then stopped it, set aspect to 5:4 and tried again. both 
+time a lot of pic is missing. If I try to play a real 720p file, even less is 
+shown and the pic isn't centered anymore It gets moved to left/up. Following 
+stream is properly centered, just the right side is missing.
+
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: patch version (2006-04-24)
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: Initialize XShmCreateImage 
+Successful (0x8438a68)
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: Initialize shmget Successful 
+(2949120 bytes)
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: Initialize shmat Successful
+Jun 14 16:44:02 inter vdr: [1764] [softdevice-xscreensaver]: xscreensaver not 
+running
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: initialized OK
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: NV17 Video Texture: available 
+ports 274 - 274
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: grabbed port 274
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: max area size 2046 x 2046
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: using area size 736 x 576
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]:   XV_SET_DEFAULTS           
+NOT-XvGettable     XvSettable (       0 [0x00000000] -        0 [0x00000000]) 
+(       0 [0x00000000]
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]:   XV_ITURBT_709                 
+XvGettable     XvSettable (       0 [0x00000000] -        1 [0x00000001]) (       
+0 [0x00000000]
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]:   XV_SYNC_TO_VBLANK             
+XvGettable     XvSettable (       0 [0x00000000] -        1 [0x00000001]) (       
+1 [0x00000001]
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: XvShmCreateImage Successful 
+(0x84398e0)
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: shmget Successful (0 bytes)
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: shmat Successful
+Jun 14 16:44:02 inter vdr: [1764] [XvVideoOut]: XShmAttach    rc = 1 (should 
+be OK)
+Jun 14 16:44:02 inter vdr: [1764] [softdevice] videoOut OK !
+Jun 14 16:44:02 inter vdr: [1764] [softdevice-audio] Opening alsa device 
+default
+Jun 14 16:44:02 inter vdr: [1764] [softdevice-audio] Using alsa AC3 device 
+iec958:AES0=0x2,AES1=0x82,AES2=0x0,AES3=0x2
+Jun 14 16:44:02 inter vdr: [1770] [VideoOut]: 736x576 [0,0 736x576] -&gt; 
+1024x768 [143,0 738x768]
+Jun 14 16:44:02 inter vdr: [1770] [VideoOut]: 736x576 [0,0 736x576] -&gt; 
+1024x768 [143,0 738x768]
+Jun 14 16:44:03 inter vdr: [1764] [softdevice-audio] Device opened! Ready to 
+play
+Jun 14 16:44:03 inter vdr: [1764] initializing plugin: femon (1.0.0): DVB 
+Signal Information Monitor (OSD)
+Jun 14 16:44:03 inter vdr: [1764] setting primary device to 2
+Jun 14 16:44:03 inter vdr: [1764] SVDRP listening on port 2001
+
+[...]
+
+Jun 14 16:44:04 inter vdr: [1779] transfer thread started (pid=1764, tid=1779)
+Jun 14 16:44:04 inter vdr: [1780] receiver on device 1 thread started 
+(pid=1764, tid=1780)
+Jun 14 16:44:04 inter vdr: [1781] TS buffer on device 1 thread started 
+(pid=1764, tid=1781)
+Jun 14 16:44:04 inter vdr: [1779] setting audio track to 1 (0)
+Jun 14 16:44:05 inter vdr: [1783] [VideoOut]: resolution changed: W(736 -&gt; 
+480); H(576 -&gt;576)
+Jun 14 16:44:05 inter vdr: [1783] [VideoOut]: aspect changed (0 -&gt; 0 ; 
+1.366667 -&gt; 1.333333)
+Jun 14 16:44:05 inter vdr: [1783] [VideoOut]: 480x576 [0,0 480x576] -&gt; 
+1024x768 [152,0 720x768]
+Jun 14 16:44:05 inter vdr: [1784] [softdevice-audio] samplerate: 48000Hz, 
+channels: #2
+Jun 14 16:44:05 inter vdr: [1784] [softdevice-audio] Period size 1152 Buffer 
+size 9216
+Jun 14 16:44:05 inter vdr: [1784] [softdevice-audio] Hardware initialized
+
+Jun 14 16:44:15 inter vdr: [1779] transfer thread ended (pid=1764, tid=1779)
+Jun 14 16:44:16 inter vdr: [1781] TS buffer on device 1 thread ended 
+(pid=1764, tid=1781)
+Jun 14 16:44:16 inter vdr: [1780] buffer stats: 30268 (1%) used
+Jun 14 16:44:16 inter vdr: [1780] receiver on device 1 thread ended (pid=1764, 
+tid=1780)
+Jun 14 16:44:16 inter vdr: [1764] buffer stats: 72568 (3%) used
+Jun 14 16:44:16 inter vdr: [1789] [VideoOut]: resolution changed: W(480 -&gt; 
+960); H(576 -&gt;544)
+Jun 14 16:44:16 inter vdr: [1789] [VideoOut]: aspect changed (0 -&gt; 0 ; 
+1.333333 -&gt; 1.764706)
+Jun 14 16:44:16 inter vdr: [1789] [VideoOut]: 960x544 [0,0 960x544] -&gt; 
+1024x768 [35,0 953x768]
+
+Jun 14 16:44:28 inter vdr: [1764] switching to channel 32
+Jun 14 16:44:28 inter vdr: [1792] transfer thread started (pid=1764, tid=1792)
+Jun 14 16:44:28 inter vdr: [1793] receiver on device 1 thread started 
+(pid=1764, tid=1793)
+Jun 14 16:44:28 inter vdr: [1794] TS buffer on device 1 thread started 
+(pid=1764, tid=1794)
+Jun 14 16:44:30 inter vdr: [1796] [VideoOut]: resolution changed: W(960 -&gt; 
+480); H(544 -&gt;576)
+Jun 14 16:44:30 inter vdr: [1796] [VideoOut]: aspect changed (0 -&gt; 0 ; 
+1.764706 -&gt; 1.333333)
+Jun 14 16:44:30 inter vdr: [1796] [VideoOut]: 480x576 [0,0 480x576] -&gt; 
+1024x768 [152,0 720x768]
+Jun 14 16:44:30 inter vdr: [1792] setting audio track to 1 (0)
+Jun 14 16:44:30 inter vdr: [1797] [softdevice-audio] samplerate: 48000Hz, 
+channels: #2
+Jun 14 16:44:30 inter vdr: [1797] [softdevice-audio] Period size 1152 Buffer 
+size 9216
+Jun 14 16:44:30 inter vdr: [1797] [softdevice-audio] Hardware initialized
+Jun 14 16:44:32 inter vdr: [1764] softdevice: no translation found 
+for 'Softdevice' in language 1 (Deutsch)
+Jun 14 16:44:32 inter vdr: [1764] femon: no translation found for 'Signal 
+Information' in language 1 (Deutsch)
+Jun 14 16:44:39 inter vdr: [1797] [softdevice-audio]: xrun
+
+[...]
+
+Jun 14 16:44:43 inter vdr: [1796] [VideoOut]: 480x576 [0,0 480x576] -&gt; 
+1024x768 [112,0 800x768]
+Jun 14 16:44:45 inter vdr: [1796] [VideoOut]: 480x576 [0,0 480x576] -&gt; 
+1024x768 [152,0 720x768]
+Jun 14 16:44:45 inter vdr: [1796] [VideoOut]: 480x576 [0,0 480x576] -&gt; 
+1024x768 [32,0 960x768]
+Jun 14 16:44:45 inter vdr: [1796] [VideoOut]: 480x576 [0,0 480x576] -&gt; 
+1024x768 [0,0 1024x768]
+Jun 14 16:44:47 inter vdr: [1764] softdevice: no translation found 
+for 'Cropping' in language 1 (Deutsch)
+Jun 14 16:44:47 inter vdr: [1764] softdevice: no translation found for 'Post 
+processing' in language 1 (Deutsch)
+Jun 14 16:44:47 inter vdr: [1764] softdevice: no translation found for 'Video 
+out' in language 1 (Deutsch)
+Jun 14 16:44:50 inter vdr: [1792] transfer thread ended (pid=1764, tid=1792)
+Jun 14 16:44:50 inter vdr: [1794] TS buffer on device 1 thread ended 
+(pid=1764, tid=1794)
+Jun 14 16:44:50 inter vdr: [1793] buffer stats: 46436 (2%) used
+Jun 14 16:44:50 inter vdr: [1793] receiver on device 1 thread ended (pid=1764, 
+tid=1793)
+Jun 14 16:44:50 inter vdr: [1764] buffer stats: 92872 (4%) used
+Jun 14 16:44:50 inter vdr: [1802] [VideoOut]: resolution changed: W(480 -&gt; 
+960); H(576 -&gt;544)
+Jun 14 16:44:50 inter vdr: [1802] [VideoOut]: aspect changed (0 -&gt; 0 ; 
+1.333333 -&gt; 1.764706)
+Jun 14 16:44:50 inter vdr: [1802] [VideoOut]: 960x544 [0,0 960x544] -&gt; 
+1024x768 [0,94 1024x580]
+Jun 14 16:44:56 inter vdr: [1764] softdevice: no translation found 
+for 'Softdevice' in language 1 (Deutsch)
+Jun 14 16:44:56 inter vdr: [1764] femon: no translation found for 'Signal 
+Information' in language 1 (Deutsch)
+Jun 14 16:44:58 inter vdr: [1764] switching to channel 32
+Jun 14 16:44:58 inter vdr: [1804] transfer thread started (pid=1764, tid=1804)
+Jun 14 16:44:58 inter vdr: [1805] receiver on device 1 thread started 
+(pid=1764, tid=1805)
+Jun 14 16:44:58 inter vdr: [1806] TS buffer on device 1 thread started 
+(pid=1764, tid=1806)
+Jun 14 16:45:00 inter vdr: [1808] [VideoOut]: resolution changed: W(960 -&gt; 
+480); H(544 -&gt;576)
+Jun 14 16:45:00 inter vdr: [1808] [VideoOut]: aspect changed (0 -&gt; 0 ; 
+1.764706 -&gt; 1.333333)
+Jun 14 16:45:00 inter vdr: [1808] [VideoOut]: 480x576 [0,0 480x576] -&gt; 
+1024x768 [0,0 1024x768]
+Jun 14 16:45:00 inter vdr: [1804] setting audio track to 1 (0)
+Jun 14 16:45:00 inter vdr: [1809] [softdevice-audio] samplerate: 48000Hz, 
+channels: #2
+Jun 14 16:45:00 inter vdr: [1809] [softdevice-audio] Period size 1152 Buffer 
+size 9216
+Jun 14 16:45:00 inter vdr: [1809] [softdevice-audio] Hardware initialized
+Jun 14 16:45:03 inter vdr: [1809] [softdevice-audio]: xrun
+
+
+-- 
+(&#176;=                 =&#176;)
+//\ Prakash Punnoor /\\
+V_/                 \_V
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060614/ac967a7a/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060614/ac967a7a/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002124.html">[Softdevice-devel] softdevice/softplay clipping picture
+</A></li>
+	<LI>Next message: <A HREF="002129.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2130">[ date ]</a>
+              <a href="thread.html#2130">[ thread ]</a>
+              <a href="subject.html#2130">[ subject ]</a>
+              <a href="author.html#2130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

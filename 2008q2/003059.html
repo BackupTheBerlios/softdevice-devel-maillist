@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with softdevice (&amp;softplay) 	with	vdr-1.6.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Futf-8%3Fq%3FProblems_with_softdevice_%3D28%3D26softp%3F%3D%0A%09%3D%3Futf-8%3Fb%3FbGF5KSAJd2l0aAl2ZHItMS42LjA%3D%3F%3D&In-Reply-To=%3C200804121317.13129.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003055.html">
+   <LINK REL="Next"  HREF="003045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with softdevice (&amp;softplay) 	with	vdr-1.6.0</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Futf-8%3Fq%3FProblems_with_softdevice_%3D28%3D26softp%3F%3D%0A%09%3D%3Futf-8%3Fb%3FbGF5KSAJd2l0aAl2ZHItMS42LjA%3D%3F%3D&In-Reply-To=%3C200804121317.13129.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems with softdevice (&amp;softplay) 	with	vdr-1.6.0">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr 12 13:17:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003055.html">[Softdevice-devel] Problems with softdevice	(&amp;softplay)	with	vdr-1.6.0
+</A></li>
+        <LI>Next message: <A HREF="003045.html">[Softdevice-devel] VDR crashes after some minutes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3059">[ date ]</a>
+              <a href="thread.html#3059">[ thread ]</a>
+              <a href="subject.html#3059">[ subject ]</a>
+              <a href="author.html#3059">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 11 April 2008, Malcolm Caldwell wrote:
+&gt;<i> On Thu, 2008-04-10 at 09:08 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Wednesday 09 April 2008, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; &gt; Hi,
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; On Thu, 2008-04-03 at 20:02 +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; &gt; &gt; Hi Malcolm,
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; sorry for my late answer...
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Malcolm Caldwell schrieb:
+</I>&gt;<i> &gt; &gt; &gt; &gt; Any idea on this?
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; I hope to get in and have a look myself, but I don't really want to do
+</I>&gt;<i> &gt; &gt; &gt; &gt; it on my production vdr system.
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; It would be great if you could solve this problem. I currently don't
+</I>&gt;<i> &gt; &gt; &gt; have much time left to work on the softdevice and softplay. I'm sorry...
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &#65279;I have found what triggers the segfault.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; In setup.conf, if softplay.UseReceiver = 1 then vdr segfaults when
+</I>&gt;<i> &gt; &gt; softplay opens a file.  Set it to 0 and no segfault.  (I don't know why
+</I>&gt;<i> &gt; &gt; yet)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; This segfault is still not reproducable for me, even while viewing TV
+</I>&gt;<i> &gt; during MP3 playback ;-) (Was not aware of that option).
+</I>&gt;<i> 
+</I>&gt;<i> Ok got it.
+</I>&gt;<i> 
+</I>&gt;<i> My trigger was I don't have a channel 1. 
+</I>&gt;<i> 
+</I>&gt;<i> I really don't know why calls to cDevice::CurrentChannel() were
+</I>&gt;<i> returning 1 but they were (On two different machines), and that made for
+</I>&gt;<i> problems later on.
+</I>&gt;<i> 
+</I>&gt;<i> The following patch fixes this:
+</I>&gt;<i> 
+</I>&gt;<i> --- SoftPlayer.c.orig	2008-03-30 22:08:08.000000000 +0930
+</I>&gt;<i> +++ SoftPlayer.c	2008-04-12 00:19:02.000000000 +0930
+</I>&gt;<i> @@ -326,8 +326,9 @@
+</I>&gt;<i>          };
+</I>&gt;<i>  
+</I>&gt;<i>   	//SoftDevice-&gt;SetPlayMode( (ePlayMode) pmAudioVideo );
+</I>&gt;<i> + 	PLDBG(&quot;softplay action, use receiver = %d, channel=%d\n&quot;,SoftplaySetup.UseReceiver(),cDevice::CurrentChannel());
+</I>&gt;<i>          if (SoftplaySetup.UseReceiver()) {
+</I>&gt;<i> -                const cChannel *channel=Channels.GetByNumber(cDevice::CurrentChannel());
+</I>&gt;<i> +	          const cChannel *channel=Channels.GetByNumber(cDevice::CurrentChannel(),true);
+</I>
+2nd parameter should be integer type. But in any case, channel has
+to be checked for != NULL.
+
+&gt;<i>                  Receiver=new cSoftplayReceiver(channel,
+</I>&gt;<i>                                  cDevice::PrimaryDevice(),SoftHandles);
+</I>&gt;<i>  #if VDRVERSNUM &gt;= 10500 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> (My guess is that an invalid receiver fed null frames into the stream)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> (NOW I can watch my old recordings with softplay.  All I have to do is
+</I>&gt;<i> work out WHY my old recordings don't play as recordings.  As mentioned
+</I>&gt;<i> previously audio plays stuttering and FAST, advancing approx 10 seconds
+</I>&gt;<i> for every minute of playback)
+</I>
+Martin's posted patch only does the read_frame replacement..
+Here is another version (from Martin too and a bit older) which
+does a different pts handling
+
+<A HREF="http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html">http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html</A>
+
+&gt;<i> (However, even softplay is not much of a 'solution' here is audio sync
+</I>&gt;<i> is out 2 seconds or so, but at least its constant!)
+</I>&gt;<i> 
+</I>
+
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.72
+diff -u -r1.72 mpeg2decoder.c
+--- mpeg2decoder.c	26 Feb 2007 23:00:34 -0000	1.72
++++ mpeg2decoder.c	17 Mar 2007 20:51:17 -0000
+@@ -174,7 +174,7 @@
+   freezeMode=false;
+   AVPacket *pkt;
+ 
+-  while ( PacketQueue.Available() &lt; 7 &amp;&amp; active) {
++  while ( PacketQueue.Available() &lt; 3 &amp;&amp; active) {
+     BUFDEB(&quot;wait while loop packets %d StreamDecoder  pid:%d type %d\n&quot;,
+       PacketQueue.Available(),getpid(),context-&gt;codec_type );
+     usleep(10000);
+@@ -1115,20 +1115,31 @@
+           usleep(50000);
+ 
+         BUFDEB(&quot;av_read_frame start\n&quot;);
+-        //ret = av_read_frame(ic, &amp;pkt);
+-        ret = av_read_packet(ic, &amp;pkt);
++        ret = av_read_frame(ic, &amp;pkt);
++        //ret = av_read_packet(ic, &amp;pkt);
+         if (ret &lt; 0) {
+             BUFDEB(&quot;cMpeg2Decoder Stream Error!\n&quot;);
+             if (ThreadActive)
+ 		    usleep(10000);
+             continue;
+         }
+-        //av_dup_packet(&amp;pkt);
++        av_dup_packet(&amp;pkt);
+         PacketCount++;
+         BUFDEB(&quot;got packet from av_read_frame!\n&quot;);
+ 
++#if LIBAVFORMAT_BUILD &gt; 4623
++        AVRational time_base;
++        time_base=ic-&gt;streams[pkt.stream_index]-&gt;time_base;
++        if ( pkt.pts != (int64_t) AV_NOPTS_VALUE ) {
++                pkt.pts=av_rescale(pkt.pts, AV_TIME_BASE* (int64_t)time_base.num, time_base.den)/100 ;
++        };
++
++        //printf(&quot;PTS: %lld new %lld num %d den %d\n&quot;,PTS,pkt.pts,
++        //                time_base.num,time_base.den);
++#else
+         if ( pkt.pts != (int64_t) AV_NOPTS_VALUE )
+           pkt.pts/=9;
++#endif
+ 
+         QueuePacket(ic,pkt,packetMode);
+ 
+@@ -1184,9 +1195,6 @@
+ void cMpeg2Decoder::QueuePacket(const AVFormatContext *ic, AVPacket &amp;pkt,
+ 		bool PacketMode)
+ {
+-  BUFDEB(&quot;QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d\n&quot;,
+-    AudioIdx,VideoIdx,pkt.stream_index);
+-
+   if (!ic) {
+         fprintf(stderr,&quot;Error: ic is null!\n&quot;);
+         av_free_packet(&amp;pkt);
+@@ -1212,6 +1220,8 @@
+           BUFDEB(&quot;Unknown packet type! Return;\n&quot;);
+           return;
+   };
++  BUFDEB(&quot;QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d, packet_type: %d\n&quot;,
++    AudioIdx,VideoIdx,pkt.stream_index,packet_type);
+ 
+   // check if there are new streams
+   if ( AudioIdx != DONT_PLAY &amp;&amp; packet_type == CODEC_TYPE_AUDIO
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003055.html">[Softdevice-devel] Problems with softdevice	(&amp;softplay)	with	vdr-1.6.0
+</A></li>
+	<LI>Next message: <A HREF="003045.html">[Softdevice-devel] VDR crashes after some minutes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3059">[ date ]</a>
+              <a href="thread.html#3059">[ thread ]</a>
+              <a href="subject.html#3059">[ subject ]</a>
+              <a href="author.html#3059">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

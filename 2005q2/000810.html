@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems while playing recordings and in startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%20startup&In-Reply-To=%3Cb7bb36410506060011715e86a3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000798.html">
+   <LINK REL="Next"  HREF="000821.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems while playing recordings and in startup</H1>
+    <B>Ari Koponen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20while%20playing%20recordings%20and%20in%20startup&In-Reply-To=%3Cb7bb36410506060011715e86a3%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] Problems while playing recordings and in startup">juniper81 at gmail.com
+       </A><BR>
+    <I>Mon Jun  6 09:11:05 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000798.html">[Softdevice-devel] Problems while playing recordings and in	startup
+</A></li>
+        <LI>Next message: <A HREF="000821.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#810">[ date ]</a>
+              <a href="thread.html#810">[ thread ]</a>
+              <a href="subject.html#810">[ subject ]</a>
+              <a href="author.html#810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> It must be something in the way vdr access the data, since the buffers
+</I>&gt;<i> of the softdevice are full, it is either like Torgeir suspects some
+</I>&gt;<i> interrupt handler which takes all the cpu time or some other process.
+</I>&gt;<i> Are you starting vdr as root or non-root? 
+</I>
+I'm starting it as root.
+
+&gt;<i> What is the overall response of the computer during these &quot;hangs&quot;? Can
+</I>&gt;<i> you move the mouse smoothly? What does top show on (how many vdr
+</I>&gt;<i> processes are there and how much cpu time do they use?)
+</I>
+I don't have a mouse so I can't try. Here's some stats from top:
+
+live TV:
+
+used CPU time:  ~40%
+number of vdr processes: 2 - 4
+
+replaying recording through softdevice:
+
+used CPU time: ~50 - 70 %
+number of vdr processess: 3 - 6
+
+replaying through softplay:
+
+used CPU time : ~40%
+number of vdr processes: 2 - 3
+
+Although I should mention that the test system is not the same as
+before because I upgraded softdevice to the recent CVS on saturday and
+vdr to 1.3.25 and ffmpeg to some other version. I say some other
+because I couldn't compile softdevice with the recent cvs of ffmpeg. I
+guess I should start a new thread about that  issue..
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000798.html">[Softdevice-devel] Problems while playing recordings and in	startup
+</A></li>
+	<LI>Next message: <A HREF="000821.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#810">[ date ]</a>
+              <a href="thread.html#810">[ thread ]</a>
+              <a href="subject.html#810">[ subject ]</a>
+              <a href="author.html#810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

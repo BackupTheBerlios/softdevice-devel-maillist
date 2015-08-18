@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 warning reseting decoder]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20warning%20reseting%20decoder%5D&In-Reply-To=%3C1173993006.45f9b62ecb65e%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002795.html">
+   <LINK REL="Next"  HREF="002797.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 warning reseting decoder]</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20warning%20reseting%20decoder%5D&In-Reply-To=%3C1173993006.45f9b62ecb65e%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] CLE266 warning reseting decoder]">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Mar 15 22:10:06 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002795.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+        <LI>Next message: <A HREF="002797.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2796">[ date ]</a>
+              <a href="thread.html#2796">[ thread ]</a>
+              <a href="subject.html#2796">[ subject ]</a>
+              <a href="author.html#2796">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting mike n:
+
+&gt;<i> &gt; &gt; Following FFMPEG version WORKS with latest CVS versions of
+</I>&gt;<i> &gt; &gt; DirectFB/DFB/linux-viafb/softdevice VDR plugin (everything updated today
+</I>&gt;<i> &gt; &gt; 2007-03-14):
+</I>&gt;<i> &gt; &gt;   svn checkout -r {20070207} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A> ffmpeg
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;If svn checkout commands is the same as cvs, this should include all
+</I>&gt;<i> &gt;changes
+</I>&gt;<i> &gt;up to 2006-02-06 23:59:59. If thats correct, this is ffmpeg revision 7865,
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;   svn checkout -r {20070208} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A> ffmpeg
+</I>&gt;<i> &gt;and this should be revision 7881.
+</I>&gt;<i>
+</I>&gt;<i> Yes. SVN checkout without time part assumes that timestamp part is 00:00:00,
+</I>&gt;<i> so the command would checkout &quot;20070207 00:00:00&quot; revision.
+</I>&gt;<i>
+</I>&gt;<i> However, &quot;svn log -r {20070207}:{20070208}&quot; command lists revision numbers
+</I>&gt;<i> from 7851 to 7872 so the working rev would be 7851 and non-working rev 7872.
+</I>&gt;<i> But could be that I'm wrong because I don't usually play with SVN revisions,
+</I>&gt;<i> I just use the latest trunk version.
+</I>
+That's strange. I thought these timestamps are server based.
+But you are (from mail header) in UTC - 0800 ! That's the reason for my
+looking at wrong revisions.
+
+
+&gt;<i> I went through and tested these revisions. It turn out that rev 7852 was the
+</I>&gt;<i> last one working and rev 7853 of ffmpeg broke the VDR output.
+</I>&gt;<i>
+</I>&gt;<i> This was the cmd I used to checkout the last working ffmpeg source codes
+</I>&gt;<i> (FYI for those having the same problem):
+</I>&gt;<i>   svn checkout -r 7852 <A HREF="svn://svn.mplayerhq.hu.ffmpeg/trunk">svn://svn.mplayerhq.hu.ffmpeg/trunk</A> ffmpeg
+</I>&gt;<i>
+</I>&gt;<i> 7853 revision modified ffmpeg/libavcodec/avcodec.h and
+</I>
+Header file modification is minor. But the other one not.
+<A HREF="http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/mpeg.c?r1=7567&amp;r2=7853&amp;pathrev=7853">http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/mpeg.c?r1=7567&amp;r2=7853&amp;pathrev=7853</A>
+
+My guess is the part with checking PES extension (line 1535 - 1557).
+Perhaps it's an issue with libcle266, which does it's own scanning or
+something with audio/video repacker of vdr.
+
+If you are still motivated enough, you could try to deactivate
+audio/video repacker of vdr with non working revision 7853 of ffmpeg.
+
+In vdr they could be deactivated in remux.c, around line 1868 (vdr-1.4.0).
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002795.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+	<LI>Next message: <A HREF="002797.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2796">[ date ]</a>
+              <a href="thread.html#2796">[ thread ]</a>
+              <a href="subject.html#2796">[ subject ]</a>
+              <a href="author.html#2796">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

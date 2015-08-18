@@ -1,0 +1,3379 @@
+From bob at globall.ru  Tue Jan  1 14:05:06 2008
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Tue, 01 Jan 2008 16:05:06 +0300
+Subject: [Softdevice-devel] softdevice+dvd plugin - audio jerks
+In-Reply-To: <4778F56C.6060104@globall.ru>
+References: <46517C2F.1080507@globall.ru>	<471021BE-A15C-472C-9E27-E43B1713DACE@pobox.com>	<4651E871.7000105@globall.ru>	<A61AB388-C503-4DA8-BD51-53591A1A0907@pobox.com>	<4652659B.2090306@globall.ru>	<4652806D.8000905@globall.ru>
+	<46529A6C.8010303@huillard.net> <4778F56C.6060104@globall.ru>
+Message-ID: <477A3A82.3020202@globall.ru>
+
+I have found out, that the problem is caused here with this code
+(workaround for some ac3 decoding issues?):
+
+    // no new frame decoded, continue but ...
+    if (audio_size <= 0) {
+      // AC3 oddities:
+      //   1st call processes header and adjusts channels.
+      //   2nd call delivers data.
+      if (context->codec_id == CODEC_ID_AC3) {
+        len=avcodec_decode_audio(context, (short *)audiosamples,
+                                 &audio_size, data, 1);
+        //fprintf(stderr,"2nd call len: %d a_size: %d\n", len, audio_size);
+      }
+      if (audio_size <= 0)
+        continue;
+    }
+
+If revert this changes, dvd plugin works normally.
+
+Regards,
+Vladimir Monchenko.
+
+
+
+
+
+From stefan at lucke.in-berlin.de  Tue Jan  1 17:05:57 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Tue, 1 Jan 2008 17:05:57 +0100
+Subject: [Softdevice-devel] softdevice+dvd plugin - audio jerks
+In-Reply-To: <477A3A82.3020202@globall.ru>
+References: <46517C2F.1080507@globall.ru> <4778F56C.6060104@globall.ru>
+	<477A3A82.3020202@globall.ru>
+Message-ID: <200801011705.57880.stefan@lucke.in-berlin.de>
+
+On Tuesday 01 January 2008, Vladimir Monchenko wrote:
+> I have found out, that the problem is caused here with this code
+> (workaround for some ac3 decoding issues?):
+> 
+>     // no new frame decoded, continue but ...
+>     if (audio_size <= 0) {
+>       // AC3 oddities:
+>       //   1st call processes header and adjusts channels.
+>       //   2nd call delivers data.
+>       if (context->codec_id == CODEC_ID_AC3) {
+>         len=avcodec_decode_audio(context, (short *)audiosamples,
+>                                  &audio_size, data, 1);
+>         //fprintf(stderr,"2nd call len: %d a_size: %d\n", len, audio_size);
+>       }
+>       if (audio_size <= 0)
+>         continue;
+>     }
+> 
+> If revert this changes, dvd plugin works normally.
+
+If you keep this change and apply the attached diff,
+it should work too.
+
+http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html
+
+I really should have a look at the issue Martin talks about and
+integrate it into our cvs.
+
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.72
+diff -u -r1.72 mpeg2decoder.c
+--- mpeg2decoder.c	26 Feb 2007 23:00:34 -0000	1.72
++++ mpeg2decoder.c	17 Mar 2007 20:51:17 -0000
+@@ -174,7 +174,7 @@
+   freezeMode=false;
+   AVPacket *pkt;
+ 
+-  while ( PacketQueue.Available() < 7 && active) {
++  while ( PacketQueue.Available() < 3 && active) {
+     BUFDEB("wait while loop packets %d StreamDecoder  pid:%d type %d\n",
+       PacketQueue.Available(),getpid(),context->codec_type );
+     usleep(10000);
+@@ -1115,20 +1115,31 @@
+           usleep(50000);
+ 
+         BUFDEB("av_read_frame start\n");
+-        //ret = av_read_frame(ic, &pkt);
+-        ret = av_read_packet(ic, &pkt);
++        ret = av_read_frame(ic, &pkt);
++        //ret = av_read_packet(ic, &pkt);
+         if (ret < 0) {
+             BUFDEB("cMpeg2Decoder Stream Error!\n");
+             if (ThreadActive)
+ 		    usleep(10000);
+             continue;
+         }
+-        //av_dup_packet(&pkt);
++        av_dup_packet(&pkt);
+         PacketCount++;
+         BUFDEB("got packet from av_read_frame!\n");
+ 
++#if LIBAVFORMAT_BUILD > 4623
++        AVRational time_base;
++        time_base=ic->streams[pkt.stream_index]->time_base;
++        if ( pkt.pts != (int64_t) AV_NOPTS_VALUE ) {
++                pkt.pts=av_rescale(pkt.pts, AV_TIME_BASE* (int64_t)time_base.num, time_base.den)/100 ;
++        };
++
++        //printf("PTS: %lld new %lld num %d den %d\n",PTS,pkt.pts,
++        //                time_base.num,time_base.den);
++#else
+         if ( pkt.pts != (int64_t) AV_NOPTS_VALUE )
+           pkt.pts/=9;
++#endif
+ 
+         QueuePacket(ic,pkt,packetMode);
+ 
+@@ -1184,9 +1195,6 @@
+ void cMpeg2Decoder::QueuePacket(const AVFormatContext *ic, AVPacket &pkt,
+ 		bool PacketMode)
+ {
+-  BUFDEB("QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d\n",
+-    AudioIdx,VideoIdx,pkt.stream_index);
+-
+   if (!ic) {
+         fprintf(stderr,"Error: ic is null!\n");
+         av_free_packet(&pkt);
+@@ -1212,6 +1220,8 @@
+           BUFDEB("Unknown packet type! Return;\n");
+           return;
+   };
++  BUFDEB("QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d, packet_type: %d\n",
++    AudioIdx,VideoIdx,pkt.stream_index,packet_type);
+ 
+   // check if there are new streams
+   if ( AudioIdx != DONT_PLAY && packet_type == CODEC_TYPE_AUDIO
+
+From bob at globall.ru  Tue Jan  1 18:22:18 2008
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Tue, 01 Jan 2008 20:22:18 +0300
+Subject: [Softdevice-devel] softdevice+dvd plugin - audio jerks
+In-Reply-To: <200801011705.57880.stefan@lucke.in-berlin.de>
+References: <46517C2F.1080507@globall.ru>
+	<4778F56C.6060104@globall.ru>	<477A3A82.3020202@globall.ru>
+	<200801011705.57880.stefan@lucke.in-berlin.de>
+Message-ID: <477A76CA.2020400@globall.ru>
+
+Stefan Lucke ?????:
+>
+> If you keep this change and apply the attached diff,
+> it should work too.
+>   
+
+Hm, it does not work. After start vdr video is frozen.
+
+My log:
+Jan  1 19:44:53 vdr vdr: [4708] Position Tracker thread started
+(pid=4708, tid=4708)
+Jan  1 19:44:53 vdr vdr: [4691] actuator: switch to channel 4255
+Jan  1 19:44:53 vdr vdr: [4709] transfer thread started (pid=4709, tid=4709)
+Jan  1 19:44:53 vdr vdr: [4710] receiver on device 1 thread started
+(pid=4710, tid=4710)
+Jan  1 19:44:53 vdr vdr: [4711] TS buffer on device 1 thread started
+(pid=4711, tid=4711)
+Jan  1 19:44:53 vdr vdr: [4712] [VideoOut] reset: sync info: repF = 0,
+drpF = 0, totF = 0
+Jan  1 19:44:53 vdr vdr: [4714] [VideoOut]: resolution changed: W(736 ->
+720); H(576 ->576)
+Jan  1 19:44:53 vdr vdr: [4714] [VideoOut]: aspect changed (0 -> 0 ;
+1.366667 -> 1.333333)
+Jan  1 19:44:53 vdr vdr: [4714] [VideoOut]: 720x576 [0,0 720x576] ->
+720x576 [0,0 720x576]
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] (re)configuring Videolayer to 720
+x 576 (720x576)
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] SetParams: Enabling DLOP_FIELD_PARITY
+Jan  1 19:44:53 vdr vdr: [4709] setting audio track to 1 (0)
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] surface capabilities for
+(videoSurface): videoonly, flipping, triple-buffered, Pixel
+Format = 0x08100609
+Jan  1 19:44:53 vdr vdr: [4714] [dfb] (re)configured 0x08100609
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Playback reopen
+error: CH2, ??? ?????? ????? ??? ????????
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] samplerate: 48000Hz,
+channels: #2
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Device 'default',
+Samplerate 48000 Channels 2
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Period size 1152
+Buffer size 9216
+Jan  1 19:44:54 vdr vdr: [4715] [softdevice-audio] Hardware initialized
+Jan  1 19:44:55 vdr vdr: [4708] Position Tracker thread ended (pid=4708,
+tid=4708)
+Jan  1 19:44:56 vdr vdr: [4710] buffer usage: 70% (tid=4709)
+Jan  1 19:44:56 vdr vdr: [4710] buffer usage: 80% (tid=4709)
+Jan  1 19:44:56 vdr vdr: [4710] buffer usage: 90% (tid=4709)
+Jan  1 19:44:57 vdr vdr: [4710] buffer usage: 100% (tid=4709)
+Jan  1 19:44:57 vdr vdr: [4710] ERROR: 1 ring buffer overflow (177 bytes
+dropped)
+Jan  1 19:45:03 vdr vdr: [4710] ERROR: 24285 ring buffer overflows
+(4565580 bytes dropped)
+Jan  1 19:45:09 vdr vdr: [4710] ERROR: 25005 ring buffer overflows
+(4700940 bytes dropped)
+Jan  1 19:45:15 vdr vdr: [4710] ERROR: 25013 ring buffer overflows
+(4702444 bytes dropped)
+...
+
+Regards,
+Vladimir Monchenko.
+
+
+
+
+From bob at globall.ru  Thu Jan  3 09:15:46 2008
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Thu, 03 Jan 2008 11:15:46 +0300
+Subject: [Softdevice-devel] softdevice+dvd plugin - audio jerks
+In-Reply-To: <477A76CA.2020400@globall.ru>
+References: <46517C2F.1080507@globall.ru>	<4778F56C.6060104@globall.ru>	<477A3A82.3020202@globall.ru>	<200801011705.57880.stefan@lucke.in-berlin.de>
+	<477A76CA.2020400@globall.ru>
+Message-ID: <477C99B2.2020409@globall.ru>
+
+Vladimir Monchenko ?????:
+> Hm, it does not work. After start vdr video is frozen.
+>   
+I am sorry, today has completely reinstalled vdr and softdevice with
+av_read_frame-01.diff. All works perfectly! Small twitchings the image
+on some channels also were gone.
+Thanks!
+
+Regards,
+Vladimir Monchenko.
+
+
+
+
+From per at mellander.org  Thu Jan  3 13:08:30 2008
+From: per at mellander.org (Per Mellander)
+Date: Thu, 03 Jan 2008 13:08:30 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+Message-ID: <477CD03E.6030506@mellander.org>
+
+A friend of me have finally managed to get his HVR4000 to work with VDR. He is 
+using xine as output-device and is now able to watch HD S2-channels. I have used 
+softdevice to watch mpeg2-HD material before and that seemed to work ok. 
+Recently they changed to H.264 on our HD-channels here in Sweden so I'm about to 
+go get a HVR4000 myself. So my simple question is:
+
+Will I still be able to use softdevice as output? If not, what's the catch?
+
+Per
+
+
+From stefan_doermann at web.de  Thu Jan  3 16:30:11 2008
+From: stefan_doermann at web.de (=?iso-8859-15?Q?Stefan_D=F6rmann?=)
+Date: Thu, 03 Jan 2008 16:30:11 +0100
+Subject: [Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on
+	SMT7020s
+Message-ID: <1000440920@web.de>
+
+Works perfectly now, thanks a lot for your help Stefan.
+
+B.R.
+
+Stefan
+______________________________________________________________________
+XXL-Speicher, PC-Virenschutz, Spartarife & mehr: Nur im WEB.DE Club!		
+Jetzt testen! http://produkte.web.de/club/?mc=021130
+
+
+
+From per at mellander.org  Sun Jan  6 19:34:59 2008
+From: per at mellander.org (Per Mellander)
+Date: Sun, 06 Jan 2008 19:34:59 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <477CD03E.6030506@mellander.org>
+References: <477CD03E.6030506@mellander.org>
+Message-ID: <47811F53.8060503@mellander.org>
+
+Well now I've bought my own card :)
+
+If I run it with softdevice I get the sound and EPG but no picture so I 
+think I can answer myself that no mpeg4 is decoded by softdevice. I've 
+also tried the card using vdr-xine and that seems to work alright, so I 
+know the card is working.
+
+My question remains about what the odds for watching mpeg4 with 
+softdevice is? I understand that ffmpeg is the decoding part of 
+softdevice but I can't really find info about if it's mpeg4 capable.
+
+Could anyone schred som lights over the matter?
+
+Per
+
+Per Mellander skrev:
+> A friend of me have finally managed to get his HVR4000 to work with VDR. He is 
+> using xine as output-device and is now able to watch HD S2-channels. I have used 
+> softdevice to watch mpeg2-HD material before and that seemed to work ok. 
+> Recently they changed to H.264 on our HD-channels here in Sweden so I'm about to 
+> go get a HVR4000 myself. So my simple question is:
+> 
+> Will I still be able to use softdevice as output? If not, what's the catch?
+> 
+> Per
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+
+From m.wache at gmx.net  Mon Jan  7 18:46:50 2008
+From: m.wache at gmx.net (Martin Wache)
+Date: Mon, 07 Jan 2008 18:46:50 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <47811F53.8060503@mellander.org>
+References: <477CD03E.6030506@mellander.org> <47811F53.8060503@mellander.org>
+Message-ID: <4782658A.8070005@gmx.net>
+
+Hi Per,
+
+Per Mellander wrote:
+> Well now I've bought my own card :)
+> 
+> If I run it with softdevice I get the sound and EPG but no picture so I 
+> think I can answer myself that no mpeg4 is decoded by softdevice. I've 
+> also tried the card using vdr-xine and that seems to work alright, so I 
+> know the card is working.
+> 
+> My question remains about what the odds for watching mpeg4 with 
+> softdevice is? I understand that ffmpeg is the decoding part of 
+> softdevice but I can't really find info about if it's mpeg4 capable.
+>
+A recent ffmpeg should not have any problems with mpeg4. Xine also uses
+ffmpeg to decode mpeg4.
+
+> Could anyone schred som lights over the matter?
+> 
+In mpeg2decoder.c cMpeg2Decoder::initStream, the stream is hardcoded to
+mpeg which is actually mpeg2, you'll have to change that. Actually I
+guess it should be quite simple to adapt the softdevice, but I don't
+have the time... I haven't even had a look at the patches to vdr, so I
+don't know what has changed there.
+
+Bye,
+
+Martin
+
+
+
+From per at mellander.org  Tue Jan  8 09:59:48 2008
+From: per at mellander.org (Per Mellander)
+Date: Tue, 08 Jan 2008 09:59:48 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <4782658A.8070005@gmx.net>
+References: <477CD03E.6030506@mellander.org> <47811F53.8060503@mellander.org>
+	<4782658A.8070005@gmx.net>
+Message-ID: <47833B84.2050801@mellander.org>
+
+Hi Martin!
+
+> 
+>> Could anyone schred som lights over the matter?
+>>
+> In mpeg2decoder.c cMpeg2Decoder::initStream, the stream is hardcoded to
+> mpeg which is actually mpeg2, you'll have to change that. Actually I
+> guess it should be quite simple to adapt the softdevice, but I don't
+> have the time... I haven't even had a look at the patches to vdr, so I
+> don't know what has changed there.
+> 
+
+Well I'll try to give it some time then.
+
+Many thanks!
+
+Per
+
+
+From kier at gmx.de  Tue Jan 15 16:37:01 2008
+From: kier at gmx.de (Christian Kier)
+Date: Tue, 15 Jan 2008 16:37:01 +0100
+Subject: [Softdevice-devel] Wrong colours and artefacts with CN400
+Message-ID: <478CD31D.4010407@gmx.de>
+
+Hi!
+
+I use softdevice + directfb (unichrome driver) on an epia sp13000 board 
+(cn400 chipset). The framebuffer kernel module used is that from VIA. 
+The directfb unichrome driver is patched such that it recognises the cn400.
+
+When experimenting with the pixelformat in /etc/directfbrc the best I 
+get is a video occupying half of the screen with a green background. The 
+OSD displays fine, though. Recording something and viewing it e.g. with 
+mplayer (on a different machine) also works fine.
+
+I hope somebody could help me or point me in the right direction, if 
+this is not the correct list.
+
+Thanks!
+/Christian
+
+---------------
+/etc/modprobe.d/options:
+options viafb mode=720x576-50 tv_system=2 bpp=32 accel=1
+
+---------------
+/etc/fb.modes:
+#
+#   Sample video modes
+#
+#   These data are based on the CRTC parameters in
+#
+#       Mach64 Programmer's Guide, Appendix C
+#       (C) 1998 ATI Technologies Inc.
+#
+
+# PAL TV output
+
+mode "720x576-50"
+    geometry 720 576 720 576 16
+    timings 35714 32 8 46 0 136 3
+    bcast true # request overscan with (modified) viafb
+endmode
+
+[... rest skipped ...]
+
+---------------
+/etc/directfbrc:
+#mode=720x576-50
+#depth=32
+pixelformat=RGB24
+disable-module=lirc
+disable-module=joystick
+#disable-module=cle266
+no-vt
+
+---------------
+# fbset -i
+
+mode "720x576-60"
+    # D: 32.668 MHz, H: 35.820 kHz, V: 60.000 Hz
+    geometry 720 576 720 1152 32
+    timings 30611 96 24 17 1 72 3
+    bcast true
+    rgba 8/16,8/8,8/0,0/0
+endmode
+
+Frame buffer device information:
+    Name        : Via
+    Address     : 0xe8000000
+    Size        : 66830336
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 0
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 2880
+    MMIO Address: 0xec000000
+    MMIO Size   : 16777216
+    Accelerator : Unknown (50)
+
+---------------
+# dfbinfo
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.25 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH 
+   (c) 2002-2004  convergence GmbH 
+-----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2008-01-05 20:38)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Modules: suppress module 'joystick'
+(*) Direct/Modules: suppress module 'lirc'
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7587)...
+(!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** 
+[../../../lib/fusion/reactor.c:853]
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence 
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7588)...
+(*) DirectFB/Input: HID 0b38:0010 (2) 0.1 (convergence integrated media 
+GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7589)...
+(*) DirectFB/Input: HID 0b38:0010 (3) 0.1 (convergence integrated media 
+GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7590)...
+(*) DirectFB/Input: PC Speaker (4) 0.1 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7591)...
+(*) DirectFB/Input: Power Button (FF) (5) 0.1 (convergence integrated 
+media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7592)...
+(*) DirectFB/Input: Power Button (CM) (6) 0.1 (convergence integrated 
+media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7593)...
+(*) DirectFB/Input: Sleep Button (CM) (7) 0.1 (convergence integrated 
+media GmbH)
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 7594)...
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: VIA/S3G CN400/UniChrome Pro 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+
+
+Screen (00) FBDev Primary Screen            (primary screen)
+   Caps: VSYNC POWER_MANAGEMENT
+
+     Layer (00) VIA CLE266 Graphics             (primary layer)
+        Type:    GRAPHICS
+        Caps:    SURFACE OPACITY ALPHACHANNEL SRC_COLORKEY BRIGHTNESS 
+CONTRAST SATURATION
+
+     Layer (01) VIA Unichrome Video                 Type:    GRAPHICS 
+VIDEO STILL_PICTURE
+        Caps:    SURFACE OPACITY SCREEN_LOCATION DEINTERLACING 
+DST_COLORKEY LEVELS FIELD_PARITY SCREEN_POSITION SCREEN_SIZE
+
+     Layer (02) VIA Unichrome DVD Subpicture        Type:    GRAPHICS 
+VIDEO STILL_PICTURE
+        Caps:    SURFACE OPACITY
+
+
+Input (00) AT Translated Set 2 keyboard    (primary keyboard)
+   Type: KEYBOARD
+   Caps: KEYS
+
+Input (10) HID 0b38:0010                  Type: KEYBOARD
+   Caps: KEYS
+
+Input (03) HID 0b38:0010                   (primary remote control)
+   Type: REMOTE
+   Caps: KEYS AXES
+   Max. Axis: 0
+
+Input (01) IMPS/2 Mouse                    (primary mouse)
+   Type: MOUSE
+   Caps: AXES BUTTONS
+   Max. Axis: 2
+   Max. Button: 2
+
+
+
+From per at mellander.org  Wed Jan 16 11:05:07 2008
+From: per at mellander.org (Per Mellander)
+Date: Wed, 16 Jan 2008 11:05:07 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <47833B84.2050801@mellander.org>
+References: <477CD03E.6030506@mellander.org>
+	<47811F53.8060503@mellander.org>	<4782658A.8070005@gmx.net>
+	<47833B84.2050801@mellander.org>
+Message-ID: <478DD6D3.1010406@mellander.org>
+
+Per Mellander skrev:
+> Hi Martin!
+> 
+>>> Could anyone schred som lights over the matter?
+>>>
+>> In mpeg2decoder.c cMpeg2Decoder::initStream, the stream is hardcoded to
+>> mpeg which is actually mpeg2, you'll have to change that. Actually I
+>> guess it should be quite simple to adapt the softdevice, but I don't
+>> have the time... I haven't even had a look at the patches to vdr, so I
+>> don't know what has changed there.
+>>
+> 
+> Well I'll try to give it some time then.
+> 
+> Many thanks!
+> 
+> Per
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+My skills / time is not positive for me right at the moment. If I read between 
+the lines on vdr-ml, it looks to me that Stefan is on the case ;) Is it so?
+
+Sincerely,
+
+Per
+
+
+From stefan at lucke.in-berlin.de  Wed Jan 16 14:40:27 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 16 Jan 2008 14:40:27 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <478DD6D3.1010406@mellander.org>
+References: <477CD03E.6030506@mellander.org> <47833B84.2050801@mellander.org>
+	<478DD6D3.1010406@mellander.org>
+Message-ID: <200801161440.27566.stefan@lucke.in-berlin.de>
+
+On Wednesday 16 January 2008, Per Mellander wrote:
+> Per Mellander skrev:
+> > Hi Martin!
+> > 
+> >>> Could anyone schred som lights over the matter?
+> >>>
+> >> In mpeg2decoder.c cMpeg2Decoder::initStream, the stream is hardcoded to
+> >> mpeg which is actually mpeg2, you'll have to change that. Actually I
+> >> guess it should be quite simple to adapt the softdevice, but I don't
+> >> have the time... I haven't even had a look at the patches to vdr, so I
+> >> don't know what has changed there.
+> >>
+> > 
+> > Well I'll try to give it some time then.
+> > 
+> > Many thanks!
+> > 
+> > Per
+
+> 
+> My skills / time is not positive for me right at the moment. If I read between 
+> the lines on vdr-ml, it looks to me that Stefan is on the case ;) Is it so?
+> 
+> Sincerely,
+> 
+> Per
+
+Yes I'm trying something, and it seems it is running for a few
+seconds, until the decoder is reset.
+
+I've some general doubts for software decoding of h264.
+My AMD X2 3800+ is a bit slow, even xosview doesn't show both CPUs
+at 100%. Ofcourse we can improve something like decoupling decoding
+and presentation layer. But we'll get a new set of A/V sync issues. Using
+several threads for decoding has no noticeable effect.
+
+Looking at HW-decoding, the reelbox HD extension looks quite interesting:
+http://www.reel-multimedia.com/rmm-english/pdf/produkt-flyer/extension_hd.pdf
+
+A new release 0.5.0 is waiting to be published, which will be without
+h264 support I guess.
+
+
+Stefan Lucke
+
+
+From per at mellander.org  Wed Jan 16 15:06:47 2008
+From: per at mellander.org (Per Mellander)
+Date: Wed, 16 Jan 2008 15:06:47 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <200801161440.27566.stefan@lucke.in-berlin.de>
+References: <477CD03E.6030506@mellander.org>
+	<47833B84.2050801@mellander.org>	<478DD6D3.1010406@mellander.org>
+	<200801161440.27566.stefan@lucke.in-berlin.de>
+Message-ID: <478E0F77.9080708@mellander.org>
+
+Stefan Lucke skrev:
+
+> Yes I'm trying something, and it seems it is running for a few
+> seconds, until the decoder is reset.
+> 
+> I've some general doubts for software decoding of h264.
+> My AMD X2 3800+ is a bit slow, even xosview doesn't show both CPUs
+> at 100%. Ofcourse we can improve something like decoupling decoding
+> and presentation layer. But we'll get a new set of A/V sync issues. Using
+> several threads for decoding has no noticeable effect.
+> 
+> Looking at HW-decoding, the reelbox HD extension looks quite interesting:
+> http://www.reel-multimedia.com/rmm-english/pdf/produkt-flyer/extension_hd.pdf
+> 
+> A new release 0.5.0 is waiting to be published, which will be without
+> h264 support I guess.
+> 
+
+Well with xine I get appx 90-120% CPU on xine and 25-35% on vdr. My cores idles 
+around 30-40% when there is 'normal' movement in the picture.
+
+Would it be of any help if I test it on my Intel Core 2 Duo 6600?
+
+
+From stefan at lucke.in-berlin.de  Wed Jan 16 19:11:05 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 16 Jan 2008 19:11:05 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <478E0F77.9080708@mellander.org>
+References: <477CD03E.6030506@mellander.org>
+	<200801161440.27566.stefan@lucke.in-berlin.de>
+	<478E0F77.9080708@mellander.org>
+Message-ID: <200801161911.05559.stefan@lucke.in-berlin.de>
+
+On Wednesday 16 January 2008, Per Mellander wrote:
+> Stefan Lucke skrev:
+> 
+> > Yes I'm trying something, and it seems it is running for a few
+> > seconds, until the decoder is reset.
+> > 
+> > I've some general doubts for software decoding of h264.
+> > My AMD X2 3800+ is a bit slow, even xosview doesn't show both CPUs
+> > at 100%. Ofcourse we can improve something like decoupling decoding
+> > and presentation layer. But we'll get a new set of A/V sync issues. Using
+> > several threads for decoding has no noticeable effect.
+> > 
+> > Looking at HW-decoding, the reelbox HD extension looks quite interesting:
+> > http://www.reel-multimedia.com/rmm-english/pdf/produkt-flyer/extension_hd.pdf
+> > 
+> > A new release 0.5.0 is waiting to be published, which will be without
+> > h264 support I guess.
+> > 
+> 
+> Well with xine I get appx 90-120% CPU on xine and 25-35% on vdr. My cores idles 
+> around 30-40% when there is 'normal' movement in the picture.
+> 
+> Would it be of any help if I test it on my Intel Core 2 Duo 6600?
+
+Yes.
+
+You need:
+
+- softdevice-cvs + Martin's av_read_frame-01.diff
+- already patched vdr-1.5.1[23] + vdr-1.5.12-PSM-01.diff
+
+
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.72
+diff -u -r1.72 mpeg2decoder.c
+--- mpeg2decoder.c	26 Feb 2007 23:00:34 -0000	1.72
++++ mpeg2decoder.c	17 Mar 2007 20:51:17 -0000
+@@ -174,7 +174,7 @@
+   freezeMode=false;
+   AVPacket *pkt;
+ 
+-  while ( PacketQueue.Available() < 7 && active) {
++  while ( PacketQueue.Available() < 3 && active) {
+     BUFDEB("wait while loop packets %d StreamDecoder  pid:%d type %d\n",
+       PacketQueue.Available(),getpid(),context->codec_type );
+     usleep(10000);
+@@ -1115,20 +1115,31 @@
+           usleep(50000);
+ 
+         BUFDEB("av_read_frame start\n");
+-        //ret = av_read_frame(ic, &pkt);
+-        ret = av_read_packet(ic, &pkt);
++        ret = av_read_frame(ic, &pkt);
++        //ret = av_read_packet(ic, &pkt);
+         if (ret < 0) {
+             BUFDEB("cMpeg2Decoder Stream Error!\n");
+             if (ThreadActive)
+ 		    usleep(10000);
+             continue;
+         }
+-        //av_dup_packet(&pkt);
++        av_dup_packet(&pkt);
+         PacketCount++;
+         BUFDEB("got packet from av_read_frame!\n");
+ 
++#if LIBAVFORMAT_BUILD > 4623
++        AVRational time_base;
++        time_base=ic->streams[pkt.stream_index]->time_base;
++        if ( pkt.pts != (int64_t) AV_NOPTS_VALUE ) {
++                pkt.pts=av_rescale(pkt.pts, AV_TIME_BASE* (int64_t)time_base.num, time_base.den)/100 ;
++        };
++
++        //printf("PTS: %lld new %lld num %d den %d\n",PTS,pkt.pts,
++        //                time_base.num,time_base.den);
++#else
+         if ( pkt.pts != (int64_t) AV_NOPTS_VALUE )
+           pkt.pts/=9;
++#endif
+ 
+         QueuePacket(ic,pkt,packetMode);
+ 
+@@ -1184,9 +1195,6 @@
+ void cMpeg2Decoder::QueuePacket(const AVFormatContext *ic, AVPacket &pkt,
+ 		bool PacketMode)
+ {
+-  BUFDEB("QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d\n",
+-    AudioIdx,VideoIdx,pkt.stream_index);
+-
+   if (!ic) {
+         fprintf(stderr,"Error: ic is null!\n");
+         av_free_packet(&pkt);
+@@ -1212,6 +1220,8 @@
+           BUFDEB("Unknown packet type! Return;\n");
+           return;
+   };
++  BUFDEB("QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d, packet_type: %d\n",
++    AudioIdx,VideoIdx,pkt.stream_index,packet_type);
+ 
+   // check if there are new streams
+   if ( AudioIdx != DONT_PLAY && packet_type == CODEC_TYPE_AUDIO
+-------------- next part --------------
+diff -x libsi -x PLUGINS -x po -x symbols -x vdr -x '*.o' -x '*.orig' -x '*.dep*' -x '*~' -x include -x 'Make*' -x locale -bU 3 --show-c-function vdr-1.5.12-s2/device.c vdr-1.5.12-jarada/device.c
+--- vdr-1.5.12-s2/device.c	2008-01-16 18:56:23.000000000 +0100
++++ vdr-1.5.12-jarada/device.c	2008-01-16 18:15:12.000000000 +0100
+@@ -179,7 +179,6 @@ int cPesAssembler::PacketSize(const ucha
+     default:
+     case 0x00 ... 0xB8: // video stream start codes
+     case 0xB9: // Program end
+-    case 0xBC: // Programm stream map
+     case 0xF0 ... 0xFF: // reserved
+          return 6;
+ 
+@@ -194,6 +193,7 @@ int cPesAssembler::PacketSize(const ucha
+             return 12;
+ 
+     case 0xBB: // System header
++    case 0xBC: // Programm stream map
+     case 0xBD: // Private stream1
+     case 0xBE: // Padding stream
+     case 0xBF: // Private stream2 (navigation data)
+@@ -1225,6 +1225,8 @@ int cDevice::PlayPesPacket(const uchar *
+         int d = End - Start;
+         int w = d;
+         switch (c) {
++         case 0xBC:
++fprintf(stderr,"??");
+           case 0xBE:          // padding stream, needed for MPEG1
+           case 0xE0 ... 0xEF: // video
+                w = PlayVideo(Start, d);
+diff -x libsi -x PLUGINS -x po -x symbols -x vdr -x '*.o' -x '*.orig' -x '*.dep*' -x '*~' -x include -x 'Make*' -x locale -bU 3 --show-c-function vdr-1.5.12-s2/remux.c vdr-1.5.12-jarada/remux.c
+--- vdr-1.5.12-s2/remux.c	2008-01-16 18:56:23.000000000 +0100
++++ vdr-1.5.12-jarada/remux.c	2008-01-16 18:12:50.000000000 +0100
+@@ -2189,6 +2189,9 @@ void cTS2PES::instant_repack(const uint8
+                   cid = 0;
+                   switch (Buf[c]) {
+                     case PROG_STREAM_MAP:
++                         found++;
++                         cid = Buf[c++];
++                         break;
+                     case PRIVATE_STREAM2:
+                     case PROG_STREAM_DIR:
+                     case ECM_STREAM     :
+@@ -2287,6 +2290,8 @@ void cTS2PES::instant_repack(const uint8
+ 
+   if (done || ((mpeg == 2 && found >= 9) || (mpeg == 1 && found >= mpeg1_required))) {
+      switch (cid) {
++                    case PROG_STREAM_MAP:
++fprintf(stderr, ".");
+        case AUDIO_STREAM_S ... AUDIO_STREAM_E:
+        case VIDEO_STREAM_S ... VIDEO_STREAM_E:
+        case PRIVATE_STREAM1:
+@@ -2486,6 +2491,20 @@ int cRingBufferLinearPes::DataReady(cons
+   return c;
+ }
+ 
++static unsigned char psm_map_0xe0_to_h264 [] =
++  { 0x00, 0x00, 0x01, 0xbc,
++    0x00, 0x10,             // psm length
++    0x00,                   // current_next(1),res(2),PSM_vers_no(5)
++    0x01,                   // res(7) marker(1)
++    0x00, 0x00,             // info length
++                            // info data here
++    0x00, 0x04,             // map length
++                            // map data here
++    0x1b, 0xe0, 0x00, 0x00, // h264 map entry / NO map info
++    0x00, 0x00, 0x00, 0x00  // crc32
++  };
++
++
+ // --- cRemux ----------------------------------------------------------------
+ 
+ #define RESULTBUFFERSIZE KILOBYTE(256)
+@@ -2504,13 +2523,20 @@ cRemux::cRemux(int VPid, const int *APid
+   resultSkipped = 0;
+   resultBuffer = new cRingBufferLinearPes(RESULTBUFFERSIZE, IPACKS, false, "Result");
+   resultBuffer->SetTimeouts(0, 100);
+-  if (VPid)
++  if (VPid) {
+ #define TEST_cVideoRepacker
+ #ifdef TEST_cVideoRepacker
+      ts2pes[numTracks++] = new cTS2PES(VPid, resultBuffer, IPACKS, 0xE0, 0x00, new cVideoRepacker(h264));
+ #else
+      ts2pes[numTracks++] = new cTS2PES(VPid, resultBuffer, IPACKS, 0xE0);
+ #endif
++     if (h264) {
++        resultBuffer->Put (psm_map_0xe0_to_h264, sizeof (psm_map_0xe0_to_h264));
++fprintf(stderr, "---- is h264\n");
++        } else {
++fprintf(stderr, "---- is NO h264\n");
++        }
++  }
+   if (APids) {
+      int n = 0;
+      while (*APids && numTracks < MAXTRACKS && n < MAXAPIDS) {
+
+From per at mellander.org  Wed Jan 16 22:59:55 2008
+From: per at mellander.org (Per Mellander)
+Date: Wed, 16 Jan 2008 22:59:55 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <200801161911.05559.stefan@lucke.in-berlin.de>
+References: <477CD03E.6030506@mellander.org>	<200801161440.27566.stefan@lucke.in-berlin.de>	<478E0F77.9080708@mellander.org>
+	<200801161911.05559.stefan@lucke.in-berlin.de>
+Message-ID: <478E7E5B.10300@mellander.org>
+
+Stefan Lucke skrev:
+>> Would it be of any help if I test it on my Intel Core 2 Duo 6600?
+> 
+> Yes.
+
+Well my first impression is that it works a bit smoother than using xine 
+as output. I'm getting a load of about 100-110% on VDR and an idle 
+that's quite higher than before ( ~35-50% on each CPU ). The decoder 
+bail out like you mentioned but the sound remains intact. I have 
+sometimes quite a problem switching to a HD channel and don't get the 
+video. Zapping around SD-HD-SD-HD usually fix the problem.
+
+What kind of logging do you need?
+
+
+From stefan at lucke.in-berlin.de  Thu Jan 17 18:29:03 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 17 Jan 2008 18:29:03 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <478E7E5B.10300@mellander.org>
+References: <477CD03E.6030506@mellander.org>
+	<200801161911.05559.stefan@lucke.in-berlin.de>
+	<478E7E5B.10300@mellander.org>
+Message-ID: <200801171829.03295.stefan@lucke.in-berlin.de>
+
+On Wednesday 16 January 2008, Per Mellander wrote:
+> Stefan Lucke skrev:
+> >> Would it be of any help if I test it on my Intel Core 2 Duo 6600?
+> > 
+> > Yes.
+> 
+> Well my first impression is that it works a bit smoother than using xine 
+> as output. I'm getting a load of about 100-110% on VDR and an idle 
+> that's quite higher than before ( ~35-50% on each CPU ).
+
+My previously test with ffmpeg thread decodings was wrong :-) .
+A different version now shows up to 140% for vdr + 20 %X11.
+Both CPUs look balanced used.
+
+> The decoder  
+> bail out like you mentioned but the sound remains intact. I have 
+> sometimes quite a problem switching to a HD channel and don't get the 
+> video. Zapping around SD-HD-SD-HD usually fix the problem.
+> 
+> What kind of logging do you need?
+
+None. You'll see messages like:
+Jan 17 18:03:32 jarada vdr: [12589] buffer usage: 80% (tid=12588)
+Jan 17 18:03:33 jarada vdr: [12589] buffer usage: 90% (tid=12588)
+Jan 17 18:03:33 jarada vdr: [12588] clearing transfer buffer to avoid overflows
+Jan 17 18:03:33 jarada vdr: [12589] buffer usage: 0% (tid=12588)
+
+Thats the point we need our own h264 detection to generate a PSM pack
+for ffmpegs h264 detection.
+
+dvb-s2 reception seems to be sensible for reception issues.
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.78
+diff -U3 -r1.78 mpeg2decoder.c
+--- mpeg2decoder.c	24 Dec 2007 11:43:31 -0000	1.78
++++ mpeg2decoder.c	17 Jan 2008 17:20:48 -0000
+@@ -294,6 +294,13 @@
+     codec=NULL;
+     return false;
+   }
++
++  int thCount = 3;
++  if (thCount > 1) {
++    avcodec_thread_init (context, thCount);
++    context->thread_count = thCount;
++  }
++
+   MPGDEB("Codec %d initialized.\n",context->codec_id);
+   return true;
+ };
+
+From izero79 at gmail.com  Thu Jan 17 19:04:22 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Thu, 17 Jan 2008 20:04:22 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+Message-ID: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+
+Hi,
+
+Recent VDR versions have DVB-subtitling included but softdevice has  
+one problem with them. If next subpicture is smaller in OSD area than  
+the previous one the old subpicture is still partly visible. The old  
+subtitles-plugin based solution works correctly so it is somehow  
+related to the way how new VDR updates the subtitles to the screen.  
+Any idea how to fix this?
+
+You can find example picture from this link: http://kotisivu.suomi.net/izero/vdr-darwin/subtitlingproblem.jpg 
+  It is showing three sequental subpictures on top of each other.
+
+I'm running VDR-1.5-13 & softdevice from CVS on Mac, but I've seen  
+similar error reports of Linux versions in Finnish VDR forum.
+
+I can provide small example file also if needed for fixing this.
+
+
+-- 
+Tero Siironen
+
+
+From stefan at lucke.in-berlin.de  Thu Jan 17 19:56:33 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 17 Jan 2008 19:56:33 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+Message-ID: <200801171956.33819.stefan@lucke.in-berlin.de>
+
+On Thursday 17 January 2008, Tero Siironen wrote:
+> Hi,
+> 
+> Recent VDR versions have DVB-subtitling included but softdevice has  
+> one problem with them. If next subpicture is smaller in OSD area than  
+> the previous one the old subpicture is still partly visible. The old  
+> subtitles-plugin based solution works correctly so it is somehow  
+> related to the way how new VDR updates the subtitles to the screen.  
+> Any idea how to fix this?
+> 
+> You can find example picture from this link: http://kotisivu.suomi.net/izero/vdr-darwin/subtitlingproblem.jpg 
+>   It is showing three sequental subpictures on top of each other.
+
+Looks like the startup issue, which seems to be still present.
+The difference is that in such a case, no video dimensions change.
+
+> 
+> I'm running VDR-1.5-13 & softdevice from CVS on Mac, but I've seen  
+> similar error reports of Linux versions in Finnish VDR forum.
+> 
+> I can provide small example file also if needed for fixing this.
+> 
+
+It would be nice If you could provide a short sample recording which 
+shows the issue.
+
+
+-- 
+Stefan Lucke
+
+
+From izero79 at gmail.com  Thu Jan 17 21:44:31 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Thu, 17 Jan 2008 22:44:31 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <200801171956.33819.stefan@lucke.in-berlin.de>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200801171956.33819.stefan@lucke.in-berlin.de>
+Message-ID: <3BE14261-F62C-48FF-9E32-6ED022CBA937@gmail.com>
+
+
+Stefan Lucke kirjoitti 17.1.2008 kello 20.56:
+
+> On Thursday 17 January 2008, Tero Siironen wrote:
+>> Hi,
+>>
+>> Recent VDR versions have DVB-subtitling included but softdevice has
+>> one problem with them. If next subpicture is smaller in OSD area than
+>> the previous one the old subpicture is still partly visible. The old
+>> subtitles-plugin based solution works correctly so it is somehow
+>> related to the way how new VDR updates the subtitles to the screen.
+>> Any idea how to fix this?
+>>
+>> You can find example picture from this link: http://kotisivu.suomi.net/izero/vdr-darwin/subtitlingproblem.jpg
+>>  It is showing three sequental subpictures on top of each other.
+>
+> Looks like the startup issue, which seems to be still present.
+> The difference is that in such a case, no video dimensions change.
+>
+>>
+>> I'm running VDR-1.5-13 & softdevice from CVS on Mac, but I've seen
+>> similar error reports of Linux versions in Finnish VDR forum.
+>>
+>> I can provide small example file also if needed for fixing this.
+>>
+>
+> It would be nice If you could provide a short sample recording which
+> shows the issue.
+>
+
+Here's a 5,4 MB file including short clip with finnish subtitles:
+
+http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip
+
+
+-- 
+Tero Siironen
+
+
+From stefan at lucke.in-berlin.de  Thu Jan 17 21:54:52 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 17 Jan 2008 21:54:52 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <3BE14261-F62C-48FF-9E32-6ED022CBA937@gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200801171956.33819.stefan@lucke.in-berlin.de>
+	<3BE14261-F62C-48FF-9E32-6ED022CBA937@gmail.com>
+Message-ID: <1200603292.478fc09c4d187@webmail.in-berlin.de>
+
+Quoting Tero Siironen:
+
+>
+> Stefan Lucke kirjoitti 17.1.2008 kello 20.56:
+>
+
+> > It would be nice If you could provide a short sample recording which
+> > shows the issue.
+> >
+>
+> Here's a 5,4 MB file including short clip with finnish subtitles:
+>
+> http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip
+>
+
+Thanks, got it.
+Is it correct that there is no video ?
+Only audio and subtitles.
+
+Stefan Lucke
+
+
+
+From izero79 at gmail.com  Fri Jan 18 08:36:32 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Fri, 18 Jan 2008 09:36:32 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <1200603292.478fc09c4d187@webmail.in-berlin.de>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200801171956.33819.stefan@lucke.in-berlin.de>
+	<3BE14261-F62C-48FF-9E32-6ED022CBA937@gmail.com>
+	<1200603292.478fc09c4d187@webmail.in-berlin.de>
+Message-ID: <8fa153640801172336v13c05cb2wfdc1509139a380b1@mail.gmail.com>
+
+2008/1/17, Stefan Lucke <stefan at lucke.in-berlin.de>:
+> Quoting Tero Siironen:
+>
+> >
+> > Stefan Lucke kirjoitti 17.1.2008 kello 20.56:
+> >
+>
+> > > It would be nice If you could provide a short sample recording which
+> > > shows the issue.
+> > >
+> >
+> > Here's a 5,4 MB file including short clip with finnish subtitles:
+> >
+> > http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip
+> >
+>
+> Thanks, got it.
+> Is it correct that there is no video ?
+> Only audio and subtitles.
+
+No, there should be video. I just downloaded the file and played with
+VLC (I'm away from my VDR) and there's video.
+
+
+-- 
+Tero
+
+
+From laz at club-burniston.co.uk  Fri Jan 18 10:27:55 2008
+From: laz at club-burniston.co.uk (Laz)
+Date: Fri, 18 Jan 2008 09:27:55 +0000
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+Message-ID: <200801180927.56774.laz@club-burniston.co.uk>
+
+On Thursday 17 Jan 2008, Tero Siironen wrote:
+> Hi,
+>
+> Recent VDR versions have DVB-subtitling included but softdevice has
+> one problem with them. If next subpicture is smaller in OSD area than
+> the previous one the old subpicture is still partly visible. The old
+> subtitles-plugin based solution works correctly so it is somehow
+> related to the way how new VDR updates the subtitles to the screen.
+
+How well "should" the native DVB subtitles in vdr work with softdevice? I 
+had a quick go and it seemed to do some very odd things when a menu was 
+displayed at the same time as subtitles. I was thinking that maybe 
+multiple OSDs had yet to be incorporated into softdevice (they were only 
+introduced into vdr for the subtitle support). This is a complete guess, 
+though!
+
+I think what I saw was subtitles on top of the menus which made reading 
+them very difficult! Maybe I need to tweak some transparency values 
+somewhere so that subtitles appear below menus!
+
+Should this all work "as intended" with a recentish cvs softdevice and 
+vdr-1.5.12?
+
+Cheers,
+
+Laz
+
+
+From ollo.diab at gmx.de  Fri Jan 18 17:52:23 2008
+From: ollo.diab at gmx.de (Thomas Herrmann)
+Date: Fri, 18 Jan 2008 17:52:23 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <200801171829.03295.stefan@lucke.in-berlin.de>
+References: <477CD03E.6030506@mellander.org>
+	<200801161911.05559.stefan@lucke.in-berlin.de>	<478E7E5B.10300@mellander.org>
+	<200801171829.03295.stefan@lucke.in-berlin.de>
+Message-ID: <20080118165223.304680@gmx.net>
+
+Hi Stefan,
+
+I've patched VDR and softdevice plugins to give HDTV a try. I'm using VDR 1.5.13 together with the latest DVB-S2 HDTV patch on a 64bit system.
+
+When switching to HDTV I get a still picture and VDR reports:
+
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]no frame!
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]no frame!
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+[h264 @ 0x2ae30fde07e0]non existing PPS referenced
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]non existing PPS referenced
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]non existing PPS referenced
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]non existing PPS referenced
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]non existing PPS referenced
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]non existing PPS referenced
+[h264 @ 0x2ae30fde07e0]decode_slice_header error
+[h264 @ 0x2ae30fde07e0]no frame!
+[mpegdecoder] Error while decoding video frame 0
+[mpegdecoder] resetting codec
+
+Anything I can debug?
+
+Regards,   Thomas
+
+
+
+-------- Original-Nachricht --------
+> Datum: Thu, 17 Jan 2008 18:29:03 +0100
+> Von: Stefan Lucke <stefan at lucke.in-berlin.de>
+> An: softdevice-devel at lists.berlios.de
+> Betreff: Re: [Softdevice-devel] Softdevice and HD-material
+
+> On Wednesday 16 January 2008, Per Mellander wrote:
+> > Stefan Lucke skrev:
+> > >> Would it be of any help if I test it on my Intel Core 2 Duo 6600?
+> > > 
+> > > Yes.
+> > 
+> > Well my first impression is that it works a bit smoother than using xine
+> > as output. I'm getting a load of about 100-110% on VDR and an idle 
+> > that's quite higher than before ( ~35-50% on each CPU ).
+> 
+> My previously test with ffmpeg thread decodings was wrong :-) .
+> A different version now shows up to 140% for vdr + 20 %X11.
+> Both CPUs look balanced used.
+> 
+> > The decoder  
+> > bail out like you mentioned but the sound remains intact. I have 
+> > sometimes quite a problem switching to a HD channel and don't get the 
+> > video. Zapping around SD-HD-SD-HD usually fix the problem.
+> > 
+> > What kind of logging do you need?
+> 
+> None. You'll see messages like:
+> Jan 17 18:03:32 jarada vdr: [12589] buffer usage: 80% (tid=12588)
+> Jan 17 18:03:33 jarada vdr: [12589] buffer usage: 90% (tid=12588)
+> Jan 17 18:03:33 jarada vdr: [12588] clearing transfer buffer to avoid
+> overflows
+> Jan 17 18:03:33 jarada vdr: [12589] buffer usage: 0% (tid=12588)
+> 
+> Thats the point we need our own h264 detection to generate a PSM pack
+> for ffmpegs h264 detection.
+> 
+> dvb-s2 reception seems to be sensible for reception issues.
+> 
+> 
+> -- 
+> Stefan Lucke
+
+-- 
+Der GMX SmartSurfer hilft bis zu 70% Ihrer Onlinekosten zu sparen! 
+Ideal f?r Modem und ISDN: http://www.gmx.net/de/go/smartsurfer
+
+
+From stefan at lucke.in-berlin.de  Sat Jan 19 10:41:03 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 19 Jan 2008 10:41:03 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <8fa153640801172336v13c05cb2wfdc1509139a380b1@mail.gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<1200603292.478fc09c4d187@webmail.in-berlin.de>
+	<8fa153640801172336v13c05cb2wfdc1509139a380b1@mail.gmail.com>
+Message-ID: <200801191041.04046.stefan@lucke.in-berlin.de>
+
+On Friday 18 January 2008, Tero Siironen wrote:
+> 2008/1/17, Stefan Lucke <stefan at lucke.in-berlin.de>:
+> > Quoting Tero Siironen:
+> >
+> > >
+> > > Stefan Lucke kirjoitti 17.1.2008 kello 20.56:
+> > >
+> >
+> > > > It would be nice If you could provide a short sample recording which
+> > > > shows the issue.
+> > > >
+> > >
+> > > Here's a 5,4 MB file including short clip with finnish subtitles:
+> > >
+> > > http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip
+> > >
+> >
+> > Thanks, got it.
+> > Is it correct that there is no video ?
+> > Only audio and subtitles.
+> 
+> No, there should be video. I just downloaded the file and played with
+> VLC (I'm away from my VDR) and there's video.
+> 
+
+Thats strange:
+ffplay SVN-r11311 plays only sound
+mplayer dev-SVN-r23741 plays sound + video
+
+I checked a few of my test streams, and found a some of them are no playable
+(no video, somtimes garbish sound) with ffplay + softdevice, but still
+play fine with above mplayer.
+
+
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Sat Jan 19 10:41:28 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 19 Jan 2008 10:41:28 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <20080118165223.304680@gmx.net>
+References: <477CD03E.6030506@mellander.org>
+	<200801171829.03295.stefan@lucke.in-berlin.de>
+	<20080118165223.304680@gmx.net>
+Message-ID: <200801191041.28347.stefan@lucke.in-berlin.de>
+
+On Friday 18 January 2008, Thomas Herrmann wrote:
+> Hi Stefan,
+> 
+> I've patched VDR and softdevice plugins to give HDTV a try. I'm using VDR 1.5.13 together with the latest DVB-S2 HDTV patch on a 64bit system.
+> 
+> When switching to HDTV I get a still picture and VDR reports:
+> 
+
+These 2 are from softdevice:
+> [mpegdecoder] Error while decoding video frame 0
+> [mpegdecoder] resetting codec
+
+These are from ffmpeg:
+> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> [h264 @ 0x2ae30fde07e0]no frame!
+
+I've such messages sometimes too. But I guess that's either
+signal quality or driver or a repacker issue.
+Switching to another channel and retune to HD solves this (sometimes).
+
+
+Stefan Lucke
+
+
+From ollo.diab at gmx.de  Sat Jan 19 16:35:30 2008
+From: ollo.diab at gmx.de (Thomas Herrmann)
+Date: Sat, 19 Jan 2008 16:35:30 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <200801191041.28347.stefan@lucke.in-berlin.de>
+References: <477CD03E.6030506@mellander.org>
+	<200801171829.03295.stefan@lucke.in-berlin.de>
+	<20080118165223.304680@gmx.net>
+	<200801191041.28347.stefan@lucke.in-berlin.de>
+Message-ID: <20080119153530.294360@gmx.net>
+
+Hi Stefan,
+
+ok, fine. I just realized AstraHD is not on Air anymore - thus the failures. AstraHD+ is still transmitting and here I do get a picture - sometimes.
+
+Thomas
+
+
+-------- Original-Nachricht --------
+> Datum: Sat, 19 Jan 2008 10:41:28 +0100
+> Von: Stefan Lucke <stefan at lucke.in-berlin.de>
+> An: softdevice-devel at lists.berlios.de
+> Betreff: Re: [Softdevice-devel] Softdevice and HD-material
+
+> On Friday 18 January 2008, Thomas Herrmann wrote:
+> > Hi Stefan,
+> > 
+> > I've patched VDR and softdevice plugins to give HDTV a try. I'm using
+> VDR 1.5.13 together with the latest DVB-S2 HDTV patch on a 64bit system.
+> > 
+> > When switching to HDTV I get a still picture and VDR reports:
+> > 
+> 
+> These 2 are from softdevice:
+> > [mpegdecoder] Error while decoding video frame 0
+> > [mpegdecoder] resetting codec
+> 
+> These are from ffmpeg:
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]no frame!
+> 
+> I've such messages sometimes too. But I guess that's either
+> signal quality or driver or a repacker issue.
+> Switching to another channel and retune to HD solves this (sometimes).
+> 
+> 
+> Stefan Lucke
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+-- 
+Ist Ihr Browser Vista-kompatibel? Jetzt die neuesten 
+Browser-Versionen downloaden: http://www.gmx.net/de/go/browser
+
+
+From ollo.diab at gmx.de  Sat Jan 19 16:35:30 2008
+From: ollo.diab at gmx.de (Thomas Herrmann)
+Date: Sat, 19 Jan 2008 16:35:30 +0100
+Subject: [Softdevice-devel] Softdevice and HD-material
+In-Reply-To: <200801191041.28347.stefan@lucke.in-berlin.de>
+References: <477CD03E.6030506@mellander.org>
+	<200801171829.03295.stefan@lucke.in-berlin.de>
+	<20080118165223.304680@gmx.net>
+	<200801191041.28347.stefan@lucke.in-berlin.de>
+Message-ID: <20080119153530.294360@gmx.net>
+
+Hi Stefan,
+
+ok, fine. I just realized AstraHD is not on Air anymore - thus the failures. AstraHD+ is still transmitting and here I do get a picture - sometimes.
+
+Thomas
+
+
+-------- Original-Nachricht --------
+> Datum: Sat, 19 Jan 2008 10:41:28 +0100
+> Von: Stefan Lucke <stefan at lucke.in-berlin.de>
+> An: softdevice-devel at lists.berlios.de
+> Betreff: Re: [Softdevice-devel] Softdevice and HD-material
+
+> On Friday 18 January 2008, Thomas Herrmann wrote:
+> > Hi Stefan,
+> > 
+> > I've patched VDR and softdevice plugins to give HDTV a try. I'm using
+> VDR 1.5.13 together with the latest DVB-S2 HDTV patch on a 64bit system.
+> > 
+> > When switching to HDTV I get a still picture and VDR reports:
+> > 
+> 
+> These 2 are from softdevice:
+> > [mpegdecoder] Error while decoding video frame 0
+> > [mpegdecoder] resetting codec
+> 
+> These are from ffmpeg:
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]B picture before any references, skipping
+> > [h264 @ 0x2ae30fde07e0]decode_slice_header error
+> > [h264 @ 0x2ae30fde07e0]no frame!
+> 
+> I've such messages sometimes too. But I guess that's either
+> signal quality or driver or a repacker issue.
+> Switching to another channel and retune to HD solves this (sometimes).
+> 
+> 
+> Stefan Lucke
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+-- 
+Ist Ihr Browser Vista-kompatibel? Jetzt die neuesten 
+Browser-Versionen downloaden: http://www.gmx.net/de/go/browser
+
+
+From stefan at lucke.in-berlin.de  Sat Jan 19 20:11:17 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 19 Jan 2008 20:11:17 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <8fa153640801172336v13c05cb2wfdc1509139a380b1@mail.gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<1200603292.478fc09c4d187@webmail.in-berlin.de>
+	<8fa153640801172336v13c05cb2wfdc1509139a380b1@mail.gmail.com>
+Message-ID: <200801192011.17974.stefan@lucke.in-berlin.de>
+
+On Friday 18 January 2008, Tero Siironen wrote:
+> 2008/1/17, Stefan Lucke <stefan at lucke.in-berlin.de>:
+> > Quoting Tero Siironen:
+> >
+> > >
+> > > Stefan Lucke kirjoitti 17.1.2008 kello 20.56:
+> > >
+> >
+> > > > It would be nice If you could provide a short sample recording which
+> > > > shows the issue.
+> > > >
+> > >
+> > > Here's a 5,4 MB file including short clip with finnish subtitles:
+> > >
+> > > http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip
+> > >
+> >
+> > Thanks, got it.
+> > Is it correct that there is no video ?
+> > Only audio and subtitles.
+> 
+> No, there should be video. I just downloaded the file and played with
+> VLC (I'm away from my VDR) and there's video.
+
+Fix is in cvs.
+
+-- 
+Stefan Lucke
+
+
+From izero79 at gmail.com  Sat Jan 19 21:41:44 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Sat, 19 Jan 2008 22:41:44 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <200801192011.17974.stefan@lucke.in-berlin.de>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<1200603292.478fc09c4d187@webmail.in-berlin.de>
+	<8fa153640801172336v13c05cb2wfdc1509139a380b1@mail.gmail.com>
+	<200801192011.17974.stefan@lucke.in-berlin.de>
+Message-ID: <BAAF0F0E-9108-42C8-BF01-F96874942E33@gmail.com>
+
+
+Stefan Lucke kirjoitti 19.1.2008 kello 21.11:
+
+> On Friday 18 January 2008, Tero Siironen wrote:
+>> 2008/1/17, Stefan Lucke <stefan at lucke.in-berlin.de>:
+>>> Quoting Tero Siironen:
+>>>
+>>>>
+>>>> Stefan Lucke kirjoitti 17.1.2008 kello 20.56:
+>>>>
+>>>
+>>>>> It would be nice If you could provide a short sample recording  
+>>>>> which
+>>>>> shows the issue.
+>>>>>
+>>>>
+>>>> Here's a 5,4 MB file including short clip with finnish subtitles:
+>>>>
+>>>> http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip
+>>>>
+>>>
+>>> Thanks, got it.
+>>> Is it correct that there is no video ?
+>>> Only audio and subtitles.
+>>
+>> No, there should be video. I just downloaded the file and played with
+>> VLC (I'm away from my VDR) and there's video.
+>
+> Fix is in cvs.
+
+Thank you for such a quick fix. There's still some issues with  
+subtitles like Laz mentioned in the mail, but for me those are not so  
+fatal.
+
+
+-- 
+Tero
+
+
+From izero79 at gmail.com  Wed Jan 23 18:34:25 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Wed, 23 Jan 2008 19:34:25 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <200801192011.17974.stefan@lucke.in-berlin.de>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<1200603292.478fc09c4d187@webmail.in-berlin.de>
+	<8fa153640801172336v13c05cb2wfdc1509139a380b1@mail.gmail.com>
+	<200801192011.17974.stefan@lucke.in-berlin.de>
+Message-ID: <18FF44F6-BE7D-4570-96AB-42573FEF6941@gmail.com>
+
+
+Stefan Lucke kirjoitti 19.1.2008 kello 21.11:
+
+> On Friday 18 January 2008, Tero Siironen wrote:
+>> 2008/1/17, Stefan Lucke <stefan at lucke.in-berlin.de>:
+>>> Quoting Tero Siironen:
+>>>
+>>>>
+>>>> Stefan Lucke kirjoitti 17.1.2008 kello 20.56:
+>>>>
+>>>
+>>>>> It would be nice If you could provide a short sample recording  
+>>>>> which
+>>>>> shows the issue.
+>>>>>
+>>>>
+>>>> Here's a 5,4 MB file including short clip with finnish subtitles:
+>>>>
+>>>> http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip
+>>>>
+>>>
+>>> Thanks, got it.
+>>> Is it correct that there is no video ?
+>>> Only audio and subtitles.
+>>
+>> No, there should be video. I just downloaded the file and played with
+>> VLC (I'm away from my VDR) and there's video.
+>
+> Fix is in cvs.
+
+
+Hi,
+
+It seems that the fix did not help in a case where the subpicture is  
+first two rows and then the next subpicture is in one row. The upper  
+row of previous subpicture stays on the screen. I updated the clip to  
+include example of this kind of situation. The second to last  
+subpicture is two row and the last is one row long.
+
+http://kotisivu.suomi.net/izero/vdr-darwin/subtitle_example.zip (6,1MB)
+
+
+-- 
+Tero
+
+
+From stefan at lucke.in-berlin.de  Sat Jan 26 00:58:16 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 26 Jan 2008 00:58:16 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <18FF44F6-BE7D-4570-96AB-42573FEF6941@gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200801192011.17974.stefan@lucke.in-berlin.de>
+	<18FF44F6-BE7D-4570-96AB-42573FEF6941@gmail.com>
+Message-ID: <200801260058.16729.stefan@lucke.in-berlin.de>
+
+On Wednesday 23 January 2008, Tero Siironen wrote:
+> 
+> Stefan Lucke kirjoitti 19.1.2008 kello 21.11:
+
+> > Fix is in cvs.
+> 
+> 
+> Hi,
+> 
+> It seems that the fix did not help in a case where the subpicture is  
+> first two rows and then the next subpicture is in one row.
+
+2nd try is in cvs .
+
+
+-- 
+Stefan Lucke
+
+
+From izero79 at gmail.com  Sat Jan 26 17:37:58 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Sat, 26 Jan 2008 18:37:58 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <200801260058.16729.stefan@lucke.in-berlin.de>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200801192011.17974.stefan@lucke.in-berlin.de>
+	<18FF44F6-BE7D-4570-96AB-42573FEF6941@gmail.com>
+	<200801260058.16729.stefan@lucke.in-berlin.de>
+Message-ID: <A6A1C60D-25B6-4082-91D8-37B3D040BA14@gmail.com>
+
+
+Stefan Lucke kirjoitti 26.1.2008 kello 1.58:
+
+> On Wednesday 23 January 2008, Tero Siironen wrote:
+>>
+>> Stefan Lucke kirjoitti 19.1.2008 kello 21.11:
+>
+>>> Fix is in cvs.
+>>
+>>
+>> Hi,
+>>
+>> It seems that the fix did not help in a case where the subpicture is
+>> first two rows and then the next subpicture is in one row.
+>
+> 2nd try is in cvs .
+>
+
+Thanks, seems that subtitling is working now. But this causes new  
+issue, now if OSD is open it closed when subpicture is to be drawn.  
+Therefore it is pretty impossible to use menu when ongoing program has  
+subtitles.
+
+
+-- 
+Tero
+
+
+From jean.palazuelos at free.fr  Mon Feb 11 13:06:44 2008
+From: jean.palazuelos at free.fr (Jean P.)
+Date: Mon, 11 Feb 2008 13:06:44 +0100
+Subject: [Softdevice-devel] Softplay - fast forward / backward
+Message-ID: <1202731604.8762.1.camel@localhost.localdomain>
+
+Hi All,
+
+I can't use fast forward with softplay (softplay/softdevice: svn from 7
+FEB 2008).
+I can see in readme.txt that fast forward / backward are in TODO list.
+But when I take a look at the code in softplayer.c I can see :  
+#if LIBAVFORMAT_BUILD > 4618
+                        av_seek_frame(ic,-1,
+                           (SoftDevice->GetSTC()/9+skip*10000)*100,
+                           AVSEEK_FLAG_BACKWARD);
+#else
+                        av_seek_frame(ic,-1,
+                           (SoftDevice->GetSTC()/9+skip*10000)*100);
+#endif
+
+Softdevice log say : 
+ [softdevice] ffmpeg build(3352578)
+And ffmpeg say:
+ libavutil   3212288
+ libavcodec  3352578
+ libavformat 3345152
+
+My remote seems to be well configured: 
+softdevice-xv.Left       0000000100010069
+softdevice-xv.Right      000000010001006A
+
+
+Could you please help me about this?
+
+THX a lot.
+Jean
+PS: Sorry I sent this message on softdevice-cvs list
+
+
+
+
+
+From tafe at unkelhaeusser.net  Thu Feb 21 22:40:03 2008
+From: tafe at unkelhaeusser.net (Thomas Eckhardt)
+Date: Thu, 21 Feb 2008 22:40:03 +0100
+Subject: [Softdevice-devel] Video covered by OSD permanently
+Message-ID: <47BDEFB3.6040104@unkelhaeusser.net>
+
+Hello,
+
+i have a strange problem running softdevice "vo: xv" on a S100 media
+player (video-chip: Intel 830M, using streamdev as input, CPU Celeron
+Mobile 733). As soon as the vdr OSD is shown the actual video is about
+99% covered by a black frame. Only a small part of the video on the
+bottom is still visible. Audio continues as normal.
+
+Of course OSD is shown by vdr right after starting it so i tried to use
+"vo: shm" and waited a few seconds after firing up vdr to start
+ShmClient. Beside the fact that the colors with ShmClient are
+disarranged (eg blue is red, maybe related:
+http://mythtv.org/pipermail/mythtv-dev/2006-September/050834.html) i
+have a running stream on my TV. Calling the OSD for the first time gives
+me a transparent OSD with the actual video stream behind it. But as soon
+as i close the OSD i have the same black frame as with "vo: xv". Calling
+the OSD again does not change this behavior.
+
+Back to xv: Stopping the playback at the softdevice OSD i get - as
+expected - a freeze image with the OSD being transparent above it. Also
+while switching aspect ratio i get a fraction of a second a clear picture.
+
+Example vid (mp4 - cell phone):
+http://fileserver.eckieck.de/s100-softdevice.avi
+
+This applies to recordings also. OSDaphablend = software neither gives
+me video nor OSD. VGA, S-VIDEO or "SCART" as output makes no difference.
+
+Debian etch, Xorg 7.1.1, IEGD 6.1, vdr 1.4.7
+Log and vdr-settings: http://fileserver.eckieck.de/s100-softdevice.txt
+
+So far i tried eg all official softdevice releases and the actual cvs
+during the last week, compiled softdevice without MMX(2) (as suggested
+at this german board:
+http://www.vdr-portal.de/board/thread.php?threadid=54640), all official
+Debian-ffmpeg releases, also the snapshots 20071023 and 20080121,
+"hundreds" of kernels between 2.6.17 and 2.6.24 with different config,
+successfully run zenslack which utilizes xine to show vdr output,
+changed vdr DVB primary device from one to two .. aso
+
+I must admit that i am relative new to vdr and unexperienced to X (but
+not to linux in general). Therefore i first posted to two more general
+boards related to vdr but unfortunately nobody had an idea so far.
+
+Does this look like a problem related to softdevice? Any ideas? Thanks a
+lot for reading so far.
+
+Thomas
+
+
+From stefan at lucke.in-berlin.de  Fri Feb 22 20:18:13 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 22 Feb 2008 20:18:13 +0100
+Subject: [Softdevice-devel] Video covered by OSD permanently
+In-Reply-To: <47BDEFB3.6040104@unkelhaeusser.net>
+References: <47BDEFB3.6040104@unkelhaeusser.net>
+Message-ID: <200802222018.13745.stefan@lucke.in-berlin.de>
+
+On Thursday 21 February 2008, Thomas Eckhardt wrote:
+> Hello,
+> 
+> i have a strange problem running softdevice "vo: xv" on a S100 media
+> player (video-chip: Intel 830M, using streamdev as input, CPU Celeron
+> Mobile 733). As soon as the vdr OSD is shown the actual video is about
+> 99% covered by a black frame. Only a small part of the video on the
+> bottom is still visible. Audio continues as normal.
+
+Is it related to this thread ?
+http://vdr-portal.de/board/thread.php?threadid=74159
+I already had a look at it, but no further idea, but this may change.
+Can you show us your xorg.config file ?
+
+
+> 
+> Of course OSD is shown by vdr right after starting it so i tried to use
+> "vo: shm" and waited a few seconds after firing up vdr to start
+> ShmClient. Beside the fact that the colors with ShmClient are
+> disarranged (eg blue is red, maybe related:
+> http://mythtv.org/pipermail/mythtv-dev/2006-September/050834.html) i
+> have a running stream on my TV. Calling the OSD for the first time gives
+> me a transparent OSD with the actual video stream behind it. But as soon
+> as i close the OSD i have the same black frame as with "vo: xv". Calling
+> the OSD again does not change this behavior.
+> 
+> Back to xv: Stopping the playback at the softdevice OSD i get - as
+> expected - a freeze image with the OSD being transparent above it. Also
+> while switching aspect ratio i get a fraction of a second a clear picture.
+> 
+> Example vid (mp4 - cell phone):
+> http://fileserver.eckieck.de/s100-softdevice.avi
+> 
+> This applies to recordings also. OSDaphablend = software neither gives
+> me video nor OSD. VGA, S-VIDEO or "SCART" as output makes no difference.
+> 
+> Debian etch, Xorg 7.1.1, IEGD 6.1, vdr 1.4.7
+
+Is IEGD a binary only driver ?
+If yes, can you switch to a opensource driver, as I guess we have
+to modify something.
+
+You may get an impression by looking at pipe_a vs. pipe_b
+statements here:
+http://vdr-portal.de/board/thread.php?threadid=54640
+
+
+Did you try DirectFB output ?
+Is your hardware similar to this one ?
+http://lists.berlios.de/pipermail/softdevice-devel/2007q4/002978.html
+
+Stefan Lucke
+
+
+From tafe at unkelhaeusser.net  Tue Feb 26 15:57:12 2008
+From: tafe at unkelhaeusser.net (Thomas Eckhardt)
+Date: Tue, 26 Feb 2008 15:57:12 +0100
+Subject: [Softdevice-devel] Video covered by OSD permanently
+In-Reply-To: <200802222018.13745.stefan@lucke.in-berlin.de>
+References: <47BDEFB3.6040104@unkelhaeusser.net>
+	<200802222018.13745.stefan@lucke.in-berlin.de>
+Message-ID: <47C428C8.4030601@unkelhaeusser.net>
+
+Thanks for your response! Sorry, wasn't able to respond earlier.
+
+Stefan Lucke schrieb am 22.02.2008 20:18:
+> Is it related to this thread ?
+> http://vdr-portal.de/board/thread.php?threadid=74159
+> I already had a look at it, but no further idea, but this may change.
+
+Yes, it is.
+
+
+> Can you show us your xorg.config file ?
+
+Uploaded to http://fileserver.eckieck.de/s100-xorg.conf
+
+
+> Is IEGD a binary only driver ?
+> If yes, can you switch to a opensource driver, as I guess we have
+> to modify something.
+
+Currently i don't get vdr+softdevice running with this driver (i810):
+"Error intializing Xv. Exit.". X is fine so far .. will retry after posting.
+
+
+> Did you try DirectFB output ?
+
+Just installed and tried it. VGA looks strange like this picture with
+vdr: http://www.myimg.de/?img=2202200836963288.jpg
+No OSD and mplayer seems to be fine.
+
+
+> Is your hardware similar to this one ?
+> http://lists.berlios.de/pipermail/softdevice-devel/2007q4/002978.html
+
+Yes, nearly identical product afaik. Will try your patch.
+
+Thomas
+
+
+
+From malcolm.caldwell at cdu.edu.au  Thu Feb 28 16:47:45 2008
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Fri, 29 Feb 2008 01:17:45 +0930
+Subject: [Softdevice-devel] no output
+Message-ID: <1204213665.32206.3.camel@lychee.local>
+
+Hello,
+
+With the latest cvs of softdevice I see no video output.
+
+OSD works, but it does not seem like the video is being decoded: CPU is
+3%.  My log file fills with Xrun messages.
+
+I have tried latest svn of ffmpeg as well as a version from 11 October
+07.
+
+Help!
+
+
+From stefan at lucke.in-berlin.de  Fri Feb 29 13:49:14 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 29 Feb 2008 13:49:14 +0100
+Subject: [Softdevice-devel] no output
+In-Reply-To: <1204213665.32206.3.camel@lychee.local>
+References: <1204213665.32206.3.camel@lychee.local>
+Message-ID: <200802291349.15044.stefan@lucke.in-berlin.de>
+
+On Thursday 28 February 2008, Malcolm Caldwell wrote:
+> Hello,
+> 
+> With the latest cvs of softdevice I see no video output.
+
+Just checked a freash cvs checkout.
+configure + make plugins + xv output is OK (vdr-1.4.0 ;-) ), FFmpeg is r12218.
+
+> 
+> OSD works, but it does not seem like the video is being decoded: CPU is
+> 3%.  My log file fills with Xrun messages.
+
+Radio station ?
+
+Did you check signal strength and or audio access rights ?
+
+> 
+> I have tried latest svn of ffmpeg as well as a version from 11 October
+> 07.
+> 
+> Help!
+
+
+-- 
+Stefan Lucke
+
+
+From malcolm.caldwell at cdu.edu.au  Sat Mar  1 00:36:48 2008
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Sat, 01 Mar 2008 09:06:48 +0930
+Subject: [Softdevice-devel] no output
+In-Reply-To: <200802291349.15044.stefan@lucke.in-berlin.de>
+References: <1204213665.32206.3.camel@lychee.local>
+	<200802291349.15044.stefan@lucke.in-berlin.de>
+Message-ID: <1204328208.10878.4.camel@lychee.local>
+
+
+On Fri, 2008-02-29 at 13:49 +0100, Stefan Lucke wrote:
+> On Thursday 28 February 2008, Malcolm Caldwell wrote:
+> > Hello,
+> > 
+> > With the latest cvs of softdevice I see no video output.
+> 
+> Just checked a freash cvs checkout.
+> configure + make plugins + xv output is OK (vdr-1.4.0 ;-) ), FFmpeg is r12218.
+
+I did not try xv, but did try directfb.  I also tried dummy checking the
+result with svdrp grab (via vdradmin)
+
+I will try again.
+ 
+> > OSD works, but it does not seem like the video is being decoded: CPU is
+> > 3%.  My log file fills with Xrun messages.
+> 
+> Radio station ?
+
+That would be too easy! (I tried multiple channels)
+
+> Did you check signal strength and or audio access rights ?
+
+I fixed the issue by reverting to my older version of ffmpeg and
+softdevice (from around May 2007).  Everything worked as expected with
+the old version but not the new.  So this is certainly a problem with
+softdevice/ffmpeg.
+
+(Given that my previous versions of ffmpeg/softdevice were old I could
+not try to compile eg new softdevice against old ffmeg, or old
+softdevice against new ffmeg)
+
+> > I have tried latest svn of ffmpeg as well as a version from 11 October
+> > 07.
+> > 
+> > Help!
+> 
+> 
+
+
+From stefan at lucke.in-berlin.de  Sat Mar  1 14:06:13 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 1 Mar 2008 14:06:13 +0100
+Subject: [Softdevice-devel] no output
+In-Reply-To: <1204328208.10878.4.camel@lychee.local>
+References: <1204213665.32206.3.camel@lychee.local>
+	<200802291349.15044.stefan@lucke.in-berlin.de>
+	<1204328208.10878.4.camel@lychee.local>
+Message-ID: <200803011406.13978.stefan@lucke.in-berlin.de>
+
+On Saturday 01 March 2008, Malcolm Caldwell wrote:
+> 
+> On Fri, 2008-02-29 at 13:49 +0100, Stefan Lucke wrote:
+> > On Thursday 28 February 2008, Malcolm Caldwell wrote:
+> > > Hello,
+> > > 
+> > > With the latest cvs of softdevice I see no video output.
+> > 
+> > Just checked a freash cvs checkout.
+> > configure + make plugins + xv output is OK (vdr-1.4.0 ;-) ), FFmpeg is r12218.
+> 
+> I did not try xv, but did try directfb.  I also tried dummy checking the
+> result with svdrp grab (via vdradmin)
+> 
+> I will try again.
+>  
+> > > OSD works, but it does not seem like the video is being decoded: CPU is
+> > > 3%.  My log file fills with Xrun messages.
+> > 
+> > Radio station ?
+> 
+> That would be too easy! (I tried multiple channels)
+> 
+> > Did you check signal strength and or audio access rights ?
+> 
+> I fixed the issue by reverting to my older version of ffmpeg and
+> softdevice (from around May 2007). 
+
+So you kept your vdr version, right ? 
+Which one ?
+Can you tell us the exact ffmpeg version which fails,
+and the configuration options ?
+
+> Everything worked as expected with 
+> the old version but not the new.  So this is certainly a problem with
+> softdevice/ffmpeg.
+> 
+> (Given that my previous versions of ffmpeg/softdevice were old I could
+> not try to compile eg new softdevice against old ffmeg, or old
+> softdevice against new ffmeg)
+> 
+
+
+Stefan Lucke
+
+
+From malcolm.caldwell at cdu.edu.au  Sat Mar  1 15:33:17 2008
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Sun, 02 Mar 2008 00:03:17 +0930
+Subject: [Softdevice-devel] no output
+In-Reply-To: <200803011406.13978.stefan@lucke.in-berlin.de>
+References: <1204213665.32206.3.camel@lychee.local>
+	<200802291349.15044.stefan@lucke.in-berlin.de>
+	<1204328208.10878.4.camel@lychee.local>
+	<200803011406.13978.stefan@lucke.in-berlin.de>
+Message-ID: <1204381997.9825.11.camel@lychee.local>
+
+
+On Sat, 2008-03-01 at 14:06 +0100, Stefan Lucke wrote:
+> On Saturday 01 March 2008, Malcolm Caldwell wrote:
+> > 
+> > On Fri, 2008-02-29 at 13:49 +0100, Stefan Lucke wrote:
+> > > On Thursday 28 February 2008, Malcolm Caldwell wrote:
+> > > > Hello,
+> > > > 
+> > > > With the latest cvs of softdevice I see no video output.
+> > > 
+> > > Just checked a freash cvs checkout.
+> > > configure + make plugins + xv output is OK (vdr-1.4.0 ;-) ), FFmpeg is r12218.
+> > 
+> > I did not try xv, but did try directfb.  I also tried dummy checking the
+> > result with svdrp grab (via vdradmin)
+> > 
+> > I will try again.
+> >  
+> > > > OSD works, but it does not seem like the video is being decoded: CPU is
+> > > > 3%.  My log file fills with Xrun messages.
+> > > 
+> > > Radio station ?
+> > 
+> > That would be too easy! (I tried multiple channels)
+> > 
+> > > Did you check signal strength and or audio access rights ?
+> > 
+> > I fixed the issue by reverting to my older version of ffmpeg and
+> > softdevice (from around May 2007). 
+> 
+> So you kept your vdr version, right ? 
+
+Yes.
+
+> Which one ?
+
+1.4.3
+
+> Can you tell us the exact ffmpeg version which fails,
+> and the configuration options ?
+
+I tried two versions: r10703 and r12271 both failed in the same way.
+
+r12271 was configured with:
+
+--enable-liba52 --enable-libfaac --enable-libfaad --enable-libgsm
+--enable-libmp3lame --enable-libtheora --enable-libvorbis
+--enable-libxvid --enable-libx264 --enable-pp --enable-swscaler
+--enable-pthreads --disable-static --enable-shared --enable-gpl
+--disable-debug --disable-strip --enable-nonfree
+
+> > Everything worked as expected with 
+> > the old version but not the new.  So this is certainly a problem with
+> > softdevice/ffmpeg.
+> > 
+> > (Given that my previous versions of ffmpeg/softdevice were old I could
+> > not try to compile eg new softdevice against old ffmeg, or old
+> > softdevice against new ffmeg)
+> > 
+> 
+> 
+> Stefan Lucke
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+
+From stefan at lucke.in-berlin.de  Sat Mar  1 17:03:25 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 1 Mar 2008 17:03:25 +0100
+Subject: [Softdevice-devel] no output
+In-Reply-To: <1204381997.9825.11.camel@lychee.local>
+References: <1204213665.32206.3.camel@lychee.local>
+	<200803011406.13978.stefan@lucke.in-berlin.de>
+	<1204381997.9825.11.camel@lychee.local>
+Message-ID: <200803011703.25517.stefan@lucke.in-berlin.de>
+
+On Saturday 01 March 2008, Malcolm Caldwell wrote:
+> 
+> On Sat, 2008-03-01 at 14:06 +0100, Stefan Lucke wrote:
+> > On Saturday 01 March 2008, Malcolm Caldwell wrote:
+
+> > > 
+> > > I fixed the issue by reverting to my older version of ffmpeg and
+> > > softdevice (from around May 2007). 
+> > 
+> > So you kept your vdr version, right ? 
+> 
+> Yes.
+> 
+> > Which one ?
+> 
+> 1.4.3
+> 
+> > Can you tell us the exact ffmpeg version which fails,
+> > and the configuration options ?
+> 
+> I tried two versions: r10703 and r12271 both failed in the same way.
+> 
+> r12271 was configured with:
+> 
+> --enable-liba52 --enable-libfaac --enable-libfaad --enable-libgsm
+> --enable-libmp3lame --enable-libtheora --enable-libvorbis
+> --enable-libxvid --enable-libx264 --enable-pp --enable-swscaler
+> --enable-pthreads --disable-static --enable-shared --enable-gpl
+> --disable-debug --disable-strip --enable-nonfree
+> 
+
+Now I tried ffmpeg r12271 with configuration:
+--enable-shared --enable-pp --enable-gpl --enable-swscaler
+--enable-liba52 --enable-libfaac --enable-libfaad --enable-pthreads
+
+plain vdr-1.4.3 with softdevice-cvs and video-xv out.
+There are no problems except some stations where signal is bad
+due to my indoor antenna (as before).
+
+When your setup fails, is it possible to play back recordings which
+were recorded with your previous working setup ?
+
+
+Stefan Lucke
+
+
+From malcolm.caldwell at cdu.edu.au  Mon Mar  3 15:53:59 2008
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Tue, 04 Mar 2008 00:23:59 +0930
+Subject: [Softdevice-devel] no output
+In-Reply-To: <200803011703.25517.stefan@lucke.in-berlin.de>
+References: <1204213665.32206.3.camel@lychee.local>
+	<200803011406.13978.stefan@lucke.in-berlin.de>
+	<1204381997.9825.11.camel@lychee.local>
+	<200803011703.25517.stefan@lucke.in-berlin.de>
+Message-ID: <1204556039.13195.1.camel@lychee.local>
+
+
+On Sat, 2008-03-01 at 17:03 +0100, Stefan Lucke wrote:
+> On Saturday 01 March 2008, Malcolm Caldwell wrote:
+> > 
+> > On Sat, 2008-03-01 at 14:06 +0100, Stefan Lucke wrote:
+> > > On Saturday 01 March 2008, Malcolm Caldwell wrote:
+> 
+> > > > 
+> > > > I fixed the issue by reverting to my older version of ffmpeg and
+> > > > softdevice (from around May 2007). 
+> > > 
+> > > So you kept your vdr version, right ? 
+> > 
+> > Yes.
+> > 
+> > > Which one ?
+> > 
+> > 1.4.3
+> > 
+> > > Can you tell us the exact ffmpeg version which fails,
+> > > and the configuration options ?
+> > 
+> > I tried two versions: r10703 and r12271 both failed in the same way.
+> > 
+> > r12271 was configured with:
+> > 
+> > --enable-liba52 --enable-libfaac --enable-libfaad --enable-libgsm
+> > --enable-libmp3lame --enable-libtheora --enable-libvorbis
+> > --enable-libxvid --enable-libx264 --enable-pp --enable-swscaler
+> > --enable-pthreads --disable-static --enable-shared --enable-gpl
+> > --disable-debug --disable-strip --enable-nonfree
+> > 
+> 
+> Now I tried ffmpeg r12271 with configuration:
+> --enable-shared --enable-pp --enable-gpl --enable-swscaler
+> --enable-liba52 --enable-libfaac --enable-libfaad --enable-pthreads
+> 
+> plain vdr-1.4.3 with softdevice-cvs and video-xv out.
+> There are no problems except some stations where signal is bad
+> due to my indoor antenna (as before).
+> 
+> When your setup fails, is it possible to play back recordings which
+> were recorded with your previous working setup ?
+
+No.
+
+I will try to compile again.   (But not tonight as it is late.  I will
+try again tomorrow night when the TV is not in use)
+
+> Stefan Lucke
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+
+From nicolas at huillard.net  Fri Mar  7 12:20:32 2008
+From: nicolas at huillard.net (Nicolas Huillard)
+Date: Fri, 07 Mar 2008 12:20:32 +0100
+Subject: [Softdevice-devel] no output
+In-Reply-To: <200803011703.25517.stefan@lucke.in-berlin.de>
+References: <1204213665.32206.3.camel@lychee.local>	<200803011406.13978.stefan@lucke.in-berlin.de>	<1204381997.9825.11.camel@lychee.local>
+	<200803011703.25517.stefan@lucke.in-berlin.de>
+Message-ID: <47D12500.9030704@huillard.net>
+
+Stefan Lucke a ?crit :
+> On Saturday 01 March 2008, Malcolm Caldwell wrote:
+>> On Sat, 2008-03-01 at 14:06 +0100, Stefan Lucke wrote:
+>>> Can you tell us the exact ffmpeg version which fails,
+>>> and the configuration options ?
+>> I tried two versions: r10703 and r12271 both failed in the same way.
+>>
+>> r12271 was configured with:
+>>
+>> --enable-liba52 --enable-libfaac --enable-libfaad --enable-libgsm
+>> --enable-libmp3lame --enable-libtheora --enable-libvorbis
+>> --enable-libxvid --enable-libx264 --enable-pp --enable-swscaler
+>> --enable-pthreads --disable-static --enable-shared --enable-gpl
+>> --disable-debug --disable-strip --enable-nonfree
+>>
+> 
+> Now I tried ffmpeg r12271 with configuration:
+> --enable-shared --enable-pp --enable-gpl --enable-swscaler
+> --enable-liba52 --enable-libfaac --enable-libfaad --enable-pthreads
+
+Seeing the number of problems related to ffmepg versions and options, 
+wouldn't it be a good idea to import the ffmpeg source into the 
+softdevice repository at some chosen times, and ship softdevice with 
+it's own linked-in ffmepg binary ?
+
+-- 
+NH
+
+
+From Neumann at do-net.de  Tue Mar 11 20:30:15 2008
+From: Neumann at do-net.de (Neumann, Andre)
+Date: Tue, 11 Mar 2008 20:30:15 +0100
+Subject: [Softdevice-devel] mpeg2decoder.c compile error
+References: <476AE719.40907@infodev.ca> <476E5BF4.1030604@poczta.multimo.pl>
+	<200712231817.33383.stefan@lucke.in-berlin.de>
+	<200712232130.11160.stefan@lucke.in-berlin.de>
+Message-ID: <FB3B5DB3197CEA429E5FB8E83D01D03901A1FA@sbs2003.do-net.de>
+
+using newest ffmpeg version still shows some problems with softdevice.
+sometimes vdr crashes (not reproducable), sometimes the picture
+freezes, switching to the channel again fixes the problem.
+ 
+anyone else have problems with recent ffmpeg versions?
+ 
+-----------------------
+Andre Neumann
+
+________________________________
+
+Von: softdevice-devel-bounces at lists.berlios.de im Auftrag von Stefan Lucke
+Gesendet: So 23.12.2007 21:30
+An: softdevice-devel at lists.berlios.de
+Betreff: Re: [Softdevice-devel] mpeg2decoder.c compile error
+
+
+
+On Sunday 23 December 2007, Stefan Lucke wrote:
+> On Sunday 23 December 2007, Artur Skawina wrote:
+> > Stefan Lucke wrote:
+> > > On Sunday 23 December 2007, Andre Neumann wrote:
+> > >> Tested it also and noticed that when switching from an
+> > >> blank channel (a channel with no signal or card not in cam inserted) to a
+> > >> working channel, vdr crashes.
+> > >
+> > > Now I've a different version which solves initial issue in softdevice only.
+> > > This one removes tricks with AVFMT_NOFILE flag too, which in term
+> > > previously caused some problems in softplay:
+> > >
+> > > http://cvs.berlios.de/cgi-bin/viewcvs.cgi/softdevice/softplay/SoftPlayer.c.diff?r1=1.16&r2=1.17
+> > >
+> > > To test the new version, you have to backout both previous changes
+> > > (softdevice + ffmpeg).
+> > >
+> > > With this one, there may be issues at termination, if ffmpeg's revision is
+> > > between and 11071 (ByteIOContext change) and 11269 (introduction of
+> > > function av_close_input_stream()). Issues may be a segfault or a
+> > > reported glibc error caused by ffmpeg url_fclose().
+> > >
+> > > If you have a problems please check your ffmpeg version by:
+> > > $ ffplay |grep version
+> >
+> > tried w/ stock ffmpeg r11306 and now vdr crashes 1) after the first channel change
+> > and 2) when started on "blank" channel like mentioned above.
+
+You've been a bit too fast. Look at the commit log for r11307:
+
+http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/utils.c?view=log
+
+"100l, av_read_packet must check for read_packet error, in case of
+error pkt->stream_index could be invalid and must not be used.
+Fixes a crash with" [link removed].
+
+So now I'm on r11311 and cannot get a crash by fast zapping.
+Switching away from some chnnels without reception does not
+harm anymore. av_free(pb->buffer); still commented out.
+
+>
+> Commenting out    //av_free(pb->buffer); looks like lowering
+> occurrence of 1).
+>
+> 2.) looks like a race condition as I can
+> reproduce that by fast zapping.
+>
+
+Stefan Lucke
+_______________________________________________
+Softdevice-devel mailing list
+Softdevice-devel at lists.berlios.de
+https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20080311/8b2b9848/attachment.html>
+
+From ollo.diab at gmx.de  Sat Mar 22 13:14:01 2008
+From: ollo.diab at gmx.de (Thomas Herrmann)
+Date: Sat, 22 Mar 2008 13:14:01 +0100
+Subject: [Softdevice-devel] H264 decoding support
+Message-ID: <20080322121401.42010@gmx.net>
+
+Hi,
+
+any chance to have HDTV / H264 decoding support anytime soon in softdevice?
+
+With current VDR + patch set kindly provided by Reinhard Nissl (e.g. see http://www.linuxtv.org/pipermail/vdr/2008-March/016227.html) HDTV support is here today.
+
+I'm currently using xine-plugin to output live HDTV on my RS690 hardware. With current fglrx 8.3 driver XVideo support is availabe and enables smooth video. But xine keeps crashing and is killing the X-Server even while switching through SDTV channels. With softdevice I don't have such issues.
+
+There is a perfect chance right now to work on softdevice HDTV support, because German TV station EinsFestivalHD is doing a showcast on 720p HDTV on a DVB-S1 transponder on Astra 19.2E.
+
+Thanks & Happy Easter Weekend!
+
+Regards,   Thomas
+
+-- 
+Psst! Geheimtipp: Online Games kostenlos spielen bei den GMX Free Games! 
+http://games.entertainment.gmx.net/de/entertainment/games/free
+
+
+From malcolm.caldwell at gmail.com  Tue Mar 25 17:27:24 2008
+From: malcolm.caldwell at gmail.com (Malcolm Caldwell)
+Date: Wed, 26 Mar 2008 01:57:24 +0930
+Subject: [Softdevice-devel] Two Problems with vdr-1.6.0
+Message-ID: <1206462444.18496.8.camel@lychee.local>
+
+Hello,
+
+I have just upgraded my vdr to 1.6.0
+
+I have two problems with softdevice
+
+1.  Softplay does not work, it appears to segfault.  I tried compiling
+again with a fresh checkout of ffmpeg svn but it gives the same error:
+
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x92114f0
+IsStream .avi
+open(!) [13337:    0.000] --> Caught signal 11 (at 0x8, invalid address) <--
+
+This is with any file I try to play.  (Help: my kids need their movies!)
+
+2.  Old recordings have stuttering audio.  New recordings seem ok, but
+my old ones sound awful.  Livetv is also fine.  The question is "Why are
+their Xruns only with old recordings".
+
+Recordings were made with vdr-1.4.3 with teletext and subtitles patch.
+(I suspect this is the cause of the problems, but need to ask here
+before I ask on the vdr list!)
+
+XXXX[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0382 D [14062] [VideoOut] reset: sync info: repF = 6, drpF = 5, totF = 8467
+No accelerated IMDCT transform found
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0458 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:24.0810 D [14065] [VideoOut] video now synced (9 - 0)
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:25.0780 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0035 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0112 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0222 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0332 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms long)
+01:51:26.0553 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0608 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0662 D [14066] [softdevice-audio]: Xrun (at least 0.003 ms long)
+01:51:26.0717 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0773 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0982 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:27.0092 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms long)
+01:51:27.0202 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+
+
+
+
+
+From malcolm.caldwell at cdu.edu.au  Wed Mar 26 03:30:07 2008
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Wed, 26 Mar 2008 12:00:07 +0930
+Subject: [Softdevice-devel] Problems with softdevice (&softplay) with
+	vdr-1.6.0
+Message-ID: <1206498607.16913.3.camel@lychee.local>
+
+Hello,
+
+I have just upgraded my vdr to 1.6.0
+
+I have two problems with softdevice:
+
+1.  Softplay does not work, it appears to segfault.  I tried compiling
+again with a fresh checkout of ffmpeg svn but it gives the same error:
+
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x92114f0
+IsStream .avi
+open(!) [13337:    0.000] --> Caught signal 11 (at 0x8, invalid address)
+<--
+
+This is with any file I try to play.  (Help: my kids need their movies!)
+
+See the end of this file for a gdb bt.
+
+
+
+2.  Old recordings have stuttering audio.  New recordings seem ok, but
+my old ones sound awful.  Livetv is also fine.  The question is "Why are
+their Xruns only with old recordings".
+
+Recordings were made with vdr-1.4.3 with teletext and subtitles patch.
+(I suspect this is the cause of the problems, but need to ask here
+before I ask on the vdr list!)
+
+XXXX[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0382 D [14062] [VideoOut] reset: sync info: repF = 6, drpF = 5,
+totF = 8467
+No accelerated IMDCT transform found
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0458 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:24.0810 D [14065] [VideoOut] video now synced (9 - 0)
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:25.0780 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0035 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0112 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0222 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0332 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms
+long)
+01:51:26.0553 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0608 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0662 D [14066] [softdevice-audio]: Xrun (at least 0.003 ms
+long)
+01:51:26.0717 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0773 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:26.0982 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms
+long)
+01:51:27.0092 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms
+long)
+01:51:27.0202 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms
+long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+
+
+Ok.  Here is the bt for my first problem:
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread -1414853744 (LWP 20444)]
+0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+pkt=@0xabab0304)
+    at SoftPlayer.c:73
+73              if ( AudioIdx== -1 &&
+Current language:  auto; currently c++
+
+
+
+
+
+Thread 33 (Thread -1404363888 (LWP 20447)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x081109aa in cPoller::Poll (this=0x1, TimeoutMs=100) at
+tools.c:1195
+#3  0x0809e9b4 in cTSBuffer::Action (this=0x8518cf0) at device.c:1599
+#4  0x0810b48c in cThread::StartThread (Thread=0x8518cf0) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 32 (Thread -1425343600 (LWP 20446)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bc6a in cCondWait::Wait (this=0x8516548, TimeoutMs=100)
+    at thread.c:69
+#3  0x080ef894 in cRingBuffer::WaitForGet (this=0x85164f8) at
+ringbuffer.c:64
+#4  0x080f031b in cRingBufferLinear::Get (this=0x85164f8,
+Count=@0xab0af300)
+    at ringbuffer.c:311
+#5  0x0809bf79 in cTSBuffer::Get (this=0x8518cf0) at device.c:1622
+#6  0x080a0b3d in cDvbDevice::GetTSPacket (this=0x84143e0,
+Data=@0xab0af378)
+    at dvbdevice.c:1205
+#7  0x0809f270 in cDevice::Action (this=0x84143e0) at device.c:1427
+---Type <return> to continue, or q <return> to quit---
+#8  0x0810b48c in cThread::StartThread (Thread=0x84143e0) at
+thread.c:244
+#9  0x0081045b in start_thread () from /lib/libpthread.so.0
+#10 0x0076823e in clone () from /lib/libc.so.6
+
+Thread 31 (Thread -1379415152 (LWP 20445)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x003031e2 in cSoftplayReceiver::Action (this=0x86c8250) at
+Receiver.c:157
+#4  0x0810b48c in cThread::StartThread (Thread=0x86c8374) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 30 (Thread -1414853744 (LWP 20444)):
+#0  0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+pkt=@0xabab0304)
+    at SoftPlayer.c:73
+#1  0x002fc89c in cSoftPlayer::FileReplay (this=0x8536ff0) at
+SoftPlayer.c:290
+#2  0x002fcd82 in cSoftPlayer::Action (this=0x8536ff0) at
+SoftPlayer.c:358
+#3  0x0810b48c in cThread::StartThread (Thread=0x8536ffc) at
+thread.c:244
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 29 (Thread -1436775536 (LWP 20443)):
+---Type <return> to continue, or q <return> to quit---
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0017213c in cSigTimer::Sleep (this=0x8479fc4, timeoutUS=50000, 
+    lowLimitUS=0) at sync-timer.c:75
+#3  0x001668b3 in cMpeg2Decoder::read_packet (this=0x8479ec8, buf=0x0, 
+    buf_size=32768) at mpeg2decoder.c:1061
+#4  0x001669b4 in read_packet_RingBuffer (opaque=0x19449, buf=0x0, 
+    buf_size=32768) at mpeg2decoder.c:988
+#5  0x0020b1f8 in get_byte () from /usr/local/lib/libavformat.so.52
+#6  0x00000000 in ?? ()
+
+Thread 27 (Thread 28269456 (LWP 19960)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bbce in cCondVar::TimedWait (this=0x8413ba0,
+Mutex=@0x8413b54, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x080a4d15 in cDvbTuner::Action (this=0x8413690) at dvbdevice.c:345
+#4  0x0810b48c in cThread::StartThread (Thread=0x8413690) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+---Type <return> to continue, or q <return> to quit---
+Thread 26 (Thread 69180304 (LWP 19961)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x080f196d in cSectionHandler::Action (this=0x84134d8) at
+sections.c:184
+#3  0x0810b48c in cThread::StartThread (Thread=0x84134d8) at
+thread.c:244
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 25 (Thread 38759312 (LWP 19963)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bbce in cCondVar::TimedWait (this=0x82d58e8,
+Mutex=@0x82d589c, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x080a4d15 in cDvbTuner::Action (this=0x82d53d8) at dvbdevice.c:345
+#4  0x0810b48c in cThread::StartThread (Thread=0x82d53d8) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 24 (Thread 57072528 (LWP 19964)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x080f196d in cSectionHandler::Action (this=0x8413e30) at
+sections.c:184
+---Type <return> to continue, or q <return> to quit---
+#3  0x0810b48c in cThread::StartThread (Thread=0x8413e30) at
+thread.c:244
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 23 (Thread 91270032 (LWP 19965)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00814256 in pthread_cond_wait@@GLIBC_2.3.2 ()
+from /lib/libpthread.so.0
+#2  0x00ac2594 in vt_thread ()
+   from /usr/local/lib/directfb-0.9.26/systems/libdirectfb_fbdev.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 22 (Thread 114228112 (LWP 19968)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x00acddd4 in ps2mouseEventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_ps2mouse.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 21 (Thread 124717968 (LWP 19969)):
+---Type <return> to continue, or q <return> to quit---
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 20 (Thread -1229980784 (LWP 19970)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 19 (Thread -1240470640 (LWP 19971)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+---Type <return> to continue, or q <return> to quit---
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 18 (Thread -1250960496 (LWP 19972)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 17 (Thread -1261450352 (LWP 19973)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085f3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 16 (Thread -1271940208 (LWP 19974)):
+#0  0x00110402 in __kernel_vsyscall ()
+---Type <return> to continue, or q <return> to quit---
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x00853ba7 in keyboardEventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_keyboard.so
+#3  0x00ab61b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 15 (Thread -1282430064 (LWP 19975)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x00990eba in cVideoOut::Action (this=0x841fde0) at video.c:114
+#4  0x0810b48c in cThread::StartThread (Thread=0x842023c) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 14 (Thread -1293128816 (LWP 19976)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x0036b31b in cWapServer::Action ()
+from ./PLUGINS/lib/libvdr-wapd.so.1.6.0
+#4  0x0810b48c in cThread::StartThread (Thread=0x8497d80) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+---Type <return> to continue, or q <return> to quit---
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 13 (Thread -1303618672 (LWP 19977)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x005b1882 in cTBSelect::Select ()
+   from ./PLUGINS/lib/libvdr-streamdev-server.so.1.6.0
+#3  0x0059f46e in cStreamdevServer::Action ()
+   from ./PLUGINS/lib/libvdr-streamdev-server.so.1.6.0
+#4  0x0810b48c in cThread::StartThread (Thread=0x847a048) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 12 (Thread -1314108528 (LWP 19978)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bbce in cCondVar::TimedWait (this=0x848e0c4,
+Mutex=@0x848e0a8, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x0061db67 in vdr_burn::manager::Action ()
+   from ./PLUGINS/lib/libvdr-burn.so.1.6.0
+#4  0x0810b48c in cThread::StartThread (Thread=0x848e078) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+---Type <return> to continue, or q <return> to quit---
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 11 (Thread -1324598384 (LWP 19979)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bc6a in cCondWait::Wait (this=0xb10c30a4, TimeoutMs=1000)
+    at thread.c:69
+#3  0x0810be20 in cCondWait::SleepMs (TimeoutMs=1000) at thread.c:58
+#4  0x042def9d in sleepMSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#5  0x042defd1 in sleepSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#6  0x04329f45 in cSearchTimerThread::Action ()
+   from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#7  0x0810b48c in cThread::StartThread (Thread=0x84b6738) at
+thread.c:244
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 10 (Thread -1335088240 (LWP 19980)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0810bc6a in cCondWait::Wait (this=0xb06c2264, TimeoutMs=1000)
+    at thread.c:69
+---Type <return> to continue, or q <return> to quit---
+#3  0x0810be20 in cCondWait::SleepMs (TimeoutMs=1000) at thread.c:58
+#4  0x042def9d in sleepMSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#5  0x042defd1 in sleepSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#6  0x042bac57 in cConflictCheckThread::Action ()
+   from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#7  0x0810b48c in cThread::StartThread (Thread=0x84b6308) at
+thread.c:244
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 9 (Thread -1345578096 (LWP 19981)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x08110705 in cFile::FileReady (FileDes=19, TimeoutMs=-1) at
+tools.c:1371
+#3  0x080bb1cc in cLircRemote::Action (this=0x84bb418) at lirc.c:73
+#4  0x0810b48c in cThread::StartThread (Thread=0x84bb428) at
+thread.c:244
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 8 (Thread -1356067952 (LWP 19982)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x08112473 in safe_read (filedes=0, buffer=0xaf2c0303, size=1)
+    at tools.c:56
+---Type <return> to continue, or q <return> to quit---
+#3  0x080ea2cf in cKbdRemote::ReadKey (this=0x84bb568) at remote.c:298
+#4  0x080ea33e in cKbdRemote::ReadKeySequence (this=0x84bb568) at
+remote.c:312
+#5  0x080eaa0e in cKbdRemote::Action (this=0x84bb568) at remote.c:353
+#6  0x0810b48c in cThread::StartThread (Thread=0x84bb578) at
+thread.c:244
+#7  0x0081045b in start_thread () from /lib/libpthread.so.0
+#8  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 1 (Thread -1208998192 (LWP 19955)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x0811082e in cFile::AnyFileReady (FileDes=22, TimeoutMs=0) at
+tools.c:1356
+#3  0x081108ad in cFile::Ready (this=0x848f104, Wait=false) at
+tools.c:1338
+#4  0x08109a29 in cSVDRP::Process (this=0x848f0f8) at svdrp.c:1613
+#5  0x080b98b7 in cInterface::GetKey (this=0x8484598, Wait=true)
+    at interface.c:37
+#6  0x0811698f in main (argc=4194304, argv=0xbf9f9e74) at vdr.c:907
+0x002fb187      73              if ( AudioIdx== -1 &&
+
+
+
+
+
+From m.wache at gmx.net  Wed Mar 26 19:21:13 2008
+From: m.wache at gmx.net (Martin Wache)
+Date: Wed, 26 Mar 2008 19:21:13 +0100
+Subject: [Softdevice-devel] Problems with softdevice (&softplay) with
+ vdr-1.6.0
+In-Reply-To: <1206498607.16913.3.camel@lychee.local>
+References: <1206498607.16913.3.camel@lychee.local>
+Message-ID: <47EA9419.1070206@gmx.net>
+
+Hi Malcolm,
+
+Malcolm Caldwell schrieb:
+> 2.  Old recordings have stuttering audio.  New recordings seem ok, but
+> my old ones sound awful.  Livetv is also fine.  The question is "Why are
+> their Xruns only with old recordings".
+> 
+> Recordings were made with vdr-1.4.3 with teletext and subtitles patch.
+> (I suspect this is the cause of the problems, but need to ask here
+> before I ask on the vdr list!)
+
+Please try the attached patch, it should fix those problems. I'm using
+it for some time, but it only works with a recent ffmpeg version.
+Previous ffmpeg versions caused problems with the A/V sync
+
+
+> Ok.  Here is the bt for my first problem:
+> Program received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread -1414853744 (LWP 20444)]
+> 0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+> pkt=@0xabab0304)
+>     at SoftPlayer.c:73
+> 73              if ( AudioIdx== -1 &&
+> Current language:  auto; currently c++
+> 
+> 
+> 
+
+
+> Thread 30 (Thread -1414853744 (LWP 20444)):
+> #0  0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+> pkt=@0xabab0304)
+>     at SoftPlayer.c:73
+> #1  0x002fc89c in cSoftPlayer::FileReplay (this=0x8536ff0) at
+> SoftPlayer.c:290
+> #2  0x002fcd82 in cSoftPlayer::Action (this=0x8536ff0) at
+> SoftPlayer.c:358
+> #3  0x0810b48c in cThread::StartThread (Thread=0x8536ffc) at
+> thread.c:244
+> #4  0x0081045b in start_thread () from /lib/libpthread.so.0
+> #5  0x0076823e in clone () from /lib/libc.so.6
+> 
+
+It would be nice to have the values of pkt.stream_index and
+ic->stream[pkt.stream_index]. And maybe all the other variables involed
+in the lines 73-7 of SoftPlayer.C
+
+
+Just in case, the did you check the usual suspects? make clean? Are you
+using the same ffmpeg version for softplay & softdevice?
+
+Bye,
+
+Martin
+
+Bye,
+Martin
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: patch.diff
+Type: text/x-diff
+Size: 866 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20080326/3301d85c/attachment.diff>
+
+From admin at berlios.de  Thu Mar 27 14:49:03 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Thu, 27 Mar 2008 15:49:03 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #13477] Display goes blank for 1-2 frames
+	when OSD/subs disappear
+Message-ID: <200803271349.m2RDn30n029339@unicorn.berlios.de>
+
+Bug #13477, was updated on 2008-Mar-27 15:49
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Display goes blank for 1-2 frames when OSD/subs disappear
+
+Details: When the OSD or DVB subtitles disappear from the screen (for example when the menu is visible and the menu key is pressed or when subtitles are visible and it's time to display the next subtitle) the entire display goes blank for a frame or two.
+
+This happens with VDR 1.6.0 and Softdevice CVS as of 20080327. I also had the same problem with VDR 1.5.x.
+
+I'm running Linux 2.6.24.3-50.fc8, xorg-x11-drv-nvidia-169.12-1.lvn8, gcc-4.1.2-33, ffmpeg-libs-0.4.9-0.41.20071011.lvn8, xorg-x11-server-Xorg-1.3.0.0-44.fc8, alsa-lib-1.0.15-1.fc8.
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=13477&group_id=2051
+
+
+From malcolm.caldwell at cdu.edu.au  Thu Mar 27 14:07:46 2008
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Thu, 27 Mar 2008 22:37:46 +0930
+Subject: [Softdevice-devel] Problems with softdevice (&softplay)
+	with	vdr-1.6.0
+In-Reply-To: <47EA9419.1070206@gmx.net>
+References: <1206498607.16913.3.camel@lychee.local> <47EA9419.1070206@gmx.net>
+Message-ID: <1206623266.6573.4.camel@lychee.local>
+
+On Wed, 2008-03-26 at 19:21 +0100, Martin Wache wrote:
+> Hi Malcolm,
+> 
+> Malcolm Caldwell schrieb:
+> > 2.  Old recordings have stuttering audio.  New recordings seem ok, but
+> > my old ones sound awful.  Livetv is also fine.  The question is "Why are
+> > their Xruns only with old recordings".
+> > 
+> > Recordings were made with vdr-1.4.3 with teletext and subtitles patch.
+> > (I suspect this is the cause of the problems, but need to ask here
+> > before I ask on the vdr list!)
+> 
+> Please try the attached patch, it should fix those problems. I'm using
+> it for some time, but it only works with a recent ffmpeg version.
+> Previous ffmpeg versions caused problems with the A/V sync
+
+This did not fix the problem.   I am running svn ffmpeg from a two days
+ago. (r12588)
+
+I have tried this a little more: what is happening is the audio is
+playing too fast.  At the end of a 5 minute news break the audio is
+approximately 15 seconds in front of the video.
+
+As previously stated recordings made with 1.6.0 play fine, as does live
+tv.
+
+
+
+From malcolm.caldwell at cdu.edu.au  Thu Mar 27 14:38:38 2008
+From: malcolm.caldwell at cdu.edu.au (Malcolm Caldwell)
+Date: Thu, 27 Mar 2008 23:08:38 +0930
+Subject: [Softdevice-devel] Problems with softdevice (&softplay)
+	with	vdr-1.6.0
+In-Reply-To: <47EA9419.1070206@gmx.net>
+References: <1206498607.16913.3.camel@lychee.local> <47EA9419.1070206@gmx.net>
+Message-ID: <1206625118.6573.14.camel@lychee.local>
+
+On Wed, 2008-03-26 at 19:21 +0100, Martin Wache wrote:
+> > Ok.  Here is the bt for my first problem:
+> > Program received signal SIGSEGV, Segmentation fault.
+> > [Switching to Thread -1414853744 (LWP 20444)]
+> > 0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+> > pkt=@0xabab0304)
+> >     at SoftPlayer.c:73
+> > 73              if ( AudioIdx== -1 &&
+> > Current language:  auto; currently c++
+> > 
+> > 
+> > 
+> 
+> 
+> > Thread 30 (Thread -1414853744 (LWP 20444)):
+> > #0  0x002fb187 in cSoftPlayer::RemuxAndQueue (this=0x8536ff0,
+> > pkt=@0xabab0304)
+> >     at SoftPlayer.c:73
+> > #1  0x002fc89c in cSoftPlayer::FileReplay (this=0x8536ff0) at
+> > SoftPlayer.c:290
+> > #2  0x002fcd82 in cSoftPlayer::Action (this=0x8536ff0) at
+> > SoftPlayer.c:358
+> > #3  0x0810b48c in cThread::StartThread (Thread=0x8536ffc) at
+> > thread.c:244
+> > #4  0x0081045b in start_thread () from /lib/libpthread.so.0
+> > #5  0x0076823e in clone () from /lib/libc.so.6
+> > 
+> 
+> It would be nice to have the values of pkt.stream_index
+
+pkt.stream_index is 1
+
+(gdb) print pkt
+$3 = (AVPacket &) @0xa9470304: {pts = 0, dts = 0, data = 0x886cc60 "??\224d", 
+  size = 384, stream_index = 1, flags = 1, duration = 1, 
+  destruct = 0x201d60 <av_destruct_packet>, priv = 0x87785ec, pos = 10260}
+
+
+>  and
+> ic->stream[pkt.stream_index].
+
+(gdb) print ic->stream[1]
+There is no member named stream.
+(gdb) print ic->streams[1]
+$6 = (AVStream *) 0x0
+
+>  And maybe all the other variables involed
+> in the lines 73-7 of SoftPlayer.C
+
+I guess there is not much to see:
+
+(gdb) print *ic
+$7 = {av_class = 0x270470, iformat = 0x287f40, oformat = 0x0, 
+  priv_data = 0x87fa620, pb = {buffer = 0x87e4e30 "0h\204\b", buffer_size = 2, 
+    buf_ptr = 0x880d750 "", buf_end = 0x880d170 "\001", opaque = 0x0, 
+    read_packet = 0, write_packet = 0, seek = 0, pos = 0, must_flush = 0, 
+    eof_reached = 0, write_flag = 0, is_streamed = 0, max_packet_size = 0, 
+    checksum = 0, checksum_ptr = 0x0, update_checksum = 0, error = 0}, 
+  nb_streams = 0, streams = {0x0, 0x0, 0x64656d2f, 0x492f6169, 0x41206563, 
+    0x612e6567, 0x6976, 0x0 <repeats 13 times>}, 
+  filename = '\0' <repeats 1023 times>, timestamp = 0, 
+  title = '\0' <repeats 511 times>, author = '\0' <repeats 511 times>, 
+  copyright = '\0' <repeats 511 times>, comment = '\0' <repeats 511 times>, 
+  album = '\0' <repeats 485 times>, "?\200\b\000\000\000\000\000\000\000\000?R\212\"\001\000\000\000\000?n+\000\000\000", year = 1195926, track = 0, 
+  genre = "\200(\221\b^\003\000\000\000\000\000\000\000\000\000\200\000\000\000\000\000\000\000\000\200(\221\b^\003\000", ctx_flags = 0, packet_buffer = 0x1, 
+  start_time = 9039497408806912, duration = 54236847013888, 
+  file_size = 44032004718592, bit_rate = 0, cur_st = 0x0, cur_ptr = 0x0, 
+  cur_len = 0, cur_pkt = {pts = 0, dts = 0, data = 0x0, size = 32000, 
+    stream_index = 3000000, flags = 0, duration = 0, destruct = 0, priv = 0x0, 
+    pos = 0}, data_offset = 4503599627370496, index_built = 3041280, 
+  mux_rate = 8388735, packet_size = 25, preload = 145336288, 
+  max_delay = 142637520, loop_output = 0, flags = 1, loop_input = 24, 
+  probesize = 2240, max_analyze_duration = 1107296320}
+(gdb) 
+
+
+Let me know if anything else might help.
+
+> 
+> Just in case, the did you check the usual suspects? make clean? Are you
+> using the same ffmpeg version for softplay & softdevice?
+> 
+> Bye,
+> 
+> Martin
+> 
+> Bye,
+> Martin
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+
+From Neumann at do-net.de  Sat Mar 29 10:26:00 2008
+From: Neumann at do-net.de (Neumann, Andre)
+Date: Sat, 29 Mar 2008 10:26:00 +0100
+Subject: [Softdevice-devel] VDR crashes after some minutes
+Message-ID: <FB3B5DB3197CEA429E5FB8E83D01D03901A200@sbs2003.do-net.de>
+
+Hi,
+ 
+softdevice was running rock stable a long time in my system, but since 2 weeks or so vdr crashes always.
+sometimes after 2 minutes, sometimes after 10 minutes. it happens when watching live tv, watching recordings.
+ 
+this is the gdb output i made, maybe anyone can help me please.
+ 
+(none):~ # gdb /usr/local/bin/vdr core.2679
+GNU gdb 6.1
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i586-suse-linux"...(no debugging symbols found)...Using host libthread_db library "/lib/tls/libthread_db.so.1".
+Core was generated by `/usr/local/bin/vdr -s /usr/bin/vdrshutdown --no-kbd --lirc -rnoad --statisticfi'.
+Program terminated with signal 6, Aborted.
+warning: current_sos: Can't read pathname for load map: Input/output error
+Reading symbols from /usr/lib/libjpeg.so.62...(no debugging symbols found)...done.
+Loaded symbols for /usr/lib/libjpeg.so.62
+Reading symbols from /lib/i686/libpthread.so.0...(no debugging symbols found)...done.
+Loaded symbols for /lib/i686/libpthread.so.0
+Reading symbols from /lib/libdl.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib/libdl.so.2
+Reading symbols from /lib/libcap.so.1...done.
+Loaded symbols for /lib/libcap.so.1
+Reading symbols from /lib/librt.so.1...done.
+Loaded symbols for /lib/librt.so.1
+Reading symbols from /usr/lib/libfreetype.so.6...done.
+Loaded symbols for /usr/lib/libfreetype.so.6
+Reading symbols from /usr/lib/libfontconfig.so.1...done.
+Loaded symbols for /usr/lib/libfontconfig.so.1
+Reading symbols from /usr/lib/libstdc++.so.5...done.
+Loaded symbols for /usr/lib/libstdc++.so.5
+Reading symbols from /lib/i686/libm.so.6...done.
+Loaded symbols for /lib/i686/libm.so.6
+Reading symbols from /lib/libgcc_s.so.1...done.
+Loaded symbols for /lib/libgcc_s.so.1
+Reading symbols from /lib/i686/libc.so.6...done.
+Loaded symbols for /lib/i686/libc.so.6
+Reading symbols from /lib/ld-linux.so.2...done.
+Loaded symbols for /lib/ld-linux.so.2
+Reading symbols from /usr/lib/libexpat.so.0...done.
+Loaded symbols for /usr/lib/libexpat.so.0
+Reading symbols from /usr/lib/gconv/ISO8859-1.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-1.so
+Reading symbols from /usr/lib/gconv/ISO8859-2.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-2.so
+Reading symbols from /usr/lib/gconv/ISO8859-15.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-15.so
+Reading symbols from /usr/lib/gconv/ISO8859-7.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-7.so
+Reading symbols from /usr/lib/gconv/ISO8859-13.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-13.so
+Reading symbols from /usr/lib/gconv/ISO8859-5.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-5.so
+Reading symbols from /usr/lib/gconv/ISO8859-9.so...done.
+Loaded symbols for /usr/lib/gconv/ISO8859-9.so
+Reading symbols from /usr/lib/libvdr-softdevice.so.1.6.0...done.
+Loaded symbols for /usr/lib/libvdr-softdevice.so.1.6.0
+Reading symbols from /usr/lib/libavcodec.so.51...done.
+Loaded symbols for /usr/lib/libavcodec.so.51
+Reading symbols from /lib/libz.so.1...done.
+Loaded symbols for /lib/libz.so.1
+Reading symbols from /usr/lib/libmp3lame.so.0...done.
+Loaded symbols for /usr/lib/libmp3lame.so.0
+Reading symbols from /usr/lib/libx264.so.54...done.
+Loaded symbols for /usr/lib/libx264.so.54
+Reading symbols from /usr/lib/libfaac.so.0...done.
+Loaded symbols for /usr/lib/libfaac.so.0
+Reading symbols from /usr/lib/libfaad.so.0...done.
+Loaded symbols for /usr/lib/libfaad.so.0
+Reading symbols from /usr/lib/libvorbisenc.so.2...done.
+Loaded symbols for /usr/lib/libvorbisenc.so.2
+Reading symbols from /usr/lib/libavutil.so.49...done.
+Loaded symbols for /usr/lib/libavutil.so.49
+Reading symbols from /usr/lib/libvorbis.so.0...done.
+Loaded symbols for /usr/lib/libvorbis.so.0
+Reading symbols from /usr/lib/libogg.so.0...done.
+Loaded symbols for /usr/lib/libogg.so.0
+Reading symbols from /usr/lib/libavformat.so.51...done.
+Loaded symbols for /usr/lib/libavformat.so.51
+Reading symbols from /usr/lib/libpostproc.so.51...done.
+Loaded symbols for /usr/lib/libpostproc.so.51
+Reading symbols from /usr/lib/libasound.so.2...done.
+Loaded symbols for /usr/lib/libasound.so.2
+Reading symbols from /usr/lib/libdfb++-1.0.so.0...done.
+Loaded symbols for /usr/lib/libdfb++-1.0.so.0
+Reading symbols from /usr/lib/libdirectfb-1.0.so.0...done.
+Loaded symbols for /usr/lib/libdirectfb-1.0.so.0
+Reading symbols from /usr/lib/libfusion-1.0.so.0...done.
+Loaded symbols for /usr/lib/libfusion-1.0.so.0
+Reading symbols from /usr/lib/libdirect-1.0.so.0...done.
+Loaded symbols for /usr/lib/libdirect-1.0.so.0
+Reading symbols from /usr/lib/libcle266mpegdec-0.5.so...done.
+Loaded symbols for /usr/lib/libcle266mpegdec-0.5.so
+Reading symbols from /usr/lib/libvidix.so.1.0.0...done.
+Loaded symbols for /usr/lib/libvidix.so.1.0.0
+Reading symbols from /usr/lib/libvdr-streamdev-server.so.1.6.0...done.
+Loaded symbols for /usr/lib/libvdr-streamdev-server.so.1.6.0
+#0  0x40250701 in kill () from /lib/i686/libc.so.6
+(gdb) bt
+#0  0x40250701 in kill () from /lib/i686/libc.so.6
+#1  0x4004b351 in pthread_kill () from /lib/i686/libpthread.so.0
+#2  0x4004b39b in raise () from /lib/i686/libpthread.so.0
+#3  0x40250494 in raise () from /lib/i686/libc.so.6
+#4  0x4025195c in abort () from /lib/i686/libc.so.6
+#5  0x40e84cc4 in signal_handler () from /usr/lib/libdirect-1.0.so.0
+#6  0x4004dcd9 in __pthread_sighandler_rt () from /lib/i686/libpthread.so.0
+#7  <signal handler called>
+#8  0x08105a54 in cListBase::Move ()
+#9  0x402521c6 in msort_with_tmp () from /lib/i686/libc.so.6
+#10 0x402520b1 in msort_with_tmp () from /lib/i686/libc.so.6
+#11 0x40252096 in msort_with_tmp () from /lib/i686/libc.so.6
+#12 0x402520b1 in msort_with_tmp () from /lib/i686/libc.so.6
+#13 0x40252096 in msort_with_tmp () from /lib/i686/libc.so.6
+#14 0x40252096 in msort_with_tmp () from /lib/i686/libc.so.6
+#15 0x402522c4 in qsort () from /lib/i686/libc.so.6
+#16 0x081060b9 in cListBase::Sort ()
+#17 0x080b2234 in cSchedule::Sort ()
+#18 0x080ac8b4 in cEIT::cEIT ()
+#19 0x080ad60c in cEitFilter::Process ()
+#20 0x080eaf53 in cSectionHandler::Action ()
+#21 0x08101748 in cThread::StartThread ()
+#22 0x40047f71 in pthread_start_thread () from /lib/i686/libpthread.so.0
+#23 0x402df9fa in clone () from /lib/i686/libc.so.6
+
+the crash looks like this:
+ 
+new Aspect detected 1,777778 (1,864078) / ep 82, lim 72, cb 72
+10:25:23.0270 D [2723] [dfb] (re)configuring Videolayer to 720 x 432 (720x432)
+10:25:23.0270 D [2723] [dfb] surface capabilities for (videoSurface): videoonly, double-buffered, flipping, PixelFormat = 0x08100609
+10:25:23.0270 D [2723] [dfb] (re)configured 0x08100609
+10:25:26.0227 D [2727] [VideoOut] reset: sync info: repF = 312, drpF = 0, totF = 314
+allocating buffer format orig->format 0
+10:25:26.0323 D [2728] [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+10:25:26.0323 D [2728] [dfb] surface capabilities for (videoSurface): videoonly, double-buffered, flipping, PixelFormat = 0x08100609
+10:25:26.0323 D [2728] [dfb] (re)configured 0x08100609
+10:25:30.0476 D [2728] [VideoOut] video now synced (90 - -322)
+new Aspect detected 1,777778 (1,855073) / ep 81, lim 72, cb 72
+10:26:14.0378 D [2728] [dfb] (re)configuring Videolayer to 720 x 432 (720x432)
+10:26:14.0379 D [2728] [dfb] surface capabilities for (videoSurface): videoonly, double-buffered, flipping, PixelFormat = 0x08100609
+10:26:14.0379 D [2728] [dfb] (re)configured 0x08100609
+(!) [ 2679:    0.000] --> Caught signal 11 (at 0x8, invalid address) <--
+ (!!!)  *** WARNING [still objects in 'Layer Region Pool'] *** [object.c:231 in fusion_object_pool_destroy()]
+ (!!!)  *** WARNING [still objects in 'Layer Context Pool'] *** [object.c:231 in fusion_object_pool_destroy()]
+ (!!!)  *** WARNING [still objects in 'Surface Pool'] *** [object.c:231 in fusion_object_pool_destroy()]
+10:27:32.0242 E [2728] [dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Resource was destroyed!
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20080329/b7d47dc8/attachment.html>
+

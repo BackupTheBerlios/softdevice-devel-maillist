@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice + libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C200607122040.44168.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002250.html">
+   <LINK REL="Next"  HREF="002243.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice + libcle266mpegdec</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C200607122040.44168.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice + libcle266mpegdec">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jul 12 20:40:44 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002250.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002243.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2251">[ date ]</a>
+              <a href="thread.html#2251">[ thread ]</a>
+              <a href="subject.html#2251">[ subject ]</a>
+              <a href="author.html#2251">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 12 Juli 2006 11:02, Laz wrote:
+&gt;<i> On Wednesday 12 July 2006 09:19, Per Mellander wrote:
+</I>&gt;<i> &gt; On Wed, 12 Jul 2006 06:51:41 +0200, Stefan Lucke wrote
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt; edge_width &amp; edge_height are not initialized in case of redrawing
+</I>&gt;<i> &gt; &gt; without old_picture.
+</I>&gt;<i> &gt; &gt; So a:
+</I>&gt;<i> &gt; &gt;  tmpBuf.edge_width = tmpBuf.edge_height = 0;
+</I>&gt;<i> &gt; &gt; at line 124 in video.c should/could fix this.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; That seems to solve the problem. I've done numerous reboots and it
+</I>&gt;<i> &gt; always start without core dump / sig 11 now.
+</I>&gt;<i> 
+</I>&gt;<i> I've just upgraded softdevice to current CVS and added that line to see if 
+</I>&gt;<i> it cures my occasional seg faults...
+</I>&gt;<i> 
+</I>&gt;<i> :)
+</I>&gt;<i> 
+</I>&gt;<i> Should this give me a core dump if it barfs or do I need to play about 
+</I>&gt;<i> with the signals and rebuild DirectFB as well for that?
+</I>
+You'll get a core dump only if you modify DirectFB/lib/direct/signals.c .
+edge_with and co is definitly (? stack gets overwritten buf == NULL in YUV() )
+the cause as you may see here (thats with gdb command: bt full):
+
+#0  0xb5843227 in fast_memcpy (to=0xb4a61800, from=0x94c50ed0, len=32) at utils.c:814
+        delta = 0
+        retval = (void *) 0xb4a61800
+        i = 11
+#1  0xb58488f9 in cDFBVideoOut::YUV (this=0x8214480, buf=0x0) at video-dfb.c:1355
+        currentFB = 11
+        dst = (uint8_t *) 0xb4a61800 &lt;Address 0xb4a61800 out of bounds&gt;
+        pitch = 736
+        hi = 0
+        Py = (uint8_t *) 0x94c50ed0 &lt;Address 0x94c50ed0 out of bounds&gt;
+        Pu = (uint8_t *) 0xadb6c184 &lt;Address 0xadb6c184 out of bounds&gt;
+        Pv = (uint8_t *) 0xadb85f94 &lt;Address 0xadb85f94 out of bounds&gt;
+        Width = 736
+        Height = 576
+#2  0xb5844884 in cVideoOut::DrawStill_420pl (this=0x8214480, buf=0xb70513c0) at video.c:466
+No locals.
+#3  0xb5843dc1 in cVideoOut::Action (this=0x8214480) at video.c:131
+        tmpBuf = {format = -1224403988, pixel = {0xb574a008 &quot;&quot;, 0x8216180 '\177' &lt;repeats 200 times&gt;...,
+    0x822ff90 '\177' &lt;repeats 200 times&gt;..., 0x81e77a0 &quot;&quot;}, stride = {736, 368, 368, -1209297397}, use_count = 3085689680,
+  buf_num = -1224403976, max_width = 736, max_height = 576, owner = 0x81e77a0, edge_width = -1224403928,
+  edge_height = 135136243, width = 736, height = 576, dtg_active_format = 0, aspect_ratio = 1.27777779, pts = 0,
+  interlaced_frame = false, pict_type = 136163856, pic_num = 136214416, age = -1208975436, priv_data = 0x17b}
+#4  0x081063fb in cThread::StartThread (Thread=0x82148dc) at thread.c:244
+
+I fixed that in another way: memset (&amp;tmpBuf, 0, sizeof (sPicBuffer)); .
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002250.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002243.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2251">[ date ]</a>
+              <a href="thread.html#2251">[ thread ]</a>
+              <a href="subject.html#2251">[ subject ]</a>
+              <a href="author.html#2251">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] shm init in incorrect order [was:	ShmClient: XvVideoOut.Reconfigure format &gt; 3!]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20shm%20init%20in%20incorrect%20order%20%5Bwas%3A%0A%09ShmClient%3A%20XvVideoOut.Reconfigure%20format%20%3E%203%21%5D&In-Reply-To=%3C200707121214.48028.zzam%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002899.html">
+   <LINK REL="Next"  HREF="002901.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] shm init in incorrect order [was:	ShmClient: XvVideoOut.Reconfigure format &gt; 3!]</H1>
+    <B>Matthias Schwarzott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20shm%20init%20in%20incorrect%20order%20%5Bwas%3A%0A%09ShmClient%3A%20XvVideoOut.Reconfigure%20format%20%3E%203%21%5D&In-Reply-To=%3C200707121214.48028.zzam%40gentoo.org%3E"
+       TITLE="[Softdevice-devel] [PATCH] shm init in incorrect order [was:	ShmClient: XvVideoOut.Reconfigure format &gt; 3!]">zzam at gentoo.org
+       </A><BR>
+    <I>Thu Jul 12 12:14:47 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002899.html">[Softdevice-devel] Compilation agains new ffmpeg snapshot
+</A></li>
+        <LI>Next message: <A HREF="002901.html">[Softdevice-devel] Problem with segfaulting softplay.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2900">[ date ]</a>
+              <a href="thread.html#2900">[ thread ]</a>
+              <a href="subject.html#2900">[ subject ]</a>
+              <a href="author.html#2900">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 22. Mai 2007, Matthias Schwarzott wrote:
+&gt;<i> Hi there!
+</I>&gt;<i>
+</I>&gt;<i> Using latest cvs snapshot, and starting vdr with:
+</I>&gt;<i> vdr -Psoftdevice&quot; -vo shm:&quot; [... other options]
+</I>&gt;<i>
+</I>&gt;<i> and then starting ShmClient gets me this output (of ShmClient):
+</I>&gt;<i>
+</I>&gt;<i> dsyslog:[XvVideoOut]: patch version (2006-11-05)
+</I>&gt;<i> [XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+</I>&gt;<i> dsyslog:[XvVideoOut]: Initialize XShmCreateImage Successful (0x80be610)
+</I>&gt;<i> [XvVideoOut]: osd_image shmid = 229379
+</I>&gt;<i> dsyslog:[XvVideoOut]: Initialize shmget Successful (2949120 bytes)
+</I>&gt;<i> dsyslog:[XvVideoOut]: Initialize shmat Successful
+</I>&gt;<i> [XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120,
+</I>&gt;<i> Bpp 32
+</I>&gt;<i> dsyslog:[softdevice-xscreensaver]: xscreensaver not running
+</I>&gt;<i>
+</I>&gt;<i> dsyslog:[XvVideoOut]: initialized OK
+</I>&gt;<i> XvVideoOut.Reconfigure format &gt; 3!
+</I>&gt;<i> [XvVideoOut]: Xinerama-Screen changed to 0
+</I>&gt;<i> dsyslog:[VideoOut]: 736x576 [0,0 736x576] -&gt; 1024x576 [122,0 778x576]
+</I>&gt;<i> XvVideoOut.Reconfigure format &gt; 3!
+</I>&gt;<i> reconfigure failed
+</I>&gt;<i> dsyslog:[VideoOut]: resolution changed: W(736 -&gt; 528); H(576 -&gt;576)
+</I>&gt;<i>
+</I>&gt;<i> dsyslog:[VideoOut]: 528x576 [0,0 528x576] -&gt; 1024x576 [132,0 759x576]
+</I>&gt;<i> XvVideoOut.Reconfigure format &gt; 3!
+</I>&gt;<i> reconfigure failed
+</I>&gt;<i> XvVideoOut.Reconfigure format &gt; 3!
+</I>&gt;<i> reconfigure failed
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> audio starts, but video is just black. The last two lines loop endlessly.
+</I>&gt;<i> Stopping and restarting ShmClient does not change anything.
+</I>&gt;<i>
+</I>&gt;<i> Stopping vdr, and then starting it DOES help.
+</I>&gt;<i> It can be reproduced then by stopping vdr, deleting the shared memory
+</I>&gt;<i> region, and starting it.
+</I>&gt;<i> Some debugging showed me that the pixelformat var had the value 14 ?!?
+</I>&gt;<i>
+</I>
+Debugged the problem further:
+Starting softdevice with shm output and no shm segment exists:
+cPluginSoftDevice starts, does net get a shm segment.
+Thus it creates the setupStore, but cannot write the Shmid of it into normal 
+shm segment.
+Later video-shm is started, and does create the shm segment.
+
+
+Needed now is some way to put the shmid of setupStore in the shm segment.
+The attached patch is a bit a hack, as it stores the shmid of setupStore 
+inside setupStore (as this is the only place it seems the subplugin video-shm 
+can access). 
+
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: shm-new-create.diff
+Type: text/x-diff
+Size: 1241 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070712/a68ccc22/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070712/a68ccc22/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002899.html">[Softdevice-devel] Compilation agains new ffmpeg snapshot
+</A></li>
+	<LI>Next message: <A HREF="002901.html">[Softdevice-devel] Problem with segfaulting softplay.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2900">[ date ]</a>
+              <a href="thread.html#2900">[ thread ]</a>
+              <a href="subject.html#2900">[ subject ]</a>
+              <a href="author.html#2900">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] new alsa device patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20alsa%20device%20patch&In-Reply-To=%3C200410292022.31155.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000044.html">
+   <LINK REL="Next"  HREF="000051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] new alsa device patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20alsa%20device%20patch&In-Reply-To=%3C200410292022.31155.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] new alsa device patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Oct 29 20:22:31 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000044.html">[Softdevice-devel] new alsa device patch
+</A></li>
+        <LI>Next message: <A HREF="000051.html">[Softdevice-devel] new alsa device patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 29. Oktober 2004 19:51, Torgeir Veimo wrote:
+&gt;<i> On Fri, 2004-10-29 at 19:43 +0200, Stefan Lucke wrote:
+</I>
+[ .. ]
+
+&gt;<i> &gt; i need just a bit time to complete the full-screen part.
+</I>&gt;<i> &gt; on some window managers i loose the originating x,y coordinates
+</I>&gt;<i> &gt; after 2nd time leaving full screen mode ;-) . that will fix bug #2265.
+</I>&gt;<i> 
+</I>&gt;<i> If both fullscreen methods are used simultaneously, there's a bit of
+</I>&gt;<i> flickering when going fullscreen and back, and the window looses focus.
+</I>
+flickering for a short time is to my opinion due to that many XvShm .. calls
+during event processing.
+loosing focus in a way that the window is not high lighted any more
+but still receiving keyboard events ;-) .
+
+&gt;<i> I think we can maybe only use the atom if it's already created by the
+</I>&gt;<i> WM, and fallback on the motif fullscreen hints when it's not available.
+</I>&gt;<i> Can you try changing line 643 of video-xv.c to 
+</I>&gt;<i> 
+</I>&gt;<i> _NET_WM_STATE_FULLSCREEN = XInternAtom(dpy, &quot;_NET_WM_STATE_FULLSCREEN&quot;,
+</I>&gt;<i> True);
+</I>
+&quot;True&quot; -&gt; create atom if it does not exits .
+
+&gt;<i> 
+</I>&gt;<i> and add 
+</I>&gt;<i> 
+</I>&gt;<i> fprintf(stderr, &quot; fullscreen atom: 0x%08x\n&quot;, _NET_WM_STATE_FULLSCREEN);
+</I>&gt;<i> 
+</I>&gt;<i> You'd need to restart the X server. Can you check if you get 0x00 with
+</I>&gt;<i> your WM?
+</I>
+i'll get that atom for kde too. a short form for atom reporting is 'xlsatoms' .
+
+my current version checks a number of atoms like mplayer (but not all).
+
+  if (_NET_WM_STATE_ABOVE)
+    e.xclient.data.l[1] = _NET_WM_STATE_ABOVE;
+  else if (_NET_WM_STATE_FULLSCREEN)
+    e.xclient.data.l[1] = _NET_WM_STATE_FULLSCREEN;
+  else //if (_NET_WM_STATE_STAYS_ON_TOP)
+    e.xclient.data.l[1] = _NET_WM_STATE_STAYS_ON_TOP;
+
+
+&gt;<i> 
+</I>&gt;<i> &gt; for bug fix of #2699 i got no feed back but i'll commit the fix too.
+</I>&gt;<i> 
+</I>&gt;<i> Never seen that one myself.
+</I>
+me too. but remote thread is started before Xv-setup is done. but during event processing
+there was a call to XvShmPutImage ;-) .
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000044.html">[Softdevice-devel] new alsa device patch
+</A></li>
+	<LI>Next message: <A HREF="000051.html">[Softdevice-devel] new alsa device patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

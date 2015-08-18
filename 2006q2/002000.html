@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605101322.49604.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001998.html">
+   <LINK REL="Next"  HREF="002001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605101322.49604.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Wed May 10 14:22:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001998.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+        <LI>Next message: <A HREF="002001.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2000">[ date ]</a>
+              <a href="thread.html#2000">[ thread ]</a>
+              <a href="subject.html#2000">[ subject ]</a>
+              <a href="author.html#2000">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 10 May 2006 11:57, Stefan Lucke wrote:
+&gt;<i> Quoting Laz:
+</I>&gt;<i> &gt; I had a quick go at trying SetLevel(-1) after reading Readme.txt in
+</I>&gt;<i> &gt; the DirectFB unichrome driver source. I can't actually remember what
+</I>&gt;<i> &gt; that did but I lost either the OSD or the video layer completely!
+</I>&gt;<i>
+</I>&gt;<i> From a look at directfb code, it should work with SetLevel(-1), if
+</I>&gt;<i> unichrome driver would report capability DLCAPS_ALPHACHANNEL. Reporting
+</I>&gt;<i> DLCAPS_ALPHACHANNEL has to be fixed in
+</I>&gt;<i> DirectFB/gfxdrivers/unichrome/uc_overlay.h line 5 or 6, by or'ing this
+</I>&gt;<i> together with other flags .
+</I>
+Hmmmm... I'm sure that my setup does report 'alphachannel' on 
+initialisation for me (can't check right now, or which layer this is 
+for), and so presumably it does get enabled. Shouldn't this be enabled 
+for the primary layer and not the overlay, anyway? Looking at 
+video-dfb.c, DLCAPS_ALPHACHANNEL is being checked for and set for the 
+video layer rather than the primary layer.
+
+Or are you saying that this feature is currently broken or missing for the 
+overlay layer in the unichrome driver?
+
+Cheers,
+
+Laz
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001998.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+	<LI>Next message: <A HREF="002001.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2000">[ date ]</a>
+              <a href="thread.html#2000">[ thread ]</a>
+              <a href="subject.html#2000">[ subject ]</a>
+              <a href="author.html#2000">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

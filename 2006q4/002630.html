@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] DVD menu problem with softdevice+dvd-plugin
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DVD%20menu%20problem%20with%20softdevice%2Bdvd-plugin&In-Reply-To=%3C200610251929.07786.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002614.html">
+   <LINK REL="Next"  HREF="002616.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] DVD menu problem with softdevice+dvd-plugin</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DVD%20menu%20problem%20with%20softdevice%2Bdvd-plugin&In-Reply-To=%3C200610251929.07786.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] DVD menu problem with softdevice+dvd-plugin">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Oct 25 19:29:07 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002614.html">[Softdevice-devel] DVD menu problem with softdevice+dvd-plugin
+</A></li>
+        <LI>Next message: <A HREF="002616.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2630">[ date ]</a>
+              <a href="thread.html#2630">[ thread ]</a>
+              <a href="subject.html#2630">[ subject ]</a>
+              <a href="author.html#2630">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 11 Oktober 2006 18:39, Mikko Vartiainen wrote:
+&gt;<i> 
+</I>&gt;<i> Hi
+</I>&gt;<i> 
+</I>&gt;<i> I have a problem with DVD menus. When using dvd menus, osd layer and the 
+</I>&gt;<i> picture layer aren't aligned, if there is any stretching involved.
+</I>
+I got that too, and the whole thing, scaling an OSD with a given still image from
+a DVD is rather confusing. I did my tests with the following DVDs:
+a: 2001 A Space Odyssey
+b: Pearl Harbor
+
+After playing around with this for a while I see there is much todo to get
+this work correct. In my working version this works _only_ for software
+OSD mixing.
+I had to change vdr + several places in softdevice.
+
+The main issues are:
+- There is only one type of OSD
+- We need at least 2 types
+  - One OSD that scales to the available screen area
+  - One OSD that scales to video area and to which the same scaling is
+   applied as video ([sx,sy - sw,sh] -&gt; [dx,dy - dw,dh]).
+
+&gt;<i> 
+</I>&gt;<i> This is an old problem which was fixed back in January with Martin Wache's new 
+</I>&gt;<i> OSD. I think that the problem came back sometime when the new field based 
+</I>&gt;<i> scaling was introduced.
+</I>
+I don't think it's a issue with field based scaling.
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002614.html">[Softdevice-devel] DVD menu problem with softdevice+dvd-plugin
+</A></li>
+	<LI>Next message: <A HREF="002616.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2630">[ date ]</a>
+              <a href="thread.html#2630">[ thread ]</a>
+              <a href="subject.html#2630">[ subject ]</a>
+              <a href="author.html#2630">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

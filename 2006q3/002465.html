@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20viafb%20%2B%20EPIA%20M10000%2C%20TVOUT%20problem&In-Reply-To=%3Ccf1d50160609170233p43318291p8906a6b48572c03c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002461.html">
+   <LINK REL="Next"  HREF="002466.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem</H1>
+    <B>Testasecca public mail</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20viafb%20%2B%20EPIA%20M10000%2C%20TVOUT%20problem&In-Reply-To=%3Ccf1d50160609170233p43318291p8906a6b48572c03c%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem">public.testasecca at gmail.com
+       </A><BR>
+    <I>Sun Sep 17 11:33:08 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002461.html">[Softdevice-devel] Softdevice &amp; CLE266 support
+</A></li>
+        <LI>Next message: <A HREF="002466.html">[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2465">[ date ]</a>
+              <a href="thread.html#2465">[ thread ]</a>
+              <a href="subject.html#2465">[ subject ]</a>
+              <a href="author.html#2465">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I'm new to the list, and of course with a problem ....
+
+I'm a trying to install a TV Box running VDR on an EPIA M 10000 board, under
+Ubuntu (server install), kernel version is 2.6.15-23-386.
+
+I want VDR running onto the framebuffer throw softdevice plugin, and i want
+hardware MPEG acceleration.
+
+So, i found this nice tutorial :
+<A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A> ...
+
+Everything works perfectly on my PC monitor, i got : the famebuffer console,
+i can see VDR interface, decode an MPEG stream with acceleration ...
+
+BUT my TV screen goes crazy ! It  is activated but  completly scrambled,
+there is some lines ( looks like interlacing problems ??, the image is
+shifted, duplicated .... ).
+
+This problems comes just after viafb/fbcon module inserting,  so there'is no
+problem with DiretFB, or DF++ or VDR, the problems comes from viafb module.
+
+I have configured into the BIOS (TV+CRT, 800x600, PAL (i'm in france),
+direct access to framebuffer .... ).
+Then i load the module :
+sudo insmod viafb.ko TVon=0    # (0 is for enable, i tried without options,
+same results ...)
+
+When i insert the viafb module, dmesg gives :
+
+[4296000.354000] viafb: VIA UNICHROME framebuffer 1.0 initializing
+[4296000.356000] viafb: viafb : CEF00000
+[4296000.356000] viafb: framebuffer size = 32 Mb
+[4296000.356000] viafb: Found Device Rev:0
+[4296000.357000] viafb: X:800 Y:600
+[4296000.357000] viafb: mode=800  bpp=32  refresh=50  TVon=0  TVtype=2
+[4296000.357000] viafb: VQ start:1FC0000  end:1FFFFFF  size:40000
+[4296000.357000] viafb: Cursor start:1FBF000  end:1FBFFFF  size:1000
+[4296000.358000] viafb: mode=800  bpp=32  refresh=255  TVon=0  TVtype=2
+[ 4296000.358000] viafb: irq handler installed, IRQ(0x200) = 80080c02
+[4296000.371000] Console: switching to colour frame buffer device 100x37
+[4296000.371000] fb0: UNICHROME frame buffer device
+
+At this time an fbset gives me :
+mode &quot;720x576-74&quot;
+    # D: 41.475 MHz, H: 44.693 kHz, V: 74.488 Hz
+    geometry 720 576 720 1152 32
+    timings 24111 88 32 16 4 88 4
+    rgba 8/16,8/8,8/0,8/24
+endmode
+
+and fbset -i :
+Frame buffer device information:
+    Name        : UNICHROME
+    Address     : 0xd8000000
+    Size        : 33288192
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 0
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 2880
+    MMIO Address: 0xdc000000
+    MMIO Size   : 16777216
+    Accelerator : Unknown (77)
+
+
+So i do a fbset &quot;720x576-50&quot; with this definition :
+mode &quot;720x576-50&quot;
+    geometry 720 576 720 576 16
+    timings 35714 32 8 46 0 136 3
+    bcast true # request overscan with (modified) viafb
+endmode
+
+then the set gives :
+mode &quot;720x576-50&quot;
+    # D: 28.000 MHz, H: 31.250 kHz, V: 50.000 Hz
+    geometry 720 576 720 576 16
+    timings 35714 32 8 46 0 136 3
+    bcast true
+    accel true
+    rgba 5/11,6/5,5/0,0/0
+endmode
+
+That's weird, everything is working on PC screen, and not on TV !
+
+I tried a patch to the kernel from VDR Eclipse site, with the same bad
+results. (
+<A HREF="http://vdr.bluox.org/download/epia/viafb_03-720x576noscale-2.6.14.patch.bz2">http://vdr.bluox.org/download/epia/viafb_03-720x576noscale-2.6.14.patch.bz2</A>)
+
+I've also tried via driver and TV out works  (with the same fb.modes) but is
+really slow ! I can't decode an MPEG stream with this !
+
+I'm a little bit disapointed ! Please Help ! :)
+
+Some not directly related questions :
+Do you know how to prevent fbcon module insertion at boot time ? ( I tried
+to remove it from /lib/modules/ ... and it was stille loaded after reboot
+!!! Magik ? Initrd ?
+
+Do you know how to force a power off on an USB device?  i want to stop USB
+power supply to my DVB-T USB device to make a hard reset to it, it seems to
+very stable ....
+
+Thanks in advance for your help ...
+Cheers
+Tom
+
+I also posted on directfb-users
+
+-- 
+Cheers,
+Thomas TESTASECCA
+
+(o-
+// \        In a world without walls and fences, who needs Windows and Gates
+?
+\/_/_
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060917/5172b1dc/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060917/5172b1dc/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002461.html">[Softdevice-devel] Softdevice &amp; CLE266 support
+</A></li>
+	<LI>Next message: <A HREF="002466.html">[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2465">[ date ]</a>
+              <a href="thread.html#2465">[ thread ]</a>
+              <a href="subject.html#2465">[ subject ]</a>
+              <a href="author.html#2465">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

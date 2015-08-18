@@ -1,0 +1,5110 @@
+From stefan at lucke.in-berlin.de  Wed Oct 20 22:46:20 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 20 Oct 2004 22:46:20 +0200
+Subject: [Softdevice-devel] Re: Contribute to vdr-softdevice
+In-Reply-To: <1098208130.27553.43.camel@atlantis.netenviron.com>
+References: <1119863521@web.de> <1098194513.41751e5152da9@webmail.in-berlin.de> <1098208130.27553.43.camel@atlantis.netenviron.com>
+Message-ID: <200410202246.20435.stefan@lucke.in-berlin.de>
+
+On Dienstag, 19. Oktober 2004 19:48, Torgeir Veimo wrote:
+> On Tue, 2004-10-19 at 16:01 +0200, Stefan Lucke wrote:
+> > Quoting Martin Wache <Martin.Wache at web.de>:
+> > 
+> > [..]
+> > 
+> > > The second patch fixes some ringbuffer locking. There was no locking when
+> > > writing to the video ringbuffer
+> > > (method cVideoStreamDecoder::Write), and the lock was held in the function
+> > > cVideoStreamDecoder::Action, 
+> > > when the function ParseStream was called. Since ParseStream sleeps when doing
+> > > the A-V syncing, 
+> > > but it doesn't modify the rinbuffer (it just reads) I think the mutex should
+> > > be released before calling ParseStream.
+> > > This patch fixes some crashes on buffer overflows.
+> > 
+> > That kind of locking I introduced intentionally, To fix a crash when jumping
+> > very fast between marks of a recording. Sleeping in DecodeData via ParseStream
+> > with held lock is no so good either.
+> 
+> Reverting the Mutex patch reintroduces some clicks and pops in my
+> setup. 
+
+Thats in someway hard to believe. In normal operation mutex is acquired
+and released in a one thread: in method Action. So this should never
+block this thread itself. The only blocking situation is that when StillPicture is called,
+method Action is suspended while the ringbuffer gets cleared and
+avcodec's buffers get flushed. 
+
+Is it possible that your clicks and pops may have some other reasons ?
+
+With 02_Fix_Ringbuffer_Locking.diff patch I get partly corrupted stillpictures
+when a jump_to_mark_key is pressed during playback.
+
+
+Stefan Lucke
+
+
+
+From torgeir at pobox.com  Wed Oct 20 22:58:19 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Wed, 20 Oct 2004 21:58:19 +0100
+Subject: [Softdevice-devel] Re: Contribute to vdr-softdevice
+In-Reply-To: <200410202246.20435.stefan@lucke.in-berlin.de>
+References: <1119863521@web.de>
+	 <1098194513.41751e5152da9@webmail.in-berlin.de>
+	 <1098208130.27553.43.camel@atlantis.netenviron.com>
+	 <200410202246.20435.stefan@lucke.in-berlin.de>
+Message-ID: <1098305899.27553.69.camel@atlantis.netenviron.com>
+
+On Wed, 2004-10-20 at 22:46 +0200, Stefan Lucke wrote:
+> On Dienstag, 19. Oktober 2004 19:48, Torgeir Veimo wrote:
+> > 
+> > Reverting the Mutex patch reintroduces some clicks and pops in my
+> > setup. 
+> 
+> Thats in someway hard to believe. In normal operation mutex is acquired
+> and released in a one thread: in method Action. So this should never
+> block this thread itself. The only blocking situation is that when StillPicture is called,
+> method Action is suspended while the ringbuffer gets cleared and
+> avcodec's buffers get flushed. 
+> 
+> Is it possible that your clicks and pops may have some other reasons ?
+> 
+> With 02_Fix_Ringbuffer_Locking.diff patch I get partly corrupted stillpictures
+> when a jump_to_mark_key is pressed during playback.
+
+It might be that I mixed up things when patching. I don't hear any
+difference with and without the Mutex patch now. But I do have a great
+improvement with the other two patches though.
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Thu Oct 21 00:43:27 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 21 Oct 2004 00:43:27 +0200
+Subject: [Softdevice-devel] Re: Contribute to vdr-softdevice
+In-Reply-To: <1098305899.27553.69.camel@atlantis.netenviron.com>
+References: <1119863521@web.de> <200410202246.20435.stefan@lucke.in-berlin.de> <1098305899.27553.69.camel@atlantis.netenviron.com>
+Message-ID: <200410210043.27617.stefan@lucke.in-berlin.de>
+
+On Mittwoch, 20. Oktober 2004 22:58, Torgeir Veimo wrote:
+> On Wed, 2004-10-20 at 22:46 +0200, Stefan Lucke wrote:
+
+[ .. ]
+
+> > Is it possible that your clicks and pops may have some other reasons ?
+> > 
+> > With 02_Fix_Ringbuffer_Locking.diff patch I get partly corrupted stillpictures
+> > when a jump_to_mark_key is pressed during playback.
+> 
+> It might be that I mixed up things when patching. I don't hear any
+> difference with and without the Mutex patch now. But I do have a great
+> improvement with the other two patches though.
+
+Patch 03_.. affects your avOffset. If it is acceptable for you we should commit it
+like patch 01_.. .
+
+But keep in mind my original comment on "delay + avOffset" from 2004-08-21
+(delay += avOffset vs. delay -= avOffset):
+
+> On Donnerstag, 19. August 2004 17:11, Torgeir Veimo wrote:
+> > Here's a patch that adds an adjustable av offset to softdevice. It's
+> > possible to adjust offset +/- 250 ms. There might be issues with buffer
+> > underruns however. You need to restart for the change to take effect.
+> 
+>      int delay = audioOut->GetDelay();
+> -    if (delay < 20)// if we have less than 20 ms in buffer we double frames
+> +    if (delay + avOffset < 20) { // if we have less than 20 ms in buffer we double frames
+>        audioOut->Write(audiosamples,audio_size);
+> 
+> Takeing that: it is something like:
+>         delay += avOffset;
+>         if (delay < 20)
+> 
+>      //  printf("Audiodelay: %d \n",delay);
+> -    *cPTS = pts - delay; // Das ist die Master-PTS die wird an den video Teil ?bergeben,
+> +    *cPTS = pts - delay + avOffset; // Das ist die Master-PTS die wird an den video Teil ?bergeben,
+> 
+> and taking that it is the same as
+>         delay -= avOffset;
+>         *cPTS = pts - delay;
+> 
+> Finaly replaceing 1st 'delay += avOffset' by 'delay += setupStore.avOffset' would
+> result in immediate changing avOffset from OSD _without_ required vdr restart.
+
+
+Stefan Lucke
+
+
+
+From torgeir at pobox.com  Thu Oct 21 12:09:33 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 21 Oct 2004 11:09:33 +0100
+Subject: [Softdevice-devel] Re: Contribute to vdr-softdevice
+In-Reply-To: <200410210043.27617.stefan@lucke.in-berlin.de>
+References: <1119863521@web.de>
+	 <200410202246.20435.stefan@lucke.in-berlin.de>
+	 <1098305899.27553.69.camel@atlantis.netenviron.com>
+	 <200410210043.27617.stefan@lucke.in-berlin.de>
+Message-ID: <1098353374.27553.81.camel@atlantis.netenviron.com>
+
+On Thu, 2004-10-21 at 00:43 +0200, Stefan Lucke wrote:
+> On Mittwoch, 20. Oktober 2004 22:58, Torgeir Veimo wrote:
+> > On Wed, 2004-10-20 at 22:46 +0200, Stefan Lucke wrote:
+> 
+> [ .. ]
+> 
+> > > Is it possible that your clicks and pops may have some other reasons ?
+> > > 
+> > > With 02_Fix_Ringbuffer_Locking.diff patch I get partly corrupted stillpictures
+> > > when a jump_to_mark_key is pressed during playback.
+> > 
+> > It might be that I mixed up things when patching. I don't hear any
+> > difference with and without the Mutex patch now. But I do have a great
+> > improvement with the other two patches though.
+> 
+> Patch 03_.. affects your avOffset. If it is acceptable for you we should commit it
+> like patch 01_.. .
+> 
+> But keep in mind my original comment on "delay + avOffset" from 2004-08-21
+> (delay += avOffset vs. delay -= avOffset):
+> 
+> > On Donnerstag, 19. August 2004 17:11, Torgeir Veimo wrote:
+> > > Here's a patch that adds an adjustable av offset to softdevice. It's
+> > > possible to adjust offset +/- 250 ms. There might be issues with buffer
+> > > underruns however. You need to restart for the change to take effect.
+> > 
+> >      int delay = audioOut->GetDelay();
+> > -    if (delay < 20)// if we have less than 20 ms in buffer we double frames
+> > +    if (delay + avOffset < 20) { // if we have less than 20 ms in buffer we double frames
+> >        audioOut->Write(audiosamples,audio_size);
+> > 
+> > Takeing that: it is something like:
+> >         delay += avOffset;
+> >         if (delay < 20)
+> > 
+> >      //  printf("Audiodelay: %d \n",delay);
+> > -    *cPTS = pts - delay; // Das ist die Master-PTS die wird an den video Teil ?bergeben,
+> > +    *cPTS = pts - delay + avOffset; // Das ist die Master-PTS die wird an den video Teil ?bergeben,
+> > 
+> > and taking that it is the same as
+> >         delay -= avOffset;
+> >         *cPTS = pts - delay;
+
+If we do the change below, the only place where avOffset remains is in
+line 195:
+
+*cPTS = pts - delay + setupStore.avOffset;
+
+> > Finaly replaceing 1st 'delay += avOffset' by 'delay += setupStore.avOffset' would
+> > result in immediate changing avOffset from OSD _without_ required vdr restart.
+
+So I'll commit patch 01 and 03?
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Thu Oct 21 22:32:09 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 21 Oct 2004 22:32:09 +0200
+Subject: [Softdevice-devel] Re: Contribute to vdr-softdevice
+In-Reply-To: <1098353374.27553.81.camel@atlantis.netenviron.com>
+References: <1119863521@web.de> <200410210043.27617.stefan@lucke.in-berlin.de> <1098353374.27553.81.camel@atlantis.netenviron.com>
+Message-ID: <200410212232.09050.stefan@lucke.in-berlin.de>
+
+On Donnerstag, 21. Oktober 2004 12:09, Torgeir Veimo wrote:
+
+[ .. ]
+
+> If we do the change below, the only place where avOffset remains is in
+> line 195:
+> 
+> *cPTS = pts - delay + setupStore.avOffset;
+> 
+> > > Finaly replaceing 1st 'delay += avOffset' by 'delay += setupStore.avOffset' would
+> > > result in immediate changing avOffset from OSD _without_ required vdr restart.
+> 
+> So I'll commit patch 01 and 03?
+
+I added Martin to our developer crew. So he can commit his fix (patch01) hisself :-) .
+
+Martin's suggested change for that "if (delay + avOffset < 20)" to
+"if (delay < 80)" is like a fix avOffset value of -60 and that fix offset for
+sample repetition gives me a stange feeling.
+Are you using negative or postive values for av-sync adjustment ?
+
+As this should be reworked in a more general way with considering
+STC syncing with some audio prebuffering, we should not spend to much time
+on this. So I'll like to keep that in your decision.
+
+-- 
+Stefan Lucke
+
+
+
+From M.Wache at gmx.net  Fri Oct 22 11:08:49 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Fri, 22 Oct 2004 11:08:49 +0200 (MEST)
+Subject: [Softdevice-devel] Re: Contribute to vdr-softdevice
+References: <200410212232.09050.stefan@lucke.in-berlin.de>
+Message-ID: <24173.1098436129@www39.gmx.net>
+
+> > So I'll commit patch 01 and 03?
+> 
+> I added Martin to our developer crew. So he can commit his fix (patch01)
+> hisself :-) .
+Great! But since I again have all my stuff at home, I have to wait until the
+evening to commit the patch...
+> 
+> Martin's suggested change for that "if (delay + avOffset < 20)" to
+> "if (delay < 80)" is like a fix avOffset value of -60 and that fix offset
+As far as I understand this condition is just to ensure that the sound
+buffer 
+doesn't underrun. Since we get audio data only every 50-75ms we have to
+ensure that the sound buffer should contains more than 80ms right after the
+audio decoding has been called, independently of the avOffset. The avOffset
+comes in afterwards, because up to now we just sync the video to the audio,
+we just have to delay or accelerate 
+the video to keep the avOffset.
+
+> As this should be reworked in a more general way with considering
+> STC syncing with some audio prebuffering, we should not spend to much time
+> on this. So I'll like to keep that in your decision.
+I'm already working on a new A-V syncing code, the current code is in my
+opinion quite 
+broken... For example the cPTS is only updated every 50-75ms again because
+AudioStreamDecoder::DecodeData is only called every 50-75ms. The result is
+that the cPTS jumps and this gives the Video quite a hard time to sync on
+the cPTS.
+I also grabbed a copy of the mpeg2 iso norm and started to read in it...
+
+Bye,
+Martin
+
+-- 
++++ GMX DSL Premiumtarife 3 Monate gratis* + WLAN-Router 0,- EUR* +++
+Clevere DSL-Nutzer wechseln jetzt zu GMX: http://www.gmx.net/de/go/dsl
+
+
+
+From stefan at lucke.in-berlin.de  Sat Oct 23 12:13:54 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 23 Oct 2004 12:13:54 +0200
+Subject: [Softdevice-devel] pseudo OSD background
+Message-ID: <200410231213.54099.stefan@lucke.in-berlin.de>
+
+Hi,
+
+based on Togeir's patch I want to suggest the following diff for
+pseudo OSD backgound drawing.
+
+It is enabled allways for all output methods when OSD is drawn and
+OSD has no alpha plane. When there is an alpha plane, each output
+method can disable that feature if it knows that true alpha blending
+could be done (that part is not implemented yet) .
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pseudo_background.diff
+Type: text/x-diff
+Size: 2515 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041023/41c857ee/attachment.diff>
+
+From stefan at lucke.in-berlin.de  Sun Oct 24 14:55:24 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 24 Oct 2004 14:55:24 +0200
+Subject: [Softdevice-devel] softdevice-0.0.7pre3
+Message-ID: <200410241455.24252.stefan@lucke.in-berlin.de>
+
+Hi,
+
+showstopper bugs 2266 & 2267 are fixed and
+if noone vetos, I'm going to announce softdevice-0.0.7pre3 this evening.
+
+Further fixes to a/v sync and fullscreen finishing should go 0.0.8 .
+
+-- 
+Stefan Lucke
+
+
+
+From M.Wache at gmx.net  Sun Oct 24 14:57:12 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Sun, 24 Oct 2004 14:57:12 +0200 (MEST)
+Subject: [Softdevice-devel] pseudo OSD background
+References: <200410231213.54099.stefan@lucke.in-berlin.de>
+Message-ID: <20248.1098622632@www53.gmx.net>
+
+> Hi,
+> 
+> based on Togeir's patch I want to suggest the following diff for
+> pseudo OSD backgound drawing.
+> 
+> It is enabled allways for all output methods when OSD is drawn and
+> OSD has no alpha plane. When there is an alpha plane, each output
+> method can disable that feature if it knows that true alpha blending
+> could be done (that part is not implemented yet) .
+
+Hey, this pseudo alpha blend looks suprisingly good! And it takes almost no
+cpu-time! Great thing...
+Did you already thing about trying to do real alpha blend in software? On a
+reasonable powerfull cpu this should be feasonable. For example for Xv
+output,
+one could transform the RGB osd image to YUV and then do the alpha blending
+in the YUV colorspace when copying the video-image to the shared memory.
+I think this combined copy/alpha blending should be possible in a few ms, 
+provided we use MMX optimized code. Maybe this works also for other output
+methods like Vidix, or FB.
+And this way we would get osd scaling for free, since it is scaled together
+with the video ;-)
+
+Martin Wache
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Ausgaben der TV Movie mit DVD
+++++ Jetzt anmelden und testen http://www.gmx.net/de/go/mail ++++
+
+
+
+From torgeir at pobox.com  Sun Oct 24 15:24:01 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 24 Oct 2004 14:24:01 +0100
+Subject: [Softdevice-devel] pseudo OSD background
+In-Reply-To: <200410231213.54099.stefan@lucke.in-berlin.de>
+References: <200410231213.54099.stefan@lucke.in-berlin.de>
+Message-ID: <1098624241.26284.27.camel@atlantis.netenviron.com>
+
+On Sat, 2004-10-23 at 12:13 +0200, Stefan Lucke wrote:
+> 
+> It is enabled allways for all output methods when OSD is drawn and
+> OSD has no alpha plane. When there is an alpha plane, each output
+> method can disable that feature if it knows that true alpha blending
+> could be done (that part is not implemented yet) .
+
+Very nice. I didn't test it yet with non-black background, but it
+appears your patch dithers with the actual background color and
+transparency? 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Sun Oct 24 15:26:36 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 24 Oct 2004 14:26:36 +0100
+Subject: [Softdevice-devel] softdevice-0.0.7pre3
+In-Reply-To: <200410241455.24252.stefan@lucke.in-berlin.de>
+References: <200410241455.24252.stefan@lucke.in-berlin.de>
+Message-ID: <1098624396.26284.30.camel@atlantis.netenviron.com>
+
+On Sun, 2004-10-24 at 14:55 +0200, Stefan Lucke wrote:
+> Hi,
+> 
+> showstopper bugs 2266 & 2267 are fixed and
+> if noone vetos, I'm going to announce softdevice-0.0.7pre3 this evening.
+> 
+> Further fixes to a/v sync and fullscreen finishing should go 0.0.8 .
+
+Yes, this is the VidMode stuff.. I'd been a bit reluctant to dig into
+it, but I'll try to find some inspiration... 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Sun Oct 24 15:56:52 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Sun, 24 Oct 2004 15:56:52 +0200 (MEST)
+Subject: [Softdevice-devel] softdevice-0.0.7pre3
+References: <1098624396.26284.30.camel@atlantis.netenviron.com>
+Message-ID: <8018.1098626212@www53.gmx.net>
+
+> On Sun, 2004-10-24 at 14:55 +0200, Stefan Lucke wrote:
+> > Hi,
+> > 
+> > showstopper bugs 2266 & 2267 are fixed and
+> > if noone vetos, I'm going to announce softdevice-0.0.7pre3 this evening.
+> > 
+> > Further fixes to a/v sync and fullscreen finishing should go 0.0.8 .
+> 
+> Yes, this is the VidMode stuff.. I'd been a bit reluctant to dig into
+> it, but I'll try to find some inspiration... 
+
+I would like to suggest to switch off by default the building of most of the
+video out drivers, except maybe Xv and/or FB. 
+Most of the users just use one video out, and the users which already
+installed DirectFB etc. are smart enough to switch the ones they need on
+again.
+
+Martin
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Ausgaben der TV Movie mit DVD
+++++ Jetzt anmelden und testen http://www.gmx.net/de/go/mail ++++
+
+
+
+From torgeir at pobox.com  Sun Oct 24 16:25:31 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 24 Oct 2004 15:25:31 +0100
+Subject: [Softdevice-devel] softdevice-0.0.7pre3
+In-Reply-To: <200410241455.24252.stefan@lucke.in-berlin.de>
+References: <200410241455.24252.stefan@lucke.in-berlin.de>
+Message-ID: <1098627931.26284.41.camel@atlantis.netenviron.com>
+
+On Sun, 2004-10-24 at 14:55 +0200, Stefan Lucke wrote:
+> Hi,
+> 
+> showstopper bugs 2266 & 2267 are fixed and
+> if noone vetos, I'm going to announce softdevice-0.0.7pre3 this evening.
+
+Ok. I have a patch that adds setting for alsa out device, and changes a
+few printf into dsyslog. Need to check if my strncpy usage is correct
+first.. (My day job involves only Java, no C++ :).
+
+The features I'm thinking about further are 
+
+- VidMode (have to do it eventually)
+- Closing the app by clicking Alt-F4 should trigger the normal vdr
+shutdown, maybe with confirm set to true.
+- add setting to start Xv in fullscreen mode automatically, maybe by
+choosing the previous fullsceen state.
+- possibility to turn video and audio output off completely, so that vdr
+can continue to run, maybe with a icon in the notification area, like
+gaim.
+- option to have a remote control button trigger the fullscreen mode.
+
+It would be good to be able to use XvMC, but I haven't programmed for
+XvMC before. There might be some code in xine which can be used. Don't
+remember if xine is LGPL or GPL though..
+
+Have anyone of you tried the dvd plugin recently? I think I remember
+someone on the ml saying that it didn't. Maybe some additional stream
+parsing is necessary for that type of program stream?
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Sun Oct 24 17:10:19 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 24 Oct 2004 17:10:19 +0200
+Subject: [Softdevice-devel] DPMS.. errors
+Message-ID: <200410241710.19306.stefan@lucke.in-berlin.de>
+
+Hi,
+
+found a showstopper:
+
+#ifdef LIBXDPMS_SUPPORT protected code was never compiled. after selecting this via define
+and correcting compile errors in xscreensaver.c I get runtime errors:
+
+jarada:/home/nfs/extra/src/video/DVB/vdr-1.3.7.stl # ./vdr -P "softdevice -vo xv:" -c /net_data/vdr137-dvb-t-jarada -v /net_data/video/
+vdr: ./PLUGINS/lib/libvdr-softdevice.so.1.3.7: undefined symbol: _Z18DPMSQueryExtensionP9_XDisplayPiS1_
+
+But libXext is at the right place and has DPMS* symbols in :-( .
+
+any clue ?
+
+Stefan Lucke
+
+
+
+From torgeir at pobox.com  Sun Oct 24 19:17:39 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 24 Oct 2004 18:17:39 +0100
+Subject: [Softdevice-devel] DPMS.. errors
+In-Reply-To: <200410241710.19306.stefan@lucke.in-berlin.de>
+References: <200410241710.19306.stefan@lucke.in-berlin.de>
+Message-ID: <1098638260.26284.46.camel@atlantis.netenviron.com>
+
+On Sun, 2004-10-24 at 17:10 +0200, Stefan Lucke wrote:
+> o.1.3.7: undefined symbol: _Z18DPMSQueryExtensionP9_XDisplayPiS1_
+
+I don't understand. You did a make clean; make all, and it's still
+there?
+
+I wanted to changed all the printf to dsyslog btw, haven't committed
+yet..
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Sun Oct 24 20:17:28 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 24 Oct 2004 19:17:28 +0100
+Subject: [Softdevice-devel] softdevice-0.0.7pre3
+In-Reply-To: <8018.1098626212@www53.gmx.net>
+References: <1098624396.26284.30.camel@atlantis.netenviron.com>
+	 <8018.1098626212@www53.gmx.net>
+Message-ID: <1098641848.26284.56.camel@atlantis.netenviron.com>
+
+On Sun, 2004-10-24 at 15:56 +0200, Martin Wache wrote:
+> like to suggest to switch off by default the building of most of the
+> video out drivers, except maybe Xv and/or FB. 
+> Most of the users just use one video out, and the users which already
+> installed DirectFB etc. are smart enough to switch the ones they need
+> on
+> again.
+
+Would it be easy to add autodetection to check if vidix or dfb is
+installed with devel libs? 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Sun Oct 24 20:24:53 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 24 Oct 2004 20:24:53 +0200
+Subject: [Softdevice-devel] DPMS.. errors
+In-Reply-To: <1098638260.26284.46.camel@atlantis.netenviron.com>
+References: <200410241710.19306.stefan@lucke.in-berlin.de> <1098638260.26284.46.camel@atlantis.netenviron.com>
+Message-ID: <200410242024.53598.stefan@lucke.in-berlin.de>
+
+On Sonntag, 24. Oktober 2004 19:17, Torgeir Veimo wrote:
+> On Sun, 2004-10-24 at 17:10 +0200, Stefan Lucke wrote:
+> > o.1.3.7: undefined symbol: _Z18DPMSQueryExtensionP9_XDisplayPiS1_
+> 
+> I don't understand. You did a make clean; make all, and it's still
+> there?
+> 
+
+You need the following diff to enable compilation of DPMS support.
+
+Index: Makefile
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/Makefile,v
+retrieving revision 1.2
+diff -r1.2 Makefile
+163a164,166
+> ifdef LIBXDPMS_SUPPORT
+> DEFINES += -DLIBXDPMS_SUPPORT
+> endif
+
+
+And then you need the following diff to get xscreensave.c to compile:
+
+Index: xscreensaver.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/xscreensaver.c,v
+retrieving revision 1.1
+diff -r1.1 xscreensaver.c
+44c44
+<   if (disabled && (DPMSQueryExtension(dpy, &dpms_dummy, &dpms_dummy)) && DPMSCapable(dpy)) && (dpms_on)) {
+---
+>   if (disabled && (DPMSQueryExtension(dpy, &dpms_dummy, &dpms_dummy)) && DPMSCapable(dpy) && (dpms_on)) {
+73a74,75
+>   dpms_on = !disable;
+>
+89c91
+<         if (onoff) {
+---
+>         if (dpms_on) {
+
+after that "make clean" in plugin directory "make plugins" in vdr directory
+will produce above error message at vdr startup.
+
+
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Sun Oct 24 21:28:52 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 24 Oct 2004 21:28:52 +0200
+Subject: [Softdevice-devel] Re: alsaDevice patch
+In-Reply-To: <1098639309.26284.51.camel@atlantis.netenviron.com>
+References: <1098639309.26284.51.camel@atlantis.netenviron.com>
+Message-ID: <200410242128.52974.stefan@lucke.in-berlin.de>
+
+On Sonntag, 24. Oktober 2004 19:35, Torgeir Veimo wrote:
+> Can you enlighten me on why I cannot use strncpy instead of strcpy as
+> used in this patch?
+
+At the moment no :-( .
+
+> 
+> I'm not sure how cautions to be with input parsing, but I thought it
+> would be wise given that some users run vdr with +s. The only missing
+> from this patch is adding a command line -A hw:0,0 check. I set the alsa
+> default device to "default" btw. I'm sure what the alsa docs says about
+> policies regarding default alsa device.
+
+A while ago someone on vdr list suggested a commandline argument similar
+to mplayer "-ao alsa:device=plughw#0.3"
+
+-- 
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Sun Oct 24 21:33:16 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 24 Oct 2004 21:33:16 +0200
+Subject: [Softdevice-devel] softdevice-0.0.7pre3
+In-Reply-To: <1098641848.26284.56.camel@atlantis.netenviron.com>
+References: <1098624396.26284.30.camel@atlantis.netenviron.com> <8018.1098626212@www53.gmx.net> <1098641848.26284.56.camel@atlantis.netenviron.com>
+Message-ID: <200410242133.16642.stefan@lucke.in-berlin.de>
+
+On Sonntag, 24. Oktober 2004 20:17, Torgeir Veimo wrote:
+> On Sun, 2004-10-24 at 15:56 +0200, Martin Wache wrote:
+> > like to suggest to switch off by default the building of most of the
+> > video out drivers, except maybe Xv and/or FB. 
+> > Most of the users just use one video out, and the users which already
+> > installed DirectFB etc. are smart enough to switch the ones they need
+> > on
+> > again.
+
+Some distributions ship them all :-) . As long we have no autodetection
+we should include all options.
+
+> 
+> Would it be easy to add autodetection to check if vidix or dfb is
+> installed with devel libs? 
+
+
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Mon Oct 25 00:06:43 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 25 Oct 2004 00:06:43 +0200
+Subject: [Softdevice-devel] DPMS.. errors
+In-Reply-To: <1098638260.26284.46.camel@atlantis.netenviron.com>
+References: <200410241710.19306.stefan@lucke.in-berlin.de> <1098638260.26284.46.camel@atlantis.netenviron.com>
+Message-ID: <200410250006.43828.stefan@lucke.in-berlin.de>
+
+On Sonntag, 24. Oktober 2004 19:17, Torgeir Veimo wrote:
+> On Sun, 2004-10-24 at 17:10 +0200, Stefan Lucke wrote:
+> > o.1.3.7: undefined symbol: _Z18DPMSQueryExtensionP9_XDisplayPiS1_
+> 
+> I don't understand. You did a make clean; make all, and it's still
+> there?
+
+Did you ever compiled it with DPMS support ?
+And did you ever saw messages in your syslog like:
+Oct 24 23:34:15 jarada vdr[12912]: [softdevice-xscreensaver]: disabling DPMS stat: 1
+
+I reduced above error message "undefined symbol" to:
+"undefined symbol: _ZN12cScreensaver7dpms_onE"
+
+which could be resolved by moving:
+  static BOOL dpms_on;
+from class definition to the beginning of C source.
+
+Resolving DPMS** error was hard and strange. I copied include file
+<X11/extensions/dpms.h> into xscreensaver.h and had to change
+
+all prototypes from 'extern foo_type foo_name ..' to 'extern "C" foo_type foo_name ..'
+
+extern Bool DPMSQueryExtension(Display *, int *, int *);
+vs.
+extern "C" Bool DPMSQueryExtension(Display *, int *, int *);
+
+Thats so strange.
+
+Can you show me your <X11/extensions/dpms.h> file ?
+
+So pre3 release is on hold. We should test that with vdr-1.3.14 first.
+
+
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Mon Oct 25 00:11:41 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 25 Oct 2004 00:11:41 +0200
+Subject: [Softdevice-devel] pseudo OSD background
+In-Reply-To: <1098624241.26284.27.camel@atlantis.netenviron.com>
+References: <200410231213.54099.stefan@lucke.in-berlin.de> <1098624241.26284.27.camel@atlantis.netenviron.com>
+Message-ID: <200410250011.41288.stefan@lucke.in-berlin.de>
+
+On Sonntag, 24. Oktober 2004 15:24, Torgeir Veimo wrote:
+> On Sat, 2004-10-23 at 12:13 +0200, Stefan Lucke wrote:
+> > 
+> > It is enabled allways for all output methods when OSD is drawn and
+> > OSD has no alpha plane. When there is an alpha plane, each output
+> > method can disable that feature if it knows that true alpha blending
+> > could be done (that part is not implemented yet) .
+> 
+> Very nice. I didn't test it yet with non-black background, but it
+> appears your patch dithers with the actual background color and
+> transparency? 
+
+Yes, it's just where I already replaced solid black (used inside fonts)
+with the darkest possible value not equal to our color key.
+
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Mon Oct 25 00:15:53 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 25 Oct 2004 00:15:53 +0200
+Subject: [Softdevice-devel] pseudo OSD background
+In-Reply-To: <20248.1098622632@www53.gmx.net>
+References: <200410231213.54099.stefan@lucke.in-berlin.de> <20248.1098622632@www53.gmx.net>
+Message-ID: <200410250015.53033.stefan@lucke.in-berlin.de>
+
+On Sonntag, 24. Oktober 2004 14:57, Martin Wache wrote:
+> > Hi,
+> > 
+> > based on Togeir's patch I want to suggest the following diff for
+> > pseudo OSD backgound drawing.
+> > 
+> > It is enabled allways for all output methods when OSD is drawn and
+> > OSD has no alpha plane. When there is an alpha plane, each output
+> > method can disable that feature if it knows that true alpha blending
+> > could be done (that part is not implemented yet) .
+> 
+> Hey, this pseudo alpha blend looks suprisingly good! And it takes almost no
+> cpu-time! Great thing...
+> Did you already thing about trying to do real alpha blend in software? On a
+> reasonable powerfull cpu this should be feasonable. For example for Xv
+> output,
+> one could transform the RGB osd image to YUV and then do the alpha blending
+> in the YUV colorspace when copying the video-image to the shared memory.
+> I think this combined copy/alpha blending should be possible in a few ms, 
+> provided we use MMX optimized code. Maybe this works also for other output
+> methods like Vidix, or FB.
+> And this way we would get osd scaling for free, since it is scaled together
+> with the video ;-)
+
+Yes, but scaling with video has the disadvantage when displaying 16:9 on a 4:3
+area, OSD would be only visible in 16:9 letterbox area too :-( .
+
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Mon Oct 25 00:45:09 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 25 Oct 2004 00:45:09 +0200
+Subject: [Softdevice-devel] DPMS.. errors
+In-Reply-To: <200410250006.43828.stefan@lucke.in-berlin.de>
+References: <200410241710.19306.stefan@lucke.in-berlin.de> <1098638260.26284.46.camel@atlantis.netenviron.com> <200410250006.43828.stefan@lucke.in-berlin.de>
+Message-ID: <200410250045.09766.stefan@lucke.in-berlin.de>
+
+On Montag, 25. Oktober 2004 00:06, Stefan Lucke wrote:
+> On Sonntag, 24. Oktober 2004 19:17, Torgeir Veimo wrote:
+> > On Sun, 2004-10-24 at 17:10 +0200, Stefan Lucke wrote:
+> > > o.1.3.7: undefined symbol: _Z18DPMSQueryExtensionP9_XDisplayPiS1_
+
+Ok, thats a bug in the X11 headers. Found a bug report for X.org release of X11
+which includes a diff to fix it.
+
+http://freedesktop.org/bugzilla/show_bug.cgi?id=830
+
+[ .. ]
+
+
+so moving that definition is the final one which should be done here:
+
+> I reduced above error message "undefined symbol" to:
+> "undefined symbol: _ZN12cScreensaver7dpms_onE"
+> 
+> which could be resolved by moving:
+>   static BOOL dpms_on;
+> from class definition to the beginning of C source.
+> 
+
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Mon Oct 25 06:15:05 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 25 Oct 2004 06:15:05 +0200
+Subject: [Softdevice-devel] Fwd: [vdr] [ANNOUNCE] vdr-softdevice-0.0.7pre3
+Message-ID: <200410250615.05516.stefan@lucke.in-berlin.de>
+
+Hi,
+
+after doing a short test with vdr-1.3.14 I decided to release the next 
+pre version.
+
+To resolve X11 header issues I included a copy of dpms.h in
+xscreensaver.h which works with C++ . I know this is not a good idea but
+forcing users to patch their X11 headers is even worse.
+
+This should be final 0.0.7 if the are no major bug reports.
+
+Stefan Lucke
+
+----------  Forwarded Message  ----------
+
+Subject: [vdr] [ANNOUNCE] vdr-softdevice-0.0.7pre3
+Date: Montag, 25. Oktober 2004 05:59
+From: Stefan Lucke <stefan at lucke.in-berlin.de>
+To: vdr at linuxtv.org
+
+Hi,
+
+after short sleep, next pre release of softdevice plugin is ready.
+
+What is it about ?
+It brings vdr via framebuffer or X11-Xv or DirectFB or vidix and ffmpeg to your desktop.
+
+Plugins homepage is located at:
+http://softdevice.berlios.de/
+
+
+From torgeir at pobox.com  Mon Oct 25 14:17:18 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 25 Oct 2004 13:17:18 +0100
+Subject: [Softdevice-devel] DPMS.. errors
+In-Reply-To: <200410250045.09766.stefan@lucke.in-berlin.de>
+References: <200410241710.19306.stefan@lucke.in-berlin.de>
+	 <1098638260.26284.46.camel@atlantis.netenviron.com>
+	 <200410250006.43828.stefan@lucke.in-berlin.de>
+	 <200410250045.09766.stefan@lucke.in-berlin.de>
+Message-ID: <1098706638.26284.76.camel@atlantis.netenviron.com>
+
+On Mon, 2004-10-25 at 00:45 +0200, Stefan Lucke wrote:
+
+> Ok, thats a bug in the X11 headers. Found a bug report for X.org release of X11
+> which includes a diff to fix it.
+
+So we should probably disable building with DPMS support by default
+then? 
+
+That probably applies to PP support as well, as it requires special
+attention to get it compiling.
+
+The pre3 plugins doesn't follow the vdr-* plugin naming convention
+anymore?
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Mon Oct 25 20:33:57 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 25 Oct 2004 19:33:57 +0100
+Subject: [Softdevice-devel] multiple input cards and softdevice
+Message-ID: <1098729237.26284.80.camel@atlantis.netenviron.com>
+
+I'm having problems using multiple dvb-t cards, and am wondering if it
+could be related to softdevice. 
+
+When I have two cards in the machine, I have to select dvb device 3 as
+the primary device. If I change to eg device 1 or 2 I get in the logs;
+
+Oct 25 19:28:32 vigor10 vdr[16127]: setting primary device to 1
+Oct 25 19:28:32 vigor10 vdr[16127]: device 1 has no MPEG decoder
+Oct 25 19:28:32 vigor10 vdr[16127]: trying device number 3 instead
+Oct 25 19:28:32 vigor10 vdr[16127]: setting primary device to 3
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Mon Oct 25 21:22:23 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 25 Oct 2004 21:22:23 +0200
+Subject: [Softdevice-devel] multiple input cards and softdevice
+In-Reply-To: <1098729237.26284.80.camel@atlantis.netenviron.com>
+References: <1098729237.26284.80.camel@atlantis.netenviron.com>
+Message-ID: <200410252122.23884.stefan@lucke.in-berlin.de>
+
+On Montag, 25. Oktober 2004 20:33, Torgeir Veimo wrote:
+> I'm having problems using multiple dvb-t cards, and am wondering if it
+> could be related to softdevice. 
+> 
+> When I have two cards in the machine, I have to select dvb device 3 as
+> the primary device. If I change to eg device 1 or 2 I get in the logs;
+> 
+> Oct 25 19:28:32 vigor10 vdr[16127]: setting primary device to 1
+> Oct 25 19:28:32 vigor10 vdr[16127]: device 1 has no MPEG decoder
+> Oct 25 19:28:32 vigor10 vdr[16127]: trying device number 3 instead
+> Oct 25 19:28:32 vigor10 vdr[16127]: setting primary device to 3
+> 
+
+Output device is: number_of_cards + 1. Where do your problems start ?
+
+
+-- 
+Stefan Lucke
+
+
+
+From stefan at lucke.in-berlin.de  Mon Oct 25 21:27:38 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 25 Oct 2004 21:27:38 +0200
+Subject: [Softdevice-devel] DPMS.. errors
+In-Reply-To: <1098706638.26284.76.camel@atlantis.netenviron.com>
+References: <200410241710.19306.stefan@lucke.in-berlin.de> <200410250045.09766.stefan@lucke.in-berlin.de> <1098706638.26284.76.camel@atlantis.netenviron.com>
+Message-ID: <200410252127.38759.stefan@lucke.in-berlin.de>
+
+On Montag, 25. Oktober 2004 14:17, Torgeir Veimo wrote:
+> On Mon, 2004-10-25 at 00:45 +0200, Stefan Lucke wrote:
+> 
+> > Ok, thats a bug in the X11 headers. Found a bug report for X.org release of X11
+> > which includes a diff to fix it.
+> 
+> So we should probably disable building with DPMS support by default
+> then? 
+
+As it compiles now, we can leave it selected, and as more code is compiled
+in by default it gets tested :-) .
+
+> 
+> That probably applies to PP support as well, as it requires special
+> attention to get it compiling.
+> 
+> The pre3 plugins doesn't follow the vdr-* plugin naming convention
+> anymore?
+
+Two answers:
+	1. a temporary error in front of my monitor,
+   or  2. intentionally done to get flamed
+
+
+Stefan Lucke
+
+
+
+From torgeir at pobox.com  Tue Oct 26 17:50:39 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Tue, 26 Oct 2004 16:50:39 +0100
+Subject: [Softdevice-devel] multiple input cards and softdevice
+In-Reply-To: <200410252122.23884.stefan@lucke.in-berlin.de>
+References: <1098729237.26284.80.camel@atlantis.netenviron.com>
+	 <200410252122.23884.stefan@lucke.in-berlin.de>
+Message-ID: <1098805839.26284.117.camel@atlantis.netenviron.com>
+
+On Mon, 2004-10-25 at 21:22 +0200, Stefan Lucke wrote:
+> On Montag, 25. Oktober 2004 20:33, Torgeir Veimo wrote:
+> > I'm having problems using multiple dvb-t cards, and am wondering if it
+> > could be related to softdevice. 
+> > 
+> > When I have two cards in the machine, I have to select dvb device 3 as
+> > the primary device. If I change to eg device 1 or 2 I get in the logs;
+> > 
+> > Oct 25 19:28:32 vigor10 vdr[16127]: setting primary device to 1
+> > Oct 25 19:28:32 vigor10 vdr[16127]: device 1 has no MPEG decoder
+> > Oct 25 19:28:32 vigor10 vdr[16127]: trying device number 3 instead
+> > Oct 25 19:28:32 vigor10 vdr[16127]: setting primary device to 3
+> > 
+> 
+> Output device is: number_of_cards + 1. Where do your problems start ?
+
+Hmm, that explains my confusion. I thought primary device selection was
+for selecting the _input_ device. 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Wed Oct 27 00:47:10 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 27 Oct 2004 00:47:10 +0200
+Subject: [Softdevice-devel] full-screen diff
+Message-ID: <200410270047.10651.stefan@lucke.in-berlin.de>
+
+Hi,
+
+I completed the fullscreen toggle.
+there is still a TODO. This is tested only with kde and has to be 
+check with other window managers too.
+
+
+This will be kept for 0.0.8 ;-) .
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: xfull_screen.diff
+Type: text/x-diff
+Size: 2093 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041027/35982f39/attachment.diff>
+
+From noreply at berlios.de  Thu Oct 28 07:34:43 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 28 Oct 2004 08:34:43 +0300 (EEST)
+Subject: [Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+Message-ID: <200410280534.i9S5YheP014867@unicorn.berlios.de>
+
+Bug #2699, was updated on 2004-Oct-28 08:34
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: jbu
+Assigned to : none
+Summary: segfault in XvShmPutImage
+
+Details: HI!
+I tried to use latest 0.0.7Pre3 CVS-version. Softdevice did't start up at all. Previous version 0.0.7Pre2 works well.
+
+Here is the gdb output:
+
+(gdb) run
+Starting program: /usr/include/vdr-1.2.6/vdr -P softdevice -P subtitles -P 
+vdrrip
+[Thread debugging using libthread_db enabled]
+[New Thread 1076286848 (LWP 14075)]
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[setup-softdevice] cropping mode set to 2 (16:9) [setup-softdevice] deinterlace method set to 0 none [softdevice] picture mirroring set to 0 (off) [setup-softdevice] pixel format set to (I420) [setup-softdevice] startup aspect set to (16:9 wide) [New Thread 1091074992 (LWP 14079)] [New Thread 1099467696 (LWP 14080)] [softdevice] initializing Plugin [softdevice] Initializing Video Out [softdevice] ffmpeg version(0.4.9-pre1) build(4727) [New Thread 1108937648 (LWP 14081)]
+**************** 1
+Xlib: sequence lost (0x10666 > 0x667) in reply type 0x0!
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 1108937648 (LWP 14081)]
+0x4038e518 in XvShmPutImage () from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+(gdb) where
+#0  0x4038e518 in XvShmPutImage ()
+   from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+#1  0x4038c800 in cXvVideoOut::ProcessEvents (this=Variable "this" is not 
+available.
+) at video-xv.c:423
+#2  0x4038cd6e in cXvRemote::Action (this=Variable "this" is not available.
+) at video-xv.c:255
+#3  0x080a7b98 in cThread::StartThread (Thread=0x8116e90) at thread.c:143 #4  0x400639dd in start_thread () from /lib/tls/libpthread.so.0 #5  0x4020fffa in clone () from /lib/tls/libc.so.6
+(gdb)
+
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2699&group_id=2051
+
+
+From noreply at berlios.de  Thu Oct 28 09:34:53 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 28 Oct 2004 09:34:53 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+Message-ID: <200410280734.i9S7Yrve020400@unicorn.berlios.de>
+
+Bug #2699, was updated on 2004-Oct-28 07:34
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: jbu
+Assigned to : lucke
+Summary: segfault in XvShmPutImage
+
+Details: HI!
+I tried to use latest 0.0.7Pre3 CVS-version. Softdevice did't start up at all. Previous version 0.0.7Pre2 works well.
+
+Here is the gdb output:
+
+(gdb) run
+Starting program: /usr/include/vdr-1.2.6/vdr -P softdevice -P subtitles -P 
+vdrrip
+[Thread debugging using libthread_db enabled]
+[New Thread 1076286848 (LWP 14075)]
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[setup-softdevice] cropping mode set to 2 (16:9) [setup-softdevice] deinterlace method set to 0 none [softdevice] picture mirroring set to 0 (off) [setup-softdevice] pixel format set to (I420) [setup-softdevice] startup aspect set to (16:9 wide) [New Thread 1091074992 (LWP 14079)] [New Thread 1099467696 (LWP 14080)] [softdevice] initializing Plugin [softdevice] Initializing Video Out [softdevice] ffmpeg version(0.4.9-pre1) build(4727) [New Thread 1108937648 (LWP 14081)]
+**************** 1
+Xlib: sequence lost (0x10666 > 0x667) in reply type 0x0!
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 1108937648 (LWP 14081)]
+0x4038e518 in XvShmPutImage () from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+(gdb) where
+#0  0x4038e518 in XvShmPutImage ()
+   from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+#1  0x4038c800 in cXvVideoOut::ProcessEvents (this=Variable "this" is not 
+available.
+) at video-xv.c:423
+#2  0x4038cd6e in cXvRemote::Action (this=Variable "this" is not available.
+) at video-xv.c:255
+#3  0x080a7b98 in cThread::StartThread (Thread=0x8116e90) at thread.c:143 #4  0x400639dd in start_thread () from /lib/tls/libpthread.so.0 #5  0x4020fffa in clone () from /lib/tls/libc.so.6
+(gdb)
+
+
+Follow-Ups:
+
+Date: 2004-Oct-28 09:34
+By: lucke
+
+Comment:
+there is a possible race condition during startup.  in initialize
+remote control thread is started without Xv setup finished.
+so this could happen even with pre2.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2699&group_id=2051
+
+
+From noreply at berlios.de  Thu Oct 28 09:35:03 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 28 Oct 2004 09:35:03 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+Message-ID: <200410280735.i9S7Z3CR020435@unicorn.berlios.de>
+
+Bug #2699, was updated on 2004-Oct-28 07:34
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: jbu
+Assigned to : lucke
+Summary: segfault in XvShmPutImage
+
+Details: HI!
+I tried to use latest 0.0.7Pre3 CVS-version. Softdevice did't start up at all. Previous version 0.0.7Pre2 works well.
+
+Here is the gdb output:
+
+(gdb) run
+Starting program: /usr/include/vdr-1.2.6/vdr -P softdevice -P subtitles -P 
+vdrrip
+[Thread debugging using libthread_db enabled]
+[New Thread 1076286848 (LWP 14075)]
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[setup-softdevice] cropping mode set to 2 (16:9) [setup-softdevice] deinterlace method set to 0 none [softdevice] picture mirroring set to 0 (off) [setup-softdevice] pixel format set to (I420) [setup-softdevice] startup aspect set to (16:9 wide) [New Thread 1091074992 (LWP 14079)] [New Thread 1099467696 (LWP 14080)] [softdevice] initializing Plugin [softdevice] Initializing Video Out [softdevice] ffmpeg version(0.4.9-pre1) build(4727) [New Thread 1108937648 (LWP 14081)]
+**************** 1
+Xlib: sequence lost (0x10666 > 0x667) in reply type 0x0!
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 1108937648 (LWP 14081)]
+0x4038e518 in XvShmPutImage () from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+(gdb) where
+#0  0x4038e518 in XvShmPutImage ()
+   from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+#1  0x4038c800 in cXvVideoOut::ProcessEvents (this=Variable "this" is not 
+available.
+) at video-xv.c:423
+#2  0x4038cd6e in cXvRemote::Action (this=Variable "this" is not available.
+) at video-xv.c:255
+#3  0x080a7b98 in cThread::StartThread (Thread=0x8116e90) at thread.c:143 #4  0x400639dd in start_thread () from /lib/tls/libpthread.so.0 #5  0x4020fffa in clone () from /lib/tls/libc.so.6
+(gdb)
+
+
+Follow-Ups:
+
+Date: 2004-Oct-28 09:35
+By: lucke
+
+Comment:
+there is a possible race condition during startup.  in initialize
+remote control thread is started without Xv setup finished.
+so this could happen even with pre2.
+-------------------------------------------------------
+
+Date: 2004-Oct-28 09:34
+By: lucke
+
+Comment:
+there is a possible race condition during startup.  in initialize
+remote control thread is started without Xv setup finished.
+so this could happen even with pre2.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2699&group_id=2051
+
+
+From M.Wache at gmx.net  Fri Oct 29 14:37:24 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Fri, 29 Oct 2004 14:37:24 +0200 (MEST)
+Subject: [Softdevice-devel] New A-V sync
+Message-ID: <6937.1099053444@www10.gmx.net>
+
+Hi,
+
+I'm sending you a patch which contains my first steps to a new A-V syncing
+code.
+The main changes are:
+- removed the common PTS cPTS ( for now this is replaced by a funtion call )
+- the video part of the syncing is complete new, with RTC timing support
+- introduced Trickspeed support 
+- implemented the Clear call (Video part only)
+- full decoding of the PES headers
+- some minor changes....
+So to put it in words, with this patch we support full multispeed
+froward/backward seeking (slow motion does not work, but I think that the
+fault of vdr - I will check this), and the A-V syncing should be more
+precise ( with RTC ). Channel switching should be a bit faster and audio and
+ video start at the same time now.
+
+What remains is the audio part of the syncing and the STC/PCR stuff. 
+And that is where I'm now a bit stuck: what we get from vdr is the PES
+stream, which
+is okay for the decoding, but it doesn't contain a proper clock reference.
+It _may_
+ontain the so called ESCR (elementry stream clock reference), but at least
+for the
+DVB-T I recieve it is not included. So if we want to sync on the clock
+refenrece we
+will have to ask for a new interface in vdr to get acces to the PCR which is
+included
+in the TS. I did not have a look at vdr yet, so right now I can not suggest
+a patch or
+an interface.
+My next step will be the the implementation of a buffer for the audio and
+the
+ability to resample the audio to make it play faster or slower so that we
+can
+sync the audio to the PCR.
+
+Please try the patch, I would appreciate your comments and suggestions.
+Bye,
+Martin
+ 
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen http://www.gmx.net/de/go/mail ++
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: AVPatch1.diff
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041029/1c537979/attachment.ksh>
+
+From torgeir at pobox.com  Fri Oct 29 14:56:09 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 13:56:09 +0100
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <6937.1099053444@www10.gmx.net>
+References: <6937.1099053444@www10.gmx.net>
+Message-ID: <1099054569.5263.16.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 14:37 +0200, Martin Wache wrote:
+
+> Please try the patch, I would appreciate your comments and suggestions.
+
+First impressions; I need to disable the doubling of audio frames,
+otherwise it tries to do it all the time. When disabled, it has almost
+perfect a/v sync without any delay! :)
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Fri Oct 29 15:09:48 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Fri, 29 Oct 2004 15:09:48 +0200 (MEST)
+Subject: [Softdevice-devel] New A-V sync
+References: <1099054569.5263.16.camel@atlantis.netenviron.com>
+Message-ID: <4671.1099055388@www10.gmx.net>
+
+> On Fri, 2004-10-29 at 14:37 +0200, Martin Wache wrote:
+> 
+> > Please try the patch, I would appreciate your comments and suggestions.
+> 
+> First impressions; I need to disable the doubling of audio frames,
+> otherwise it tries to do it all the time. When disabled, it has almost
+> perfect a/v sync without any delay! :)
+
+Hmm, what is the size of your alsa sound buffer? The actual size is printed
+by the softdevice at the startup in the syslog. 
+Maybe this is caused by my patch 03, which increases the replay delay to
+80ms. It 
+is still included in my personal version and also in the patch I send you. 
+But I hope I will be able to remove it as soon as a proper buffering of the
+audio
+data is done
+
+Martin
+
+ 
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen http://www.gmx.net/de/go/mail ++
+
+
+
+From torgeir at pobox.com  Fri Oct 29 15:27:10 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 14:27:10 +0100
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <4671.1099055388@www10.gmx.net>
+References: <1099054569.5263.16.camel@atlantis.netenviron.com>
+	 <4671.1099055388@www10.gmx.net>
+Message-ID: <1099056430.5263.21.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 15:09 +0200, Martin Wache wrote:
+> > On Fri, 2004-10-29 at 14:37 +0200, Martin Wache wrote:
+> > 
+> > > Please try the patch, I would appreciate your comments and suggestions.
+> > 
+> > First impressions; I need to disable the doubling of audio frames,
+> > otherwise it tries to do it all the time. When disabled, it has almost
+> > perfect a/v sync without any delay! :)
+> 
+> Hmm, what is the size of your alsa sound buffer? The actual size is printed
+> by the softdevice at the startup in the syslog. 
+
+Period size 6000, buffer size 12000. 
+
+> Maybe this is caused by my patch 03, which increases the replay delay to
+> 80ms. It 
+> is still included in my personal version and also in the patch I send you. 
+> But I hope I will be able to remove it as soon as a proper buffering of the
+> audio
+> data is done
+
+Delay is always 0 it seems.
+
+I think the av sync is near perfect otherwise. 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Fri Oct 29 15:39:11 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 14:39:11 +0100
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <6937.1099053444@www10.gmx.net>
+References: <6937.1099053444@www10.gmx.net>
+Message-ID: <1099057151.5263.28.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 14:37 +0200, Martin Wache wrote:
+
+> Please try the patch, I would appreciate our comments and suggestions.
+
+I tried the DVD plugin;
+
+Seeing a lot of "[softdevice] Buffer filled, sleeping", and some
+"[mpeg2decoder] Video Clear 99". Then it segfaults.
+
+The reason for delay being 0 is that I use the alsa device "default"
+which again is configured to use the alsa dmix software mixer. When I
+use normal alsa output, eg plughw:0,2, the delay is correctly changing
+between 11, 34, 42, 66 etc. If I then set the double audio frame limit
+to 20 it works fairly well.. AV sync is not perfect with this setup
+though..
+
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Fri Oct 29 15:41:31 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Fri, 29 Oct 2004 15:41:31 +0200 (MEST)
+Subject: [Softdevice-devel] New A-V sync
+References: <1099056430.5263.21.camel@atlantis.netenviron.com>
+Message-ID: <27098.1099057291@www10.gmx.net>
+
+> Period size 6000, buffer size 12000. 
+Ok, so this is the reason why it doesn't work for you with the delay of
+80ms. The audio data for 80ms doesn't fit in the sound buffer. 
+Since there is still some work to do on the audio part I hope this problem
+will be solved when we buffer the audio data just like the video data.
+
+Bye,
+Martin
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+
+From M.Wache at gmx.net  Fri Oct 29 16:05:15 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Fri, 29 Oct 2004 16:05:15 +0200 (MEST)
+Subject: [Softdevice-devel] New A-V sync
+References: <1099057151.5263.28.camel@atlantis.netenviron.com>
+Message-ID: <16937.1099058715@www10.gmx.net>
+
+> Seeing a lot of "[softdevice] Buffer filled, sleeping", and some
+> "[mpeg2decoder] Video Clear 99". Then it segfaults.
+The message "[softdevice] Buffer filled, sleeping" is just a debug message I
+left
+in the code. It is okay when it appears sometimes (eg. when you are seeking
+) maybe it
+is also ok for dvd playback. But the message "Video Clear" should not
+appear, this means that we are recieving data much to fast, and vdr clears
+our buffer.  I didn't use the dvd plugin up to now, but I will have a look
+at it. 
+
+Have you tried seeking in an recorded stream? This should be similar like
+the replaying a dvd. Does this work?
+
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+
+From torgeir at pobox.com  Fri Oct 29 17:18:48 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 16:18:48 +0100
+Subject: [Softdevice-devel] new alsa device patch
+Message-ID: <1099063128.5263.30.camel@atlantis.netenviron.com>
+
+This time with command line parsing. Patch against cvs current.
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: alsadevice.patch
+Type: text/x-patch
+Size: 6636 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041029/fef9eff5/attachment.bin>
+
+From stefan at lucke.in-berlin.de  Fri Oct 29 19:43:24 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 29 Oct 2004 19:43:24 +0200
+Subject: [Softdevice-devel] new alsa device patch
+In-Reply-To: <1099063128.5263.30.camel@atlantis.netenviron.com>
+References: <1099063128.5263.30.camel@atlantis.netenviron.com>
+Message-ID: <200410291943.24969.stefan@lucke.in-berlin.de>
+
+On Freitag, 29. Oktober 2004 17:18, Torgeir Veimo wrote:
+> This time with command line parsing. Patch against cvs current.
+
+since thats now in cvs we have to open the next round to pre4.
+
+as i imagine, the mplayer style of subarguments is using ':' as a separator.
+but i think we can close bug #2264.
+
+i need just a bit time to complete the full-screen part.
+on some window managers i loose the originating x,y coordinates
+after 2nd time leaving full screen mode ;-) . that will fix bug #2265.
+
+for bug fix of #2699 i got no feed back but i'll commit the fix too.
+
+
+stefan lucke
+
+
+
+From noreply at berlios.de  Fri Oct 29 19:39:17 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Fri, 29 Oct 2004 19:39:17 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #2264] alsa device name cannot be selected at runtime
+Message-ID: <200410291739.i9THdHDo022334@unicorn.berlios.de>
+
+Bug #2264, was updated on 2004-Aug-17 09:51
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 4
+Submitted by: lucke
+Assigned to : lucke
+Summary: alsa device name cannot be selected at runtime
+
+Details: Alsa device name is hardcoded. Thus to change this according to system dependant needs, users have to modify source code.  Preferred way should be passing alsa device name in a mplayer style manner:
+-ao device=name#sub.id
+
+Follow-Ups:
+
+Date: 2004-Oct-29 19:39
+By: lucke
+
+Comment:
+fix by torgeir now in cvs
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2264&group_id=2051
+
+
+From torgeir at pobox.com  Fri Oct 29 19:51:26 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 18:51:26 +0100
+Subject: [Softdevice-devel] new alsa device patch
+In-Reply-To: <200410291943.24969.stefan@lucke.in-berlin.de>
+References: <1099063128.5263.30.camel@atlantis.netenviron.com>
+	 <200410291943.24969.stefan@lucke.in-berlin.de>
+Message-ID: <1099072286.5263.45.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 19:43 +0200, Stefan Lucke wrote:
+> On Freitag, 29. Oktober 2004 17:18, Torgeir Veimo wrote:
+> > This time with command line parsing. Patch against cvs current.
+> 
+> since thats now in cvs we have to open the next round to pre4.
+
+Yes. :)
+
+> i need just a bit time to complete the full-screen part.
+> on some window managers i loose the originating x,y coordinates
+> after 2nd time leaving full screen mode ;-) . that will fix bug #2265.
+
+If both fullscreen methods are used simultaneously, there's a bit of
+flickering when going fullscreen and back, and the window looses focus.
+I think we can maybe only use the atom if it's already created by the
+WM, and fallback on the motif fullscreen hints when it's not available.
+Can you try changing line 643 of video-xv.c to 
+
+_NET_WM_STATE_FULLSCREEN = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN",
+True);
+
+and add 
+
+fprintf(stderr, " fullscreen atom: 0x%08x\n", _NET_WM_STATE_FULLSCREEN);
+
+You'd need to restart the X server. Can you check if you get 0x00 with
+your WM?
+
+> for bug fix of #2699 i got no feed back but i'll commit the fix too.
+
+Never seen that one myself.
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Fri Oct 29 19:54:30 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 18:54:30 +0100
+Subject: [Softdevice-devel] new alsa device patch
+In-Reply-To: <200410291943.24969.stefan@lucke.in-berlin.de>
+References: <1099063128.5263.30.camel@atlantis.netenviron.com>
+	 <200410291943.24969.stefan@lucke.in-berlin.de>
+Message-ID: <1099072470.5263.49.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 19:43 +0200, Stefan Lucke wrote:
+> On Freitag, 29. Oktober 2004 17:18, Torgeir Veimo wrote:
+> > This time with command line parsing. Patch against cvs current.
+> 
+> since thats now in cvs we have to open the next round to pre4.
+> 
+> as i imagine, the mplayer style of subarguments is using ':' as a separator.
+> but i think we can close bug #2264.
+
+Ok, I only followed the convention used for -vo, so if you have a
+shorter approach we can do that. We can maybe drop the alsa: string and
+just do -ao hw:0,0 .
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From noreply at berlios.de  Fri Oct 29 19:46:59 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Fri, 29 Oct 2004 19:46:59 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+Message-ID: <200410291746.i9THkxRx022651@unicorn.berlios.de>
+
+Bug #2699, was updated on 2004-Oct-28 07:34
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: jbu
+Assigned to : lucke
+Summary: segfault in XvShmPutImage
+
+Details: HI!
+I tried to use latest 0.0.7Pre3 CVS-version. Softdevice did't start up at all. Previous version 0.0.7Pre2 works well.
+
+Here is the gdb output:
+
+(gdb) run
+Starting program: /usr/include/vdr-1.2.6/vdr -P softdevice -P subtitles -P 
+vdrrip
+[Thread debugging using libthread_db enabled]
+[New Thread 1076286848 (LWP 14075)]
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[setup-softdevice] cropping mode set to 2 (16:9) [setup-softdevice] deinterlace method set to 0 none [softdevice] picture mirroring set to 0 (off) [setup-softdevice] pixel format set to (I420) [setup-softdevice] startup aspect set to (16:9 wide) [New Thread 1091074992 (LWP 14079)] [New Thread 1099467696 (LWP 14080)] [softdevice] initializing Plugin [softdevice] Initializing Video Out [softdevice] ffmpeg version(0.4.9-pre1) build(4727) [New Thread 1108937648 (LWP 14081)]
+**************** 1
+Xlib: sequence lost (0x10666 > 0x667) in reply type 0x0!
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 1108937648 (LWP 14081)]
+0x4038e518 in XvShmPutImage () from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+(gdb) where
+#0  0x4038e518 in XvShmPutImage ()
+   from ./PLUGINS/lib/libvdr-softdevice.so.1.2.6
+#1  0x4038c800 in cXvVideoOut::ProcessEvents (this=Variable "this" is not 
+available.
+) at video-xv.c:423
+#2  0x4038cd6e in cXvRemote::Action (this=Variable "this" is not available.
+) at video-xv.c:255
+#3  0x080a7b98 in cThread::StartThread (Thread=0x8116e90) at thread.c:143 #4  0x400639dd in start_thread () from /lib/tls/libpthread.so.0 #5  0x4020fffa in clone () from /lib/tls/libc.so.6
+(gdb)
+
+
+Follow-Ups:
+
+Date: 2004-Oct-29 19:46
+By: lucke
+
+Comment:
+XvShm .. delayed until init sequence is comcleted.
+-------------------------------------------------------
+
+Date: 2004-Oct-28 09:35
+By: lucke
+
+Comment:
+there is a possible race condition during startup.  in initialize
+remote control thread is started without Xv setup finished.
+so this could happen even with pre2.
+-------------------------------------------------------
+
+Date: 2004-Oct-28 09:34
+By: lucke
+
+Comment:
+there is a possible race condition during startup.  in initialize
+remote control thread is started without Xv setup finished.
+so this could happen even with pre2.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2699&group_id=2051
+
+
+From stefan at lucke.in-berlin.de  Fri Oct 29 20:08:59 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 29 Oct 2004 20:08:59 +0200
+Subject: [Softdevice-devel] new alsa device patch
+In-Reply-To: <1099072470.5263.49.camel@atlantis.netenviron.com>
+References: <1099063128.5263.30.camel@atlantis.netenviron.com> <200410291943.24969.stefan@lucke.in-berlin.de> <1099072470.5263.49.camel@atlantis.netenviron.com>
+Message-ID: <200410292008.59181.stefan@lucke.in-berlin.de>
+
+On Freitag, 29. Oktober 2004 19:54, Torgeir Veimo wrote:
+> On Fri, 2004-10-29 at 19:43 +0200, Stefan Lucke wrote:
+
+[ .. ]
+
+> > as i imagine, the mplayer style of subarguments is using ':' as a separator.
+> > but i think we can close bug #2264.
+> 
+> Ok, I only followed the convention used for -vo, so if you have a
+> shorter approach we can do that. We can maybe drop the alsa: string and
+> just do -ao hw:0,0 .
+
+it's okay so. perhaps we have to change that later on, when there are multiple
+selection possible.
+
+-- 
+stefan lucke
+
+
+
+From torgeir at pobox.com  Fri Oct 29 20:10:36 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 19:10:36 +0100
+Subject: [Softdevice-devel] new alsa device patch
+In-Reply-To: <200410291943.24969.stefan@lucke.in-berlin.de>
+References: <1099063128.5263.30.camel@atlantis.netenviron.com>
+	 <200410291943.24969.stefan@lucke.in-berlin.de>
+Message-ID: <1099073436.5263.55.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 19:43 +0200, Stefan Lucke wrote:
+
+> i need just a bit time to complete the full-screen part.
+> on some window managers i loose the originating x,y coordinates
+> after 2nd time leaving full screen mode ;-) . that will fix bug #2265.
+
+Alternatively, first try to get the _NET_WM_STATE_FULLSCREEN atom, if
+that fails, get the motif atom. (both with only_if_exists = True)
+
+I'd assume it's no point in trying the motif hints if the
+_NET_WM_STATE_FULLSCREEN atom exits, but we probably need to verify
+that.
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Fri Oct 29 20:13:34 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 29 Oct 2004 19:13:34 +0100
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <6937.1099053444@www10.gmx.net>
+References: <6937.1099053444@www10.gmx.net>
+Message-ID: <1099073614.5263.59.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 14:37 +0200, Martin Wache wrote:
+> Hi,
+> 
+> I'm sending you a patch which contains my first steps to a new A-V syncing
+> code.
+
+You might want to post your patch to the vdr / linux-dvb mailing list to
+get more feedback.
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Fri Oct 29 20:22:31 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 29 Oct 2004 20:22:31 +0200
+Subject: [Softdevice-devel] new alsa device patch
+In-Reply-To: <1099072286.5263.45.camel@atlantis.netenviron.com>
+References: <1099063128.5263.30.camel@atlantis.netenviron.com> <200410291943.24969.stefan@lucke.in-berlin.de> <1099072286.5263.45.camel@atlantis.netenviron.com>
+Message-ID: <200410292022.31155.stefan@lucke.in-berlin.de>
+
+On Freitag, 29. Oktober 2004 19:51, Torgeir Veimo wrote:
+> On Fri, 2004-10-29 at 19:43 +0200, Stefan Lucke wrote:
+
+[ .. ]
+
+> > i need just a bit time to complete the full-screen part.
+> > on some window managers i loose the originating x,y coordinates
+> > after 2nd time leaving full screen mode ;-) . that will fix bug #2265.
+> 
+> If both fullscreen methods are used simultaneously, there's a bit of
+> flickering when going fullscreen and back, and the window looses focus.
+
+flickering for a short time is to my opinion due to that many XvShm .. calls
+during event processing.
+loosing focus in a way that the window is not high lighted any more
+but still receiving keyboard events ;-) .
+
+> I think we can maybe only use the atom if it's already created by the
+> WM, and fallback on the motif fullscreen hints when it's not available.
+> Can you try changing line 643 of video-xv.c to 
+> 
+> _NET_WM_STATE_FULLSCREEN = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN",
+> True);
+
+"True" -> create atom if it does not exits .
+
+> 
+> and add 
+> 
+> fprintf(stderr, " fullscreen atom: 0x%08x\n", _NET_WM_STATE_FULLSCREEN);
+> 
+> You'd need to restart the X server. Can you check if you get 0x00 with
+> your WM?
+
+i'll get that atom for kde too. a short form for atom reporting is 'xlsatoms' .
+
+my current version checks a number of atoms like mplayer (but not all).
+
+  if (_NET_WM_STATE_ABOVE)
+    e.xclient.data.l[1] = _NET_WM_STATE_ABOVE;
+  else if (_NET_WM_STATE_FULLSCREEN)
+    e.xclient.data.l[1] = _NET_WM_STATE_FULLSCREEN;
+  else //if (_NET_WM_STATE_STAYS_ON_TOP)
+    e.xclient.data.l[1] = _NET_WM_STATE_STAYS_ON_TOP;
+
+
+> 
+> > for bug fix of #2699 i got no feed back but i'll commit the fix too.
+> 
+> Never seen that one myself.
+
+me too. but remote thread is started before Xv-setup is done. but during event processing
+there was a call to XvShmPutImage ;-) .
+
+-- 
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Fri Oct 29 22:24:11 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 29 Oct 2004 22:24:11 +0200
+Subject: [Softdevice-devel] new alsa device patch
+In-Reply-To: <200410292022.31155.stefan@lucke.in-berlin.de>
+References: <1099063128.5263.30.camel@atlantis.netenviron.com> <1099072286.5263.45.camel@atlantis.netenviron.com> <200410292022.31155.stefan@lucke.in-berlin.de>
+Message-ID: <200410292224.11742.stefan@lucke.in-berlin.de>
+
+On Freitag, 29. Oktober 2004 20:22, Stefan Lucke wrote:
+> On Freitag, 29. Oktober 2004 19:51, Torgeir Veimo wrote:
+
+[ .. ]
+
+> > Can you try changing line 643 of video-xv.c to 
+> > 
+> > _NET_WM_STATE_FULLSCREEN = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN",
+> > True);
+> 
+> "True" -> create atom if it does not exits .
+
+oh, damm . you are right and i am wrong. parameter is only_if_exists.
+so i misunderstood the logic thats behind
+atom testing.
+
+so its quite funny that with wrong assumptions, i do get the right (expected) results.
+
+with gnome it's now less flickering, with windowmaker and gnome i've the
+originating x,y values, gome window has it's focus back and with kde, gnome and
+windowmaker I can go to and from full screen without problems,
+
+so i'm going to commit in a few minutes.
+
+
+stefan lucke
+
+
+
+From noreply at berlios.de  Fri Oct 29 22:40:10 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Fri, 29 Oct 2004 22:40:10 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #2265] xv fullscreen mode works only with gnome
+Message-ID: <200410292040.i9TKeAqQ000404@unicorn.berlios.de>
+
+Bug #2265, was updated on 2004-Aug-17 09:54
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 3
+Submitted by: lucke
+Assigned to : lucke
+Summary: xv fullscreen mode works only with gnome
+
+Details: xv fullscreen mode works only with gnome. Other window managers should be supportet too (see vlc's fullscreen toggle).
+
+Follow-Ups:
+
+Date: 2004-Oct-29 22:40
+By: lucke
+
+Comment:
+fullscreen works now with: kde, gnome, windowmaker, fvwm2,
+mwm and twm. only mwm has a slight drift towards down
+right.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2265&group_id=2051
+
+
+From stefan at lucke.in-berlin.de  Sat Oct 30 16:07:40 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 30 Oct 2004 16:07:40 +0200
+Subject: [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.0.7pre4
+Message-ID: <200410301607.40674.stefan@lucke.in-berlin.de>
+
+Hi,
+
+Softdevice plugin, what is it about:
+It brings vdr via framebuffer or X11-Xv or DirectFB or vidix and ffmpeg to your desktop.
+
+Plugin's homepage is located at:
+http://softdevice.berlios.de/
+
+Changelog since last prerelease:
+  2004-10-30: softdevice-0.0.7pre4
+  2004-10-29:
+   - xv-out: changed fullscreen mode. works now with more wms (bug: #2265)
+   - xv-out: fix possible race condition causing segfault during init (bug: #2699)
+   - allow setting alsa device with command line parameter or in setup.conf
+  2004-10-25:
+   - compile fix for older vdr versions. tested with 1.2.1 .
+
+-- 
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Sat Oct 30 16:07:40 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 30 Oct 2004 16:07:40 +0200
+Subject: [Softdevice-devel] [vdr] [ANNOUNCE] vdr-softdevice-0.0.7pre4
+Message-ID: <200410301607.40674.stefan@lucke.in-berlin.de>
+
+Hi,
+
+Softdevice plugin, what is it about:
+It brings vdr via framebuffer or X11-Xv or DirectFB or vidix and ffmpeg to your desktop.
+
+Plugin's homepage is located at:
+http://softdevice.berlios.de/
+
+Changelog since last prerelease:
+  2004-10-30: softdevice-0.0.7pre4
+  2004-10-29:
+   - xv-out: changed fullscreen mode. works now with more wms (bug: #2265)
+   - xv-out: fix possible race condition causing segfault during init (bug: #2699)
+   - allow setting alsa device with command line parameter or in setup.conf
+  2004-10-25:
+   - compile fix for older vdr versions. tested with 1.2.1 .
+
+-- 
+stefan lucke
+
+
+
+From torgeir at pobox.com  Sun Oct 31 20:01:53 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 31 Oct 2004 19:01:53 +0000
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <27098.1099057291@www10.gmx.net>
+References: <1099056430.5263.21.camel@atlantis.netenviron.com>
+	 <27098.1099057291@www10.gmx.net>
+Message-ID: <1099249313.5263.82.camel@atlantis.netenviron.com>
+
+On Fri, 2004-10-29 at 15:41 +0200, Martin Wache wrote:
+
+> Since there is still some work to do on the audio part I hope this
+> problem
+> will be solved when we buffer the audio data just like the video data.
+
+Reapplied the pcr patch for pre4 and it seems to be quite good at fixing
+the offset problem I previously had, but there seems to be some minor
+audio buffering issues still. Do you have any improved patch ready for
+testing?
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Mon Nov  1 10:38:06 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Mon, 1 Nov 2004 10:38:06 +0100 (MET)
+Subject: [Softdevice-devel] New A-V sync
+References: <1099249313.5263.82.camel@atlantis.netenviron.com>
+Message-ID: <17513.1099301886@www24.gmx.net>
+
+> On Fri, 2004-10-29 at 15:41 +0200, Martin Wache wrote:
+> 
+> > Since there is still some work to do on the audio part I hope this
+> > problem
+> > will be solved when we buffer the audio data just like the video data.
+> 
+> Reapplied the pcr patch for pre4 and it seems to be quite good at fixing
+> the offset problem I previously had, but there seems to be some minor
+> audio buffering issues still. Do you have any improved patch ready for
+> testing?
+
+I'm still working on the dvd - issue. In fact I haven't got the dvd plugin
+running yet, well the video seems to be fine, but I don't get any audio at
+all....
+I also changed the buffering of the audio part so I hope that issue should
+be fixed now.
+I don't know yet how much time I will have this evening, but maybe I can
+send an improved patch this evening.
+Are you sure that my patch improves the fixed A-V offset? I didn't do
+something which should fix this explicitly.I changed the way the PTS is
+interpreted, so maybe this changes something...
+
+Bye,
+Martin
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen http://www.gmx.net/de/go/mail ++
+
+
+
+From torgeir at pobox.com  Mon Nov  1 16:41:52 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 01 Nov 2004 15:41:52 +0000
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <17513.1099301886@www24.gmx.net>
+References: <1099249313.5263.82.camel@atlantis.netenviron.com>
+	 <17513.1099301886@www24.gmx.net>
+Message-ID: <1099323713.5263.90.camel@atlantis.netenviron.com>
+
+On Mon, 2004-11-01 at 10:38 +0100, Martin Wache wrote:
+> > On Fri, 2004-10-29 at 15:41 +0200, Martin Wache wrote:
+> > 
+> > > Since there is still some work to do on the audio part I hope this
+> > > problem
+> > > will be solved when we buffer the audio data just like the video data.
+> > 
+> > Reapplied the pcr patch for pre4 and it seems to be quite good at fixing
+> > the offset problem I previously had, but there seems to be some minor
+> > audio buffering issues still. Do you have any improved patch ready for
+> > testing?
+> 
+> I'm still working on the dvd - issue. In fact I haven't got the dvd plugin
+> running yet, well the video seems to be fine, but I don't get any audio at
+> all....
+
+Making the dvd plugin working was just a digression. It didn't work
+previously either.
+
+> I also changed the buffering of the audio part so I hope that issue should
+> be fixed now.
+> I don't know yet how much time I will have this evening, but maybe I can
+> send an improved patch this evening.
+
+Ok.
+
+> Are you sure that my patch improves the fixed A-V offset? I didn't do
+> something which should fix this explicitly.I changed the way the PTS is
+> interpreted, so maybe this changes something...
+
+I used to set the offset to 160ms, now I have it at 20ms, so there is
+definitely some progress. I haven't really looked into the new pts
+handling yet though..
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Mon Nov  1 21:52:37 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 1 Nov 2004 21:52:37 +0100
+Subject: [Softdevice-devel] audio troubles
+Message-ID: <200411012152.37869.stefan@lucke.in-berlin.de>
+
+Hi,
+
+don't know if someone has seen this before.
+
+I'm still testing current cvs version. after selecting an old recording
+and pressing "back" key immediate after recording starts, vdr terminates.
+this is accompanied with a message in syslog i never saw before:
+
+Nov  1 21:29:29 jarada vdr[3871]: [softdevice-audio]: write error: Unterbrechung w?hrend des Betriebssystemaufrufs FATAL exiting
+
+thats EINTR signal during write.
+
+i fixed that in my local copy with:
+-- snip --
+Index: audio.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/audio.c,v
+retrieving revision 1.4
+diff -r1.4 audio.c
+60a61,63
+>     } else if (err == -EINTR) {
+>       dsyslog ("[softdevice-audio]: EINTR");
+>       continue;
+-- snip --
+
+after that, i see above syslog message in:
+
+Nov  1 21:38:33 jarada vdr[4008]: [VideoOut]: aspect changed (0 -> 0 ; 1,777778 -> 1,333333)
+Nov  1 21:38:34 jarada vdr[4009]: [softdevice-audio]: EINTR
+Nov  1 21:38:34 jarada last message repeated 4 times
+Nov  1 21:38:34 jarada vdr[4010]: non blocking file reader thread ended (pid=4010)
+
+and vdr continues normal operation.
+
+can someone confirm such behavior ?
+
+
+-- 
+stefan lucke
+
+
+
+From M.Wache at gmx.net  Tue Nov  2 11:38:06 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Tue, 2 Nov 2004 11:38:06 +0100 (MET)
+Subject: [Softdevice-devel] New A-V sync
+Message-ID: <2460.1099391886@www17.gmx.net>
+
+
+> 
+> Making the dvd plugin working was just a digression. It didn't work
+> previously either.
+Ah, ok, I was thinking it was working with the old code, but I didn't even
+get it to work with the old code... But anyway I think will spend some more
+work on it... I guess we can make it work...
+
+> > I also changed the buffering of the audio part so I hope that issue
+> should
+> > be fixed now.
+> > I don't know yet how much time I will have this evening, but maybe I can
+> > send an improved patch this evening.
+
+I didn't make it last evening, but I have a new version for you now.
+Actually it's
+the my "working" version so it is quite experimental and there are also
+still a few
+known issues, eg. sometimes it takes ages to switch a channel and then
+something goes completly wrong the sound is corrupted and so on.
+But I got rid of this 80ms delay and the doubleing of audio samples and
+still there are almost no buffer underruns anymore.
+So if you have some time to spare, please try the patch and tell me your
+experience with it.
+
+Bye,
+Martin  
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen http://www.gmx.net/de/go/mail ++
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: AV-Patch2.diff
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041102/18e98ba6/attachment.ksh>
+
+From stefan at lucke.in-berlin.de  Wed Nov  3 19:09:11 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 3 Nov 2004 19:09:11 +0100
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <2460.1099391886@www17.gmx.net>
+References: <2460.1099391886@www17.gmx.net>
+Message-ID: <200411031909.11542.stefan@lucke.in-berlin.de>
+
+On Dienstag, 2. November 2004 11:38, Martin Wache wrote:
+> 
+> > 
+> > Making the dvd plugin working was just a digression. It didn't work
+> > previously either.
+> Ah, ok, I was thinking it was working with the old code, but I didn't even
+> get it to work with the old code... But anyway I think will spend some more
+> work on it... I guess we can make it work...
+> 
+> > > I also changed the buffering of the audio part so I hope that issue
+> > should
+> > > be fixed now.
+> > > I don't know yet how much time I will have this evening, but maybe I can
+> > > send an improved patch this evening.
+> 
+> I didn't make it last evening, but I have a new version for you now.
+> Actually it's
+> the my "working" version so it is quite experimental and there are also
+> still a few
+> known issues, eg. sometimes it takes ages to switch a channel and then
+> something goes completly wrong the sound is corrupted and so on.
+> But I got rid of this 80ms delay and the doubleing of audio samples and
+> still there are almost no buffer underruns anymore.
+> So if you have some time to spare, please try the patch and tell me your
+> experience with it.
+
+I tested this with vdr-1.3.15 and vdr-1.2.1.
+with vdr-1.2.1 compile fails:
+
+../../../include/vdr/ringbuffer.h: In member function `virtual void
+   cStreamDecoder::Clear()':
+../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+   protected
+
+I think there are some other issues even with newer vdrs due to
+CondVar handling.
+
+Pausing playback seems to take some longer time.
+Audio sync in life mode is better.
+I still have to do some more test .
+
+I'm using that part of sync code, that has no rtc access. /dev/rtc
+is in use by chronyd for network time syncing :-) .
+
+For compalibility issues: is it possbile to have the new audio sync
+concurrent with the old one, so that new code can be selected via "#if some_thing" ?
+
+A minor issue towards coding style: could you please replace tabs with blanks
+so that indentation (2 spaces) is kept independent of editor's tab settings ?
+
+For EINTR handling in audio.c I'll commit a last change for 0.0.7 with "continue"
+replaced by "return" .
+
+-- 
+stefan lucke
+
+
+
+From torgeir at pobox.com  Wed Nov  3 23:55:45 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Wed, 03 Nov 2004 22:55:45 +0000
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <2460.1099391886@www17.gmx.net>
+References: <2460.1099391886@www17.gmx.net>
+Message-ID: <1099522545.3718.11.camel@atlantis.netenviron.com>
+
+On Tue, 2004-11-02 at 11:38 +0100, Martin Wache wrote:
+> >anymore.
+> So if you have some time to spare, please try the patch and tell me your
+> experience with it.
+
+I still have to set the av offset. Now I use a value of 200ms to get
+proper lipsync.
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Thu Nov  4 16:46:01 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 4 Nov 2004 16:46:01 +0100 (MET)
+Subject: [Softdevice-devel] New A-V sync
+References: <200411031909.11542.stefan@lucke.in-berlin.de>
+Message-ID: <20062.1099583161@www65.gmx.net>
+
+> I tested this with vdr-1.3.15 and vdr-1.2.1.
+> with vdr-1.2.1 compile fails:
+> 
+> ../../../include/vdr/ringbuffer.h: In member function `virtual void
+>    cStreamDecoder::Clear()':
+> ../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+>    protected
+Ah, ok I just checked it with vdr-1.2.6, but I can fix this...
+
+> 
+> I think there are some other issues even with newer vdrs due to
+> CondVar handling.
+What do you mean? As far as I remember I didn't change anything concerning 
+CondVars.
+
+
+> A minor issue towards coding style: could you please replace tabs with
+> blanks
+> so that indentation (2 spaces) is kept independent of editor's tab
+> settings ?
+I was about to ask if you agreed on some kind of coding style, I found
+different
+coding styles in different places and I was not sure which coding style to
+use.
+Are you using the vdr coding style?
+
+> 
+> For EINTR handling in audio.c I'll commit a last change for 0.0.7 with
+> "continue"
+> replaced by "return" .
+I tried to reproduce this error, but I could not reproduce it on my machine.
+Anyway, I think your patch will only improve things.
+
+Thanks a lot for your comments, I think I still have some work to spend on
+the new
+A-V syncing code, but I'm already happy that there seem to be no major
+Issues...
+
+Bye,
+Martin
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+
+From M.Wache at gmx.net  Thu Nov  4 16:55:05 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 4 Nov 2004 16:55:05 +0100 (MET)
+Subject: [Softdevice-devel] New A-V sync
+References: <1099522545.3718.11.camel@atlantis.netenviron.com>
+Message-ID: <27102.1099583705@www65.gmx.net>
+
+> On Tue, 2004-11-02 at 11:38 +0100, Martin Wache wrote:
+> > >anymore.
+> > So if you have some time to spare, please try the patch and tell me your
+> > experience with it.
+> 
+> I still have to set the av offset. Now I use a value of 200ms to get
+> proper lipsync.
+Hmm, that's strange... Didn't you tell that with AVPatch01 the stituation
+improved?
+
+From torgeir at pobox.com  Thu Nov  4 16:59:59 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 04 Nov 2004 15:59:59 +0000
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <27102.1099583705@www65.gmx.net>
+References: <1099522545.3718.11.camel@atlantis.netenviron.com>
+	 <27102.1099583705@www65.gmx.net>
+Message-ID: <1099583999.3718.25.camel@atlantis.netenviron.com>
+
+On Thu, 2004-11-04 at 16:55 +0100, Martin Wache wrote:
+> > On Tue, 2004-11-02 at 11:38 +0100, Martin Wache wrote:
+> > > >anymore.
+> > > So if you have some time to spare, please try the patch and tell me your
+> > > experience with it.
+> > 
+> > I still have to set the av offset. Now I use a value of 200ms to get
+> > proper lipsync.
+> Hmm, that's strange... Didn't you tell that with AVPatch01 the stituation
+> improved?
+> From AVPatch01 to AVPatch02 I just changed the way the audio is buffered, so
+> the A-V sync should not have changed... Did you try to go back to AVPatch01?
+
+I'm not sure the things I reported with patch 01 was consistent with
+reality... 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Thu Nov  4 17:32:09 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 4 Nov 2004 17:32:09 +0100 (MET)
+Subject: [Softdevice-devel] New A-V sync
+References: <1099583999.3718.25.camel@atlantis.netenviron.com>
+Message-ID: <20147.1099585929@www65.gmx.net>
+
+> On Thu, 2004-11-04 at 16:55 +0100, Martin Wache wrote:
+> > > On Tue, 2004-11-02 at 11:38 +0100, Martin Wache wrote:
+> > > > >anymore.
+> > > > So if you have some time to spare, please try the patch and tell me
+> your
+> > > > experience with it.
+> > > 
+> > > I still have to set the av offset. Now I use a value of 200ms to get
+> > > proper lipsync.
+> > Hmm, that's strange... Didn't you tell that with AVPatch01 the
+> stituation
+> > improved?
+> > From AVPatch01 to AVPatch02 I just changed the way the audio is
+> buffered, so
+> > the A-V sync should not have changed... Did you try to go back to
+> AVPatch01?
+> 
+> I'm not sure the things I reported with patch 01 was consistent with
+> reality... 
+> 
+Hmm, well as I already told you I didn't do anything which should fix this
+constant A-V offset problem my patch, so I did not expect it to improve...
+
+I'm just a bit curious, do you know any other open source programm which
+doesn't show
+this problem? Did you try mplayer or mythTV? What about commercial DVB
+decoders (for Windows or
+Set-Top boxes)?  Do they show similar behaviors?
+
+
+Martin
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+
+From torgeir at pobox.com  Thu Nov  4 19:01:39 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 04 Nov 2004 18:01:39 +0000
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <20147.1099585929@www65.gmx.net>
+References: <1099583999.3718.25.camel@atlantis.netenviron.com>
+	 <20147.1099585929@www65.gmx.net>
+Message-ID: <1099591299.3718.36.camel@atlantis.netenviron.com>
+
+On Thu, 2004-11-04 at 17:32 +0100, Martin Wache wrote:
+> 
+> I'm just a bit curious, do you know any other open source programm
+> which
+> doesn't show
+> this problem? Did you try mplayer or mythTV? What about commercial DVB
+> decoders (for Windows or
+> Set-Top boxes)?  Do they show similar behaviors?
+
+xawtv has the same problems. I haven't had time to look into you patch
+in detail yet, but you did want to implement support for proper PCR/STC
+handling?
+
+The reply from Holger on the linux-dvb mailing list if you lost it:
+http://www.linuxtv.org/mailinglists/linux-dvb/2004/10-2004/msg00387.html
+
+I was referred to
+http://212.227.36.83/linuxtv//index.php/The_DVB_Decoder_Challenge  
+I also have the attached paper which describes this, but I haven't had
+time to read it throughly just yet.
+
+I would imagine that the audio stream is relative to the PCR, not the
+video stream, and that there are some time stamps that are not taken
+into account right now, which are different in UK dvb-t transmissions. 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: mpeg2.pdf
+Type: application/pdf
+Size: 99482 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041104/4f5f039e/attachment.pdf>
+
+From torgeir at pobox.com  Thu Nov  4 21:30:31 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 04 Nov 2004 20:30:31 +0000
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <20147.1099585929@www65.gmx.net>
+References: <1099583999.3718.25.camel@atlantis.netenviron.com>
+	 <20147.1099585929@www65.gmx.net>
+Message-ID: <1099600231.3718.41.camel@atlantis.netenviron.com>
+
+On Thu, 2004-11-04 at 17:32 +0100, Martin Wache wrote:
+
+> I'm just a bit curious, do you know any other open source programm which
+> doesn't show
+> this problem? Did you try mplayer or mythTV? What about commercial DVB
+> decoders (for Windows or
+> Set-Top boxes)?  Do they show similar behaviors?
+
+Sorry, misread your question; Xine doesn't have this problem. I think
+they implement proper PCR handling. You can take a peek at /xine-
+lib/src/input/input_dvb.c . It's GPL though.
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Fri Nov  5 23:26:22 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 5 Nov 2004 23:26:22 +0100
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <20062.1099583161@www65.gmx.net>
+References: <200411031909.11542.stefan@lucke.in-berlin.de> <20062.1099583161@www65.gmx.net>
+Message-ID: <200411052326.22351.stefan@lucke.in-berlin.de>
+
+On Donnerstag, 4. November 2004 16:46, Martin Wache wrote:
+> 
+> > I tested this with vdr-1.3.15 and vdr-1.2.1.
+> > with vdr-1.2.1 compile fails:
+> > 
+> > ../../../include/vdr/ringbuffer.h: In member function `virtual void
+> >    cStreamDecoder::Clear()':
+> > ../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+> >    protected
+> Ah, ok I just checked it with vdr-1.2.6, but I can fix this...
+> 
+> > 
+> > I think there are some other issues even with newer vdrs due to
+> > CondVar handling.
+> What do you mean? As far as I remember I didn't change anything concerning 
+> CondVars.
+
+Thats an error of mine. Drop that note.
+
+> 
+> 
+> > A minor issue towards coding style: could you please replace tabs with
+> > blanks
+> > so that indentation (2 spaces) is kept independent of editor's tab
+> > settings ?
+> I was about to ask if you agreed on some kind of coding style, I found
+> different
+> coding styles in different places and I was not sure which coding style to
+> use.
+> Are you using the vdr coding style?
+
+Won't comment on this style.
+
+Yes in softdevice there are different styles.
+One of my rule is:
+Don't mix reformating (style change) with code change.
+
+When writing new code we should agree on one style so the it better readable.
+Are there other suggestions ?
+
+-- 
+stefan lucke
+
+
+
+From M.Wache at gmx.net  Sun Nov  7 19:41:11 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Sun, 7 Nov 2004 19:41:11 +0100 (MET)
+Subject: [Softdevice-devel] New A-V sync
+References: <1099600231.3718.41.camel@atlantis.netenviron.com>
+Message-ID: <5526.1099852871@www10.gmx.net>
+
+> On Thu, 2004-11-04 at 17:32 +0100, Martin Wache wrote:
+> 
+> > I'm just a bit curious, do you know any other open source programm which
+> > doesn't show
+> > this problem? Did you try mplayer or mythTV? What about commercial DVB
+> > decoders (for Windows or
+> > Set-Top boxes)?  Do they show similar behaviors?
+> 
+> Sorry, misread your question; Xine doesn't have this problem. I think
+> they implement proper PCR handling. You can take a peek at /xine-
+> lib/src/input/input_dvb.c . It's GPL though.
+
+Is the xine plugine for vdr also ok, or is just standalone xine ok?
+I already had a short look at the xine libs, but I think I will have to get 
+a sample stream at some point to play around a bit with the problem.
+Is the link to the stream you gave in the other thread still valid?
+
+Bye,
+Martin
+
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+
+From M.Wache at gmx.net  Sun Nov  7 19:48:37 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Sun, 7 Nov 2004 19:48:37 +0100 (MET)
+Subject: [Softdevice-devel] dvd plugin working
+Message-ID: <32127.1099853317@www10.gmx.net>
+
+Hello,
+
+I found the problem why the dvd plugin was not working with the
+softdevice...
+The dvd plugin decodes the audio and sends pcm data to the primary device.
+Since the softdevice can't handle raw pcm data (yet), it parses all the 
+audio data and a crashes as soon as it finds something which looks like
+video
+data but isn't. 
+This is easy to fix, we just have to parse the headers for the raw pcm
+properly and send it directly to the audio device. But before doing this I
+would like to finish the new A-V sync...
+
+Bye,
+Martin
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+
+From stefan at lucke.in-berlin.de  Sun Nov  7 23:13:01 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 7 Nov 2004 23:13:01 +0100
+Subject: [Softdevice-devel] A/V sync
+Message-ID: <200411072313.01160.stefan@lucke.in-berlin.de>
+
+Hi,
+
+todays work with dfb-out lead me to the the idea that current cvs logic to
+sync is wrong and some parts of Martin's work is wrong too.
+
+Delaying the display time of a frame should not be done in the context
+of the decoder. This should be done in the context of the current displaying
+device. Take a stream 25fps (50 half frames). Now we wait a certain
+time after a frame was decoded. But we do not know when the next
+horizontal retrace happens. So it could happen that after wait complets,
+the frame flip happens during copy process of YUV method and the device
+has to wait an additional frame to flip the picture contens.
+
+So I suggest a different interface to display frames.
+
+// used if the device has no posibility to sync to frame retrace
+// the same has current delay method. should be used by fb-out
+framePrepare () 
+
+// as now device has to copy/prepare picture to display
+YUV ()
+
+// this is for actual device to remember the 
+syncOnFrame ()
+{
+  lastVideoPts = pts_value_of_last_displayed_frame;
+  lastVideoPtsMilis = getTimeMilis ();
+}
+
+// query fucntion to report last displayed PTS to sync engine
+getVideoPTS ()
+
+
+-- 
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Sun Nov  7 23:21:21 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 7 Nov 2004 23:21:21 +0100
+Subject: [Softdevice-devel] dvd plugin working
+In-Reply-To: <32127.1099853317@www10.gmx.net>
+References: <32127.1099853317@www10.gmx.net>
+Message-ID: <200411072321.21917.stefan@lucke.in-berlin.de>
+
+On Sonntag, 7. November 2004 19:48, Martin Wache wrote:
+> Hello,
+> 
+> I found the problem why the dvd plugin was not working with the
+> softdevice...
+> The dvd plugin decodes the audio and sends pcm data to the primary device.
+> Since the softdevice can't handle raw pcm data (yet), it parses all the 
+> audio data and a crashes as soon as it finds something which looks like
+> video
+> data but isn't. 
+
+mp3 plugin encodes PCM data in streamid 0xBD which is normally
+used for AC3.
+
+There is a function which is still not implemented PlayAudio () and
+I think this is used for AC3 playback.
+
+> This is easy to fix, we just have to parse the headers for the raw pcm
+> properly and send it directly to the audio device. But before doing this I
+> would like to finish the new A-V sync...
+> 
+> Bye,
+> Martin
+> 
+
+
+stefan lucke
+
+
+
+From M.Wache at gmx.net  Mon Nov  8 12:13:02 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Mon, 8 Nov 2004 12:13:02 +0100 (MET)
+Subject: [Softdevice-devel] A/V sync
+References: <200411072313.01160.stefan@lucke.in-berlin.de>
+Message-ID: <1651.1099912382@www62.gmx.net>
+
+> todays work with dfb-out lead me to the the idea that current cvs logic to
+> sync is wrong and some parts of Martin's work is wrong too.
+Can you tell me which part is wrong?
+
+> device. Take a stream 25fps (50 half frames). Now we wait a certain
+> time after a frame was decoded. But we do not know when the next
+> horizontal retrace happens. So it could happen that after wait complets,
+> the frame flip happens during copy process of YUV method and the device
+> has to wait an additional frame to flip the picture contens.
+Yes, that would be the correct way to do the syncing provided we have a
+display
+which uses a multiple of 25Hz for displaying. But for VGA output the are
+only a few modes which use a multiple of 25Hz. For all the other modes
+syncing on the refresh of 
+the display wont improve the A-V sync.
+
+> So I suggest a different interface to display frames.
+> 
+> // used if the device has no posibility to sync to frame retrace
+> // the same has current delay method. should be used by fb-out
+> framePrepare () 
+I like the idea of a "framePrepare()" function very much, we should really
+try to do
+as much work we can do before sleeping, and the displaying should be as fast
+as
+possible.
+
+Martin Wache
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen http://www.gmx.net/de/go/mail ++
+
+
+
+From va_modiri at yahoo.com  Mon Nov  8 16:01:28 2004
+From: va_modiri at yahoo.com (Vahid Modiri)
+Date: Mon, 8 Nov 2004 07:01:28 -0800 (PST)
+Subject: [Softdevice-devel] Recording VDR files in network
+Message-ID: <20041108150128.46219.qmail@web51005.mail.yahoo.com>
+
+We wanted to record video parts onto local network after defining the predetermined timres. After mounting the desired partition (from windows or linux computers in  the current lan) with smbmount command (Samba) , the parts of VDR video files appear on the seccond computer (windows or linux) but during the record time we couldn't view the VDR files with common players .
+As soon as disactivating the timer , the VDR files could be able to play back.
+ 
+Any help would be appreciated
+
+
+
+			
+---------------------------------
+Do you Yahoo!?
+ Check out the new Yahoo! Front Page. www.yahoo.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041108/8c0de1c7/attachment.html>
+
+From torgeir at pobox.com  Mon Nov  8 16:32:07 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 08 Nov 2004 15:32:07 +0000
+Subject: [Softdevice-devel] New A-V sync
+In-Reply-To: <200411052326.22351.stefan@lucke.in-berlin.de>
+References: <200411031909.11542.stefan@lucke.in-berlin.de>
+	 <20062.1099583161@www65.gmx.net>
+	 <200411052326.22351.stefan@lucke.in-berlin.de>
+Message-ID: <1099927927.24436.9.camel@atlantis.netenviron.com>
+
+On Fri, 2004-11-05 at 23:26 +0100, Stefan Lucke wrote:
+
+> Yes in softdevice there are different styles.
+> One of my rule is:
+> Don't mix reformating (style change) with code change.
+> 
+> When writing new code we should agree on one style so the it better readable.
+> Are there other suggestions ?
+
+Although it is for java I think it contains a few good points: 
+
+http://jroller.com/page/jeddi/20041108#java_coding_standards_in_a
+
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Mon Nov  8 16:38:05 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon,  8 Nov 2004 16:38:05 +0100
+Subject: [Softdevice-devel] Recording VDR files in network
+In-Reply-To: <20041108150128.46219.qmail@web51005.mail.yahoo.com>
+References: <20041108150128.46219.qmail@web51005.mail.yahoo.com>
+Message-ID: <1099928285.418f92dd5f32f@webmail.in-berlin.de>
+
+Quoting Vahid Modiri <va_modiri at yahoo.com>:
+
+> We wanted to record video parts onto local network after defining the
+> predetermined timres. After mounting the desired partition (from windows or
+> linux computers in  the current lan) with smbmount command (Samba) , the
+> parts of VDR video files appear on the seccond computer (windows or linux)
+> but during the record time we couldn't view the VDR files with common players
+> .
+> As soon as disactivating the timer , the VDR files could be able to play
+> back.
+>  
+> Any help would be appreciated
+
+This is the wrong list for such questions. You should ask such general vdr
+questions like this at: http://www.linuxtv.org/mailinglists.xml .
+
+For my working enviroment recording on server, viewing while recording
+on other clients is possible (clients are connected via nfs :-) ).
+
+
+Stefan Lucke
+
+
+From torgeir at pobox.com  Mon Nov  8 17:23:21 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 08 Nov 2004 16:23:21 +0000
+Subject: [Softdevice-devel] dfb support using overlay?
+Message-ID: <1099931001.24436.19.camel@atlantis.netenviron.com>
+
+I've been trying to get a directfb setup running and have temporarily
+given up on my radeon.
+
+I've tried with a g450 card with better results, but softdevice doesn't
+seem to use the scaler on the card; I'd like to use the native
+resolution of my projector. Is this possible? 
+
+720x576 works, but gives me tearing. Is there anything I can do to avoid
+this?
+
+[VDR]# fbset -i
+
+mode "720x576-50"
+    # D: 32.043 MHz, H: 31.049 kHz, V: 49.999 Hz
+    geometry 720 576 736 1152 32
+    timings 31208 144 40 32 10 128 3
+    rgba 8/16,8/8,8/0,8/24
+endmode
+
+Frame buffer device information:
+    Name        : MATROX
+    Address     : 0xd0000000
+    Size        : 16777216
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 8
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 2944
+    MMIO Address: 0xd3000000
+    MMIO Size   : 16384
+    Accelerator : Matrox G400
+
+[root at vigor10 VDR]# dfbinfo
+
+[...]
+
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (convergence integrated media
+GmbH)
+(!) Direct/Modules: Unable to dlopen
+`/usr/local/lib/directfb-0.9.21/wm/libdirectfbwm_unique.so'!
+    --> libuniquewm-0.9.so.21: cannot open shared object file: No such
+file or directory
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+
+
+Screen (00) FBDev Primary Screen            (primary screen)
+   Caps: VSYNC POWER_MANAGEMENT
+
+     Layer (00) FBDev Primary Layer             (primary layer)
+        Type: GRAPHICS
+        Caps: SURFACE BRIGHTNESS CONTRAST SATURATION
+
+     Layer (01) Matrox Backend Scaler
+        Type: GRAPHICS VIDEO STILL_PICTURE
+        Caps: SURFACE SCREEN_LOCATION DEINTERLACING DST_COLORKEY
+BRIGHTNESS CONTRAST
+
+[...]
+
+
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (convergence integrated media
+GmbH)
+(!) Direct/Modules: Unable to dlopen
+`/usr/local/lib/directfb-0.9.21/wm/libdirectfbwm_unique.so'!
+    --> libuniquewm-0.9.so.21: cannot open shared object file: No such
+file or directory
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 16777216 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize
+SrcColorkey Deinterlace
+[dfb] Supported video Modes are: 640x480 at 8 640x480 at 8 640x480 at 8 640x480 at 8
+640x480 at 8 800x600 at 8 800x600 at 8 800x600 at 8 800x600 at 8 800x600 at 8 800x600 at 8
+800x600 at 8 800x600 at 8 1024x768 at 8 1024x768 at 8 1024x768 at 8 1024x768 at 8
+1024x768 at 8 1024x768 at 8 1024x768 at 8 1152x864 at 8 1152x864 at 8 1152x864 at 8
+1152x864 at 8 1152x864 at 8 1152x864 at 8 1024x1024 at 8 1280x1024 at 8 1280x1024 at 8
+1280x1024 at 8 1280x1024 at 8 1280x1024 at 8 1600x1200 at 8 1600x1200 at 8 1600x1200 at 8
+1280x720 at 16 1280x720 at 32 720x576 at 32
+[dfb] Enumeratig display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location
+surface
+  This is our videoLayer
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [720x576])
+osdSurface::
+ - videoonly
+ - flipping
+videoSurface::
+ - videoonly
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring ColorKeying
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: Matrox Backend Scaler
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] (re)configured 0x08100609
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+[softdevice] should set volume to 255
+cStreamDecoder... ID: 0x0
+cStreamDecoder... ID: 0x1c0 fertig
+cStreamDecoder... ID: 0x0
+cStreamDecoder... ID: 0x1e0 fertig
+Set up to use linux RTC
+Neuer Thread geatartet: pid:7311 ID: 0x1c0
+Neuer Thread geatartet: pid:7311 ID: 0x1e0
+Buffer underrun
+[softdevice] allocating picture buffer for resolution 720x576
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] (re)configured 0x08100609
+
+Any ideas?
+
+
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Wed Nov 10 19:55:55 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 10 Nov 2004 19:55:55 +0100
+Subject: [Softdevice-devel] dfb support using overlay?
+In-Reply-To: <1099931001.24436.19.camel@atlantis.netenviron.com>
+References: <1099931001.24436.19.camel@atlantis.netenviron.com>
+Message-ID: <200411101955.56000.stefan@lucke.in-berlin.de>
+
+On Montag, 8. November 2004 17:23, Torgeir Veimo wrote:
+> I've been trying to get a directfb setup running and have temporarily
+> given up on my radeon.
+> 
+> I've tried with a g450 card with better results, but softdevice doesn't
+> seem to use the scaler on the card; I'd like to use the native
+> resolution of my projector. Is this possible? 
+
+So what is the "native resolution" of your projector ?
+
+> 
+> 720x576 works, but gives me tearing. Is there anything I can do to avoid
+> this?
+
+tearing ? .. could you describe that a bit more ?
+
+> 
+> [VDR]# fbset -i
+> 
+> mode "720x576-50"
+>     # D: 32.043 MHz, H: 31.049 kHz, V: 49.999 Hz
+>     geometry 720 576 736 1152 32
+>     timings 31208 144 40 32 10 128 3
+>     rgba 8/16,8/8,8/0,8/24
+> endmode
+> 
+
+> Screen (00) FBDev Primary Screen            (primary screen)
+>    Caps: VSYNC POWER_MANAGEMENT
+> 
+>      Layer (00) FBDev Primary Layer             (primary layer)
+>         Type: GRAPHICS
+>         Caps: SURFACE BRIGHTNESS CONTRAST SATURATION
+> 
+>      Layer (01) Matrox Backend Scaler
+>         Type: GRAPHICS VIDEO STILL_PICTURE
+>         Caps: SURFACE SCREEN_LOCATION DEINTERLACING DST_COLORKEY
+> BRIGHTNESS CONTRAST
+> 
+
+> [dfb] Enumeratig display Layers
+> Layer 0 FBDev Primary Layer  Type: graphics
+>   Caps: brightness contrast saturation surface
+> Layer 1 Matrox Backend Scaler  Type: graphics picture video
+>   Caps: brightness contrast deinterlacing dst_colorkey screen_location
+> surface
+>   This is our videoLayer
+> [dfb] width = 720, height = 576
+> [dfb] got fmt = 0x00418c04 bpp = 32
+> [dfb] Using this layer for OSD: (FBDev Primary Layer - [720x576])
+> osdSurface::
+>  - videoonly
+>  - flipping
+> videoSurface::
+>  - videoonly
+> [dfb] Configuring CooperativeLevel for Overlay
+> [dfb] Configuring ColorKeying
+> [dfb] Configuring CooperativeLevel for OSD
+> [dfb] Using this layer for OSD: FBDev Primary Layer
+> [dfb] Using this layer for Video out: Matrox Backend Scaler
+
+We use the scaler. That's ok.
+
+> [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+
+720x576 is not optimal as it needs some special handling.
+Currently the scaling operation assumes operating in square pixel mode.
+So for a tft screen that is ok. But for TV-out width 720 should not be scaled.
+
+For adjust screen pixel aspect via OSD I made a preliminar modification.
+
+
+-- 
+stefan lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: non-square.diff
+Type: text/x-diff
+Size: 6010 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041110/71ab3f22/attachment.diff>
+
+From torgeir at pobox.com  Wed Nov 10 20:24:03 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Wed, 10 Nov 2004 19:24:03 +0000
+Subject: [Softdevice-devel] dfb support using overlay?
+In-Reply-To: <200411101955.56000.stefan@lucke.in-berlin.de>
+References: <1099931001.24436.19.camel@atlantis.netenviron.com>
+	 <200411101955.56000.stefan@lucke.in-berlin.de>
+Message-ID: <1100114643.24436.97.camel@atlantis.netenviron.com>
+
+On Wed, 2004-11-10 at 19:55 +0100, Stefan Lucke wrote:
+> On Montag, 8. November 2004 17:23, Torgeir Veimo wrote:
+> > I've been trying to get a directfb setup running and have temporarily
+> > given up on my radeon.
+> > 
+> > I've tried with a g450 card with better results, but softdevice doesn't
+> > seem to use the scaler on the card; I'd like to use the native
+> > resolution of my projector. Is this possible? 
+> 
+> So what is the "native resolution" of your projector ?
+> 
+> > 
+> > 720x576 works, but gives me tearing. Is there anything I can do to avoid
+> > this?
+> 
+> tearing ? .. could you describe that a bit more ?
+
+It looks like part of the frame is still one frame behind. You can see
+it on horizontal pans easily. It only happens with matrox and I420 color
+space.
+
+> 720x576 is not optimal as it needs some special handling.
+> Currently the scaling operation assumes operating in square pixel mode.
+
+That's why the native mode works best for me. My projector is 1280x720
+and the setup in Xv works really well as long as the aspect ratio change
+is detected. When the programme is in 4x3 black bars are added correctly
+at the sides in Xv, that doesn't happen with 720x576 and dfb output.
+Maybe a 1024x576 resolution is better. Will have to test it again. 
+
+I usually keep the radeon in the machine as it has better black details,
+which I attribute to the 10 bit per component resolution of the hw
+scaler. The image of the matrox g450 also look too soft to my eye.
+
+Incidentally, the judder problems I'm having, which I was due to the
+extra indirection before the YUV data is actually sent to the hardware
+caused by the X server process, is also present when using dfb output on
+the matrox g450. So I am beginning to suspect it is caused by the
+libavcodec decoding... The plot thickens...
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Wed Nov 10 20:41:08 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Wed, 10 Nov 2004 19:41:08 +0000
+Subject: [Softdevice-devel] dfb support using overlay?
+In-Reply-To: <1100114643.24436.97.camel@atlantis.netenviron.com>
+References: <1099931001.24436.19.camel@atlantis.netenviron.com>
+	 <200411101955.56000.stefan@lucke.in-berlin.de>
+	 <1100114643.24436.97.camel@atlantis.netenviron.com>
+Message-ID: <1100115668.24436.100.camel@atlantis.netenviron.com>
+
+On Wed, 2004-11-10 at 19:24 +0000, Torgeir Veimo wrote:
+
+> Incidentally, the judder problems I'm having, which I was due to the
+Incidentally, the judder problems I'm having, which I thought
+> extra indirection before the YUV data is actually sent to the hardware
+> caused by the X server process, is also present when using dfb output on
+> the matrox g450. So I am beginning to suspect it is caused by the
+> libavcodec decoding... The plot thickens...
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Sat Nov 13 17:06:42 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Sat, 13 Nov 2004 17:06:42 +0100 (MET)
+Subject: [Softdevice-devel] New A-V patch
+Message-ID: <11150.1100362002@www9.gmx.net>
+
+Hello,
+
+I have a new version of my new A-V syncing patch. The main changes since
+the last version are: I fixed the stupid bug which caused the channel 
+switching to fail sometimes, fixed the compile issue with vdr-1.2.1 and
+I implemented the Freeze() method.
+
+Since the new A-V syncing is now running very stable and I fixed all the 
+issues of the last patch, I will commit this patch to the CVS tomorrow 
+evening if there are no objections.
+
+Bye,
+Martin
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen http://www.gmx.net/de/go/mail ++
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: AVPatch3.diff
+Type: text/x-patch
+Size: 28214 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041113/35b69bba/attachment.bin>
+
+From torgeir at pobox.com  Sat Nov 13 19:05:34 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sat, 13 Nov 2004 18:05:34 +0000
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <11150.1100362002@www9.gmx.net>
+References: <11150.1100362002@www9.gmx.net>
+Message-ID: <1100369134.24436.138.camel@atlantis.netenviron.com>
+
+On Sat, 2004-11-13 at 17:06 +0100, Martin Wache wrote:
+> Hello,
+> 
+> I have a new version of my new A-V syncing patch. The main changes since
+> the last version are: I fixed the stupid bug which caused the channel 
+> switching to fail sometimes, fixed the compile issue with vdr-1.2.1 and
+> I implemented the Freeze() method.
+> 
+> Since the new A-V syncing is now running very stable and I fixed all the 
+> issues of the last patch, I will commit this patch to the CVS tomorrow 
+> evening if there are no objections.
+
++1
+
+I still have to add an av offset of about 200ms to 240ms manually
+though. 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Sun Nov 14 16:40:14 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Nov 2004 16:40:14 +0100
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <1100369134.24436.138.camel@atlantis.netenviron.com>
+References: <11150.1100362002@www9.gmx.net> <1100369134.24436.138.camel@atlantis.netenviron.com>
+Message-ID: <200411141640.14730.stefan@lucke.in-berlin.de>
+
+On Samstag, 13. November 2004 19:05, Torgeir Veimo wrote:
+> On Sat, 2004-11-13 at 17:06 +0100, Martin Wache wrote:
+> > Hello,
+> > 
+> > I have a new version of my new A-V syncing patch. The main changes since
+> > the last version are: I fixed the stupid bug which caused the channel 
+> > switching to fail sometimes, fixed the compile issue with vdr-1.2.1 and
+> > I implemented the Freeze() method.
+> > 
+> > Since the new A-V syncing is now running very stable and I fixed all the 
+> > issues of the last patch, I will commit this patch to the CVS tomorrow 
+> > evening if there are no objections.
+> 
+> +1
+> 
+> I still have to add an av offset of about 200ms to 240ms manually
+> though. 
+
+That is probably an issue with ffmpeg. We have to test this separate.
+The issue with ffmpeg is that the reported PTS value belongs to an earlier
+frame. What happens is that not every stream has a PTS value for each frame
+and display sequence of frames is not the transmitted sequence of frames.
+Therefor I introduced some time ago the sync option "every frame" vs. "I-Frame".
+
+The error I refer to was that a stream had PTS values for I-frames only. But
+the PTS value was reported two frames later for a P-frame. So checking
+for an I-frame and taking that PTS time, was wrong.
+
+
+
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Sun Nov 14 19:26:49 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Nov 2004 19:26:49 +0100
+Subject: [Softdevice-devel] vdr-1.2.1 build fails
+Message-ID: <200411141926.49230.stefan@lucke.in-berlin.de>
+
+Did a fresh checkout and it fails with the following message:
+
+In file included from softdevice.c:70:
+mpeg2decoder.h: In constructor `
+   cSoftRingBufferLinear::cSoftRingBufferLinear(int, int, bool, const char*)':
+mpeg2decoder.h:47: error: no matching function for call to `cRingBufferLinear::
+   cRingBufferLinear(int&, int&, bool&, const char*&)'
+../../../include/vdr/ringbuffer.h:44: error: candidates are:
+   cRingBufferLinear::cRingBufferLinear(const cRingBufferLinear&)
+../../../include/vdr/ringbuffer.h:51: error:
+   cRingBufferLinear::cRingBufferLinear(int, int, bool)
+make[1]: *** [softdevice.o] Fehler 1
+
+-- 
+stefan lucke
+
+
+
+From M.Wache at gmx.net  Sun Nov 14 21:21:35 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Sun, 14 Nov 2004 21:21:35 +0100 (MET)
+Subject: [Softdevice-devel] vdr-1.2.1 build fails
+References: <200411141926.49230.stefan@lucke.in-berlin.de>
+Message-ID: <9083.1100463695@www17.gmx.net>
+
+> Did a fresh checkout and it fails with the following message:
+> 
+> In file included from softdevice.c:70:
+> mpeg2decoder.h: In constructor `
+>    cSoftRingBufferLinear::cSoftRingBufferLinear(int, int, bool, const
+> char*)':
+> mpeg2decoder.h:47: error: no matching function for call to
+> `cRingBufferLinear::
+>    cRingBufferLinear(int&, int&, bool&, const char*&)'
+> ../../../include/vdr/ringbuffer.h:44: error: candidates are:
+>    cRingBufferLinear::cRingBufferLinear(const cRingBufferLinear&)
+> ../../../include/vdr/ringbuffer.h:51: error:
+>    cRingBufferLinear::cRingBufferLinear(int, int, bool)
+> make[1]: *** [softdevice.o] Fehler 1
+> 
+> -- 
+> stefan lucke
+
+I'm sorry... I hope my last change fixed this. By the way where can I get 
+these old versions of vdr?
+
+Martin Wache
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+From stefan at lucke.in-berlin.de  Sun Nov 14 21:48:13 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Nov 2004 21:48:13 +0100
+Subject: [Softdevice-devel] vdr-1.2.1 build fails
+In-Reply-To: <9083.1100463695@www17.gmx.net>
+References: <200411141926.49230.stefan@lucke.in-berlin.de> <9083.1100463695@www17.gmx.net>
+Message-ID: <200411142148.13132.stefan@lucke.in-berlin.de>
+
+On Sonntag, 14. November 2004 21:21, Martin Wache wrote:
+> > Did a fresh checkout and it fails with the following message:
+> > 
+> > In file included from softdevice.c:70:
+> > mpeg2decoder.h: In constructor `
+> >    cSoftRingBufferLinear::cSoftRingBufferLinear(int, int, bool, const
+> > char*)':
+> > mpeg2decoder.h:47: error: no matching function for call to
+> > `cRingBufferLinear::
+> >    cRingBufferLinear(int&, int&, bool&, const char*&)'
+> > ../../../include/vdr/ringbuffer.h:44: error: candidates are:
+> >    cRingBufferLinear::cRingBufferLinear(const cRingBufferLinear&)
+> > ../../../include/vdr/ringbuffer.h:51: error:
+> >    cRingBufferLinear::cRingBufferLinear(int, int, bool)
+> > make[1]: *** [softdevice.o] Fehler 1
+> > 
+> > -- 
+> > stefan lucke
+> 
+> I'm sorry... I hope my last change fixed this. By the way where can I get 
+> these old versions of vdr?
+
+ftp://ftp.cadsoft.de/vdr/Developer/
+
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Sun Nov 14 21:52:42 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Nov 2004 21:52:42 +0100
+Subject: [Softdevice-devel] vdr-1.2.1 build fails
+In-Reply-To: <9083.1100463695@www17.gmx.net>
+References: <200411141926.49230.stefan@lucke.in-berlin.de> <9083.1100463695@www17.gmx.net>
+Message-ID: <200411142152.42808.stefan@lucke.in-berlin.de>
+
+On Sonntag, 14. November 2004 21:21, Martin Wache wrote:
+
+> I'm sorry... I hope my last change fixed this. By the way where can I get 
+> these old versions of vdr?
+
+Now the Free () problen is back:
+../../../include/vdr/ringbuffer.h: In member function `virtual void
+   cStreamDecoder::Clear()':
+../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+   protected
+mpeg2decoder.c:256: error: within this context
+../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+   protected
+mpeg2decoder.c:262: error: within this context
+mpeg2decoder.c: In member function `virtual int
+   cAudioStreamDecoder::DecodeData(uchar*, int)':
+mpeg2decoder.c:321: Warnung: unused variable `int delay'
+make[1]: *** [mpeg2decoder.o] Fehler 1
+
+-- 
+stefan lucke
+
+
+
+From M.Wache at gmx.net  Sun Nov 14 23:35:12 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Sun, 14 Nov 2004 23:35:12 +0100 (MET)
+Subject: [Softdevice-devel] vdr-1.2.1 build fails
+References: <200411142152.42808.stefan@lucke.in-berlin.de>
+Message-ID: <1708.1100471712@www17.gmx.net>
+
+> On Sonntag, 14. November 2004 21:21, Martin Wache wrote:
+> 
+> > I'm sorry... I hope my last change fixed this. By the way where can I
+> get 
+> > these old versions of vdr?
+> 
+> Now the Free () problen is back:
+> ../../../include/vdr/ringbuffer.h: In member function `virtual void
+>    cStreamDecoder::Clear()':
+> ../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+>    protected
+> mpeg2decoder.c:256: error: within this context
+> ../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+>    protected
+> mpeg2decoder.c:262: error: within this context
+> mpeg2decoder.c: In member function `virtual int
+>    cAudioStreamDecoder::DecodeData(uchar*, int)':
+> mpeg2decoder.c:321: Warnung: unused variable `int delay'
+> make[1]: *** [mpeg2decoder.o] Fehler 1
+> 
+ehmm, now its working... This time I tried it...
+Sorry, again.
+
+Martin Wache
+
+-- 
+Geschenkt: 3 Monate GMX ProMail + 3 Top-Spielfilme auf DVD
+++ Jetzt kostenlos testen http://www.gmx.net/de/go/mail ++
+
+
+From stefan at lucke.in-berlin.de  Sun Nov 14 23:44:10 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Nov 2004 23:44:10 +0100
+Subject: [Softdevice-devel] vdr-1.2.1 build fails
+In-Reply-To: <1708.1100471712@www17.gmx.net>
+References: <200411142152.42808.stefan@lucke.in-berlin.de> <1708.1100471712@www17.gmx.net>
+Message-ID: <200411142344.10388.stefan@lucke.in-berlin.de>
+
+On Sonntag, 14. November 2004 23:35, Martin Wache wrote:
+> ehmm, now its working... This time I tried it...
+> Sorry, again.
+
+Yes, works for me too. Thanks.
+
+-- 
+stefan lucke
+
+
+
+From torgeir at pobox.com  Mon Nov 15 23:41:28 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 15 Nov 2004 22:41:28 +0000
+Subject: [Softdevice-devel] picture delays due to deinterlacing
+Message-ID: <1100558488.8743.12.camel@atlantis.netenviron.com>
+
+Stefan, 
+
+Do you have an estimate over how many frames delay each deinterlacing
+method incur? 
+
+Have been looking for information about this, but it's hard to find. 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From torgeir at pobox.com  Tue Nov 16 20:47:56 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Tue, 16 Nov 2004 19:47:56 +0000
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <11150.1100362002@www9.gmx.net>
+References: <11150.1100362002@www9.gmx.net>
+Message-ID: <1100634476.14559.20.camel@atlantis.netenviron.com>
+
+On Sat, 2004-11-13 at 17:06 +0100, Martin Wache wrote:
+> Hello,
+> 
+> I have a new version of my new A-V syncing patch. The main changes since
+> the last version are: I fixed the stupid bug which caused the channel 
+> switching to fail sometimes, fixed the compile issue with vdr-1.2.1 and
+> I implemented the Freeze() method.
+> 
+> Since the new A-V syncing is now running very stable and I fixed all the 
+> issues of the last patch, I will commit this patch to the CVS tomorrow 
+> evening if there are no objections.
+
+It's not in CVS yet?
+
+I think the av offset setting is not working as it did before. I am
+really unable to adjust any offset to fix my sync issues. also, it seems
+to fluctuate depending on which channel I watch.
+
+I've uploaded a tgz of a vdr recording which demonstrates the problem.
+It would be good if one of you could try to view it and see if you have
+the same problems as I have, to actually test whether the problem is in
+my local setup or not. It's quite large, about 80mb, at
+http://nothome.com/avsynctest.tgz 
+
+Additionally, we should probably negate the offset value and call it
+audio delay instead?
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Wed Nov 17 06:17:10 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 17 Nov 2004 06:17:10 +0100
+Subject: [Softdevice-devel] picture delays due to deinterlacing
+In-Reply-To: <1100558488.8743.12.camel@atlantis.netenviron.com>
+References: <1100558488.8743.12.camel@atlantis.netenviron.com>
+Message-ID: <200411170617.10660.stefan@lucke.in-berlin.de>
+
+On Montag, 15. November 2004 23:41, Torgeir Veimo wrote:
+> Stefan, 
+> 
+> Do you have an estimate over how many frames delay each deinterlacing
+> method incur? 
+
+No, just a guess. I think it is based only on the current frame (intraframe).
+
+> 
+> Have been looking for information about this, but it's hard to find. 
+> 
+-- 
+stefan lucke
+
+
+
+From torgeir at pobox.com  Thu Nov 18 00:24:08 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Wed, 17 Nov 2004 23:24:08 +0000
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <1100634476.14559.20.camel@atlantis.netenviron.com>
+References: <11150.1100362002@www9.gmx.net>
+	 <1100634476.14559.20.camel@atlantis.netenviron.com>
+Message-ID: <1100733848.23943.16.camel@atlantis.netenviron.com>
+
+On Tue, 2004-11-16 at 19:47 +0000, Torgeir Veimo wrote:
+
+> I've uploaded a tgz of a vdr recording which demonstrates the problem.
+> It would be good if one of you could try to view it and see if you have
+> the same problems as I have, to actually test whether the problem is in
+> my local setup or not. It's quite large, about 80mb, at
+> http://nothome.com/avsynctest.tgz 
+
+Did anyone of you try the recording? It works about right with an
+additional audio delay of about 200ms in my setup. 200ms is still the
+delay that works best for most channels and programmes, but not always.
+
+I think I'll just rename av offset to audio delay in CVS (without
+negating it, I'm getting confused by all my trial and errors...)
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From M.Wache at gmx.net  Thu Nov 18 09:02:01 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 18 Nov 2004 09:02:01 +0100 (MET)
+Subject: [Softdevice-devel] New A-V patch
+References: <1100733848.23943.16.camel@atlantis.netenviron.com>
+Message-ID: <23032.1100764921@www48.gmx.net>
+
+> On Tue, 2004-11-16 at 19:47 +0000, Torgeir Veimo wrote:
+> 
+> > I've uploaded a tgz of a vdr recording which demonstrates the problem.
+> > It would be good if one of you could try to view it and see if you have
+> > the same problems as I have, to actually test whether the problem is in
+> > my local setup or not. It's quite large, about 80mb, at
+> > http://nothome.com/avsynctest.tgz 
+> 
+> Did anyone of you try the recording? It works about right with an
+> additional audio delay of about 200ms in my setup. 200ms is still the
+> delay that works best for most channels and programmes, but not always.
+> 
+> I think I'll just rename av offset to audio delay in CVS (without
+> negating it, I'm getting confused by all my trial and errors...)
+> 
+
+I will try to have a look at it, but right now I don't have too much time
+left...
+So maybe it will take some time...
+
+Martin Wache
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+From stefan at lucke.in-berlin.de  Sat Nov 20 08:56:32 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 20 Nov 2004 08:56:32 +0100
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <1100733848.23943.16.camel@atlantis.netenviron.com>
+References: <11150.1100362002@www9.gmx.net> <1100634476.14559.20.camel@atlantis.netenviron.com> <1100733848.23943.16.camel@atlantis.netenviron.com>
+Message-ID: <200411200856.33134.stefan@lucke.in-berlin.de>
+
+On Donnerstag, 18. November 2004 00:24, Torgeir Veimo wrote:
+> On Tue, 2004-11-16 at 19:47 +0000, Torgeir Veimo wrote:
+> 
+> > I've uploaded a tgz of a vdr recording which demonstrates the problem.
+> > It would be good if one of you could try to view it and see if you have
+> > the same problems as I have, to actually test whether the problem is in
+> > my local setup or not. It's quite large, about 80mb, at
+> > http://nothome.com/avsynctest.tgz 
+> 
+> Did anyone of you try the recording? It works about right with an
+> additional audio delay of about 200ms in my setup. 200ms is still the
+> delay that works best for most channels and programmes, but not always.
+
+Now I was able to test this stream. It sound terrible. But maybe thats
+to the fact I got so many xrun messages:
+Nov 20 08:07:21 jarada vdr[2497]: [video-dfb] 1: 704x576 [0,0 704x576] -> 1024x768 [0,15 1024x737]
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 80% (tid=229387)
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 85% (tid=229387)
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 90% (tid=229387)
+Nov 20 08:07:21 jarada vdr[2498]: buffer usage: 95% (tid=229387)
+Nov 20 08:07:22 jarada vdr[2498]: buffer usage: 100% (tid=229387)
+Nov 20 08:07:45 jarada vdr[2496]: [softdevice-audio]: xrun
+
+Nov 20 08:08:16 jarada last message repeated 79 times
+Nov 20 08:09:04 jarada last message repeated 135 times
+
+Nov 20 08:09:04 jarada vdr[2478]: softdevice: no translation found for 'Softdevice' in language 1 (Deutsch)
+Nov 20 08:09:04 jarada vdr[2496]: [softdevice-audio]: xrun
+Nov 20 08:09:09 jarada last message repeated 14 times
+Nov 20 08:09:09 jarada vdr[2478]: confirm: Wirklich neu starten?
+
+mplayer has better sync but there are many suond glitches too
+(like a hissy background noise).
+
+I think the audio sample rate is not detected correct.
+
+-- 
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Sun Nov 21 07:56:42 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 21 Nov 2004 07:56:42 +0100
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <1100733848.23943.16.camel@atlantis.netenviron.com>
+References: <11150.1100362002@www9.gmx.net> <1100634476.14559.20.camel@atlantis.netenviron.com> <1100733848.23943.16.camel@atlantis.netenviron.com>
+Message-ID: <200411210756.42157.stefan@lucke.in-berlin.de>
+
+On Donnerstag, 18. November 2004 00:24, Torgeir Veimo wrote:
+> On Tue, 2004-11-16 at 19:47 +0000, Torgeir Veimo wrote:
+> 
+> > I've uploaded a tgz of a vdr recording which demonstrates the problem.
+> > It would be good if one of you could try to view it and see if you have
+> > the same problems as I have, to actually test whether the problem is in
+> > my local setup or not. It's quite large, about 80mb, at
+> > http://nothome.com/avsynctest.tgz 
+> 
+> Did anyone of you try the recording? It works about right with an
+> additional audio delay of about 200ms in my setup. 200ms is still the
+> delay that works best for most channels and programmes, but not always.
+
+My previous guess "audio sample rate" is wrong.
+
+It now plays fine (no audio adjustment) when I set softdevise's
+OSD option from "I-Frames" to "Any Frames". Torgeir did you test this too ?
+
+Dumping the video with xlist shows: it has only I-Frames equipped with
+PTS values.
+
+
+-- 
+stefan lucke
+
+
+
+From torgeir at pobox.com  Mon Nov 22 16:18:47 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Mon, 22 Nov 2004 15:18:47 +0000
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <200411210756.42157.stefan@lucke.in-berlin.de>
+References: <11150.1100362002@www9.gmx.net>
+	 <1100634476.14559.20.camel@atlantis.netenviron.com>
+	 <1100733848.23943.16.camel@atlantis.netenviron.com>
+	 <200411210756.42157.stefan@lucke.in-berlin.de>
+Message-ID: <1101136727.573.1.camel@atlantis.netenviron.com>
+
+On Sun, 2004-11-21 at 07:56 +0100, Stefan Lucke wrote:
+> On Donnerstag, 18. November 2004 00:24, Torgeir Veimo wrote:
+> > On Tue, 2004-11-16 at 19:47 +0000, Torgeir Veimo wrote:
+> > 
+> > > I've uploaded a tgz of a vdr recording which demonstrates the problem.
+> > > It would be good if one of you could try to view it and see if you have
+> > > the same problems as I have, to actually test whether the problem is in
+> > > my local setup or not. It's quite large, about 80mb, at
+> > > http://nothome.com/avsynctest.tgz 
+> > 
+> > Did anyone of you try the recording? It works about right with an
+> > additional audio delay of about 200ms in my setup. 200ms is still the
+> > delay that works best for most channels and programmes, but not always.
+> 
+> My previous guess "audio sample rate" is wrong.
+> 
+> It now plays fine (no audio adjustment) when I set softdevise's
+> OSD option from "I-Frames" to "Any Frames". Torgeir did you test this too ?
+> 
+> Dumping the video with xlist shows: it has only I-Frames equipped with
+> PTS values.
+
+I need to use Any Frames all the time otherwise the video stutters
+frequently.
+
+Do you really get good lip sync with 0ms offset with that video?
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Mon Nov 22 21:41:22 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 22 Nov 2004 21:41:22 +0100
+Subject: [Softdevice-devel] New A-V patch
+In-Reply-To: <1101136727.573.1.camel@atlantis.netenviron.com>
+References: <11150.1100362002@www9.gmx.net> <200411210756.42157.stefan@lucke.in-berlin.de> <1101136727.573.1.camel@atlantis.netenviron.com>
+Message-ID: <200411222141.22522.stefan@lucke.in-berlin.de>
+
+On Montag, 22. November 2004 16:18, Torgeir Veimo wrote:
+> On Sun, 2004-11-21 at 07:56 +0100, Stefan Lucke wrote:
+
+
+> > My previous guess "audio sample rate" is wrong.
+> > 
+> > It now plays fine (no audio adjustment) when I set softdevise's
+> > OSD option from "I-Frames" to "Any Frames". Torgeir did you test this too ?
+> > 
+> > Dumping the video with xlist shows: it has only I-Frames equipped with
+> > PTS values.
+> 
+> I need to use Any Frames all the time otherwise the video stutters
+> frequently.
+> 
+> Do you really get good lip sync with 0ms offset with that video?
+
+Sometimes yes, sometimes (after pause play) the xruns are back ;-( .
+-- 
+stefan lucke
+
+
+
+From torgeir at pobox.com  Thu Nov 25 23:40:46 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 25 Nov 2004 22:40:46 +0000
+Subject: [Softdevice-devel] current ffmpeg cvs has less judder
+Message-ID: <1101422446.3868.8.camel@atlantis.netenviron.com>
+
+Todays version of ffmpeg/libavcodec has significant less judder than I'm
+used to seeing (did previous cvs update a few days ago).
+
+Are any of you tracking current ffmpeg and noticing any judder recently?
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Sat Dec 11 21:57:55 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 11 Dec 2004 21:57:55 +0100
+Subject: [Softdevice-devel] A/V sync, option "setupStore.syncOnFrames"
+Message-ID: <200412112157.55544.stefan@lucke.in-berlin.de>
+
+Hi,
+
+I prepared a diff that would us allow to drop OSD option "A/V Sync".
+With attached diff I get good sync for streams which have PTS values
+for each frame and for streams which have PTS values for I-frames only.
+
+In general the sync point is about 4 frames (160ms) different from previous
+behaviour ;-) . So perhaps this would eliminate the need for adjusting
+A/V sync by hand.
+
+-- 
+stefan lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: work02-av-sync.diff
+Type: text/x-diff
+Size: 5398 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041211/5430e25b/attachment.diff>
+
+From torgeir.veimo at netenviron.com  Mon Dec 13 04:18:22 2004
+From: torgeir.veimo at netenviron.com (torgeir.veimo at netenviron.com)
+Date: Mon, 13 Dec 2004 04:18:22 +0100 (CET)
+Subject: [Softdevice-devel] A/V sync, option "setupStore.syncOnFrames"
+In-Reply-To: <200412112157.55544.stefan@lucke.in-berlin.de>
+References: <200412112157.55544.stefan@lucke.in-berlin.de>
+Message-ID: <47219.192.168.75.5.1102907902.squirrel@im.netenviron.com>
+
+> Hi,
+>
+> I prepared a diff that would us allow to drop OSD option "A/V Sync".
+> With attached diff I get good sync for streams which have PTS values
+> for each frame and for streams which have PTS values for I-frames only.
+>
+> In general the sync point is about 4 frames (160ms) different from
+> previous
+> behaviour ;-) . So perhaps this would eliminate the need for adjusting
+> A/V sync by hand.
+
+Very good! :)
+
+I'll try it out when I'm back from holidays.
+
+-- 
+-Tor
+
+
+From torgeir at pobox.com  Thu Dec 16 20:05:34 2004
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Thu, 16 Dec 2004 19:05:34 +0000
+Subject: [Softdevice-devel] A/V sync, option "setupStore.syncOnFrames"
+In-Reply-To: <200412112157.55544.stefan@lucke.in-berlin.de>
+References: <200412112157.55544.stefan@lucke.in-berlin.de>
+Message-ID: <1103223935.4905.3.camel@atlantis.netenviron.com>
+
+On Sat, 2004-12-11 at 21:57 +0100, Stefan Lucke wrote:
+> Hi,
+> 
+> I prepared a diff that would us allow to drop OSD option "A/V Sync".
+> With attached diff I get good sync for streams which have PTS values
+> for each frame and for streams which have PTS values for I-frames only.
+> 
+> In general the sync point is about 4 frames (160ms) different from previous
+> behaviour ;-) . So perhaps this would eliminate the need for adjusting
+> A/V sync by hand.
+
+Thank you so very much! :)
+
++1
+
+But it would be nice to still be able to set an adjustable offset
+though. For example, my digital amp adds minimum 8ms, the length
+depending on if a dsp program is active or not. 
+
+-- 
+Torgeir Veimo <torgeir at pobox.com>
+
+
+
+From stefan at lucke.in-berlin.de  Wed Dec 22 07:36:10 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 22 Dec 2004 07:36:10 +0100
+Subject: [Softdevice-devel] (TEST) List back now ?
+Message-ID: <200412220736.10707.stefan@lucke.in-berlin.de>
+
+Hi,
+ referring to this bug report, mailing list should be online again.
+
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2931&group_id=1
+
+-- 
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Wed Dec 22 07:53:59 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 22 Dec 2004 07:53:59 +0100
+Subject: [Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+Message-ID: <200412220753.59943.stefan@lucke.in-berlin.de>
+
+As the mailing lsit seems to work again, I'll resend this.
+
+If someone is interested in the patch from Andrei please let me know.
+bz2 size is about 90kB so beyond the limit of this list.
+
+Stefan Lucke
+
+----------  Forwarded Message  ----------
+
+Subject: Re: Matrox patch
+Date: Sonntag, 19. Dezember 2004 23:40
+From: Stefan Lucke <..>
+To: Andrei Naouman <..>
+Cc: softdevice- ..
+
+On Sonntag, 19. Dezember 2004 17:31, Andrei Naouman wrote:
+> Here is the patch I uploaded to the site.
+> 
+> "This patch adds a driver dedicated to support Matrox card TV-out. See
+> screenshot.
+> With recently enhanced Vidix mga driver you will have Hardware OSD of
+> Matrox card.
+> Since CRTC2 out does not support hardware scaling a software scaler
+> was borrowed from MPlayer project.
+
+I'm not sure if your CRTC2 statement is correct. I think I've seen code
+somewhere in directFB output modules (mplayer one ?) where they do
+some tricks in half-frame interrupts. Thus programming double line length
+and changing the line start addresses upon field interrupt :-) .
+
+
+I think we have to contact mplayer developer before accepting/including this
+huge patch into softdevice (uncompressed size is about 404K). At a first glance
+it looks like mplayer/postproc/* .
+
+Do you or anyone else know of a library for software scaling?
+
+Copying parts of mplayer is to my opinion not a clean solution, as I cannot maintain
+that code for bug fixing or further development.
+
+If mplayer developers decide to make their postproc lib, part of a separate public
+standalone lib (or include it into ffmpeg) it would be easier for other projects
+to share code.
+
+The screenshot you send to me looks nice.
+
+
+Stefan Lucke
+
+
+
+-------------------------------------------------------
+
+-- 
+stefan lucke
+
+
+
+From M.Wache at gmx.net  Wed Dec 22 10:33:07 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Wed, 22 Dec 2004 10:33:07 +0100
+Subject: [Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+In-Reply-To: <200412220753.59943.stefan@lucke.in-berlin.de>
+References: <200412220753.59943.stefan@lucke.in-berlin.de>
+Message-ID: <41C93F53.5040206@gmx.net>
+
+Stefan Lucke wrote:
+> As the mailing lsit seems to work again, I'll resend this.
+> 
+> If someone is interested in the patch from Andrei please let me know.
+> bz2 size is about 90kB so beyond the limit of this list.
+> 
+> Stefan Lucke
+> 
+> ----------  Forwarded Message  ----------
+> 
+> Subject: Re: Matrox patch
+> Date: Sonntag, 19. Dezember 2004 23:40
+> From: Stefan Lucke <..>
+> To: Andrei Naouman <..>
+> Cc: softdevice- ..
+> 
+> On Sonntag, 19. Dezember 2004 17:31, Andrei Naouman wrote:
+> 
+>>Here is the patch I uploaded to the site.
+>>
+>>"This patch adds a driver dedicated to support Matrox card TV-out. See
+>>screenshot.
+>>With recently enhanced Vidix mga driver you will have Hardware OSD of
+>>Matrox card.
+>>Since CRTC2 out does not support hardware scaling a software scaler
+>>was borrowed from MPlayer project.
+> 
+> 
+> I'm not sure if your CRTC2 statement is correct. I think I've seen code
+> somewhere in directFB output modules (mplayer one ?) where they do
+> some tricks in half-frame interrupts. Thus programming double line length
+> and changing the line start addresses upon field interrupt :-) .
+> 
+> 
+> I think we have to contact mplayer developer before accepting/including this
+> huge patch into softdevice (uncompressed size is about 404K). At a first glance
+> it looks like mplayer/postproc/* .
+> 
+> Do you or anyone else know of a library for software scaling?
+> 
+> Copying parts of mplayer is to my opinion not a clean solution, as I cannot maintain
+> that code for bug fixing or further development.
+> 
+> If mplayer developers decide to make their postproc lib, part of a separate public
+> standalone lib (or include it into ffmpeg) it would be easier for other projects
+> to share code.
+> 
+> The screenshot you send to me looks nice.
+> 
+> 
+> Stefan Lucke
+> 
+> 
+> 
+> -------------------------------------------------------
+> 
+
+
+Hi,
+
+I fully aggree with you, we should not blow up the softdevice that much 
+just to get software scaling. But having a procedure which scales the 
+osd to fit the actual windowsize would also be nice for X11-out.  In 
+principle scaling of a picture should not be that difficult, so maybe we 
+can get a algorithem from somewhere an implemented it ourself.
+I hope to have some more time during the holidays, can you send me the 
+patch to my private e-mail, so that I can have a look at it?
+
+Bye,
+Martin
+
+
+From stefan at lucke.in-berlin.de  Wed Dec 22 11:39:32 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 22 Dec 2004 11:39:32 +0100
+Subject: [Softdevice-devel] FYI: Fwd: swscale lib
+Message-ID: <200412221139.32453.stefan@lucke.in-berlin.de>
+
+----------  Forwarded Message  ----------
+
+Subject: swscale lib
+Date: Mittwoch, 22. Dezember 2004 08:59
+From: Andrei Naouman <..>
+To: michaelni..
+Cc: Stefan Lucke <..>
+
+Hi Michael,
+
+I wrote video out for Matrox card's TV-out for vdr/softdevice project
+(SAT TV). Since the card's second head does not have hardware scaling
+ability, a software scaler required to stretch SAT-TV picture (like
+704 -> 768).
+
+Currently I use MPlayer's /postpoc code for that purpose. But I am
+searching for stand alone library for that.
+
+Could you advice me that sort of library or may be swscale code exist
+in some other form with lower dependencies of MPlayer? (I saw drip
+project but have not investigated it yet...)
+
+Your help would be just great,
+Andrei.
+
+
+On Sun, 19 Dec 2004 23:40:11 +0100, Stefan Lucke
+<..> wrote:
+> On Sonntag, 19. Dezember 2004 17:31, Andrei Naouman wrote:
+> > Here is the patch I uploaded to the site.
+> >
+> > "This patch adds a driver dedicated to support Matrox card TV-out. See
+> > screenshot.
+> > With recently enhanced Vidix mga driver you will have Hardware OSD of
+> > Matrox card.
+> > Since CRTC2 out does not support hardware scaling a software scaler
+> > was borrowed from MPlayer project.
+> 
+> I'm not sure if your CRTC2 statement is correct. I think I've seen code
+> somewhere in directFB output modules (mplayer one ?) where they do
+> some tricks in half-frame interrupts. Thus programming double line length
+> and changing the line start addresses upon field interrupt :-) .
+> 
+> I think we have to contact mplayer developer before accepting/including this
+> huge patch into softdevice (uncompressed size is about 404K). At a first glance
+> it looks like mplayer/postproc/* .
+> 
+> Do you or anyone else know of a library for software scaling?
+> 
+> Copying parts of mplayer is to my opinion not a clean solution, as I cannot maintain
+> that code for bug fixing or further development.
+> 
+> If mplayer developers decide to make their postproc lib, part of a separate public
+> standalone lib (or include it into ffmpeg) it would be easier for other projects
+> to share code.
+> 
+> The screenshot you send to me looks nice.
+> 
+> 
+> Stefan Lucke
+> 
+>
+
+
+-------------------------------------------------------
+
+-- 
+stefan lucke
+
+
+
+From stefan at lucke.in-berlin.de  Wed Dec 22 11:50:06 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 22 Dec 2004 11:50:06 +0100
+Subject: [Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+In-Reply-To: <41C93F53.5040206@gmx.net>
+References: <200412220753.59943.stefan@lucke.in-berlin.de> <41C93F53.5040206@gmx.net>
+Message-ID: <200412221150.06441.stefan@lucke.in-berlin.de>
+
+On Mittwoch, 22. Dezember 2004 10:33, Martin Wache wrote:
+
+> Hi,
+> 
+> I fully aggree with you, we should not blow up the softdevice that much 
+> just to get software scaling. But having a procedure which scales the 
+> osd to fit the actual windowsize would also be nice for X11-out.  In 
+> principle scaling of a picture should not be that difficult, so maybe we 
+> can get a algorithem from somewhere an implemented it ourself.
+
+We can choose another OSD-drawing method. That is: render the OSD into
+the video frame with honoring alpha blending. So OSD is scaled with video,
+but this must be done foreach frame. We need a separate copy of the last
+displayed frame too, to refresh OSD and video in pause mode.
+
+> I hope to have some more time during the holidays, can you send me the 
+> patch to my private e-mail, so that I can have a look at it?
+
+Done.
+
+Have a nice X-mas.
+
+-- 
+stefan lucke
+
+
+
+From M.Wache at gmx.net  Thu Dec 23 12:37:24 2004
+From: M.Wache at gmx.net (Martin Wache)
+Date: Thu, 23 Dec 2004 12:37:24 +0100
+Subject: [Softdevice-devel] Re:  Alpha Blending was: Fwd: Re: Matrox patch
+In-Reply-To: <200412221150.06441.stefan@lucke.in-berlin.de>
+References: <200412220753.59943.stefan@lucke.in-berlin.de> <41C93F53.5040206@gmx.net> <200412221150.06441.stefan@lucke.in-berlin.de>
+Message-ID: <41CAADF4.4080108@gmx.net>
+
+Stefan Lucke wrote:
+> On Mittwoch, 22. Dezember 2004 10:33, Martin Wache wrote:
+> 
+> 
+>>Hi,
+>>
+>>I fully aggree with you, we should not blow up the softdevice that much 
+>>just to get software scaling. But having a procedure which scales the 
+>>osd to fit the actual windowsize would also be nice for X11-out.  In 
+>>principle scaling of a picture should not be that difficult, so maybe we 
+>>can get a algorithem from somewhere an implemented it ourself.
+> 
+> 
+> We can choose another OSD-drawing method. That is: render the OSD into
+> the video frame with honoring alpha blending. So OSD is scaled with video,
+> but this must be done foreach frame. We need a separate copy of the last
+> displayed frame too, to refresh OSD and video in pause mode.
+> 
+I tried that already some time ago, I attached a patch which is at 
+"proof of concept"-level and may break some things ;-). It is based on 
+an older version of the softdevice, but it should apply cleanly on the 
+CVS. The rendering of the OSD into the video picture works, but we still 
+have to scale the OSD in some cases, and if osd is present only the part 
+of the video with OSD overlay is shown.
+Due to a lack of time I did not finish this patch yet, so there are 
+still a lot of things to do, but this patch may be a good starting point.
+> 
+>>I hope to have some more time during the holidays, can you send me the 
+>>patch to my private e-mail, so that I can have a look at it?
+> 
+> 
+> Done.
+>  
+Thanks a lot for the patch, I will have a look at it during the holidays.
+
+Bye,
+Martin
+
+
+From noreply at berlios.de  Wed Dec 29 22:35:57 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Wed, 29 Dec 2004 23:35:57 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2971] Short gaps in audio output
+Message-ID: <200412292135.iBTLZvmj002597@unicorn.berlios.de>
+
+Bug #2971, was updated on 2004-Dec-29 23:35
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Short gaps in audio output
+
+Details: The audio output in vdr-softdevice-0.0.8pre1 seems to suffer from severe buffering problems. There are short gaps in the audio output and the gaps occur repeatedly so that there is a constant buzz in the sound. It sounds like multiplying the audio signal by 1 for a short while and then by 0 for a short while and then again by 1 etc.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2971&group_id=2051
+
+
+From noreply at berlios.de  Wed Dec 29 22:38:44 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Wed, 29 Dec 2004 23:38:44 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412292138.iBTLciHa002692@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 23:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Wed Dec 29 23:31:12 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Wed, 29 Dec 2004 23:31:12 +0100 (CET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412292231.iBTMVCSe007027@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 22:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-29 23:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Wed Dec 29 23:34:40 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 00:34:40 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412292234.iBTMYeSO007162@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 23:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 00:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Wed Dec 29 23:40:14 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Wed, 29 Dec 2004 23:40:14 +0100 (CET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412292240.iBTMeEwQ007355@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 22:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-29 23:40
+By: lucke
+
+Comment:
+Which exact version of X11 do you use and which driver is in use ? This is perhaps similar to this report on vdr mailing list:
+http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Wed Dec 29 23:46:57 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 00:46:57 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412292246.iBTMkvp4007628@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 23:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 00:46
+By: vesuri
+
+Comment:
+XFree86 is version 4.3.0 and I'm using ATis proprietary XFree86 driver fglrx-4.3.0-3.14.6.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:40
+By: lucke
+
+Comment:
+Which exact version of X11 do you use and which driver is in use ? This is perhaps similar to this report on vdr mailing list:
+http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Wed Dec 29 23:52:17 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Wed, 29 Dec 2004 23:52:17 +0100 (CET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412292252.iBTMqH7T007796@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 22:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-29 23:52
+By: lucke
+
+Comment:
+Can you try to change line 860 from:
+attributeStore.SetColorkey(0x01000000);
+to:
+attributeStore.SetColorkey(0x00000000);
+to see if that brings back colorkeying for your card
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:46
+By: vesuri
+
+Comment:
+XFree86 is version 4.3.0 and I'm using ATis proprietary XFree86 driver fglrx-4.3.0-3.14.6.
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:40
+By: lucke
+
+Comment:
+Which exact version of X11 do you use and which driver is in use ? This is perhaps similar to this report on vdr mailing list:
+http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Thu Dec 30 12:41:17 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 12:41:17 +0100 (CET)
+Subject: [Softdevice-devel] [Bug #2971] Short gaps in audio output
+Message-ID: <200412301141.iBUBfHLe007283@unicorn.berlios.de>
+
+Bug #2971, was updated on 2004-Dec-29 22:35
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Short gaps in audio output
+
+Details: The audio output in vdr-softdevice-0.0.8pre1 seems to suffer from severe buffering problems. There are short gaps in the audio output and the gaps occur repeatedly so that there is a constant buzz in the sound. It sounds like multiplying the audio signal by 1 for a short while and then by 0 for a short while and then again by 1 etc.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 12:41
+By: lucke
+
+Comment:
+Which hardware do you use (mobo & cpu & soundcard/chips) ?
+Did you use previous softdevice versions too with same effect ?
+Do you get messages like:
+Dec 30 11:31:03 jarada vdr[3351]: [softdevice-audio]: xrun
+Whats the sound sample rate ?
+Dec 30 11:26:26 jarada vdr[3230]: [softdevice-audio] samplerate: 48000Hz, channels: #2
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2971&group_id=2051
+
+
+From stefan at lucke.in-berlin.de  Thu Dec 30 13:11:06 2004
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 30 Dec 2004 13:11:06 +0100
+Subject: [Softdevice-devel] Fwd: Re: swscale lib
+Message-ID: <200412301311.06553.stefan@lucke.in-berlin.de>
+
+----------  Forwarded Message  ----------
+
+Subject: Re: swscale lib
+Date: Freitag, 24. Dezember 2004 09:17
+From: Andrei Naouman <anaouman at gmail.com>
+To: Stefan Lucke <stefan at lucke.in-berlin.de>
+
+Hi Stefan!
+
+What do you think about author's - Michael Niedermayer - advice :) ?
+
+Anyway I did not find stand alone library for software scaling. Other
+projects like Video Lan and 'drip' do the same thing to Mplayer's
+postproc...
+So we could include the code so far until guys move the library to ffmpeg.
+
+Another ugly solution - I could statically link code to MPlayer
+libswscale.a (and couple of it dependent *.a). But that would force
+users to build MPlayer from sources...
+
+Yet another solution is to extract exactly YV12 MMX scaler code from
+the labrary but that whould involve even more customization than
+extract the whole library...
+
+What do you think? 
+
+Andrei.
+
+On Wed, 22 Dec 2004 12:59:45 +0100, Michael Niedermayer
+<michaelni at gmx.at> wrote:
+> Hi
+> 
+> On Wednesday 22 December 2004 08:59, Andrei Naouman wrote:
+> > Hi Michael,
+> >
+> > I wrote video out for Matrox card's TV-out for vdr/softdevice project
+> > (SAT TV). Since the card's second head does not have hardware scaling
+> > ability, a software scaler required to stretch SAT-TV picture (like
+> > 704 -> 768).
+> >
+> > Currently I use MPlayer's /postpoc code for that purpose. But I am
+> > searching for stand alone library for that.
+> 
+> try google :)
+> 
+> anyway, the swscaler will be moved from mplayer to ffmpeg, at least its
+> planned to do that since a long time, though probably u dont want to wait for
+> that to happen, so until then simply including the required files from
+> postproc, while ugly is the simplest solution
+> "maintaining" it also shouldnt be much work, its simply a matter of
+> occasionally diffing the files against the ones from mplayer/postproc and
+> merging the differences
+> 
+> another minor thing i should mention is that IMHO scaling/colorspace
+> conversation doesnt belong into a driver not directly nor indirectly but in
+> the application using the driver or some common API layer maybe, i dunno
+> whichever way u have implemented it, and its your decision anyway how to do
+> it ...
+> 
+> [...]
+> --
+> Michael
+> 
+> "I do not agree with what you have to say, but I'll defend to the death your
+> right to say it." -- Voltaire
+>
+
+
+
+-------------------------------------------------------
+
+-- 
+stefan lucke
+
+
+
+From noreply at berlios.de  Thu Dec 30 15:30:44 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 16:30:44 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412301430.iBUEUiEE013507@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 23:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 16:30
+By: vesuri
+
+Comment:
+Yes, this fixed the problem. Thanks!
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:52
+By: lucke
+
+Comment:
+Can you try to change line 860 from:
+attributeStore.SetColorkey(0x01000000);
+to:
+attributeStore.SetColorkey(0x00000000);
+to see if that brings back colorkeying for your card
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:46
+By: vesuri
+
+Comment:
+XFree86 is version 4.3.0 and I'm using ATis proprietary XFree86 driver fglrx-4.3.0-3.14.6.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:40
+By: lucke
+
+Comment:
+Which exact version of X11 do you use and which driver is in use ? This is perhaps similar to this report on vdr mailing list:
+http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Thu Dec 30 15:33:12 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 16:33:12 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2971] Short gaps in audio output
+Message-ID: <200412301433.iBUEXCU9013660@unicorn.berlios.de>
+
+Bug #2971, was updated on 2004-Dec-29 23:35
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Short gaps in audio output
+
+Details: The audio output in vdr-softdevice-0.0.8pre1 seems to suffer from severe buffering problems. There are short gaps in the audio output and the gaps occur repeatedly so that there is a constant buzz in the sound. It sounds like multiplying the audio signal by 1 for a short while and then by 0 for a short while and then again by 1 etc.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 16:33
+By: vesuri
+
+Comment:
+Motherboard: ABit IS7
+CPU: Pentium 4 2,8GHz
+Soundcards: intel8x0 (integrated on the motherboard), ice1712 (M-Audio Audiophile 2496)
+
+VDR 1.2.6 and softdevice 0.0.7 had the same effect.
+
+I'll get back to you about the possible xruns and sample rates later today (I'm not using the computer just now).
+-------------------------------------------------------
+
+Date: 2004-Dec-30 13:41
+By: lucke
+
+Comment:
+Which hardware do you use (mobo & cpu & soundcard/chips) ?
+Did you use previous softdevice versions too with same effect ?
+Do you get messages like:
+Dec 30 11:31:03 jarada vdr[3351]: [softdevice-audio]: xrun
+Whats the sound sample rate ?
+Dec 30 11:26:26 jarada vdr[3230]: [softdevice-audio] samplerate: 48000Hz, channels: #2
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2971&group_id=2051
+
+
+From noreply at berlios.de  Thu Dec 30 20:24:38 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 21:24:38 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412301924.iBUJOc4V019185@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 23:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 21:24
+By: vesuri
+
+Comment:
+Video is shown through all black parts of all windows though but I guess there's nothing that can be done about that if the driver does not support the 0x01000000 color key.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 16:30
+By: vesuri
+
+Comment:
+Yes, this fixed the problem. Thanks!
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:52
+By: lucke
+
+Comment:
+Can you try to change line 860 from:
+attributeStore.SetColorkey(0x01000000);
+to:
+attributeStore.SetColorkey(0x00000000);
+to see if that brings back colorkeying for your card
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:46
+By: vesuri
+
+Comment:
+XFree86 is version 4.3.0 and I'm using ATis proprietary XFree86 driver fglrx-4.3.0-3.14.6.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:40
+By: lucke
+
+Comment:
+Which exact version of X11 do you use and which driver is in use ? This is perhaps similar to this report on vdr mailing list:
+http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+
+From noreply at berlios.de  Thu Dec 30 20:27:56 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 21:27:56 +0200 (EET)
+Subject: [Softdevice-devel] [Bug #2971] Short gaps in audio output
+Message-ID: <200412301927.iBUJRu7Q019525@unicorn.berlios.de>
+
+Bug #2971, was updated on 2004-Dec-29 23:35
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Short gaps in audio output
+
+Details: The audio output in vdr-softdevice-0.0.8pre1 seems to suffer from severe buffering problems. There are short gaps in the audio output and the gaps occur repeatedly so that there is a constant buzz in the sound. It sounds like multiplying the audio signal by 1 for a short while and then by 0 for a short while and then again by 1 etc.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 21:27
+By: vesuri
+
+Comment:
+Actually this turned out to be a problem with the ALSA dmix (software mixing) plugin since I have configured the default device to go through it. Both the internal intel8x0 card and the Audiophile work fine when used without dmix - no xruns, samplerate 48000Hz, channels 2. I need to use a slave device with only 2 channels with the Audiophile though (the hardware device has 10 channels) but it's the same with virtually all other programs as well.
+
+I haven't had problems with the dmix device with other programs though.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 16:33
+By: vesuri
+
+Comment:
+Motherboard: ABit IS7
+CPU: Pentium 4 2,8GHz
+Soundcards: intel8x0 (integrated on the motherboard), ice1712 (M-Audio Audiophile 2496)
+
+VDR 1.2.6 and softdevice 0.0.7 had the same effect.
+
+I'll get back to you about the possible xruns and sample rates later today (I'm not using the computer just now).
+-------------------------------------------------------
+
+Date: 2004-Dec-30 13:41
+By: lucke
+
+Comment:
+Which hardware do you use (mobo & cpu & soundcard/chips) ?
+Did you use previous softdevice versions too with same effect ?
+Do you get messages like:
+Dec 30 11:31:03 jarada vdr[3351]: [softdevice-audio]: xrun
+Whats the sound sample rate ?
+Dec 30 11:26:26 jarada vdr[3230]: [softdevice-audio] samplerate: 48000Hz, channels: #2
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2971&group_id=2051
+
+
+From noreply at berlios.de  Thu Dec 30 20:37:34 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Thu, 30 Dec 2004 19:37:34 GMT
+Subject: [Softdevice-devel] [Bug #2971] Short gaps in audio output
+Message-ID: <200412301937.iBUJbYkG020085@unicorn.berlios.de>
+
+Bug #2971, was updated on 2004-Dec-29 21:35
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Short gaps in audio output
+
+Details: The audio output in vdr-softdevice-0.0.8pre1 seems to suffer from severe buffering problems. There are short gaps in the audio output and the gaps occur repeatedly so that there is a constant buzz in the sound. It sounds like multiplying the audio signal by 1 for a short while and then by 0 for a short while and then again by 1 etc.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 19:37
+By: iampivot
+
+Comment:
+The reason for the dropouts with dmix is that the alsa function snd_pcm_status_get_delay(status) returns 0, and the delay is important for syncing up audio and video. It might be an idea to look at what other media players do to sync in these cases.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 19:27
+By: vesuri
+
+Comment:
+Actually this turned out to be a problem with the ALSA dmix (software mixing) plugin since I have configured the default device to go through it. Both the internal intel8x0 card and the Audiophile work fine when used without dmix - no xruns, samplerate 48000Hz, channels 2. I need to use a slave device with only 2 channels with the Audiophile though (the hardware device has 10 channels) but it's the same with virtually all other programs as well.
+
+I haven't had problems with the dmix device with other programs though.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 14:33
+By: vesuri
+
+Comment:
+Motherboard: ABit IS7
+CPU: Pentium 4 2,8GHz
+Soundcards: intel8x0 (integrated on the motherboard), ice1712 (M-Audio Audiophile 2496)
+
+VDR 1.2.6 and softdevice 0.0.7 had the same effect.
+
+I'll get back to you about the possible xruns and sample rates later today (I'm not using the computer just now).
+-------------------------------------------------------
+
+Date: 2004-Dec-30 11:41
+By: lucke
+
+Comment:
+Which hardware do you use (mobo & cpu & soundcard/chips) ?
+Did you use previous softdevice versions too with same effect ?
+Do you get messages like:
+Dec 30 11:31:03 jarada vdr[3351]: [softdevice-audio]: xrun
+Whats the sound sample rate ?
+Dec 30 11:26:26 jarada vdr[3230]: [softdevice-audio] samplerate: 48000Hz, channels: #2
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2971&group_id=2051
+
+
+From noreply at berlios.de  Fri Dec 31 02:00:28 2004
+From: noreply at berlios.de (noreply at berlios.de)
+Date: Fri, 31 Dec 2004 02:00:28 +0100 (CET)
+Subject: [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+Message-ID: <200412310100.iBV10SNp022141@unicorn.berlios.de>
+
+Bug #2972, was updated on 2004-Dec-29 22:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-31 02:00
+By: lucke
+
+Comment:
+No, colorkey value 0x01000000 was a workaround for an Xfree, dri, Xorg bug in the savage driver(s) which treat colorkey value of BLACK different as other colors. Value BLACK 0x00000000 is the right value. If the vdr window is partially hidden by other windows which have black areas, then it is by nature of colorkeying that video is shown in these black areas. If you minimize the vdr window, Xv-out is stopped and black areas of other windows shall return to black :-) . Colorkey fix is now in cvs.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 20:24
+By: vesuri
+
+Comment:
+Video is shown through all black parts of all windows though but I guess there's nothing that can be done about that if the driver does not support the 0x01000000 color key.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 15:30
+By: vesuri
+
+Comment:
+Yes, this fixed the problem. Thanks!
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:52
+By: lucke
+
+Comment:
+Can you try to change line 860 from:
+attributeStore.SetColorkey(0x01000000);
+to:
+attributeStore.SetColorkey(0x00000000);
+to see if that brings back colorkeying for your card
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:46
+By: vesuri
+
+Comment:
+XFree86 is version 4.3.0 and I'm using ATis proprietary XFree86 driver fglrx-4.3.0-3.14.6.
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:40
+By: lucke
+
+Comment:
+Which exact version of X11 do you use and which driver is in use ? This is perhaps similar to this report on vdr mailing list:
+http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-29 23:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=2972&group_id=2051
+
+

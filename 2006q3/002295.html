@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Exit out on wrong audio rates?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Exit%20out%20on%20wrong%20audio%20rates%3F&In-Reply-To=%3C44C67E0D.9050306%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002280.html">
+   <LINK REL="Next"  HREF="002296.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Exit out on wrong audio rates?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Exit%20out%20on%20wrong%20audio%20rates%3F&In-Reply-To=%3C44C67E0D.9050306%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Exit out on wrong audio rates?">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Jul 25 22:24:45 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002280.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+        <LI>Next message: <A HREF="002296.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2295">[ date ]</a>
+              <a href="thread.html#2295">[ thread ]</a>
+              <a href="subject.html#2295">[ subject ]</a>
+              <a href="author.html#2295">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo schrieb:
+&gt;<i> Dave wrote:
+</I>&gt;&gt;<i> Here is the actual log entry:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jul 17 22:33:32 vdr vdr: [8262] [softdevice-audio] Rate 24000 Hz is not
+</I>&gt;&gt;<i> possible (and using instead 48000 Hz is not implemented) FATAL exiting
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This drives me nuts!
+</I>&gt;<i> 
+</I>&gt;<i> Did you try changing the exit(1); in line 335 in audio-alsa.c to return 0; ?
+</I>&gt;<i> 
+</I>&gt;<i> It's probably not enough, but not having a stream to check with makes it 
+</I>&gt;<i> a bit difficult to test. Can you make a recording where the audio 
+</I>&gt;<i> changes from 48000 to 24000 and upload it somewhere?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>I changed audio-alsa not to exit if the hardware is not able to audio
+format. Please report it if there are problems.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002280.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+	<LI>Next message: <A HREF="002296.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2295">[ date ]</a>
+              <a href="thread.html#2295">[ thread ]</a>
+              <a href="subject.html#2295">[ subject ]</a>
+              <a href="author.html#2295">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

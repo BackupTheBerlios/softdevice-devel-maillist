@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] MMX error on Celeron 466
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MMX%20error%20on%20Celeron%20466&In-Reply-To=%3C46529C55.2000301%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002867.html">
+   <LINK REL="Next"  HREF="002868.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] MMX error on Celeron 466</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MMX%20error%20on%20Celeron%20466&In-Reply-To=%3C46529C55.2000301%40huillard.net%3E"
+       TITLE="[Softdevice-devel] MMX error on Celeron 466">nicolas at huillard.net
+       </A><BR>
+    <I>Tue May 22 09:31:33 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002867.html">[Softdevice-devel] MMX error on Celeron 466
+</A></li>
+        <LI>Next message: <A HREF="002868.html">[Softdevice-devel] No picture with latest cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2883">[ date ]</a>
+              <a href="thread.html#2883">[ thread ]</a>
+              <a href="subject.html#2883">[ subject ]</a>
+              <a href="author.html#2883">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nicolas Huillard a &#233;crit :
+&gt;<i> I'm testing softdevice on a old Celeron box, which used to be a DVD 
+</I>&gt;<i> player. I hope it will be OK as a VDR box with softdevice...
+</I>&gt;<i> I'm trying to stick with binary Debian packages, but I have an MMX 
+</I>&gt;<i> problem here.
+</I>
+...
+
+&gt;<i> flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca 
+</I>&gt;<i> cmov pat pse36 mmx fxsr
+</I>
+...
+
+&gt;<i> Program received signal SIGILL, Illegal instruction.
+</I>&gt;<i> [Switching to Thread -1210758496 (LWP 8282)]
+</I>&gt;<i> 0xb7d2e340 in cSoftOsd::ScaleUpHoriz_MMX () from 
+</I>&gt;<i> /usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+</I>
+Vladimir Monchenko have quite the same CPU, with added &quot;sse&quot; flag. I 
+didn't experiment more on this subject, but it seems that the MMX 
+#define in softdevice also refers to SSE instructions, which can be 
+misleading.
+
+Side note: I didn't experiment more with this box, because the Nova-T 
+DVB card I have doesn't work there. The PCI bus is sufficient for the 
+system to detect and use all devices on the card, but the tuner itself 
+is not activated: no antena pass-through, and every tuning attempt 
+fails. The red LED on the card is also off. Putting the card in another 
+box with 3.3V/5V PCI bus solves the problem.
+
+I think try to use older-than-reasonable hardware...
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002867.html">[Softdevice-devel] MMX error on Celeron 466
+</A></li>
+	<LI>Next message: <A HREF="002868.html">[Softdevice-devel] No picture with latest cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2883">[ date ]</a>
+              <a href="thread.html#2883">[ thread ]</a>
+              <a href="subject.html#2883">[ subject ]</a>
+              <a href="author.html#2883">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

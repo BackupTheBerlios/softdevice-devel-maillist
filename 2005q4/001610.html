@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem  
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem%20%20&In-Reply-To=%3C20051218024900.44180.qmail%40web35412.mail.mud.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001611.html">
+   <LINK REL="Next"  HREF="001612.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem  </H1>
+    <B>Zdzislaw Gorlicki</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem%20%20&In-Reply-To=%3C20051218024900.44180.qmail%40web35412.mail.mud.yahoo.com%3E"
+       TITLE="[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem  ">zdzisekg at yahoo.com
+       </A><BR>
+    <I>Sun Dec 18 03:49:00 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001611.html">[Softdevice-devel] VDR with softdevice only 3 issues
+</A></li>
+        <LI>Next message: <A HREF="001612.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1610">[ date ]</a>
+              <a href="thread.html#1610">[ thread ]</a>
+              <a href="subject.html#1610">[ subject ]</a>
+              <a href="author.html#1610">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>After many hours of fiddling around with this block in
+mpeg2decoder.c(as mentioned by you in previous
+message)
+---------------------------------------------------------------
+    if (pkt-&gt;pts != (int64_t) AV_NOPTS_VALUE) {
+         lastPTS=pkt-&gt;pts;
+         lastDuration=pkt-&gt;duration;
+
+         if (lastDuration) {
+#if LIBAVCODEC_BUILD &gt; 4753
+                
+default_frametime=context-&gt;time_base.num*
+                         10000/context-&gt;time_base.den;
+#else
+                 default_frametime=lastDuration/100;
+#endif
+                 if (!default_frametime) {
+                  /*
+-------------------------------------------------------------------
+                   * we should have another/better
+guess.
+                   */
+                  //fprintf (stderr, &quot; --- setting
+default frametime !! ---\n&quot;);
+                  default_frametime =
+DEFAULT_FRAMETIME;
+                 }
+                 MPGDEB(&quot;Set default_frametime to
+%d\n&quot;,default_frametime);
+         };
+    };
+-------------------------------------------------------------------
+
+it has come to me that if I set the DEFAULT_FRAMETIME
+in
+mpeg2decoder.h to 0 (zero). HD channels display fine,
+however SD channels do not. So you were right on that
+it
+might be a frame detection issue. However I'm hardly a
+programmer and my skills are limited, so I have no
+idea
+how to fix it myself.
+
+Also, how do you calculate the frame time that it ends
+up
+400 for PAL. What would it be for NTSC?
+
+Debugging the output and looking at the function
+above, I'd assume that default_frametime = 0 is only
+printed when everything else fails and the
+default_frametime is used. However, in my debug log, I
+get this message on every frame, which means for me it
+always failes back to default. Even on the SD
+channels. Any thoughts on that?
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+<A HREF="http://mail.yahoo.com">http://mail.yahoo.com</A> 
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001611.html">[Softdevice-devel] VDR with softdevice only 3 issues
+</A></li>
+	<LI>Next message: <A HREF="001612.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1610">[ date ]</a>
+              <a href="thread.html#1610">[ thread ]</a>
+              <a href="subject.html#1610">[ subject ]</a>
+              <a href="author.html#1610">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

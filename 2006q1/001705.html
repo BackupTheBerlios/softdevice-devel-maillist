@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XV-out, toggle fullscreen while playback paused
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%20paused&In-Reply-To=%3C200601221258.03713.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001728.html">
+   <LINK REL="Next"  HREF="001706.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XV-out, toggle fullscreen while playback paused</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%20paused&In-Reply-To=%3C200601221258.03713.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] XV-out, toggle fullscreen while playback paused">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Jan 22 12:58:03 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001728.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+        <LI>Next message: <A HREF="001706.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1705">[ date ]</a>
+              <a href="thread.html#1705">[ thread ]</a>
+              <a href="subject.html#1705">[ subject ]</a>
+              <a href="author.html#1705">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I get an odd behaviour when toggleing fullscreen mode while playback
+is paused. It took a few seconds until still video image is shown
+after toggle.
+
+To fix this, I'm using attached dif to get instant video refresh.
+
+map_count is used for limiting redraw operations to every third
+event of interest. So when event processing loop terminates, there
+may be some yet unhandled events. In that case redrawing of
+current (still) picture is required too. XClearArea() should be
+called too so that parts of screen which do not hold video,
+get cleared. After reenabling this code video I got a huge number
+of Expose events, so I disabled map_count increment for this 
+(new handled) event type.
+
+Martin, in which situations did you encounter problems with old logic ?
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: xv-01.diff
+Type: text/x-diff
+Size: 1426 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060122/c0351e86/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060122/c0351e86/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001728.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+	<LI>Next message: <A HREF="001706.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1705">[ date ]</a>
+              <a href="thread.html#1705">[ thread ]</a>
+              <a href="subject.html#1705">[ subject ]</a>
+              <a href="author.html#1705">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

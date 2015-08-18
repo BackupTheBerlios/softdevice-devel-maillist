@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Success%20report%3A%20VIA%20EPIA%20ME6000%20%26%20VDR%20%26%20Streamdev%0A%20%26%20DirectFB%20%26%20DFB%2B%2B&In-Reply-To=%3C42832588.3040808%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000606.html">
+   <LINK REL="Next"  HREF="000607.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Success%20report%3A%20VIA%20EPIA%20ME6000%20%26%20VDR%20%26%20Streamdev%0A%20%26%20DirectFB%20%26%20DFB%2B%2B&In-Reply-To=%3C42832588.3040808%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu May 12 11:44:40 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000606.html">[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++
+</A></li>
+        <LI>Next message: <A HREF="000607.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#649">[ date ]</a>
+              <a href="thread.html#649">[ thread ]</a>
+              <a href="subject.html#649">[ subject ]</a>
+              <a href="author.html#649">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Steve Brown a &#233;crit :
+&gt;<i> Guys,
+</I>&gt;<i> 
+</I>&gt;<i> I'd like to report my success with softdevice on my Eden powered ME6000 
+</I>&gt;<i> mini-itx mainboard built on Debian.
+</I>
+Great ! I knew it would work on that platform !
+
+&gt;<i> The ME6000 is a 600MHz VIA Eden powered mainboard with CLE266 chipset. I 
+</I>&gt;<i> was really interested to get the accellerated MPEG decoder going, 
+</I>&gt;<i> because with a 600MHz processor I really didn't think it was going to 
+</I>&gt;<i> work with a software decoder solution.
+</I>
+Since I use a Celeron 466 since a few years for software DVD decoding on 
+Windows, it would have been bad if a new Eden 600 wasn't up to the task.
+
+&gt;<i> and this is configured as a diskless (Actually, I'm using a 16MB flash 
+</I>&gt;<i> card to boot with the custom initrd image containing the USB WLAN driver 
+</I>&gt;<i> and then mounting root on NFS) client with a USB Wireless NIC.
+</I>&gt;<i> Yes, I like pain, and this setup produced plenty.
+</I>
+You now have a (potentially ?) totally silent setup. I think it is 
+really worth the effort.
+
+&gt;<i> DirectFB *does have* support for the MPEG decoder in the CLE266. It 
+</I>&gt;<i> seems support for that function is growing rapidly now the VIA drivers 
+</I>&gt;<i> are in the open.
+</I>
+I'm really interested in CLE266 HW decoding with softdevice. I was told 
+that libavcodec would make use of the HW decoding stuff, and softdevice 
+would use it natively : do you have news in this area ?
+
+&gt;<i> Note that PP_LIBAVCODEC and MMX2 are _not_enabled, they require 
+</I>&gt;<i> instructions not available in the Eden processor.
+</I>
+Eden instruction set is different from C3/Nehemiah (kind of PII vs. PIII).
+
+&gt;<i> Performance.
+</I>&gt;<i> On the whole, great. I'm using a 17inch LCD monitor for output. Sure, 
+</I>&gt;<i> the quality doesn't come close to that produced on my main VDR box with 
+</I>&gt;<i> FF DVB card and 32inch screen - if you look at the 17inch screen from 
+</I>&gt;<i> one foot away you can see some (not too significant) MPEG artifacts 
+</I>&gt;<i> inthe form of blockiness here and there - but from usual viewing 
+</I>&gt;<i> position it's great. This system is in my main bedroom at the end of th 
+</I>&gt;<i> bed.
+</I>
+I sometime have perf problems (1Ghz C3/Nehemiah) when openning the 
+recording list (directory scan), while recording a show, and viewing 
+something else. The recording misses some frames and have a few seconds gap.
+You might not have this problems with your NFS mount.
+
+&gt;<i> Thanks very much to everyone who developed or contributed to the 
+</I>&gt;<i> softdevice plugin, and the DirectFB project. Excellent work.
+</I>
+Thanks for your report.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000606.html">[Softdevice-devel] Success report: VIA EPIA ME6000 &amp; VDR &amp; Streamdev &amp; DirectFB &amp; DFB++
+</A></li>
+	<LI>Next message: <A HREF="000607.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#649">[ date ]</a>
+              <a href="thread.html#649">[ thread ]</a>
+              <a href="subject.html#649">[ subject ]</a>
+              <a href="author.html#649">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

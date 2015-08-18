@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] building on mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C4612C40E.2050603%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002834.html">
+   <LINK REL="Next"  HREF="002836.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] building on mac</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C4612C40E.2050603%40gmx.net%3E"
+       TITLE="[Softdevice-devel] building on mac">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr  3 23:15:58 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002834.html">[Softdevice-devel] building on mac
+</A></li>
+        <LI>Next message: <A HREF="002836.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2835">[ date ]</a>
+              <a href="thread.html#2835">[ thread ]</a>
+              <a href="subject.html#2835">[ subject ]</a>
+              <a href="author.html#2835">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo schrieb:
+&gt;<i> On 3 Apr 2007, at 22:03, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Torgeir Veimo schrieb:
+</I>&gt;&gt;&gt;<i> Martin, I tried the latest cvs stuff, and am having a few compile
+</I>&gt;&gt;&gt;<i> problems.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I have to manually edit the .dependencies file to remove linux/dvb/
+</I>&gt;&gt;&gt;<i> dmx.h. Not sure why it ends up in that file.
+</I>&gt;<i> 
+</I>&gt;<i> This was due to VDR/include/remux.h. My mac VDR setup is prob not  
+</I>&gt;<i> waterproof.
+</I>&gt;<i> 
+</I>&gt;<i> Now I get;
+</I>&gt;<i> 
+</I>&gt;<i> Plugin softdevice:
+</I>&gt;<i> g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG - 
+</I>&gt;<i> D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' - 
+</I>&gt;<i> D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT - 
+</I>&gt;<i> I../../../include -I../../../../DVB/include -I/usr/local/include -I/ 
+</I>&gt;<i> usr/local/include/ffmpeg   SoftOsd.c
+</I>&gt;<i> /usr/local/include/ffmpeg/avcodec.h:2439: warning: attribute ignored  
+</I>&gt;<i> in declaration of 'struct ImgReSampleContext'
+</I>&gt;<i> /usr/local/include/ffmpeg/avcodec.h:2439: warning: attribute for  
+</I>&gt;<i> 'struct ImgReSampleContext' must follow the 'struct' keyword
+</I>&gt;<i> /usr/local/include/ffmpeg/avcodec.h:2444: warning:  
+</I>&gt;<i> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+</I>&gt;<i> ffmpeg/avcodec.h:2441)
+</I>&gt;<i> /usr/local/include/ffmpeg/avcodec.h:2451: warning:  
+</I>&gt;<i> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+</I>&gt;<i> ffmpeg/avcodec.h:2441)
+</I>&gt;<i> /usr/local/include/ffmpeg/avcodec.h:2455: warning:  
+</I>&gt;<i> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+</I>&gt;<i> ffmpeg/avcodec.h:2441)
+</I>&gt;<i> /usr/local/include/ffmpeg/avcodec.h:2457: warning:  
+</I>&gt;<i> 'ImgReSampleContext' is deprecated (declared at /usr/local/include/ 
+</I>&gt;<i> ffmpeg/avcodec.h:2441)
+</I>&gt;<i> /var/tmp//ccpGFYQd.s:1399:Unimplemented segment type 5 in parse_operand
+</I>&gt;<i> 
+</I>&gt;<i> I'll try updating my ffmpeg library. It's a shame it's not available  
+</I>&gt;<i> through fink.
+</I>&gt;<i> 
+</I>Please also try disable mmx optimizations, I'm not sure if Mac Os allows
+the same syntax as Linux.
+
+Bye,
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002834.html">[Softdevice-devel] building on mac
+</A></li>
+	<LI>Next message: <A HREF="002836.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2835">[ date ]</a>
+              <a href="thread.html#2835">[ thread ]</a>
+              <a href="subject.html#2835">[ subject ]</a>
+              <a href="author.html#2835">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

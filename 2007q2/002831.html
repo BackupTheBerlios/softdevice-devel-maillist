@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C4612BAC2.4080909%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002829.html">
+   <LINK REL="Next"  HREF="002841.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay, unable to play (mpeg) movies.</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C4612BAC2.4080909%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softplay, unable to play (mpeg) movies.">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr  3 22:36:18 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002829.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+        <LI>Next message: <A HREF="002841.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2831">[ date ]</a>
+              <a href="thread.html#2831">[ thread ]</a>
+              <a href="subject.html#2831">[ subject ]</a>
+              <a href="author.html#2831">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Per Mellander schrieb:
+&gt;<i> I started using softplay when I changed my output device to softdevice. 
+</I>&gt;<i> As I understand it I can't use mplayer plugin together with softdevice. 
+</I>&gt;<i> The problem is that some files are not playable with softplay, and what 
+</I>&gt;<i> concerns me is that it is mpeg files?
+</I>&gt;<i> 
+</I>&gt;<i> For example this one ( mplayer output ):
+</I>&gt;<i> 
+</I>&gt;<i> Playing NallePuhAdventure.mpg.
+</I>&gt;<i> MPEG-PS file format detected.
+</I>&gt;<i> VIDEO:  MPEG1  352x288  (aspect 8)  25.000 fps  1150.0 kbps (143.8 kbyte/s)
+</I>&gt;<i> 
+</I>&gt;<i> and this one:
+</I>&gt;<i> 
+</I>&gt;<i> Playing Pettson och Findus - Kattonauten .mpg.
+</I>&gt;<i> MPEG-PS file format detected.
+</I>&gt;<i> VIDEO:  MPEG1  352x288  (aspect 8)  25.000 fps  1150.0 kbps (143.8 kbyte/s)
+</I>&gt;<i> 
+</I>&gt;<i> I have several other movies that works but it seems that all that I can 
+</I>&gt;<i> play are movies that are _not_ mpeg. Strange, or have I missed something 
+</I>&gt;<i> obvious?
+</I>&gt;<i> 
+</I>In principle softplay should be able to replay those files without
+problems. I suspect that the auto detection of the file format fails.
+Could you please try if ffmpeg or ffplay detect the files correctly?
+What does softplay report when you've opened one of those files? There
+should be some lines starting with &quot;Input #0, mpeg, from 'test'&quot;, could
+you please send me those lines?
+Which ffmpeg version do you use? (SVN revision?)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002829.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+	<LI>Next message: <A HREF="002841.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2831">[ date ]</a>
+              <a href="thread.html#2831">[ thread ]</a>
+              <a href="subject.html#2831">[ subject ]</a>
+              <a href="author.html#2831">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200604301041.26837.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001963.html">
+   <LINK REL="Next"  HREF="001959.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200604301041.26837.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sun Apr 30 11:41:26 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001963.html">[Softdevice-devel] dfb:mgatv screen not blanked when playing audio-only program
+</A></li>
+        <LI>Next message: <A HREF="001959.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1958">[ date ]</a>
+              <a href="thread.html#1958">[ thread ]</a>
+              <a href="subject.html#1958">[ subject ]</a>
+              <a href="author.html#1958">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Right...here is a first attempt at a patch which incorporates hardware 
+decoding into softdevice on via cle266 chipsets. It's a bit hacked together 
+and requires a lot more work but as a first point it seems to work mostly.
+
+Prerequisites: libcle266decode (see below for link), the library which 
+provides the decoder access.
+
+viafb: I'm using linux-viafb from DirectFB cvs from 18/4/06. My version 
+includes Mark Adams' field sync patch. Not sure whether this would work with 
+any other viafb. Probably not.
+
+DirectFB and DFB++: both need patching with patches supplied in 
+libcle266decode tarball (DFB++ one needs applying by hand at present but it 
+involves adding about 2 lines: will fix at some point!). I'm using DirectFB 
+and DFB++ from cvs on the 18/4/06 (not sure if anything drastic has changed 
+since then). I've also patched with Mark Adams' field sync patch.
+
+The patch is against softdevice cvs from 28/4/06. You will probably have to 
+add -lcle266decode to the Makefile or config.mak. I have tried to enclose all 
+of my additions in #ifdefs so you will also need to add -DCLE266HW to the 
+Makefile. I think the only place where I didn't enclose with an #ifdef was in 
+cDFBVideoOut::YUV because the compiler didn't like having #ifdefs within the 
+try {} catch {} structures: they are there but commented out!
+
+;)
+
+Hopefully, the plugin should behave as normal unless it is called as 
+-P'softdevice -vo dfb:cle266' Only MPEG-2 video is sent to the hardware 
+decoder: anything else should still be decoded by ffmpeg, so things like 
+softplay should hopefully work still (not tried yet!).
+
+At present, this also enables viatv because I'm using TV-out for this.
+
+At present, I get a smooth picture on my TV but it only occupies the top-left 
+quarter of the screen! Total CPU usage has dropped from ca. 70-80% with 
+software decoding to ca. 35% with my patch. It seems quite stable: it ran 
+seamlessly over night without locking up.
+
+The decoded frames end up in a DirectFB surface so I'm blitting these from 
+here directly to the video surface, rather than copying to the avcodec 
+structures. This means that there are some complaints where frame sizes are 
+determined from the avcodec context (I commented out a few fprintfs from 
+postprocessing steps)!
+
+At the moment, this doesn't matter because I'm just blitting the whole frame 
+rather than cropping, etc. This does mean that if, for example, the stream 
+changes from 720x576 to 704x576, I end up with a strip of the previous few 
+frames at the right-hand edge of my picture!
+
+The video surface is forced to YV12 pixel format so that this blit can take 
+place. N.B. I get a picture with swapped round red and blue (or something) if 
+I select YV12 without the hardware decoding but then it has always been like 
+that for me.
+
+Patch:
+<A HREF="http://vdr.club-burniston.co.uk/softdevice_cle266.diff">http://vdr.club-burniston.co.uk/softdevice_cle266.diff</A>
+
+Decoder library:
+<A HREF="http://vdr.club-burniston.co.uk/libcle266decode-0.1.tar.gz">http://vdr.club-burniston.co.uk/libcle266decode-0.1.tar.gz</A>
+
+This is looking quite promising but still needs a lot of work...
+
+Current problem is trying to work out why I only get a quarter-sized 
+frame...if anyone has any clues, please let me know! Both the decoded frame 
+buffer and the video surface are 720x576 so I'm not sure why only a quarter 
+gets filled with video. The OSD itself fills the screen!
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001963.html">[Softdevice-devel] dfb:mgatv screen not blanked when playing audio-only program
+</A></li>
+	<LI>Next message: <A HREF="001959.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1958">[ date ]</a>
+              <a href="thread.html#1958">[ thread ]</a>
+              <a href="subject.html#1958">[ subject ]</a>
+              <a href="author.html#1958">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

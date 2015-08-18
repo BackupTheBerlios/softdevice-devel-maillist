@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D&In-Reply-To=%3C200507170832.31921.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000979.html">
+   <LINK REL="Next"  HREF="000948.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH]</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D&In-Reply-To=%3C200507170832.31921.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH]">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Jul 17 08:32:31 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000979.html">[Softdevice-devel] [PATCH]
+</A></li>
+        <LI>Next message: <A HREF="000948.html">[Softdevice-devel] EPIA-M DirectFB + Softdevice Configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#991">[ date ]</a>
+              <a href="thread.html#991">[ thread ]</a>
+              <a href="subject.html#991">[ subject ]</a>
+              <a href="author.html#991">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 15. Juli 2005 07:33, Vadim Catana wrote:
+&gt;<i> Martin Wache wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; By the way, did you already try to replace the memcpy in vidix and
+</I>&gt;<i> &gt; directfb with fast_memcpy? For Xv-out this improves the time spent on
+</I>&gt;<i> &gt; the memcpy by 20%, so I guess it's worth a try...
+</I>&gt;<i> 
+</I>&gt;<i> I couldn't try because fast_memcpy does not compile on x86_64. I was
+</I>&gt;<i> looking at aclib.c/aclib_template.c from MPlayer and it seems that
+</I>&gt;<i> it supports many more CPU architectures and instruction sets for
+</I>&gt;<i> fast_memcpy. I was thinking to include these two files in softdevice
+</I>&gt;<i> to replace it's fast_memcpy. Also, postproc directory from MPlayer
+</I>&gt;<i> has functions for picture format convertion with support for
+</I>&gt;<i> MMX, MMX2, SSE, SSE2, 3Dnow, including YUV422 to YUY2. This is
+</I>&gt;<i> usefull for the problem discused in the &quot;softdevice and 4:2:2&quot; thread.
+</I>&gt;<i> So, is it possible to put aclib, rgb2rgb and yuv2rgb
+</I>&gt;<i> from MPlayer in a subdirectory and use that code in softdevice ?
+</I>&gt;<i> This way softdevice developers will not need to spend time maintaining
+</I>&gt;<i> that part of the code. I'll try to do this, if there're no objections.
+</I>
+There are some objections. I think we had a similar discussion a while
+ago. <A HREF="../2004q4/000103.html">http://lists.berlios.de/pipermail/softdevice-devel/2004q4/000103.html</A>
+
+The &quot;best and correct way&quot; (tm)  to get those sophisticated conversion
+functions available for softdevice (and other projects), is to integrate
+them into ffmpeg. I you want to spend time on this, a patch to ffmpeg
+is welcome to the ffmpeg developers (see attached mail).
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+An embedded message was scrubbed...
+From: Michael Niedermayer &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">michaelni at gmx.at</A>&gt;
+Subject: Re: swscale lib
+Date: Wed, 22 Dec 2004 12:59:45 +0100
+Size: 3204
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050717/5eb3308d/attachment.mht">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050717/5eb3308d/attachment.mht</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000979.html">[Softdevice-devel] [PATCH]
+</A></li>
+	<LI>Next message: <A HREF="000948.html">[Softdevice-devel] EPIA-M DirectFB + Softdevice Configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#991">[ date ]</a>
+              <a href="thread.html#991">[ thread ]</a>
+              <a href="subject.html#991">[ subject ]</a>
+              <a href="author.html#991">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

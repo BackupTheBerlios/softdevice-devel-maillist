@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] no output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20output&In-Reply-To=%3C1204381997.9825.11.camel%40lychee.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003027.html">
+   <LINK REL="Next"  HREF="003029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] no output</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20output&In-Reply-To=%3C1204381997.9825.11.camel%40lychee.local%3E"
+       TITLE="[Softdevice-devel] no output">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Sat Mar  1 15:33:17 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003027.html">[Softdevice-devel] no output
+</A></li>
+        <LI>Next message: <A HREF="003029.html">[Softdevice-devel] no output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3028">[ date ]</a>
+              <a href="thread.html#3028">[ thread ]</a>
+              <a href="subject.html#3028">[ subject ]</a>
+              <a href="author.html#3028">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Sat, 2008-03-01 at 14:06 +0100, Stefan Lucke wrote:
+&gt;<i> On Saturday 01 March 2008, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On Fri, 2008-02-29 at 13:49 +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; On Thursday 28 February 2008, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; &gt; &gt; Hello,
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; With the latest cvs of softdevice I see no video output.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Just checked a freash cvs checkout.
+</I>&gt;<i> &gt; &gt; configure + make plugins + xv output is OK (vdr-1.4.0 ;-) ), FFmpeg is r12218.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I did not try xv, but did try directfb.  I also tried dummy checking the
+</I>&gt;<i> &gt; result with svdrp grab (via vdradmin)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I will try again.
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt; &gt; &gt; OSD works, but it does not seem like the video is being decoded: CPU is
+</I>&gt;<i> &gt; &gt; &gt; 3%.  My log file fills with Xrun messages.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Radio station ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; That would be too easy! (I tried multiple channels)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Did you check signal strength and or audio access rights ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I fixed the issue by reverting to my older version of ffmpeg and
+</I>&gt;<i> &gt; softdevice (from around May 2007). 
+</I>&gt;<i> 
+</I>&gt;<i> So you kept your vdr version, right ? 
+</I>
+Yes.
+
+&gt;<i> Which one ?
+</I>
+1.4.3
+
+&gt;<i> Can you tell us the exact ffmpeg version which fails,
+</I>&gt;<i> and the configuration options ?
+</I>
+I tried two versions: r10703 and r12271 both failed in the same way.
+
+r12271 was configured with:
+
+--enable-liba52 --enable-libfaac --enable-libfaad --enable-libgsm
+--enable-libmp3lame --enable-libtheora --enable-libvorbis
+--enable-libxvid --enable-libx264 --enable-pp --enable-swscaler
+--enable-pthreads --disable-static --enable-shared --enable-gpl
+--disable-debug --disable-strip --enable-nonfree
+
+&gt;<i> &gt; Everything worked as expected with 
+</I>&gt;<i> &gt; the old version but not the new.  So this is certainly a problem with
+</I>&gt;<i> &gt; softdevice/ffmpeg.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; (Given that my previous versions of ffmpeg/softdevice were old I could
+</I>&gt;<i> &gt; not try to compile eg new softdevice against old ffmeg, or old
+</I>&gt;<i> &gt; softdevice against new ffmeg)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003027.html">[Softdevice-devel] no output
+</A></li>
+	<LI>Next message: <A HREF="003029.html">[Softdevice-devel] no output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3028">[ date ]</a>
+              <a href="thread.html#3028">[ thread ]</a>
+              <a href="subject.html#3028">[ subject ]</a>
+              <a href="author.html#3028">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

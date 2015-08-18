@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606171501360.352980%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002156.html">
+   <LINK REL="Next"  HREF="002159.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Rolf Ahrenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3CPine.OSF.4.61.0606171501360.352980%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">rahrenbe at cc.hut.fi
+       </A><BR>
+    <I>Sat Jun 17 14:05:55 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002156.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002159.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2158">[ date ]</a>
+              <a href="thread.html#2158">[ thread ]</a>
+              <a href="subject.html#2158">[ subject ]</a>
+              <a href="author.html#2158">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, 17 Jun 2006, Martin Wache wrote:
+
+&gt;<i> Sure, having more systems to test it is never a bad idea. I'm not sure
+</I>&gt;<i> if I caught all the changes that you did on the patches, for some reason
+</I>&gt;<i> patch refused to apply your patch and also a diff of the diffs failed.
+</I>
+OK. I've attached my modifications over your patch (some configuration 
+stuff and the forced pixelFormat), that makes your patch working on my 
+setup too.
+
+BR,
+--
+rofa
+-------------- next part --------------
+diff -Nru softdevice-cvs-20060617-cle266-martin/Makefile softdevice-cvs-20060617-cle266-martin-fixed/Makefile
+--- softdevice-cvs-20060617-cle266-martin/Makefile	2006-06-17 13:54:17.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/Makefile	2006-06-17 14:51:58.000000000 +0300
+@@ -151,7 +151,7 @@
+ ifdef CLE266_SUPPORT
+   CLE266_LIBS = -L/usr/local/lib -lcle266mpegdec
+   CLE266_CFLAGS = -I/usr/local/include
+-  DEFINES  += -DHAVE_CLE266_MPEG_DECODER
++  DEFINES  += -DHAVE_CLE266_MPEG_DECODER -DFBDEV=\&quot;$(FBDEV)\&quot;
+ endif
+ 
+ ifdef XV_SUPPORT
+diff -Nru softdevice-cvs-20060617-cle266-martin/configure softdevice-cvs-20060617-cle266-martin-fixed/configure
+--- softdevice-cvs-20060617-cle266-martin/configure	2006-06-17 13:54:17.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/configure	2006-06-17 14:53:12.000000000 +0300
+@@ -271,9 +271,9 @@
+ #
+ if test &quot;${dfb}&quot; = &quot;yes&quot; ; then
+ echo -n &quot;Checking for cle266mpegdec... &quot;
+-cle266_cflags=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --cflags cle266mpegdec 2&gt;&gt;config.log` || cle266=&quot;no&quot;
++cle266_cflags=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --cflags libcle266mpegdec 2&gt;&gt;config.log` || cle266=&quot;no&quot;
+   if test &quot;${cle266}&quot; = &quot;yes&quot; ; then
+-  cle266_libs=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --libs cle266mpegdec`
++  cle266_libs=`PKG_CONFIG_PATH=$PKG_CONFIG_PATH pkg-config --libs libcle266mpegdec`
+   cle266_opts=&quot;${cle266_cflags} ${cle266_libs}&quot;
+   fi
+ 
+@@ -453,6 +453,7 @@
+ if test &quot;${cle266}&quot; = &quot;yes&quot; ; then
+   echo &quot;CLE266_LIBS = ${cle266_libs}&quot; &gt;&gt; $TMPM
+   echo &quot;CLE266_CFLAGS = -DHAVE_CLE266_MPEG_DECODER ${cle266_cflags}&quot; &gt;&gt; $TMPM
++  echo &quot;#define FBDEV \&quot;${fb_dev_name}\&quot;&quot; &gt;&gt; $TMPH
+ fi
+ 
+ ###############################################################################
+diff -Nru softdevice-cvs-20060617-cle266-martin/setup-softdevice-menu.c softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice-menu.c
+--- softdevice-cvs-20060617-cle266-martin/setup-softdevice-menu.c	2006-06-17 13:53:11.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice-menu.c	2006-06-17 14:46:15.000000000 +0300
+@@ -356,7 +356,7 @@
+   Add(new cOsdItem(&quot; &quot;, osUnknown));
+ #endif
+ 
+-  if (data-&gt;outputMethod == VOUT_DFB || data-&gt;outputMethod == VOUT_VIDIX)
++  if ((data-&gt;outputMethod == VOUT_DFB || data-&gt;outputMethod == VOUT_VIDIX) &amp;&amp; !data-&gt;cle266HWdecode)
+   {
+     Add(new cMenuEditStraItem(tr(&quot;Pixel Format&quot;),
+                               &amp;data-&gt;pixelFormat,
+diff -Nru softdevice-cvs-20060617-cle266-martin/setup-softdevice.c softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice.c
+--- softdevice-cvs-20060617-cle266-martin/setup-softdevice.c	2006-06-17 13:54:17.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/setup-softdevice.c	2006-06-17 14:54:04.000000000 +0300
+@@ -282,9 +282,12 @@
+     fprintf(stderr,&quot;[setup-softdevice] Expanding %d columns at left and right\n&quot;,
+             expandLeftRightCols);
+   } else if (!strcasecmp(Name,&quot;PixelFormat&quot;)) {
++#ifdef HAVE_CLE266_MPEG_DECODER
++    pixelFormat = 1;
++#else
+     pixelFormat = atoi(Value);
+     pixelFormat = clamp (0, pixelFormat, 2);
+-
++#endif
+     fprintf (stderr,
+              &quot;[setup-softdevice] pixel format set to (%s)\n&quot;,
+              pix_fmt [pixelFormat]);
+diff -Nru softdevice-cvs-20060617-cle266-martin/softdevice.c softdevice-cvs-20060617-cle266-martin-fixed/softdevice.c
+--- softdevice-cvs-20060617-cle266-martin/softdevice.c	2006-06-17 13:54:17.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/softdevice.c	2006-06-17 13:58:58.000000000 +0300
+@@ -806,10 +806,11 @@
+             setupStore.viaTv = 1;
+             fprintf(stderr,&quot;[softdevice] enabling field parity\n&quot;);
+ #ifdef HAVE_CLE266_MPEG_DECODER
+-          } else if (!strncmp (vo_argv, &quot;cle266&quot;, 6)) {
+-            //setupStore.viaTv = 1;
+-            setupStore.cle266HWdecode = 1;
+-            fprintf(stderr,&quot;[softdevice] enabling CLE266 HW decoding\n&quot;);
++            vo_argv += 5;
++            if (!strncmp (vo_argv, &quot;:cle266&quot;, 7)) {
++              setupStore.cle266HWdecode = 1;
++              fprintf(stderr,&quot;[softdevice] enabling CLE266 HW decoding\n&quot;);
++            }
+ #endif // HAVE_CLE266_MPEG_DECODER
+           } else if (!strncmp (vo_argv, &quot;triple&quot;, 6)) {
+             setupStore.tripleBuffering = 1;
+diff -Nru softdevice-cvs-20060617-cle266-martin/video-dfb.c softdevice-cvs-20060617-cle266-martin-fixed/video-dfb.c
+--- softdevice-cvs-20060617-cle266-martin/video-dfb.c	2006-06-17 13:54:17.000000000 +0300
++++ softdevice-cvs-20060617-cle266-martin-fixed/video-dfb.c	2006-06-17 13:55:17.000000000 +0300
+@@ -370,8 +370,7 @@
+               setupStore-&gt;cle266HWdecode = false;
+           } else {
+               // Need YV12 pixel format for blitting from harware buffer
+-              currentPixelFormat = setupStore-&gt;pixelFormat = 0;
+-              //currentPixelFormat = setupStore-&gt;pixelFormat = 1;
++              currentPixelFormat = setupStore-&gt;pixelFormat = 1;
+           }
+       }
+ #endif // HAVE_CLE266_MPEG_DECODER
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002156.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002159.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2158">[ date ]</a>
+              <a href="thread.html#2158">[ thread ]</a>
+              <a href="subject.html#2158">[ subject ]</a>
+              <a href="author.html#2158">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

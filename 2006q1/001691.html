@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20100000%25%20speed-up%20for%20cDFBVideoOut%3A%3ASetParams%28%29&In-Reply-To=%3C20060119104127.GA4191%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001690.html">
+   <LINK REL="Next"  HREF="001692.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20100000%25%20speed-up%20for%20cDFBVideoOut%3A%3ASetParams%28%29&In-Reply-To=%3C20060119104127.GA4191%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Jan 19 11:41:27 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001690.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+        <LI>Next message: <A HREF="001692.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1691">[ date ]</a>
+              <a href="thread.html#1691">[ thread ]</a>
+              <a href="subject.html#1691">[ subject ]</a>
+              <a href="author.html#1691">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jan 19, 2006 at 09:50:09AM +0100, Stefan Lucke wrote:
+&gt;<i> The problem in this case is not SetParms() beeing called, and not this
+</I>&gt;<i> loop. The problem is: Why does SetParms() think there must be taken some
+</I>&gt;<i> action (for each frame). SetParms() is for reallocation our drawing
+</I>&gt;<i> surface in case some parameters changed.
+</I>
+Okay, the constant reallocation of the drawing surface would also explain
+why libdirectfb-matrox.so (or something like that) took about 10 percent
+of all CPU cycles.  (This is from memory; I can't test until this evening.)
+
+&gt;<i> Action taken are protected by:
+</I>&gt;<i> 
+</I>&gt;<i>   if (videoLayer || useStretchBlit)
+</I>&gt;<i>   {
+</I>&gt;<i>     if ( ! videoSurface || aspect_changed ||
+</I>&gt;<i>         currentPixelFormat != setupStore-&gt;pixelFormat ||
+</I>&gt;<i>         cutTop != setupStore-&gt;cropTopLines ||
+</I>&gt;<i>         cutBottom != setupStore-&gt;cropBottomLines ||
+</I>&gt;<i>         cutLeft != setupStore-&gt;cropLeftCols ||
+</I>&gt;<i>         cutRight != setupStore-&gt;cropRightCols ||
+</I>&gt;<i>         useStretchBlit != setupStore-&gt;useStretchBlit )
+</I>&gt;<i>     {
+</I>&gt;<i> 
+</I>&gt;<i> If these expressions evaluate to true for every frame than you'll
+</I>&gt;<i> get your measured values (I guess).
+</I>
+Yep, I agree that the conditions probably hold for every frame.  I'll
+add debug printout to find out which condition is the culprit.  I
+suspect pixelFormat or useStretchBlit, i.e., maybe when they are
+automatically overridden by softdevice, they will not be stored properly.
+
+&gt;<i> Do you build sofdevice with subplugins or as a single lib ?
+</I>
+As a single library, unless the configure script has overridden my
+preference.  At least I didn't notice anything else softdevice-related in
+PLUGINS/lib than libvdr-softdevice.so.1.3.*.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001690.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+	<LI>Next message: <A HREF="001692.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1691">[ date ]</a>
+              <a href="thread.html#1691">[ thread ]</a>
+              <a href="subject.html#1691">[ subject ]</a>
+              <a href="author.html#1691">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

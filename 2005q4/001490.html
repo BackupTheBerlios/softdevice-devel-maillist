@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: Via Unichrome TV-out
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Via%20Unichrome%20TV-out&In-Reply-To=%3C200511061124.38533.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001486.html">
+   <LINK REL="Next"  HREF="001492.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: Via Unichrome TV-out</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Via%20Unichrome%20TV-out&In-Reply-To=%3C200511061124.38533.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Patch: Via Unichrome TV-out">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sun Nov  6 12:24:38 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001486.html">Black square with DirectFB cvs + softdevice YUV2 + stretchblit (Was: Re: [Softdevice-devel] vidix with matrox g550 - no osd)
+</A></li>
+        <LI>Next message: <A HREF="001492.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1490">[ date ]</a>
+              <a href="thread.html#1490">[ thread ]</a>
+              <a href="subject.html#1490">[ subject ]</a>
+              <a href="author.html#1490">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+This patch applied against current CVS of softdevice give a new DirectFB 
+output option for Via Unichrome TV-out (works with an Epia MII board with a 
+vt1622a encoder: I don't know if the vt1622 encoders work without it or not).
+
+Using the standard '-vo dfb:' driver, I get quite good A-V sync but the field 
+parity switches back and forth every few seconds. Using the new '-vo 
+dfb:viatv' driver enables triple buffering and enables Field Parity sync, and 
+this gives me a much better picture. Every now and then I'm seeing the odd 
+blip where the field parity is incorrect but I think that is due to a kernel 
+latency issue I need to track down!
+
+I have yet to settle on the best value for the A-V delay and it seems to vary 
+somewhat between channels! That could just be my imagination, though!
+
+For this to work, a recent CVS version of DirectFB and viafb (from DirectFB) 
+are required and both must be patched with the patches at:
+<A HREF="http://mail.directfb.org/pipermail/directfb-users/2005-November/001042.html">http://mail.directfb.org/pipermail/directfb-users/2005-November/001042.html</A>
+
+Stefan: it will probably need a bit of cleaning up but hopefully you can work 
+it out!
+
+Cheers,
+
+Laz
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: softdevice_field_parity.diff
+Type: text/x-diff
+Size: 5668 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20051106/ae064d0b/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20051106/ae064d0b/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001486.html">Black square with DirectFB cvs + softdevice YUV2 + stretchblit (Was: Re: [Softdevice-devel] vidix with matrox g550 - no osd)
+</A></li>
+	<LI>Next message: <A HREF="001492.html">[Softdevice-devel] Patch: Via Unichrome TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1490">[ date ]</a>
+              <a href="thread.html#1490">[ thread ]</a>
+              <a href="subject.html#1490">[ subject ]</a>
+              <a href="author.html#1490">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

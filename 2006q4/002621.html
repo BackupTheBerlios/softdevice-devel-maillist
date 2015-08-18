@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [directfb-users] viafb + cle266mpegdec +	TVout : field parity status and patches [update]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bdirectfb-users%5D%20viafb%20%2B%20cle266mpegdec%20%2B%0A%09TVout%20%3A%20field%20parity%20status%20and%20patches%20%5Bupdate%5D&In-Reply-To=%3C200610142320.25615.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002620.html">
+   <LINK REL="Next"  HREF="002622.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [directfb-users] viafb + cle266mpegdec +	TVout : field parity status and patches [update]</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bdirectfb-users%5D%20viafb%20%2B%20cle266mpegdec%20%2B%0A%09TVout%20%3A%20field%20parity%20status%20and%20patches%20%5Bupdate%5D&In-Reply-To=%3C200610142320.25615.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] [directfb-users] viafb + cle266mpegdec +	TVout : field parity status and patches [update]">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sun Oct 15 00:20:24 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002620.html">[Softdevice-devel] [directfb-users] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+        <LI>Next message: <A HREF="002622.html">[Softdevice-devel] [Bug #9148] --disable-mmx broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2621">[ date ]</a>
+              <a href="thread.html#2621">[ thread ]</a>
+              <a href="subject.html#2621">[ subject ]</a>
+              <a href="author.html#2621">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 14 October 2006 10:33, Nicolas Huillard wrote:
+&gt;<i> Laz a &#233;crit :
+</I>&gt;<i> &gt; Here's what I see in dmesg:
+</I>&gt;<i> &gt; viafb: VIA UNICHROME framebuffer 1.0 initializing
+</I>&gt;<i> &gt; viafb: viafb : CC900000
+</I>&gt;<i> &gt; viafb: framebuffer size = 64 Mb
+</I>&gt;<i> &gt; viafb: Found Device Rev:0
+</I>&gt;<i> &gt; mtrr: MTRR 4 not used
+</I>&gt;<i> &gt; mtrr: 0xd8000000,0x4000000 overlaps existing 0xd8000000,0x800000
+</I>&gt;<i> &gt; viafb: X:720 Y:576
+</I>&gt;<i> &gt; viafb: detected VT1622A (7)
+</I>&gt;<i> &gt; viafb: mode=720  bpp=32  refresh=50  TVon=1  TVtype=2
+</I>&gt;<i> &gt; viafb: VQ start:3FC0000  end:3FFFFFF  size:40000
+</I>&gt;<i> &gt; viafb: Cursor start:3FBF000  end:3FBFFFF  size:1000
+</I>&gt;<i> &gt; viafb: detected VT1622A (7)
+</I>&gt;<i> &gt; viafb: mode=720  bpp=32  refresh=50  TVon=1  TVtype=2
+</I>&gt;<i> &gt; viafb: irq handler installed, IRQ(0x200) = 80080c02
+</I>&gt;<i>
+</I>&gt;<i> Here is the diff with mine :
+</I>&gt;<i> viafb: viafb : CEB00000
+</I>&gt;<i> viafb: framebuffer size = 32 Mb
+</I>&gt;<i> viafb: detected VT1622 (2), using TV3 tables
+</I>&gt;<i> viafb: VQ start:1FC0000  end:1FFFFFF  size:40000
+</I>&gt;<i> viafb: Cursor start:1FBF000  end:1FBFFFF  size:1000
+</I>&gt;<i> viafb: detected VT1622 (2), using TV3 tables
+</I>&gt;<i>
+</I>&gt;<i> 32Mb buffer size should be enough (26 times the full 720x576x32 frame)
+</I>
+I can't remember why I set mine to 64 MB (I'm assuming this is a BIOS setting: 
+not touched the BIOS in months!).
+
+&gt;<i> May it be a difference between TV encoder device (VT16xx), or actual
+</I>&gt;<i> CLE266 revision ?
+</I>
+Mine is an Epia MII-12000. Running the find_revision.sh script from DirectFB 
+gives me:
+Your CLE266 revision number is 17.
+To use this value, add the following line to /etc/directfbrc:
+    unichrome-revision=17
+
+In /etc/directfb I have:
+mode=720x576
+depth=32
+pixelformat=ARGB
+disable-module=lirc
+disable-module=joystick
+disable-module=cle266
+no-vt
+unichrome-revision=17
+
+&gt;<i> BTW, you have wrong MTRR stuff :
+</I>&gt;<i> mtrr: MTRR 4 not used
+</I>&gt;<i> mtrr: 0xd8000000,0x4000000 overlaps existing 0xd8000000,0x800000
+</I>
+How do I fix that? I vaguely remember something a long while back about 
+something to do with MTRR being broken because two of them overlapped. Not 
+really delved too deeply because it works at the moment!
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002620.html">[Softdevice-devel] [directfb-users] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+	<LI>Next message: <A HREF="002622.html">[Softdevice-devel] [Bug #9148] --disable-mmx broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2621">[ date ]</a>
+              <a href="thread.html#2621">[ thread ]</a>
+              <a href="subject.html#2621">[ subject ]</a>
+              <a href="author.html#2621">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

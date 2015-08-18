@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C20060426202851.GA3655%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001926.html">
+   <LINK REL="Next"  HREF="001938.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C20060426202851.GA3655%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Apr 26 22:28:51 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001926.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+        <LI>Next message: <A HREF="001938.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1937">[ date ]</a>
+              <a href="thread.html#1937">[ thread ]</a>
+              <a href="subject.html#1937">[ subject ]</a>
+              <a href="author.html#1937">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Apr 25, 2006 at 11:31:07PM +0200, Martin Wache wrote:
+&gt;<i> &gt; I didn't claim that you removed dfbRemote.  I merely suggested that it be
+</I>&gt;<i> &gt; done, because as of video-dfb.c -r1.54, no DirectFB remote events are
+</I>&gt;<i> &gt; reported to VDR.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> I did test video-dfb, for me the remote works just like before. Is there
+</I>&gt;<i> anybody else who has problems with the dfb-remote?
+</I>
+I did several tests with video-dfb.c -r1.53 and -r1.54, and the RCU would
+only work with -r1.53.  I'm afraid I don't have time to repeat the tests
+until weekend (which is when I guess you'd be releasing softdevice).
+
+&gt;<i> &gt; Then what do you think about Nicolas' suggestion:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;&gt; The CropModeToggleKey could still be handled by subclassing the real
+</I>&gt;<i> &gt;&gt;&gt; remote class or creating an event handler for keypresses.
+</I>&gt;<i> 
+</I>&gt;<i> I'm not sure if that can be done. If one uses the vdr-remote plugin
+</I>&gt;<i> there is (to my knowledge) no way how the softdevice can have access to
+</I>&gt;<i> keypress events, except of course if we patch the vdr.
+</I>
+You're probably right.  One option could be to patch the vdr-remote plugin
+and use the inter-plugin service interface to report special keys to
+softdevice.
+
+&gt;<i> Maybe we should ask for the possibility of receiving keypresses for
+</I>&gt;<i> plugins at the vdr mailing list, if vdr would implement such a feature
+</I>&gt;<i> we could simply use that.
+</I>
+Yes, it could be something for vdr 1.5.x.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001926.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+	<LI>Next message: <A HREF="001938.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1937">[ date ]</a>
+              <a href="thread.html#1937">[ thread ]</a>
+              <a href="subject.html#1937">[ subject ]</a>
+              <a href="author.html#1937">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] HOWTO libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HOWTO%20libcle266mpegdec&In-Reply-To=%3C200607111511.55632.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002236.html">
+   <LINK REL="Next"  HREF="002240.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] HOWTO libcle266mpegdec</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HOWTO%20libcle266mpegdec&In-Reply-To=%3C200607111511.55632.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] HOWTO libcle266mpegdec">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Tue Jul 11 16:11:55 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002236.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002240.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2237">[ date ]</a>
+              <a href="thread.html#2237">[ thread ]</a>
+              <a href="subject.html#2237">[ subject ]</a>
+              <a href="author.html#2237">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tuesday 11 July 2006 13:38, Per Mellander wrote:
+&gt;<i> I've written some kind of a HOWTO for making use of the CLE266 hardware
+</I>&gt;<i> decoding with softdevice. Could you ( Laz, Martin, Stefan etc. ) take a
+</I>&gt;<i> look and comment before I drop the link on vdr ml?
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+</I>&gt;<i>
+</I>&gt;<i> I'm not really sure concerning prerequisites ( i.e ffmpeg ). And if
+</I>&gt;<i> someone could drop me a line explaining the technical behind I would be
+</I>&gt;<i> glad to incorporate it.
+</I>
+It looks pretty much OK to me. I think the main thing is to make sure that 
+you have a recent CVS version of softdevice (so it includes the hardware 
+decoding stuff) and a recent CVS version of softdevice so it patches 
+cleanly. Softdevice also had some fixes to the OSD transparency recently.
+
+I also have a couple of patches applied to give better vertical sync when 
+using TV-out. Can post these if anyone is interested. Not tried it 
+without these patches recently, so they may not actually be doing much 
+now!
+
+It would be nice to get libcle266mpegdec-0.1.tar.gz put somewhere more 
+obvious like in the softdevice or DirectFB archives, though.
+
+:<i>)
+</I>
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002236.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002240.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2237">[ date ]</a>
+              <a href="thread.html#2237">[ thread ]</a>
+              <a href="subject.html#2237">[ subject ]</a>
+              <a href="author.html#2237">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

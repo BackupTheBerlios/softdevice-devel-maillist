@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] live HDTV channel not playing smooth
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20live%20HDTV%20channel%20not%20playing%20smooth&In-Reply-To=%3C44B2972C.9000609%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002224.html">
+   <LINK REL="Next"  HREF="002225.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] live HDTV channel not playing smooth</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20live%20HDTV%20channel%20not%20playing%20smooth&In-Reply-To=%3C44B2972C.9000609%40gmx.net%3E"
+       TITLE="[Softdevice-devel] live HDTV channel not playing smooth">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Jul 10 20:06:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002224.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+        <LI>Next message: <A HREF="002225.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2226">[ date ]</a>
+              <a href="thread.html#2226">[ thread ]</a>
+              <a href="subject.html#2226">[ subject ]</a>
+              <a href="author.html#2226">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Andre Neumann schrieb:
+&gt;<i> I noticed the same problem on a 3,4 Ghz P4 HT machine (my VDR is a 2,8 GHz P4 without HT),
+</I>&gt;<i> so i think it has nothing to do with cpu power.
+</I>&gt;<i> It must be some buffer or something....
+</I>&gt;<i> 
+</I>
+Yes, probably you are right, please try to increase the buffersizes in
+mpeg2decoder.c:
+
+
+// 0: save buffers, 1: good seeking, 2: HDTV buffers
+int dvb_buf_size[] = {64*1024,32*1024,64*1024};
+int packet_buf_size[] = {300,150,2000};
+
+The last one is the relevant one of HDTV playback, please try to change
+packet_buf_size first and if you find values that are working for you
+please report them.
+If you don't find any values I will send you a patch which will
+introduce some more debugging infos.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002224.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+	<LI>Next message: <A HREF="002225.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2226">[ date ]</a>
+              <a href="thread.html#2226">[ thread ]</a>
+              <a href="subject.html#2226">[ subject ]</a>
+              <a href="author.html#2226">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

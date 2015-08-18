@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Segfault%20with%20current%200.3.0%20release%20vs.%20cvs%0A%09from%202006-06-23&In-Reply-To=%3C200610112215.45675.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002613.html">
+   <LINK REL="Next"  HREF="002617.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Segfault%20with%20current%200.3.0%20release%20vs.%20cvs%0A%09from%202006-06-23&In-Reply-To=%3C200610112215.45675.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Oct 11 22:15:45 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002613.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+        <LI>Next message: <A HREF="002617.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2615">[ date ]</a>
+              <a href="thread.html#2615">[ thread ]</a>
+              <a href="subject.html#2615">[ subject ]</a>
+              <a href="author.html#2615">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 11 Oktober 2006 01:53, Herbert Poetzl wrote:
+&gt;<i> On Tue, Oct 10, 2006 at 11:57:57PM +0200, Stefan Lucke wrote:
+</I>
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; Yes changing pixelformat is the other way to circumvent this segfault.
+</I>&gt;<i> &gt; Please get an updated version from cvs, as the bug was reproducable
+</I>&gt;<i> &gt; for me and I commited a fix.
+</I>
+There was still an issue with color jumping, when cut lines from left
+was set to an odd value. Fixed now.
+
+&gt;<i> 
+</I>&gt;<i> seems to work fine here, thanks!
+</I>&gt;<i> 
+</I>&gt;<i> btw, a few things I noticed regarding softdevice
+</I>&gt;<i> but I didn't bother to mention (until now), but 
+</I>&gt;<i> maybe that input is appreciated:
+</I>&gt;<i> 
+</I>&gt;<i>  - depending on the pixel format, the entire
+</I>&gt;<i>    picture and overlay shifts slightly left and
+</I>&gt;<i>    right, where:
+</I>&gt;<i> 
+</I>&gt;<i>    - YV12 is one pixel right compared to YUY2
+</I>
+One pixel ? That _was_ much more as for some reason edge_with was 16,
+which must be multiplied by 2 for YUV2 offset calculations.
+
+&gt;<i>    - YV12 and I420 are perfectly aligned
+</I>&gt;<i> 
+</I>&gt;<i>  - the pseudo alpha blending never worked for me
+</I>&gt;<i>    neither with different nvidia cards nor with
+</I>&gt;<i>    matrox cards
+</I>
+Ups, both modes work perfectly fine for my G550 ;-) .
+
+&gt;<i> 
+</I>&gt;<i>  - I would expect the overlay to be pixel aligned
+</I>&gt;<i>    (as it is on the full featured card) i.e.
+</I>&gt;<i>    without strange scaling/alignment effects
+</I>&gt;<i>    while in fact it changes slightly with each
+</I>&gt;<i>    channel (duplicating pixels and sometimes
+</I>&gt;<i>    even antialiasing pixels) see
+</I>
+Could be an edge_width problem too (&lt;= vs &lt;) .
+
+&gt;<i>   
+</I>&gt;<i>    <A HREF="http://www.13thfloor.at/~herbert/chan{05,14,26">http://www.13thfloor.at/~herbert/chan{05,14,26</A>}.png
+</I>
+That link does not work.
+
+&gt;<i> 
+</I>&gt;<i> that aside, I'm happy that softdevice was not
+</I>&gt;<i> abandoned and seems to be well maintained now
+</I>&gt;<i> 
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002613.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+	<LI>Next message: <A HREF="002617.html">[Softdevice-devel] Segfault with current 0.3.0 release vs. cvs	from 2006-06-23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2615">[ date ]</a>
+              <a href="thread.html#2615">[ thread ]</a>
+              <a href="subject.html#2615">[ subject ]</a>
+              <a href="author.html#2615">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

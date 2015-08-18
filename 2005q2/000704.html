@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio : my proposal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C428E0A92.9000902%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000702.html">
+   <LINK REL="Next"  HREF="000705.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio : my proposal</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C428E0A92.9000902%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio : my proposal">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Fri May 20 18:04:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000702.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+        <LI>Next message: <A HREF="000705.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#704">[ date ]</a>
+              <a href="thread.html#704">[ thread ]</a>
+              <a href="subject.html#704">[ subject ]</a>
+              <a href="author.html#704">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> Quoting Nicolas Huillard &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at e-dition.fr</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>As of now, I can test with the 800x600 vs. 720x576 sizes on 16:9 CRT TV.
+</I>&gt;&gt;<i>What I saw was obvious, so I will see improvements.
+</I>&gt;<i> 
+</I>&gt;<i> Can you change in file setup-softdevice.c:
+</I>&gt;<i> char *videoAspectNames [] = {
+</I>&gt;<i>         &quot;Monitor&quot;,
+</I>&gt;<i>         &quot;TV  4:3 PAL&quot;,
+</I>&gt;<i>         &quot;TV 16:9 PAL&quot;,
+</I>&gt;<i>         &quot;5:4 as 4:3&quot;,
+</I>&gt;<i>         &quot;test 2&quot;,
+</I>&gt;<i>         NULL
+</I>&gt;<i>      };
+</I>&gt;<i> struct sVideoAspectsValues {
+</I>&gt;<i>   int   width,
+</I>&gt;<i>         height;
+</I>&gt;<i> } videoAspectValues [] = {
+</I>&gt;<i>   { 768, 576},
+</I>&gt;<i>   { 720, 576},
+</I>&gt;<i>   { 540, 576},
+</I>&gt;<i>   { 800, 576},
+</I>&gt;<i>   {1280, 1024}, // &lt;-- this line (corresponds to mode &quot;test 2&quot;) to:
+</I>&gt;<i>                 // {324, 576},
+</I>&gt;<i>   {768,576}
+</I>&gt;<i> };
+</I>
+I think part of the problem is that &quot;videoAspectValues&quot; are actually 
+&quot;resolutionValues&quot;...
+I'll try that, but I think the solution is to code this as real aspect 
+ratio, like this :
+	{ 4, 3 },  // standard 4:3 ratio
+	{ 16, 9 }, // standard 16:9 ratio
+	{ 325, 240 }, // actual size of my 17&quot; monitor, not exactly 4:3
+(actual unit used is unimportant, since only the ratio is useful : this 
+might only help tracking bugs in the usage of that info).
+
+&gt;&gt;&gt;<i>Getting actual scaling information (from syslog) with current code
+</I>&gt;&gt;&gt;<i>would be nice.
+</I>&gt;&gt;<i>
+</I>  &gt; They are written via dsyslog() so they should appear. They look like:
+&gt;<i> [VideoOut]: aspect changed (%d -&gt; %d ; %f -&gt; %f)
+</I>&gt;<i> [VideoOut]: resolution changed: W(%d -&gt; %d); H(%d -&gt;%d)
+</I>&gt;<i> [VideoOut]: %dx%d [%d,%d %dx%d] -&gt; %dx%d [%d,%d %dx%d]
+</I>
+Got them, but since they are old, I can't remember exactly what they 
+were supposed to show :
+
+[VideoOut]: resolution changed: W(720 -&gt; 544); H(576 -&gt;576)
+[VideoOut]: aspect changed (-100 -&gt; 0 ; -100.000000 -&gt; 1.333333)
+[VideoOut]: 544x576 [0,72 544x432] -&gt; 720x576 [0,0 720x576]
+
+-&gt; a channel where everything is in 544x576 frames, containing 
+full-frame 4:3 movies, or 16:9 with top/bottom black bars
+-&gt; I think softdevice was set in crop-mode = 16:9, pixel-aspect = 16:9 PAL
+-&gt; I would like an easy way to switch between 4:3 on the whole 16:9 
+screen (scaling 1:1), eliminate top/bottom black bars (1.0 horizontal, 
+1.x vertical scaling), maybe something in the middle (half the vertical 
+expansion, when I want a big image and can affort the loss of top/bottom 
+parts), and added right/left black bars (0.x horizontal, 1.0 vertical 
+scaling)
+
+[VideoOut]: aspect changed (-100 -&gt; 0 ; -100.000000 -&gt; 1.333333)
+[VideoOut]: 720x576 [0,72 720x432] -&gt; 720x576 [0,0 720x576]
+
+-&gt; this channel is always 720x576, showing 4:3-full-frame, 
+16:9-top/bottom-black and even 1.85 films with huge top/bottom bars
+-&gt; I think softdevice was set in crop-mode = 16:9, pixel-aspect = 16:9 PAL
+-&gt; kind is same aspect switch : reduce width to have a 4:3 ratio 
+on-screen, full-frame on screen (100%), expand verticaly to various 
+values, to minimize black bars.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000702.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+	<LI>Next message: <A HREF="000705.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#704">[ date ]</a>
+              <a href="thread.html#704">[ thread ]</a>
+              <a href="subject.html#704">[ subject ]</a>
+              <a href="author.html#704">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

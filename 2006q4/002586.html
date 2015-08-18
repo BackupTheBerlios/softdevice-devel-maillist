@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay-0.0.2 doesn't compile with ffmpeg-cvs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay-0.0.2%20doesn%27t%20compile%20with%20ffmpeg-cvs&In-Reply-To=%3C20061004070819.GA5067%40seneca.muc.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002584.html">
+   <LINK REL="Next"  HREF="002585.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay-0.0.2 doesn't compile with ffmpeg-cvs</H1>
+    <B>Harald Milz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay-0.0.2%20doesn%27t%20compile%20with%20ffmpeg-cvs&In-Reply-To=%3C20061004070819.GA5067%40seneca.muc.de%3E"
+       TITLE="[Softdevice-devel] softplay-0.0.2 doesn't compile with ffmpeg-cvs">hm at seneca.muc.de
+       </A><BR>
+    <I>Wed Oct  4 09:08:19 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002584.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+        <LI>Next message: <A HREF="002585.html">[Softdevice-devel] softplay-0.0.2 doesn't compile with	ffmpeg-cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2586">[ date ]</a>
+              <a href="thread.html#2586">[ thread ]</a>
+              <a href="subject.html#2586">[ subject ]</a>
+              <a href="author.html#2586">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+trying to compile softplay-0.0.2 against ffmpeg-cvs from yesterday. Result: 
+
+
+Plugin softplay:
+make[1]: Entering directory `/usr/src/vdr-1.4.1/PLUGINS/src/softplay-0.0.2'
+g++ -fPIC -g -O2 -Wall -Woverloaded-virtual -c -D_GNU_SOURCE -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../DVB/include -I/usr/local/include/ffmpeg SoftPlayer.c
+/usr/local/include/ffmpeg/avformat.h:247: warning: &#8216;AVFrac&#8217; is deprecated (declared at /usr/local/include/ffmpeg/avformat.h:100)
+/usr/local/include/ffmpeg/avformat.h:379: warning: attribute ignored in declaration of &#8216;struct AVInputImageContext&#8217;
+/usr/local/include/ffmpeg/avformat.h:379: warning: attribute for &#8216;struct AVInputImageContext&#8217; must follow the &#8216;struct&#8217; keyword
+/usr/local/include/ffmpeg/avformat.h:403: warning: &#8216;AVImageInfo&#8217; is deprecated (declared at /usr/local/include/ffmpeg/avformat.h:388)
+/usr/local/include/ffmpeg/avformat.h:406: warning: &#8216;AVImageInfo&#8217; is deprecated (declared at /usr/local/include/ffmpeg/avformat.h:388)
+SoftPlayer.c: In member function &#8216;virtual void cSoftPlayer::Action()&#8217;:
+SoftPlayer.c:173: error: request for member &#8216;codec_type&#8217; in &#8216;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[pkt.AVPacket::stream_index]-&gt;AVStream::codec&#8217;, which is of non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c:178: error: request for member &#8216;codec_type&#8217; in &#8216;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[pkt.AVPacket::stream_index]-&gt;AVStream::codec&#8217;, which is of non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c:222: error: request for member &#8216;codec_id&#8217; in &#8216;((cSoftPlayer*)this)-&gt;cSoftPlayer::ic-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#8217;, which is of non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c: In member function &#8216;ePlayMode cSoftPlayer::GetPlayMode(AVFormatContext*)&#8217;:
+SoftPlayer.c:248: error: request for member &#8216;codec_type&#8217; in &#8216;IC-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#8217;, which is of non-class type &#8216;AVCodecContext*&#8217;
+SoftPlayer.c:250: error: request for member &#8216;codec_type&#8217; in &#8216;IC-&gt;AVFormatContext::streams[i]-&gt;AVStream::codec&#8217;, which is of non-class type &#8216;AVCodecContext*&#8217;
+make[1]: *** [SoftPlayer.o] Fehler 1
+make[1]: Leaving directory `/usr/src/vdr-1.4.1/PLUGINS/src/softplay-0.0.2'
+
+
+softplay-cvs from today does compile as soon as the Makefile is patched to
+honor APIVERSION...  Dunno yet if it actually works. 
+
+Hope this helps. 
+
+-- 
+The price of seeking to force our beliefs on others is that someday
+they might force their beliefs on us.
+		-- Mario Cuomo
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002584.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+	<LI>Next message: <A HREF="002585.html">[Softdevice-devel] softplay-0.0.2 doesn't compile with	ffmpeg-cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2586">[ date ]</a>
+              <a href="thread.html#2586">[ thread ]</a>
+              <a href="subject.html#2586">[ subject ]</a>
+              <a href="author.html#2586">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

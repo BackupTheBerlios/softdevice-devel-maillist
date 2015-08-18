@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C200701261215.07603.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002697.html">
+   <LINK REL="Next"  HREF="002699.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C200701261215.07603.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Fri Jan 26 13:15:07 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002697.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding
+</A></li>
+        <LI>Next message: <A HREF="002699.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2698">[ date ]</a>
+              <a href="thread.html#2698">[ thread ]</a>
+              <a href="subject.html#2698">[ subject ]</a>
+              <a href="author.html#2698">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 26 January 2007 10:33, Nicolas Huillard wrote:
+&gt;<i> &gt; Looking more closely, I _think_ DirectFB and DFB++ are both cvs from
+</I>&gt;<i> &gt; 2006-04-18. I have lots of different cvs trees which I really should
+</I>&gt;<i> &gt; clean out.
+</I>&gt;<i>
+</I>&gt;<i> My problem may be a regression in DirectFB, then. It may also be that I
+</I>&gt;<i> badly applied the patch to DirectFB.
+</I>
+I'm just building cvs DirectFB and DFB++ (as Debian packages) and I've 
+just remembered another couple of patches: libcle266mpegdec needs to get 
+the offset of the framebuffer from DirectFB. Looks like they are no 
+longer needed because the code is now in DirectFB and DFB++!
+
+:<i>)
+</I>
+Hmmmm...just built and installed DirectFB, DFB++, and linux-viafb, then 
+rebuilt libcle266mpegdec and softdevice against the new versions. Now 
+when I try to start vdr, I get:
+
+vdr-1.5.0 --video=/video --config=/home/vdr/vdrconf --lib=/home/vdr/plugins -P'softdevice -vo 
+dfb:viatv:cle266'
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: dfb:viatv:cle266
+[softdevice] enabling field parity
+[softdevice] enabling CLE266 HW decoding
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3344640)
+[dfb] init
+
+     =======================|  DirectFB 1.0.0-rc3  |
+=======================
+          (c) 2001-2006  United Cultures of Earth - go for outer space!
+          (c) 2000-2004  Convergence (integrated media) GmbH
+        ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2007-01-26 10:52)
+(*) Direct/Modules: suppress module 'linux_input'
+(*) Direct/Modules: suppress module 'joystick'
+(*) Direct/Modules: suppress module 'lirc'
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+[dfb] RAM: 66842624 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine 
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Xor
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize 
+SrcColorkey DstColorkey Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A>
+[dfb] Enumerating display Layers
+[dfb] Configuring CooperativeLevel for OSD
+Layer 0 VIA CLE266 Graphics  Type: graphics
+  Caps: alphachannel brightness contrast opacity saturation src_colorkey 
+surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+  Caps: deinterlacing dst_colorkey levels field_parity opacity 
+screen_location surface
+Initialising CLE266 decoder (/dev/fb0): success!
+CLE266: Creating buffers for decoder
+CLE266: Creating buffer number 0
+CLE266: Creating buffer number 1
+CLE266: Creating buffer number 2
+CLE266: Creating buffer number 3
+CLE266: passing mpegfb_stride
+CLE266: passing buffers to decoder
+[dfb] (osdLayer): flags, options, pixelformat: 0000000f, 00000000 00418c04
+[dfb] (osdLayer): width, height:               720 576
+[dfb] osdLayer has alpha channel
+[dfb] init 
+EXITING:action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), 
+result=Not supported!
+ (!!!)  *** WARNING [Application exited without deinitialization of 
+DirectFB!] *** [../../../src/core/core.c:745 in dfb_core_deinit_check()]
+
+Which all looks OK until I get to the end!
+
+:<i>-(
+</I>
+Is there anything in DirectFB which has chagned drastically for the 
+Unichrome driver?
+
+&gt;<i> &gt; Your best bet may be to check out a new version of linux-viafb and
+</I>&gt;<i> &gt; see if that sorts it out.
+</I>&gt;<i>
+</I>&gt;<i> I'll do that. And also add printk as Mark Adams suggested a (long)
+</I>&gt;<i> while ago.
+</I>&gt;<i> I'll keep you all updated on this.
+</I>&gt;<i>
+</I>&gt;<i> BTW : does anyone else use CLE266 hardware decoding and TV-out with
+</I>&gt;<i> softdevice (out of the 500+ downloads of libcle266mpegdec) ?
+</I>
+My main annoyance at the moment are that my Epia system doesn't always 
+power off fully so I can't use nvram-wakeup at the moment. Not sure why 
+it's decided to do this. Might get round to reflashing the BIOS to see if 
+that sorts it: it had worked fine for about a year or so!!
+
+It's also a shame that these things only have one PCI slot, too, because I 
+can only have one USB2 device on it (in addition to a Nova-T 500 dual 
+card) or they just keep on disconnecting themselves! The drivers for the 
+older Nova-T cards seem much more stable.
+
+Still, mustn't grumble: it's in constant use!!
+
+:<i>)
+</I>
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002697.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding
+</A></li>
+	<LI>Next message: <A HREF="002699.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2698">[ date ]</a>
+              <a href="thread.html#2698">[ thread ]</a>
+              <a href="subject.html#2698">[ subject ]</a>
+              <a href="author.html#2698">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

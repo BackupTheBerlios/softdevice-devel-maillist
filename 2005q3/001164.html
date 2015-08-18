@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.1.3&In-Reply-To=%3C200509040853.11131.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001266.html">
+   <LINK REL="Next"  HREF="001165.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.3</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.1.3&In-Reply-To=%3C200509040853.11131.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.3">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Sep  4 08:53:11 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001266.html">[Softdevice-devel] definitive configuration
+</A></li>
+        <LI>Next message: <A HREF="001165.html">[Softdevice-devel] key-repeat fixes; Re: [vdr] [ANNOUNCE] vdr-softdevice-0.1.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1164">[ date ]</a>
+              <a href="thread.html#1164">[ thread ]</a>
+              <a href="subject.html#1164">[ subject ]</a>
+              <a href="author.html#1164">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+softdevice team (Torgeir Veimo, Martin Wache and me, Stefan Lucke)
+is pleased to announce a new release of vdr softdevice plugin.
+
+Softdevice plugin enables vdr to run on your desktop with
+so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+
+For compile options, please read the Makefile carefully and decide which of
+the available output methods fit to your system.
+
+Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+
+Changelog since last release:
+2005-09-04: softdevice-0.1.3
+    - dfb-out: applied dfb-key-repeat handling patch (by Marko M&#228;kel&#228;)
+2005-08-19:
+    - change #ifdefs to contain closing brackets
+        (stops my editor from complaining...)
+    - fix possible segfault in ToYUV()
+2005-08-17:
+    - audio-out: changed retrieval of audio delay with newer alsa versions on
+                 &quot;default&quot; device. should fix bug #2971 too.
+2005-08-08:
+    - dfb-out: enclose all dfb calls by try{}catch{} by Marko M&#228;kel&#228;
+2005-07-31:
+    - remove Deactivate(), instead deactive at start of Stop()
+    - stop playback in Clear() while clearing the packet buffer
+    - introduce SOFTDEB, more checks agains NULL dereferences
+    - call decoder-&gt;Clear in Clear
+    - return NULL in getPPValue when compiled without postproc lib
+      (suggested by Antonio)
+2005-07-29:
+    - some small changes on finnish translations by Rolf Ahrenberg
+    - fix for segfaults in setup-softdevice.c by previous change
+2005-07-27:
+    - compile fix for newer ffmpeg versions (&gt; 2005-07-17 22:24:35) by Antonio
+    - fix for video-dfb.c change from 2005-07-16 by Rolf Ahrenberg
+    - more OSD entries translateable by Rolf Ahrenberg
+    - more finnish translations by Rolf Ahrenberg
+    - limit cropping amount to 50 each
+2005-07-24:
+    - finnish translations by Rolf Ahrenberg
+2005-07-23:
+    - vidix-out:
+      - some cosmetic cleanups
+      - force OSD mode pseudo when YUY2 pixelformat is choosen
+2005-07-22:
+    - changed pause OSD handling in software drawing mode
+    - work around for some *.avi files where frametime is zero
+    - fix previously introduced compile fail without -DUSE_SUBPLUGINS
+    - include patch from Claas Hilbrecht for &quot;-vo dummy:&quot;
+    - some code reorg for subpluging loader
+2005-07-20:
+    - fix for live view at trick speed
+    - stretchBlit mode for dfb-out is selectable via OSD
+    - cropLeft/Right for xv-out and dfb-out
+    - exclude cropTop/Bottom OSD from fb-out
+    - adjusted vidix-out call of yv12_to_yuy2() to dfb-out
+2005-07-17:
+    - crop Top/Bottom for xv-out
+    - introduce colour space conversion (by Malcom Caldwell)
+    - make filters work with YUV422 color space
+2005-07-16:
+    - fix for cropBottom in dfb with YUY2 pixelformat
+    - some preparations for configure in video-dfb.c
+    - some preparations for configure in utils.c
+2005-07-15:
+    - by Vadim Catana:
+      - fixed a couple of compiler warnings for gcc4 on x86-64
+      - the video-vidix.c and video-dfb.c both contain code
+        that converts pictures from YV12 format to YUY2. I moved
+        this common code to a function in utils.c .
+      - Some channels display white dots at the top and bottom of
+        the screen due to WSS data encoded in the picture.
+        This problem has been mentioned on vdr, linux-dvb and
+        dxr3 mailinglists a few times. I added two new items in
+        the softdevice menu that allow to cut off a number of lines
+        from top and bottom of the picture. It is implemented now
+        only for -vo vidix and dfb with i420/YV12 format and hardware
+        alpha blending.
+    - by Malcolm Caldwell: fix for vdr segfaulting
+2005-07-03:
+    - fix fullscreen mode for 64-bit architectures
+    - improve response time for 60-sec skips
+2005-06-30:
+    - changed delay clamping low limit and printout &quot;+&quot; if we drop frames
+    - dfb: report current frame duration
+    - dfb: activated device specific delay handling
+2005-06-28:
+    - fix for loosing window dimensions upon switching from fullscreen mode to windowed mode
+2005-06-26:
+    - fix compile issue with recent gcc versions (patch by alexw)
+2005-06-18:
+    - provide error message on stderr when Xv plugin cannot connect to X server.
+2005-06-12:
+    - no new audio frame has been decoded when audio_size &lt;= 0 
+       (reported by Antonio O.)
+    - introduce fast_memcpy (gives 20-30% speed increase on copying)
+    - switch xv-out to fast_memcpy
+    - enable fast and default deblock postprocessing
+    - make buffersizes choosable
+2005-06-06:
+    - fixed latest ffmpeg cvs compile issue
+    - applied fix for noisy audio on some soundcards (by Antonio O.)
+    - applied GetDeviceDescription() patch for video-dfb.c (by Lucian Muresan)
+2005-06-05:
+    - compile by default with &quot;-g&quot;
+    - fix vidix segfault
+2005-05-29:
+    - changed screen aspect ratio selection (based on suggestion by Nicolas Huillard)
+    - fix some segfaults on bad signal
+    - fix possible segfault when called without arguments 
+      (thanks to Marko M&#228;kel&#228;)
+    - buffering is now complety signal triggered
+    - made buffersizes variable
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001266.html">[Softdevice-devel] definitive configuration
+</A></li>
+	<LI>Next message: <A HREF="001165.html">[Softdevice-devel] key-repeat fixes; Re: [vdr] [ANNOUNCE] vdr-softdevice-0.1.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1164">[ date ]</a>
+              <a href="thread.html#1164">[ thread ]</a>
+              <a href="subject.html#1164">[ subject ]</a>
+              <a href="author.html#1164">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [vdr] G450 softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606100003.49618.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002116.html">
+   <LINK REL="Next"  HREF="002118.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [vdr] G450 softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606100003.49618.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: [vdr] G450 softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jun 10 00:03:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002116.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+        <LI>Next message: <A HREF="002118.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2117">[ date ]</a>
+              <a href="thread.html#2117">[ thread ]</a>
+              <a href="subject.html#2117">[ subject ]</a>
+              <a href="author.html#2117">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag 09 Juni 2006 23:19, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Fri, Jun 09, 2006 at 11:30:05PM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; Same binary on the 900 MHz Celeron:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; delta1 = 353333
+</I>&gt;<i> &gt; delta2 = 353249
+</I>&gt;<i> &gt; delta3 = 366210
+</I>&gt;<i> &gt; delta4 = 374806
+</I>&gt;<i> &gt; delta5 = 283929
+</I>&gt;<i> 
+</I>
+&gt;<i> 
+</I>&gt;<i> Is there anything you could do to speed up yv12_to_yuy2_il_mmx2_line()
+</I>&gt;<i> on a Celeron (Coppermine) stepping 10 with 128 KiB cache?
+</I>&gt;<i> 
+</I>&gt;<i> Could you at least avoid calling yv12_to_yuy2_il_*() when no vertical scaling
+</I>&gt;<i> takes place?
+</I>
+But delta4 corresponds to the default (old), frame based yuy2 converter and
+is at the same speed ;-( . Is it a pitfall of benchmarking ?
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002116.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+	<LI>Next message: <A HREF="002118.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2117">[ date ]</a>
+              <a href="thread.html#2117">[ thread ]</a>
+              <a href="subject.html#2117">[ subject ]</a>
+              <a href="author.html#2117">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

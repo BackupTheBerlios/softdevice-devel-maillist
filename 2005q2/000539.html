@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Running softdevice:dfb as not root
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Running%20softdevice%3Adfb%20as%20not%20root&In-Reply-To=%3C426BE238.9070507%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000537.html">
+   <LINK REL="Next"  HREF="000540.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Running softdevice:dfb as not root</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Running%20softdevice%3Adfb%20as%20not%20root&In-Reply-To=%3C426BE238.9070507%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Running softdevice:dfb as not root">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Sun Apr 24 20:15:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000537.html">[Softdevice-devel] Compile problem with 0.1.1 - VDRPluginCreator syms
+</A></li>
+        <LI>Next message: <A HREF="000540.html">[Softdevice-devel] Running softdevice:dfb as not root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#539">[ date ]</a>
+              <a href="thread.html#539">[ thread ]</a>
+              <a href="subject.html#539">[ subject ]</a>
+              <a href="author.html#539">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I finally managed to compile and run 0.1.1, and plan to go in production 
+with it (leaving vdr-xine behind) : you all did a great job with 
+softdevice ! Lot of thanks !
+
+As the subject tells : did anyone manage to regularly run softdevice as 
+a non-root user ?
+When running as root, DirectFB stops like below. I know it's a 
+long-lasting thread, and I thought it was possible, but I can't manage 
+to get the right conf.
+My /etc/directfbrc :
+
+fbdev=/dev/fb0
+mode=720x576
+depth=32
+#pixelformat=AiRGB
+pixelformat=ARGB
+#sync
+#disable-module=keyboard
+disable-module=lirc
+disable-module=joystick
+disable-module=cle266
+graphics-vt
+#no-graphics-vt
+no-vt-switch
+no-vt-switching
+
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">vdr at vdr</A>:plugins$ LD_ASSUME_KERNEL=2.4.21 /usr/bin/vdr-kbd -v /home/video 
+-c /var/lib/vdr -r /usr/lib/vdr/vdr-recordingaction -s 
+/usr/lib/vdr/vdr-shutdown -w 60 -P'softdevice -vo dfb:' --lirc 
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] deinterlace method set to 0 none
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(cvs) build(4752)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+        ---------------------- DirectFB v0.9.21 ---------------------
+              (c) 2000-2002  convergence integrated media GmbH
+              (c) 2002-2004  convergence GmbH
+         -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (with MMX support) 
+(2004-08-05 20:17)
+(*) Direct/Memcpy: Using SSE optimized memcpy()
+(!) DirectFB/FBDev/vt: FBIOGET_CON2FBMAP failed!
+     --&gt; Inappropriate ioctl for device
+(!) DirectFB/FBDev/vt: FBIOPUT_CON2FBMAP failed!
+     --&gt; Inappropriate ioctl for device
+(!) DirectFB/fbdev/vt: KD_GRAPHICS failed!
+     --&gt; Operation not permitted
+(!) DirectFB/Core: Could not initialize 'system' core!
+     --&gt; Initialization error!
+(!) [15036:    0.000] --&gt; Caught signal 6 (sent by pid 15036, uid 108) &lt;--
+Killed
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000537.html">[Softdevice-devel] Compile problem with 0.1.1 - VDRPluginCreator syms
+</A></li>
+	<LI>Next message: <A HREF="000540.html">[Softdevice-devel] Running softdevice:dfb as not root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#539">[ date ]</a>
+              <a href="thread.html#539">[ thread ]</a>
+              <a href="subject.html#539">[ subject ]</a>
+              <a href="author.html#539">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

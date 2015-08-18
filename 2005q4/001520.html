@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] 4:3 16:9 stretchblit crop problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%204%3A3%2016%3A9%20stretchblit%20crop%20problem&In-Reply-To=%3C1131696142.4704.98.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001556.html">
+   <LINK REL="Next"  HREF="001521.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] 4:3 16:9 stretchblit crop problem</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%204%3A3%2016%3A9%20stretchblit%20crop%20problem&In-Reply-To=%3C1131696142.4704.98.camel%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] 4:3 16:9 stretchblit crop problem">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Fri Nov 11 09:02:22 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001556.html">[Softdevice-devel] EPIA M10000 hardware mpeg decoding
+</A></li>
+        <LI>Next message: <A HREF="001521.html">[Softdevice-devel] 4:3 16:9 stretchblit crop problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1520">[ date ]</a>
+              <a href="thread.html#1520">[ thread ]</a>
+              <a href="subject.html#1520">[ subject ]</a>
+              <a href="author.html#1520">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I think I might be about display my lack of understanding...
+
+I have been thinking about the problems surrounding the croping under
+matrox tv out using directfb.  The current code produces weird field
+based artifacts when you crop so a 16:9 image gets displayed letterboxed
+on a 4:3 television.
+
+&gt;<i>From what I understand, The problem occurs because stretchblit is not
+</I>field aware, so in various bands there are sections where the fields are
+correctly displayed and other where they are not.
+
+Now, I maybe off the planet here, but, maybe there is a workaround.  Can
+we pretend that the image is just twice as wide as it really is?
+
+Say our image is 720x576
+
+Line
+1    1111111111111111111111
+2    2222222222222222222222
+3    3333333333333333333333
+4    4444444444444444444444
+5    5555555555555555555555
+6    6666666666666666666666
+7    7777777777777777777777
+8    8888888888888888888888
+9    9999999999999999999999
+10   0000000000000000000000
+...
+575  YYYYYYYYYYYYYYYYYYYYYY
+566  ZZZZZZZZZZZZZZZZZZZZZZ
+
+If we use the same image data, but lets just say our image is 1440x288.
+
+Line
+1   11111111111111111111112222222222222222222222
+2   33333333333333333333334444444444444444444444
+3   55555555555555555555556666666666666666666666
+4   77777777777777777777778888888888888888888888
+5   99999999999999999999990000000000000000000000
+...
+288 YYYYYYYYYYYYYYYYYYYYYYZZZZZZZZZZZZZZZZZZZZZZ
+
+Now since we only crop in the vertical dimension we can crop this image
+down to 1140xY, (is this value 288*(3/4)=216?)
+
+1   11111111111111111111112222222222222222222222
+2   33333333333333333333334444444444444444444444
+3   55555555555555555555556666666666666666666666
+4   99999999999999999999990000000000000000000000
+...
+216 YYYYYYYYYYYYYYYYYYYYYYZZZZZZZZZZZZZZZZZZZZZZ
+
+And then re-cast it to its original horizontal size making 720x432.
+(Again, this is if my calculation for the vertical scale factor is
+correct).
+
+1   1111111111111111111111
+2   2222222222222222222222
+3   3333333333333333333333
+4   4444444444444444444444
+5   5555555555555555555555
+6   6666666666666666666666
+7   9999999999999999999999
+8   0000000000000000000000
+...
+431 YYYYYYYYYYYYYYYYYYYYYY
+432 ZZZZZZZZZZZZZZZZZZZZZZ
+
+So, we can still use stretchblit, our fields are still in the currect
+place and our image is now scaled.  Or Have I missed something
+fundamental.  I *think* this will work with the image formats in
+question.
+
+Or am I completely wrong?
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001556.html">[Softdevice-devel] EPIA M10000 hardware mpeg decoding
+</A></li>
+	<LI>Next message: <A HREF="001521.html">[Softdevice-devel] 4:3 16:9 stretchblit crop problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1520">[ date ]</a>
+              <a href="thread.html#1520">[ thread ]</a>
+              <a href="subject.html#1520">[ subject ]</a>
+              <a href="author.html#1520">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

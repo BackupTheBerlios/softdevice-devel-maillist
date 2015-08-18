@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C444E3EFD.2050307%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001919.html">
+   <LINK REL="Next"  HREF="001924.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C444E3EFD.2050307%40huillard.net%3E"
+       TITLE="[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?">nicolas at huillard.net
+       </A><BR>
+    <I>Tue Apr 25 17:23:41 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001919.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+        <LI>Next message: <A HREF="001924.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1920">[ date ]</a>
+              <a href="thread.html#1920">[ thread ]</a>
+              <a href="subject.html#1920">[ subject ]</a>
+              <a href="author.html#1920">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; a &#233;crit :
+&gt;&gt;&gt;<i>I suggest that dfbRemote be removed altogether.  If that cannot be done,
+</I>&gt;&gt;&gt;<i>the code should be fixed so that it will deliver events to VDR as before
+</I>&gt;&gt;&gt;<i>video-dfb.c -r1.54.
+</I>&gt;<i> 
+</I>&gt;<i> Of course, removing dfbRemote would also remove CropModeToggleKey.
+</I>
+I recall having dug into this a long time ago. The dfbRemote code is a
+quick and dirty hack, and IMHO should be removed.
+The CropModeToggleKey could still be handled by subclassing the real
+remote class or creating an event handler for keypresses.
+The problem of current implementation is that keypresses are processed
+twice : once by the VDR main remote object, and once more by the
+dfbRemote object. Luckily, only one of those really process each event...
+
+Another problem is that remote keys are processed by DirectFB LIRC input
+plugin, which translates LIRC codes into DFB codes... Some key codes
+from your LIRC simply do not match what DirectFB expect, and the key is
+simply dropped. That happenned with the [A/B] key on my remote, mapped
+to a &quot;A/B&quot; code in LIRC, which did not match the &quot;AB&quot; #define in
+DirectFB. That was the key I tried to assign to CropModeToggleKey, and
+the only one on the remote that didn't work...
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001919.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+	<LI>Next message: <A HREF="001924.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1920">[ date ]</a>
+              <a href="thread.html#1920">[ thread ]</a>
+              <a href="subject.html#1920">[ subject ]</a>
+              <a href="author.html#1920">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with nvidia TwinView and ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710051442.28122.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002921.html">
+   <LINK REL="Next"  HREF="002924.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with nvidia TwinView and ShmClient</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710051442.28122.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems with nvidia TwinView and ShmClient">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Oct  5 14:42:27 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002921.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+        <LI>Next message: <A HREF="002924.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2923">[ date ]</a>
+              <a href="thread.html#2923">[ thread ]</a>
+              <a href="subject.html#2923">[ subject ]</a>
+              <a href="author.html#2923">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 5. Oktober 2007, Michael Rademacher wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> On Fri, 05.10.07, at 11:16 Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Did you try to select an other one ? 
+</I>&gt;<i> &gt; 5:4 should be correct for 1280x1024 screen size.
+</I>&gt;<i> 
+</I>&gt;<i> Yes, I played around a bit but no big changes. Set this to 5:4 now.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Does toggeling fullscreen mode (pressing key 'f') work (showing
+</I>&gt;<i> &gt; the same effect [extra large black bars]) ?
+</I>&gt;<i> 
+</I>&gt;<i> Yes, also in fullscreen.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; What does the following command report:
+</I>&gt;<i> &gt; xdpyinfo | grep dimension
+</I>&gt;<i> &gt; For my display it is:
+</I>&gt;<i> &gt;   dimensions:    1280x1024 pixels (342x274 millimeters)
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">werkstatt at zentrale</A>:~$ xdpyinfo | grep dimension
+</I>&gt;<i>   dimensions:    2560x1024 pixels (765x302 millimeters)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Any other info I can give you?
+</I>
+I'd like to have a look at complete output of xdpyinfo command,
+to check if there is some more info of both screens.
+
+If you are able to compile softdevice, you may change
+in video-xv.c, ~line 479
+
+from:
+displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+
+to:
+displayAspect = displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+
+Or without compiling, by modifying xorg.conf:
+
+Section &quot;Monitor&quot;
+        Identifier      &quot;Xerox&quot;
+        Option          &quot;DPMS&quot;
+        HorizSync       30-100
+        VertRefresh     50-160
+# overwrite display size:
+	DisplaySize	377 302	# &lt;-- about 5:4
+# and half the size if above line still does not help
+#	DisplaySize	189 302
+EndSection
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002921.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+	<LI>Next message: <A HREF="002924.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2923">[ date ]</a>
+              <a href="thread.html#2923">[ thread ]</a>
+              <a href="subject.html#2923">[ subject ]</a>
+              <a href="author.html#2923">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

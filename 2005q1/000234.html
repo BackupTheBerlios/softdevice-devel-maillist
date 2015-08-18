@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C200502102210.07149.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000233.html">
+   <LINK REL="Next"  HREF="000356.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C200502102210.07149.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Feb 10 22:10:07 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000233.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+        <LI>Next message: <A HREF="000356.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#234">[ date ]</a>
+              <a href="thread.html#234">[ thread ]</a>
+              <a href="subject.html#234">[ subject ]</a>
+              <a href="author.html#234">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 10. Februar 2005 19:48, Tomi Hautakoski wrote:
+&gt;<i> On Thu, 10 Feb 2005, Martin Wache wrote:
+</I>&gt;<i> &gt; Just one minor issue, the software mode does not get saved
+</I>&gt;<i> &gt;&gt; in the setup file of vdr (have to reenable software OSD after every restart
+</I>&gt;<i> &gt;&gt; of VDR).
+</I>&gt;<i> &gt; I noticed this too, but up to now I don't now how to fix it... The method for 
+</I>&gt;<i> &gt; saving the softdevice options seems not to be called by vdr.
+</I>&gt;<i> &gt; What actually works is the parsing of the options, so if you want to have 
+</I>&gt;<i> &gt; software alpha blending osd from start adding a line similar to
+</I>&gt;<i> &gt; &quot;softdevice.OSDalphablend = 1&quot;
+</I>&gt;<i> &gt; to your /video/setup.conf should help. I'm sorry I'm not at home right now, 
+</I>&gt;<i> &gt; so I can't check what the actual line was like...
+</I>&gt;<i> 
+</I>&gt;<i> I have the same kind of problem here. With G400 CRTC2 &amp; DFB I have to 
+</I>&gt;<i> change the video to YUV2 and pixel aspect to PAL-TV every time. Any 
+</I>&gt;<i> keywords to enable these?
+</I>
+Please use setup-&gt;plugins-&gt;softdevice.
+
+&gt;<i> 
+</I>&gt;<i> A bit OT, but @Stefan: With 1.3.20, softdevice cvs, DFB 0.9.21 and Celeron 
+</I>&gt;<i> 1.2GHz the dfb:mga seems to be in really bad trouble when watching live 
+</I>&gt;<i> hockey. Whenever there's vertical movement I'm getting picture jams 
+</I>&gt;<i> ramdomly between 1-5 secs.
+</I>
+Maybe thats because we sync just before we are calling the output method
+specific drawing function.
+
+&gt;<i> 
+</I>&gt;<i> BTW, how do you guys stop the vdr&amp;softdevice when you want to return 
+</I>&gt;<i> quickly back to X/console? I'm running vdr on my desktop machine and 
+</I>&gt;<i> can't use it while vdr is running on the CRTC2. If I want to test 
+</I>&gt;<i> vdr&amp;softdevice and then return, I hit the vdr's power button and then have 
+</I>&gt;<i> to wait for 5 mins to vdr run my kill_vdr script. Any better ideas?
+</I>
+I'm starting vdr just just from console &quot;./vdr ....&quot; , so there is no looping
+script and thus setup-&gt;restart stops vdr :-) .
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000233.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+	<LI>Next message: <A HREF="000356.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha	blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#234">[ date ]</a>
+              <a href="thread.html#234">[ thread ]</a>
+              <a href="subject.html#234">[ subject ]</a>
+              <a href="author.html#234">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

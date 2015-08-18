@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C200503010616.30034.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000260.html">
+   <LINK REL="Next"  HREF="000258.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C200503010616.30034.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Mar  1 06:16:29 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000260.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+        <LI>Next message: <A HREF="000258.html">[Softdevice-devel] Softdevice future [was : PATCH: OSD scaling &amp;&amp; and real alpha blending for XV]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#255">[ date ]</a>
+              <a href="thread.html#255">[ thread ]</a>
+              <a href="subject.html#255">[ subject ]</a>
+              <a href="author.html#255">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 28. Februar 2005 11:38, Martin Wache wrote:
+
+&gt;<i> In fact I already have a early version which understands ac3 :-)
+</I>&gt;<i> But there is still a lot to do, as this version is not very stable, A-V 
+</I>&gt;<i> sync is broken ( and so on and so on...its almost a complete rewrite of 
+</I>&gt;<i> mpeg2decoder.c) and I will be away for another week from thursday on... 
+</I>&gt;<i> So I guess it will take at least 2-3 weeks before I can present a quite 
+</I>&gt;<i> stable version.
+</I>
+As I'm trying to release a new version, we should delay this for a short
+period. V0.0.8 is quite old and doesn't work with newer vdr versions
+without an cvs update.
+
+&gt;<i> 
+</I>&gt;<i> Inspired by your work with the subplugins I will create a general 
+</I>&gt;<i> interface for video filters like deinterleace and postproc. I plan to 
+</I>&gt;<i> use some kind of filter queue which can be plugged between the mpeg 
+</I>&gt;<i> decoder and the video out ( but not with shared libraries). Creating 
+</I>&gt;<i> additional filters like image scalers or format conversion would be a 
+</I>&gt;<i> lot easier then and could be used for all video out methods. Finally I 
+</I>&gt;<i> don't like to have the filters in the mpeg2decoder. They have nothing to 
+</I>&gt;<i> do with mpeg2 decoding, it's postprocessing what they are doing...
+</I>
+Changeing this is some sort of optimazing too. Remember we are
+decoding a frame. deinterlace and finally copying the frame to
+the destination area.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000260.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+	<LI>Next message: <A HREF="000258.html">[Softdevice-devel] Softdevice future [was : PATCH: OSD scaling &amp;&amp; and real alpha blending for XV]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#255">[ date ]</a>
+              <a href="thread.html#255">[ thread ]</a>
+              <a href="subject.html#255">[ subject ]</a>
+              <a href="author.html#255">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

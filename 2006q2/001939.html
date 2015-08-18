@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Actual format of data passed to avcodec_decode_video() in mpeg2decoder.c...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Actual%20format%20of%20data%20passed%20to%20avcodec_decode_video%28%29%0A%20in%20mpeg2decoder.c...&In-Reply-To=%3C444FED71.9090504%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001936.html">
+   <LINK REL="Next"  HREF="001940.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Actual format of data passed to avcodec_decode_video() in mpeg2decoder.c...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Actual%20format%20of%20data%20passed%20to%20avcodec_decode_video%28%29%0A%20in%20mpeg2decoder.c...&In-Reply-To=%3C444FED71.9090504%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Actual format of data passed to avcodec_decode_video() in mpeg2decoder.c...">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Apr 27 00:00:17 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001936.html">[Softdevice-devel] Actual format of data passed to avcodec_decode_video() in mpeg2decoder.c...
+</A></li>
+        <LI>Next message: <A HREF="001940.html">[Softdevice-devel] Actual format of data passed to avcodec_decode_video() in mpeg2decoder.c...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1939">[ date ]</a>
+              <a href="thread.html#1939">[ thread ]</a>
+              <a href="subject.html#1939">[ subject ]</a>
+              <a href="author.html#1939">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I'm working on incorporating hardware MPEG decoding for the Via CLE266 
+</I>&gt;<i> into softdevice. The simplest way would be to replace the call to 
+</I>&gt;<i> avcodec_decode_video() at mpeg2decoder.c:570 with a replacement which 
+</I>&gt;<i> does the equivalent in hardware (and then grab the relevant data back to 
+</I>&gt;<i> the relevant DirectFB video surface for eventual display). I'm hoping to 
+</I>&gt;<i> use libsoftmpeg for this but I need to work out 'how deep' into the 
+</I>&gt;<i> library I can go.
+</I>
+It would be great if that would work like this. Maybe we can even do
+some postprocessing on it ;-)
+
+&gt;<i> 
+</I>&gt;<i> Obviously, I can avoid any A-V sync bits in libsoftmpeg because softdevice 
+</I>&gt;<i> keeps track of that itself. However, I need to work out the form of an 
+</I>&gt;<i> MPEG stream that currently gets passed to avcodec_decode_video(). Much 
+</I>&gt;<i> quicker to ask than try to work it out for myself and get it wrong!
+</I>&gt;<i> 
+</I>&gt;<i> ;)
+</I>&gt;<i> 
+</I>&gt;<i> Is it MPEG PES complete with audio, or is it just an MPEG ES stream by 
+</I>&gt;<i> this point? (Obviously, I'll have to check for different types of streams 
+</I>&gt;<i> sent by softplay, etc.). I.e. do I need to worry about audio in the 
+</I>&gt;<i> stream or not!
+</I>&gt;<i> 
+</I>You don't need to worry about the audio.
+The softdevice gets PES from Vdr, and the PES packets are parsed by
+libavformat. So what is fed into avcodec_decode_video() is whatever is
+inside of the PES stream video stream (maybe ES, I forgot, it some time
+since I wrote this :-(). You don't have to worry about different streams
+if you are replacing avcodec_decode_video() only if context-&gt;codec_id
+==CODEC_ID_MPEG2VIDEO.
+Like that we could simple switch the decoders for mpeg2 and for other
+than mpeg2 we could use the softdevice like it is now.
+But I think these are problems which can be solved later.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001936.html">[Softdevice-devel] Actual format of data passed to avcodec_decode_video() in mpeg2decoder.c...
+</A></li>
+	<LI>Next message: <A HREF="001940.html">[Softdevice-devel] Actual format of data passed to avcodec_decode_video() in mpeg2decoder.c...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1939">[ date ]</a>
+              <a href="thread.html#1939">[ thread ]</a>
+              <a href="subject.html#1939">[ subject ]</a>
+              <a href="author.html#1939">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

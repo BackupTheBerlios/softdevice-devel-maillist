@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C2D849.7040808%40kapsi.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000905.html">
+   <LINK REL="Next"  HREF="000907.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Tommi Lundell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C2D849.7040808%40kapsi.fi%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">prelude at kapsi.fi
+       </A><BR>
+    <I>Wed Jun 29 19:20:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000905.html">[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+</A></li>
+        <LI>Next message: <A HREF="000907.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#906">[ date ]</a>
+              <a href="thread.html#906">[ thread ]</a>
+              <a href="subject.html#906">[ subject ]</a>
+              <a href="author.html#906">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello
+
+I use G400 TV out, vdr-1.3.27 and latest softdevice source from CVS.
+When i look live TV picture is fine but when i look recording picture 
+jerking whole time :-/
+Any idea where to look that problem?
+
+I added little timing debug to code.
+mpeg2decoder.c
+Line 594:
+
+   // display picture
+    delay2=syncTimer2-&gt;GetRelTime();
+    printf(&quot;decode = %d\t&quot;,delay2);
+    videoOut-&gt;YUV(picture-&gt;data[0], picture-&gt;data[1],picture-&gt;data[2],
+        context-&gt;width,context-&gt;height,
+        picture-&gt;linesize[0],picture-&gt;linesize[1]);
+    delay2+=syncTimer2-&gt;GetRelTime();
+    printf(&quot;Total = %d\n&quot;,delay2);
+
+When i watch live tv result is: (CPU usage: 33-40%)
+decode = 7111   Total = 39998
+decode = 6615   Total = 39997
+decode = 6352   Total = 40000
+decode = 5120   Total = 40002
+decode = 3908   Total = 39992
+decode = 4977   Total = 40007
+decode = 5108   Total = 39999
+decode = 7105   Total = 39978
+decode = 5565   Total = 40018
+decode = 5377   Total = 39992
+decode = 5279   Total = 40012
+decode = 6046   Total = 39983
+decode = 5970   Total = 39994
+decode = 5391   Total = 40005
+decode = 6046   Total = 40008
+decode = 5846   Total = 39991
+decode = 6889   Total = 40004
+decode = 6598   Total = 39995
+decode = 6543   Total = 39988
+decode = 6690   Total = 40012
+decode = 5764   Total = 39988
+decode = 5949   Total = 40007
+decode = 5141   Total = 39993
+decode = 6125   Total = 40005
+decode = 5887   Total = 39995
+decode = 4841   Total = 39999
+decode = 6096   Total = 39996
+decode = 7117   Total = 40009
+decode = 8515   Total = 39985
+decode = 6376   Total = 40031
+decode = 6066   Total = 39970
+decode = 7444   Total = 40023
+decode = 5443   Total = 39996
+decode = 5595   Total = 39973
+decode = 4128   Total = 40005
+decode = 6061   Total = 40002
+decode = 5885   Total = 39989
+decode = 5423   Total = 40005
+decode = 6018   Total = 39990
+decode = 5886   Total = 40013
+decode = 7819   Total = 39998
+decode = 7109   Total = 39991
+decode = 6576   Total = 39997
+decode = 8899   Total = 39996
+decode = 5890   Total = 40013
+decode = 5416   Total = 39994
+decode = 4079   Total = 39992
+decode = 5643   Total = 40003
+decode = 5754   Total = 40001
+
+
+And when i watch recording: (CPU usage: 50-60%)
+decode = 8272   Total = 40005
+decode = 8297   Total = 46372
+decode = 16845  Total = 33628
+decode = 14091  Total = 39985
+decode = 8298   Total = 40011
+decode = 8258   Total = 46366
+decode = 27880  Total = 73637
+decode = 8349   Total = 39982
+decode = 6759   Total = 40005
+decode = 7968   Total = 39998
+decode = 8524   Total = 39996
+decode = 8205   Total = 44513
+decode = 17871  Total = 35964
+decode = 13078  Total = 39510
+decode = 7243   Total = 40006
+decode = 8443   Total = 46336
+decode = 17679  Total = 73676
+decode = 8728   Total = 39990
+decode = 8363   Total = 39992
+decode = 8965   Total = 44391
+decode = 7340   Total = 35614
+decode = 8223   Total = 39990
+decode = 8067   Total = 47255
+decode = 28150  Total = 72761
+decode = 31628  Total = 39984
+decode = 60185  Total = 80004
+decode = 43471  Total = 80002
+decode = 36020  Total = 83120
+decode = 36345  Total = 76857
+decode = 31024  Total = 39992
+decode = 55483  Total = 89967
+decode = 40212  Total = 70039
+decode = 33172  Total = 40063
+decode = 61915  Total = 119928
+decode = 31385  Total = 39997
+decode = 60965  Total = 87037
+decode = 37072  Total = 72967
+decode = 31574  Total = 39982
+decode = 55065  Total = 84067
+decode = 35454  Total = 75937
+decode = 31775  Total = 40002
+decode = 56866  Total = 82256
+decode = 37441  Total = 77729
+decode = 30997  Total = 80007
+
+It's seems that problem is somewhere mpeg2 stream decoding part but i 
+can be wrong also ;-)
+
+Regards: Tommi
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000905.html">[Softdevice-devel] xv output and fullscreen issue: almost SOLVED.
+</A></li>
+	<LI>Next message: <A HREF="000907.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#906">[ date ]</a>
+              <a href="thread.html#906">[ thread ]</a>
+              <a href="subject.html#906">[ subject ]</a>
+              <a href="author.html#906">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

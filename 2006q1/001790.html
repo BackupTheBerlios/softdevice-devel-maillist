@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Displaying images
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C20060224104301.GA5714%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001788.html">
+   <LINK REL="Next"  HREF="001793.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Displaying images</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C20060224104301.GA5714%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Displaying images">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Feb 24 11:43:01 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001788.html">[Softdevice-devel] Displaying images
+</A></li>
+        <LI>Next message: <A HREF="001793.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1790">[ date ]</a>
+              <a href="thread.html#1790">[ thread ]</a>
+              <a href="subject.html#1790">[ subject ]</a>
+              <a href="author.html#1790">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Feb 23, 2006 at 10:50:15PM +0100, Sebastian Vandersee wrote:
+&gt;<i> &gt;&gt;No problem.  BTW, do you know if there is any JPEG viewer that would
+</I>&gt;<i> &gt;&gt;do the color space transformation (normally YCbCr -&gt; RGB) and scaling
+</I>&gt;<i> &gt;&gt;in hardware (Xv)?  I guess it would save some CPU if the Y component
+</I>&gt;<i> &gt;&gt;could be passed as is.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; No, I don't know one and I doubt that there is one. I don't think the
+</I>&gt;<i> &gt; savings on the CPU time is worth the efforts, and you add requirements
+</I>&gt;<i> &gt; to the video driver.
+</I>&gt;<i> &gt; But if Sebastian manages to decode the images the softdevice will do it
+</I>&gt;<i> &gt; like this :-)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Hehe, that puts some pressure on me to implement jpeg decoding ;-)
+</I>&gt;<i> Hopefully I can start looking at it next week.
+</I>
+Well, if I were you, I'd probably go the YCbCr -&gt; RGB -&gt; YUV route first,
+and then determine that implementing all possible conversions YCbCr -&gt; I420,
+YCbCr -&gt; YV12, YCbCr -&gt; YUY2 etc. is not worth the effort. :-)
+
+For what it is worth, I've written a JPEG to JPEG image scaler that also
+converts CMYK to RGB.  It's in the file scale.c of my photomolo package,
+of which I just released a new version:
+<A HREF="http://www.iki.fi/~msmakela/software/photomolo/">http://www.iki.fi/~msmakela/software/photomolo/</A>
+
+You might find that useful, since I guess you will want to scale the images.
+The algorithm scales the image line by line, that is, it will not decompress
+the whole JPEG image first.  It'd be easy to modify the code to store the
+downscaled RGB image data instead of passing it to libjpeg.
+
+See also libjpeg.doc (/usr/share/doc/libjpeg62-dev/libjpeg.doc.gz on Debian).
+I found the document very helpful.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001788.html">[Softdevice-devel] Displaying images
+</A></li>
+	<LI>Next message: <A HREF="001793.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1790">[ date ]</a>
+              <a href="thread.html#1790">[ thread ]</a>
+              <a href="subject.html#1790">[ subject ]</a>
+              <a href="author.html#1790">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

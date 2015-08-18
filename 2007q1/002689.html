@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] improved lip sync with mgatv and viatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C200701242101.24316.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002688.html">
+   <LINK REL="Next"  HREF="002690.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] improved lip sync with mgatv and viatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C200701242101.24316.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] improved lip sync with mgatv and viatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jan 24 21:01:24 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002688.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+        <LI>Next message: <A HREF="002690.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2689">[ date ]</a>
+              <a href="thread.html#2689">[ thread ]</a>
+              <a href="subject.html#2689">[ subject ]</a>
+              <a href="author.html#2689">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 23 Januar 2007 01:25, Torgeir Veimo wrote:
+&gt;<i> On 22 Jan 2007, at 20:26, Stefan Lucke wrote:
+</I>
+&gt;<i> &gt; So my system skips around 9 to 10 frames per minute.
+</I>&gt;<i> &gt; 60 * 25 = 1500 frames.
+</I>&gt;<i> &gt; So the TV frame rate is 25 * 1490 / 1500 = 24.833 Hz .
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I guess I've to ask Ville if there is a way to increase the dot clock
+</I>&gt;<i> &gt; of my card in some way.
+</I>&gt;<i> 
+</I>&gt;<i> This assumes your soundcard is perfectly clocked to the incoming DVB  
+</I>&gt;<i> stream? I'd assume that eventually if the soundcard is a bit faster  
+</I>&gt;<i> than the DVB stream, you'd get an xrun. Maybe it's an idea to add  
+</I>&gt;<i> xrun counts as well.
+</I>
+Yes, there are e few assumptions which may slightly influence calculation.
+These numbers are from recording playback. During live view, they are
+a bit different, but the direction is the same.
+
+The other way, we have to issue additional delays, because of some
+errors we lost about 9 frames is bad too. Let's look at the code:
+
+1. calculate current audio / video offset:
+  if ( aPTS )
+    offset = aPTS - pts ;
+  else offset = 0;
+  if ( abs(offset) &gt; 100000)
+          offset=0;
+
+To my opinion thats ok.
+
+  // this few lines does the whole syncing
+  int pts_corr;
+
+Bad thing starts here. Only 1/10 of offset is taken into account
+for further calcs.
+
+  // calculate pts correction. Correct 1/10 of offset at a time
+  pts_corr = offset/10;
+
+Even worse, correction value is clamped to +/- 2/10 frametime for
+next frame delay calculation.
+To understand that this is bad, you haave to remember that directfb ouput
+ingores all delays which are lower than one frame duration of out device.
+
+  //Max. correction is 2/10 frametime.
+  if (pts_corr &gt; 2*frametime() / 10 )
+    pts_corr = 2*frametime() / 10;
+  else if (pts_corr &lt; -2*frametime() / 10 )
+    pts_corr = -2*frametime() / 10;
+
+  // calculate delay
+  delay += ( frametime() - pts_corr  ) * 100;
+  // update video pts
+  pts += frametime();
+
+Again clamping. Negative delays are out of interest. Positive delays are
+limited to 2 frames which is ok to my opinion.
+
+  if (delay &gt; 2*frametime()*100)
+    delay = 2*frametime()*100;
+  else if (delay &lt; -frametime()*100)
+    delay = -frametime()*100;
+
+Finally I guess this handling should be delegated to the output device,
+as there might be the chance that it could adjust the frame rate on demand.
+I like to have a calculation of a floating average of offset values, and let
+the device make it's own decitions of further actions:
+
+videoOut-&gt;EvaluateDelay (offset, frametime(), &amp;delay, &amp;hurry_up);
+
+&gt;<i> 
+</I>&gt;<i> Another thing which would be good to get statistics about: the  
+</I>&gt;<i> average number of &quot;hurryup&quot;s after a channel change.
+</I>&gt;<i> 
+</I>
+After a channel change, I think we issue delays instead of hurryups.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002688.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+	<LI>Next message: <A HREF="002690.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2689">[ date ]</a>
+              <a href="thread.html#2689">[ thread ]</a>
+              <a href="subject.html#2689">[ subject ]</a>
+              <a href="author.html#2689">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

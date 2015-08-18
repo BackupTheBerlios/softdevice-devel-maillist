@@ -1,0 +1,3317 @@
+From admin at berlios.de  Sun Jul 20 18:46:07 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 20 Jul 2008 18:46:07 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #14039] softdevice doesn't work with some
+	sound systems
+Message-ID: <200807201646.m6KGk7GN023630@unicorn.berlios.de>
+
+Bug #14039, was updated on 2008-Jun-15 20:39
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: earcar
+Assigned to : none
+Summary: softdevice doesn't work with some sound systems
+
+Details: With the pulseaudio alsa plugin vdr-softdevice makes this error:
+Jun 15 01:10:40 fastforward vdr: [29273] [softdevice-audio] Access type not
+available NO AUDIO!
+
+This happens because it assumes that SND_PCM_ACCESS_MMAP_INTERLEAVED is
+available. That assumption is bogus, only normal PCI hw has mmap. So it makes
+troubles with software backends or with a little bit more exotic audio
+hardware.
+
+I've done a patch that fixes this.
+
+Follow-Ups:
+
+Date: 2008-Jul-20 18:46
+By: lucke
+
+Comment:
+Commited a fix based on your patch. If you've still troubles, please cry.
+-------------------------------------------------------
+
+Date: 2008-Jun-15 20:40
+By: earcar
+
+Comment:
+--- audio-alsa.c	2008-04-16 11:06:31.000000000 +0200
++++ audio-alsa.c.new	2008-06-15 01:18:22.962510892 +0200
+@@ -116,9 +116,9 @@
+ 
+   while (size) {
+     while (paused) usleep(1000); // block
+-    AUDIODEB("pcm_mmap_writei  handle %p Data %p size %d\n",handle,Data,size);
+-    err = snd_pcm_mmap_writei(handle,Data, size);
+-    AUDIODEB("pcm_mmap_writeei return value %d Data %p size %d \n",
++    AUDIODEB("pcm_writei  handle %p Data %p size %d\n",handle,Data,size);
++    err = snd_pcm_writei(handle,Data, size);
++    AUDIODEB("pcm_writei return value %d Data %p size %d \n",
+                    err,Data,size);
+     if (err == -EAGAIN || (err >= 0 && (size_t)err < size)) {
+       AUDIODEB("wait \n");
+@@ -334,9 +334,7 @@
+ 
+     snd_pcm_access_mask_t *mask = (snd_pcm_access_mask_t *)alloca(snd_pcm_access_mask_sizeof());
+     snd_pcm_access_mask_none(mask);
+-    snd_pcm_access_mask_set(mask, SND_PCM_ACCESS_MMAP_INTERLEAVED);
+-    snd_pcm_access_mask_set(mask, SND_PCM_ACCESS_MMAP_NONINTERLEAVED);
+-    snd_pcm_access_mask_set(mask, SND_PCM_ACCESS_MMAP_COMPLEX);
++    snd_pcm_access_mask_set(mask, SND_PCM_ACCESS_RW_INTERLEAVED);
+     err = snd_pcm_hw_params_set_access_mask(handle, params, mask);
+     if (err < 0) {
+       esyslog("[softdevice-audio] Access type not available NO AUDIO!");
+
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14039&group_id=2051
+
+
+From admin at berlios.de  Sun Jul 20 19:01:48 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 20 Jul 2008 19:01:48 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #7549] Fehlfarben im OSD
+Message-ID: <200807201701.m6KH1mES005835@unicorn.berlios.de>
+
+Bug #7549, was updated on 2006-May-19 20:56
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Closed
+Resolution: Works For Me
+Bug Group: None
+Priority: 5
+Submitted by: daliman
+Assigned to : none
+Summary: Fehlfarben im OSD
+
+Details: Ich kann nicht genau nachvollziehen ob es ein Fehler von SD ist oder der ATI-Grafikkarte (video overlay?), denn es ist erst beim Umstieg auf SuSE10.1 aufgetreten. 
+
+Bei ver?ndern des Wertes von z.B. "Expand Top/Bottom lines" wird da? OSD unleserlich. D.h. es wird bei mir von lila Streifen durchsetzt. 
+
+
+Follow-Ups:
+
+Date: 2008-Jul-20 19:01
+By: lucke
+
+Comment:
+Problem reporter asked for "please close".  Problem was not reproduceable for developers.
+-------------------------------------------------------
+
+Date: 2006-May-28 15:45
+By: daliman
+
+Comment:
+Kann geschlossen werden,  da die aktuelle cvs eine neue Configureoption "--disable-mmx" enth?lt, die dieses Problem beseitigt.
+
+-------------------------------------------------------
+
+Date: 2006-May-27 13:26
+By: wachm
+
+Comment:
+Tritt das bei Software alpha blending auf?
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=7549&group_id=2051
+
+
+From admin at berlios.de  Fri Jul 25 18:21:44 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Fri, 25 Jul 2008 18:21:44 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #14265] Very dark areas go transparent
+Message-ID: <200807251621.m6PGLiwv016746@unicorn.berlios.de>
+
+Bug #14265, was updated on 2008-Jul-25 18:21
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: svoop
+Assigned to : none
+Summary: Very dark areas go transparent
+
+Details: Setup:
+VDR with softdevice using shm:max-area:full for output, ShmClient to view.
+
+Symptom:
+Very dark pixels (probably #000000) are transparent, thus the underlying desktop "shines" through. The effect is particularly visible if the mplayer plugin is used to play a very dark i.e. AVI: The current TV-frame is frozen and mplayer (mplay.sh) outputs "on top" of the frozen frame. If the frozen frame has is bright and the mplayer movie has very dark pixels or areas, the frozen frame clearly breaks through.
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14265&group_id=2051
+
+
+From admin at berlios.de  Sat Jul 26 18:20:56 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sat, 26 Jul 2008 18:20:56 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #13856] Running VDR with softdevice breaks
+	with ffmpeg-svn
+Message-ID: <200807261620.m6QGKuAu000748@unicorn.berlios.de>
+
+Bug #13856, was updated on 2008-May-22 18:24
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Works For Me
+Bug Group: None
+Priority: 5
+Submitted by: tviel
+Assigned to : none
+Summary: Running VDR with softdevice breaks with ffmpeg-svn
+
+Details: Compiling newest ffmpeg svn sources with postprocessing and shared support enabled, starting vdr with softdevice (0.4, 0.5 and svn checked) results in ERROR:
+
+libvdr-softdevice.so.1.6.0: undefined symbol: pp_free_mode
+
+
+
+Follow-Ups:
+
+Date: 2008-Jul-26 18:20
+By: lucke
+
+Comment:
+Checked with ffmpeg of today (revision 14421) and I had no problems. When changeing ffmpeg, it is a good idea to rebuild and reconfigure softdevice.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=13856&group_id=2051
+
+
+From admin at berlios.de  Sun Jul 27 19:36:41 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 27 Jul 2008 19:36:41 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #13729] Video 4:2:2 problems
+Message-ID: <200807271736.m6RHaf5P027772@unicorn.berlios.de>
+
+Bug #13729, was updated on 2008-May-02 21:16
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: jbg70
+Assigned to : none
+Summary: Video 4:2:2 problems
+
+Details: Hello,
+I use vdr-1.6.0, softdevice (form CVS, 0.4.0, 0.5.0 - I tried all versions!), but when I tune on a channel with 4:2:2 video format, I see the image looking in black and white with some spot of colors like shadows. OSD colors are displayed correctly over the 'bad' video.
+
+I tried also different version of ffmpeg, without solving the problem.
+
+A vdr stream can be downloaded pointing your browser to http://jbg70.interfree.it/data.tar
+It is about 55Mbytes, (1 minute recording) but there is a lot of bandwitdh for downloading.
+
+Any hints?
+Thanks.
+
+Follow-Ups:
+
+Date: 2008-Jul-27 19:36
+By: lucke
+
+Comment:
+Thanks for your sample video. A fix is now in cvs.
+-------------------------------------------------------
+
+Date: 2008-May-12 12:58
+By: jbg70
+
+Comment:
+Update: vlc playes correctly the channel, but without OSD (I already knew!). That means a problem on the client side (ShmClient). I can produce the same problem in vlc if I choose the deinterlace mode as X, medium, linear.
+
+my command line for vlc is just: vlc http://localhost:3000/PES/Cannel_num...
+
+Thanks and regards.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=13729&group_id=2051
+
+
+From admin at berlios.de  Sun Aug  3 01:43:24 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sat, 2 Aug 2008 15:43:24 -0800 (AKDT)
+Subject: [Softdevice-devel] [Bug #14302] ShmClient broken
+Message-ID: <200808022343.m72NhOP5008921@unicorn.berlios.de>
+
+Bug #14302, was updated on 2008-Aug-02 15:43
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: bugmenot
+Assigned to : none
+Summary: ShmClient broken
+
+Details: Since softdevice version 0.5 ShmClient is only black. The tv pictures aren't displayed. OSD and sound is working.
+
+Version 0.4 was working fine.
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14302&group_id=2051
+
+
+From admin at berlios.de  Sun Aug  3 01:47:42 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sat, 2 Aug 2008 15:47:42 -0800 (AKDT)
+Subject: [Softdevice-devel] [Bug #14303] ShmClient: Fullscreen commandline
+	parameter
+Message-ID: <200808022347.m72NlgvE015605@unicorn.berlios.de>
+
+Bug #14303, was updated on 2008-Aug-02 15:47
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: bugmenot
+Assigned to : none
+Summary: ShmClient: Fullscreen commandline parameter
+
+Details: Please apply the following patch to provide a commandline parameter for fullscreen. thanks in advance.
+
+Index: softdevice-cvs/ShmClient.c
+===================================================================
+--- softdevice-cvs.orig/ShmClient.c
++++ softdevice-cvs/ShmClient.c
+@@ -119,6 +119,16 @@ int main(int argc, char **argv) {
+         xvRemote= new cShmRemote("softdevice-xv");
+         //SetupStore.InitSetupStore();
+         SetupStore->xvFullscreen=0;
++       if (argc>1) {
++               if (strcmp(argv[1], "-f") == 0) {
++                       SetupStore->xvFullscreen=1;
++               } else if (strcmp(argv[1], "-h") == 0) {
++                       printf ("Shared-Memory-Client for vdr-softdevice\n");
++                       printf ("Options:\n");
++                       printf ("  -f   Start fullscreen\n");
++                       return 0;
++               }
++       }
+ 
+         if ( !vout->Initialize()  ) {
+                 fprintf(stderr,"Could not init video out!\n");
+
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14303&group_id=2051
+
+
+From admin at berlios.de  Wed Sep 10 19:16:36 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Wed, 10 Sep 2008 19:16:36 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #14302] ShmClient broken
+Message-ID: <200809101716.m8AHGawj012372@unicorn.berlios.de>
+
+Bug #14302, was updated on 2008-Aug-03 01:43
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: bugmenot
+Assigned to : none
+Summary: ShmClient broken
+
+Details: Since softdevice version 0.5 ShmClient is only black. The tv pictures aren't displayed. OSD and sound is working.
+
+Version 0.4 was working fine.
+
+Follow-Ups:
+
+Date: 2008-Sep-10 19:16
+By: lucke
+
+Comment:
+It's not only black, even worse one (I) were not able to change xv output paramters via OSD. Bug was in vdr version dependent member in setupstore.
+Fix is in cvs. Please recompile after make clean.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14302&group_id=2051
+
+
+From admin at berlios.de  Wed Sep 10 19:18:11 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Wed, 10 Sep 2008 19:18:11 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #14303] ShmClient: Fullscreen commandline
+	parameter
+Message-ID: <200809101718.m8AHIBF6018057@unicorn.berlios.de>
+
+Bug #14303, was updated on 2008-Aug-03 01:47
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Closed
+Resolution: Wont Fix
+Bug Group: None
+Priority: 5
+Submitted by: bugmenot
+Assigned to : none
+Summary: ShmClient: Fullscreen commandline parameter
+
+Details: Please apply the following patch to provide a commandline parameter for fullscreen. thanks in advance.
+
+Index: softdevice-cvs/ShmClient.c
+===================================================================
+--- softdevice-cvs.orig/ShmClient.c
++++ softdevice-cvs/ShmClient.c
+@@ -119,6 +119,16 @@ int main(int argc, char **argv) {
+         xvRemote= new cShmRemote("softdevice-xv");
+         //SetupStore.InitSetupStore();
+         SetupStore->xvFullscreen=0;
++       if (argc>1) {
++               if (strcmp(argv[1], "-f") == 0) {
++                       SetupStore->xvFullscreen=1;
++               } else if (strcmp(argv[1], "-h") == 0) {
++                       printf ("Shared-Memory-Client for vdr-softdevice\n");
++                       printf ("Options:\n");
++                       printf ("  -f   Start fullscreen\n");
++                       return 0;
++               }
++       }
+ 
+         if ( !vout->Initialize()  ) {
+                 fprintf(stderr,"Could not init video out!\n");
+
+
+Follow-Ups:
+
+Date: 2008-Sep-10 19:18
+By: lucke
+
+Comment:
+Patch rejected.
+Parameters for starting in full screen mode should be specified like those for softdevice: -vo xv:full .
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14303&group_id=2051
+
+
+From stefan at lucke.in-berlin.de  Wed Sep 10 22:20:52 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 10 Sep 2008 22:20:52 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <A6A1C60D-25B6-4082-91D8-37B3D040BA14@gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200801260058.16729.stefan@lucke.in-berlin.de>
+	<A6A1C60D-25B6-4082-91D8-37B3D040BA14@gmail.com>
+Message-ID: <200809102220.52686.stefan@lucke.in-berlin.de>
+
+On Saturday 26 January 2008, Tero Siironen wrote:
+> 
+> Stefan Lucke kirjoitti 26.1.2008 kello 1.58:
+> 
+> > On Wednesday 23 January 2008, Tero Siironen wrote:
+> >>
+> >> Stefan Lucke kirjoitti 19.1.2008 kello 21.11:
+> >
+> >>> Fix is in cvs.
+> >>
+> >>
+> >> Hi,
+> >>
+> >> It seems that the fix did not help in a case where the subpicture is
+> >> first two rows and then the next subpicture is in one row.
+> >
+> > 2nd try is in cvs .
+> >
+> 
+> Thanks, seems that subtitling is working now. But this causes new  
+> issue, now if OSD is open it closed when subpicture is to be drawn.  
+> Therefore it is pretty impossible to use menu when ongoing program has  
+> subtitles.
+
+Sorry, took a while.
+3rd try is in cvs now.
+
+-- 
+Stefan Lucke
+
+
+From izero79 at gmail.com  Thu Sep 11 20:46:43 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Thu, 11 Sep 2008 21:46:43 +0300
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <200809102220.52686.stefan@lucke.in-berlin.de>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200801260058.16729.stefan@lucke.in-berlin.de>
+	<A6A1C60D-25B6-4082-91D8-37B3D040BA14@gmail.com>
+	<200809102220.52686.stefan@lucke.in-berlin.de>
+Message-ID: <98FEA2E7-2DBB-473D-BA3F-164A28B4EDE1@gmail.com>
+
+
+Stefan Lucke kirjoitti 10.9.2008 kello 23.20:
+
+> On Saturday 26 January 2008, Tero Siironen wrote:
+>>
+>> Stefan Lucke kirjoitti 26.1.2008 kello 1.58:
+>>
+>>> On Wednesday 23 January 2008, Tero Siironen wrote:
+>>>>
+>>>> Stefan Lucke kirjoitti 19.1.2008 kello 21.11:
+>>>
+>>>>> Fix is in cvs.
+>>>>
+>>>>
+>>>> Hi,
+>>>>
+>>>> It seems that the fix did not help in a case where the subpicture  
+>>>> is
+>>>> first two rows and then the next subpicture is in one row.
+>>>
+>>> 2nd try is in cvs .
+>>>
+>>
+>> Thanks, seems that subtitling is working now. But this causes new
+>> issue, now if OSD is open it closed when subpicture is to be drawn.
+>> Therefore it is pretty impossible to use menu when ongoing program  
+>> has
+>> subtitles.
+>
+> Sorry, took a while.
+> 3rd try is in cvs now.
+
+Thanks for the fix, now were are very close to perfect. I still  
+noticed that if I open the OSD when subtitling is on the screen the  
+OSD is closed and subtitles are not drawn anymore. Then if I press  
+menu key, menu is not shown but subtitles are shown again. When I  
+press menu second time OSD is shown. So after first menu press OSD is  
+actually open but it's just cleaned and it causes that subtitles are  
+not shown in mean time.
+
+But this is not a big problem anymore.
+
+
+-- 
+Tero
+
+
+From stefan at lucke.in-berlin.de  Thu Sep 11 23:51:06 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 11 Sep 2008 23:51:06 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <98FEA2E7-2DBB-473D-BA3F-164A28B4EDE1@gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200809102220.52686.stefan@lucke.in-berlin.de>
+	<98FEA2E7-2DBB-473D-BA3F-164A28B4EDE1@gmail.com>
+Message-ID: <200809112351.06738.stefan@lucke.in-berlin.de>
+
+On Thursday 11 September 2008, Tero Siironen wrote:
+> 
+> Stefan Lucke kirjoitti 10.9.2008 kello 23.20:
+> 
+> > On Saturday 26 January 2008, Tero Siironen wrote:
+> >>
+
+> >> Thanks, seems that subtitling is working now. But this causes new
+> >> issue, now if OSD is open it closed when subpicture is to be drawn.
+> >> Therefore it is pretty impossible to use menu when ongoing program  
+> >> has
+> >> subtitles.
+> >
+> > Sorry, took a while.
+> > 3rd try is in cvs now.
+> 
+> Thanks for the fix, now were are very close to perfect. I still  
+> noticed that if I open the OSD when subtitling is on the screen the  
+> OSD is closed and subtitles are not drawn anymore. Then if I press  
+> menu key, menu is not shown but subtitles are shown again. When I  
+> press menu second time OSD is shown. So after first menu press OSD is  
+> actually open but it's just cleaned and it causes that subtitles are  
+> not shown in mean time.
+> 
+> But this is not a big problem anymore.
+
+But I like to fix this. Can you try attached patch ?
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: SoftOsd.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/SoftOsd.c,v
+retrieving revision 1.34
+diff -U3 -r1.34 SoftOsd.c
+--- SoftOsd.c	10 Sep 2008 20:17:43 -0000	1.34
++++ SoftOsd.c	11 Sep 2008 21:45:05 -0000
+@@ -118,7 +118,10 @@
+ {
+         if (shown) {
+                 Clear();
+-                videoOut->ClearOSD();
++#if VDRVERSNUM >= 10509
++                if (cOsd::Active())
++#endif
++                        videoOut->ClearOSD();
+                 shown = false;
+         }
+         return cOsd::SetAreas(Areas, NumAreas);
+@@ -128,7 +131,15 @@
+ /* -------------------------------------------------------------------------*/
+ void cSoftOsd::SetActive(bool On)
+ {
+-        cOsd::SetActive(On);
++        voutMutex.Lock();
++        if (On != cOsd::Active()) {
++                cOsd::SetActive(On);
++                if (On && GetBitmap(0)) {
++                        Flush();
++                        OsdCommit(true);
++                }
++        }
++        voutMutex.Unlock();
+ }
+ #endif
+ 
+@@ -187,7 +198,7 @@
+ }
+ 
+ /*--------------------------------------------------------------------------*/
+-void cSoftOsd::OsdCommit() {
++void cSoftOsd::OsdCommit(bool forced) {
+         OSDDEB("OsdCommit()\n");
+         int newX;
+         int newY;
+@@ -217,6 +228,9 @@
+                 RefreshAll = true;
+                 modeChanged = true;
+         }
++
++        if (forced)
++                RefreshAll = true;
+ 
+         if (modeChanged) {
+                 OSDDEB("mode changed\n");
+Index: SoftOsd.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/SoftOsd.h,v
+retrieving revision 1.19
+diff -U3 -r1.19 SoftOsd.h
+--- SoftOsd.h	10 Sep 2008 20:17:43 -0000	1.19
++++ SoftOsd.h	11 Sep 2008 21:45:05 -0000
+@@ -117,7 +117,7 @@
+     bool FlushBitmaps(bool OnlyDirty);
+     bool DrawConvertBitmap(cBitmap *Bitmap, bool OnlyDirty);
+ 
+-    void OsdCommit();
++    void OsdCommit(bool forced = false);
+     // may only be called if the caller holds voutMutex
+ 
+     void Clear();
+
+From izero79 at gmail.com  Fri Sep 12 18:12:25 2008
+From: izero79 at gmail.com (Tero Siironen)
+Date: Fri, 12 Sep 2008 19:12:25 +0300
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <200809112351.06738.stefan@lucke.in-berlin.de>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200809102220.52686.stefan@lucke.in-berlin.de>
+	<98FEA2E7-2DBB-473D-BA3F-164A28B4EDE1@gmail.com>
+	<200809112351.06738.stefan@lucke.in-berlin.de>
+Message-ID: <038AB454-5E4C-4BAE-A5AB-1935E6726919@gmail.com>
+
+
+Stefan Lucke kirjoitti 12.9.2008 kello 0.51:
+
+> On Thursday 11 September 2008, Tero Siironen wrote:
+>>
+>> Stefan Lucke kirjoitti 10.9.2008 kello 23.20:
+>>
+>>> On Saturday 26 January 2008, Tero Siironen wrote:
+>>>>
+>
+>>>> Thanks, seems that subtitling is working now. But this causes new
+>>>> issue, now if OSD is open it closed when subpicture is to be drawn.
+>>>> Therefore it is pretty impossible to use menu when ongoing program
+>>>> has
+>>>> subtitles.
+>>>
+>>> Sorry, took a while.
+>>> 3rd try is in cvs now.
+>>
+>> Thanks for the fix, now were are very close to perfect. I still
+>> noticed that if I open the OSD when subtitling is on the screen the
+>> OSD is closed and subtitles are not drawn anymore. Then if I press
+>> menu key, menu is not shown but subtitles are shown again. When I
+>> press menu second time OSD is shown. So after first menu press OSD is
+>> actually open but it's just cleaned and it causes that subtitles are
+>> not shown in mean time.
+>>
+>> But this is not a big problem anymore.
+>
+> But I like to fix this. Can you try attached patch ?
+>
+
+Now it works great, OSD doesn't close by itself and when I exit OSD I  
+still can see the subtitles immediately. Thanks!
+
+
+-- 
+Tero
+
+
+From stefan at lucke.in-berlin.de  Fri Sep 12 18:53:06 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 12 Sep 2008 18:53:06 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and DVB-subtitles
+In-Reply-To: <038AB454-5E4C-4BAE-A5AB-1935E6726919@gmail.com>
+References: <6470E5B6-578F-4C64-9D70-20B14B9E60A4@gmail.com>
+	<200809112351.06738.stefan@lucke.in-berlin.de>
+	<038AB454-5E4C-4BAE-A5AB-1935E6726919@gmail.com>
+Message-ID: <200809121853.07055.stefan@lucke.in-berlin.de>
+
+On Friday 12 September 2008, Tero Siironen wrote:
+> 
+> Stefan Lucke kirjoitti 12.9.2008 kello 0.51:
+> 
+> > On Thursday 11 September 2008, Tero Siironen wrote:
+> >>
+> >> Stefan Lucke kirjoitti 10.9.2008 kello 23.20:
+> >>
+> >>> On Saturday 26 January 2008, Tero Siironen wrote:
+> >>>>
+> >
+> >>>> Thanks, seems that subtitling is working now. But this causes new
+> >>>> issue, now if OSD is open it closed when subpicture is to be drawn.
+> >>>> Therefore it is pretty impossible to use menu when ongoing program
+> >>>> has
+> >>>> subtitles.
+> >>>
+> >>> Sorry, took a while.
+> >>> 3rd try is in cvs now.
+> >>
+> >> Thanks for the fix, now were are very close to perfect. I still
+> >> noticed that if I open the OSD when subtitling is on the screen the
+> >> OSD is closed and subtitles are not drawn anymore. Then if I press
+> >> menu key, menu is not shown but subtitles are shown again. When I
+> >> press menu second time OSD is shown. So after first menu press OSD is
+> >> actually open but it's just cleaned and it causes that subtitles are
+> >> not shown in mean time.
+> >>
+> >> But this is not a big problem anymore.
+> >
+> > But I like to fix this. Can you try attached patch ?
+> >
+> 
+> Now it works great, OSD doesn't close by itself and when I exit OSD I  
+> still can see the subtitles immediately. Thanks!
+
+Just commited to cvs :-) .
+
+-- 
+Stefan Lucke
+
+
+From fabio.bordin at informacitta.it  Fri Sep 12 23:38:02 2008
+From: fabio.bordin at informacitta.it (Fabio Bordin)
+Date: Fri, 12 Sep 2008 23:38:02 +0200
+Subject: [Softdevice-devel]  Softdevice, VDR and Fast Forward
+Message-ID: <48CAE13A.7040302@informacitta.it>
+
+Hi!
+Recently I have returned to use softdevice and I have remained indeed 
+surprised by the footsteps before that it has done.
+I have noticed an annoying problem with the recordings.
+If I quickly advance the timecode is not correctly adjourned and  when I 
+press the key play I find very more ahead than what I expected.
+To make an example:
+I begin to see the recording and I make to go fast forward the first 
+minute. At the desired point the timecode points out 00:03:00 but the 
+images don't correspond. If I restart and I see the recording to normal 
+speed the point in which I had pressed the key play had to point out 
+once inferior, around 00:01:30.
+
+I hope that someone can help me.
+
+PS: sorry for my english
+
+
+From admin at berlios.de  Sat Sep 13 16:03:03 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sat, 13 Sep 2008 16:03:03 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #14494] softdevice fails to build with
+	ffmpeg r15306
+Message-ID: <200809131403.m8DE33V5008743@unicorn.berlios.de>
+
+Bug #14494, was updated on 2008-Sep-13 16:03
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: davide125
+Assigned to : none
+Summary: softdevice fails to build with ffmpeg r15306
+
+Details: Using today ffmpeg (r15306) vdr-softdevice fails to build. Here's the log:
+g++ -MM -MG -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" softdevice.c utils.c i18n.c video.c mpeg2decoder.c audio.c video-dummy.c setup-softdevice.c setup-softdevice-menu.c setup-softlog.c setup-softlog-menu.c sync-timer.c SoftOsd.c PicBuffer.c VideoFilter.c audio-alsa.c audio-ac3pt.c video-fb.c video-xv.c xscreensaver.c video-shm.c > .dependencies
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" softdevice.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" utils.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" i18n.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" video.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" mpeg2decoder.c
+In file included from video.h:26,
+                 from video.c:17:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+video.c: In member function 'virtual void cVideoOut::EvaluateDelay(uint64_t, uint64_t, int)':
+video.c:558: warning: deprecated conversion from string constant to 'char*'
+video.c:586: warning: deprecated conversion from string constant to 'char*'
+video.c:595: warning: deprecated conversion from string constant to 'char*'
+video.c:602: warning: deprecated conversion from string constant to 'char*'
+video.c: In member function 'virtual void cVideoOut::ResetDelay()':
+video.c:619: warning: deprecated conversion from string constant to 'char*'
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" audio.c
+In file included from video.h:26,
+                 from mpeg2decoder.h:31,
+                 from mpeg2decoder.c:15:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+mpeg2decoder.c: In constructor 'cStreamDecoder::cStreamDecoder(AVCodecContext*, bool)':
+mpeg2decoder.c:143: error: 'struct AVCodecContext' has no member named 'error_resilience'
+mpeg2decoder.c: In constructor 'cMpeg2Decoder::cMpeg2Decoder(cAudioOut*, cVideoOut*)':
+mpeg2decoder.c:1029: error: 'avcodec_build' was not declared in this scope
+mpeg2decoder.c: In member function 'void cMpeg2Decoder::Freeze(int, bool)':
+mpeg2decoder.c:1457: warning: suggest parentheses around comparison in operand of &
+make: *** [mpeg2decoder.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from video.h:26,
+                 from mpeg2decoder.h:31,
+                 from softdevice.h:18,
+                 from softdevice.c:9:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+softdevice.c: In constructor 'cPluginSoftDevice::cPluginSoftDevice()':
+softdevice.c:819: warning: deprecated conversion from string constant to 'char*'
+
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14494&group_id=2051
+
+
+From laz at club-burniston.co.uk  Sat Sep 13 17:17:09 2008
+From: laz at club-burniston.co.uk (Laz)
+Date: Sat, 13 Sep 2008 16:17:09 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <48CAE13A.7040302@informacitta.it>
+References: <48CAE13A.7040302@informacitta.it>
+Message-ID: <200809131617.09495.laz@club-burniston.co.uk>
+
+On Friday 12 September 2008 22:38:02 Fabio Bordin wrote:
+> Hi!
+> Recently I have returned to use softdevice and I have remained indeed
+> surprised by the footsteps before that it has done.
+> I have noticed an annoying problem with the recordings.
+> If I quickly advance the timecode is not correctly adjourned and  when I
+> press the key play I find very more ahead than what I expected.
+> To make an example:
+> I begin to see the recording and I make to go fast forward the first
+> minute. At the desired point the timecode points out 00:03:00 but the
+> images don't correspond. If I restart and I see the recording to normal
+> speed the point in which I had pressed the key play had to point out
+> once inferior, around 00:01:30.
+
+I've been seeing the same thing since back in May with DirectFB / Matrox G450 
+output with softdevice (see thread "Trickspeed jumps huge distances..." back 
+in May). This was a newly built system but I've not had this problem before 
+with the same type of hardware.
+
+My initial suspicions were that it had to do with the virtual function
+cDevice::HasIBPTrickSpeed which was introduced in vdr 1.5.15. However, I've 
+played about enabling and disabling that in softdevice but get the same 
+outcome as you describe.
+
+I also see poor A-V synch after using fast or slow speeds: this can be 
+corrected by jumping backwards or forwards! I think there is a limit to the 
+A-V offset so that if the offset is greater than that value it is set to 
+zero: I'm pretty sure this is connected with the "position" in the file and 
+the current frames being shown being so far apart after using a fast or slow 
+speed.
+
+If I jump forward or backwards by a minute, the actual position jumped (as 
+shown by the counter) is something like 1:12 forwards and 50 s backwards, 
+rather than a minute as it should be. Also, when setting a cut mark, the 
+position jumps forward quite a few I-frames, rather than just to the next 
+one.
+
+I'm pretty sure that all of these are connected but whether it's down to 
+changes in vdr or in softdevice...
+
+Any clues?
+
+Cheers,
+
+Laz
+
+
+From stefan at lucke.in-berlin.de  Sat Sep 13 18:13:00 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 13 Sep 2008 18:13:00 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809131617.09495.laz@club-burniston.co.uk>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809131617.09495.laz@club-burniston.co.uk>
+Message-ID: <200809131813.00225.stefan@lucke.in-berlin.de>
+
+On Saturday 13 September 2008, Laz wrote:
+> On Friday 12 September 2008 22:38:02 Fabio Bordin wrote:
+> > Hi!
+> > Recently I have returned to use softdevice and I have remained indeed
+> > surprised by the footsteps before that it has done.
+> > I have noticed an annoying problem with the recordings.
+> > If I quickly advance the timecode is not correctly adjourned and  when I
+> > press the key play I find very more ahead than what I expected.
+> > To make an example:
+> > I begin to see the recording and I make to go fast forward the first
+> > minute. At the desired point the timecode points out 00:03:00 but the
+> > images don't correspond. If I restart and I see the recording to normal
+> > speed the point in which I had pressed the key play had to point out
+> > once inferior, around 00:01:30.
+> 
+> I've been seeing the same thing since back in May with DirectFB / Matrox G450 
+> output with softdevice (see thread "Trickspeed jumps huge distances..." back 
+> in May). This was a newly built system but I've not had this problem before 
+> with the same type of hardware.
+
+Which version of ffmpeg do you use ?
+
+> 
+> My initial suspicions were that it had to do with the virtual function
+> cDevice::HasIBPTrickSpeed which was introduced in vdr 1.5.15. However, I've 
+> played about enabling and disabling that in softdevice but get the same 
+> outcome as you describe.
+> 
+> I also see poor A-V synch after using fast or slow speeds: this can be 
+> corrected by jumping backwards or forwards! I think there is a limit to the 
+> A-V offset so that if the offset is greater than that value it is set to 
+> zero: I'm pretty sure this is connected with the "position" in the file and 
+> the current frames being shown being so far apart after using a fast or slow 
+> speed.
+> 
+
+For sync issues, you may use attached patch, see below.
+
+> If I jump forward or backwards by a minute, the actual position jumped (as 
+> shown by the counter) is something like 1:12 forwards and 50 s backwards, 
+> rather than a minute as it should be. Also, when setting a cut mark, the 
+> position jumps forward quite a few I-frames, rather than just to the next 
+> one.
+> 
+> I'm pretty sure that all of these are connected but whether it's down to 
+> changes in vdr or in softdevice...
+> 
+> Any clues?
+
+
+Can you both try attached patch ?
+
+There are 2 changes:
+1st Makes use of av_read_frame() selectable via OSD.
+    Thats because I noticed some serrious sync issues with my old ffmpeg
+    version I use on my prod system. Deactivating av_read_frame() and 
+    using av_read_packed() instead solved that for me.
+2nd Feature makes field selectable which is displayed in still picture
+    mode, but unfortunately this doesn't work at the moment.
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.83
+diff -U3 -r1.83 mpeg2decoder.c
+--- mpeg2decoder.c	20 Jul 2008 16:41:01 -0000	1.83
++++ mpeg2decoder.c	13 Sep 2008 16:00:13 -0000
+@@ -1047,6 +1047,8 @@
+   IsSuspended=false;
+   Speed=1;
+   pb = NULL;
++
++  useAVReadFrame = setupStore->useAVReadFrame;
+ }
+ 
+ cMpeg2Decoder::~cMpeg2Decoder()
+@@ -1176,15 +1178,21 @@
+           usleep(50000);
+ 
+         BUFDEB("av_read_frame start\n");
+-        ret = av_read_frame(ic, &pkt);
+-        //ret = av_read_packet(ic, &pkt);
++
++        if (useAVReadFrame)
++            ret = av_read_frame(ic, &pkt);
++        else
++            ret = av_read_packet(ic, &pkt);
++
+         if (ret < 0) {
+             BUFDEB("cMpeg2Decoder Stream Error!\n");
+             if (ThreadActive)
+-		    usleep(10000);
++                usleep(10000);
+             continue;
+         }
+-        av_dup_packet(&pkt);
++        if (useAVReadFrame)
++            av_dup_packet(&pkt);
++
+         PacketCount++;
+         BUFDEB("got packet from av_read_frame!\n");
+ 
+@@ -1537,41 +1545,47 @@
+ 
+ /* ----------------------------------------------------------------------------
+  */
+-
+ static uint8_t pes_packet_header[] = {
+      0x00,0x00,0x01, 0xe0,           0x00,0x00,   0x84, 0x00, 0x00,0x00};
+      // startcode,  video-stream 0, packet length,      no pts
++
++/* ----------------------------------------------------------------------------
++ */
+ int cMpeg2Decoder::StillPicture(uchar *Data, int Length)
+ {
+-  bool has_pesheader=false;
+-  CMDDEB("StillPicture %p length %d \n",Data,Length);
++  bool has_pesheader = false;
++  CMDDEB("StillPicture %p length %d \n", Data,Length);
+   // XXX hack to ingore audio junk sent by vdr in the still picture
+-  AudioIdx=DONT_PLAY;
++  AudioIdx = DONT_PLAY;
+ 
+   // check if data contains a valid pes header
+ #define SEARCH_LENGTH 64
+-  if (Length>SEARCH_LENGTH) {
+-    uchar *start=Data+1;
++  if (Length > SEARCH_LENGTH) {
++    uchar *start = Data + 1;
+     do {
+       start++;
+-      start=(uchar *)memchr(start,0x01,Data+SEARCH_LENGTH-start);
+-      if ( start && start[-1]==0 && start[-2] == 0
+-          && ((start[1] &0xF0)==0xe0) ) { // video stream pes header
+-        has_pesheader=true;
++      start = (uchar *) memchr (start, 0x01, Data + SEARCH_LENGTH - start);
++      if ( start &&
++           start[-1] == 0 && start[-2] == 0 && 
++           ((start[1] &0xF0) == 0xe0) ) { // video stream pes header
++        has_pesheader = true;
+         break;
+-      };
+-    } while (start<Data+SEARCH_LENGTH && start);
+-  };
++      }
++    } while (start < Data + SEARCH_LENGTH && start);
++  }
+ 
+-  for (int i=0; 4>i;i++) {
++  videoOut->SetStillPictureMode (true);
++  for (int i = 0; 4 > i; i++) {
+     if (!has_pesheader) {
+       // send a fake pes header
+-      pes_packet_header[4]=(Length+2)>>8 & 0xFF;
+-      pes_packet_header[5]=(Length+2) & 0xFF;
+-      Decode(pes_packet_header,9);
+-    };
+-    Decode(Data,Length);
++      pes_packet_header[4] = (Length + 2) >> 8 & 0xFF;
++      pes_packet_header[5] = (Length + 2) & 0xFF;
++      Decode (pes_packet_header, 9);
++    }
++    Decode (Data,Length);
+   }
++  //videoOut->SetStillPictureMode (false);
++
+   CMDDEB("StillPicture end \n");
+   return Length;
+ }
+Index: mpeg2decoder.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.h,v
+retrieving revision 1.44
+diff -U3 -r1.44 mpeg2decoder.h
+--- mpeg2decoder.h	26 Feb 2008 08:06:18 -0000	1.44
++++ mpeg2decoder.h	13 Sep 2008 16:00:14 -0000
+@@ -284,6 +284,7 @@
+ 
+     AVFormatContext *ic;
+     ByteIOContext   *pb;
++    bool            useAVReadFrame;
+     int LastSize;
+     cMutex  mutex;
+     cSigTimer EnablePutSignal;
+Index: setup-softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.c,v
+retrieving revision 1.56
+diff -U3 -r1.56 setup-softdevice.c
+--- setup-softdevice.c	20 Jul 2008 16:41:01 -0000	1.56
++++ setup-softdevice.c	13 Sep 2008 16:00:14 -0000
+@@ -74,6 +74,8 @@
+ 
+ const char *fieldOrderNames[SETUP_FIELD_ORDER_NAMES];
+ 
++const char *preferredFieldNames[SETUP_PREFERRED_FIELD_NAMES];
++
+ /* ----------------------------------------------------------------------------
+  */
+ cSetupStore *setupStore=NULL;
+@@ -116,6 +118,8 @@
+   useStretchBlit    = 0;
+   stretchBlitLocked = false;
+   fieldOrderMode    = 2;
++  preferredField    = bothFields;
++  useAVReadFrame    = true;
+   bufferMode      = 0;
+   mainMenu  = 1;
+   syncTimerMode = 2;
+@@ -209,6 +213,11 @@
+   fieldOrderNames[1] = "Top field first";
+   fieldOrderNames[2] = "Auto";
+   fieldOrderNames[3] = NULL;
++
++  preferredFieldNames[0] = tr("Both Fields");
++  preferredFieldNames[1] = tr("First Field");
++  preferredFieldNames[2] = tr("Later Field");
++  preferredFieldNames[3] = NULL;
+ }
+ 
+ bool cSetupStore::SetupParse(const char *Name, const char *Value)
+@@ -381,6 +390,14 @@
+     fieldOrderMode = clamp (0, fieldOrderMode, 2);
+     fprintf(stderr, "[setup-softdevice] fieldOrderMode: %s\n",
+             fieldOrderNames[fieldOrderMode]);
++  } else if (!strcasecmp(Name, "preferredField")) {
++    preferredField = (tPreferredField) atoi (Value);
++    preferredField = (tPreferredField) clamp (bothFields, preferredField, laterField);
++    fprintf(stderr, "[setup-softdevice] preferrenField: %s\n",
++            preferredFieldNames[preferredField]);
++  } else if (!strcasecmp(Name, "useAVReadFrame")) {
++    useAVReadFrame = (bool) atoi (Value);
++    fprintf(stderr, "[setup-softdevice] useAVReadFrame: %s\n", (useAVReadFrame) ? "yes": "no");
+   } else if (!strcasecmp(Name, "vidBrightness")) {
+     vidBrightness = atoi (Value);
+     vidBrightness = clamp (-1, vidBrightness, 100);
+Index: setup-softdevice.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.h,v
+retrieving revision 1.46
+diff -U3 -r1.46 setup-softdevice.h
+--- setup-softdevice.h	10 Sep 2008 17:15:38 -0000	1.46
++++ setup-softdevice.h	13 Sep 2008 16:00:14 -0000
+@@ -105,6 +105,9 @@
+ #define SETUP_FIELD_ORDER_NAMES  4
+ extern const char *fieldOrderNames[SETUP_FIELD_ORDER_NAMES];
+ 
++#define SETUP_PREFERRED_FIELD_NAMES  4
++extern const char *preferredFieldNames[SETUP_PREFERRED_FIELD_NAMES];
++
+ /* ----------------------------------------------------------------------------
+  * allow changing of output pixfmt
+  */
+@@ -116,6 +119,14 @@
+ #define SETUP_SUSPENDVIDEO 3
+ extern const char *suspendVideo[SETUP_SUSPENDVIDEO];
+ 
++/*-----------------------------------------------------------------------------
++ */
++typedef enum preferredField {
++        bothFields,
++        earlierField,
++        laterField
++} tPreferredField;
++
+ /* ---------------------------------------------------------------------------
+  */
+ struct cSetupStore {
+@@ -149,6 +160,7 @@
+     int   ppQuality;
+     int   mirror;
+     int   syncOnFrames;
++    bool  useAVReadFrame;
+     int   avOffset;
+     int   screenPixelAspect;
+     int   zoom;
+@@ -182,6 +194,8 @@
+     char  alsaAC3Device [ALSA_DEVICE_NAME_LENGTH];
+ 
+     int   setupStoreShmid;
++
++    tPreferredField   preferredField;
+ };
+ 
+ #define OSDMODE_PSEUDO    0
+Index: setup-softdevice-menu.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice-menu.c,v
+retrieving revision 1.15
+diff -U3 -r1.15 setup-softdevice-menu.c
+--- setup-softdevice-menu.c	20 Jul 2008 16:41:01 -0000	1.15
++++ setup-softdevice-menu.c	13 Sep 2008 16:00:14 -0000
+@@ -370,6 +370,15 @@
+                             (SETUP_FIELD_ORDER_NAMES-1),
+                             fieldOrderNames));
+ 
++  Add(new cMenuEditStraItem(tr("Still Picture Field"),
++                            (int *) &data->preferredField,
++                            (SETUP_PREFERRED_FIELD_NAMES-1),
++                            preferredFieldNames));
++
++  Add(new cMenuEditBoolItem(tr("Use av_read_frame()"),
++                            (int *) &data->useAVReadFrame, tr("no"), tr("yes")));
++
++
+ #if VDRVERSNUM >= 10334
+   Add(new cOsdItem(" ", osUnknown, false));
+ #else
+@@ -489,6 +498,8 @@
+   SetupStore ("mainMenu",             setupStore->mainMenu);
+   SetupStore ("syncTimerMode",        setupStore->syncTimerMode);
+   SetupStore ("fieldOrderMode",       setupStore->fieldOrderMode);
++  SetupStore ("preferredField",       setupStore->preferredField);
++  SetupStore ("useAVReadFrame",       setupStore->useAVReadFrame);
+   SetupStore ("vidBrightness",        setupStore->vidBrightness);
+   SetupStore ("vidContrast",          setupStore->vidContrast);
+   SetupStore ("vidHue",               setupStore->vidHue);
+Index: video.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.c,v
+retrieving revision 1.77
+diff -U3 -r1.77 video.c
+--- video.c	20 Jul 2008 16:41:01 -0000	1.77
++++ video.c	13 Sep 2008 16:00:15 -0000
+@@ -461,6 +461,56 @@
+ 
+ /* ---------------------------------------------------------------------------
+  */
++void cVideoOut::SetStillPictureMode(bool on)
++{
++fprintf(stderr,"%s", on ? "ON " : "OFF ");
++    stillPictureMode = on;
++}
++
++/* ---------------------------------------------------------------------------
++ */
++void cVideoOut::SelectField (sPicBuffer *pic)
++{
++                unsigned char   *dest, 
++                                *src;
++
++fprintf(stderr,"1");
++        if (!pic->interlaced_frame)
++                return;
++fprintf(stderr,"2");
++        if (setupStore->preferredField == bothFields)
++                return;
++
++fprintf(stderr,"3");
++        dest = src  = pic->pixel[0];
++
++        if (setupStore->preferredField == earlierField) {
++
++fprintf(stderr,"4");
++                if (pic->top_field_first)
++                        dest += pic->stride[0];
++                else
++                        src  += pic->stride[0];
++
++        } else {
++
++fprintf(stderr,"5");
++                if (pic->top_field_first)
++                        src  += pic->stride[0];
++                else
++                        dest += pic->stride[0];
++        }
++
++fprintf(stderr,"6");
++        for (int i = 0; i < pic->height; i += 2) {
++            memcpy (dest, src, pic->stride[0]);
++            dest += 2 * pic->stride[0];
++            src  += 2 * pic->stride[0];
++        }
++}
++
++/* ---------------------------------------------------------------------------
++ */
+ void cVideoOut::DrawVideo_420pl(cSyncTimer *syncTimer,
+                                 sPicBuffer *pic)
+ {
+@@ -472,6 +522,12 @@
+     return;
+   }
+ 
++  if (stillPictureMode) {
++    stillPictureMode = false;
++fprintf(stderr,"0");
++    SelectField (pic);
++  }
++
+   sPicBuffer *scale_pic=NULL;
+   if (scaleVid != 0) {
+           scale_pic=GetBuffer(pic->format,pic->max_width,pic->max_height);
+@@ -554,7 +610,7 @@
+   offsetIndex %= AVRG_OFF_CNT;
+ 
+   softlog->Log(SOFT_LOG_TRACE, 0,
+-                  "[VideoOut] A/V (%d - %d) off = %d avoff = %d\n",
++                  "[VideoOut] A/V (%lld - %lld) off = %d avoff = %d\n",
+                   aPTS, pts, offset, offsetAverage);
+ 
+   dropOffset = (useAverage4Drop) ? offsetAverage : offset;
+Index: video.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.h,v
+retrieving revision 1.56
+diff -U3 -r1.56 video.h
+--- video.h	20 Jul 2008 16:41:01 -0000	1.56
++++ video.h	13 Sep 2008 16:00:15 -0000
+@@ -66,6 +66,7 @@
+     //
+     sPicBuffer  *oldPicture;
+     cMutex      oldPictureMutex;
++    bool        stillPictureMode;
+     void        SetOldPicture(sPicBuffer *pic);
+ 
+ protected:
+@@ -192,6 +193,8 @@
+             oldPictureMutex.Unlock();
+     };
+ 
++    virtual void SetStillPictureMode (bool on);
++    virtual void SelectField (sPicBuffer *pic);
+ 
+     virtual void Action(void);
+     // osd control thread. Refreshes the osd on dimension changes and
+
+From laz at club-burniston.co.uk  Sat Sep 13 18:24:46 2008
+From: laz at club-burniston.co.uk (Laz)
+Date: Sat, 13 Sep 2008 17:24:46 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809131813.00225.stefan@lucke.in-berlin.de>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809131617.09495.laz@club-burniston.co.uk>
+	<200809131813.00225.stefan@lucke.in-berlin.de>
+Message-ID: <200809131724.46866.laz@club-burniston.co.uk>
+
+On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+> On Saturday 13 September 2008, Laz wrote:
+> > I've been seeing the same thing since back in May with DirectFB / Matrox
+> > G450 output with softdevice (see thread "Trickspeed jumps huge
+> > distances..." back in May). This was a newly built system but I've not
+> > had this problem before with the same type of hardware.
+>
+> Which version of ffmpeg do you use ?
+
+Just checked and it's ffmpeg svn from 29/07/08 (happy to check out a new 
+version, if you think that would help!). I'm pretty sure I had the same 
+issues with svn from 24/04/08: I think I upgraded it to see if it fixed the 
+problem!
+
+:-)
+
+> > My initial suspicions were that it had to do with the virtual function
+> > cDevice::HasIBPTrickSpeed which was introduced in vdr 1.5.15. However,
+> > I've played about enabling and disabling that in softdevice but get the
+> > same outcome as you describe.
+> >
+> > I also see poor A-V synch after using fast or slow speeds: this can be
+> > corrected by jumping backwards or forwards! I think there is a limit to
+> > the A-V offset so that if the offset is greater than that value it is set
+> > to zero: I'm pretty sure this is connected with the "position" in the
+> > file and the current frames being shown being so far apart after using a
+> > fast or slow speed.
+>
+> For sync issues, you may use attached patch, see below.
+>
+> > If I jump forward or backwards by a minute, the actual position jumped
+> > (as shown by the counter) is something like 1:12 forwards and 50 s
+> > backwards, rather than a minute as it should be. Also, when setting a cut
+> > mark, the position jumps forward quite a few I-frames, rather than just
+> > to the next one.
+> >
+> > I'm pretty sure that all of these are connected but whether it's down to
+> > changes in vdr or in softdevice...
+> >
+> > Any clues?
+>
+> Can you both try attached patch ?
+>
+> There are 2 changes:
+> 1st Makes use of av_read_frame() selectable via OSD.
+>     Thats because I noticed some serrious sync issues with my old ffmpeg
+>     version I use on my prod system. Deactivating av_read_frame() and
+>     using av_read_packed() instead solved that for me.
+> 2nd Feature makes field selectable which is displayed in still picture
+>     mode, but unfortunately this doesn't work at the moment.
+
+Will try patch and get back with the results ASAP...
+
+Cheers,
+
+Laz
+
+
+From stefan at lucke.in-berlin.de  Sat Sep 13 18:44:43 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 13 Sep 2008 18:44:43 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809131724.46866.laz@club-burniston.co.uk>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809131813.00225.stefan@lucke.in-berlin.de>
+	<200809131724.46866.laz@club-burniston.co.uk>
+Message-ID: <200809131844.43767.stefan@lucke.in-berlin.de>
+
+On Saturday 13 September 2008, Laz wrote:
+> On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+> > On Saturday 13 September 2008, Laz wrote:
+> > > I've been seeing the same thing since back in May with DirectFB / Matrox
+> > > G450 output with softdevice (see thread "Trickspeed jumps huge
+> > > distances..." back in May). This was a newly built system but I've not
+> > > had this problem before with the same type of hardware.
+> >
+> > Which version of ffmpeg do you use ?
+> 
+> Just checked and it's ffmpeg svn from 29/07/08 (happy to check out a new 
+> version, if you think that would help!). 
+
+No, don't upgrade ffmpeg, as softdevice won't compile.
+See bug report #14494.
+
+
+-- 
+Stefan Lucke
+
+
+From laz at club-burniston.co.uk  Sat Sep 13 18:50:51 2008
+From: laz at club-burniston.co.uk (Laz)
+Date: Sat, 13 Sep 2008 17:50:51 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809131724.46866.laz@club-burniston.co.uk>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809131813.00225.stefan@lucke.in-berlin.de>
+	<200809131724.46866.laz@club-burniston.co.uk>
+Message-ID: <200809131750.51222.laz@club-burniston.co.uk>
+
+On Saturday 13 September 2008 17:24:46 Laz wrote:
+> On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+> > Can you both try attached patch ?
+> >
+> > There are 2 changes:
+> > 1st Makes use of av_read_frame() selectable via OSD.
+> >     Thats because I noticed some serrious sync issues with my old ffmpeg
+> >     version I use on my prod system. Deactivating av_read_frame() and
+> >     using av_read_packed() instead solved that for me.
+>
+> Will try patch and get back with the results ASAP...
+
+First impressions: will need proper testing "in normal useage"!
+
+Cut marks do now get set pretty much where I press 0.
+
+Fast forward (multispeed enabled): as I increase the fast-forward speed, the 
+time counter stays running forward at the same speed but the pictures shown 
+speed up with each increase. It looks like the counter is always going at the 
+maximum speed but the pictures shown do increase in speed form 2x to the 
+maximum (can't remember what that is!).
+
+I still lose A-V synch after slow motion.
+
+I'm pretty sure it does the same whether I have av_read_frame or not.
+
+I wouldn't be surprised if this was down to ffmpeg versions because its 
+behaviour seems to change quite regularly between versions! Any experience of 
+current svn? What configure options are you using when building it?
+
+I had a similar setup (DirectFB, G450) which I used on-and-off for several 
+years and I remember that the A-V synch was pretty rock solid on that.
+
+> > 2nd Feature makes field selectable which is displayed in still picture
+> >     mode, but unfortunately this doesn't work at the moment.
+>
+
+Excellent: I had toyed with the idea of implementing that in the past but 
+never got anywhere! I take it that this will remove flicker from a paused 
+interlaced stream?
+
+Cheers,
+
+Laz
+
+
+From laz at club-burniston.co.uk  Sat Sep 13 19:06:23 2008
+From: laz at club-burniston.co.uk (Laz)
+Date: Sat, 13 Sep 2008 18:06:23 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809131750.51222.laz@club-burniston.co.uk>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809131724.46866.laz@club-burniston.co.uk>
+	<200809131750.51222.laz@club-burniston.co.uk>
+Message-ID: <200809131806.23231.laz@club-burniston.co.uk>
+
+On Saturday 13 September 2008 17:50:51 Laz wrote:
+
+> Fast forward (multispeed enabled): as I increase the fast-forward speed,
+> the time counter stays running forward at the same speed but the pictures
+> shown speed up with each increase. It looks like the counter is always
+> going at the maximum speed but the pictures shown do increase in speed form
+> 2x to the maximum (can't remember what that is!).
+
+Forgot to say that when I go back to normal speed, it doesn't appear to jump a 
+huge distance.
+
+Not very easy to describe the behaviour! It is as if the speeded up replay 
+doesn't use the multispeeds for the playback time but it does for the frames 
+shown, if that makes sense!!
+
+Cheers,
+
+Laz
+
+
+From fabio.bordin at informacitta.it  Sat Sep 13 20:25:06 2008
+From: fabio.bordin at informacitta.it (Fabio Bordin)
+Date: Sat, 13 Sep 2008 20:25:06 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809131813.00225.stefan@lucke.in-berlin.de>
+References: <48CAE13A.7040302@informacitta.it>	<200809131617.09495.laz@club-burniston.co.uk>
+	<200809131813.00225.stefan@lucke.in-berlin.de>
+Message-ID: <48CC0582.8000405@informacitta.it>
+
+Stefan Lucke ha scritto:
+> On Saturday 13 September 2008, Laz wrote:
+>   
+>> On Friday 12 September 2008 22:38:02 Fabio Bordin wrote:
+>>     
+>>> Hi!
+>>> Recently I have returned to use softdevice and I have remained indeed
+>>> surprised by the footsteps before that it has done.
+>>> I have noticed an annoying problem with the recordings.
+>>> If I quickly advance the timecode is not correctly adjourned and  when I
+>>> press the key play I find very more ahead than what I expected.
+>>> To make an example:
+>>> I begin to see the recording and I make to go fast forward the first
+>>> minute. At the desired point the timecode points out 00:03:00 but the
+>>> images don't correspond. If I restart and I see the recording to normal
+>>> speed the point in which I had pressed the key play had to point out
+>>> once inferior, around 00:01:30.
+>>>       
+>> I've been seeing the same thing since back in May with DirectFB / Matrox G450 
+>> output with softdevice (see thread "Trickspeed jumps huge distances..." back 
+>> in May). This was a newly built system but I've not had this problem before 
+>> with the same type of hardware.
+>>     
+>
+> Which version of ffmpeg do you use ?
+>
+>   
+>> My initial suspicions were that it had to do with the virtual function
+>> cDevice::HasIBPTrickSpeed which was introduced in vdr 1.5.15. However, I've 
+>> played about enabling and disabling that in softdevice but get the same 
+>> outcome as you describe.
+>>
+>> I also see poor A-V synch after using fast or slow speeds: this can be 
+>> corrected by jumping backwards or forwards! I think there is a limit to the 
+>> A-V offset so that if the offset is greater than that value it is set to 
+>> zero: I'm pretty sure this is connected with the "position" in the file and 
+>> the current frames being shown being so far apart after using a fast or slow 
+>> speed.
+>>
+>>     
+>
+> For sync issues, you may use attached patch, see below.
+>
+>   
+>> If I jump forward or backwards by a minute, the actual position jumped (as 
+>> shown by the counter) is something like 1:12 forwards and 50 s backwards, 
+>> rather than a minute as it should be. Also, when setting a cut mark, the 
+>> position jumps forward quite a few I-frames, rather than just to the next 
+>> one.
+>>
+>> I'm pretty sure that all of these are connected but whether it's down to 
+>> changes in vdr or in softdevice...
+>>
+>> Any clues?
+>>     
+>
+>
+> Can you both try attached patch ?
+>
+> There are 2 changes:
+> 1st Makes use of av_read_frame() selectable via OSD.
+>     Thats because I noticed some serrious sync issues with my old ffmpeg
+>     version I use on my prod system. Deactivating av_read_frame() and 
+>     using av_read_packed() instead solved that for me.
+> 2nd Feature makes field selectable which is displayed in still picture
+>     mode, but unfortunately this doesn't work at the moment.
+>
+>   
+I just tried your patch and it works. Speed is not high but for the 
+moment is ok for me.
+Some info about my system:
+Debian Etch
+vdr 1.6.0
+FFmpeg SVN-r15200
+libavutil     49.10. 0 / 49.10. 0
+libavcodec    51.71. 0 / 51.71. 0
+libavformat   52.22. 0 / 52.22. 0
+libavdevice   52. 1. 0 / 52. 1. 0
+libpostproc   51. 2. 0 / 51. 2. 0
+softdevice showed with xv
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20080913/a1240f65/attachment.html>
+
+From stefan at lucke.in-berlin.de  Sat Sep 13 23:09:50 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 13 Sep 2008 23:09:50 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <48CC0582.8000405@informacitta.it>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809131813.00225.stefan@lucke.in-berlin.de>
+	<48CC0582.8000405@informacitta.it>
+Message-ID: <200809132309.50477.stefan@lucke.in-berlin.de>
+
+On Saturday 13 September 2008, Fabio Bordin wrote:
+> Stefan Lucke ha scritto:
+> > On Saturday 13 September 2008, Laz wrote:
+> >   
+> >> On Friday 12 September 2008 22:38:02 Fabio Bordin wrote:
+> >>     
+> >>> Hi!
+> >>> Recently I have returned to use softdevice and I have remained indeed
+> >>> surprised by the footsteps before that it has done.
+> >>> I have noticed an annoying problem with the recordings.
+> >>> If I quickly advance the timecode is not correctly adjourned and  when I
+> >>> press the key play I find very more ahead than what I expected.
+> >>> To make an example:
+> >>> I begin to see the recording and I make to go fast forward the first
+> >>> minute. At the desired point the timecode points out 00:03:00 but the
+> >>> images don't correspond. If I restart and I see the recording to normal
+> >>> speed the point in which I had pressed the key play had to point out
+> >>> once inferior, around 00:01:30.
+> >>>       
+> >> I've been seeing the same thing since back in May with DirectFB / Matrox G450 
+> >> output with softdevice (see thread "Trickspeed jumps huge distances..." back 
+> >> in May). This was a newly built system but I've not had this problem before 
+> >> with the same type of hardware.
+> >>     
+> >
+> > Which version of ffmpeg do you use ?
+> >
+> >   
+> >> My initial suspicions were that it had to do with the virtual function
+> >> cDevice::HasIBPTrickSpeed which was introduced in vdr 1.5.15. However, I've 
+> >> played about enabling and disabling that in softdevice but get the same 
+> >> outcome as you describe.
+> >>
+> >> I also see poor A-V synch after using fast or slow speeds: this can be 
+> >> corrected by jumping backwards or forwards! I think there is a limit to the 
+> >> A-V offset so that if the offset is greater than that value it is set to 
+> >> zero: I'm pretty sure this is connected with the "position" in the file and 
+> >> the current frames being shown being so far apart after using a fast or slow 
+> >> speed.
+> >>
+> >>     
+> >
+> > For sync issues, you may use attached patch, see below.
+> >
+> >   
+> >> If I jump forward or backwards by a minute, the actual position jumped (as 
+> >> shown by the counter) is something like 1:12 forwards and 50 s backwards, 
+> >> rather than a minute as it should be. Also, when setting a cut mark, the 
+> >> position jumps forward quite a few I-frames, rather than just to the next 
+> >> one.
+> >>
+> >> I'm pretty sure that all of these are connected but whether it's down to 
+> >> changes in vdr or in softdevice...
+> >>
+> >> Any clues?
+> >>     
+> >
+> >
+> > Can you both try attached patch ?
+> >
+> > There are 2 changes:
+> > 1st Makes use of av_read_frame() selectable via OSD.
+> >     Thats because I noticed some serrious sync issues with my old ffmpeg
+> >     version I use on my prod system. Deactivating av_read_frame() and 
+> >     using av_read_packed() instead solved that for me.
+> > 2nd Feature makes field selectable which is displayed in still picture
+> >     mode, but unfortunately this doesn't work at the moment.
+> >
+> >   
+> I just tried your patch and it works. Speed is not high but for the 
+> moment is ok for me.
+> Some info about my system:
+> Debian Etch
+> vdr 1.6.0
+> FFmpeg SVN-r15200
+
+That's a brand new version in my eyes. Did you disable av_read_frame()
+and restarted vdr ? I gues I forgot to say that toggleing this setup value
+needs a vdr restart.
+
+> libavutil     49.10. 0 / 49.10. 0
+> libavcodec    51.71. 0 / 51.71. 0
+> libavformat   52.22. 0 / 52.22. 0
+> libavdevice   52. 1. 0 / 52. 1. 0
+> libpostproc   51. 2. 0 / 51. 2. 0
+> softdevice showed with xv
+> 
+
+I usually test and develop with xv. With this output method and 
+ffmpeg @ SVN-r14421 I did not have problems. Let's see
+what happens when I upgrade.
+
+
+-- 
+Stefan Lucke
+
+
+From laz at club-burniston.co.uk  Sun Sep 14 14:09:43 2008
+From: laz at club-burniston.co.uk (Laz)
+Date: Sun, 14 Sep 2008 13:09:43 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809132309.50477.stefan@lucke.in-berlin.de>
+References: <48CAE13A.7040302@informacitta.it>
+	<48CC0582.8000405@informacitta.it>
+	<200809132309.50477.stefan@lucke.in-berlin.de>
+Message-ID: <200809141309.43112.laz@club-burniston.co.uk>
+
+On Saturday 13 September 2008 22:09:50 Stefan Lucke wrote:
+> That's a brand new version in my eyes. Did you disable av_read_frame()
+> and restarted vdr ? I gues I forgot to say that toggleing this setup value
+> needs a vdr restart.
+
+Ahhhhh...I thought it was changing it on-the-fly. Will check again a bit later 
+on including restarts, this time!
+
+Cheers,
+
+Laz
+
+
+From laz at club-burniston.co.uk  Sun Sep 14 14:23:04 2008
+From: laz at club-burniston.co.uk (Laz)
+Date: Sun, 14 Sep 2008 13:23:04 +0100
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809141309.43112.laz@club-burniston.co.uk>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809132309.50477.stefan@lucke.in-berlin.de>
+	<200809141309.43112.laz@club-burniston.co.uk>
+Message-ID: <200809141323.04869.laz@club-burniston.co.uk>
+
+On Sunday 14 September 2008 13:09:43 Laz wrote:
+> On Saturday 13 September 2008 22:09:50 Stefan Lucke wrote:
+> > That's a brand new version in my eyes. Did you disable av_read_frame()
+> > and restarted vdr ? I gues I forgot to say that toggleing this setup
+> > value needs a vdr restart.
+>
+> Ahhhhh...I thought it was changing it on-the-fly. Will check again a bit
+> later on including restarts, this time!
+
+Couldn't resist a quick test before I went out!
+
+Setting av_read_frame to "no" and restarting does make fast-forward work 
+properly again for me and A-V synch seems not to drift after fast or slow 
+playback.
+
+:-)
+
+Will try to check more thoroughly later on, though.
+
+Cheers,
+
+Laz
+
+
+From stefan at lucke.in-berlin.de  Sun Sep 14 19:46:40 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Sep 2008 19:46:40 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809131750.51222.laz@club-burniston.co.uk>
+References: <48CAE13A.7040302@informacitta.it>
+	<200809131724.46866.laz@club-burniston.co.uk>
+	<200809131750.51222.laz@club-burniston.co.uk>
+Message-ID: <200809141946.40970.stefan@lucke.in-berlin.de>
+
+On Saturday 13 September 2008, Laz wrote:
+> On Saturday 13 September 2008 17:24:46 Laz wrote:
+> > On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+> > > Can you both try attached patch ?
+
+> > > 2nd Feature makes field selectable which is displayed in still picture
+> > >     mode, but unfortunately this doesn't work at the moment.
+> >
+> 
+> Excellent: I had toyed with the idea of implementing that in the past but 
+> never got anywhere! I take it that this will remove flicker from a paused 
+> interlaced stream?
+
+Here is an other version of the patch.
+2nd feature seems to work most of the time.
+
+When switching between play / pause real fast, it doesn't work,
+as the frame is displayed just before the Freeze() command arrives.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.83
+diff -U3 -r1.83 mpeg2decoder.c
+--- mpeg2decoder.c	20 Jul 2008 16:41:01 -0000	1.83
++++ mpeg2decoder.c	14 Sep 2008 16:29:56 -0000
+@@ -1047,6 +1047,8 @@
+   IsSuspended=false;
+   Speed=1;
+   pb = NULL;
++
++  useAVReadFrame = setupStore->useAVReadFrame;
+ }
+ 
+ cMpeg2Decoder::~cMpeg2Decoder()
+@@ -1176,15 +1178,21 @@
+           usleep(50000);
+ 
+         BUFDEB("av_read_frame start\n");
+-        ret = av_read_frame(ic, &pkt);
+-        //ret = av_read_packet(ic, &pkt);
++
++        if (useAVReadFrame)
++            ret = av_read_frame(ic, &pkt);
++        else
++            ret = av_read_packet(ic, &pkt);
++
+         if (ret < 0) {
+             BUFDEB("cMpeg2Decoder Stream Error!\n");
+             if (ThreadActive)
+-		    usleep(10000);
++                usleep(10000);
+             continue;
+         }
+-        av_dup_packet(&pkt);
++        if (useAVReadFrame)
++            av_dup_packet(&pkt);
++
+         PacketCount++;
+         BUFDEB("got packet from av_read_frame!\n");
+ 
+@@ -1413,6 +1421,8 @@
+ {
+   CMDDEB("Play\n");
+   freezeMode=false;
++fprintf(stderr,"MP Play\n");
++  videoOut->SetStillPictureMode (false);
+   if (running)
+   {
+     aoutMutex.Lock();
+@@ -1433,6 +1443,9 @@
+ {
+   curPlayMode=playMode;
+   this->packetMode=packetMode;
++fprintf(stderr,"MP SetPlayMode (%d, packetMode(%s))\n",playMode, packetMode?"ON":"OFF");
++
++  videoOut->SetStillPictureMode (false);
+   switch (curPlayMode) {
+     case PmAudioVideo:
+       CMDDEB("SetPlayMode PmAudioVideo\n");
+@@ -1456,6 +1469,10 @@
+   CMDDEB("Freeze Streams %d freeze %d\n",Stream,freeze);
+   if (Stream & SOFTDEVICE_BOTH_STREAMS == SOFTDEVICE_BOTH_STREAMS )
+     freezeMode=freeze;
++fprintf(stderr,"MP Freeze(%s)\n", freeze ? "ON":"OFF");
++  if (freeze)
++    videoOut->SetStillPictureMode (true);
++
+   // sleep a short while before putting the
+   // audio and video stream decoders to sleep
+   usleep(20000);
+@@ -1537,41 +1554,47 @@
+ 
+ /* ----------------------------------------------------------------------------
+  */
+-
+ static uint8_t pes_packet_header[] = {
+      0x00,0x00,0x01, 0xe0,           0x00,0x00,   0x84, 0x00, 0x00,0x00};
+      // startcode,  video-stream 0, packet length,      no pts
++
++/* ----------------------------------------------------------------------------
++ */
+ int cMpeg2Decoder::StillPicture(uchar *Data, int Length)
+ {
+-  bool has_pesheader=false;
+-  CMDDEB("StillPicture %p length %d \n",Data,Length);
++  bool has_pesheader = false;
++  CMDDEB("StillPicture %p length %d \n", Data,Length);
+   // XXX hack to ingore audio junk sent by vdr in the still picture
+-  AudioIdx=DONT_PLAY;
++  AudioIdx = DONT_PLAY;
+ 
+   // check if data contains a valid pes header
+ #define SEARCH_LENGTH 64
+-  if (Length>SEARCH_LENGTH) {
+-    uchar *start=Data+1;
++  if (Length > SEARCH_LENGTH) {
++    uchar *start = Data + 1;
+     do {
+       start++;
+-      start=(uchar *)memchr(start,0x01,Data+SEARCH_LENGTH-start);
+-      if ( start && start[-1]==0 && start[-2] == 0
+-          && ((start[1] &0xF0)==0xe0) ) { // video stream pes header
+-        has_pesheader=true;
++      start = (uchar *) memchr (start, 0x01, Data + SEARCH_LENGTH - start);
++      if ( start &&
++           start[-1] == 0 && start[-2] == 0 && 
++           ((start[1] &0xF0) == 0xe0) ) { // video stream pes header
++        has_pesheader = true;
+         break;
+-      };
+-    } while (start<Data+SEARCH_LENGTH && start);
+-  };
++      }
++    } while (start < Data + SEARCH_LENGTH && start);
++  }
+ 
+-  for (int i=0; 4>i;i++) {
++  videoOut->SetStillPictureMode (true);
++  for (int i = 0; 4 > i; i++) {
+     if (!has_pesheader) {
+       // send a fake pes header
+-      pes_packet_header[4]=(Length+2)>>8 & 0xFF;
+-      pes_packet_header[5]=(Length+2) & 0xFF;
+-      Decode(pes_packet_header,9);
+-    };
+-    Decode(Data,Length);
++      pes_packet_header[4] = (Length + 2) >> 8 & 0xFF;
++      pes_packet_header[5] = (Length + 2) & 0xFF;
++      Decode (pes_packet_header, 9);
++    }
++    Decode (Data,Length);
+   }
++  //videoOut->SetStillPictureMode (false);
++
+   CMDDEB("StillPicture end \n");
+   return Length;
+ }
+@@ -1582,6 +1605,7 @@
+ {
+   mutex.Lock();
+   CMDDEB("Clear\n");
++  videoOut->SetStillPictureMode (true);
+   Stop(false);
+   Start(false);
+   CMDDEB("Clear finished\n");
+@@ -1593,6 +1617,7 @@
+ void cMpeg2Decoder::TrickSpeed(int trickSpeed)
+ {
+   CMDDEB("TrickSpeed %d\n",Speed);
++fprintf(stderr,"MP TrickSpeed A (%d -> %d)\n", Speed, trickSpeed);
+   Speed=trickSpeed;
+   // XXX hack to ingore audio junk sent by vdr in the
+   if (trickSpeed!=1) {
+@@ -1604,6 +1629,11 @@
+     AudioIdx=DONT_PLAY;
+   } else if (AudioIdx==DONT_PLAY)
+     AudioIdx=NO_STREAM;
++
++  if (trickSpeed > 1)
++    videoOut->SetStillPictureMode (true);
++fprintf(stderr,"MP TrickSpeed B (%d -> %d)\n", Speed, trickSpeed);
++
+   Play();
+   if (running)
+   {
+Index: mpeg2decoder.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.h,v
+retrieving revision 1.44
+diff -U3 -r1.44 mpeg2decoder.h
+--- mpeg2decoder.h	26 Feb 2008 08:06:18 -0000	1.44
++++ mpeg2decoder.h	14 Sep 2008 16:29:56 -0000
+@@ -284,6 +284,7 @@
+ 
+     AVFormatContext *ic;
+     ByteIOContext   *pb;
++    bool            useAVReadFrame;
+     int LastSize;
+     cMutex  mutex;
+     cSigTimer EnablePutSignal;
+Index: setup-softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.c,v
+retrieving revision 1.56
+diff -U3 -r1.56 setup-softdevice.c
+--- setup-softdevice.c	20 Jul 2008 16:41:01 -0000	1.56
++++ setup-softdevice.c	14 Sep 2008 16:29:57 -0000
+@@ -74,6 +74,8 @@
+ 
+ const char *fieldOrderNames[SETUP_FIELD_ORDER_NAMES];
+ 
++const char *preferredFieldNames[SETUP_PREFERRED_FIELD_NAMES];
++
+ /* ----------------------------------------------------------------------------
+  */
+ cSetupStore *setupStore=NULL;
+@@ -116,6 +118,8 @@
+   useStretchBlit    = 0;
+   stretchBlitLocked = false;
+   fieldOrderMode    = 2;
++  preferredField    = bothFields;
++  useAVReadFrame    = true;
+   bufferMode      = 0;
+   mainMenu  = 1;
+   syncTimerMode = 2;
+@@ -209,6 +213,11 @@
+   fieldOrderNames[1] = "Top field first";
+   fieldOrderNames[2] = "Auto";
+   fieldOrderNames[3] = NULL;
++
++  preferredFieldNames[0] = tr("Both Fields");
++  preferredFieldNames[1] = tr("First Field");
++  preferredFieldNames[2] = tr("Later Field");
++  preferredFieldNames[3] = NULL;
+ }
+ 
+ bool cSetupStore::SetupParse(const char *Name, const char *Value)
+@@ -381,6 +390,14 @@
+     fieldOrderMode = clamp (0, fieldOrderMode, 2);
+     fprintf(stderr, "[setup-softdevice] fieldOrderMode: %s\n",
+             fieldOrderNames[fieldOrderMode]);
++  } else if (!strcasecmp(Name, "preferredField")) {
++    preferredField = (tPreferredField) atoi (Value);
++    preferredField = (tPreferredField) clamp (bothFields, preferredField, laterField);
++    fprintf(stderr, "[setup-softdevice] preferrenField: %s\n",
++            preferredFieldNames[preferredField]);
++  } else if (!strcasecmp(Name, "useAVReadFrame")) {
++    useAVReadFrame = (bool) atoi (Value);
++    fprintf(stderr, "[setup-softdevice] useAVReadFrame: %s\n", (useAVReadFrame) ? "yes": "no");
+   } else if (!strcasecmp(Name, "vidBrightness")) {
+     vidBrightness = atoi (Value);
+     vidBrightness = clamp (-1, vidBrightness, 100);
+Index: setup-softdevice.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.h,v
+retrieving revision 1.46
+diff -U3 -r1.46 setup-softdevice.h
+--- setup-softdevice.h	10 Sep 2008 17:15:38 -0000	1.46
++++ setup-softdevice.h	14 Sep 2008 16:29:57 -0000
+@@ -105,6 +105,9 @@
+ #define SETUP_FIELD_ORDER_NAMES  4
+ extern const char *fieldOrderNames[SETUP_FIELD_ORDER_NAMES];
+ 
++#define SETUP_PREFERRED_FIELD_NAMES  4
++extern const char *preferredFieldNames[SETUP_PREFERRED_FIELD_NAMES];
++
+ /* ----------------------------------------------------------------------------
+  * allow changing of output pixfmt
+  */
+@@ -116,6 +119,14 @@
+ #define SETUP_SUSPENDVIDEO 3
+ extern const char *suspendVideo[SETUP_SUSPENDVIDEO];
+ 
++/*-----------------------------------------------------------------------------
++ */
++typedef enum preferredField {
++        bothFields,
++        earlierField,
++        laterField
++} tPreferredField;
++
+ /* ---------------------------------------------------------------------------
+  */
+ struct cSetupStore {
+@@ -149,6 +160,7 @@
+     int   ppQuality;
+     int   mirror;
+     int   syncOnFrames;
++    bool  useAVReadFrame;
+     int   avOffset;
+     int   screenPixelAspect;
+     int   zoom;
+@@ -182,6 +194,8 @@
+     char  alsaAC3Device [ALSA_DEVICE_NAME_LENGTH];
+ 
+     int   setupStoreShmid;
++
++    tPreferredField   preferredField;
+ };
+ 
+ #define OSDMODE_PSEUDO    0
+Index: setup-softdevice-menu.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice-menu.c,v
+retrieving revision 1.15
+diff -U3 -r1.15 setup-softdevice-menu.c
+--- setup-softdevice-menu.c	20 Jul 2008 16:41:01 -0000	1.15
++++ setup-softdevice-menu.c	14 Sep 2008 16:29:57 -0000
+@@ -370,6 +370,15 @@
+                             (SETUP_FIELD_ORDER_NAMES-1),
+                             fieldOrderNames));
+ 
++  Add(new cMenuEditStraItem(tr("Still Picture Field"),
++                            (int *) &data->preferredField,
++                            (SETUP_PREFERRED_FIELD_NAMES-1),
++                            preferredFieldNames));
++
++  Add(new cMenuEditBoolItem(tr("Use av_read_frame()"),
++                            (int *) &data->useAVReadFrame, tr("no"), tr("yes")));
++
++
+ #if VDRVERSNUM >= 10334
+   Add(new cOsdItem(" ", osUnknown, false));
+ #else
+@@ -489,6 +498,8 @@
+   SetupStore ("mainMenu",             setupStore->mainMenu);
+   SetupStore ("syncTimerMode",        setupStore->syncTimerMode);
+   SetupStore ("fieldOrderMode",       setupStore->fieldOrderMode);
++  SetupStore ("preferredField",       setupStore->preferredField);
++  SetupStore ("useAVReadFrame",       setupStore->useAVReadFrame);
+   SetupStore ("vidBrightness",        setupStore->vidBrightness);
+   SetupStore ("vidContrast",          setupStore->vidContrast);
+   SetupStore ("vidHue",               setupStore->vidHue);
+Index: softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.93
+diff -U3 -r1.93 softdevice.c
+--- softdevice.c	18 Apr 2008 15:15:41 -0000	1.93
++++ softdevice.c	14 Sep 2008 16:29:58 -0000
+@@ -113,7 +113,7 @@
+ #define AOUT_OSS    3
+ #define AOUT_MACOS  4
+ 
+-//#define SOFTDEB(out...) {printf("softdeb[%04d]:",(int)(getTimeMilis() % 10000));printf(out);}
++#define SOFTDEB(out...) {printf("softdeb[%04d]:",(int)(getTimeMilis() % 10000));printf(out);}
+ 
+ #ifndef SOFTDEB
+ #define SOFTDEB(out...)
+@@ -497,9 +497,9 @@
+ void cSoftDevice::Freeze(void)
+ {
+     SOFTDEB("Freeze...\n");
+-    cDevice::Freeze();
+     if (decoder)
+       decoder->Freeze();
++    cDevice::Freeze();
+     SOFTDEB("Freeze finished.\n");
+ }
+ 
+@@ -585,7 +585,7 @@
+ int cSoftDevice::PlayAudio(const uchar *Data, int Length)
+ # endif
+ {
+-  SOFTDEB("PlayAudio... %p length %d\n",Data,Length);
++  //SOFTDEB("PlayAudio... %p length %d\n",Data,Length);
+ #if VDRVERSNUM >= 10342
+   if (SHOULD_SUSPEND && !Transferring()) {
+     usleep(10000); // avoid burning CPU
+@@ -646,7 +646,7 @@
+  */
+ int cSoftDevice::PlayVideo(const uchar *Data, int Length)
+ {
+-  SOFTDEB("PlayVideo %x length %d\n",Data,Length);
++  //SOFTDEB("PlayVideo %x length %d\n",Data,Length);
+ #if VDRVERSNUM >= 10342
+   if (SHOULD_SUSPEND && !Transferring()) {
+     usleep(10000); // avoid burning CPU
+Index: video.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.c,v
+retrieving revision 1.77
+diff -U3 -r1.77 video.c
+--- video.c	20 Jul 2008 16:41:01 -0000	1.77
++++ video.c	14 Sep 2008 16:29:58 -0000
+@@ -461,6 +461,60 @@
+ 
+ /* ---------------------------------------------------------------------------
+  */
++void cVideoOut::SetStillPictureMode(bool on)
++{
++fprintf(stderr,"SetStillPictureMode: %s\n", on ? "ON " : "OFF ");
++    stillPictureMode = on;
++}
++
++/* ---------------------------------------------------------------------------
++ */
++void cVideoOut::SelectField (sPicBuffer *pic)
++{
++                unsigned char   *dest, 
++                                *src;
++                int             i;
++
++        if (!pic->interlaced_frame)
++                return;
++        if (setupStore->preferredField == bothFields)
++                return;
++
++        dest = src  = pic->pixel[0]
++                      + (pic->edge_height) * pic->stride[0]
++                      + pic->edge_width;
++
++        if (setupStore->preferredField == earlierField) {
++
++                if (pic->top_field_first)
++                        dest += pic->stride[0];
++                else
++                        src  += pic->stride[0];
++
++        } else {
++
++                if (pic->top_field_first)
++                        src  += pic->stride[0];
++                else
++                        dest += pic->stride[0];
++        }
++
++        for (i = 0; i < pic->height; i += 2) {
++#if 1
++            // copy part
++            memcpy (dest, src, pic->stride[0]);
++#else
++            // set frame to very dark
++            memset (dest, 0, pic->stride[0]);
++            memset (src, 0, pic->stride[0]);
++#endif
++            dest += 2 * pic->stride[0];
++            src  += 2 * pic->stride[0];
++        }
++}
++
++/* ---------------------------------------------------------------------------
++ */
+ void cVideoOut::DrawVideo_420pl(cSyncTimer *syncTimer,
+                                 sPicBuffer *pic)
+ {
+@@ -472,6 +526,11 @@
+     return;
+   }
+ 
++  if (stillPictureMode) {
++fprintf(stderr,"0");
++    SelectField (pic);
++  }
++
+   sPicBuffer *scale_pic=NULL;
+   if (scaleVid != 0) {
+           scale_pic=GetBuffer(pic->format,pic->max_width,pic->max_height);
+@@ -554,7 +613,7 @@
+   offsetIndex %= AVRG_OFF_CNT;
+ 
+   softlog->Log(SOFT_LOG_TRACE, 0,
+-                  "[VideoOut] A/V (%d - %d) off = %d avoff = %d\n",
++                  "[VideoOut] A/V (%lld - %lld) off = %d avoff = %d\n",
+                   aPTS, pts, offset, offsetAverage);
+ 
+   dropOffset = (useAverage4Drop) ? offsetAverage : offset;
+Index: video.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.h,v
+retrieving revision 1.56
+diff -U3 -r1.56 video.h
+--- video.h	20 Jul 2008 16:41:01 -0000	1.56
++++ video.h	14 Sep 2008 16:29:58 -0000
+@@ -66,6 +66,7 @@
+     //
+     sPicBuffer  *oldPicture;
+     cMutex      oldPictureMutex;
++    bool        stillPictureMode;
+     void        SetOldPicture(sPicBuffer *pic);
+ 
+ protected:
+@@ -192,6 +193,8 @@
+             oldPictureMutex.Unlock();
+     };
+ 
++    virtual void SetStillPictureMode (bool on);
++    virtual void SelectField (sPicBuffer *pic);
+ 
+     virtual void Action(void);
+     // osd control thread. Refreshes the osd on dimension changes and
+
+From fabio.bordin at informacitta.it  Sun Sep 14 23:25:43 2008
+From: fabio.bordin at informacitta.it (Fabio Bordin)
+Date: Sun, 14 Sep 2008 23:25:43 +0200
+Subject: [Softdevice-devel] Softdevice, VDR and Fast Forward
+In-Reply-To: <200809141946.40970.stefan@lucke.in-berlin.de>
+References: <48CAE13A.7040302@informacitta.it>	<200809131724.46866.laz@club-burniston.co.uk>	<200809131750.51222.laz@club-burniston.co.uk>
+	<200809141946.40970.stefan@lucke.in-berlin.de>
+Message-ID: <48CD8157.7040205@informacitta.it>
+
+Stefan Lucke ha scritto:
+> On Saturday 13 September 2008, Laz wrote:
+>   
+>> On Saturday 13 September 2008 17:24:46 Laz wrote:
+>>     
+>>> On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+>>>       
+>>>> Can you both try attached patch ?
+>>>>         
+>
+>   
+>>>> 2nd Feature makes field selectable which is displayed in still picture
+>>>>     mode, but unfortunately this doesn't work at the moment.
+>>>>         
+>> Excellent: I had toyed with the idea of implementing that in the past but 
+>> never got anywhere! I take it that this will remove flicker from a paused 
+>> interlaced stream?
+>>     
+>
+> Here is an other version of the patch.
+> 2nd feature seems to work most of the time.
+>
+> When switching between play / pause real fast, it doesn't work,
+> as the frame is displayed just before the Freeze() command arrives.
+>
+>   
+> ------------------------------------------------------------------------
+I activated the option  and it started to work correctly.
+Tomorrow I will try your new patch.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20080914/3b92ea5d/attachment.html>
+
+From bob at globall.ru  Sat Sep 20 17:06:18 2008
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Sat, 20 Sep 2008 19:06:18 +0400
+Subject: [Softdevice-devel] Epia EN1500G + softdevice
+Message-ID: <48D5116A.1030607@globall.ru>
+
+Hi,
+
+About two years I use vdr+DirectFb+softdevice on VIA Epia ME6000. All 
+works excellently - the video very smooth, problems with interlaced 
+video are not present. My TV is connected with vdr box through s-video 
+cable. It would be desirable only two things - smooth playback mpeg4 
+video and connect the TV through a component (YPbPr) input.
+For this purpose I have gained recently system board VIA Epia EN1500G 
+(CN700 North Bridge) and have started to build vdr on HOWTO from 
+vdrportal.de -  (http://www.vdrportal.de/board/thread.php? 
+threadid=59950&hilight=cn700).
+Basically all works, but the result has turned out worse, than at use 
+ME6000.
+I could get correct operation OSD only with versions DirectFB-1.0.0 and 
+less.
+With the last DirectFB (1.2.0-1.3.0) I gain strange effect which depends 
+on pressing of buttons the keyboard:
+1. Start vdr (OSD ok)
+2. Press DOWN (OSD not ok)
+3. Press DOWN (OSD ok)
+4. Press UP (OSD not ok)
+5. Press UP (OSD ok)
+6. Press something (OSD not ok)
+7. Press something (OSD ok)
+8. ...
+9. ...
+When OSD not ok, it looks as though horizontal synchronisation not 
+correctly works, thus video overlay works correctly.
+On video I see movement artefacts, jitter and small jerks on the 
+scrolling text. CPU is loaded on 50-55 % at live video or record playback.
+The problem with OSD - regression DirectFB or is required modification 
+softdevice?
+Whether it is possible to improve quality of video?
+
+Regards,
+Vladimir Monchenko.
+
+
+From torgeir at pobox.com  Sat Sep 20 17:21:26 2008
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Sun, 21 Sep 2008 01:21:26 +1000
+Subject: [Softdevice-devel] Epia EN1500G + softdevice
+In-Reply-To: <48D5116A.1030607@globall.ru>
+References: <48D5116A.1030607@globall.ru>
+Message-ID: <BD3F8E2A-DF2C-42EC-8051-2CEFC93E2841@pobox.com>
+
+
+On 21 Sep 2008, at 01:06, Vladimir Monchenko wrote:
+
+> On video I see movement artefacts, jitter and small jerks on the
+> scrolling text. CPU is loaded on 50-55 % at live video or record  
+> playback.
+
+
+You might be experiencing a problem with the video hardware not being  
+able to use an irq. Are you seeing about 10 FPS video playback?
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+
+From bob at globall.ru  Sat Sep 20 18:37:50 2008
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Sat, 20 Sep 2008 20:37:50 +0400
+Subject: [Softdevice-devel] Epia EN1500G + softdevice
+In-Reply-To: <BD3F8E2A-DF2C-42EC-8051-2CEFC93E2841@pobox.com>
+References: <48D5116A.1030607@globall.ru>
+	<BD3F8E2A-DF2C-42EC-8051-2CEFC93E2841@pobox.com>
+Message-ID: <48D526DE.9000200@globall.ru>
+
+Torgeir Veimo wrote:
+> On 21 Sep 2008, at 01:06, Vladimir Monchenko wrote:
+>
+>   
+>> On video I see movement artefacts, jitter and small jerks on the
+>> scrolling text. CPU is loaded on 50-55 % at live video or record  
+>> playback.
+>>     
+>
+>
+> You might be experiencing a problem with the video hardware not being  
+> able to use an irq. Are you seeing about 10 FPS video playback?
+>
+>   
+I see complete 25 FPS video playback and I do not receive in log 
+messages of resync video and sound.
+Here a complete log vdr sessions - start vdr, start playback records and 
+in 2,5 minutes shutdown vdr.
+
+Sep 19 20:18:07 epia-en vdr: [4946] VDR version 1.6.0-2 started
+Sep 19 20:18:07 epia-en vdr: [4946] codeset is 'UTF-8' - known
+Sep 19 20:18:08 epia-en vdr: [4946] found 23 locales in /usr/share/locale
+Sep 19 20:18:08 epia-en vdr: [4946] loading plugin: 
+/usr/lib/vdr/libvdr-softdevice.so.1.6.0
+Sep 19 20:18:09 epia-en vdr: [4946] loading plugin: 
+/usr/lib/vdr/libvdr-softplay.so.1.6.0
+Sep 19 20:18:09 epia-en vdr: [4946] loading /etc/vdr/setup.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/sources.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/diseqc.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/channels.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/timers.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/reccmds.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/svdrphosts.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/remote.conf
+Sep 19 20:18:10 epia-en vdr: [4946] loading /etc/vdr/keymacros.conf
+Sep 19 20:18:10 epia-en vdr: [4946] ERROR: unknown plugin 'prefermenu'
+Sep 19 20:18:10 epia-en vdr: [4946] ERROR: empty key macro
+Sep 19 20:18:10 epia-en vdr: [4947] video directory scanner thread 
+started (pid=4946, tid=4947)
+Sep 19 20:18:10 epia-en vdr: [4948] video directory scanner thread 
+started (pid=4946, tid=4948)
+Sep 19 20:18:10 epia-en vdr: [4947] video directory scanner thread ended 
+(pid=4946, tid=4947)
+Sep 19 20:18:10 epia-en vdr: [4948] video directory scanner thread ended 
+(pid=4946, tid=4948)
+Sep 19 20:18:10 epia-en vdr: [4946] reading EPG data from 
+/mnt/pub/video/epg.data
+Sep 19 20:18:10 epia-en vdr: [4946] no DVB device found
+Sep 19 20:18:10 epia-en vdr: [4946] initializing plugin: softdevice 
+(0.5.0): ??????????-??????????? MPEG-2 ??????????
+Sep 19 20:18:10 epia-en vdr: [4946] [dfb] init
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Supported video Modes are:
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Enumerating display Layers
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Configuring CooperativeLevel 
+for OSD
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] disabling hw-decode support 
+for this layer
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (osdLayer): flags, options, 
+pixelformat: 0000000f, 00000000 80418c0d
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (osdLayer): width, height: 720 576
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] osdLayer has alpha channel
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Set DLBM_TRIPLE for layer [VIA 
+Unichrome Video 3]
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] DLOP_FIELD_PARITY supported by 
+layer [VIA Unichrome Video 3]
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Set layer [VIA Unichrome Video 
+3] to (TOP field first)
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(scrSurface): videoonly, double-buffered, flipping, PixelFormat = 0x80418c0d
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] width = 720, height = 576
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] got fmt = 0x80418c0d bpp = 32
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Using this layer for OSD: (VIA 
+CLE266 Graphics - [720x576])
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(osdSurface): videoonly, double-buffered, flipping, PixelFormat = 0x00418c04
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Configuring CooperativeLevel 
+for Overlay
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(videoSurface): videoonly, PixelFormat = 0x00200806
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Using this layer for OSD: VIA 
+CLE266 Graphics
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Using this layer for Video 
+out: VIA Unichrome Video 3
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] Display frame time is 20008 
+microseconds
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (re)configuring Videolayer to 
+720 x 576 (720x576)
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 19 20:18:11 epia-en vdr: [4946] [dfb] (re)configured 0x00200806
+Sep 19 20:18:11 epia-en vdr: [4946] [softdevice-audio] Opening alsa 
+device default
+Sep 19 20:18:11 epia-en vdr: [4946] [softdevice-audio] Using alsa AC3 
+device hw:0,1
+Sep 19 20:18:11 epia-en vdr: [4946] [softdevice-audio] Device opened! 
+Ready to play
+Sep 19 20:18:11 epia-en vdr: [4946] initializing plugin: softplay 
+(0.0.2): SoftPlay play media files with the softdevice
+Sep 19 20:18:11 epia-en vdr: [4946] setting primary device to 1
+Sep 19 20:18:11 epia-en vdr: [4946] assuming manual start of VDR
+Sep 19 20:18:11 epia-en vdr: [4946] SVDRP listening on port 2001
+Sep 19 20:18:11 epia-en vdr: [4946] setting current skin to "sttng"
+Sep 19 20:18:11 epia-en vdr: [4946] loading 
+/etc/vdr/themes/sttng-default.theme
+Sep 19 20:18:11 epia-en vdr: [4946] starting plugin: softdevice
+Sep 19 20:18:11 epia-en vdr: [4946] plugin 'softdevice' called obsolete 
+function RegisterI18n()
+Sep 19 20:18:11 epia-en vdr: [4946] starting plugin: softplay
+Sep 19 20:18:11 epia-en vdr: [4946] plugin 'softplay' called obsolete 
+function RegisterI18n()
+Sep 19 20:18:11 epia-en vdr: [4954] KBD remote control thread started 
+(pid=4946, tid=4954)
+Sep 19 20:18:11 epia-en vdr: [4946] remote control softdevice-dfb - keys 
+known
+Sep 19 20:18:11 epia-en vdr: [4946] remote control KBD - keys known
+Sep 19 20:18:11 epia-en vdr: [4946] switching to channel 1
+Sep 19 20:18:11 epia-en vdr: [4946] info: ????? ??????????!
+Sep 19 20:18:13 epia-en vdr: [4946] switching to channel 1
+Sep 19 20:18:13 epia-en vdr: [4946] info: ????? ??????????!
+Sep 19 20:18:14 epia-en vdr: [4953] [VideoOut]: resolution changed: 
+W(720 -> 736); H(576 ->576)
+Sep 19 20:18:14 epia-en vdr: [4953] [VideoOut]: 736x576 [0,0 736x576] -> 
+720x576 [14,0 690x576]
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] (re)configuring Videolayer to 
+736 x 576 (736x576)
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 19 20:18:14 epia-en vdr: [4953] [dfb] (re)configured 0x00200806
+Sep 19 20:18:16 epia-en vdr: [4946] replay 
+/mnt/pub/video/C1R-Europe/2008-09-13.20.25.50.99.rec
+Sep 19 20:18:16 epia-en vdr: [4946] playing 
+'/mnt/pub/video/C1R-Europe/2008-09-13.20.25.50.99.rec/001.vdr'
+Sep 19 20:18:16 epia-en vdr: [4960] dvbplayer thread started (pid=4946, 
+tid=4960)
+Sep 19 20:18:16 epia-en vdr: [4960] playing 
+'/mnt/pub/video/C1R-Europe/2008-09-13.20.25.50.99.rec/003.vdr'
+Sep 19 20:18:16 epia-en vdr: [4960] resuming replay at index 262713 
+(2:55:08.14)
+Sep 19 20:18:16 epia-en vdr: [4961] non blocking file reader thread 
+started (pid=4946, tid=4961)
+Sep 19 20:18:16 epia-en vdr: [4960] SetBrokenLink: no GOP header found 
+in video packet
+Sep 19 20:18:16 epia-en vdr: [4959] [VideoOut] reset: sync info: repF = 
+0, drpF = 0, totF = 0
+Sep 19 20:18:16 epia-en vdr: [4960] setting audio track to 1 (0)
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Playback reopen 
+error: CH2, ??? ?????? ????? ??? ????????
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] samplerate: 
+48000Hz, channels: #2
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Device 'default', 
+Samplerate 48000 Channels 2
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Period size 1152 
+Buffer size 9216
+Sep 19 20:18:16 epia-en vdr: [4963] [softdevice-audio] Hardware initialized
+Sep 19 20:18:16 epia-en vdr: [4962] [VideoOut]: resolution changed: 
+W(736 -> 720); H(576 ->576)
+Sep 19 20:18:16 epia-en vdr: [4962] [VideoOut]: aspect changed (0 -> 0 ; 
+1.366667 -> 1.333333)
+Sep 19 20:18:16 epia-en vdr: [4962] [VideoOut]: 720x576 [0,0 720x576] -> 
+720x576 [0,0 720x576]
+Sep 19 20:18:16 epia-en vdr: [4962] [dfb] (re)configuring Videolayer to 
+720 x 576 (720x576)
+Sep 19 20:18:16 epia-en vdr: [4962] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 19 20:18:17 epia-en vdr: [4962] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 19 20:18:17 epia-en vdr: [4962] [dfb] (re)configured 0x00200806
+Sep 19 20:18:20 epia-en vdr: [4962] [VideoOut] video now synced (70 - -270)
+Sep 19 20:20:01 epia-en cron[4965]: (root) CMD (test -x 
+/usr/sbin/run-crons && /usr/sbin/run-crons )
+Sep 19 20:20:57 epia-en vdr: [4961] non blocking file reader thread 
+ended (pid=4946, tid=4961)
+Sep 19 20:20:57 epia-en vdr: [4960] dvbplayer thread ended (pid=4946, 
+tid=4960)
+Sep 19 20:20:57 epia-en vdr: [4946] switching to channel 1
+Sep 19 20:20:57 epia-en vdr: [4946] info: ????? ??????????!
+Sep 19 20:21:00 epia-en vdr: [4946] confirm: ????????????? ??????????????
+Sep 19 20:21:00 epia-en vdr: [4946] warning: ????????????? ??????????????
+Sep 19 20:21:00 epia-en vdr: [4946] confirmed
+Sep 19 20:21:00 epia-en vdr: [4946] stopping plugin: softplay
+Sep 19 20:21:00 epia-en vdr: [4946] stopping plugin: softdevice
+Sep 19 20:21:00 epia-en vdr: [4954] KBD remote control thread ended 
+(pid=4946, tid=4954)
+Sep 19 20:21:00 epia-en vdr: [4946] saved setup to /etc/vdr/setup.conf
+Sep 19 20:21:00 epia-en vdr: [4946] Releasing DFB
+Sep 19 20:21:01 epia-en vdr: [4946] [VideoOut]: Good bye
+Sep 19 20:21:01 epia-en vdr: [4946] deleting plugin: softplay
+Sep 19 20:21:01 epia-en vdr: [4946] deleting plugin: softdevice
+Sep 19 20:21:01 epia-en vdr: [4946] exiting, exit code 1
+Sep 19 20:22:10 epia-en sshd[4983]: Accepted keyboard-interactive/pam 
+for root from 192.168.2.3 port 34342 ssh2
+Sep 19 20:22:10 epia-en sshd[4988]: pam_unix(sshd:session): session 
+opened for user root by root(uid=0)
+
+Regards,
+Vladimir Monchenko.
+
+
+From admin at berlios.de  Sun Sep 21 14:59:02 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 21 Sep 2008 14:59:02 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #14494] softdevice fails to build with
+	ffmpeg r15306
+Message-ID: <200809211259.m8LCx241024961@unicorn.berlios.de>
+
+Bug #14494, was updated on 2008-Sep-13 16:03
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: davide125
+Assigned to : none
+Summary: softdevice fails to build with ffmpeg r15306
+
+Details: Using today ffmpeg (r15306) vdr-softdevice fails to build. Here's the log:
+g++ -MM -MG -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" softdevice.c utils.c i18n.c video.c mpeg2decoder.c audio.c video-dummy.c setup-softdevice.c setup-softdevice-menu.c setup-softlog.c setup-softlog-menu.c sync-timer.c SoftOsd.c PicBuffer.c VideoFilter.c audio-alsa.c audio-ac3pt.c video-fb.c video-xv.c xscreensaver.c video-shm.c > .dependencies
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" softdevice.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" utils.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" i18n.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" video.c
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" mpeg2decoder.c
+In file included from video.h:26,
+                 from video.c:17:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+video.c: In member function 'virtual void cVideoOut::EvaluateDelay(uint64_t, uint64_t, int)':
+video.c:558: warning: deprecated conversion from string constant to 'char*'
+video.c:586: warning: deprecated conversion from string constant to 'char*'
+video.c:595: warning: deprecated conversion from string constant to 'char*'
+video.c:602: warning: deprecated conversion from string constant to 'char*'
+video.c: In member function 'virtual void cVideoOut::ResetDelay()':
+video.c:619: warning: deprecated conversion from string constant to 'char*'
+/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softdevice"' -D_GNU_SOURCE -DPLUGINLIBDIR='"/usr/lib/vdr"' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include "-I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale" audio.c
+In file included from video.h:26,
+                 from mpeg2decoder.h:31,
+                 from mpeg2decoder.c:15:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+mpeg2decoder.c: In constructor 'cStreamDecoder::cStreamDecoder(AVCodecContext*, bool)':
+mpeg2decoder.c:143: error: 'struct AVCodecContext' has no member named 'error_resilience'
+mpeg2decoder.c: In constructor 'cMpeg2Decoder::cMpeg2Decoder(cAudioOut*, cVideoOut*)':
+mpeg2decoder.c:1029: error: 'avcodec_build' was not declared in this scope
+mpeg2decoder.c: In member function 'void cMpeg2Decoder::Freeze(int, bool)':
+mpeg2decoder.c:1457: warning: suggest parentheses around comparison in operand of &
+make: *** [mpeg2decoder.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from video.h:26,
+                 from mpeg2decoder.h:31,
+                 from softdevice.h:18,
+                 from softdevice.c:9:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+softdevice.c: In constructor 'cPluginSoftDevice::cPluginSoftDevice()':
+softdevice.c:819: warning: deprecated conversion from string constant to 'char*'
+
+
+Follow-Ups:
+
+Date: 2008-Sep-21 14:59
+By: lucke
+
+Comment:
+Fixed with current cvs version. Needs to rerun configure.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14494&group_id=2051
+
+
+From admin at berlios.de  Sun Sep 21 15:00:14 2008
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 21 Sep 2008 15:00:14 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #14302] ShmClient broken
+Message-ID: <200809211300.m8LD0E3A025693@unicorn.berlios.de>
+
+Bug #14302, was updated on 2008-Aug-03 01:43
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: bugmenot
+Assigned to : none
+Summary: ShmClient broken
+
+Details: Since softdevice version 0.5 ShmClient is only black. The tv pictures aren't displayed. OSD and sound is working.
+
+Version 0.4 was working fine.
+
+Follow-Ups:
+
+Date: 2008-Sep-21 15:00
+By: lucke
+
+Comment:
+Assume fixed since 2008-09-10.
+-------------------------------------------------------
+
+Date: 2008-Sep-10 19:16
+By: lucke
+
+Comment:
+It's not only black, even worse one (I) were not able to change xv output paramters via OSD. Bug was in vdr version dependent member in setupstore.
+Fix is in cvs. Please recompile after make clean.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=14302&group_id=2051
+
+
+From stefan at lucke.in-berlin.de  Mon Sep 22 20:32:47 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 22 Sep 2008 20:32:47 +0200
+Subject: [Softdevice-devel] Epia EN1500G + softdevice
+In-Reply-To: <48D5116A.1030607@globall.ru>
+References: <48D5116A.1030607@globall.ru>
+Message-ID: <200809222032.47739.stefan@lucke.in-berlin.de>
+
+On Saturday 20 September 2008, Vladimir Monchenko wrote:
+> Hi,
+> 
+> About two years I use vdr+DirectFb+softdevice on VIA Epia ME6000. All 
+> works excellently - the video very smooth, problems with interlaced 
+> video are not present. My TV is connected with vdr box through s-video 
+> cable. It would be desirable only two things - smooth playback mpeg4 
+> video and connect the TV through a component (YPbPr) input.
+> For this purpose I have gained recently system board VIA Epia EN1500G 
+> (CN700 North Bridge) and have started to build vdr on HOWTO from 
+> vdrportal.de -  (http://www.vdrportal.de/board/thread.php? 
+> threadid=59950&hilight=cn700).
+> Basically all works, but the result has turned out worse, than at use 
+> ME6000.
+> I could get correct operation OSD only with versions DirectFB-1.0.0 and 
+> less.
+> With the last DirectFB (1.2.0-1.3.0) I gain strange effect which depends 
+> on pressing of buttons the keyboard:
+> 1. Start vdr (OSD ok)
+> 2. Press DOWN (OSD not ok)
+> 3. Press DOWN (OSD ok)
+> 4. Press UP (OSD not ok)
+> 5. Press UP (OSD ok)
+> 6. Press something (OSD not ok)
+> 7. Press something (OSD ok)
+> 8. ...
+> 9. ...
+> When OSD not ok, it looks as though horizontal synchronisation not 
+> correctly works, thus video overlay works correctly.
+
+This description reminds me of pitch size mismatch for OSD.
+Can you add some debug message(s) to method GetLockOsdSurface()
+around line 1192, after commented out printf.
+
+softlog->Log(SOFT_LOG_INFO, 0, "[dfb--] osd surface pitch is (%d)\n", pitch),
+
+> On video I see movement artefacts, jitter and small jerks on the 
+> scrolling text. CPU is loaded on 50-55 % at live video or record playback.
+> The problem with OSD - regression DirectFB or is required modification 
+> softdevice?
+
+We'll see.
+
+> Whether it is possible to improve quality of video?
+> 
+
+-- 
+Stefan Lucke
+
+
+From bob at globall.ru  Tue Sep 23 17:36:53 2008
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Tue, 23 Sep 2008 19:36:53 +0400
+Subject: [Softdevice-devel] Epia EN1500G + softdevice
+In-Reply-To: <200809222032.47739.stefan@lucke.in-berlin.de>
+References: <48D5116A.1030607@globall.ru>
+	<200809222032.47739.stefan@lucke.in-berlin.de>
+Message-ID: <48D90D15.4080107@globall.ru>
+
+Stefan Lucke wrote:
+> This description reminds me of pitch size mismatch for OSD.
+> Can you add some debug message(s) to method GetLockOsdSurface()
+> around line 1192, after commented out printf.
+>
+> softlog->Log(SOFT_LOG_INFO, 0, "[dfb--] osd surface pitch is (%d)\n", pitch),
+>
+>   
+After experiments, I have detected that this effect depends on the 
+resolution with which it is started vdr.
+In resolutions 640x480, 800x600 and 1024x768 OSD works not correctly. It 
+does not depend on customisations of video output (dfb:, dfb:cle266, 
+dfb:cle266:viatv).
+In reslution 720x576 OSD works normally.
+I have added an output of debug messages in video-dfb.c.
+Here a log vdr sessions:
+
+
+Sep 22 19:09:29 epia-en vdr: [5266] VDR version 1.6.0-2 started
+Sep 22 19:09:29 epia-en vdr: [5266] codeset is 'UTF-8' - known
+Sep 22 19:09:29 epia-en vdr: [5266] found 23 locales in /usr/share/locale
+Sep 22 19:09:29 epia-en vdr: [5266] loading plugin: 
+/usr/lib/vdr/libvdr-softdevice.so.1.6.0
+Sep 22 19:09:29 epia-en vdr: [5266] loading plugin: 
+/usr/lib/vdr/libvdr-softplay.so.1.6.0
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/setup.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/sources.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/diseqc.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/channels.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/timers.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/reccmds.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/svdrphosts.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/remote.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/keymacros.conf
+Sep 22 19:09:29 epia-en vdr: [5266] ERROR: unknown plugin 'prefermenu'
+Sep 22 19:09:29 epia-en vdr: [5266] ERROR: empty key macro
+Sep 22 19:09:29 epia-en vdr: [5267] video directory scanner thread 
+started (pid=5266, tid=5267)
+Sep 22 19:09:29 epia-en vdr: [5267] video directory scanner thread ended 
+(pid=5266, tid=5267)
+Sep 22 19:09:29 epia-en vdr: [5268] video directory scanner thread 
+started (pid=5266, tid=5268)
+Sep 22 19:09:29 epia-en vdr: [5268] video directory scanner thread ended 
+(pid=5266, tid=5268)
+Sep 22 19:09:29 epia-en vdr: [5266] reading EPG data from 
+/mnt/pub/video/epg.data
+Sep 22 19:09:29 epia-en vdr: [5266] no DVB device found
+Sep 22 19:09:29 epia-en vdr: [5266] initializing plugin: softdevice 
+(0.5.0): ??????????-??????????? MPEG-2 ??????????
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] init
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Supported video Modes are:
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Enumerating display Layers
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Configuring CooperativeLevel 
+for OSD
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] disabling hw-decode support 
+for this layer
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (osdLayer): flags, options, 
+pixelformat: 0000000f, 00000000 80418c0d
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (osdLayer): width, height: 800 600
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] osdLayer has alpha channel
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Set DLBM_TRIPLE for layer [VIA 
+Unichrome Video 3]
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] DLOP_FIELD_PARITY supported by 
+layer [VIA Unichrome Video 3]
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Set layer [VIA Unichrome Video 
+3] to (TOP field first)
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(scrSurface): videoonly, double-buffered, flipping, PixelFormat = 0x80418c0d
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] width = 800, height = 600
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] got fmt = 0x80418c0d bpp = 32
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for OSD: (VIA 
+CLE266 Graphics - [800x600])
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(osdSurface): videoonly, double-buffered, flipping, PixelFormat = 0x00418c04
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Configuring CooperativeLevel 
+for Overlay
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(videoSurface): videoonly, PixelFormat = 0x00200806
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for OSD: VIA 
+CLE266 Graphics
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for Video 
+out: VIA Unichrome Video 3
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Display frame time is 16653 
+microseconds
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (re)configuring Videolayer to 
+720 x 576 (720x576)
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (re)configured 0x00200806
+Sep 22 19:09:29 epia-en vdr: [5266] [softdevice-audio] Opening alsa 
+device default
+Sep 22 19:09:29 epia-en vdr: [5266] [softdevice-audio] Using alsa AC3 
+device hw:0,1
+Sep 22 19:09:29 epia-en vdr: [5266] [softdevice-audio] Device opened! 
+Ready to play
+Sep 22 19:09:29 epia-en vdr: [5266] initializing plugin: softplay 
+(0.0.2): SoftPlay play media files with the softdevice
+Sep 22 19:09:29 epia-en vdr: [5266] setting primary device to 1
+Sep 22 19:09:29 epia-en vdr: [5266] assuming manual start of VDR
+Sep 22 19:09:29 epia-en vdr: [5266] SVDRP listening on port 2001
+Sep 22 19:09:29 epia-en vdr: [5266] setting current skin to "sttng"
+Sep 22 19:09:29 epia-en vdr: [5266] loading 
+/etc/vdr/themes/sttng-default.theme
+Sep 22 19:09:29 epia-en vdr: [5266] starting plugin: softdevice
+Sep 22 19:09:29 epia-en vdr: [5266] plugin 'softdevice' called obsolete 
+function RegisterI18n()
+Sep 22 19:09:29 epia-en vdr: [5266] starting plugin: softplay
+Sep 22 19:09:29 epia-en vdr: [5266] plugin 'softplay' called obsolete 
+function RegisterI18n()
+Sep 22 19:09:29 epia-en vdr: [5274] KBD remote control thread started 
+(pid=5266, tid=5274)
+Sep 22 19:09:29 epia-en vdr: [5266] remote control softdevice-dfb - keys 
+known
+Sep 22 19:09:29 epia-en vdr: [5266] remote control KBD - keys known
+Sep 22 19:09:29 epia-en vdr: [5266] switching to channel 1
+Sep 22 19:09:29 epia-en vdr: [5266] info: ????? ??????????!
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:32 epia-en vdr: [5266] switching to channel 1
+Sep 22 19:09:32 epia-en vdr: [5266] info: ????? ??????????!
+Sep 22 19:09:32 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:32 epia-en vdr: [5273] [VideoOut]: resolution changed: 
+W(720 -> 736); H(576 ->576)
+Sep 22 19:09:32 epia-en vdr: [5273] [VideoOut]: 736x576 [0,0 736x576] -> 
+800x600 [16,0 767x600]
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] (re)configuring Videolayer to 
+736 x 576 (736x576)
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] (re)configured 0x00200806
+Sep 22 19:09:34 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:41 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:43 epia-en vdr: [5266] switching to channel 1
+Sep 22 19:09:43 epia-en vdr: [5266] info: ????? ??????????!
+Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:44 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:45 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:46 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:46 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:47 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:47 epia-en vdr: [5266] confirm: ????????????? ??????????????
+Sep 22 19:09:47 epia-en vdr: [5266] warning: ????????????? ??????????????
+Sep 22 19:09:47 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:47 epia-en vdr: [5266] confirmed
+Sep 22 19:09:47 epia-en vdr: [5266] stopping plugin: softplay
+Sep 22 19:09:47 epia-en vdr: [5266] stopping plugin: softdevice
+Sep 22 19:09:47 epia-en vdr: [5274] KBD remote control thread ended 
+(pid=5266, tid=5274)
+Sep 22 19:09:47 epia-en vdr: [5266] saved setup to /etc/vdr/setup.conf
+Sep 22 19:09:47 epia-en vdr: [5266] Releasing DFB
+Sep 22 19:09:47 epia-en vdr: [5266] [VideoOut]: Good bye
+Sep 22 19:09:47 epia-en vdr: [5266] deleting plugin: softplay
+Sep 22 19:09:47 epia-en vdr: [5266] deleting plugin: softdevice
+Sep 22 19:09:47 epia-en vdr: [5266] exiting, exit code 1
+
+Regards,
+Vladimir Monchenko.
+
+
+From stefan at lucke.in-berlin.de  Wed Sep 24 21:26:45 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 24 Sep 2008 21:26:45 +0200
+Subject: [Softdevice-devel] Epia EN1500G + softdevice
+In-Reply-To: <48D90D15.4080107@globall.ru>
+References: <48D5116A.1030607@globall.ru>
+	<200809222032.47739.stefan@lucke.in-berlin.de>
+	<48D90D15.4080107@globall.ru>
+Message-ID: <200809242126.45455.stefan@lucke.in-berlin.de>
+
+On Tuesday 23 September 2008, Vladimir Monchenko wrote:
+> Stefan Lucke wrote:
+> > This description reminds me of pitch size mismatch for OSD.
+> > Can you add some debug message(s) to method GetLockOsdSurface()
+> > around line 1192, after commented out printf.
+> >
+> > softlog->Log(SOFT_LOG_INFO, 0, "[dfb--] osd surface pitch is (%d)\n", pitch),
+> >
+> >   
+> After experiments, I have detected that this effect depends on the 
+> resolution with which it is started vdr.
+> In resolutions 640x480, 800x600 and 1024x768 OSD works not correctly. It 
+> does not depend on customisations of video output (dfb:, dfb:cle266, 
+> dfb:cle266:viatv).
+> In reslution 720x576 OSD works normally.
+> I have added an output of debug messages in video-dfb.c.
+> Here a log vdr sessions:
+> 
+> 
+
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] disabling hw-decode support for this layer
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (osdLayer): flags, options, pixelformat: 0000000f, 00000000 80418c0d
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (osdLayer): width, height: 800 600
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] osdLayer has alpha channel
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Set DLBM_TRIPLE for layer [VIA Unichrome Video 3]
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] DLOP_FIELD_PARITY supported by layer [VIA Unichrome Video 3]
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Set layer [VIA Unichrome Video 3] to (TOP field first)
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for (scrSurface): videoonly, double-buffered, flipping, PixelFormat = 0x80418c0d
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] width = 800, height = 600
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] got fmt = 0x80418c0d bpp = 32
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for OSD: (VIA CLE266 Graphics - [800x600])
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for (osdSurface): videoonly, double-buffered, flipping, PixelFormat = 0x00418c04
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Configuring CooperativeLevel for Overlay
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for (videoSurface): videoonly, PixelFormat = 0x00200806
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for OSD: VIA CLE266 Graphics
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for Video out: VIA Unichrome Video 3
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Display frame time is 16653 microseconds
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] SetParams: Enabling DLOP_FIELD_PARITY
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for (videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 0x00200806
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (re)configured 0x00200806
+
+> Sep 22 19:09:29 epia-en vdr: [5266] switching to channel 1
+> Sep 22 19:09:29 epia-en vdr: [5266] info: ????? ??????????!
+> Sep 22 19:09:29 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+
+Thats a pitch for 720 width
+
+> Sep 22 19:09:32 epia-en vdr: [5266] switching to channel 1
+> Sep 22 19:09:32 epia-en vdr: [5266] info: ????? ??????????!
+> Sep 22 19:09:32 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+
+and thats a pitch for width 800. Pitch of our used scrSurface should
+definitly not change between Flip() calls.
+
+Are other DirectFB VIA unichrome users affected by current
+DirectFB git version with a similar issue ?
+
+> Sep 22 19:09:32 epia-en vdr: [5273] [VideoOut]: resolution changed: W(720 -> 736); H(576 ->576)
+> Sep 22 19:09:32 epia-en vdr: [5273] [VideoOut]: 736x576 [0,0 736x576] -> 800x600 [16,0 767x600]
+> Sep 22 19:09:32 epia-en vdr: [5273] [dfb] (re)configuring Videolayer to 736 x 576 (736x576)
+> Sep 22 19:09:32 epia-en vdr: [5273] [dfb] SetParams: Enabling DLOP_FIELD_PARITY
+> Sep 22 19:09:32 epia-en vdr: [5273] [dfb] surface capabilities for (videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 0x00200806
+> Sep 22 19:09:32 epia-en vdr: [5273] [dfb] (re)configured 0x00200806
+> Sep 22 19:09:34 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+> Sep 22 19:09:41 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+> Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+> Sep 22 19:09:43 epia-en vdr: [5266] switching to channel 1
+
+I'll do a reinstall on my epia system, as my current system is broken:
+~ # emerge --info
+Traceback (most recent call last):
+  File "/usr/bin/emerge", line 12, in ?
+    import portage
+  File "/usr/lib/portage/pym/portage.py", line 1031
+    if os.path.exists(mypath):
+     ^
+SyntaxError: invalid syntax
+
+Grr. For current DirectFB I need to install git ;-).
+
+
+-- 
+Stefan Lucke
+
+
+From torgeir at pobox.com  Fri Sep 26 11:57:58 2008
+From: torgeir at pobox.com (Torgeir Veimo)
+Date: Fri, 26 Sep 2008 19:57:58 +1000
+Subject: [Softdevice-devel] transcoding w softplay
+Message-ID: <F3F4C3F2-46B5-48A1-9747-023B608ECB44@pobox.com>
+
+Transcoding media files to use with ff cards, how processor intense  
+would that be? I just got my vdr box set up again after half a year  
+absense, and it's got a ff card in it now.
+
+-- 
+Torgeir Veimo
+torgeir at pobox.com
+
+
+
+
+
+
+From stefan at lucke.in-berlin.de  Fri Sep 26 22:57:05 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Fri, 26 Sep 2008 22:57:05 +0200
+Subject: [Softdevice-devel] Epia EN1500G + softdevice (kernel + via
+	driver)
+In-Reply-To: <48D5116A.1030607@globall.ru>
+References: <48D5116A.1030607@globall.ru>
+Message-ID: <200809262257.06012.stefan@lucke.in-berlin.de>
+
+On Saturday 20 September 2008, Vladimir Monchenko wrote:
+> Hi,
+> 
+> About two years I use vdr+DirectFb+softdevice on VIA Epia ME6000. All 
+> works excellently - the video very smooth, problems with interlaced 
+> video are not present. My TV is connected with vdr box through s-video 
+> cable. It would be desirable only two things - smooth playback mpeg4 
+> video and connect the TV through a component (YPbPr) input.
+> For this purpose I have gained recently system board VIA Epia EN1500G 
+> (CN700 North Bridge) and have started to build vdr on HOWTO from 
+> vdrportal.de -  (http://www.vdrportal.de/board/thread.php?threadid=59950&hilight=cn700).
+
+Which kernel and driver do you use ?
+With gentoo kernel 2.6.25-gentoo-r7 and via's driver
+Linux-FBDev-kernel-src_2.6.00.03a I get these error
+messages on loading viafb.ko:
+
+viafb: Unknown symbol unregister_framebuffer
+viafb: Unknown symbol cfb_copyarea
+viafb: Unknown symbol register_framebuffer
+viafb: Unknown symbol cfb_imageblit
+viafb: Unknown symbol cfb_fillrect
+viafb: Unknown symbol soft_cursor
+
+DirectFB's driver doesn't compile with current kernel:
+/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c: In function 'viafb_init':
+/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c:1796: error: implicit declaration of function 'pci_module_init'
+make[2]: *** [/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.o] Error 1
+make[1]: *** [_module_/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266] Error 2
+
+
+-- 
+Stefan Lucke
+
+
+From bob at globall.ru  Sat Sep 27 08:19:34 2008
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Sat, 27 Sep 2008 10:19:34 +0400
+Subject: [Softdevice-devel] Epia EN1500G + softdevice (kernel +
+	via	driver)
+In-Reply-To: <200809262257.06012.stefan@lucke.in-berlin.de>
+References: <48D5116A.1030607@globall.ru>
+	<200809262257.06012.stefan@lucke.in-berlin.de>
+Message-ID: <48DDD076.4010903@globall.ru>
+
+Stefan Lucke wrote:
+> On Saturday 20 September 2008, Vladimir Monchenko wrote:
+>   
+>> Hi,
+>>
+>> About two years I use vdr+DirectFb+softdevice on VIA Epia ME6000. All 
+>> works excellently - the video very smooth, problems with interlaced 
+>> video are not present. My TV is connected with vdr box through s-video 
+>> cable. It would be desirable only two things - smooth playback mpeg4 
+>> video and connect the TV through a component (YPbPr) input.
+>> For this purpose I have gained recently system board VIA Epia EN1500G 
+>> (CN700 North Bridge) and have started to build vdr on HOWTO from 
+>> vdrportal.de -  (http://www.vdrportal.de/board/thread.php?threadid=59950&hilight=cn700).
+>>     
+>
+> Which kernel and driver do you use ?
+> With gentoo kernel 2.6.25-gentoo-r7 and via's driver
+> Linux-FBDev-kernel-src_2.6.00.03a I get these error
+> messages on loading viafb.ko:
+>
+> viafb: Unknown symbol unregister_framebuffer
+> viafb: Unknown symbol cfb_copyarea
+> viafb: Unknown symbol register_framebuffer
+> viafb: Unknown symbol cfb_imageblit
+> viafb: Unknown symbol cfb_fillrect
+> viafb: Unknown symbol soft_cursor
+>
+> DirectFB's driver doesn't compile with current kernel:
+> /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c: In function 'viafb_init':
+> /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c:1796: error: implicit declaration of function 'pci_module_init'
+> make[2]: *** [/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.o] Error 1
+> make[1]: *** [_module_/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266] Error 2
+>
+>
+>   
+I too use a kernel 2.6.25-gentoo-r7 and via's driver 
+Linux-FBDev-kernel-src_2.6.00.03a. You need to install kernel modules 
+cfb_copyarea, cfb_imageblit, cfb_fillrect. It can be made if to build fb 
+driver for another video card, for example savage or i810.
+I have installed manually DirectFB-1.2.3 and DFB ++. git from 
+directfb.org. For DFB ++ need a patch: 
+http://sources.gentoo.org/viewcvs.py/gentoo-x86/dev-libs/DFB++/files/DFB++-1.2.0-directfb-api.patch?view=markup
+
+
+From rahrenbe at cc.hut.fi  Sat Sep 27 08:23:29 2008
+From: rahrenbe at cc.hut.fi (Rolf Ahrenberg)
+Date: Sat, 27 Sep 2008 09:23:29 +0300 (EEST)
+Subject: [Softdevice-devel] Epia EN1500G + softdevice (kernel + via
+ driver)
+In-Reply-To: <200809262257.06012.stefan@lucke.in-berlin.de>
+References: <48D5116A.1030607@globall.ru>
+	<200809262257.06012.stefan@lucke.in-berlin.de>
+Message-ID: <Pine.OSF.4.64.0809270921420.360699@kosh.hut.fi>
+
+On Fri, 26 Sep 2008, Stefan Lucke wrote:
+
+> DirectFB's driver doesn't compile with current kernel:
+> /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c: In function 'viafb_init':
+> /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c:1796: error: implicit declaration of function 'pci_module_init'
+> make[2]: *** [/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.o] Error 1
+> make[1]: *** [_module_/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266] Error 2
+
+http://www.mail-archive.com/directfb-users at directfb.org/msg07023.html
+
+BR,
+--
+rofa
+
+
+From stefan at lucke.in-berlin.de  Sat Sep 27 13:57:17 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 27 Sep 2008 13:57:17 +0200
+Subject: [Softdevice-devel] Epia EN1500G + softdevice (kernel + via
+	driver)
+In-Reply-To: <Pine.OSF.4.64.0809270921420.360699@kosh.hut.fi>
+References: <48D5116A.1030607@globall.ru>
+	<200809262257.06012.stefan@lucke.in-berlin.de>
+	<Pine.OSF.4.64.0809270921420.360699@kosh.hut.fi>
+Message-ID: <200809271357.18110.stefan@lucke.in-berlin.de>
+
+On Saturday 27 September 2008, Rolf Ahrenberg wrote:
+> On Fri, 26 Sep 2008, Stefan Lucke wrote:
+> 
+> > DirectFB's driver doesn't compile with current kernel:
+> > /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c: In function 'viafb_init':
+> > /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c:1796: error: implicit declaration of function 'pci_module_init'
+> > make[2]: *** [/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.o] Error 1
+> > make[1]: *** [_module_/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266] Error 2
+> 
+> http://www.mail-archive.com/directfb-users at directfb.org/msg07023.html
+> 
+
+Tanks (should search for the search function first).
+
+
+-- 
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Sat Sep 27 14:02:43 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 27 Sep 2008 14:02:43 +0200
+Subject: [Softdevice-devel]
+	=?iso-8859-1?q?Epia_EN1500G_+_softdevice_=28ke?=
+	=?iso-8859-1?q?rnel_+_via=09driver_=29?=
+In-Reply-To: <48DDD076.4010903@globall.ru>
+References: <48D5116A.1030607@globall.ru>
+	<200809262257.06012.stefan@lucke.in-berlin.de>
+	<48DDD076.4010903@globall.ru>
+Message-ID: <200809271402.43397.stefan@lucke.in-berlin.de>
+
+On Saturday 27 September 2008, Vladimir Monchenko wrote:
+> Stefan Lucke wrote:
+
+> > Which kernel and driver do you use ?
+> > With gentoo kernel 2.6.25-gentoo-r7 and via's driver
+> > Linux-FBDev-kernel-src_2.6.00.03a I get these error
+> > messages on loading viafb.ko:
+> >
+> > viafb: Unknown symbol unregister_framebuffer
+> > viafb: Unknown symbol cfb_copyarea
+> > viafb: Unknown symbol register_framebuffer
+> > viafb: Unknown symbol cfb_imageblit
+> > viafb: Unknown symbol cfb_fillrect
+> > viafb: Unknown symbol soft_cursor
+> >
+> > DirectFB's driver doesn't compile with current kernel:
+> > /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c: In function 'viafb_init':
+> > /usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c:1796: error: implicit declaration of function 'pci_module_init'
+> > make[2]: *** [/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.o] Error 1
+> > make[1]: *** [_module_/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266] Error 2
+> >
+> >
+> >   
+> I too use a kernel 2.6.25-gentoo-r7 and via's driver 
+> Linux-FBDev-kernel-src_2.6.00.03a. You need to install kernel modules 
+> cfb_copyarea, cfb_imageblit, cfb_fillrect. It can be made if to build fb 
+> driver for another video card, for example savage or i810.
+
+Thanks. I guess I should deselect "via" driver of the kernel and
+should select the "intel" one. At the moment both (viafb from DirectFB
+and vt8623fb from kernel) are loaded ;-) .
+
+viafb                 153956  0
+vt8623fb               12544  0
+fb                     29320  2 viafb,vt8623fb
+svgalib                 7168  1 vt8623fb
+cfbcopyarea             3200  1 vt8623fb
+vgastate                7424  1 vt8623fb
+cfbimgblt               2688  2 viafb,vt8623fb
+cfbfillrect             3200  1 vt8623fb
+
+> I have installed manually DirectFB-1.2.3 and DFB ++. git from 
+> directfb.org. For DFB ++ need a patch: 
+> http://sources.gentoo.org/viewcvs.py/gentoo-x86/dev-libs/DFB++/files/DFB++-1.2.0-directfb-api.patch?view=markup
+
+Run into the same trouble before reading this and reported it to
+directfb-devel (just saw this is fix in git now).
+
+-- 
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Mon Sep 29 21:45:32 2008
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Mon, 29 Sep 2008 21:45:32 +0200
+Subject: [Softdevice-devel] Epia EN1500G + softdevice
+In-Reply-To: <48D90D15.4080107@globall.ru>
+References: <48D5116A.1030607@globall.ru>
+	<200809222032.47739.stefan@lucke.in-berlin.de>
+	<48D90D15.4080107@globall.ru>
+Message-ID: <200809292145.32660.stefan@lucke.in-berlin.de>
+
+On Tuesday 23 September 2008, Vladimir Monchenko wrote:
+> Stefan Lucke wrote:
+> > This description reminds me of pitch size mismatch for OSD.
+> > Can you add some debug message(s) to method GetLockOsdSurface()
+> > around line 1192, after commented out printf.
+> >
+> > softlog->Log(SOFT_LOG_INFO, 0, "[dfb--] osd surface pitch is (%d)\n", pitch),
+> >
+> >   
+> After experiments, I have detected that this effect depends on the 
+> resolution with which it is started vdr.
+> In resolutions 640x480, 800x600 and 1024x768 OSD works not correctly. It 
+> does not depend on customisations of video output (dfb:, dfb:cle266, 
+> dfb:cle266:viatv).
+> In reslution 720x576 OSD works normally.
+
+With my system I can see now the same messy OSD.
+Pitch sizes are buggy when the first entry of /etc/fb.modes does not
+match the resolution choosen in directfbrc ;-) 
+
+> Sep 22 19:09:34 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+> Sep 22 19:09:41 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+> Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+
+
+-- 
+Stefan Lucke
+
+

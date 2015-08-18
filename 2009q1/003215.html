@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with FastForward and Rewind
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20FastForward%20and%20Rewind&In-Reply-To=%3C200902182155.32797.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003213.html">
+   <LINK REL="Next"  HREF="003216.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with FastForward and Rewind</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20FastForward%20and%20Rewind&In-Reply-To=%3C200902182155.32797.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems with FastForward and Rewind">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Feb 18 21:55:32 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003213.html">[Softdevice-devel]  Problems with FastForward and Rewind
+</A></li>
+        <LI>Next message: <A HREF="003216.html">[Softdevice-devel] Problems with FastForward and Rewind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3215">[ date ]</a>
+              <a href="thread.html#3215">[ thread ]</a>
+              <a href="subject.html#3215">[ subject ]</a>
+              <a href="author.html#3215">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 18 February 2009, Maik Opitz wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I use softdevice in my VDR with DirectFB.
+</I>&gt;<i> Since some time I have the following problem when I replay an  
+</I>&gt;<i> recording. When I fast forward the recording, it runs forward  
+</I>&gt;<i> extremely fast for the first minute (of recording time) or so. Then it  
+</I>&gt;<i> goes to normal ff-speed. The same if I rewind. Also jumping forward or  
+</I>&gt;<i> backward by 1 minute (green and yellow button) is not a minute.  
+</I>&gt;<i> Forward it jumps more than 1 minute. Backwards it is less then 1 minute.
+</I>&gt;<i> 
+</I>&gt;<i> I found out that this change came on 15. April 2008. After some more  
+</I>&gt;<i> investigating I found, it hat to do with the change from  
+</I>&gt;<i> av_read_packet to av_read_frame.
+</I>&gt;<i> 
+</I>&gt;<i> The following patch changes back from av_read_frame to av_read_packet  
+</I>&gt;<i> and so fixes the problem.
+</I>&gt;<i> Could someone confirm this?
+</I>
+Yes, we had a discussion about this in september last year.
+
+1. <A HREF="../2008q3/003125.html">http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003125.html</A>
+2. <A HREF="../2008q3/003134.html">http://lists.berlios.de/pipermail/softdevice-devel/2008q3/003134.html</A>
+
+On my main viewing system, I switched via that uncommited patch
+back to av_read_packet().
+
+&gt;<i> And why did we change from av_read_packet to av_read_frame?
+</I>
+Hm, there were other problems, starting here:
+<A HREF="http://www.linuxtv.org/pipermail/vdr/2007-March/012473.html">http://www.linuxtv.org/pipermail/vdr/2007-March/012473.html</A>
+
+and original fix of Martin:
+<A HREF="http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html">http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html</A>
+
+av_read_frame() has a bug in PTS handling of which Martin tried to
+convince ffmpeg developers, but he failed. Have a look at:
+<A HREF="http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2007-March/025553.html">http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2007-March/025553.html</A>
+
+&gt;<i> 
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003213.html">[Softdevice-devel]  Problems with FastForward and Rewind
+</A></li>
+	<LI>Next message: <A HREF="003216.html">[Softdevice-devel] Problems with FastForward and Rewind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3215">[ date ]</a>
+              <a href="thread.html#3215">[ thread ]</a>
+              <a href="subject.html#3215">[ subject ]</a>
+              <a href="author.html#3215">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

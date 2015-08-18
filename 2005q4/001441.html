@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Rescaling for a large LCD TV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3C1130921281.43687d41506e2%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001440.html">
+   <LINK REL="Next"  HREF="001442.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Rescaling for a large LCD TV</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3C1130921281.43687d41506e2%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Rescaling for a large LCD TV">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Nov  2 09:48:01 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001440.html">[Softdevice-devel] Rescaling for a large LCD TV
+</A></li>
+        <LI>Next message: <A HREF="001442.html">[Softdevice-devel] Rescaling for a large LCD TV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1441">[ date ]</a>
+              <a href="thread.html#1441">[ thread ]</a>
+              <a href="subject.html#1441">[ subject ]</a>
+              <a href="author.html#1441">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Harald Milz:
+
+&gt;<i> On Wed, Nov 02, 2005 at 02:57:54AM +0100, Stefan Lucke wrote:
+</I>
+&gt;<i> &gt; &gt; Sound: the DD receiver shows a DD signal on ZDF all the time. I'm using a
+</I>&gt;<i> &gt; &gt; coax cable from the Asus SPDIF bracket to the receiver.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; They transmit a DD stream, but most of the time it is DD 2.0 :-) . On my
+</I>&gt;<i> &gt; logitech Z680 it is usually displayed as dolby and only on some special
+</I>&gt;<i> &gt; transmissions it switches to display 5.1 .
+</I>&gt;<i>
+</I>&gt;<i> A-ha. But it works fine, I did some watching last night, and no probs.
+</I>&gt;<i>
+</I>&gt;<i> I still have some probs with the remote module. At the moment I still use
+</I>&gt;<i> the IR input of the FF card J2 jack. The softdevide module learns the codes
+</I>&gt;<i> just fine but then interprets all key presses as two. No way to get into
+</I>&gt;<i> the menu :-( But I need to set up LIRC anyway because none of the RC5 VCR or
+</I>&gt;<i> DVD modes of my programmable remote is groked completely, i.e. either &quot;OK&quot;
+</I>&gt;<i> or &quot;Menu&quot; missing, and that's it.
+</I>
+That may be caused by reading input twice. vdr reads and softdevice via
+directfb reads the events too. So you may either disable all input processing
+for directfb (in that mode you cannot use the userkey remapping) or compile
+vdr with keyboard and lirc disabled.
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001440.html">[Softdevice-devel] Rescaling for a large LCD TV
+</A></li>
+	<LI>Next message: <A HREF="001442.html">[Softdevice-devel] Rescaling for a large LCD TV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1441">[ date ]</a>
+              <a href="thread.html#1441">[ thread ]</a>
+              <a href="subject.html#1441">[ subject ]</a>
+              <a href="author.html#1441">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

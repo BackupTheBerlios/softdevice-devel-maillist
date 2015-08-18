@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb-out: square with different colours
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb-out%3A%20square%20with%20different%20colours&In-Reply-To=%3C20060909200710.GC2891%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002407.html">
+   <LINK REL="Next"  HREF="002428.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb-out: square with different colours</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb-out%3A%20square%20with%20different%20colours&In-Reply-To=%3C20060909200710.GC2891%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] dfb-out: square with different colours">marko.makela at hut.fi
+       </A><BR>
+    <I>Sat Sep  9 22:07:10 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002407.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+        <LI>Next message: <A HREF="002428.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2426">[ date ]</a>
+              <a href="thread.html#2426">[ thread ]</a>
+              <a href="subject.html#2426">[ subject ]</a>
+              <a href="author.html#2426">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Sep 08, 2006 at 09:08:33PM +0100, Alasdair Campbell wrote:
+&gt;<i> &gt; LOGFILE=/var/log/my_vdr_logfile
+</I>[...]
+&gt;<i> &gt; vdr WITH_DESIRED_PARAMETERS  &gt;${LOGFILE} 2&gt;&amp;1
+</I>
+&gt;<i> Something strange happened when I tried this script, first of all with
+</I>&gt;<i> it copied verbatim, vdr loads as normal but there is only a black
+</I>&gt;<i> screen. I then tried commenting out lines such as the powersave one,
+</I>&gt;<i> and the &quot;clear&quot; line, however even after removing ALL the lines until
+</I>&gt;<i> it was only a exact copy of my vdr command line, there was still
+</I>&gt;<i> nothing but a black screen.
+</I>
+Is that on -vo dfb or -vo dfb:mgatv?  You did define LOGFILE in
+a sensible way, didn't you?
+
+Hmm, I'm not sure if '-vo dfb' is compatible with these settings in
+your directfbrc:
+
+matrox-crtc2
+matrox-tv-standard=pal
+matrox-cable-type=scart-rgb
+
+I tried commenting out these, but all seem to be needed in order to
+get a composite sync signal.  It was also necessary to define
+primary-layer=2, although according to dfbinfo, it should be
+the FBDev Primary Layer on the FBDev Primary Screen (i.e.,
+the 1st head and not 2nd head).
+
+&gt;<i> I figure this must be to do with permissions or what not, however I
+</I>&gt;<i> ran the command on the console directly with the same user and it
+</I>&gt;<i> worked fine, exact same command in an executable shell script and
+</I>&gt;<i> nothing appears.
+</I>
+Did you try adding &quot;set -x&quot; to the beginning of the script? Then it
+should display all commands as they are executed.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002407.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+	<LI>Next message: <A HREF="002428.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2426">[ date ]</a>
+              <a href="thread.html#2426">[ thread ]</a>
+              <a href="subject.html#2426">[ subject ]</a>
+              <a href="author.html#2426">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

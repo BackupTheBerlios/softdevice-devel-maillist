@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Profiling tools
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Profiling%20tools&In-Reply-To=%3C20050405194602.GC7363%40mail.kolumbus.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000455.html">
+   <LINK REL="Next"  HREF="000446.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Profiling tools</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Profiling%20tools&In-Reply-To=%3C20050405194602.GC7363%40mail.kolumbus.fi%3E"
+       TITLE="[Softdevice-devel] Profiling tools">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Apr  5 21:46:02 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000455.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+        <LI>Next message: <A HREF="000446.html">[Softdevice-devel] Profiling tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#442">[ date ]</a>
+              <a href="thread.html#442">[ thread ]</a>
+              <a href="subject.html#442">[ subject ]</a>
+              <a href="author.html#442">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Apr 05, 2005 at 06:11:32PM +0200, Martin Wache wrote:
+&gt;<i> &gt;Finally, here is the list for libvdr-softdevice:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;samples  %        symbol name
+</I>&gt;<i> &gt;2986     26.1219  cVideoStreamDecoder::DecodePacket(AVPacket*)
+</I>&gt;<i> &gt;1320     11.5475  cStreamDecoder::Action()
+</I>&gt;<i> Actualy this is quite interessting. Action() should do nothing except 
+</I>&gt;<i> waiting for new packets and call DecodePacket() for each packet. I would 
+</I>&gt;<i> not expect it use so much time. Sleeping and the call to DecodePacket 
+</I>&gt;<i> should not count, so where does it spend the time? Maybe the mutex... I 
+</I>&gt;<i> guess playing around in this function may give some improvements..
+</I>
+The opannotate command will show the samples for individual machine
+instructions.
+
+&gt;<i> I never used oprofile before, only gprof so I don't now exactly what 
+</I>&gt;<i> these numbers mean. What is samples exactly, I asume it is the overall 
+</I>&gt;<i> cpu time spend in a function? Is there a statistic like numbers of calls 
+</I>&gt;<i> and time consumed per call?
+</I>
+Please have a look at <A HREF="http://oprofile.sourceforge.net/.">http://oprofile.sourceforge.net/.</A>  There are some
+performance counters in every modern processor, and OProfile makes use of
+them.  When you start it, you specify the counter(s) to use and a sampling
+interval (the lower the number, the more frequently the samples will be
+taken).  An NMI interrupt handler saves the samples in a buffer, and the
+oprofile daemon collects the statistics and writes them out to a file.  This
+causes a few percent overhead, and no instrumentation of the running programs
+is necessary.  You can even profile kernel code, and you can start and stop
+collecting samples any time you want.
+
+Yes, the more samples, the more resources are consumed at that location.
+CPU_CLK_UNHALTED measures CPU consumption.  I've also profiled some code
+(not VDR) using DCU_MISS_OUTSTANDING, which measures data cache misses
+(useful if you want to fine-tune things with __builtin_prefetch()).
+
+&gt;<i> You can disable USE_SUBPLUGINS in the softdevice makefile and you will 
+</I>&gt;<i> get at least one library for the softdevice.
+</I>
+Thanks.  I also see a dlopen() call in plugin.c.
+
+&gt;<i> &gt;If you want to play with oprofile yourself, be sure to enable the following
+</I>&gt;<i> 
+</I>&gt;<i> I guess if I find the time I will try gprof. I know it much better and 
+</I>&gt;<i> we can compare the results...
+</I>
+Of course, this depends on what you mean by &quot;better&quot;.  Oh, sorry, I misread
+you: you didn't say &quot;I know it's much better&quot;. :-)
+
+I've used gprof years ago when there was no free software tool like oprofile.
+(I didn't have access to Intel's VTune or DCPI for Digital UNIX.)
+I have understood that gprof does not work with multi-threaded programs, and
+I think you will have hard time using it in a dlopen()ed library.  Well,
+actually the dlopen() might not be a problem, as long as all code is compiled
+with gcc -pg.  For my doctoral thesis work, I wrote a program that generates
+some C code on the fly and executes it.  I can't remember, but it could be
+that it might actually have worked on the dlopen()ed code as well.
+
+If you want to get meaningful statistics from gprof, you will have to disable
+inlining, which degrades performance further.  Also, you will get junk from
+the initialization and cleanup phases.
+
+With oprofile, you can choose to collect samples for the interesting part
+only, at a performance penalty of a few percent.  Already a run of 10 seconds
+gives pretty good numbers.  The longer you run it, the more accurate it gets
+due to the statistical nature of oprofile.  I'd let it collect samples for
+a couple of minutes to get a pretty accurate view.  But isn't gprof somehow
+statistical as well?
+
+&gt;<i> Are the above oprof outputs from the old snapshot or from the new one? 
+</I>
+For the old snapshot.  I'll run the profiler again on a fresh CVS checkout
+soon, maybe this evening.
+
+&gt;<i> I guess I will try the subtitles plugin myself. I wonder if in Germany 
+</I>&gt;<i> there are stations which provide subtitles...
+</I>
+I've understood that the bitmap subtitles (<A HREF="http://www.virtanen.org/">http://www.virtanen.org/</A>) are
+used in Finland and in the UK.  In Sweden, they use textual subtitles.
+You Germans are spoiled with dubbed programs.  Here, they only dub some
+small children's programs and often in very bad quality (one actor tries
+to imitate all voices).
+
+If you'd like, I can provide you with some samples, e.g., &quot;Creature Comforts&quot;
+by Aadrman Animations.  In tonight's show, all subtitles appeared to be
+unsynchronized, appearing 5-10 seconds before the audio.
+
+&gt;<i> &gt;Finally, I noticed another interesting thing: the subtitles will continue 
+</I>&gt;<i> &gt;to
+</I>&gt;<i> &gt;change, even if playback is suspended!
+</I>&gt;<i> Now that is strange... GetSTC should not return anything meaningfull if 
+</I>&gt;<i> the playback is suspended...
+</I>
+When I suspend, the sound stops and the picture freezes, but the subtitle
+overlay keeps changing.
+
+&gt;<i> What I understand from the description is that oprofile simply checks 
+</I>&gt;<i> what's on top of the call stack at regular (timed) intervals. That's 
+</I>&gt;<i> more statistical than gprof, but requires no tooling of the code.
+</I>
+Actually, stack trace backtracking is optional, and it only works if the
+program has been compiled with -fno-omit-frame-pointer.  I was unable to
+enable backtracking yesterday, but I'll try again today.  It looks like
+the default settings are stored in ~root/.oprofile/daemonrc.  It's a bit
+of mystery to me if the settings can be changed once the oprofile module
+has been loaded.  (It can't be unloaded from 2.6 kernels, if I've understood
+correctly.)
+
+&gt;<i> Ah, okay that makes sense. So I will try gprof, I guess it will be nice 
+</I>&gt;<i> to compare with the oprofile...
+</I>
+Sure, and please tell me if you got it to work.  I have never tried to use
+gprof on a multi-threaded program.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000455.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+	<LI>Next message: <A HREF="000446.html">[Softdevice-devel] Profiling tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#442">[ date ]</a>
+              <a href="thread.html#442">[ thread ]</a>
+              <a href="subject.html#442">[ subject ]</a>
+              <a href="author.html#442">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

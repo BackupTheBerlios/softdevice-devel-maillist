@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio : my proposal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C4283217F.2000006%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000598.html">
+   <LINK REL="Next"  HREF="000651.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio : my proposal</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C4283217F.2000006%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio : my proposal">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu May 12 11:27:27 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000598.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+        <LI>Next message: <A HREF="000651.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#648">[ date ]</a>
+              <a href="thread.html#648">[ thread ]</a>
+              <a href="subject.html#648">[ subject ]</a>
+              <a href="author.html#648">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I didn't have any reply/comments/etc.
+
+Was I totally dreaming at 3:00 AM ?
+Is it unimplementable ?
+Or is it simply just so clear and so well defined that everybody agrees 
+silently ? (I don't think the third option is the right one...)
+
+Nicolas Huillard a &#233;crit :
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> After I have read and I hope understood what you all did describe, I can 
+</I>&gt;<i> sum-up thing here :
+</I>&gt;<i> 
+</I>&gt;<i> 1) option to set physical display size
+</I>&gt;<i> * use choose from &quot;16/9&quot;, &quot;4/3&quot;, even &quot;16/10&quot;, or so
+</I>&gt;<i> * this is stored as a a decimal value : 1.777, 1.333, 1.6, etc.
+</I>&gt;<i> * this may be stored as the physical H + V sizes of the screen (as X does)
+</I>&gt;<i> * this option is selected once for all
+</I>&gt;<i> * it is independent of the resolution of the screen : think about 16/9 
+</I>&gt;<i> display at 800x600, or 16/10 at 1400x1050, or the new plasmas 16/9 at 
+</I>&gt;<i> 1024x1024
+</I>&gt;<i> * maybe this option is already present in the standard config / DVB card 
+</I>&gt;<i> / video format option (from VDR's MANUAL : &quot;Video format = 4:3     The 
+</I>&gt;<i> video format (or aspect ratio) of the tv set in use (4:3 or 16:9)&quot;
+</I>&gt;<i> * display ratio, and display resolution can be used together to 
+</I>&gt;<i> calculate the pixel aspect ratio : 800/600 / (16/9) = 0.75 ; 1280/768 / 
+</I>&gt;<i> (16/9) = 0.9375 ; 720/576 / (4/3) = 0.9375 ; etc.
+</I>&gt;<i> 
+</I>&gt;<i> 2) auto-detection of aspect ratio
+</I>&gt;<i> * the WSS bit can be set by the broadcaster to set the aspect ratio to 
+</I>&gt;<i> 16/9 (I think the only time I saw it was with Arte on analog broadcast, 
+</I>&gt;<i> because the TV switches to the full-frame display automagically)
+</I>&gt;<i> * other auto-detect features can be used, to set wether the frame is 
+</I>&gt;<i> meant to be viewed as 16/9 or 4/3 (or something else)
+</I>&gt;<i> * if no detection is done (I don't expect anything here in France), the 
+</I>&gt;<i> frame ratio will probably be advertised as 4/3
+</I>&gt;<i> * this is something the user has no impact on
+</I>&gt;<i> 
+</I>&gt;<i> 3) user-set programme aspect ratio
+</I>&gt;<i> * the user may choose not to trust the broadcaster advertised aspect 
+</I>&gt;<i> ratio (I won't)
+</I>&gt;<i> * the user selects the actual image ratio inside the frame : 4/3, 16/9, 
+</I>&gt;<i> 1.85, 2.35, etc.
+</I>&gt;<i> * the special value &quot;trust the broadcaster&quot; is simply the fact that the 
+</I>&gt;<i> image fills the entire frame, whatever the aspect ratio (&quot;full-frame&quot;)
+</I>&gt;<i> * that would be the option the user changes most often : the one to 
+</I>&gt;<i> match to a remote key
+</I>&gt;<i> 
+</I>&gt;<i> 4) match between frame ratio and programme ratio
+</I>&gt;<i> * the match between frame ratio and image ratio is obvious : if the 
+</I>&gt;<i> broadcaster says the frame is 4:3 but I see a 16/9 image, the image 
+</I>&gt;<i> fills (4/3) / (16/9) = 0.75, leaving horizontal black bars ; if the 
+</I>&gt;<i> broadcaster says the frame is 16/9 but I see vertical black bars, the 
+</I>&gt;<i> image is in fact 4/3
+</I>&gt;<i> * the calculations begin to be difficult for me ;-)
+</I>&gt;<i> * this match is used to crop the image : strip black bars, the right 
+</I>&gt;<i> thickness, at the right places
+</I>&gt;<i> 
+</I>&gt;<i> 5) scaling between the frame/image ratio and the screen
+</I>&gt;<i> * once the image is cropped by the match between the frame and the 
+</I>&gt;<i> image, it can be scaled to the screen
+</I>&gt;<i> * scaling uses the calculated image size and the actual screen size
+</I>&gt;<i> * it also uses the screen aspect ratio, in another crop stage : fitting 
+</I>&gt;<i> a 4/3 image in a 16/9 screen, or a 16/9 image in a 4/3 screen, can be 
+</I>&gt;<i> done by upscaling of downscaling
+</I>&gt;<i> 
+</I>&gt;<i> It might seem complicated, but user action is limited to selecting 
+</I>&gt;<i> screen size or ratio once, and selecting the proper image ratio, if the 
+</I>&gt;<i> programme doesn't include it. That's something I always do on my TV (but 
+</I>&gt;<i> softdevice will do this much better, not loosing resolution).
+</I>&gt;<i> 
+</I>
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000598.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+	<LI>Next message: <A HREF="000651.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#648">[ date ]</a>
+              <a href="thread.html#648">[ thread ]</a>
+              <a href="subject.html#648">[ subject ]</a>
+              <a href="author.html#648">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Image scaling vs. visible resolution
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Image%20scaling%20vs.%20visible%20resolution&In-Reply-To=%3C42721F0D.4090604%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000574.html">
+   <LINK REL="Next"  HREF="000582.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Image scaling vs. visible resolution</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Image%20scaling%20vs.%20visible%20resolution&In-Reply-To=%3C42721F0D.4090604%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Image scaling vs. visible resolution">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Fri Apr 29 13:48:29 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000574.html">[Softdevice-devel] Does anyone have a PNG image to test	s-video output ?
+</A></li>
+        <LI>Next message: <A HREF="000582.html">[Softdevice-devel] Image scaling vs. visible resolution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#581">[ date ]</a>
+              <a href="thread.html#581">[ thread ]</a>
+              <a href="subject.html#581">[ subject ]</a>
+              <a href="author.html#581">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Loosely related to aspect ratio handling.
+
+On a 352x288 stream, scaled to full 800x600 DirectFB screen, the stream 
+pixels appear clearly.
+With other decoders, like vdr-xine / hardware decoding, the image is 
+smoothed, as if it really were 800x600.
+That's clearly visible on very small letters (5 pixel) : with 
+softdevice, they're awful, with vdr-xine, they're really nice.
+
+The test channel : M&#233;t&#233;o 
+Express;OpenMux:10911:vC34:S13.0E:27500:5820:5830:0:0:5800:176:12000:0
+
+My explanation : softdevice does scaling after decompression, whereas 
+xine does scaling before decompression (one step or another in the 
+decompression process).
+
+Not that this channel is important to me, but every improvement in image 
+quality is a good thing (particularly if it's easy to implement).
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000574.html">[Softdevice-devel] Does anyone have a PNG image to test	s-video output ?
+</A></li>
+	<LI>Next message: <A HREF="000582.html">[Softdevice-devel] Image scaling vs. visible resolution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#581">[ date ]</a>
+              <a href="thread.html#581">[ thread ]</a>
+              <a href="subject.html#581">[ subject ]</a>
+              <a href="author.html#581">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

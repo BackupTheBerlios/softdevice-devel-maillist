@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20refresh%20rate%20on%20dvb-t%20%28device%20delay%20%2B%20ac3%29&In-Reply-To=%3C1114476939.32332.6.camel%40africa%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000556.html">
+   <LINK REL="Next"  HREF="000558.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20refresh%20rate%20on%20dvb-t%20%28device%20delay%20%2B%20ac3%29&In-Reply-To=%3C1114476939.32332.6.camel%40africa%3E"
+       TITLE="[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)">torgeir at pobox.com
+       </A><BR>
+    <I>Tue Apr 26 02:55:39 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000556.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+        <LI>Next message: <A HREF="000558.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#557">[ date ]</a>
+              <a href="thread.html#557">[ thread ]</a>
+              <a href="subject.html#557">[ subject ]</a>
+              <a href="author.html#557">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 2005-04-25 at 18:15 +0100, Torgeir Veimo wrote:
+&gt;<i> On Mon, 2005-04-25 at 06:51 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Montag, 25. April 2005 03:16, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; &gt; Am starting to count Flip() calls 
+</I>
+Here's a rough implementation of a counter using FBIO_WAITFORVSYNC
+ioctl. There are some race issues, ideally, there would be a vsync
+serial counter in the fb module implementation, and the count should be
+returned from DFB's Flip() method. I might try to get it right even
+without that.
+
+Drift can be calculated as accumulated late / early frames. This version
+only prints out a * when it detects a difference to last serial that is
+not 2. 
+
+There should probably be a way to turn it on and off interactively, eg
+using the key j.
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vsync.diff
+Type: text/x-patch
+Size: 5711 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050426/a5332a51/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050426/a5332a51/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000556.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+	<LI>Next message: <A HREF="000558.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#557">[ date ]</a>
+              <a href="thread.html#557">[ thread ]</a>
+              <a href="subject.html#557">[ subject ]</a>
+              <a href="author.html#557">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

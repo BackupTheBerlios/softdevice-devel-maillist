@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] New A-V sync
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C1099323713.5263.90.camel%40atlantis.netenviron.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000056.html">
+   <LINK REL="Next"  HREF="000038.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] New A-V sync</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20sync&In-Reply-To=%3C1099323713.5263.90.camel%40atlantis.netenviron.com%3E"
+       TITLE="[Softdevice-devel] New A-V sync">torgeir at pobox.com
+       </A><BR>
+    <I>Mon Nov  1 16:41:52 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000056.html">[Softdevice-devel] New A-V sync
+</A></li>
+        <LI>Next message: <A HREF="000038.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#57">[ date ]</a>
+              <a href="thread.html#57">[ thread ]</a>
+              <a href="subject.html#57">[ subject ]</a>
+              <a href="author.html#57">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 2004-11-01 at 10:38 +0100, Martin Wache wrote:
+&gt;<i> &gt; On Fri, 2004-10-29 at 15:41 +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Since there is still some work to do on the audio part I hope this
+</I>&gt;<i> &gt; &gt; problem
+</I>&gt;<i> &gt; &gt; will be solved when we buffer the audio data just like the video data.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Reapplied the pcr patch for pre4 and it seems to be quite good at fixing
+</I>&gt;<i> &gt; the offset problem I previously had, but there seems to be some minor
+</I>&gt;<i> &gt; audio buffering issues still. Do you have any improved patch ready for
+</I>&gt;<i> &gt; testing?
+</I>&gt;<i> 
+</I>&gt;<i> I'm still working on the dvd - issue. In fact I haven't got the dvd plugin
+</I>&gt;<i> running yet, well the video seems to be fine, but I don't get any audio at
+</I>&gt;<i> all....
+</I>
+Making the dvd plugin working was just a digression. It didn't work
+previously either.
+
+&gt;<i> I also changed the buffering of the audio part so I hope that issue should
+</I>&gt;<i> be fixed now.
+</I>&gt;<i> I don't know yet how much time I will have this evening, but maybe I can
+</I>&gt;<i> send an improved patch this evening.
+</I>
+Ok.
+
+&gt;<i> Are you sure that my patch improves the fixed A-V offset? I didn't do
+</I>&gt;<i> something which should fix this explicitly.I changed the way the PTS is
+</I>&gt;<i> interpreted, so maybe this changes something...
+</I>
+I used to set the offset to 160ms, now I have it at 20ms, so there is
+definitely some progress. I haven't really looked into the new pts
+handling yet though..
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000056.html">[Softdevice-devel] New A-V sync
+</A></li>
+	<LI>Next message: <A HREF="000038.html">[Softdevice-devel] New A-V sync
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#57">[ date ]</a>
+              <a href="thread.html#57">[ thread ]</a>
+              <a href="subject.html#57">[ subject ]</a>
+              <a href="author.html#57">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

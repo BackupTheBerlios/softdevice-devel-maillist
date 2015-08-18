@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] new OSD support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C43C0FD14.5020903%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001634.html">
+   <LINK REL="Next"  HREF="001639.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] new OSD support</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C43C0FD14.5020903%40gmx.net%3E"
+       TITLE="[Softdevice-devel] new OSD support">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Jan  8 12:52:52 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001634.html">[Softdevice-devel] new OSD support
+</A></li>
+        <LI>Next message: <A HREF="001639.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1637">[ date ]</a>
+              <a href="thread.html#1637">[ thread ]</a>
+              <a href="subject.html#1637">[ subject ]</a>
+              <a href="author.html#1637">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> On Saturday 07 January 2006 14:49, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>I just committed the new OSD, which supports up- and down-scaleing,
+</I>&gt;&gt;<i>fixes some problems with software alpha blending mode and should also
+</I>&gt;&gt;<i>fix the shifted menu problem with the dvd-plugin. In most cases it is
+</I>&gt;&gt;<i>also much faster than the old OSD, and hopefully easier to maintain
+</I>&gt;&gt;<i>since it uses less global variables.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>I had to modify all four video-out methods, I tested them but of course
+</I>&gt;&gt;<i>I could have missed some new bugs. So please check out the latest
+</I>&gt;&gt;<i>cvs-version and test the softdevice with your favourite video-out methods.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> It seems to work fine with my epia system using dfb tv-out. The OSD is still a 
+</I>&gt;<i> bit sluggish but then I think it always will be on there until someone 
+</I>&gt;<i> manages to incorporate hardware MPEG decoding into softdevice!
+</I>&gt;<i> 
+</I>Thank you for your report, nice to hear that it works for you!
+What processor do you use? Is it a Nehemiah or earlier? The new OSD is
+useing MMX quite heavily so the gain is probably not that big on earlier
+processors than Nehemiah because the MMX unit is quite slow on them.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001634.html">[Softdevice-devel] new OSD support
+</A></li>
+	<LI>Next message: <A HREF="001639.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1637">[ date ]</a>
+              <a href="thread.html#1637">[ thread ]</a>
+              <a href="subject.html#1637">[ subject ]</a>
+              <a href="author.html#1637">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

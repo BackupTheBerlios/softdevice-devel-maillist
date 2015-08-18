@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050816194555.GF3163%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001126.html">
+   <LINK REL="Next"  HREF="001120.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050816194555.GF3163%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Aug 16 21:45:55 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001126.html">[Softdevice-devel] Minor AV sync problems - fix works!
+</A></li>
+        <LI>Next message: <A HREF="001120.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1119">[ date ]</a>
+              <a href="thread.html#1119">[ thread ]</a>
+              <a href="subject.html#1119">[ subject ]</a>
+              <a href="author.html#1119">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Aug 15, 2005 at 04:48:34PM +0200, Martin Wache wrote:
+&gt;<i> Are you using MPlayer? I'm just a bit curious, maybe you can try to
+</I>&gt;<i> check if MPlayer is getting the audio delay correctly. To do this you
+</I>&gt;<i> have to edit libao2/ao_alsa.c in MPlayer's source directory. Search for
+</I>&gt;<i> get_delay and print out the result of their delay calculation, please
+</I>&gt;<i> note that they are useing floats for the delay.
+</I>
+I'm not using MPlayer regularly, and not at all on my VDR box.  The box
+where I'm occasionally using it has an I82801DBICH4 (Intel ICH4).
+
+&gt;<i> I guess we can try to work around that by just using the system clock to
+</I>&gt;<i> calculate the audio delay, but then we wouldn't be able to detect drifts
+</I>&gt;<i> of the sound clock.
+</I>
+With your patch, softdevice reported the line
+Raw audio delay 0 audio delay 0
+several times (both values always zero).
+
+I'll try to compile vdr and softdevice on my laptop to see if it is any
+different.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001126.html">[Softdevice-devel] Minor AV sync problems - fix works!
+</A></li>
+	<LI>Next message: <A HREF="001120.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1119">[ date ]</a>
+              <a href="thread.html#1119">[ thread ]</a>
+              <a href="subject.html#1119">[ subject ]</a>
+              <a href="author.html#1119">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

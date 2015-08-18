@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C20050529083607.GD477139%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000741.html">
+   <LINK REL="Next"  HREF="000769.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%20relay&In-Reply-To=%3C20050529083607.GD477139%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun May 29 10:36:07 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000741.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+        <LI>Next message: <A HREF="000769.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#758">[ date ]</a>
+              <a href="thread.html#758">[ thread ]</a>
+              <a href="subject.html#758">[ subject ]</a>
+              <a href="author.html#758">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, May 25, 2005 at 11:50:40PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> This may be a bit off-topic for this list, but I have built a simple 10A
+</I>&gt;<i> power control box that has a switch (ON/OFF/programmatic), a fuse and a
+</I>&gt;<i> solid-state relay.
+</I>[...]
+&gt;<i> In the switch position &quot;programmatic&quot;, the power is controlled by an RS-232
+</I>&gt;<i> handshaking line from the PC.  This allows the VDR to power the monitor and
+</I>&gt;<i> speakers on and off as needed.  I would like to connect the relay to the
+</I>&gt;<i> softdevice &quot;suspended&quot; flag, i.e., when softdevice playback is suspended,
+</I>&gt;<i> the display will be off.
+</I>
+Okay, I finally have completed the unit, but haven't integrated it to
+softdevice yet.  I would appreciate some insight there; how to implement
+this hook for all playback methods (DirectFB, Xv and so on).  I've attached
+a minimal test program for controlling the relay.  The test program has the
+getchar() loop, because the TxD line will be released and the relay will be
+switched off on close().
+
+The relay is controlled via TxD, because I noticed that I had fried RTS
+on both serial ports when I had tested a connection with a faulty cable.
+(TxD/RxD were crossed over but RTS/CTS were not).  The schematic diagram
+is simple.  TxD and GND are connected to the inputs of the solid-state
+relay via a diode, so that the relay will only connect if TxD &gt; GND, that
+is, a BREAK signal is present on the RS-232 port.  On the 230-volt side,
+there is a fuse and a ON-OFF-ON switch for bypassing the relay.
+
+If anyone is interested in building this (I surely can't be the only one
+who wants to control the whole VDR equipment with a single remote control),
+I can provide more information and pictures.
+
+	Marko
+-------------- next part --------------
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/ioctl.h&gt;
+#include &lt;fcntl.h&gt;
+
+int
+main (int argc, char** argv)
+{
+  int fd;
+  int bit;
+  if (argc != 3) {
+    fprintf (stderr, &quot;Usage: %s /dev/ttyS0 0|1\n&quot;, argv[0]);
+    return EXIT_FAILURE;
+  }
+
+  bit = atoi (argv[2]);
+  fd = open (argv[1], O_RDWR | O_NOCTTY | O_NONBLOCK);
+
+  if (fd &lt; 0) {
+    perror (&quot;open&quot;);
+    return EXIT_FAILURE;
+  }
+  if (ioctl (fd, bit ? TIOCSBRK : TIOCCBRK, 0)) {
+    perror (&quot;ioctl&quot;);
+    return EXIT_FAILURE;
+  }
+  while (getchar() != EOF);
+  if (close (fd)) {
+    perror (&quot;close&quot;);
+    return EXIT_FAILURE;
+  }
+  return EXIT_SUCCESS;
+}
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000741.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+	<LI>Next message: <A HREF="000769.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#758">[ date ]</a>
+              <a href="thread.html#758">[ thread ]</a>
+              <a href="subject.html#758">[ subject ]</a>
+              <a href="author.html#758">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

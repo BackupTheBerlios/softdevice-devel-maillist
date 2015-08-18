@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD layer not always fully cleared on mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C20060918185020.GB2739%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002486.html">
+   <LINK REL="Next"  HREF="002519.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD layer not always fully cleared on mgatv</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C20060918185020.GB2739%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] OSD layer not always fully cleared on mgatv">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Sep 18 20:50:20 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002486.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+        <LI>Next message: <A HREF="002519.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2497">[ date ]</a>
+              <a href="thread.html#2497">[ thread ]</a>
+              <a href="subject.html#2497">[ subject ]</a>
+              <a href="author.html#2497">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Sep 18, 2006 at 12:55:30PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> I'm using CVS versions of softdevice and DirectFB from one or two weeks
+</I>&gt;<i> ago, when Stefan fixed the big OSD flicker.
+</I>&gt;<i> 
+</I>&gt;<i> I occasionally see flicker on the OSD layer.  Sometimes, when I close the
+</I>&gt;<i> OSD, it appears that one of the two interlaced fields is not completely
+</I>&gt;<i> cleared.  A few top and bottom lines will flicker between transparent
+</I>&gt;<i> and their previous contents until another menu is opened.  Has anyone
+</I>&gt;<i> else experienced this?
+</I>
+One or two weeks ago I have noticed that when something is blanked
+(made transparent) in the OSD of -vo dfb:mgatv, the change does not
+happen immediately, but the pixels will fade out in at least 4 steps.
+
+For instance, in the Recordings menu, those entries that are
+subdirectories will only display a label for the Red button,
+while recordings will display labels for all four colour buttons
+at the bottom of the screen.  If I press the Down or Up key,
+the labels for Yellow, Green, and Blue keys will appear or
+disappear.  They will appear instantly, and the top lines of
+the labels will disappear immediately.  The bottom 3 or so lines
+will disappear gradually, possibly fading out one step every
+1/25 seconds.  It takes about 1/2 or 1 second to fade out
+completely.
+
+I'm using the following OSD settings:
+
+OSDHeight = 555
+OSDLanguage = 8
+OSDLeft = 36
+OSDMessageTime = 1
+OSDSkin = classic
+OSDTheme = default
+OSDTop = 12
+OSDWidth = 672
+
+Hopefully this information will help in tracking down the bug.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002486.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+	<LI>Next message: <A HREF="002519.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2497">[ date ]</a>
+              <a href="thread.html#2497">[ thread ]</a>
+              <a href="subject.html#2497">[ subject ]</a>
+              <a href="author.html#2497">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] New A-V patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20patch&In-Reply-To=%3C200411141640.14730.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000083.html">
+   <LINK REL="Next"  HREF="000092.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] New A-V patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20New%20A-V%20patch&In-Reply-To=%3C200411141640.14730.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] New A-V patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Nov 14 16:40:14 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000083.html">[Softdevice-devel] New A-V patch
+</A></li>
+        <LI>Next message: <A HREF="000092.html">[Softdevice-devel] New A-V patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#84">[ date ]</a>
+              <a href="thread.html#84">[ thread ]</a>
+              <a href="subject.html#84">[ subject ]</a>
+              <a href="author.html#84">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 13. November 2004 19:05, Torgeir Veimo wrote:
+&gt;<i> On Sat, 2004-11-13 at 17:06 +0100, Martin Wache wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I have a new version of my new A-V syncing patch. The main changes since
+</I>&gt;<i> &gt; the last version are: I fixed the stupid bug which caused the channel 
+</I>&gt;<i> &gt; switching to fail sometimes, fixed the compile issue with vdr-1.2.1 and
+</I>&gt;<i> &gt; I implemented the Freeze() method.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Since the new A-V syncing is now running very stable and I fixed all the 
+</I>&gt;<i> &gt; issues of the last patch, I will commit this patch to the CVS tomorrow 
+</I>&gt;<i> &gt; evening if there are no objections.
+</I>&gt;<i> 
+</I>&gt;<i> +1
+</I>&gt;<i> 
+</I>&gt;<i> I still have to add an av offset of about 200ms to 240ms manually
+</I>&gt;<i> though. 
+</I>
+That is probably an issue with ffmpeg. We have to test this separate.
+The issue with ffmpeg is that the reported PTS value belongs to an earlier
+frame. What happens is that not every stream has a PTS value for each frame
+and display sequence of frames is not the transmitted sequence of frames.
+Therefor I introduced some time ago the sync option &quot;every frame&quot; vs. &quot;I-Frame&quot;.
+
+The error I refer to was that a stream had PTS values for I-frames only. But
+the PTS value was reported two frames later for a P-frame. So checking
+for an I-frame and taking that PTS time, was wrong.
+
+
+
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000083.html">[Softdevice-devel] New A-V patch
+</A></li>
+	<LI>Next message: <A HREF="000092.html">[Softdevice-devel] New A-V patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#84">[ date ]</a>
+              <a href="thread.html#84">[ thread ]</a>
+              <a href="subject.html#84">[ subject ]</a>
+              <a href="author.html#84">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

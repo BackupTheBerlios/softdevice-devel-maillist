@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] pseudo alpha mmx2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20alpha%20mmx2&In-Reply-To=%3C44BD0910.3080407%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002274.html">
+   <LINK REL="Next"  HREF="002284.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] pseudo alpha mmx2</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20alpha%20mmx2&In-Reply-To=%3C44BD0910.3080407%40gmx.net%3E"
+       TITLE="[Softdevice-devel] pseudo alpha mmx2">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Jul 18 18:15:12 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002274.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+        <LI>Next message: <A HREF="002284.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2277">[ date ]</a>
+              <a href="thread.html#2277">[ thread ]</a>
+              <a href="subject.html#2277">[ subject ]</a>
+              <a href="author.html#2277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo schrieb:
+&gt;<i> Martin Wache wrote:
+</I>&gt;&gt;<i> Torgeir Veimo schrieb:
+</I>&gt;&gt;&gt;<i> Martin Wache wrote:
+</I>&gt;&gt;&gt;&gt;<i> Torgeir Veimo schrieb:
+</I>&gt;&gt;&gt;&gt;&gt;<i> Martin Wache wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I think we would have to change the interface of the convert functions,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> and also pass a line number. For the mmx part there are to possible ways:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> 1. convert a single pixel using the c code for odd lines, and convert
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>    the rest using the mmx code. The drawback is that the memory access
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>    won't be aligned anymore, and I guess all the speed advantage will be
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>    gone.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> 2. have different mmx codes for odd and even lines. To produce this code
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>    is quite simple, but the code will be doubled.
+</I>&gt;&gt;&gt;&gt;&gt;<i> What about doing the dithering in the OSD buffer before it's transferred 
+</I>&gt;&gt;&gt;&gt;&gt;<i> to screen? 
+</I>&gt;&gt;&gt;&gt;<i> That would also be before it is scaled, I don't think that would look good.
+</I>&gt;&gt;&gt;<i> This is only when using &quot;pseudo&quot; transparency, it wouldn't apply to 
+</I>&gt;&gt;&gt;<i> software OSD, and thus no scaling would occur.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> No, if you use X11 with a high resolution, or the softdevice in an X
+</I>&gt;&gt;<i> window the OSD has to be scaled. The software OSD usually doesn't have
+</I>&gt;&gt;<i> to be scaled (depends on the stream).
+</I>&gt;<i> 
+</I>&gt;<i> What resolutions are you talking about? I'm displaying in 1280x1024 and 
+</I>&gt;<i> 1280x720 without scaling. The OSD is shown pixel perfect on top of the 
+</I>&gt;<i> video output.
+</I>&gt;<i> 
+</I>
+The FF cards have an OSD of the same resolution as the streams
+(720x576), and vdr renders the OSD in this same resolution. For software
+alpha blending we can usually just blend the osd over the stream (they
+have the same size), but if the screen has a higher (or lower)
+resolution we have to scale video and osd. The video is scaled by the
+hardware (except fb-out), and the osd is scaled by
+cSoftOsd::Scale(VUp/VDown)CopyToBitmap().
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002274.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+	<LI>Next message: <A HREF="002284.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2277">[ date ]</a>
+              <a href="thread.html#2277">[ thread ]</a>
+              <a href="subject.html#2277">[ subject ]</a>
+              <a href="author.html#2277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

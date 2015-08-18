@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] make mgatv default to TV output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20make%20mgatv%20default%20to%20TV%20output&In-Reply-To=%3C200609162031.43380.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002457.html">
+   <LINK REL="Next"  HREF="002459.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] make mgatv default to TV output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20make%20mgatv%20default%20to%20TV%20output&In-Reply-To=%3C200609162031.43380.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] make mgatv default to TV output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Sep 16 20:31:43 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002457.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+        <LI>Next message: <A HREF="002459.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2458">[ date ]</a>
+              <a href="thread.html#2458">[ thread ]</a>
+              <a href="subject.html#2458">[ subject ]</a>
+              <a href="author.html#2458">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 16 September 2006 19:21, Heikki Lindholm wrote:
+&gt;<i> I didn't like the need to have &quot;primary-layer=2&quot; in /etc/directfbrc, and 
+</I>&gt;<i> I also think mgatv output should always go to TV regardless of the 
+</I>&gt;<i> primary layer. The included patch always defaults both OSD and video 
+</I>&gt;<i> layers to crtc2 when mgatv option is used.
+</I>
+Good to know, that even of  my previous replies your are still interested
+in some improvements of softdevice.
+
+In case of option mgatv, there are some other parameters of directfbrc
+obsolete, like:
+
+  depth = 32
+  pixelformat=ARGB
+
+and pal implies:
+  matrox-tv-standard=pal
+  mode=720x576
+ntsc implies:
+  matrox-tv-standard=ntsc
+  mode=720x480
+
+Passing these parameters to directfb could be done via the Init() call.
+
+char *matroxTvArgs[6] = {
+  &quot;depth = 32&quot;,
+  &quot;pixelformat = ARGB&quot;,
+  &quot;matrox-crtc2&quot;,
+  NULL,
+  NULL,
+  NULL};
+
+dfbInitArgc = 0
+dfbInitArgv = NULL;
+if (setupstore-&gt;useMGAtv) {
+  dfbInitArgc = 3;
+  dfbInitArgv = matroxTvArgs;
+}
+
+DirectFB::Init(dfbInitARgc, dfbInitArgv);
+
+What do you think of such a way ?
+I guess we need a way to switch TV-norm on the fly.
+Going from PAL to PAL60 depending on current frame duration.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002457.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+	<LI>Next message: <A HREF="002459.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2458">[ date ]</a>
+              <a href="thread.html#2458">[ thread ]</a>
+              <a href="subject.html#2458">[ subject ]</a>
+              <a href="author.html#2458">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] DirectFB radeon output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DirectFB%20radeon%20output&In-Reply-To=%3C200501292214.39905.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000215.html">
+   <LINK REL="Next"  HREF="000218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] DirectFB radeon output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DirectFB%20radeon%20output&In-Reply-To=%3C200501292214.39905.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] DirectFB radeon output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jan 29 22:14:39 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000215.html">[Softdevice-devel] DirectFB radeon output
+</A></li>
+        <LI>Next message: <A HREF="000218.html">[Softdevice-devel] DirectFB radeon output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#217">[ date ]</a>
+              <a href="thread.html#217">[ thread ]</a>
+              <a href="subject.html#217">[ subject ]</a>
+              <a href="author.html#217">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 29. Januar 2005 21:30, Torgeir Veimo wrote:
+&gt;<i> On Sat, 2005-01-29 at 21:16 +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Samstag, 29. Januar 2005 19:45, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; &gt; On Sat, 2005-01-29 at 19:33 +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Which scaleing parameters are reported in syslog?
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; If I start with BBC 1 as initial channel, video not full screen;
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Jan 29 18:43:28 vigor10 vdr[17467]: [VideoOut]: aspect changed (-100 -&gt;
+</I>&gt;<i> &gt; &gt; 15 ; -100.000000 -&gt; 1.777778)
+</I>&gt;<i> &gt; &gt; Jan 29 18:43:28 vigor10 vdr[17467]: [VideoOut]: 720x576 [0,0 720x576] -&gt;
+</I>&gt;<i> &gt; &gt; 1280x720 [0,0 1280x720]
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; All parameters are ok and should scale to fullscreen. Maybe what you see
+</I>&gt;<i> &gt; is the same I have, when selecting 1024x768 instead of 1280x1024. In that
+</I>&gt;<i> &gt; case video is shown unscaled (in source width/height) in the upper left corner
+</I>&gt;<i> &gt; of the screen. Toggeling pixel aspect via OSD recovers to the right scaleing
+</I>&gt;<i> &gt; setup. If that toggeling resolves your problem too, then this is to my opinion
+</I>&gt;<i> &gt; a bug in directfb and should be discussed on their devel list.
+</I>&gt;<i> 
+</I>&gt;<i> Yes, toggling aspect ratio fixes it. 
+</I>
+So it is common between different drivers: yours is radeon and mine is matrox.
+Please try attached diff, which fixes (and reports something via fprintfs) my
+problem at 1024x768.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb_screenlocation_reporting_fix.diff
+Type: text/x-diff
+Size: 939 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050129/d37b0ab4/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050129/d37b0ab4/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000215.html">[Softdevice-devel] DirectFB radeon output
+</A></li>
+	<LI>Next message: <A HREF="000218.html">[Softdevice-devel] DirectFB radeon output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#217">[ date ]</a>
+              <a href="thread.html#217">[ thread ]</a>
+              <a href="subject.html#217">[ subject ]</a>
+              <a href="author.html#217">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

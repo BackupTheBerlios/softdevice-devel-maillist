@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%20time&In-Reply-To=%3C45181E7D.1010001%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002529.html">
+   <LINK REL="Next"  HREF="002537.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long time</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%20time&In-Reply-To=%3C45181E7D.1010001%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long time">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Sep 25 20:22:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002529.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002537.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2530">[ date ]</a>
+              <a href="thread.html#2530">[ thread ]</a>
+              <a href="subject.html#2530">[ subject ]</a>
+              <a href="author.html#2530">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> On Montag 25 September 2006 19:37, Martin Wache wrote:
+</I>
+&gt;&gt;<i> On non-linux systems, yes. As soon as you are using strict posix mutexes
+</I>&gt;&gt;<i>  trying to lock a mutex from the thread which already holds the mutex
+</I>&gt;&gt;<i> always results in a deadlock.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But there may be other problems as well: if you lock a mutex, and then
+</I>&gt;&gt;<i> call a method which locks the same mutex again, this second lock will
+</I>&gt;&gt;<i> fail with -EAGAIN (in case of a mutex PTHREAD_MUTEX_ERRORCHECK_NP), but
+</I>&gt;&gt;<i> not block. If this method now unlocks the mutex, the mutex will be
+</I>&gt;&gt;<i> unlocked, even though the calling method still thinks it holds the mutex.
+</I>&gt;&gt;<i> I did not try this out, maybe I'm wrong here (it depends on the
+</I>&gt;&gt;<i> implementation of the library... there are also recursive locks which
+</I>&gt;&gt;<i> are allowed to double lock)
+</I>&gt;&gt;<i> So I would like to avoid double locking...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thinking again about all this, I don't think that one actually needs to
+</I>&gt;&gt;<i> call DrawStill() from other than cVideo, it is only used to redraw a
+</I>&gt;&gt;<i> frame when the OSD changes and no video currently is displayed.
+</I>&gt;&gt;<i> I think the name is misleading, even still pictures should be displayed
+</I>&gt;&gt;<i> with DrawVideo(), since on OSD change one still wants to have the last
+</I>&gt;&gt;<i> still picture, and only DrawVideo() updates oldPicture. So I would
+</I>&gt;&gt;<i> suggest to remove the lock from DrawStill(), make it private and put a
+</I>&gt;&gt;<i> comment on it, that it only should be called with oldPictureMutex held.
+</I>&gt;<i> 
+</I>&gt;<i> DrawStill() is called from outside of video.c -&gt; ShmClient.c.
+</I>&gt;<i> So we should have a non-locking private one, and a locking public.
+</I>&gt;<i> 
+</I>Yes, I forgot that ShmClient uses DrawStill(), but I don't see a reason
+why ShmClient should not use DrawVideo(). So we could also change
+DrawVideo() to be allowed to be called without syncTimer and make
+DrawStill() private.
+But as long as no mutexes are taken twice I don't mind :-)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002529.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002537.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2530">[ date ]</a>
+              <a href="thread.html#2530">[ thread ]</a>
+              <a href="subject.html#2530">[ subject ]</a>
+              <a href="author.html#2530">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

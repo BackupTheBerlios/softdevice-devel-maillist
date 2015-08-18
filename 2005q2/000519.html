@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] DFB-out and subtitle plugin.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DFB-out%20and%20subtitle%20plugin.&In-Reply-To=%3C200504121948.49375.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000538.html">
+   <LINK REL="Next"  HREF="000521.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] DFB-out and subtitle plugin.</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DFB-out%20and%20subtitle%20plugin.&In-Reply-To=%3C200504121948.49375.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] DFB-out and subtitle plugin.">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Apr 12 19:48:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000538.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+        <LI>Next message: <A HREF="000521.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#519">[ date ]</a>
+              <a href="thread.html#519">[ thread ]</a>
+              <a href="subject.html#519">[ subject ]</a>
+              <a href="author.html#519">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>New Thread.
+
+On Sonntag, 10. April 2005 23:57, Stefan Lucke wrote:
+&gt;<i> On Sonntag, 10. April 2005 23:12, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; Stefan,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; If Thomas's mail would not be here, we would be ready for 0.1.1 .
+</I>&gt;<i> &gt; &gt; But I'll have a look at that too.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; There is something wrong with DirectFB output of subtitles.  Xv output
+</I>&gt;<i> &gt; works just fine, but DirectFB doesn't show any subtitles, while a snapshot
+</I>&gt;<i> &gt; from a few weeks ago does (although not properly synchronized).
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for your samples. I'll have a look at that issue when I replace
+</I>&gt;<i> the radeon with my martox on my development system.
+</I>&gt;<i> 
+</I>
+Back on my matrox.
+
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; Martin suggested me to downgrade the cDFBVideoOut::Refresh() methods
+</I>&gt;<i> &gt; in video-dfb.c to -r1.19.  I tried that, but then VDR wouldn't react
+</I>&gt;<i> &gt; on the remote control.  Could you please advise, and perhaps also have
+</I>&gt;<i> &gt; a look at the sample I emailed you about?  Martin is unable to test
+</I>&gt;<i> &gt; DirectFB output on his system.
+</I>
+Still no subtitle plugin (it requires a patched :-( vdr right ?).
+In Refresh method there is a TODO section. There may be a
+coordinate mismatch between the drawing function and Refresh()
+when Draw() does a downscale. Could you set the OSD  y and x
+offsets to zero in OSD setup ?
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000538.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+	<LI>Next message: <A HREF="000521.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#519">[ date ]</a>
+              <a href="thread.html#519">[ thread ]</a>
+              <a href="subject.html#519">[ subject ]</a>
+              <a href="author.html#519">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

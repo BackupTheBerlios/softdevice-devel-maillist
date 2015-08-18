@@ -1,0 +1,443 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20viafb%20%2B%20EPIA%20M10000%2C%20TVOUT%20problem&In-Reply-To=%3Ccf1d50160609171142q2b0e89c4icc421f349bb5bede%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002466.html">
+   <LINK REL="Next"  HREF="002467.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem</H1>
+    <B>Testasecca public mail</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20viafb%20%2B%20EPIA%20M10000%2C%20TVOUT%20problem&In-Reply-To=%3Ccf1d50160609171142q2b0e89c4icc421f349bb5bede%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem">public.testasecca at gmail.com
+       </A><BR>
+    <I>Sun Sep 17 20:42:11 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002466.html">[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem
+</A></li>
+        <LI>Next message: <A HREF="002467.html">[Softdevice-devel] cle266 hw decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2470">[ date ]</a>
+              <a href="thread.html#2470">[ thread ]</a>
+              <a href="subject.html#2470">[ subject ]</a>
+              <a href="author.html#2470">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The problem comes from TVon=0, to activate the TV out you definitely have to
+put TVon=1 !!!!!!!
+
+I won't try to justify me on this .... but the readme.txt says :
+
+TVon=&lt;0|1&gt;       - enable/disable TV output (default 0)
+TVtype=&lt;0|1|2&gt;   - set TV type to none/NTSC/PAL (default PAL)
+TVoverscan=&lt;0|1&gt; - enable/disable overscan mode (default 0)
+
+so i deduced 0=enable 1=disable ...
+
+all this time lost for this stupid and so logic TVon=1 ;)
+
+Fine, now i have a nice TVout.
+
+2006/9/17, Public TESTASECCA &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">public.testasecca at gmail.com</A>&gt;:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I realized, i have not posted the rigth dmesg trace ...
+</I>&gt;<i>
+</I>&gt;<i> [4303339.616000] viafb: VIA UNICHROME framebuffer 1.0 initializing
+</I>&gt;<i> [4303339.617000] via_pci_probe:io_base_phy : DC000000
+</I>&gt;<i> [4303339.617000] via_pci_probe:io_size     : 1000000
+</I>&gt;<i> [4303339.618000] viafb: viafb : CEF00000
+</I>&gt;<i> [4303339.618000] via_pci_probe:viafb : 1000000
+</I>&gt;<i> [4303339.618000] via_pci_probe:viafb_fix.mmio_start : DC000000
+</I>&gt;<i> [4303339.618000] via_pci_probe:mem_base_phy  : D8000000
+</I>&gt;<i> [4303339.618000] viafb: framebuffer size = 32 Mb
+</I>&gt;<i> [4303339.618000] via_pci_probe:mem_size : 2000000
+</I>&gt;<i> [4303339.619000] viafb: Found Device Rev:0
+</I>&gt;<i> [4303339.619000] viafb: X:720 Y:576
+</I>&gt;<i> [4303339.619000] viafb: mode=720  bpp=32  refresh=255  TVon=0  TVtype=2
+</I>&gt;<i> [4303339.620000] viafb: VQ start:1FC0000  end:1FFFFFF  size:40000
+</I>&gt;<i> [4303339.620000] viafb: Cursor start:1FBF000  end:1FBFFFF  size:1000
+</I>&gt;<i> [4303339.620000] viafb: mode=720  bpp=32  refresh=255  TVon=0  TVtype=2
+</I>&gt;<i> [4303339.620000] viafb: irq handler installed, IRQ(0x200) = 80080c00
+</I>&gt;<i> [4303339.624000] viafb_set_par:Set_Par x:720 y:576 bpp:32 vxres:720
+</I>&gt;<i> vyres:1152
+</I>&gt;<i> [4303339.624000] setmode:setmode fount mode:75
+</I>&gt;<i> [4303339.624000] viafb_pan_display:pan_display
+</I>&gt;<i> [4303339.626000] viafb_pan_display:pan_display
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:0 r:0 g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:1 r:0 g:0 b:AAAA t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:2 r:0 g:AAAA b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:3 r:0 g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:4 r:AAAA g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:5 r:AAAA g:0 b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:6 r:AAAA g:5555 b:0
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:7 r:AAAA g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:8 r:5555 g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:9 r:5555 g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:10 r:5555 g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:11 r:5555 g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:12 r:FFFF g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:13 r:FFFF g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:14 r:FFFF g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:15 r:FFFF g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:0 r:0 g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:1 r:0 g:0 b:AAAA t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:2 r:0 g:AAAA b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:3 r:0 g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:4 r:AAAA g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:5 r:AAAA g:0 b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:6 r:AAAA g:5555 b:0
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:7 r:AAAA g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:8 r:5555 g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:9 r:5555 g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:10 r:5555 g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:11 r:5555 g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:12 r:FFFF g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:13 r:FFFF g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:14 r:FFFF g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.626000] viafb_setcolreg:set_col_reg reg:15 r:FFFF g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_pan_display:pan_display
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:0 r:0 g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:1 r:0 g:0 b:AAAA t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:2 r:0 g:AAAA b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:3 r:0 g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:4 r:AAAA g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:5 r:AAAA g:0 b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:6 r:AAAA g:5555 b:0
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:7 r:AAAA g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:8 r:5555 g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.629000] viafb_setcolreg:set_col_reg reg:9 r:5555 g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_col_reg reg:10 r:5555 g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_col_reg reg:11 r:5555 g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_col_reg reg:12 r:FFFF g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_col_reg reg:13 r:FFFF g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_col_reg reg:14 r:FFFF g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.630000] viafb_setcolreg:set_col_reg reg:15 r:FFFF g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:0 r:0 g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:1 r:0 g:0 b:AAAA t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:2 r:0 g:AAAA b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:3 r:0 g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:4 r:AAAA g:0 b:0 t:FFFF
+</I>&gt;<i> bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:5 r:AAAA g:0 b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:6 r:AAAA g:5555 b:0
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.632000] viafb_setcolreg:set_col_reg reg:7 r:AAAA g:AAAA b:AAAA
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:8 r:5555 g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:9 r:5555 g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:10 r:5555 g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:11 r:5555 g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:12 r:FFFF g:5555 b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:13 r:FFFF g:5555 b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:14 r:FFFF g:FFFF b:5555
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_colreg
+</I>&gt;<i> [4303339.633000] viafb_setcolreg:set_col_reg reg:15 r:FFFF g:FFFF b:FFFF
+</I>&gt;<i> t:FFFF bpp: 32
+</I>&gt;<i> [4303339.633000] Console: switching to colour frame buffer device 90x36
+</I>&gt;<i> [4303339.656000] setmode:setmode fount mode:75
+</I>&gt;<i> [4303339.657000] viafb_pan_display:pan_display
+</I>&gt;<i> [4303339.657000] fb0: UNICHROME frame buffer device
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Le dimanche 17 septembre 2006 &#224; 11:33 +0200, Testasecca public mail a
+</I>&gt;<i> &#233;crit :
+</I>&gt;<i> &gt; Hi all,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm new to the list, and of course with a problem ....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm a trying to install a TV Box running VDR on an EPIA M 10000 board,
+</I>&gt;<i> &gt; under Ubuntu (server install), kernel version is 2.6.15-23-386.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I want VDR running onto the framebuffer throw softdevice plugin, and i
+</I>&gt;<i> &gt; want hardware MPEG acceleration.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So, i found this nice tutorial :
+</I>&gt;<i> &gt; <A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A> ...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Everything works perfectly on my PC monitor, i got : the famebuffer
+</I>&gt;<i> &gt; console, i can see VDR interface, decode an MPEG stream with
+</I>&gt;<i> &gt; acceleration ...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; BUT my TV screen goes crazy ! It  is activated but  completly
+</I>&gt;<i> &gt; scrambled, there is some lines ( looks like interlacing problems ??,
+</I>&gt;<i> &gt; the image is shifted, duplicated .... ).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This problems comes just after viafb/fbcon module inserting,  so
+</I>&gt;<i> &gt; there'is no problem with DiretFB, or DF++ or VDR, the problems comes
+</I>&gt;<i> &gt; from viafb module.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have configured into the BIOS (TV+CRT, 800x600, PAL (i'm in france),
+</I>&gt;<i> &gt; direct access to framebuffer .... ).
+</I>&gt;<i> &gt; Then i load the module :
+</I>&gt;<i> &gt; sudo insmod viafb.ko TVon=0    # (0 is for enable, i tried without
+</I>&gt;<i> &gt; options, same results ...)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; When i insert the viafb module, dmesg gives :
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; [4296000.354000] viafb: VIA UNICHROME framebuffer 1.0 initializing
+</I>&gt;<i> &gt; [4296000.356000] viafb: viafb : CEF00000
+</I>&gt;<i> &gt; [4296000.356000] viafb: framebuffer size = 32 Mb
+</I>&gt;<i> &gt; [4296000.356000] viafb: Found Device Rev:0
+</I>&gt;<i> &gt; [4296000.357000] viafb: X:800 Y:600
+</I>&gt;<i> &gt; [4296000.357000] viafb: mode=800  bpp=32  refresh=50  TVon=0  TVtype=2
+</I>&gt;<i> &gt; [4296000.357000] viafb: VQ start:1FC0000  end:1FFFFFF  size:40000
+</I>&gt;<i> &gt; [4296000.357000] viafb: Cursor start:1FBF000  end:1FBFFFF  size:1000
+</I>&gt;<i> &gt; [4296000.358000] viafb: mode=800  bpp=32  refresh=255  TVon=0
+</I>&gt;<i> &gt; TVtype=2
+</I>&gt;<i> &gt; [ 4296000.358000] viafb: irq handler installed, IRQ(0x200) = 80080c02
+</I>&gt;<i> &gt; [4296000.371000] Console: switching to colour frame buffer device
+</I>&gt;<i> &gt; 100x37
+</I>&gt;<i> &gt; [4296000.371000] fb0: UNICHROME frame buffer device
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; At this time an fbset gives me :
+</I>&gt;<i> &gt; mode &quot;720x576-74&quot;
+</I>&gt;<i> &gt;     # D: 41.475 MHz, H: 44.693 kHz, V: 74.488 Hz
+</I>&gt;<i> &gt;     geometry 720 576 720 1152 32
+</I>&gt;<i> &gt;     timings 24111 88 32 16 4 88 4
+</I>&gt;<i> &gt;     rgba 8/16,8/8,8/0,8/24
+</I>&gt;<i> &gt; endmode
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; and fbset -i :
+</I>&gt;<i> &gt; Frame buffer device information:
+</I>&gt;<i> &gt;     Name        : UNICHROME
+</I>&gt;<i> &gt;     Address     : 0xd8000000
+</I>&gt;<i> &gt;     Size        : 33288192
+</I>&gt;<i> &gt;     Type        : PACKED PIXELS
+</I>&gt;<i> &gt;     Visual      : TRUECOLOR
+</I>&gt;<i> &gt;     XPanStep    : 0
+</I>&gt;<i> &gt;     YPanStep    : 1
+</I>&gt;<i> &gt;     YWrapStep   : 0
+</I>&gt;<i> &gt;     LineLength  : 2880
+</I>&gt;<i> &gt;     MMIO Address: 0xdc000000
+</I>&gt;<i> &gt;     MMIO Size   : 16777216
+</I>&gt;<i> &gt;     Accelerator : Unknown (77)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So i do a fbset &quot;720x576-50&quot; with this definition :
+</I>&gt;<i> &gt; mode &quot;720x576-50&quot;
+</I>&gt;<i> &gt;     geometry 720 576 720 576 16
+</I>&gt;<i> &gt;     timings 35714 32 8 46 0 136 3
+</I>&gt;<i> &gt;     bcast true # request overscan with (modified) viafb
+</I>&gt;<i> &gt; endmode
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; then the set gives :
+</I>&gt;<i> &gt; mode &quot;720x576-50&quot;
+</I>&gt;<i> &gt;     # D: 28.000 MHz, H: 31.250 kHz, V: 50.000 Hz
+</I>&gt;<i> &gt;     geometry 720 576 720 576 16
+</I>&gt;<i> &gt;     timings 35714 32 8 46 0 136 3
+</I>&gt;<i> &gt;     bcast true
+</I>&gt;<i> &gt;     accel true
+</I>&gt;<i> &gt;     rgba 5/11,6/5,5/0,0/0
+</I>&gt;<i> &gt; endmode
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; That's weird, everything is working on PC screen, and not on TV !
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I tried a patch to the kernel from VDR Eclipse site, with the same bad
+</I>&gt;<i> &gt; results.
+</I>&gt;<i> &gt; (
+</I>&gt;<i> <A HREF="http://vdr.bluox.org/download/epia/viafb_03-720x576noscale-2.6.14.patch.bz2">http://vdr.bluox.org/download/epia/viafb_03-720x576noscale-2.6.14.patch.bz2</A>
+</I>&gt;<i> )
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I've also tried via driver and TV out works  (with the same fb.modes)
+</I>&gt;<i> &gt; but is really slow ! I can't decode an MPEG stream with this !
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm a little bit disapointed ! Please Help ! :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Some not directly related questions :
+</I>&gt;<i> &gt; Do you know how to prevent fbcon module insertion at boot time ? ( I
+</I>&gt;<i> &gt; tried to remove it from /lib/modules/ ... and it was stille loaded
+</I>&gt;<i> &gt; after reboot !!! Magik ? Initrd ?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Do you know how to force a power off on an USB device?  i want to stop
+</I>&gt;<i> &gt; USB power supply to my DVB-T USB device to make a hard reset to it, it
+</I>&gt;<i> &gt; seems to very stable ....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks in advance for your help ...
+</I>&gt;<i> &gt; Cheers
+</I>&gt;<i> &gt; Tom
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I also posted on directfb-users
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Cheers,
+</I>&gt;<i> &gt; Thomas TESTASECCA
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; (o-
+</I>&gt;<i> &gt; // \        In a world without walls and fences, who needs Windows and
+</I>&gt;<i> &gt; Gates ?
+</I>&gt;<i> &gt; \/_/_
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+Cheers,
+Thomas TESTASECCA
+
+(o-
+// \        In a world without walls and fences, who needs Windows and Gates
+?
+\/_/_
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060917/97595230/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060917/97595230/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002466.html">[Softdevice-devel] directfb viafb + EPIA M10000, TVOUT problem
+</A></li>
+	<LI>Next message: <A HREF="002467.html">[Softdevice-devel] cle266 hw decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2470">[ date ]</a>
+              <a href="thread.html#2470">[ thread ]</a>
+              <a href="subject.html#2470">[ subject ]</a>
+              <a href="author.html#2470">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

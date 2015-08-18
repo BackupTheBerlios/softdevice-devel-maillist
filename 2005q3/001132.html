@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Remarks%20about%20cSoftDevice%3A%3ASetPlayMode%28%29&In-Reply-To=%3C20050823195644.GA251888%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001131.html">
+   <LINK REL="Next"  HREF="001133.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Remarks%20about%20cSoftDevice%3A%3ASetPlayMode%28%29&In-Reply-To=%3C20050823195644.GA251888%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Aug 23 21:56:44 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001131.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+        <LI>Next message: <A HREF="001133.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1132">[ date ]</a>
+              <a href="thread.html#1132">[ thread ]</a>
+              <a href="subject.html#1132">[ subject ]</a>
+              <a href="author.html#1132">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Aug 19, 2005 at 09:25:17PM +0200, Martin Wache wrote:
+&gt;<i> For replay of recordings the stream directly from the tuner to the
+</I>&gt;<i> decoder has to be stopped, so it has to be possible. If you now just
+</I>&gt;<i> don't anything of to replay the decoding should be stopped :-)
+</I>
+You've convinced me.
+
+Alas, it looks like making cDevice::PlayPesPacket() simply return
+Length when playback is suspended won't cut it.  If I make the
+method return 0 when suspended, it seems to cause a busy loop.
+
+Playback will be suspended in both cases, but I believe that
+the decoder should be reset when suspending (or resuming)
+playback.  Now, at resume it'll take some time until the
+decoder has re-synchronized on the stream.  Also, the screen
+should be blanked immediately at suspend.  Are there some
+methods for resetting the decoder and blanking the screen?
+
+One more thing: the stream reader won't be suspended.  It'd be
+nice if the DVB tuner were shut down during suspend, or if
+the suspend key could be used as a &quot;pause&quot; key while playing
+back recordings.  I think that the latter could be achieved by
+catching the kSuspend key in menu.c and by making it work like
+kPause or kPlay after flipping the flag.  However, I have to
+figure out how to avoid a conflict between vdr.c and menu.c
+reading this key.
+
+Given that I'm such a novice when it comes to the VDR code base,
+I think it's best I'll post the patch here first and wait for
+some comments before presenting it on the main VDR list.  But
+I'm not there yet.  Can you give me a few hints?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001131.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+	<LI>Next message: <A HREF="001133.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1132">[ date ]</a>
+              <a href="thread.html#1132">[ thread ]</a>
+              <a href="subject.html#1132">[ subject ]</a>
+              <a href="author.html#1132">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

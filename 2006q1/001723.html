@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Save%2010%25%20CPU%20by%20sleeping%20before%20IDirectFBSurface%3A%3AFlip%28%29&In-Reply-To=%3C20060123094455.GA3713%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001714.html">
+   <LINK REL="Next"  HREF="001728.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Save%2010%25%20CPU%20by%20sleeping%20before%20IDirectFBSurface%3A%3AFlip%28%29&In-Reply-To=%3C20060123094455.GA3713%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Jan 23 10:44:55 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001714.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+        <LI>Next message: <A HREF="001728.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1723">[ date ]</a>
+              <a href="thread.html#1723">[ thread ]</a>
+              <a href="subject.html#1723">[ subject ]</a>
+              <a href="author.html#1723">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jan 22, 2006 at 05:48:47PM +0100, Martin Wache wrote:
+&gt;<i> &gt; diff -p -u -r1.45 video-dfb.c
+</I>&gt;<i> &gt; --- video-dfb.c 10 Jan 2006 19:40:25 -0000      1.45
+</I>&gt;<i> &gt; +++ video-dfb.c 22 Jan 2006 16:00:29 -0000
+</I>&gt;<i> &gt; @@ -1245,6 +1245,7 @@ void cDFBVideoOut::ShowOSD ()
+</I>&gt;<i> &gt;          scrSurface-&gt;SetBlittingFlags(DSBLIT_BLEND_ALPHACHANNEL);
+</I>&gt;<i> &gt;          scrSurface-&gt;Blit(osdSurface, &amp;osdsrc, 0, 0);
+</I>&gt;<i> &gt;        }
+</I>&gt;<i> &gt; +      usleep(1000);
+</I>&gt;<i> &gt;        scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;      }
+</I>&gt;<i> 
+</I>&gt;<i> Did you try to change the parameters for Flip()? Maybe DSFLIP_ONSYNC or
+</I>&gt;<i> DSFLIP_NONE helps?
+</I>
+I didn't try that in ShowOSD() yet, but I tried it in YUV() previously.
+There was no difference, and I was not really surprised, since the
+matroxEngineSync() invoked by Flip() is not waiting for vertical
+retrace, but hardware idle.  That is, unless one of those flags avoids
+the EngineSync altogether, it should not make any difference.  I would
+guess that the wait time after the Blit or StretchBlit is rather constant.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001714.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+	<LI>Next message: <A HREF="001728.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1723">[ date ]</a>
+              <a href="thread.html#1723">[ thread ]</a>
+              <a href="subject.html#1723">[ subject ]</a>
+              <a href="author.html#1723">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

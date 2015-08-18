@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD oddities with softdevice/xv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20oddities%20with%20softdevice/xv&In-Reply-To=%3C20060804223937.GA73213%40spork.qfe3.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002307.html">
+   <LINK REL="Next"  HREF="002312.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD oddities with softdevice/xv</H1>
+    <B>Chris Elsworth</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20oddities%20with%20softdevice/xv&In-Reply-To=%3C20060804223937.GA73213%40spork.qfe3.net%3E"
+       TITLE="[Softdevice-devel] OSD oddities with softdevice/xv">chris at shagged.org
+       </A><BR>
+    <I>Sat Aug  5 00:39:37 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002307.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+        <LI>Next message: <A HREF="002312.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2310">[ date ]</a>
+              <a href="thread.html#2310">[ thread ]</a>
+              <a href="subject.html#2310">[ subject ]</a>
+              <a href="author.html#2310">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello!
+
+I am using softdevice to render my pictures/OSD via an NVidia card
+which is hooked up via SVideo tv out.
+
+For the most part, it works wonderfully - for this I thank the authors
+very much :)
+
+I have a couple of small oddities which these screenshots show:
+
+firstly a normal shot - this is how it should look:
+<A HREF="http://spork.qfe3.net/~chris/vdr/snapshot1.png">http://spork.qfe3.net/~chris/vdr/snapshot1.png</A>
+
+this is a mis-coloured OSD, it's pink:
+<A HREF="http://spork.qfe3.net/~chris/vdr/snapshot2.png">http://spork.qfe3.net/~chris/vdr/snapshot2.png</A>
+
+As far as I can tell, the OSD goes pink when the resolution of the
+broadcast goes below 640x480. Sometimes, if I leave some part of OSD
+on screen without touching it for a while, it will flick from being
+correct to being pink, and back again, as adverts come and go, at
+different resolutions.  Does anyone have any idea why this might be
+happening? I'd be grateful for any suggestions. (this happens with
+0.2.3 and a CVS checkout of a few minutes ago).
+
+Secondly I have an odd problem with windows wrapping:
+<A HREF="http://spork.qfe3.net/~chris/vdr/snapshot3.png">http://spork.qfe3.net/~chris/vdr/snapshot3.png</A>
+
+This should be centered in the screen. That particular OSD is from
+vdr-femon, but vdr-osdteletext does it too. The author of these
+plugins thinks the bug might be in softdevice-xv. Again this happens
+with 0.2.3 and a recent cvs.
+
+Unfortunately I only have softdevice-xv working as an output method at
+the moment, I haven't gotten directfb or anything else to work. I'll
+try a PVR-350 or a dxr3 if I can get one.
+
+I was hoping someone might have some ideas on these bugs :)
+
+thanks very much,
+-- 
+Chris
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002307.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+	<LI>Next message: <A HREF="002312.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2310">[ date ]</a>
+              <a href="thread.html#2310">[ thread ]</a>
+              <a href="subject.html#2310">[ subject ]</a>
+              <a href="author.html#2310">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

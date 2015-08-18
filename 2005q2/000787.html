@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Communicating status changes to an external program
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Communicating%20status%20changes%20to%20an%20external%20program&In-Reply-To=%3C20050531173843.GA406196%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000786.html">
+   <LINK REL="Next"  HREF="000742.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Communicating status changes to an external program</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Communicating%20status%20changes%20to%20an%20external%20program&In-Reply-To=%3C20050531173843.GA406196%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Communicating status changes to an external program">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue May 31 19:38:43 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000786.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+        <LI>Next message: <A HREF="000742.html">[Softdevice-devel] [ANNOUNCE] tig - test image generator
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#787">[ date ]</a>
+              <a href="thread.html#787">[ thread ]</a>
+              <a href="subject.html#787">[ subject ]</a>
+              <a href="author.html#787">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, May 31, 2005 at 07:16:54PM +0200, Stefan Lucke wrote:
+&gt;<i> &gt; Yes, thanks a lot, Martin!  Attached is my patch for controlling the relay
+</I>&gt;<i> &gt; with the IsSuspended flag.  You will also need to add a line to
+</I>&gt;<i> &gt; /video/setup.conf that looks like this:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; softdevice.serialfd = /dev/ttyS0
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> There should be a more general way to do such communications.
+</I>
+I agree.  Perhaps a popen(3) pipe to a user-specified command?  It would
+print out status changes in setup.conf format, e.g., lines like
+
+softdevice.IsSuspended=0
+softdevice.IsSuspended=1
+CurrentChannel=1
+softdevice.aspect=4:3
+softdevice.IsSuspended=0
+CurrentChannel=2
+softdevice.aspect=16:9
+
+Then the user-written command (which could be written in any language)
+would react on the interesting lines.
+
+The softdevice.aspect setting I just made up would signal changes in
+the MPEG-2 stream.  They could be used in someone's home theatre to
+control the black curtains on the sides of the projector screen.
+
+I think this would be better done in the VDR layer than in the plugins.
+Until someone implements that, I'm going to stick with my patch.
+
+&gt;<i> vdr has the possibility to execute commands and it is possible to bind
+</I>&gt;<i> them to userX keys.
+</I>&gt;<i> 
+</I>&gt;<i> The minimum we could to is sending such key events to vdr like we do
+</I>&gt;<i> already in one case.
+</I>
+Oh yes: I can modify softdevice to intercept the suspend=off and
+suspend=toggle keycodes I'm going to need in my setup.  Thanks for
+the idea! (I don't know if that is what you meant by your comment,
+and that kind of a patch obviously can't be applied to the official
+softdevice tree.)
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000786.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+	<LI>Next message: <A HREF="000742.html">[Softdevice-devel] [ANNOUNCE] tig - test image generator
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#787">[ date ]</a>
+              <a href="thread.html#787">[ thread ]</a>
+              <a href="subject.html#787">[ subject ]</a>
+              <a href="author.html#787">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

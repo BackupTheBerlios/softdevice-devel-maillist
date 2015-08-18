@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C454C8DF1.3000707%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002638.html">
+   <LINK REL="Next"  HREF="002641.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C454C8DF1.3000707%40gmx.net%3E"
+       TITLE="[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Nov  4 13:56:17 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002638.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+        <LI>Next message: <A HREF="002641.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2640">[ date ]</a>
+              <a href="thread.html#2640">[ thread ]</a>
+              <a href="subject.html#2640">[ subject ]</a>
+              <a href="author.html#2640">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> On Donnerstag 02 November 2006 16:40, Juha Pahkala wrote:
+</I>&gt;&gt;<i> Stefan Lucke wrote:
+</I>&gt;&gt;&gt;<i> Quoting Juha Pahkala &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">jpahka at welho.com</A>&gt;:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;&gt;<i> Just updated my softdevice from 0.2.2 to 0.3.0. Picture-wise, it seems
+</I>&gt;&gt;&gt;&gt;<i> to be an improvement, I'm not sure whether I'm imagining things but the
+</I>&gt;&gt;&gt;&gt;<i> picture does seem crispier on the primary head of my g400... although I
+</I>&gt;&gt;&gt;&gt;<i> also updated dfb so not sure who's to blame ;)
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i> Can you try:
+</I>&gt;&gt;&gt;<i> a. unmute main pcm with alsamixer, or
+</I>&gt;&gt;&gt;<i> b. comment out line 15 of audio_alsa.c: #define NO_MIXER
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;<i> Hi Stefan,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Option A didn't make a difference but commenting out the NO_MIXER define
+</I>&gt;&gt;<i> fixed the problem! So thank you for your help (as well as softdevice in
+</I>&gt;&gt;<i> general ;)
+</I>&gt;<i> 
+</I>&gt;<i> Can you try the following patch which makes use of alsa mixer 
+</I>&gt;<i> selectable via OSD ?
+</I>&gt;<i> 
+</I>I fear some strange effects if one switches the use of alsa mixer via
+the osd. Consider the following, the volume of vdr is at some low
+position, the alsa mixer is in high volume position. One switches from
+no mixer to mixer. The audio wont be scaled any more so the volume goes
+dramatically up, since the alsa mixer is still in a high volume
+position. Now one changes the volume of the vdr by one step, the volume
+will jump to a low volume again, because the alsa mixer will go down to
+a low volume. If one now switches back to no alsa mixer option, the
+volume will instantly go down even more, since now the audio is scaled
+(or something else, scale_Factor is unset)...
+
+Some of those problems can surely be fixed, but that will make it more
+complicated. If one has to be able to select to use the alsa mixer I
+would prefer a command line option.
+
+But maybe you can explain me what actually the problem is? Of course if
+the AC3 data would be scaled, that would make the useless, but as far as
+I see, that is not the case. So the is the problem the alsa mixer setting?
+
+Bye,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002638.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+	<LI>Next message: <A HREF="002641.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2640">[ date ]</a>
+              <a href="thread.html#2640">[ thread ]</a>
+              <a href="subject.html#2640">[ subject ]</a>
+              <a href="author.html#2640">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

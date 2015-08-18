@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Work on Debian package still in progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C42ED4B6F.3000209%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001067.html">
+   <LINK REL="Next"  HREF="001069.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Work on Debian package still in progress...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C42ED4B6F.3000209%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Work on Debian package still in progress...">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Aug  1 00:06:39 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001067.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+        <LI>Next message: <A HREF="001069.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1068">[ date ]</a>
+              <a href="thread.html#1068">[ thread ]</a>
+              <a href="subject.html#1068">[ subject ]</a>
+              <a href="author.html#1068">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tobias Grimm schrieb:
+
+&gt;<i> Is there anything I should take care of in fb.modes? (BTW: I'm running
+</I>&gt;<i> 2.4.31 with vesafb)
+</I>&gt;<i> 
+</I>
+This is the problem, with vesafb you don't have access to the
+accelerated video functions. You need to use the specialized fb modules
+like matroxfb, rage128fb or viafb.
+Your mainboard has a UnichromePro chipset, doesn't it? I know that
+Unichrome is well supported, but I'm not so sure about UnichromePro...
+If I remember correctly there are two alternative fb drivers for
+Unichrome, the pros and cons of them where discussed here on this list
+some time ago, but I don't remember any details...
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001067.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+	<LI>Next message: <A HREF="001069.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1068">[ date ]</a>
+              <a href="thread.html#1068">[ thread ]</a>
+              <a href="subject.html#1068">[ subject ]</a>
+              <a href="author.html#1068">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

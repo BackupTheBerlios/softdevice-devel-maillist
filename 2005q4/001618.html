@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice osd flickers in pseudo mode with nvidia cards
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20osd%20flickers%20in%20pseudo%20mode%20with%20nvidia%20cards&In-Reply-To=%3C1135934022913.voitto.tuomainen.17497.tFhEa5W-AlRX7LHuv6pMJQ%40luukku.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001616.html">
+   <LINK REL="Next"  HREF="001619.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice osd flickers in pseudo mode with nvidia cards</H1>
+    <B>Voitto Tuomainen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20osd%20flickers%20in%20pseudo%20mode%20with%20nvidia%20cards&In-Reply-To=%3C1135934022913.voitto.tuomainen.17497.tFhEa5W-AlRX7LHuv6pMJQ%40luukku.com%3E"
+       TITLE="[Softdevice-devel] Softdevice osd flickers in pseudo mode with nvidia cards">voitto.tuomainen at luukku.com
+       </A><BR>
+    <I>Fri Dec 30 10:13:42 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001616.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001619.html">[Softdevice-devel] ffmpeg versions with softdevice 0.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1618">[ date ]</a>
+              <a href="thread.html#1618">[ thread ]</a>
+              <a href="subject.html#1618">[ subject ]</a>
+              <a href="author.html#1618">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I noticed the problem first when watching program, which had subtitles on it, from finnish channel 1 (one of the finnish channel that uses DVB texts). Every time when subtitle changes there is a notisable flicker (picture gets rapidly black and then back on with new subtitle).
+
+If subtitle plugin is not installed, problem can be generated using pseudo osd mode. Software mode shows osd ok.
+
+I have had this problem on now for about 2-3 week. I think it could have been occured after upgrading xog-x11 from 6.8.1 to 6.8.2.
+
+I have played with nvidia Options in xorg.xonf, but nothing seems to makes difference (except Rotation).
+
+I have another computer, which has Radeon 9600 graphics card and about the same software, but in that system this problem is not there.
+
+I just upgraded my system from Sempron (32 bit) to Semprom 64 bit, but same effect is there on the new system.
+
+My hardware is 
+- AMD64 Sempron
+  (old AMD Sempron)
+- Palit Geforce 6200 TC, PCI-e
+  (old Gainward 5200 FX, AGP)
+- 2 x Technisat AirStar 2 
+
+and software
+- gentoo amd64 2005.1 + current updates
+- kernel: gentoo-sources-2.6.14-r5
+- nvidia-kernel &amp; -glx 1.0.8178
+-- same with older ones too
+- xorg-x11-6.9.0
+-- problems with 6.8.2 too
+-- can't test with 6.8.1 now, because it's not available
+   in gentoo system any more
+- b2c2_flexcop_pci
+- ffmpeg-0.4.9_p20051216
+- vdr-1.3.37
+-- same with 36
+- newest softdevice from cvs
+-- same with 0.2.1
+
+Pictures from both modes is available in 
+<A HREF="http://kotisivu.mtv3.fi/vtuomain/">http://kotisivu.mtv3.fi/vtuomain/</A>
+
+There you can't see flickering...
+
+I took here one session information, where I changed osd from software rendering to pseudo and back.
+
+Here are some logs and configs:
+/var/log/messages
+-----------------
+Dec 30 08:37:29 vdrmiu syslog-ng[10442]: syslog-ng version 1.6.8 starting
+Dec 30 08:37:29 vdrmiu syslog-ng[10442]: Changing permissions on special file /dev/tty12
+Dec 30 08:37:45 vdrmiu vdr[10477]: VDR version 1.3.37 started
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading plugin: ./PLUGINS/lib/libvdr-subtitles.so.1.3.37
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading plugin: ./PLUGINS/lib/libvdr-softdevice.so.1.3.37
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading plugin: ./PLUGINS/lib/libvdr-osdteletext.so.1.3.37
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading plugin: ./PLUGINS/lib/libvdr-femon.so.1.3.37
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading plugin: ./PLUGINS/lib/libvdr-dvd.so.1.3.37
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading plugin: ./PLUGINS/lib/libvdr-burn.so.1.3.37
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading plugin: ./PLUGINS/lib/libvdr-sysinfo.so.1.3.37
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/setup.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/sources.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/diseqc.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/channels.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/timers.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/commands.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/reccmds.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/svdrphosts.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/ca.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/remote.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/keymacros.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: reading EPG data from /video/epg.data
+Dec 30 08:37:45 vdrmiu vdr[10477]: video directory scanner thread started (pid=10477, tid=1082132832)
+Dec 30 08:37:45 vdrmiu vdr[10477]: video directory scanner thread ended (pid=10477, tid=1082132832)
+Dec 30 08:37:45 vdrmiu vdr[10477]: probing /dev/dvb/adapter0/frontend0
+Dec 30 08:37:45 vdrmiu vdr[10477]: probing /dev/dvb/adapter1/frontend0
+Dec 30 08:37:45 vdrmiu vdr[10477]: tuner on device 1 thread started (pid=10477, tid=1082132832)
+Dec 30 08:37:45 vdrmiu vdr[10477]: section handler thread started (pid=10477, tid=1090525536)
+Dec 30 08:37:45 vdrmiu vdr[10477]: tuner on device 2 thread started (pid=10477, tid=1098918240)
+Dec 30 08:37:45 vdrmiu vdr[10477]: found 2 video devices
+Dec 30 08:37:45 vdrmiu vdr[10477]: initializing plugin: subtitles (0.3.8): DVB subtitles decoder
+Dec 30 08:37:45 vdrmiu vdr[10477]: initializing plugin: softdevice (0.2.1): A software emulated MPEG2 device
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: patch version (2005-11-06)
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: Initialize XShmCreateImage Successful (0x897090)
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: Initialize shmget Successful (1695744 bytes)
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: Initialize shmat Successful
+Dec 30 08:37:45 vdrmiu vdr[10477]: [softdevice-xscreensaver]: xscreensaver not running
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: initialized OK
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: NV17 Video Texture: available ports 274 - 274
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: grabbed port 274
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: max area size 2046 x 2046
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: using area size 736 x 576
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]:   XV_SET_DEFAULTS           NOT-XvGettable     XvSettable (       0 [0x00000000] -        0 [0x00000000]) (       0 [0x00000000]
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]:   XV_ITURBT_709                 XvGettable     XvSettable (       0 [0x00000000] -        1 [0x00000001]) (       0 [0x00000000]
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]:   XV_SYNC_TO_VBLANK             XvGettable     XvSettable (       0 [0x00000000] -        1 [0x00000001]) (       1 [0x00000001]
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: XvShmCreateImage Successful (0x898240)
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: shmget Successful (847872 bytes)
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: shmat Successful
+Dec 30 08:37:45 vdrmiu vdr[10477]: [XvVideoOut]: XShmAttach    rc = 1 (should be OK)
+Dec 30 08:37:45 vdrmiu vdr[10477]: [softdevice] videoOut OK !
+Dec 30 08:37:45 vdrmiu vdr[10477]: [softdevice-audio] Opening alsa device default
+Dec 30 08:37:45 vdrmiu vdr[10477]: [softdevice-audio] Using alsa AC3 device spdif
+Dec 30 08:37:45 vdrmiu vdr[10477]: section handler thread started (pid=10477, tid=1107310944)
+Dec 30 08:37:45 vdrmiu vdr[10477]: Xv remote control thread started (pid=10477)
+Dec 30 08:37:45 vdrmiu vdr[10477]: [softdevice-audio] Device opened! Ready to play
+Dec 30 08:37:45 vdrmiu vdr[10477]: initializing plugin: osdteletext (0.5.1): Displays teletext on the OSD
+Dec 30 08:37:45 vdrmiu vdr[10477]: initializing plugin: femon (0.9.2): DVB Signal Information Monitor (OSD)
+Dec 30 08:37:45 vdrmiu vdr[10477]: initializing plugin: dvd (0.3.6-b03): turn VDR into an (almost) full featured DVD player
+Dec 30 08:37:45 vdrmiu vdr[10477]: initializing plugin: burn (0.0.6j): Versatile convert-and-burn plugin
+Dec 30 08:37:45 vdrmiu vdr[10477]: initializing plugin: sysinfo (0.0.4a): System information plugin
+Dec 30 08:37:45 vdrmiu vdr[10477]: setting primary device to 3
+Dec 30 08:37:45 vdrmiu vdr[10477]: SVDRP listening on port 2001
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/themes/sttng-default.theme
+Dec 30 08:37:45 vdrmiu vdr[10477]: starting plugin: subtitles
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/plugins/subchannels.conf
+Dec 30 08:37:45 vdrmiu vdr[10477]: starting plugin: softdevice
+Dec 30 08:37:45 vdrmiu vdr[10477]: starting plugin: osdteletext
+Dec 30 08:37:45 vdrmiu vdr[10477]: starting plugin: femon
+Dec 30 08:37:45 vdrmiu vdr[10477]: starting plugin: dvd
+Dec 30 08:37:45 vdrmiu vdr[10477]: starting plugin: burn
+Dec 30 08:37:45 vdrmiu vdr[10477]: starting plugin: sysinfo
+Dec 30 08:37:45 vdrmiu vdr[10477]: loading /video/themes/sttng-default.theme
+Dec 30 08:37:45 vdrmiu lircd-0.7.2[7447]: accepted new client on /dev/lircd
+Dec 30 08:37:45 vdrmiu vdr[10477]: remote control softdevice-xv - keys known
+Dec 30 08:37:45 vdrmiu vdr[10477]: remote control LIRC - keys known
+Dec 30 08:37:45 vdrmiu vdr[10477]: switching to channel 3
+Dec 30 08:37:45 vdrmiu vdr[10477]: creating directory /vtx/T-8438-8193-49
+Dec 30 08:37:45 vdrmiu vdr[10477]: LIRC remote control thread started (pid=10477, tid=1132489056)
+Dec 30 08:37:45 vdrmiu vdr[10477]: transfer thread started (pid=10477, tid=1140881760)
+Dec 30 08:37:45 vdrmiu vdr[10477]: receiver on device 1 thread started (pid=10477, tid=1149274464)
+Dec 30 08:37:45 vdrmiu vdr[10477]: TS buffer on device 1 thread started (pid=10477, tid=1174452576)
+Dec 30 08:37:45 vdrmiu vdr[10477]: timer 4 (1 1105-1252 'George Harrisonin muistokonsertti') set to event Pe  30.12.2005 11:05-12:45 'George Harrisonin muistokonsertti'
+Dec 30 08:37:45 vdrmiu vdr[10477]: [VideoOut]: 736x576 [0,0 736x576] -&gt; 768x576 [0,7 768x562]
+Dec 30 08:37:45 vdrmiu vdr[10477]: [VideoOut]: 736x576 [0,0 736x576] -&gt; 768x576 [0,7 768x562]
+Dec 30 08:37:45 vdrmiu vdr[10477]: [VideoOut]: 736x576 [0,0 736x576] -&gt; 768x576 [0,7 768x562]
+Dec 30 08:37:46 vdrmiu vdr[10477]: setting audio track to 1 (0)
+Dec 30 08:37:46 vdrmiu vdr[10477]: [VideoOut]: resolution changed: W(736 -&gt; 720); H(576 -&gt;576)
+Dec 30 08:37:46 vdrmiu vdr[10477]: [VideoOut]: aspect changed (0 -&gt; 0 ; 1.366667 -&gt; 1.333333)
+Dec 30 08:37:46 vdrmiu vdr[10477]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,0 768x576]
+Dec 30 08:37:46 vdrmiu vdr[10477]: [softdevice-audio] samplerate: 48000Hz, channels: #2
+Dec 30 08:37:46 vdrmiu vdr[10477]: [softdevice-audio] Period size 1024 Buffer size 16384
+Dec 30 08:37:46 vdrmiu vdr[10477]: [softdevice-audio] Hardware initialized
+Dec 30 08:37:46 vdrmiu vdr[10477]: channel 10 (Nelonen Plus) event 08:00 'Mobiilipeli: Blockate' status 4
+Dec 30 08:37:46 vdrmiu vdr[10477]: channel 3 (MTV3) event 08:25 'Ostoskanava' status 4
+Dec 30 08:37:46 vdrmiu vdr[10477]: channel 4 (Nelonen) event 08:30 'Soittis' status 4
+Dec 30 08:37:46 vdrmiu vdr[10477]: channel 7 (Subtv) event 06:00 'Sub chat' status 4
+Dec 30 08:37:47 vdrmiu vdr[10477]: channel 9 (MTV3+) event 08:35 'Astronautti 3' status 4
+Dec 30 08:37:48 vdrmiu vdr[10477]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,0 768x576]
+Dec 30 08:37:48 vdrmiu vdr[10477]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,0 768x576]
+Dec 30 08:37:50 vdrmiu vdr[10477]: assuming manual start of VDR
+Dec 30 08:38:02 vdrmiu vdr[10477]: switching to channel 1
+Dec 30 08:38:02 vdrmiu vdr[10477]: transfer thread ended (pid=10477, tid=1140881760)
+Dec 30 08:38:02 vdrmiu vdr[10477]: buffer stats: 64296 (3%) used
+Dec 30 08:38:02 vdrmiu vdr[10477]: buffer stats: 0 (0%) used
+Dec 30 08:38:02 vdrmiu vdr[10477]: transfer thread started (pid=10477, tid=1166059872)
+Dec 30 08:38:02 vdrmiu vdr[10477]: buffer stats: 0 (0%) used
+Dec 30 08:38:02 vdrmiu vdr[10477]: creating directory /vtx/T-8438-4097-17
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 30 (YLE X3M) event 06:00 'Anne och A-laget.' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 17 (YLE PEILI) event 08:00 'Aamun peili ja Ykk&#246;saamu' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 1 (YLE TV1) event 08:05 'Kiehtova maailma: Halki Himalajan' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: [VideoOut]: resolution changed: W(720 -&gt; 704); H(576 -&gt;576)
+Dec 30 08:38:03 vdrmiu vdr[10477]: [VideoOut]: aspect changed (0 -&gt; 8 ; 1.333333 -&gt; 1.777778)
+Dec 30 08:38:03 vdrmiu vdr[10477]: [VideoOut]: 704x576 [0,0 704x576] -&gt; 768x576 [0,72 768x432]
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 15 (YLEQ) event 06:32 'Aamu Kuussa. Markus Turunen. www.yleq.fi' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: setting audio track to 1 (0)
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 2 (YLE TV2) event 08:30 'TV2: Lasten joulu' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 18 (YLEN KLASSINEN) event 06:00 'Aamuklassinen.' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: [softdevice-audio]: xrun
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 12 (YLE FST) event 04:00 'Ei esityst&#228;' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 13 (YLE FSR+) event 07:00 'Nyhetsmorgon' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 6 (YLE24) event 08:10 'Ei esityst&#228;' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 29 (YLEMONDO) event 08:30 'RFI.' status 4
+Dec 30 08:38:03 vdrmiu vdr[10477]: channel 5 (YLE Teema) event 04:00 'Ei esityst&#228;' status 4
+Dec 30 08:38:07 vdrmiu vdr[10477]: no translation found for 'SysInfo' in language 8 (suomi)
+Dec 30 08:38:28 vdrmiu vdr[10477]: confirm: Sulje vdr ?
+Dec 30 08:38:28 vdrmiu vdr[10477]: warning: Sulje vdr ?
+Dec 30 08:38:30 vdrmiu vdr[10477]: confirmed
+Dec 30 08:38:30 vdrmiu vdr[10477]: executing command '/usr/local/bin/sulje_vdr.sh 2&gt;&amp;1'
+Dec 30 08:38:30 vdrmiu lircd-0.7.2[7447]: removed client
+
+
+/etc/X11/xorg.conf
+------------------
+Section &quot;ServerLayout&quot;
+	Identifier     &quot;Layout0&quot;
+	Screen      0  &quot;Screen0&quot; 0 0
+	InputDevice    &quot;Keyboard0&quot; &quot;CoreKeyboard&quot;
+	InputDevice    &quot;Mouse0&quot; &quot;CorePointer&quot;
+	#Option &quot;RandR&quot; &quot;false&quot;
+EndSection
+
+Section &quot;Files&quot;
+        RgbPath      &quot;/usr/lib64/X11/rgb&quot;
+        ModulePath   &quot;/usr/lib64/modules&quot;
+        FontPath     &quot;/usr/share/fonts/misc/&quot;
+        FontPath     &quot;/usr/share/fonts/TTF/&quot;
+        FontPath     &quot;/usr/share/fonts/Type1/&quot;
+        FontPath     &quot;/usr/share/fonts/CID/&quot;
+        FontPath     &quot;/usr/share/fonts/75dpi/&quot;
+        FontPath     &quot;/usr/share/fonts/100dpi/&quot;
+EndSection
+
+Section &quot;ServerFlags&quot;
+	Option      &quot;blank time&quot;    &quot;0&quot;    
+EndSection
+
+Section &quot;Module&quot;
+        Load  &quot;glx&quot;
+#        Load  &quot;dri&quot;
+        Load  &quot;xtrap&quot;
+        Load  &quot;extmod&quot;
+        Load  &quot;dbe&quot;
+        Load  &quot;record&quot;
+        Load  &quot;freetype&quot;
+        Load  &quot;type1&quot;
+EndSection
+
+Section &quot;InputDevice&quot;
+	Identifier  &quot;Mouse0&quot;
+	Driver      &quot;mouse&quot;
+	Option	    &quot;Protocol&quot; &quot;Auto&quot;
+	Option      &quot;ZAxisMapping&quot;   &quot;4 5 6 7&quot;
+	Option	    &quot;Device&quot; &quot;/dev/input/mice&quot;
+EndSection
+
+Section &quot;InputDevice&quot;
+	Identifier  &quot;Keyboard0&quot;
+	Driver      &quot;kbd&quot;
+	Option	    &quot;XkbModel&quot; &quot;pc105&quot;
+	Option	    &quot;XkbLayout&quot; &quot;fi&quot;
+EndSection
+
+Section &quot;Monitor&quot;
+	Identifier   &quot;Monitor0&quot;
+	HorizSync    31.5 - 48.5
+	VertRefresh  50.0 - 70.0
+EndSection
+
+Section &quot;Monitor&quot;
+  Identifier   &quot;TV&quot;
+  VendorName   &quot;Toshiba&quot;
+  Modelname    &quot;foobar&quot;
+	ModeLine &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 50i</A>&quot; 13.875 720 744 808 888 576 581 586 625 -hsync -vsync interlace DisplaySize  400 225
+	Modeline &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 50i</A>&quot; 14.766 768 768 840 944 576 576 580 624 interlace -csync
+	HorizSync    15.625
+        VertRefresh  50
+EndSection
+
+Section &quot;Device&quot;
+	Identifier  &quot;Card1&quot;
+	Driver      &quot;nvidia&quot;
+        VendorName  &quot;nVidia Corporation&quot;
+        BoardName   &quot;GeForce 6200 TurboCache(TM)&quot;
+        BusID       &quot;PCI:5:0:0&quot;
+
+        Option     &quot;NoLogo&quot; &quot;true&quot;                   # [&lt;bool&gt;]
+        Option     &quot;NvAGP&quot; &quot;0&quot;                     # &lt;i&gt;
+        Option     &quot;IgnoreEDID&quot; &quot;true&quot;               # [&lt;bool&gt;]
+        Option     &quot;RenderAccel&quot; &quot;true&quot;              # [&lt;bool&gt;]
+        Option     &quot;MultisampleCompatibility&quot;  &quot;true&quot;
+        Option     &quot;RandRRotation&quot; &quot;false&quot;
+EndSection
+
+Section &quot;Screen&quot;
+	Identifier &quot;Screen0&quot;
+	Device     &quot;Card1&quot;
+	Monitor    &quot;TV&quot;
+	DefaultDepth     24
+	SubSection &quot;Display&quot;
+		Viewport   0 0
+		Depth     24
+		Modes    &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 50i</A>&quot; &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 50i</A>&quot;
+	EndSubSection
+EndSection
+
+vdr-start
+---------
+cd /usr/local/vdr/vdr-1.3.37
+./vdr \
+--lirc=/dev/lircd \
+-Psubtitles \
+-P'softdevice -vo xv:full' \
+-Posdteletext \
+-Pfemon \
+-Pdvd \
+-Pburn \
+-Psysinfo \
+-s /usr/local/bin/vdrshutdown &gt; /dev/null 2&gt;&amp;1
+
+______
+BR, Voitto Tuomainen
+
+...................................................................
+Luukku Plus paketilla p&#228;&#228;set eroon tila- ja turvallisuusongelmista.
+Hanki Luukku Plus ja helpotat el&#228;m&#228;&#228;si. <A HREF="http://www.mtv3.fi/luukku">http://www.mtv3.fi/luukku</A>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001616.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001619.html">[Softdevice-devel] ffmpeg versions with softdevice 0.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1618">[ date ]</a>
+              <a href="thread.html#1618">[ thread ]</a>
+              <a href="subject.html#1618">[ subject ]</a>
+              <a href="author.html#1618">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

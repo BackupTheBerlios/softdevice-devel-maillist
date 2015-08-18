@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and gentoo
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20gentoo&In-Reply-To=%3C200611200058.20329.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002663.html">
+   <LINK REL="Next"  HREF="002667.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and gentoo</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20gentoo&In-Reply-To=%3C200611200058.20329.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice and gentoo">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Nov 20 00:58:20 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002663.html">[Softdevice-devel] softdevice and gentoo
+</A></li>
+        <LI>Next message: <A HREF="002667.html">[Softdevice-devel] [ANNOUNCE] libcle266mpegdec-0.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2664">[ date ]</a>
+              <a href="thread.html#2664">[ thread ]</a>
+              <a href="subject.html#2664">[ subject ]</a>
+              <a href="author.html#2664">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag 20 November 2006 00:05, Lucian Muresan wrote:
+&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> have you managed to start vdr with softdevice output over DirectFB from 
+</I>&gt;<i> the gentoo start scripts?
+</I>
+Yes,
+- it is running as user vdr,
+- it is started in the default runlevel,
+- and the reported issue #4 with shutdown is resolved:
+   - found the point where I had to activate vdr's shutdown feature:
+     /etc/conf.d/vdr.shutdown
+   - for some reason my /usr/bin/sudo lost it's suid bit. After restoring that
+     it worked. Perhaps that was due to the fact I copied my whole system
+     via tar to a new location. I'm shure I used --preserve for extract but ..
+
+This vdr box is now a diskless client :-) .
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002663.html">[Softdevice-devel] softdevice and gentoo
+</A></li>
+	<LI>Next message: <A HREF="002667.html">[Softdevice-devel] [ANNOUNCE] libcle266mpegdec-0.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2664">[ date ]</a>
+              <a href="thread.html#2664">[ thread ]</a>
+              <a href="subject.html#2664">[ subject ]</a>
+              <a href="author.html#2664">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

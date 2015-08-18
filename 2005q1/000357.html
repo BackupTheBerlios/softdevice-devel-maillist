@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] directfb questions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20questions&In-Reply-To=%3C1111328765.6661.42.camel%40africa.netenviron.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000355.html">
+   <LINK REL="Next"  HREF="000298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] directfb questions</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20questions&In-Reply-To=%3C1111328765.6661.42.camel%40africa.netenviron.com%3E"
+       TITLE="[Softdevice-devel] directfb questions">torgeir at pobox.com
+       </A><BR>
+    <I>Sun Mar 20 15:26:05 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000355.html">[Softdevice-devel] directfb questions
+</A></li>
+        <LI>Next message: <A HREF="000298.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#357">[ date ]</a>
+              <a href="thread.html#357">[ thread ]</a>
+              <a href="subject.html#357">[ subject ]</a>
+              <a href="author.html#357">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, 2005-03-20 at 15:16 +0100, Carsten Kollmeier wrote:
+&gt;<i> Am Sonntag, 20. M&#228;rz 2005 14:47 schrieb Torgeir Veimo:
+</I>&gt;<i> &gt; &gt; Could this be the problem with the slow output, for DirectFB has
+</I>&gt;<i> &gt; &gt; to convert from I420? Then I will be testing dfb-output right
+</I>&gt;<i> &gt; &gt; away, for I don't like the vidix-output I am using not very
+</I>&gt;<i> &gt; &gt; much.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; What do you mean by slow output? Like if the picture is not
+</I>&gt;<i> &gt; completely updated every second?
+</I>&gt;<i> 
+</I>&gt;<i> I mean the pictures run not very smooth. One issue is, that I suppose 
+</I>&gt;<i> that the output gets not synced with the frequency of my monitor and 
+</I>&gt;<i> therefore I get incomplete pictures especially on pans.
+</I>
+If you see vertical lines being broken in horizontal pans, that would
+technically be called tearing. 
+
+If you see some frames &quot;missing&quot; causing non-smooth motion, the
+technical name would be judder.
+
+&gt;<i> I also get framedrops or something what looks like that. On some 
+</I>&gt;<i> channels (for example &quot;WDR Dortmund&quot; on Astra) the picture stops 
+</I>&gt;<i> sometimes for approx &lt;0,5 sec and picture and sound get more and 
+</I>&gt;<i> more out of sync.
+</I>
+It's also my own experience that using sync to vertical retrace on
+matrox cards introduces sync issues. It doesn't happen when doing sync
+to vertical trace using radeons. 
+
+Am not sure why it only happens with matrox cards, but with Martins
+forthcoming sync-to-video support, the situation should improve.
+
+Have you tried both pixel formats on the radeon? The YUV2 pixel format
+is really only supported on the matrox, where it uses the hardware
+texture support and stretch blits, whereas I420 output uses the hardware
+overlay. The former is tear-free, while the latter requires either
+triple or double buffering to be tear-free.
+
+Can you try I420 output with the triple/double buffering patch I posted
+yesterday and see if it improves the situation?
+
+&gt;<i> I'm setting up an testing system in the moment (for my wife doesn't 
+</I>&gt;<i> like me to test on our TV-system), then I will be able to test it 
+</I>&gt;<i> and share my observations in detail.
+</I>
+Understandable. :) In any case I think the WAF factor of softdevice
+improves every day these days..
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000355.html">[Softdevice-devel] directfb questions
+</A></li>
+	<LI>Next message: <A HREF="000298.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#357">[ date ]</a>
+              <a href="thread.html#357">[ thread ]</a>
+              <a href="subject.html#357">[ subject ]</a>
+              <a href="author.html#357">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

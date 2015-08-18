@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] use libavformat in mpeg2decoder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C423AEB3C.4000009%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000330.html">
+   <LINK REL="Next"  HREF="000338.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] use libavformat in mpeg2decoder</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C423AEB3C.4000009%40gmx.net%3E"
+       TITLE="[Softdevice-devel] use libavformat in mpeg2decoder">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Mar 18 15:52:44 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000330.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+        <LI>Next message: <A HREF="000338.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#331">[ date ]</a>
+              <a href="thread.html#331">[ thread ]</a>
+              <a href="subject.html#331">[ subject ]</a>
+              <a href="author.html#331">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Carsten Kollmeier wrote:
+
+&gt;<i> I checked out the changes in the cvs, but I can't get vdr to work 
+</I>&gt;<i> with softdevice. Here is, what it tells me: (The last part of it, 
+</I>&gt;<i> tell me if you need more)
+</I>More information would be nice, I have some things which I would like 
+you to do:
+
+Just to be sure, did you do a make clean in the softdevice directory?
+
+I guess you don't have a core dump, but maybe you can produce one and 
+post a backtrace and print out of the line where the softdevice crashed?
+
+Try to replace the line ( in mpeg2decoder.c function 
+cAudioStreamDecoder::GetPTS)
+if (audioBuffer &amp;&amp; context...
+with
+if (audioBuffer &amp;&amp; audioContext.channels)
+
+If all of the above doesn't help / gives no result, then uncomment the line
+//#define MPGDEB(out) {printf....
+in mpeg2decoder.c, recompile and start the vdr rederecting the output in 
+a file. Please send the gzipped output directly to my e-mail acount...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000330.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+	<LI>Next message: <A HREF="000338.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#331">[ date ]</a>
+              <a href="thread.html#331">[ thread ]</a>
+              <a href="subject.html#331">[ subject ]</a>
+              <a href="author.html#331">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

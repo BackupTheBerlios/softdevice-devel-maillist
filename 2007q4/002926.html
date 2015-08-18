@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with nvidia TwinView and ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710060912.55649.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002925.html">
+   <LINK REL="Next"  HREF="002927.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with nvidia TwinView and ShmClient</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710060912.55649.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems with nvidia TwinView and ShmClient">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Oct  6 09:12:55 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002925.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+        <LI>Next message: <A HREF="002927.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2926">[ date ]</a>
+              <a href="thread.html#2926">[ thread ]</a>
+              <a href="subject.html#2926">[ subject ]</a>
+              <a href="author.html#2926">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 5. Oktober 2007, Michael Rademacher wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> On Fri, 05.10.07, at 14:42 Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; If you are able to compile softdevice, you may change
+</I>&gt;<i> &gt; in video-xv.c, ~line 479
+</I>&gt;<i> &gt; from:
+</I>&gt;<i> &gt; displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+</I>&gt;<i> &gt; to:
+</I>&gt;<i> &gt; displayAspect = displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+</I>&gt;<i> 
+</I>&gt;<i> Ok, took a while to get the necessary development libraries installed as I
+</I>&gt;<i> am not a software developer. Anyway, with the suggested fix it works indeed.
+</I>&gt;<i> 
+</I>
+If that works now, some of your previous tests was wrong (or with
+a version too old, see below).
+From initial mail:
+ii &#160;vdr-plugin-softdevice &#160; &#160; &#160; &#160; &#160; &#160;0.4.0-5 &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;VDR plugin for frame-buffer output
+
+With this modification, displayAspect is of the same value than displayRatio.
+Both are passed to (line 484): SetParValues(displayAspect, displayRatio); .
+
+displayRatio should be in your case taken from current screen 
+(quoting your initial mail):
+[XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+[XvVideoOut]: Xinerama Screen 1: 1280,0  1280x1024
+
+with 1280 height 1024 -&gt; 1280/1024 = 5/4 = 1,25
+
+With code from SetParValue() [Par: Pixel aspect ratio] file video.c:
+/* ---------------------------------------------------------------------------
+ */
+void cVideoOut::SetParValues(double displayAspect, double displayRatio)
+{
+  parValues [0] = displayAspect / displayRatio;
+  parValues [1] = ( 5.0 /  4.0) / displayRatio;
+  parValues [2] = ( 4.0 /  3.0) / displayRatio;
+  parValues [3] = (16.0 /  9.0) / displayRatio;
+  parValues [4] = (16.0 / 10.0) / displayRatio;
+  parValues [5] = (15.0 /  9.0) / displayRatio;
+}
+
+With above modification, first two entries produce the same result.
+
+&gt;<i> What's the next step to support this in future releases?
+</I>
+Can you revert above modification and do a retest by changing 
+&quot;Screen aspect&quot; (&quot;Bildschirmformat&quot;) via softdevice OSD ?
+
+Which version of softdevice did you compile ?
+CVS ? Then it might be a change in cvs, compared to your binary
+version, that helped.
+
+From our CHANGELOG, Martin committed ShmClient access to setup
+parameters on 2007-05-10 (1 month past 0.4.0 release).
+
+I think its time for a new release.
+
+&gt;<i> I imagine that 
+</I>&gt;<i> there has to be some code to detect my special setup, right? Anything I can
+</I>&gt;<i> do to support you?
+</I>&gt;<i> 
+</I>&gt;<i> Thanks a lot for your immediate help!
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002925.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+	<LI>Next message: <A HREF="002927.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2926">[ date ]</a>
+              <a href="thread.html#2926">[ thread ]</a>
+              <a href="subject.html#2926">[ subject ]</a>
+              <a href="author.html#2926">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

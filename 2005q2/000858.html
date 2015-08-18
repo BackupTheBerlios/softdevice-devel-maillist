@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Many xrun(s) with latest cvs changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C200506102334.26518.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000832.html">
+   <LINK REL="Next"  HREF="000869.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Many xrun(s) with latest cvs changes.</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C200506102334.26518.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Many xrun(s) with latest cvs changes.">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jun 10 23:34:26 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000832.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+        <LI>Next message: <A HREF="000869.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#858">[ date ]</a>
+              <a href="thread.html#858">[ thread ]</a>
+              <a href="subject.html#858">[ subject ]</a>
+              <a href="author.html#858">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 6. Juni 2005 23:46, Stefan Lucke wrote:
+&gt;<i> On Montag, 6. Juni 2005 23:00, Martin Wache wrote:
+</I>&gt;<i> &gt; Stefan Lucke wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt;&gt;The cause for this is that I reduced the buffer sizes, I plan to make it 
+</I>&gt;<i> &gt; &gt;&gt;possible to choose between &quot;good seeking&quot; (that is currently the 
+</I>&gt;<i> &gt; &gt;&gt;default), a save buffer (like it was bevore), and HDTV buffers.
+</I>&gt;<i> &gt; &gt;&gt;The good seeking buffer is as large as the FF card buffers, that means 
+</I>&gt;<i> &gt; &gt;&gt;that when seeking backward vdr will correctly guess the current position.
+</I>&gt;<i> &gt; &gt;&gt;Right now the switch to choose the buffer size is still missing, so one 
+</I>&gt;<i> &gt; &gt;&gt;can't chosse yet :-(, but I'll add this feature soon.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; un  5 14:34:04 jarada vdr[3189]: buffer usage: 60% (tid=294919)
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:04 jarada vdr[3189]: buffer usage: 70% (tid=294919)
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:05 jarada vdr[3189]: buffer usage: 80% (tid=294919)
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:06 jarada vdr[3193]: [softdevice-audio]: xrun
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:14 jarada vdr[3189]: buffer usage: 90% (tid=294919)
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:14 jarada vdr[3188]: clearing transfer buffer to avoid overflows
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:14 jarada vdr[3189]: buffer usage: 0% (tid=294919)
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:15 jarada vdr[3219]: [softdevice-audio]: xrun
+</I>&gt;<i> &gt; &gt; Jun  5 14:34:25 jarada vdr[3219]: [softdevice-audio]: xrun
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; There must be something else. I played around with various buffer sizes,
+</I>&gt;<i> &gt; &gt; without success.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; Sorry, I have not finished the buffer size selection yet. Which buffer 
+</I>&gt;<i> &gt; size did you increase? Did you choose one of the combinations from 
+</I>&gt;<i> &gt; mpeg2decoder.h?
+</I>&gt;<i> 
+</I>&gt;<i> Yes.
+</I>&gt;<i> MIN_BUF_SIZE is used as buffer size for init_but_byte and as a threshold
+</I>&gt;<i> for enabling a signal.
+</I>&gt;<i> I'm wondering if I'm the only one who noticed that, could that be caused
+</I>&gt;<i> by my old/ stable kernel 2.4.27 ?
+</I>
+I got a bit further. So for now I don't think that my problem is with
+buffering. I think it is a problem in the sync change, that is now
+with pthread_cond_timedwait() .  It looks like upon call of this function
+it allways returns upon the expired time and never at arrival of
+a signal.
+
+BUF[1388]:wakeup consumer
+BUF[1388]:-- wakeup producer
+BUF[1388]:-- consumer sleep    &lt;---
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1388]:wakeup consumer
+BUF[1389]:wakeup consumer
+BUF[1389]:wakeup consumer
+BUF[1389]:wakeup consumer
+BUF[1389]:wakeup consumer
+BUF[1389]:wakeup consumer
+BUF[1389]:wakeup consumer
+BUF[1389]:wakeup consumer
+BUF[1389]:producer sleep
+BUF[1408]:-- consumer sleep done    &lt;--- delta = 20ms
+BUF[1448]:producer sleep done
+BUF[1448]:wakeup consumer
+
+
+BUF[1808]:wakeup consumer
+BUF[1808]:-- wakeup producer
+BUF[1808]:-- consumer sleep    &lt;---
+BUF[1828]:-- consumer sleep done    &lt;--- delta = 20ms
+BUF[1848]:-- wakeup producer
+BUF[1848]:-- consumer sleep
+BUF[1868]:wakeup consumer
+
+BUF[3148]:wakeup consumer
+BUF[3148]:producer sleep    &lt;+++
+BUF[3168]:-- consumer sleep done
+BUF[3171]:-- wakeup producer
+BUF[3171]:-- consumer sleep    &lt;---
+BUF[3188]:-- consumer sleep done    &lt;--- delta = 17ms
+BUF[3208]:producer sleep done    &lt;+++ delta = 60ms
+BUF[3208]:wakeup consumer
+BUF[3208]:-- wakeup producer
+BUF[3208]:-- consumer sleep
+BUF[3208]:wakeup consumer
+
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: sod-sync.diff
+Type: text/x-diff
+Size: 3940 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050610/69be4521/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050610/69be4521/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000832.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+	<LI>Next message: <A HREF="000869.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#858">[ date ]</a>
+              <a href="thread.html#858">[ thread ]</a>
+              <a href="subject.html#858">[ subject ]</a>
+              <a href="author.html#858">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

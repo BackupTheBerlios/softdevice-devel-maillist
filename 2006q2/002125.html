@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [vdr] G450 softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606140019.07736.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002118.html">
+   <LINK REL="Next"  HREF="002136.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [vdr] G450 softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606140019.07736.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: [vdr] G450 softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jun 14 00:19:07 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002118.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+        <LI>Next message: <A HREF="002136.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2125">[ date ]</a>
+              <a href="thread.html#2125">[ thread ]</a>
+              <a href="subject.html#2125">[ subject ]</a>
+              <a href="author.html#2125">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 10 Juni 2006 22:52, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Jun 10, 2006 at 12:03:49AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Freitag 09 Juni 2006 23:19, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; On Fri, Jun 09, 2006 at 11:30:05PM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; &gt; Same binary on the 900 MHz Celeron:
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; delta1 = 353333
+</I>&gt;<i> &gt; &gt; &gt; delta2 = 353249
+</I>&gt;<i> &gt; &gt; &gt; delta3 = 366210
+</I>&gt;<i> &gt; &gt; &gt; delta4 = 374806
+</I>&gt;<i> &gt; &gt; &gt; delta5 = 283929
+</I>
+I've some quite different numbers for ny 1,2 GHz Celeron:
+
+delta1 = 325940
+delta2 = 321790
+delta3 = 421976
+delta4 = 128018
+delta5 = 99039
+
+These numbers are from softbench. The difference to real-life test is,
+that softbench does _not_ write to video ram of graphic card.
+But due to the fact that my numbers are bad for delta2 (more like the
+plain C version, I'm on the way to do an other mmx-version.
+
+&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Is there anything you could do to speed up yv12_to_yuy2_il_mmx2_line()
+</I>&gt;<i> &gt; &gt; on a Celeron (Coppermine) stepping 10 with 128 KiB cache?
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Could you at least avoid calling yv12_to_yuy2_il_*() when no vertical scaling
+</I>&gt;<i> &gt; &gt; takes place?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; But delta4 corresponds to the default (old), frame based yuy2 converter and
+</I>&gt;<i> &gt; is at the same speed ;-( . Is it a pitfall of benchmarking ?
+</I>&gt;<i> 
+</I>&gt;<i> Good point.  Perhaps yv12_to_yuy2_il_mmx2() wasn't slower than the old
+</I>&gt;<i> frame based converter after all.  Can you give a one-line patch for
+</I>&gt;<i> reverting to the old converter?  
+</I>
+Patch ? I think you can just comment out unneeded calls, or make the
+same for interlaced/noninterlaced.
+
+      if (interlaceMode) {
+        //yv12_to_yuy2_fr_mmx2(Py + Ystride  * cutTop * 2 + cutLeft * 2,
+        // below the call that should be done for field based color conversion:
+        yv12_to_yuy2_il_mmx2(Py + Ystride  * cutTop * 2 + cutLeft * 2,
+                             Pu + UVstride * cutTop + cutLeft,
+                             Pv + UVstride * cutTop + cutLeft,
+                             dst + pitch * cutTop * 2 + cutLeft * 4,
+                             Width - 2 * (cutLeft + cutRight),
+                             Height - 2 * (cutTop + cutBottom),
+                             Ystride, UVstride, pitch);
+      } else {
+        //yv12_to_yuy2_il_mmx2(Py + Ystride  * cutTop * 2 + cutLeft * 2,
+        // below the call that should be done for frame based col conv:
+        yv12_to_yuy2_fr_mmx2(Py + Ystride  * cutTop * 2 + cutLeft * 2,
+                             Pu + UVstride * cutTop + cutLeft,
+                             Pv + UVstride * cutTop + cutLeft,
+                             dst + pitch * cutTop * 2 + cutLeft * 4,
+                             Width - 2 * (cutLeft + cutRight),
+                             Height - 2 * (cutTop + cutBottom),
+                             Ystride, UVstride, pitch);
+      }
+
+&gt;<i> Then I could get accurate benchmarks. 
+</I>&gt;<i> Also, if I don't mind wrong colors, how could the converter be bypassed
+</I>&gt;<i> altogether?
+</I>&gt;<i> 
+</I>&gt;<i> Incrementing the loop count in softbench.c by a factor of 10 might give more
+</I>&gt;<i> accurate results.  But I'd rather run the benchmarks within vdr+softdevice,
+</I>&gt;<i> always playing back the same recording, and varying the converter method.
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002118.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+	<LI>Next message: <A HREF="002136.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2125">[ date ]</a>
+              <a href="thread.html#2125">[ thread ]</a>
+              <a href="subject.html#2125">[ subject ]</a>
+              <a href="author.html#2125">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

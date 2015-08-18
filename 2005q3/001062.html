@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Work on Debian package still in progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C200507312129.51538.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001100.html">
+   <LINK REL="Next"  HREF="001067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Work on Debian package still in progress...</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C200507312129.51538.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Work on Debian package still in progress...">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Jul 31 21:29:51 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001100.html">[Softdevice-devel] [PATCH] Added catch statements to video-dfb.c
+</A></li>
+        <LI>Next message: <A HREF="001067.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1062">[ date ]</a>
+              <a href="thread.html#1062">[ thread ]</a>
+              <a href="subject.html#1062">[ subject ]</a>
+              <a href="author.html#1062">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 31. Juli 2005 20:14, Tobias Grimm wrote:
+&gt;<i> Hi!
+</I>&gt;<i> 
+</I>&gt;<i> Guillem Jover now has packaged dfb++, so I thought it's time to continue
+</I>&gt;<i> working on the vdr-plugin-softdevice package. I've sucessfully built the
+</I>&gt;<i> package with directFB support, but could need some help with getting it
+</I>&gt;<i> up and running.
+</I>&gt;<i> 
+</I>&gt;<i> I have a board (GA-K8VM800M) with a VIA K8M800 chipset and an on-board
+</I>&gt;<i> graphics card, which I would like to use. A quick test brought the
+</I>&gt;<i> attached error messages. Where should I start?
+</I>&gt;<i> 
+</I>
+With your /etc/directfbrc and your /etc/fb.modes.
+
+&gt;<i> (*) DirectFB/Core: Single Application Core. (2005-07-31 15:28)
+</I>&gt;<i> (*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+</I>&gt;<i> (*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 12963)...
+</I>&gt;<i> (!) Direct/Modules: Unable to dlopen
+</I>&gt;<i> `/usr/lib/directfb-0.9.22/inputdrivers/libdirectfb_ps2mouse.so'!
+</I>&gt;<i>     --&gt; /usr/lib/directfb-0.9.22/inputdrivers/libdirectfb_ps2mouse.so:
+</I>&gt;<i> undefined symbol: direct_free
+</I>
+This error message is odd too. Do directfb samples work (like dfbinfo) ?
+
+&gt;<i> (*) Direct/Thread: Running 'LiRC Input' (INPUT, 12964)...
+</I>&gt;<i>  (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] ***
+</I>&gt;<i> [../../../lib/fusion/reactor.c:802]
+</I>
+&gt;<i> [dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+</I>
+By default directfb uses the first mode specified in fb.modes. I you
+want a higher resolution and/or color depth (you will) you should
+specify them in directfbrc.
+
+&gt;<i> [dfb] Enumeratig display Layers
+</I>&gt;<i> Layer 0 FBDev Primary Layer  Type: graphics
+</I>&gt;<i>   Caps: brightness contrast saturation surface
+</I>&gt;<i> (!) [12950:    0.000] --&gt; Caught signal 6 (sent by pid 12950, uid 0) &lt;--
+</I>&gt;<i> /usr/sbin/runvdr: line 1: 12950 Get&#246;tet                
+</I>
+Thats to my opinion caused by insufficient resolution / color depth.
+&gt;<i> LD_ASSUME_KERNEL=2.4.1 /usr/bin/vdr -v /var/lib/video.00 -c /var/lib/vdr
+</I>&gt;<i> -L /usr/lib/vdr/plugins -r
+</I>
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001100.html">[Softdevice-devel] [PATCH] Added catch statements to video-dfb.c
+</A></li>
+	<LI>Next message: <A HREF="001067.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1062">[ date ]</a>
+              <a href="thread.html#1062">[ thread ]</a>
+              <a href="subject.html#1062">[ subject ]</a>
+              <a href="author.html#1062">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

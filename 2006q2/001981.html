@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605080946.36388.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001982.html">
+   <LINK REL="Next"  HREF="001984.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605080946.36388.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Mon May  8 10:46:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001982.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="001984.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1981">[ date ]</a>
+              <a href="thread.html#1981">[ thread ]</a>
+              <a href="subject.html#1981">[ subject ]</a>
+              <a href="author.html#1981">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 07 May 2006 08:57, Martin Wache wrote:
+&gt;<i> Laz schrieb:
+</I>&gt;<i> &gt; I've had a private email from Rolf Ahrenberg who got this working and
+</I>&gt;<i> &gt; had the same quarter-sized image. However, he tells me that setting
+</I>&gt;<i> &gt; &quot;context-&gt;width = 720; context-&gt;height = 576;&quot; around where the
+</I>&gt;<i> &gt; decoder is called gives a full-screen picture.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I haven't tested this yet but this is what I was going to try next!
+</I>&gt;<i> &gt; Not sure what happens like this if the stream changes resolution or
+</I>&gt;<i> &gt; aspect ratio, though! That's the next step...
+</I>&gt;<i>
+</I>&gt;<i> finally I have some time to work on the softdevice again, and I wanted
+</I>&gt;<i> to have a look at your patch. I know that I downloaded it and had a
+</I>&gt;<i> quick look, but I can't find it anymore and the link isn't working for
+</I>&gt;<i> me anymore. Can you please post the patch again? Maybe you already have
+</I>&gt;<i> an updated version?
+</I>
+Sorry: the web server was down. Back up now. However, I think Rolf 
+Ahrenberg posted a link to an updated version. (I haven't had a chance to 
+get back to it yet!)
+
+&gt;<i> From my memory I can say that I was surprised that the patch was so
+</I>&gt;<i> small, so in my opinion we can merge it into the softdevice as soon as
+</I>&gt;<i> it works stable and the above issue is solved.
+</I>
+It seems quite stable on the short tests I've tried such as leaving it 
+going all day whilst I'm at work or overnight. The main problem is the 
+scaling and aspect ratio. I'm just Blitting straight to the video surface 
+at the moment!
+
+&gt;<i> I also remember that you 
+</I>&gt;<i> used the SetupStore for some global variables which weren't really
+</I>&gt;<i> setup options. Please don't do that, especially the index of the next
+</I>&gt;<i> picture doesn't belong there.
+</I>
+Sorry about that: I knew it was quite nasty! It was a quick bodge to see 
+if it actually worked. I'm still finding my feet a bit with C++ and I 
+couldn't easily see anywhere else which could be accessed by both 
+cMpeg2Decoder and cDFBVideoOut!
+
+I think Rolf has tidied it up a bit but I haven't had a chance to look 
+yet: he may have sorted out the variables.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001982.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="001984.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1981">[ date ]</a>
+              <a href="thread.html#1981">[ thread ]</a>
+              <a href="subject.html#1981">[ subject ]</a>
+              <a href="author.html#1981">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

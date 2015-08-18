@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice 0.1.3 no alsa audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C200510021112.40833.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001285.html">
+   <LINK REL="Next"  HREF="001290.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice 0.1.3 no alsa audio</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C200510021112.40833.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice 0.1.3 no alsa audio">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct  2 11:12:40 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001285.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+        <LI>Next message: <A HREF="001290.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1288">[ date ]</a>
+              <a href="thread.html#1288">[ thread ]</a>
+              <a href="subject.html#1288">[ subject ]</a>
+              <a href="author.html#1288">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 2. Oktober 2005 01:44, Peter Andersson wrote:
+&gt;<i> Thanks for the quick reply!
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Are there error messages ? Usually we don't start if we cannot open alsa
+</I>&gt;<i> &gt; device.
+</I>&gt;<i> 
+</I>&gt;<i> These are the outputs from softdevice when i ran it with these flags:
+</I>&gt;<i> -P'softdevice -ao alsa:default -vo dummy:'
+</I>&gt;<i> 
+</I>&gt;<i> Everything looks ok to me,
+</I>&gt;<i> 
+</I>&gt;<i> [softdevice]   argv [1] = -ao
+</I>&gt;<i> [softdevice] using alsa device default
+</I>&gt;<i> [setup-softdevice] alsa ac3Mode set to: 0
+</I>&gt;<i> [setup-softdevice] A/V Offset set to (0)
+</I>&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;<i> 
+</I>&gt;<i> I tried to use mplayer while running vdr and softdevice. Mplayer didn't
+</I>&gt;<i> start playing until i shut down vdr. So the softdevice plugin is doing
+</I>&gt;<i> something with the soundcard.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Is master volume unmuted and set to non zero value ?
+</I>&gt;<i> &gt; We adjust volume via PCM volume (not master volume).
+</I>&gt;<i> 
+</I>&gt;<i> Yep, i have cranked the volume to the maximum and unmuted all channels. I
+</I>&gt;<i> have checked this with both with a gtk app and with alsamixer. Mplayer
+</I>&gt;<i> uses the pcm volume control too and i can verify that it is working by
+</I>&gt;<i> playing music and changing the pcm volume.
+</I>&gt;<i> 
+</I>&gt;<i> Any other ideas?
+</I>
+Only that vdr volume itself, is set to zero. You can check that with
+alsamixer. If PCM volume is zero after vdr start, you have to increase
+vdr's volume. The initial startup volume is in setup.conf, entry:
+CurrentVolume = 100
+
+If that still does not help, whats your sound card/chip ?
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001285.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+	<LI>Next message: <A HREF="001290.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1288">[ date ]</a>
+              <a href="thread.html#1288">[ thread ]</a>
+              <a href="subject.html#1288">[ subject ]</a>
+              <a href="author.html#1288">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

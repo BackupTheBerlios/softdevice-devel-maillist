@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] &quot;Out of video memory&quot; error with Matrox G450...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%22Out%20of%20video%20memory%22%20error%20with%20Matrox%20G450...&In-Reply-To=%3C200511261226.14093.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001565.html">
+   <LINK REL="Next"  HREF="001568.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] &quot;Out of video memory&quot; error with Matrox G450...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%22Out%20of%20video%20memory%22%20error%20with%20Matrox%20G450...&In-Reply-To=%3C200511261226.14093.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] &quot;Out of video memory&quot; error with Matrox G450...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat Nov 26 13:26:13 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001565.html">[Softdevice-devel] Nvidia card - fb.modes anyone?
+</A></li>
+        <LI>Next message: <A HREF="001568.html">[Softdevice-devel] &quot;Out of video memory&quot; error with Matrox G450...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1567">[ date ]</a>
+              <a href="thread.html#1567">[ thread ]</a>
+              <a href="subject.html#1567">[ subject ]</a>
+              <a href="author.html#1567">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>After a few weeks of doing other stuff, I've started trying to set up a 
+further vdr system with a Matrox G450 and softdevice using DirectFB.
+
+I have got df_xine to output a perfect picture to my TV using a home-made 
+RGB-SCART cable on the second head, so I know that the DirectFB part is 
+working.
+
+However, when I run vdr with softdevice (cvs from today), I get the following 
+output:
+
+LD_ASSUME_KERNEL=2.4.1 vdr-1.3.36 --video=/video --config=/home/vdr/vdrconf 
+--lib=/home/vdr/plugins -Pstreamdev-client -P'softdevice -vo dfb:mgatv'
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: dfb:mgatv
+[setup-softdevice] pixel format set to (YUY2)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3277056)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.25 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-11-26 09:55)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Modules: suppress module 'joystick'
+(*) Direct/Modules: suppress module 'keyboard'
+(*) Direct/Modules: suppress module 'lirc'
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G450 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:837]
+[dfb] RAM: 8384512 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle 
+Blit StretchBlit All
+[dfb] Drawing Flags: Blend
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey 
+Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+[dfb] Enumerating display Layers
+Layer 2 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location surface
+Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+  Caps: brightness contrast hue field_parity saturation surface
+[dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+[dfb] DLOP_FIELD_PARITY supported by layer [Matrox CRTC2 Layer]
+[surface capabilities] scrSurface: videoonly flipping interlaced 
+triple-buffered
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] init EXITING:action=IDirectFB::CreateSurface(DFBSurfaceDescription&amp;), 
+result=Out of video memory!
+ (!!!)  *** WARNING [Application exited without deinitialization of DirectFB!] 
+*** [core.c:727 in dfb_core_deinit_check()]
+
+(I'm using the stream-dev client because there is no DVB device in this 
+machine at present.)
+
+I'm a bit concerned by the &quot;[dfb] RAM: 8384512 bytes&quot; line! I'm sure the thing 
+has either 16 or 32 MB on it. Can I really have not enough memory for 
+softdevice? Should I try softdevice with double-buffering rather than 
+triple-buffering? Or is my problem something else?
+
+/etc/directfbrc contains:
+
+no-debug
+matrox-crtc2
+matrox-tv-standard=pal
+primary-layer=2
+mode=720x576
+depth=32
+
+matrox-cable-type=scart-rgb
+disable-module=lirc
+disable-module=joystick
+disable-module=keyboard
+no-vt
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001565.html">[Softdevice-devel] Nvidia card - fb.modes anyone?
+</A></li>
+	<LI>Next message: <A HREF="001568.html">[Softdevice-devel] &quot;Out of video memory&quot; error with Matrox G450...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1567">[ date ]</a>
+              <a href="thread.html#1567">[ thread ]</a>
+              <a href="subject.html#1567">[ subject ]</a>
+              <a href="author.html#1567">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

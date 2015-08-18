@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Way to get best image quality with MGA400 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C200607281113.49907.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002305.html">
+   <LINK REL="Next"  HREF="002307.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Way to get best image quality with MGA400 ?</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C200607281113.49907.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Way to get best image quality with MGA400 ?">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Fri Jul 28 12:13:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002305.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+        <LI>Next message: <A HREF="002307.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2306">[ date ]</a>
+              <a href="thread.html#2306">[ thread ]</a>
+              <a href="subject.html#2306">[ subject ]</a>
+              <a href="author.html#2306">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 26 July 2006 20:02, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Wed, Jul 26, 2006 at 05:05:26PM +0100, Laz wrote:
+</I>&gt;<i> &gt; It should be easy to build this into softdevice: just set the
+</I>&gt;<i> &gt; relevant states of DTR and RTS whenever the aspect ratio changes.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hmmmm...I think you might need to run as root for that sort of
+</I>&gt;<i> &gt; control of the port, though.
+</I>&gt;<i>
+</I>&gt;<i> Why?  POSIX termios doesn't require any super-user privileges.
+</I>
+That's good news: makes life easier!
+
+&gt;<i> &gt; Unless we use something like your 'serport' as an SUID
+</I>&gt;<i> &gt; wrapper... I had to do that with a status LED plugin!
+</I>&gt;<i>
+</I>&gt;<i> If you're using the parallel printer port, you should use ppdev instead
+</I>&gt;<i> of the old ioperm() system call.
+</I>
+Ahhh...it's some quite old code that I acquired somewhere and I haven't 
+actually used it in a while.
+
+If I can work out which of the aspect ratio variables is the one to watch 
+for changes, I might have a go at making a patch to add this to 
+softdevice.
+
+This might also be of interest to the dxr3 plugin developers: one revision 
+of the card can send the relevant control signals down the SCART 
+connector (embedded in the video or sync signals: can't remember what 
+they're called) to change the aspect ratio but the other version can't so 
+being able to set it via the serial port and the pin on the SCART socket.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002305.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+	<LI>Next message: <A HREF="002307.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2306">[ date ]</a>
+              <a href="thread.html#2306">[ thread ]</a>
+              <a href="subject.html#2306">[ subject ]</a>
+              <a href="author.html#2306">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

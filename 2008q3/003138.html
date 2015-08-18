@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Epia EN1500G + softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C48D5116A.1030607%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003125.html">
+   <LINK REL="Next"  HREF="003139.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Epia EN1500G + softdevice</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C48D5116A.1030607%40globall.ru%3E"
+       TITLE="[Softdevice-devel] Epia EN1500G + softdevice">bob at globall.ru
+       </A><BR>
+    <I>Sat Sep 20 17:06:18 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003125.html">[Softdevice-devel] [Bug #14494] softdevice fails to build with	ffmpeg r15306
+</A></li>
+        <LI>Next message: <A HREF="003139.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3138">[ date ]</a>
+              <a href="thread.html#3138">[ thread ]</a>
+              <a href="subject.html#3138">[ subject ]</a>
+              <a href="author.html#3138">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+About two years I use vdr+DirectFb+softdevice on VIA Epia ME6000. All 
+works excellently - the video very smooth, problems with interlaced 
+video are not present. My TV is connected with vdr box through s-video 
+cable. It would be desirable only two things - smooth playback mpeg4 
+video and connect the TV through a component (YPbPr) input.
+For this purpose I have gained recently system board VIA Epia EN1500G 
+(CN700 North Bridge) and have started to build vdr on HOWTO from 
+vdrportal.de -  (<A HREF="http://www.vdrportal.de/board/thread.php?">http://www.vdrportal.de/board/thread.php?</A> 
+threadid=59950&amp;hilight=cn700).
+Basically all works, but the result has turned out worse, than at use 
+ME6000.
+I could get correct operation OSD only with versions DirectFB-1.0.0 and 
+less.
+With the last DirectFB (1.2.0-1.3.0) I gain strange effect which depends 
+on pressing of buttons the keyboard:
+1. Start vdr (OSD ok)
+2. Press DOWN (OSD not ok)
+3. Press DOWN (OSD ok)
+4. Press UP (OSD not ok)
+5. Press UP (OSD ok)
+6. Press something (OSD not ok)
+7. Press something (OSD ok)
+8. ...
+9. ...
+When OSD not ok, it looks as though horizontal synchronisation not 
+correctly works, thus video overlay works correctly.
+On video I see movement artefacts, jitter and small jerks on the 
+scrolling text. CPU is loaded on 50-55 % at live video or record playback.
+The problem with OSD - regression DirectFB or is required modification 
+softdevice?
+Whether it is possible to improve quality of video?
+
+Regards,
+Vladimir Monchenko.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003125.html">[Softdevice-devel] [Bug #14494] softdevice fails to build with	ffmpeg r15306
+</A></li>
+	<LI>Next message: <A HREF="003139.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3138">[ date ]</a>
+              <a href="thread.html#3138">[ thread ]</a>
+              <a href="subject.html#3138">[ subject ]</a>
+              <a href="author.html#3138">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

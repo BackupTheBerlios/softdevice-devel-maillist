@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay - fast forward / backward
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20-%20fast%20forward%20/%20backward&In-Reply-To=%3C1202731604.8762.1.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003009.html">
+   <LINK REL="Next"  HREF="003021.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay - fast forward / backward</H1>
+    <B>Jean P.</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20-%20fast%20forward%20/%20backward&In-Reply-To=%3C1202731604.8762.1.camel%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Softplay - fast forward / backward">jean.palazuelos at free.fr
+       </A><BR>
+    <I>Mon Feb 11 13:06:44 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003009.html">[Softdevice-devel] Softdevice, VDR and DVB-subtitles
+</A></li>
+        <LI>Next message: <A HREF="003021.html">[Softdevice-devel] Video covered by OSD permanently
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3020">[ date ]</a>
+              <a href="thread.html#3020">[ thread ]</a>
+              <a href="subject.html#3020">[ subject ]</a>
+              <a href="author.html#3020">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi All,
+
+I can't use fast forward with softplay (softplay/softdevice: svn from 7
+FEB 2008).
+I can see in readme.txt that fast forward / backward are in TODO list.
+But when I take a look at the code in softplayer.c I can see :  
+#if LIBAVFORMAT_BUILD &gt; 4618
+                        av_seek_frame(ic,-1,
+                           (SoftDevice-&gt;GetSTC()/9+skip*10000)*100,
+                           AVSEEK_FLAG_BACKWARD);
+#else
+                        av_seek_frame(ic,-1,
+                           (SoftDevice-&gt;GetSTC()/9+skip*10000)*100);
+#endif
+
+Softdevice log say : 
+ [softdevice] ffmpeg build(3352578)
+And ffmpeg say:
+ libavutil   3212288
+ libavcodec  3352578
+ libavformat 3345152
+
+My remote seems to be well configured: 
+softdevice-xv.Left       0000000100010069
+softdevice-xv.Right      000000010001006A
+
+
+Could you please help me about this?
+
+THX a lot.
+Jean
+PS: Sorry I sent this message on softdevice-cvs list
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003009.html">[Softdevice-devel] Softdevice, VDR and DVB-subtitles
+</A></li>
+	<LI>Next message: <A HREF="003021.html">[Softdevice-devel] Video covered by OSD permanently
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3020">[ date ]</a>
+              <a href="thread.html#3020">[ thread ]</a>
+              <a href="subject.html#3020">[ subject ]</a>
+              <a href="author.html#3020">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

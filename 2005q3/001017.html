@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay, DVB subtitles, one failing AVI example
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20DVB%20subtitles%2C%20one%20failing%20AVI%20example&In-Reply-To=%3C200507221959.35181.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001014.html">
+   <LINK REL="Next"  HREF="001020.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay, DVB subtitles, one failing AVI example</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20DVB%20subtitles%2C%20one%20failing%20AVI%20example&In-Reply-To=%3C200507221959.35181.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softplay, DVB subtitles, one failing AVI example">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jul 22 19:59:35 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001014.html">[Softdevice-devel] Softplay, DVB subtitles, one failing AVI example
+</A></li>
+        <LI>Next message: <A HREF="001020.html">[Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1017">[ date ]</a>
+              <a href="thread.html#1017">[ thread ]</a>
+              <a href="subject.html#1017">[ subject ]</a>
+              <a href="author.html#1017">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 22. Juli 2005 18:07, Seppo Ingalsuo wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I gave it a try because it is a nice replacement for mplayer script 
+</I>&gt;<i> hacks. It worked quite well with some xvid avi clips. Here are two 
+</I>&gt;<i> problems I noticed:
+</I>&gt;<i> 
+</I>&gt;<i> - DVB subtitles from a previously tuned channel are shown on top of 
+</I>&gt;<i> videos (I didn't try music only). It could be a subtitles plugin problem 
+</I>&gt;<i> as well. Is anyone here using DVB or teletext subtitles?
+</I>&gt;<i> 
+</I>&gt;<i> - With this video there is no A/V sync at all. Audio plays at normal 
+</I>&gt;<i> speed but video is decoded rapidly much ahead from audio. It was the 
+</I>&gt;<i> only video which behaved badly. Mplayer plays it correctly so it 
+</I>&gt;<i> possibly is a bug in softplay.
+</I>&gt;<i> <A HREF="http://www.jorihulkkonen.com/downloads/jori_divX.avi">http://www.jorihulkkonen.com/downloads/jori_divX.avi</A>
+</I>
+A work around for this is in softdevice cvs. For some reason, frametime
+calculation fails. In such a case, a minimum frametime of 40ms is choosen.
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001014.html">[Softdevice-devel] Softplay, DVB subtitles, one failing AVI example
+</A></li>
+	<LI>Next message: <A HREF="001020.html">[Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1017">[ date ]</a>
+              <a href="thread.html#1017">[ thread ]</a>
+              <a href="subject.html#1017">[ subject ]</a>
+              <a href="author.html#1017">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

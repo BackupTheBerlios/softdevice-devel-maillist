@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Transparent skins with text2skin and softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Transparent%20skins%20with%20text2skin%20and%20softdevice&In-Reply-To=%3C200509202339.27440.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001249.html">
+   <LINK REL="Next"  HREF="001251.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Transparent skins with text2skin and softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Transparent%20skins%20with%20text2skin%20and%20softdevice&In-Reply-To=%3C200509202339.27440.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Transparent skins with text2skin and softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Sep 20 23:39:27 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001249.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+        <LI>Next message: <A HREF="001251.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1250">[ date ]</a>
+              <a href="thread.html#1250">[ thread ]</a>
+              <a href="subject.html#1250">[ subject ]</a>
+              <a href="author.html#1250">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 20. September 2005 19:36, Laz wrote:
+&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I've just been setting up an Epia system and finally got softdevice going 
+</I>&gt;<i> relatively well with DirectFB output (using patches for the patcher2k kernel 
+</I>&gt;<i> module and DirectFB from Mark Adams on the directfb-users list).
+</I>&gt;<i> 
+</I>&gt;<i> So far, it seems to work quite well, especially in terms of the OSD compared 
+</I>&gt;<i> with the xine plugin because the OSD is on a separate layer for softdevice. 
+</I>&gt;<i> The main problem I can see at the moment is that A-V sync seems to drift 
+</I>&gt;<i> about quite a bit but I know that this is under further development form 
+</I>&gt;<i> monitoring this list.
+</I>
+And I'm following the discussion on the directfb lists very interested.
+On epia I only did a video out (no audio) with a vga connected monitor.
+So there are some A/V sync test pending.
+
+&gt;<i> 
+</I>&gt;<i> One other thing I have found is that if I use a skin using text2skin, I get no 
+</I>&gt;<i> transparent backgrounds to the OSD. This is the case for at least the enElchi 
+</I>&gt;<i> and Deep Blue, and Enigma skins, although the EgalSimple skin does have  a 
+</I>&gt;<i> transparent background. The standard vdr skin and the ST:TNG panels skins 
+</I>&gt;<i> both have transparent backgrounds and work fine! All of these skins do have 
+</I>&gt;<i> transparent backgrounds with the xine plugin.
+</I>&gt;<i> 
+</I>&gt;<i> Is this a know problem?
+</I>
+I think it's a hardware limitation. Once I saw  (directfb code ?) that there
+is only a 4bit alpha value for hw blending available. By this alpha
+values less 0x10 are transparent and those greater 0xf0 are solid.
+I don't know if it is possible to change the used alpha values of skins.
+
+I did a search through current directfb code (on my some months 
+old cvs version) but didn't find that location again.
+
+&gt;<i> I had thought it was just the text2skin ones which 
+</I>&gt;<i> lost their transparency until I found that the EgalSimple skin is 
+</I>&gt;<i> transparent! Having said that, the skins do render without other artifacts, 
+</I>&gt;<i> unlike with the xine plugin where OSD colours didn't always appear as 
+</I>&gt;<i> expected.
+</I>&gt;<i> 
+</I>&gt;<i> This is with vdr-1.3.30, softdevice-0.1.3, and text2skin cvs from 14/8/05.
+</I>&gt;<i> 
+</I>&gt;<i> Cheers,
+</I>&gt;<i> 
+</I>&gt;<i> Laz
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001249.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+	<LI>Next message: <A HREF="001251.html">[Softdevice-devel] Transparent skins with text2skin and softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1250">[ date ]</a>
+              <a href="thread.html#1250">[ thread ]</a>
+              <a href="subject.html#1250">[ subject ]</a>
+              <a href="author.html#1250">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

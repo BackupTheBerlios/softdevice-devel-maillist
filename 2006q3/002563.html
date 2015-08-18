@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200609301732.07696.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002562.html">
+   <LINK REL="Next"  HREF="002565.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200609301732.07696.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat Sep 30 18:32:06 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002562.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+        <LI>Next message: <A HREF="002565.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2563">[ date ]</a>
+              <a href="thread.html#2563">[ thread ]</a>
+              <a href="subject.html#2563">[ subject ]</a>
+              <a href="author.html#2563">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 30 September 2006 16:36, Martin Wache wrote:
+&gt;<i> Laz schrieb:
+</I>&gt;<i> &gt; Hmmmm...I don't think I get this problem if I suspend decoding, if that's
+</I>&gt;<i> &gt; what you mean here by 'suspend'. Having said that, I don't think I've
+</I>&gt;<i> &gt; tried suspending the decoding for a long while... I see the effect when I
+</I>&gt;<i> &gt; pause playback.
+</I>&gt;<i>
+</I>&gt;<i> I usually suspend the decoding on my vdr when I go away, so I'm pretty
+</I>&gt;<i> sure that this works ;-)
+</I>
+I usually let mine turn itself on and off with nvram-wakeup! I see the problem 
+when I leave it for a short while in the middle of something and get 
+distracted!
+
+:<i>)
+</I>
+&gt;<i> This is probably the reason why I never noticed this... Now I've tried
+</I>&gt;<i> to pause my vdr for a long time and indeed it looked up :-(
+</I>&gt;<i>
+</I>&gt;<i> I have now an idea what could be the reason for the deadlock. It could
+</I>&gt;<i> be that the counters for synchronizing the video are overflowing, the
+</I>&gt;<i> result would be a _very_ long delay until the next frame is actually
+</I>&gt;<i> displayed. That would match quite well with Marco's backtrace...
+</I>
+Ooooo...that sounds feasible. I must admit, that I've never sat there for ages 
+to see if it wakes up again.
+
+&gt;<i> And here is a patch which hopefully fixes the problem (I'm trying
+</I>&gt;<i> currently it out, which obviously takes some time... but I wanted to
+</I>&gt;<i> shared it with you in case someone else wants to join the testing)
+</I>
+Applied. Not sure I'll be able to recreate the situation off-hand, though.
+
+Hmmm...if you're right about this, how long should it take to overflow? The 
+only counter I can see is a 64-bit integer which looks like it's counting in 
+useconds which would take a few million years to overflow, by my reckoning! 
+Maybe I'm looking in the wrong place and it's a 32-bit counter which would 
+take 1 h 12 min to overflow. Not sure it was taking that long but it's hard 
+to tell.
+
+I will try to make it happen without the patch and then try with the patched 
+version.
+
+Cheers,
+
+Laz
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002562.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+	<LI>Next message: <A HREF="002565.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2563">[ date ]</a>
+              <a href="thread.html#2563">[ thread ]</a>
+              <a href="subject.html#2563">[ subject ]</a>
+              <a href="author.html#2563">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

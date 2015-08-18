@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Displaying images
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C43FB4F0C.2000102%40gmx.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001771.html">
+   <LINK REL="Next"  HREF="001773.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Displaying images</H1>
+    <B>Sebastian Vandersee</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C43FB4F0C.2000102%40gmx.de%3E"
+       TITLE="[Softdevice-devel] Displaying images">seb42 at gmx.de
+       </A><BR>
+    <I>Tue Feb 21 18:34:04 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001771.html">[Softdevice-devel] Displaying images
+</A></li>
+        <LI>Next message: <A HREF="001773.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1772">[ date ]</a>
+              <a href="thread.html#1772">[ thread ]</a>
+              <a href="subject.html#1772">[ subject ]</a>
+              <a href="author.html#1772">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache schrieb:
+
+&gt;<i> 
+</I>&gt;<i> [ .. ]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>I don't like to convert images first to mpeg still pics
+</I>&gt;&gt;&gt;&gt;<i>and then play it. That's too slow.
+</I>&gt;&gt;&gt;&gt;<i>It would be great, if pictures could be directly displayed.
+</I>&gt;&gt;&gt;&gt;<i>Is anyone working on such a feature?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Perhaps we should try again that part in softplay.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>I just took a look at the sources of softplay. Would that mean,
+</I>&gt;&gt;<i>instead of passing a frame in &quot;packet mode&quot; to softdevice,
+</I>&gt;&gt;<i>one would have to pass a jpeg? I guess, there will be also
+</I>&gt;&gt;<i>changes required in softdevice itself, right?
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> If you can convince ffmpeg to consider jpeg a video codec that you could
+</I>&gt;<i> try that (maybe as motion jpeg?). However I think that using
+</I>&gt;<i> av_read_image() from avformat.h looks more promising. If you manage to
+</I>&gt;<i> get the jpegs decoded inside softplay ( or if you prefer that you can
+</I>&gt;<i> also create your own plugin) we can introduce a new method to pass the
+</I>&gt;<i> decoded image to the softdevice via the service interface.
+</I>&gt;<i> 
+</I>I've never done this - but decoding images (e.g. jpegs) should be
+possible with ImageMagick library.
+So what format would I have to pass to softdevice's service
+interface (assumed that such a method would be introduced)?
+RGB? YUV? Probably depends on the graphics mode softdevice
+uses, right?
+
+
+Sebastian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001771.html">[Softdevice-devel] Displaying images
+</A></li>
+	<LI>Next message: <A HREF="001773.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1772">[ date ]</a>
+              <a href="thread.html#1772">[ thread ]</a>
+              <a href="subject.html#1772">[ subject ]</a>
+              <a href="author.html#1772">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20pure%20virtual%20method%20called%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes%29&In-Reply-To=%3C200505281824.20226.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000753.html">
+   <LINK REL="Next"  HREF="000756.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20pure%20virtual%20method%20called%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes%29&In-Reply-To=%3C200505281824.20226.stefan%40lucke.in-berlin.de%3E"
+       TITLE="pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat May 28 18:24:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000753.html">[Softdevice-devel] undefined symbol: dts_frame
+</A></li>
+        <LI>Next message: <A HREF="000756.html">pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#755">[ date ]</a>
+              <a href="thread.html#755">[ thread ]</a>
+              <a href="subject.html#755">[ subject ]</a>
+              <a href="author.html#755">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 28. Mai 2005 14:56, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Thu, May 26, 2005 at 11:31:56PM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; I found a few places where I forgot to check pointers and one _really_ 
+</I>&gt;<i> &gt; silly bug which caused a lot of problems on bad signal.
+</I>&gt;<i> 
+</I>&gt;<i> You told me not to report bugs for the old code, but I thought I'd share
+</I>&gt;<i> this.  I got a crash this morning, when my 23-month-old son pressed the
+</I>&gt;<i> Power button for too long time, so that it would repeat 3 or 4 times.
+</I>&gt;<i> VDR crashed with SIGABRT.  In the log, a few lines before the SIGABRT
+</I>&gt;<i> notice, I saw a message &quot;pure virtual method called&quot;. 
+</I>
+Whats the list of your loaded plugins ?
+I saw this message some time ago with streamdev plugin. I think we
+need a gdb bt for such a crash.
+
+&gt;<i> From my
+</I>&gt;<i> experience with g++ and its runtime, one possible cause of this message
+</I>&gt;<i> is invoking the methods of a freed object.
+</I>&gt;<i> 
+</I>
+Ack.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000753.html">[Softdevice-devel] undefined symbol: dts_frame
+</A></li>
+	<LI>Next message: <A HREF="000756.html">pure virtual method called (WAS: Re: [Softdevice-devel] Unrepeatable crashes)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#755">[ date ]</a>
+              <a href="thread.html#755">[ thread ]</a>
+              <a href="subject.html#755">[ subject ]</a>
+              <a href="author.html#755">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

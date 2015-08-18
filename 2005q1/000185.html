@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PATCH%3A%20Suspend%20audio%20and%20video%20out%20%28for%20XV%20out%29&In-Reply-To=%3C200501151831.22806.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000183.html">
+   <LINK REL="Next"  HREF="000188.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PATCH%3A%20Suspend%20audio%20and%20video%20out%20%28for%20XV%20out%29&In-Reply-To=%3C200501151831.22806.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jan 15 18:31:22 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000183.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV	out)
+</A></li>
+        <LI>Next message: <A HREF="000188.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#185">[ date ]</a>
+              <a href="thread.html#185">[ thread ]</a>
+              <a href="subject.html#185">[ subject ]</a>
+              <a href="author.html#185">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 15. Januar 2005 16:13, Torgeir Veimo wrote:
+&gt;<i> On Sat, 2005-01-15 at 15:23 +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Samstag, 15. Januar 2005 14:13, mike lewis wrote:
+</I>&gt;<i> &gt; &gt; &gt; So if you want please try the patch and tell me how it works for you, so
+</I>&gt;<i> &gt; &gt; &gt; that we can include it in the CVS if you like it and its working.
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; I'm exited about this prospect, i wish I could help to code this for
+</I>&gt;<i> &gt; &gt; DirectFB.  Thanks for your efforts Martin.  If anyone wants to port
+</I>&gt;<i> &gt; &gt; this to directFfb i'll buy them a beer ;-)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; When talking about such a feature:
+</I>&gt;<i> &gt; what is the real use-case for this feature ?
+</I>&gt;<i> 
+</I>&gt;<i> You are recording something, but want to watch a DVD, thus you'd like to
+</I>&gt;<i> continue running vdr, but use your one and only Xv output port with
+</I>&gt;<i> Xine.
+</I>
+Isn't that the same as terminating your vdr-client and let the vdr-server
+up and running :-) ? Yes that would require a better streamdev plugin ..
+and a way to highjack the server OSD to the client. The last is one of
+my greatest whishes as my vdr-server downstairs has no graphic and
+audio output device :-( (vdr-server based video cutting, .. ).
+
+&gt;<i> 
+</I>&gt;<i> &gt; Should we probably cycle thru all our output methods via hot-keys 
+</I>&gt;<i> &gt; (x -&gt; x11, d -&gt; dfb, v -&gt; vidix) too ?
+</I>&gt;<i> 
+</I>&gt;<i> That's is less useful in my view.
+</I>
+For dfb-out due to startup mode with SetCooperativeLevel(DLSCL_ADMINISTRATIVE);
+it would be more or less the same as delete videoOut; ...
+videoOut = new cMETHODVideoOut (..);.
+
+&gt;<i> 
+</I>&gt;<i> I think if we had a fully working DVD plugin with softdevice there would
+</I>&gt;<i> be less use for this feature.
+</I>
+So we should focus on more compatibility with some other plugins and have 
+a player like Martin suggested for other video stream types which are
+supported by ffmpeg. To get the dvd plugin work again, I think looking at
+recent changes of vdr output method PlayPES()  instead of playvideo()
+(wondering why it still works with vdr-1.3.18).
+
+When targeting upon inclusion into distributions (binary) we should have
+our own sub-plugin loader for runtime loading the output device handler. By
+this vdr would not fail on startup while loading libvdr-softdevice.so.1.x.y on
+a system that has only support for directfb, but not for X11. This would still
+allow that all output methods are selected at build time.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000183.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV	out)
+</A></li>
+	<LI>Next message: <A HREF="000188.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#185">[ date ]</a>
+              <a href="thread.html#185">[ thread ]</a>
+              <a href="subject.html#185">[ subject ]</a>
+              <a href="author.html#185">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

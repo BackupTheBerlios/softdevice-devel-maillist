@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg (snapshot from 2008-12-19)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Fiso-8859-1%3Fq%3F%3D5BBug_%3D2314990%3D5D_Problem_with%3F%3D%0A%09%3D%3Fiso-8859-1%3Fq%3F_newest%3D09ffmpeg_%3D28snapshot_from_2008-12-19%3D29%3F%3D&In-Reply-To=%3C200902162122.36985.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003203.html">
+   <LINK REL="Next"  HREF="003205.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg (snapshot from 2008-12-19)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Fiso-8859-1%3Fq%3F%3D5BBug_%3D2314990%3D5D_Problem_with%3F%3D%0A%09%3D%3Fiso-8859-1%3Fq%3F_newest%3D09ffmpeg_%3D28snapshot_from_2008-12-19%3D29%3F%3D&In-Reply-To=%3C200902162122.36985.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg (snapshot from 2008-12-19)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Feb 16 21:22:36 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003203.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003205.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3204">[ date ]</a>
+              <a href="thread.html#3204">[ thread ]</a>
+              <a href="subject.html#3204">[ subject ]</a>
+              <a href="author.html#3204">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 16 February 2009, Vladimir Monchenko wrote:
+&gt;<i> Maik Opitz wrote:
+</I>&gt;<i> &gt; Some more info:
+</I>&gt;<i> &gt; The VDR OSD is shown normaly. When there is no signal on DVB card (and  
+</I>&gt;<i> &gt; so no video is shown) all seems OK. When the video comes in it  
+</I>&gt;<i> &gt; segfaults.
+</I>&gt;<i> &gt;   
+</I>&gt;<i> 
+</I>&gt;<i> Yes, you are right. I did not connect  DVB USB adapter to laptop.
+</I>&gt;<i> After connection DVB card I have segfault.
+</I>
+By default: I'm sorry for my delayed response.
+
+For summary: original bug reporter used a ffmpeg checkout from 2008-12-19.
+  That's about svn revision r16226 to r16244
+
+My last used ffmpeg version was r16128
+
+To reproduce errors with ffmpeg it is important to have exact
+revision numbers, like those you get from command ffplay:
+FFplay version SVN-r16128, Copyright (c) 2003-2008 Fabrice Bellard, et al.
+  configuration: --enable-shared --enable-postproc --enable-gpl --enable-swscale --enable-libfaac --enable-libfaad --enable-pthreads
+  libavutil     49.12. 0 / 49.12. 0
+  libavcodec    52. 6. 1 / 52. 6. 1
+  libavformat   52.23. 1 / 52.23. 1
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libswscale     0. 6. 1 /  0. 6. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Dec 14 2008 18:17:02, gcc: 4.1.2 (Gentoo 4.1.2 p1.1)
+An input file must be specified
+
+I upgraded to this version now:
+FFplay version SVN-r17385, Copyright (c) 2003-2009 Fabrice Bellard, et al.
+  configuration: --enable-shared --enable-postproc --enable-gpl --enable-swscale --enable-libfaac --enable-libfaad --enable-pthreads
+  libavutil     49.14. 0 / 49.14. 0
+  libavcodec    52.15. 0 / 52.15. 0
+  libavformat   52.29. 0 / 52.29. 0
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libswscale     0. 7. 0 /  0. 7. 0
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Feb 16 2009 20:50:07, gcc: 4.1.2 (Gentoo 4.1.2 p1.1)
+An input file must be specified
+
+But while upgrading ffmpeg my mind cleared a bit, and I remembered some
+reverted changes I did even for my old 16128 revision.
+
+Assuming you save attached patches above ffmpeg directory, please try to
+apply both inside ffmpeg's directory in sequence with the following commands:
+
+patch  -p1 -R &lt;../r-15799.patch
+patch  -p1 -R &lt;../r-15634.patch
+
+These patches fix my segfaults but I did only a short test.
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+--- trunk/libavformat/aviobuf.c	2008/10/18 17:30:37	15634
++++ trunk/libavformat/aviobuf.c	2008/11/10 21:41:35	15799
+@@ -290,7 +290,7 @@
+ 
+ static void fill_buffer(ByteIOContext *s)
+ {
+-    uint8_t *dst= s-&gt;buf_end - s-&gt;buffer &lt; s-&gt;buffer_size ? s-&gt;buf_ptr : s-&gt;buffer;
++    uint8_t *dst= !s-&gt;max_packet_size &amp;&amp; s-&gt;buf_end - s-&gt;buffer &lt; s-&gt;buffer_size ? s-&gt;buf_ptr : s-&gt;buffer;
+     int len= s-&gt;buffer_size - (dst - s-&gt;buffer);
+ 
+     assert(s-&gt;buf_ptr == s-&gt;buf_end);
+-------------- next part --------------
+--- trunk/libavformat/aviobuf.c	2008/10/04 21:11:58	15555
++++ trunk/libavformat/aviobuf.c	2008/10/18 17:30:37	15634
+@@ -290,20 +290,25 @@
+ 
+ static void fill_buffer(ByteIOContext *s)
+ {
+-    int len=0;
++    uint8_t *dst= s-&gt;buf_end - s-&gt;buffer &lt; s-&gt;buffer_size ? s-&gt;buf_ptr : s-&gt;buffer;
++    int len= s-&gt;buffer_size - (dst - s-&gt;buffer);
++
++    assert(s-&gt;buf_ptr == s-&gt;buf_end);
+ 
+     /* no need to do anything if EOF already reached */
+     if (s-&gt;eof_reached)
+         return;
+ 
+-    if(s-&gt;update_checksum){
++    if(s-&gt;update_checksum &amp;&amp; dst == s-&gt;buffer){
+         if(s-&gt;buf_end &gt; s-&gt;checksum_ptr)
+             s-&gt;checksum= s-&gt;update_checksum(s-&gt;checksum, s-&gt;checksum_ptr, s-&gt;buf_end - s-&gt;checksum_ptr);
+         s-&gt;checksum_ptr= s-&gt;buffer;
+     }
+ 
+     if(s-&gt;read_packet)
+-        len = s-&gt;read_packet(s-&gt;opaque, s-&gt;buffer, s-&gt;buffer_size);
++        len = s-&gt;read_packet(s-&gt;opaque, dst, len);
++    else
++        len = 0;
+     if (len &lt;= 0) {
+         /* do not modify buffer if EOF reached so that a seek back can
+            be done without rereading data */
+@@ -312,8 +317,8 @@
+             s-&gt;error= len;
+     } else {
+         s-&gt;pos += len;
+-        s-&gt;buf_ptr = s-&gt;buffer;
+-        s-&gt;buf_end = s-&gt;buffer + len;
++        s-&gt;buf_ptr = dst;
++        s-&gt;buf_end = dst + len;
+     }
+ }
+ 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003203.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003205.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3204">[ date ]</a>
+              <a href="thread.html#3204">[ thread ]</a>
+              <a href="subject.html#3204">[ subject ]</a>
+              <a href="author.html#3204">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

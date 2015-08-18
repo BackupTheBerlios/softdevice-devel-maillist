@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C454A1181.8070905%40welho.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002632.html">
+   <LINK REL="Next"  HREF="002638.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code</H1>
+    <B>Juha Pahkala</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20possible%20bug%20in%20softdevice%200.3.0%20alsa%20code&In-Reply-To=%3C454A1181.8070905%40welho.com%3E"
+       TITLE="[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code">jpahka at welho.com
+       </A><BR>
+    <I>Thu Nov  2 16:40:49 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002632.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+        <LI>Next message: <A HREF="002638.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2634">[ date ]</a>
+              <a href="thread.html#2634">[ thread ]</a>
+              <a href="subject.html#2634">[ subject ]</a>
+              <a href="author.html#2634">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> Quoting Juha Pahkala &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">jpahka at welho.com</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Just updated my softdevice from 0.2.2 to 0.3.0. Picture-wise, it seems
+</I>&gt;&gt;<i> to be an improvement, I'm not sure whether I'm imagining things but the
+</I>&gt;&gt;<i> picture does seem crispier on the primary head of my g400... although I
+</I>&gt;&gt;<i> also updated dfb so not sure who's to blame ;)
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Can you try:
+</I>&gt;<i> a. unmute main pcm with alsamixer, or
+</I>&gt;<i> b. comment out line 15 of audio_alsa.c: #define NO_MIXER
+</I>&gt;<i>   
+</I>
+Hi Stefan,
+
+Option A didn't make a difference but commenting out the NO_MIXER define
+fixed the problem! So thank you for your help (as well as softdevice in
+general ;)
+
+In the following webpage:
+
+<A HREF="http://alsa.opensrc.org/via8233">http://alsa.opensrc.org/via8233</A>
+
+there's the following text:
+
+&quot;If the playback device indicates a link is present, but makes no sound,
+check the mixer 'IEC958 Playback AC97-SPSA'. The S/PDIF always outputs
+at full volume - even muting the master or PCM mixers does not affect
+the S/PDIF volume...&quot;
+
+Well, don't know if that means anything, but I think that the master PCM
+doesn't do anything for this chip....
+
+Thanks again, juhis
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002632.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+	<LI>Next message: <A HREF="002638.html">[Softdevice-devel] possible bug in softdevice 0.3.0 alsa code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2634">[ date ]</a>
+              <a href="thread.html#2634">[ thread ]</a>
+              <a href="subject.html#2634">[ subject ]</a>
+              <a href="author.html#2634">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

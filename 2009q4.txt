@@ -1,0 +1,435 @@
+From admin at berlios.de  Sun Nov  1 18:11:16 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 1 Nov 2009 08:11:16 -0900 (AKST)
+Subject: [Softdevice-devel] [Bug #15364] video freeze with ffmpeg 0.5
+Message-ID: <200911011711.nA1HBGnb023391@unicorn.berlios.de>
+
+Bug #15364, was updated on 2009-Mar-10 02:04
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: video freeze with ffmpeg 0.5
+
+Details: I have permanently strange freezes of picture with softdevice from cvs and ffmpeg 0.5.
+
+Can you fix it?
+
+Thanks.
+
+Gentoo, amd64, vdr-1.6.0-2
+
+Follow-Ups:
+
+Date: 2009-Nov-01 08:11
+By: lululog
+
+Comment:
+Hi,
+
+I'm also using Gentoo and have the same problem. How did you disable av_read_frame? Doesn't look like there's an USE variable. Did you write your own ebuild, and if yes, would you mind sharing it ;-)
+-------------------------------------------------------
+
+Date: 2009-Mar-22 08:32
+By: axiator
+
+Comment:
+Sorry, with "Use av_read_frame() = no" works great.
+Thanks.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=15364&group_id=2051
+
+
+From admin at berlios.de  Mon Nov  2 07:24:32 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Mon, 2 Nov 2009 09:24:32 +0300 (MSK)
+Subject: [Softdevice-devel] [Bug #15364] video freeze with ffmpeg 0.5
+Message-ID: <200911020624.nA26OWoa017097@unicorn.berlios.de>
+
+Bug #15364, was updated on 2009-Mar-10 13:04
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: video freeze with ffmpeg 0.5
+
+Details: I have permanently strange freezes of picture with softdevice from cvs and ffmpeg 0.5.
+
+Can you fix it?
+
+Thanks.
+
+Gentoo, amd64, vdr-1.6.0-2
+
+Follow-Ups:
+
+Date: 2009-Nov-02 09:24
+By: axiator
+
+Comment:
+Hello!
+It`s not a problem - can be disabled in settings menu for softdevice plugin in vdr.
+Good luck!
+-------------------------------------------------------
+
+Date: 2009-Nov-01 20:11
+By: lululog
+
+Comment:
+Hi,
+
+I'm also using Gentoo and have the same problem. How did you disable av_read_frame? Doesn't look like there's an USE variable. Did you write your own ebuild, and if yes, would you mind sharing it ;-)
+-------------------------------------------------------
+
+Date: 2009-Mar-22 19:32
+By: axiator
+
+Comment:
+Sorry, with "Use av_read_frame() = no" works great.
+Thanks.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=15364&group_id=2051
+
+
+From bob at globall.ru  Mon Nov  2 07:48:24 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Mon, 02 Nov 2009 09:48:24 +0300
+Subject: [Softdevice-devel] [Bug #15364] video freeze with ffmpeg 0.5
+In-Reply-To: <200911020624.nA26OWoa017097@unicorn.berlios.de>
+References: <200911020624.nA26OWoa017097@unicorn.berlios.de>
+Message-ID: <4AEE80B8.8080703@globall.ru>
+
+admin at berlios.de ?????:
+> Bug #15364, was updated on 2009-Mar-10 13:04
+> Here is a current snapshot of the bug.
+>
+> Project: Vdr Softdevice
+> Category: general
+> Status: Open
+> Resolution: None
+> Bug Group: None
+> Priority: 5
+> Submitted by: axiator
+> Assigned to : none
+> Summary: video freeze with ffmpeg 0.5
+>
+> Details: I have permanently strange freezes of picture with softdevice from cvs and ffmpeg 0.5.
+>
+> Can you fix it?
+>
+> Thanks.
+>
+> Gentoo, amd64, vdr-1.6.0-2
+>
+> Follow-Ups:
+>
+> Date: 2009-Nov-02 09:24
+> By: axiator
+>
+> Comment:
+> Hello!
+> It`s not a problem - can be disabled in settings menu for softdevice plugin in vdr.
+> Good luck!
+> -------------------------------------------------------
+>
+> Date: 2009-Nov-01 20:11
+> By: lululog
+>
+> Comment:
+> Hi,
+>
+> I'm also using Gentoo and have the same problem. How did you disable av_read_frame? Doesn't look like there's an USE variable. Did you write your own ebuild, and if yes, would you mind sharing it ;-)
+> -------------------------------------------------------
+>
+> Date: 2009-Mar-22 19:32
+> By: axiator
+>
+> Comment:
+> Sorry, with "Use av_read_frame() = no" works great.
+> Thanks.
+> -------------------------------------------------------
+>
+> For detailed info, follow this link:
+> http://developer.berlios.de/bugs/?func=detailbug&bug_id=15364&group_id=2051
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+>   
+I have the same problem. For me, change settings "Use av_read_frame() =
+no" in  menu for softdevice plugin not resolved this problem :(
+
+Regards,
+Vladimir Monchenko.
+
+
+
+From admin at berlios.de  Mon Nov  2 22:20:24 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Mon, 2 Nov 2009 12:20:24 -0900 (AKST)
+Subject: [Softdevice-devel] [Bug #15364] video freeze with ffmpeg 0.5
+Message-ID: <200911022120.nA2LKOgZ005129@unicorn.berlios.de>
+
+Bug #15364, was updated on 2009-Mar-10 02:04
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: axiator
+Assigned to : none
+Summary: video freeze with ffmpeg 0.5
+
+Details: I have permanently strange freezes of picture with softdevice from cvs and ffmpeg 0.5.
+
+Can you fix it?
+
+Thanks.
+
+Gentoo, amd64, vdr-1.6.0-2
+
+Follow-Ups:
+
+Date: 2009-Nov-02 12:20
+By: lululog
+
+Comment:
+Cool, problem solved. Thanks a lot ;-)
+-------------------------------------------------------
+
+Date: 2009-Nov-01 21:24
+By: axiator
+
+Comment:
+Hello!
+It`s not a problem - can be disabled in settings menu for softdevice plugin in vdr.
+Good luck!
+-------------------------------------------------------
+
+Date: 2009-Nov-01 08:11
+By: lululog
+
+Comment:
+Hi,
+
+I'm also using Gentoo and have the same problem. How did you disable av_read_frame? Doesn't look like there's an USE variable. Did you write your own ebuild, and if yes, would you mind sharing it ;-)
+-------------------------------------------------------
+
+Date: 2009-Mar-22 08:32
+By: axiator
+
+Comment:
+Sorry, with "Use av_read_frame() = no" works great.
+Thanks.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=15364&group_id=2051
+
+
+From wallak at free.fr  Fri Dec 11 01:22:58 2009
+From: wallak at free.fr (wallak at free.fr)
+Date: Fri, 11 Dec 2009 01:22:58 +0100
+Subject: [Softdevice-devel] softdevice - fix with current ffmpeg release -
+	frametime
+Message-ID: <1260490978.4b2190e226ec0@imp.free.fr>
+
+
+Here is a patch required to get the proper delay between video frames.
+
+Best Regards,
+Wallak.
+
+
+From wallak at free.fr  Fri Dec 11 01:24:58 2009
+From: wallak at free.fr (wallak at free.fr)
+Date: Fri, 11 Dec 2009 01:24:58 +0100
+Subject: [Softdevice-devel] softdevice - fix with current ffmpeg release -
+	frametime
+Message-ID: <1260491098.4b21915ab73d3@imp.free.fr>
+
+
+Here is a patch required to get the proper delay between video frames.
+
+Best Regards,
+Wallak.
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: softdevice-frametime.patch
+Type: application/octet-stream
+Size: 1890 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20091211/c9323b15/attachment.obj>
+
+From wallak at free.fr  Fri Dec 11 01:31:25 2009
+From: wallak at free.fr (wallak at free.fr)
+Date: Fri, 11 Dec 2009 01:31:25 +0100
+Subject: [Softdevice-devel] h264 compatibility
+Message-ID: <1260491485.4b2192dd56766@imp.free.fr>
+
+
+Now h264 streams are widely available. Do you know if a h264 patch is available
+and works with the current softdevice ?
+
+Best Regards,
+Wallak.
+
+
+From bob at globall.ru  Sat Dec 12 19:22:58 2009
+From: bob at globall.ru (Vladimir Monchenko)
+Date: Sat, 12 Dec 2009 21:22:58 +0300
+Subject: [Softdevice-devel] softdevice - fix with current ffmpeg release
+ -	frametime
+In-Reply-To: <1260491098.4b21915ab73d3@imp.free.fr>
+References: <1260491098.4b21915ab73d3@imp.free.fr>
+Message-ID: <4B23DF82.30908@globall.ru>
+
+wallak at free.fr wrote:
+> Here is a patch required to get the proper delay between video frames.
+>
+> Best Regards,
+> Wallak.
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+>   
+
+Thanks!
+Your patch works for me, but he has not solved all problems. The big 
+jerks are not present every second more, but video not smoothly. Log is 
+not present shows "Xrun", but fast movements on the image twitch.
+
+My system:
+
+Linux athlon 2.6.31-gentoo-r6 #6 SMP PREEMPT Thu Dec 10 22:17:15 MSK 
+2009 x86_64 AMD Phenom(tm) 8450 Triple-Core Processor AuthenticAMD GNU/Linux
+
+FFmpeg version 0.5, Copyright (c) 2000-2009 Fabrice Bellard, et al.
+  configuration: --prefix=/usr --libdir=/usr/lib64 --shlibdir=/usr/lib64 
+--mandir=/usr/share/man --enable-static --enable-shared 
+--cc=x86_64-pc-linux-gnu-gcc --disable-debug --disable-network 
+--enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libxvid 
+--enable-libdc1394 --disable-demuxer=v4l --disable-demuxer=oss 
+--disable-muxer=oss --enable-x11grab --enable-libamr-nb 
+--enable-libamr-wb --enable-nonfree --enable-vdpau --disable-altivec 
+--cpu=amdfam10 --disable-vhook --enable-gpl --enable-postproc 
+--enable-avfilter --enable-avfilter-lavf --enable-swscale 
+--disable-stripping --enable-hardcoded-tables
+  libavutil     49.15. 0 / 49.15. 0
+  libavcodec    52.20. 0 / 52.20. 0
+  libavformat   52.31. 0 / 52.31. 0
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libavfilter    0. 4. 0 /  0. 4. 0
+  libswscale     0. 7. 1 /  0. 7. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Dec  6 2009 00:00:44, gcc: 4.3.4
+
+vdr-1.7.10
+
+Best regards,
+Vladimir Monchenko.
+
+
+
+From wallak at free.fr  Mon Dec 14 22:24:14 2009
+From: wallak at free.fr (wallak at free.fr)
+Date: Mon, 14 Dec 2009 22:24:14 +0100
+Subject: [Softdevice-devel] softdevice - fix with current ffmpeg release
+	- frametime
+In-Reply-To: <4B23DF82.30908@globall.ru>
+References: <1260491098.4b21915ab73d3@imp.free.fr> <4B23DF82.30908@globall.ru>
+Message-ID: <1260825854.4b26acfe93976@imp.free.fr>
+
+Now, the video frame duration is correct, with interlaced/non interlaced video
+streams. Nevertheless  video jitter is visible,  this may be the consequence of
+a non optimized software video frame switching. And, I have a 60Hz LCD
+configuration, that is, definitively, not in-sync with a PAL 50Hz video stream.
+The later may be optimized with a 75Hz configuration, if the screen support it.
+Some further improvements are required...
+
+I still use softdevice with vdr-1.6, glibc-2.11, on an amd64 system.
+
+Best Regards,
+Wallak.
+
+Quoting Vladimir Monchenko <bob at globall.ru>:
+
+> wallak at free.fr wrote:
+> > Here is a patch required to get the proper delay between video frames.
+> >
+> > Best Regards,
+> > Wallak.
+> > ------------------------------------------------------------------------
+> >
+> > _______________________________________________
+> > Softdevice-devel mailing list
+> > Softdevice-devel at lists.berlios.de
+> > https://lists.berlios.de/mailman/listinfo/softdevice-devel
+> >
+>
+> Thanks!
+> Your patch works for me, but he has not solved all problems. The big
+> jerks are not present every second more, but video not smoothly. Log is
+> not present shows "Xrun", but fast movements on the image twitch.
+>
+> My system:
+>
+> Linux athlon 2.6.31-gentoo-r6 #6 SMP PREEMPT Thu Dec 10 22:17:15 MSK
+> 2009 x86_64 AMD Phenom(tm) 8450 Triple-Core Processor AuthenticAMD GNU/Linux
+>
+> FFmpeg version 0.5, Copyright (c) 2000-2009 Fabrice Bellard, et al.
+>   configuration: --prefix=/usr --libdir=/usr/lib64 --shlibdir=/usr/lib64
+> --mandir=/usr/share/man --enable-static --enable-shared
+> --cc=x86_64-pc-linux-gnu-gcc --disable-debug --disable-network
+> --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libxvid
+> --enable-libdc1394 --disable-demuxer=v4l --disable-demuxer=oss
+> --disable-muxer=oss --enable-x11grab --enable-libamr-nb
+> --enable-libamr-wb --enable-nonfree --enable-vdpau --disable-altivec
+> --cpu=amdfam10 --disable-vhook --enable-gpl --enable-postproc
+> --enable-avfilter --enable-avfilter-lavf --enable-swscale
+> --disable-stripping --enable-hardcoded-tables
+>   libavutil     49.15. 0 / 49.15. 0
+>   libavcodec    52.20. 0 / 52.20. 0
+>   libavformat   52.31. 0 / 52.31. 0
+>   libavdevice   52. 1. 0 / 52. 1. 0
+>   libavfilter    0. 4. 0 /  0. 4. 0
+>   libswscale     0. 7. 1 /  0. 7. 1
+>   libpostproc   51. 2. 0 / 51. 2. 0
+>   built on Dec  6 2009 00:00:44, gcc: 4.3.4
+>
+> vdr-1.7.10
+>
+> Best regards,
+> Vladimir Monchenko.
+>
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/softdevice-devel
+>
+
+
+
+

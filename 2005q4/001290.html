@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice 0.1.3 no alsa audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C1429.192.168.1.252.1128256527.squirrel%40192.168.1.252%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001288.html">
+   <LINK REL="Next"  HREF="001286.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice 0.1.3 no alsa audio</H1>
+    <B>Peter Andersson</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C1429.192.168.1.252.1128256527.squirrel%40192.168.1.252%3E"
+       TITLE="[Softdevice-devel] softdevice 0.1.3 no alsa audio">peter at legio.mine.nu
+       </A><BR>
+    <I>Sun Oct  2 14:35:27 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001288.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+        <LI>Next message: <A HREF="001286.html">[Softdevice-devel] StretchBlit problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1290">[ date ]</a>
+              <a href="thread.html#1290">[ thread ]</a>
+              <a href="subject.html#1290">[ subject ]</a>
+              <a href="author.html#1290">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi again, thanks for bearing with me on this.
+
+&gt;<i> Only that vdr volume itself, is set to zero. You can check that with
+</I>&gt;<i> alsamixer. If PCM volume is zero after vdr start, you have to increase
+</I>&gt;<i> vdr's volume. The initial startup volume is in setup.conf, entry:
+</I>&gt;<i> CurrentVolume = 100
+</I>&gt;<i>
+</I>
+I have checked this allready, and i have seen no problems with the volume
+controls, everything is unmuted and cranked up to the maximum.
+
+Vdr outputs &quot;status: volume=100 mute=0&quot;
+On startup, that is correct right?
+
+&gt;<i> If that still does not help, whats your sound card/chip ?
+</I>
+According to alsamixer its:
+Card: VIA 82C686A/B rev50 (confirmed to be 82C686B via motherboard manual)
+Chip: VIA Technologies VIA1612A
+
+I can also say that alsamixer has way more options than my soundcard has.
+I am using a integrated soundcard which basically has one input and one
+output. Alsa mixer has about 20 options for surround etc.
+
+Hope this might give you some clues.
+
+/Peter
+
+
+&gt;<i> On Sonntag, 2. Oktober 2005 01:44, Peter Andersson wrote:
+</I>&gt;&gt;<i> Thanks for the quick reply!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; Are there error messages ? Usually we don't start if we cannot open
+</I>&gt;&gt;<i> alsa
+</I>&gt;&gt;<i> &gt; device.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> These are the outputs from softdevice when i ran it with these flags:
+</I>&gt;&gt;<i> -P'softdevice -ao alsa:default -vo dummy:'
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Everything looks ok to me,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [softdevice]   argv [1] = -ao
+</I>&gt;&gt;<i> [softdevice] using alsa device default
+</I>&gt;&gt;<i> [setup-softdevice] alsa ac3Mode set to: 0
+</I>&gt;&gt;<i> [setup-softdevice] A/V Offset set to (0)
+</I>&gt;&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I tried to use mplayer while running vdr and softdevice. Mplayer didn't
+</I>&gt;&gt;<i> start playing until i shut down vdr. So the softdevice plugin is doing
+</I>&gt;&gt;<i> something with the soundcard.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; Is master volume unmuted and set to non zero value ?
+</I>&gt;&gt;<i> &gt; We adjust volume via PCM volume (not master volume).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Yep, i have cranked the volume to the maximum and unmuted all channels.
+</I>&gt;&gt;<i> I
+</I>&gt;&gt;<i> have checked this with both with a gtk app and with alsamixer. Mplayer
+</I>&gt;&gt;<i> uses the pcm volume control too and i can verify that it is working by
+</I>&gt;&gt;<i> playing music and changing the pcm volume.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any other ideas?
+</I>&gt;<i>
+</I>&gt;<i> Only that vdr volume itself, is set to zero. You can check that with
+</I>&gt;<i> alsamixer. If PCM volume is zero after vdr start, you have to increase
+</I>&gt;<i> vdr's volume. The initial startup volume is in setup.conf, entry:
+</I>&gt;<i> CurrentVolume = 100
+</I>&gt;<i>
+</I>&gt;<i> If that still does not help, whats your sound card/chip ?
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001288.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+	<LI>Next message: <A HREF="001286.html">[Softdevice-devel] StretchBlit problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1290">[ date ]</a>
+              <a href="thread.html#1290">[ thread ]</a>
+              <a href="subject.html#1290">[ subject ]</a>
+              <a href="author.html#1290">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

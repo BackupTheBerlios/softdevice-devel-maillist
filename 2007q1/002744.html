@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200702272149.29181.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002742.html">
+   <LINK REL="Next"  HREF="002746.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200702272149.29181.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Feb 27 21:49:28 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002742.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002746.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2744">[ date ]</a>
+              <a href="thread.html#2744">[ thread ]</a>
+              <a href="subject.html#2744">[ subject ]</a>
+              <a href="author.html#2744">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 26 February 2007 23:13, Hugo Visser wrote:
+&gt;<i> 
+</I>&gt;<i> On Feb 26, 2007, at 10:31 PM, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Did you select the correct display aspect ratio for your device ?
+</I>&gt;<i> &gt; What is the native resolution of your TV ?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Some plasma TVs have 1024x768 as a native 16:9 resolution (non  
+</I>&gt;<i> &gt; square pixels).
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> The offical supported resolutions are 640x480 and 1024x768 according  
+</I>&gt;<i> to the (sparse) manual, but the panel itself is W-XGA 1366x768  
+</I>&gt;<i> pixels. I'm running 1024x768 in &quot;full&quot; or 16:9 mode, so the pixels  
+</I>&gt;<i> must be non square. It's a JVC LT-26x70s.
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; What it should do is zoom
+</I>&gt;<i> &gt;&gt; the picture, so that the black bars get &quot;out of screen&quot; to fill the
+</I>&gt;<i> &gt;&gt; entire screen. I'm running on DirectFB, maybe that matters?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The &quot;should do&quot; is the expected behaviour.
+</I>&gt;<i> &gt; What is your selected display resolution ?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Choosen resolution for displaying is reported via syslog.
+</I>&gt;<i> &gt; Can you show us such lines for which you see wrong aspect on your  
+</I>&gt;<i> &gt; screen ?
+</I>&gt;<i> &gt; They  look like:
+</I>&gt;<i> &gt; vdr: [14328] [VideoOut]: 720x576 [0,72 720x432] -&gt; 1024x576 [0,0  
+</I>&gt;<i> &gt; 1024x576]
+</I>&gt;<i> 
+</I>&gt;<i> Feb 26 22:52:14 localhost vdr: [6553] [VideoOut]: resolution changed:  
+</I>&gt;<i> W(736 -&gt; 704); H(576 -&gt;576)
+</I>&gt;<i> Feb 26 22:52:14 localhost vdr: [6553] [VideoOut]: aspect changed (0 -&gt; 0 ; 1.366667 -&gt; 1.333333)
+</I>&gt;<i> Feb 26 22:52:14 localhost vdr: [6553] [VideoOut]: 704x576 [0,0  704x576] -&gt; 1024x768 [128,0 768x768]
+</I>&gt;<i> 
+</I>&gt;<i> Then I tried with a fb.modes line of 1366x768 that I dug up on google  
+</I>&gt;<i> (not quite correct but just for testing), and got these lines
+</I>&gt;<i> 
+</I>
+&gt;<i> Feb 26 23:05:13 localhost vdr: [6878] [VideoOut]: 528x576 [0,40 528x496] -&gt; 1368x768 [84,0 1197x768]
+</I>
+For this one, it look like &quot;Cropping&quot; -&gt; &quot;CropMode&quot; is set to 14:9 and &quot;Screen Aspect&quot;
+set &quot;16:9&quot; or &quot;default&quot;.
+14:9:
+video.c, line 345:
+  if (afd_asp &lt;= new_asp) {
+    swidth = (int) (0.5 + ((double) tmpWidth * afd_asp / new_asp));
+  } else {
+    sheight = (int) (0.5 + ((double) tmpHeight * new_asp / afd_asp));
+  }
+
+new_asp: assumed as 4/3 (1.3333),
+afd_asp: unknown but greater than new_asp
+-&gt; else part will be choosen.
+so afd_asp = tmpHeight * new_asp / sheight;
+sheight: about 496 (+2 due to adjusting to YV12)
+tmpHeight: 576 (not other zoom / offset values applied)
+afd_asp is about 1.54838 ( 14 / 9 = 1.5555)
+
+&gt;<i> Feb 26 23:05:14 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  528x576] -&gt; 1368x768 [170,0 1026x768]
+</I>&gt;<i> Feb 26 23:05:21 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  528x576] -&gt; 1368x768 [114,0 1140x768]
+</I>&gt;<i> Feb 26 23:05:22 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  528x576] -&gt; 1368x768 [136,0 1094x768]
+</I>&gt;<i> Feb 26 23:05:24 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  528x576] -&gt; 1368x768 [172,0 1024x768]
+</I>
+Did you cycle through all possible &quot;Screen Aspect&quot; possibilities ?
+
+&quot;Screen Aspect&quot; should be set only once, so that it fits the geometry
+of your output device.
+
+So with screen aspect set to 16:9 and cropmode set to 16:9 it should work,
+as long a pur 16:9 video fills the entire screen of your lcd .
+Don't know what to ask further, exept for short sample recording as I've never
+seen resolution 528x576 (only 540x576).
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002742.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002746.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2744">[ date ]</a>
+              <a href="thread.html#2744">[ thread ]</a>
+              <a href="subject.html#2744">[ subject ]</a>
+              <a href="author.html#2744">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

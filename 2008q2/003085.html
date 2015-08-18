@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.5.0&In-Reply-To=%3C6AFEA6E16806683BDB1C2F74%40%5B192.168.83.145%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003078.html">
+   <LINK REL="Next"  HREF="003084.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0</H1>
+    <B>Claas Hilbrecht</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.5.0&In-Reply-To=%3C6AFEA6E16806683BDB1C2F74%40%5B192.168.83.145%5D%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0">claas+maillinglists.softdevice at jucs-kramkiste.de
+       </A><BR>
+    <I>Mon Apr 28 11:25:17 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003078.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+        <LI>Next message: <A HREF="003084.html">[Softdevice-devel] new crash :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3085">[ date ]</a>
+              <a href="thread.html#3085">[ thread ]</a>
+              <a href="subject.html#3085">[ subject ]</a>
+              <a href="author.html#3085">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>--Am Freitag, 18. April 2008 18:01 +0200 Stefan Lucke 
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; schrieb:
+
+&gt;<i> Supported vdr versions: 1.4.x, 1.5.x and 1.6.x
+</I>
+After switching from vdr 1.6.0 and softdevice 2008-02-26 to vdr 1.6.0-1 and 
+softdevice 0.5.0 I have a problem. I use the softdevice audio output only 
+and after the upgrade the audio is &quot;killed&quot; after some hours. If I change 
+the channel via vdr live plugin the sounds comes back. I use softdevice as 
+a radio broadcast system here. Looking at syslog I only find this 
+information regarding softdevice:
+
+Apr 27 21:42:36 funfix vdr: [15174] 1 cRepacker messages suppressed
+Apr 27 21:42:36 funfix vdr: [15174] cAudioRepacker(0xC0): skipped 312 bytes 
+while syncing on next audio frame
+Apr 27 21:42:36 funfix vdr: [15140] cAudioRepacker(0xC0): skipped 1148 
+bytes while syncing on next audio frame
+Apr 27 21:42:46 funfix vdr: [15140] cAudioRepacker(0xC0): skipped 4 bytes 
+to sync on next audio frame
+Apr 27 21:42:48 funfix vdr: [15174] 2 cRepacker messages suppressed
+Apr 27 21:42:48 funfix vdr: [15174] cAudioRepacker(0xC0): skipped 4 bytes 
+to sync on next audio frame
+
+But this is only logged once and the audio killing occured so far &gt;5 times. 
+I didn't change any configuration or libs since the last update. softdevice 
+is build with this configuration: ./configure --disable-vidix --disable-fb 
+--disable-dfb --disable-cle266 --disable-xv --disable-xinerama 
+--disable-oss --disable-suspendkey --disable-yaepg.
+
+I will now try vdr 1.6.0-1 with the &quot;old&quot; softdevice from cvs to locate the 
+problem.
+
+-- 
+ Claas Hilbrecht
+ <A HREF="http://www.jucs-kramkiste.de">http://www.jucs-kramkiste.de</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003078.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+	<LI>Next message: <A HREF="003084.html">[Softdevice-devel] new crash :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3085">[ date ]</a>
+              <a href="thread.html#3085">[ thread ]</a>
+              <a href="subject.html#3085">[ subject ]</a>
+              <a href="author.html#3085">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

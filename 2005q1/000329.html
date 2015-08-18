@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CVS%20from%20last%20night%20feedback%20%20-%20field%20parity%20seems%20to%20be%20solved%20%3A-%29%0A%20%2C%20some%20audio%20issues%20remain&In-Reply-To=%3C423AA25F.3030007%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000327.html">
+   <LINK REL="Next"  HREF="000332.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CVS%20from%20last%20night%20feedback%20%20-%20field%20parity%20seems%20to%20be%20solved%20%3A-%29%0A%20%2C%20some%20audio%20issues%20remain&In-Reply-To=%3C423AA25F.3030007%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Fri Mar 18 10:41:51 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000327.html">[Softdevice-devel] [Bug #3588] softdevice-0.1.0 compiliert mit gcc-3.4 nicht
+</A></li>
+        <LI>Next message: <A HREF="000332.html">[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#329">[ date ]</a>
+              <a href="thread.html#329">[ thread ]</a>
+              <a href="subject.html#329">[ subject ]</a>
+              <a href="author.html#329">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+
+I checked out last night's CVS (after Martin committed the new 
+mpeg2decoder), and I must say, this is getting very interesting for me now:
+  - I no longer have field parity artifacts on my G400 TV-out 
+(DirectFB), only every few seconds there seems to be a jump, but 
+otherwise the image is as it should be, I'm very pleased.
+  - the new libavformat parsing code gives me software AC3 decoding (of 
+course, I still would like to find out how to let ffmpeg just 
+passthrough AC3 to the SPDIF);
+  - the new tracing printed on the console comes very handy for 
+analysing some MP2-related issues, let me give you some examples:
+
+1.)
+CMD[6295]:Neuer Thread gestartet: Mpeg2Decoder pid 17562
+CMD[7646]:Neuer StreamDecoder type 17562
+CMD[7700]:Neuer Thread gestartet: pid:17562 type 1
+alsa-audio: SetParams
+Input #0, mpeg, from 'test':
+    Duration: N/A, bitrate: N/A
+    Stream #0.0: Audio: mp2, 48000 Hz, mono, 96 kb/s
+
+On this channel, I have no sound on the SPDIF, because the stream is 
+mono and I think it should be upmixed to stereo. BTW, this is a romanian 
+  channel on EutelsatW2.
+
+2.)
+CMD[7480]:Neuer Thread gestartet: pid:18720 type 1
+alsa-audio: SetParams
+Input #0, mpeg, from 'test':
+    Duration: N/A, bitrate: N/A
+    Stream #0.0: Video: mpeg2video, 528x576, 25.00 fps, 15000 kb/s
+    Stream #0.1: Audio: mp2, 48000 Hz, mono, 128 kb/s
+
+Same as above, only this is CNN on Astra 19.2E, you could tune to this 
+one yourself if you use SPDIF and could debug the problem. Note the 
+different bitrate, in the following examples there is more about bitrate.
+
+3.)
+CMD[6143]:Neuer StreamDecoder type 18720
+CMD[6154]:Neuer Thread gestartet: pid:18720 type 1
+alsa-audio: SetParams
+Input #0, mpeg, from 'test':
+    Duration: N/A, bitrate: N/A
+    Stream #0.0: Video: mpeg2video, 704x576, 25.00 fps, 3840 kb/s
+    Stream #0.1: Audio: mp2, 48000 Hz, stereo, 128 kb/s
+
+On this one I have sound, like I always did, but with the new code there 
+is an approx. 1 second offset betwwen audio and video (audio ahead of video)
+
+
+4.)
+CMD[1501]:Neuer Thread gestartet: pid:18720 type 1
+alsa-audio: Xrun
+Input #0, mpeg, from 'test':
+    Duration: N/A, bitrate: N/A
+    Stream #0.0: Video: mpeg2video, 720x576, 25.00 fps, 15000 kb/s
+    Stream #0.1: Audio: ac3, 48000 Hz, stereo, 448 kb/s
+
+This one was Pro7 when broadcasting DD 2.0, I have sound now but 
+software decoded and passed as stereo PCM to the SPDIF, with a very big 
+sync offset as well;
+
+
+5.)
+CMD[7496]:Neuer Thread gestartet: pid:18720 type 1
+alsa-audio: SetParams
+Input #0, mpeg, from 'test':
+    Duration: N/A, bitrate: N/A
+    Stream #0.0: Video: mpeg2video, 480x576, 25.00 fps, 7980 kb/s
+    Stream #0.1: Audio: mp2, 48000 Hz, stereo, 192 kb/s
+
+Now, this one is very, very interesting! This was the french channel TV5 
+and it was in lipsync! Is it due to the bitrate of 192 kb/s?
+
+
+
+As you see, I found some very distinct and reproducible scenarios, maybe 
+you can conclude few things from them, as you know your code best. for 
+instance, this A/V-sync stuff depending on the bitrate.
+
+Did samething actually changed in the DirectFB code what caused the 
+benefic effect that I no longer see field parity artifacts not even on 
+horizontally scrollin text banners (except a jump every 1-3 seconds, 
+maybe a re-sync attempt, I don't know)? Or is it due to the fact that 
+the audio stream parsing or even decoding is done differently? Or did 
+you changed something in the threading scheme of the plugin?
+Maybe all these are worth analyzing, I don't know, I'm just suggesting 
+you should give it a thought.
+
+
+Otherwise, great work, keep it up guys!
+Lucian Muresan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000327.html">[Softdevice-devel] [Bug #3588] softdevice-0.1.0 compiliert mit gcc-3.4 nicht
+</A></li>
+	<LI>Next message: <A HREF="000332.html">[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#329">[ date ]</a>
+              <a href="thread.html#329">[ thread ]</a>
+              <a href="subject.html#329">[ subject ]</a>
+              <a href="author.html#329">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

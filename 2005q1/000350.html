@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CVS%20from%20last%20night%20feedback%20%20-%20field%20parity%0A%20seems%20to%20be%20solved%20%3A-%29%20%2C%20some%20audio%20issues%20remain&In-Reply-To=%3C423D6F90.3090307%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000342.html">
+   <LINK REL="Next"  HREF="000351.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CVS%20from%20last%20night%20feedback%20%20-%20field%20parity%0A%20seems%20to%20be%20solved%20%3A-%29%20%2C%20some%20audio%20issues%20remain&In-Reply-To=%3C423D6F90.3090307%40gmx.net%3E"
+       TITLE="[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Mar 20 13:41:52 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000342.html">[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+</A></li>
+        <LI>Next message: <A HREF="000351.html">[Softdevice-devel] CVS from last night feedback  - field	parity seems to be solved :-) , some audio issues remain
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#350">[ date ]</a>
+              <a href="thread.html#350">[ thread ]</a>
+              <a href="subject.html#350">[ subject ]</a>
+              <a href="author.html#350">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Lucian Muresan wrote:
+&gt;<i> Martin Wache wrote:
+</I>&gt;<i> ...
+</I>&gt;<i> 
+</I>&gt;&gt;<i> If you are right and your soundcard repacks the pcm and sends it to 
+</I>&gt;&gt;<i> SPDIF out, we will have trouble syncing... There seems to be a buffer 
+</I>&gt;&gt;<i> either in the soundcard or in your ac3 decoder of unknown size which 
+</I>&gt;&gt;<i> has to be taken into account and may be different for different 
+</I>&gt;&gt;<i> machines. Hmm, I have to think about that... But I think we should 
+</I>&gt;&gt;<i> wait for some more reports before concluding anything.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I wanted to let you know, I checked for these off-sync problems when 
+</I>&gt;<i> using vdr-xine viewed in df_xine, and there are no delays, everything is 
+</I>&gt;<i> in sync on channels with various bitrates on MP2, even on Sat1/Pro7 with 
+</I>&gt;<i> AC3. But xine has the &quot;mono MP2&quot; and the field parity issues softdevice 
+</I>&gt;<i> had before the latest changes, too (of course, using the same Matrox 
+</I>&gt;<i> G400 TV-out in DirectFB), and also switches channels slower than 
+</I>&gt;<i> softdevice.
+</I>I just commited a few changes to the A-V sync. One change may be 
+interesting for the SPDIF out off-sync problem: now video and audio wait 
+for each other before starting. Before each of the stream was played as 
+soon as data was available and syncing was done while playing. Now the 
+syncronization between audio and video should be much better at the 
+start, maybe this improves the situation for SPDIF out...
+
+I have some more things which I like to now... Is it possible with your 
+soundcard to have SPDIF out and analog out at one time? Is analog out 
+and SPDIF out asynchron?
+There is a menu entry A/V Delay in the softdevice menu, is it possible 
+to syncronize SPDIF out and the video with this option? If you need a 
+bigger range you can multiply setupStore.avOffset by ten in 
+mpeg2decoder.c method cAudioStreamDecoder::GetPTS().
+If you have a synchronized A/V stream for one station, what happens if 
+you switch away and back again? Is the synchronisation still okay?
+Can you please tell me offsets for some stations which correct the A/V 
+syncronisations?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000342.html">[Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain
+</A></li>
+	<LI>Next message: <A HREF="000351.html">[Softdevice-devel] CVS from last night feedback  - field	parity seems to be solved :-) , some audio issues remain
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#350">[ date ]</a>
+              <a href="thread.html#350">[ thread ]</a>
+              <a href="subject.html#350">[ subject ]</a>
+              <a href="author.html#350">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr-1.2.1 build fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr-1.2.1%20build%20fails&In-Reply-To=%3C9083.1100463695%40www17.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000085.html">
+   <LINK REL="Next"  HREF="000087.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr-1.2.1 build fails</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr-1.2.1%20build%20fails&In-Reply-To=%3C9083.1100463695%40www17.gmx.net%3E"
+       TITLE="[Softdevice-devel] vdr-1.2.1 build fails">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Nov 14 21:21:35 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000085.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+        <LI>Next message: <A HREF="000087.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Did a fresh checkout and it fails with the following message:
+</I>&gt;<i> 
+</I>&gt;<i> In file included from softdevice.c:70:
+</I>&gt;<i> mpeg2decoder.h: In constructor `
+</I>&gt;<i>    cSoftRingBufferLinear::cSoftRingBufferLinear(int, int, bool, const
+</I>&gt;<i> char*)':
+</I>&gt;<i> mpeg2decoder.h:47: error: no matching function for call to
+</I>&gt;<i> `cRingBufferLinear::
+</I>&gt;<i>    cRingBufferLinear(int&amp;, int&amp;, bool&amp;, const char*&amp;)'
+</I>&gt;<i> ../../../include/vdr/ringbuffer.h:44: error: candidates are:
+</I>&gt;<i>    cRingBufferLinear::cRingBufferLinear(const cRingBufferLinear&amp;)
+</I>&gt;<i> ../../../include/vdr/ringbuffer.h:51: error:
+</I>&gt;<i>    cRingBufferLinear::cRingBufferLinear(int, int, bool)
+</I>&gt;<i> make[1]: *** [softdevice.o] Fehler 1
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> stefan lucke
+</I>
+I'm sorry... I hope my last change fixed this. By the way where can I get 
+these old versions of vdr?
+
+Martin Wache
+
+-- 
+NEU +++ DSL Komplett von GMX +++ <A HREF="http://www.gmx.net/de/go/dsl">http://www.gmx.net/de/go/dsl</A>
+GMX DSL-Netzanschluss + Tarif zum superg&#252;nstigen Komplett-Preis!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000085.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+	<LI>Next message: <A HREF="000087.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

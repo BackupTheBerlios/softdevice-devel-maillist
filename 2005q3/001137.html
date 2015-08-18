@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20viafb%20kernel%20frame%20buffer%20vs.%20720x576%20tvout%20no-scale%20update...&In-Reply-To=%3Cb7f6d73705082503227c876b6f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001136.html">
+   <LINK REL="Next"  HREF="001138.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...</H1>
+    <B>Mark Adams</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20viafb%20kernel%20frame%20buffer%20vs.%20720x576%20tvout%20no-scale%20update...&In-Reply-To=%3Cb7f6d73705082503227c876b6f%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...">mark147m at gmail.com
+       </A><BR>
+    <I>Thu Aug 25 12:22:38 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001136.html">[Softdevice-devel] viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+        <LI>Next message: <A HREF="001138.html">[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1137">[ date ]</a>
+              <a href="thread.html#1137">[ thread ]</a>
+              <a href="subject.html#1137">[ subject ]</a>
+              <a href="author.html#1137">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 8/25/05, Nicolas Huillard &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at e-dition.fr</A>&gt; wrote:
+
+&gt;<i> I finally got the kernel frame-buffer driver from viaarena to work with
+</I>&gt;<i> DirectFB. I can provide a patch against that viafb code to anyone
+</I>&gt;<i> (change accelerator ID to match DirectFB + yvirtres reporting).
+</I>&gt;<i> Drawback is that that viafb doesnt seem to handle virtual Y resolution
+</I>&gt;<i> correctly, thus no double-buffering can work.
+</I>
+I'm using the 'patcher2k' version of viafb (with some enhancements for
+interlace) and can use double buffering or triple buffering in
+DirectFB with no problems.
+
+&gt;<i> On the tv-out 720x576 no-scale front, I'm stuck... I understood a lot
+</I>&gt;<i> about that VT1622 registers and their behaviour, but I still need advice
+</I>&gt;<i> about the CRTC registers.
+</I>&gt;<i> For what I know : I need to adjust CRTC (Unichrome chip) registers to
+</I>&gt;<i> generate a 720x576 or 800x600 timing at 50hz, 28.000Mhz dotclock,
+</I>&gt;<i> non-interlaced. Then the VT1622 will drive the Unichrome chip clock and
+</I>&gt;<i> convert the VGA signal into S-Video signals, merging pixels vertically
+</I>&gt;<i> (lines) or horizontally), to fit exact PAL timing (keeping one line out
+</I>&gt;<i> of two to generate an interlaced signal).
+</I>&gt;<i> Since the VT1622 does not have a frame buffer, it must receive at the
+</I>&gt;<i> input a similar timing than the PAL output.
+</I>
+I believe my setup has the CLE266 generating a 720x576/50 Hz
+progressive picture with 27 MHz clock (28 will give you incorrect
+horizontal scaling but shouldn't cause the problems you describe). 
+The VT1622A (in my case) is then programmed with suitable PLL settings
+to sync to this picture and generate the 625 line PAL picture. 
+Scaling and filtering is turned off in the VT1622A.
+
+I think you're probably right that the VT1622/1622A does not have a
+frame buffer but it must have a buffer of a few lines in order to do
+the filtering and scaling.
+
+&gt;<i> What I have with various sort of CRTC timing is a &quot;out-of-range scan&quot; on
+</I>&gt;<i> the VGA monitor (thus black screen), and a totally disturbed &quot;image&quot; on
+</I>&gt;<i> the TV (when it does not blank the screen the same way the monitor does).
+</I>
+Many VGA monitors will not like the 50 Hz frame rate (and maybe not
+the 31.25 kHz line rate either).  I've mainly been using flat panel
+displays: some of them are happy, some are not.
+
+You should get a nice picture on the TV screen though.  Is the TV
+locked but the image disturbed (and possibly
+scrolling/flickering/sheared/duplicated) or is it unlocked (if you're
+ears are young enough, you'd hear a different tone from the TV than
+when it was getting a good signal)?  If the latter, your configuration
+of the TV chip must be incorrect for the picture that the CLE266 is
+putting out such that the TV chip can't generate a valid signal.  If
+the former, your problem is more likely to be in the CLE266 or the
+input-side parameters of the VT1622.
+
+&gt;<i> I'm nearly giving-up... Any advice regarding CRTC registers, docs about
+</I>&gt;<i> them, different variant of chips in the VIA Unichrome line, is welcome.
+</I>
+Try posting the output from the vt1622 utility from the unichrome
+project when you type 'D' and I'll see if I can spot anything obvious.
+
+Regards,
+
+Mark
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001136.html">[Softdevice-devel] viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+	<LI>Next message: <A HREF="001138.html">[Softdevice-devel] Re: [directfb-users] Re: viafb kernel frame buffer vs. 720x576 tvout no-scale update...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1137">[ date ]</a>
+              <a href="thread.html#1137">[ thread ]</a>
+              <a href="subject.html#1137">[ subject ]</a>
+              <a href="author.html#1137">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] MMX error on Celeron 466
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MMX%20error%20on%20Celeron%20466&In-Reply-To=%3C464742F7.6000104%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002863.html">
+   <LINK REL="Next"  HREF="002883.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] MMX error on Celeron 466</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MMX%20error%20on%20Celeron%20466&In-Reply-To=%3C464742F7.6000104%40huillard.net%3E"
+       TITLE="[Softdevice-devel] MMX error on Celeron 466">nicolas at huillard.net
+       </A><BR>
+    <I>Sun May 13 18:55:19 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002863.html">[Softdevice-devel] E-tobi: vdr-plugin-softdevice-0.4.0 - no dfb	support
+</A></li>
+        <LI>Next message: <A HREF="002883.html">[Softdevice-devel] MMX error on Celeron 466
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2867">[ date ]</a>
+              <a href="thread.html#2867">[ thread ]</a>
+              <a href="subject.html#2867">[ subject ]</a>
+              <a href="author.html#2867">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I'm testing softdevice on a old Celeron box, which used to be a DVD 
+player. I hope it will be OK as a VDR box with softdevice...
+I'm trying to stick with binary Debian packages, but I have an MMX 
+problem here.
+
+The CPU:
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">vdr at diskless-vdr</A>:~$ cat /proc/cpuinfo
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 6
+model name      : Celeron (Mendocino)
+stepping        : 5
+cpu MHz         : 467.737
+cache size      : 128 KB
+fdiv_bug        : no
+hlt_bug         : no
+f00f_bug        : no
+coma_bug        : no
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 2
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca 
+cmov pat pse36 mmx fxsr
+bogomips        : 936.24
+
+GDB output:
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[New Thread -1250026576 (LWP 8291)]
+
+Program received signal SIGILL, Illegal instruction.
+[Switching to Thread -1210758496 (LWP 8282)]
+0xb7d2e340 in cSoftOsd::ScaleUpHoriz_MMX () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+(gdb) bt
+#0  0xb7d2e340 in cSoftOsd::ScaleUpHoriz_MMX () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#1  0xb7d2fc42 in cSoftOsd::ScaleVUpCopyToBitmap () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#2  0xb7d2ffc9 in cSoftOsd::CopyToBitmap () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#3  0xb7d30980 in cSoftOsd::OsdCommit () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#4  0xb7d30a78 in cSoftOsd::Flush () from 
+/usr/lib/vdr/plugins/libvdr-softdevice.so.1.4.5
+#5  0x080e5d29 in cSkinSTTNGDisplayMenu::Flush ()
+#6  0x080a959e in cInterface::QueryKeys ()
+#7  0x080a9fc5 in cInterface::LearnKeys ()
+#8  0x080fc6d2 in main ()
+
+
+The ScaleUpHoriz_MMX method is full of __asm__() code, in which there 
+might be incompatible MMX instructions...
+
+Just for the record: Xv output on SiS6326 card, 1024x768x32 or 640x480x32
+
+I'd like to get the maximum out of this old box, using binary packages 
+if as much as possible (from <A HREF="http://e-tobi.net/">http://e-tobi.net/</A>)
+
+TIA,
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002863.html">[Softdevice-devel] E-tobi: vdr-plugin-softdevice-0.4.0 - no dfb	support
+</A></li>
+	<LI>Next message: <A HREF="002883.html">[Softdevice-devel] MMX error on Celeron 466
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2867">[ date ]</a>
+              <a href="thread.html#2867">[ thread ]</a>
+              <a href="subject.html#2867">[ subject ]</a>
+              <a href="author.html#2867">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

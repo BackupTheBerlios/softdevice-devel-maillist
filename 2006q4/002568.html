@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200610010142.39325.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002567.html">
+   <LINK REL="Next"  HREF="002571.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200610010142.39325.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct  1 01:42:39 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002567.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002571.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2568">[ date ]</a>
+              <a href="thread.html#2568">[ thread ]</a>
+              <a href="subject.html#2568">[ subject ]</a>
+              <a href="author.html#2568">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 01 Oktober 2006 01:27, Stefan Lucke wrote:
+&gt;<i> On Samstag 30 September 2006 20:04, Marko M&#228;kel&#228; wrote:
+</I>
+&gt;<i> &gt; I would have believed that one hang occurred after a 40-minute suspension.
+</I>&gt;<i> &gt; Could it perhaps be a signed counter, counting 1&lt;&lt;31 microseconds before
+</I>&gt;<i> &gt; overflow?
+</I>&gt;<i> 
+</I>&gt;<i> 40 minute time frame is good. Had to wait a 2nd one, as I did not save my
+</I>&gt;<i> inserted trace messages :-( .
+</I>&gt;<i> 
+</I>&gt;<i> Pause:
+</I>&gt;<i> Oct  1 00:28:47 jarada jarada vdr: [32130] setting audio track to 1 (0)
+</I>&gt;<i> Oct  1 00:28:47 jarada jarada vdr: [32133] [softdevice-audio]: xrun
+</I>&gt;<i> 
+</I>&gt;<i> Play:
+</I>&gt;<i> Oct  1 01:11:37 jarada jarada vdr: [32133] [softdevice-audio]: xrun
+</I>&gt;<i> 
+</I>&gt;<i> And now we'll wait for about 27 minutes (without getting signalled?):
+</I>
+After that time, playback continued. Have a nice sleep.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002567.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002571.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2568">[ date ]</a>
+              <a href="thread.html#2568">[ thread ]</a>
+              <a href="subject.html#2568">[ subject ]</a>
+              <a href="author.html#2568">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

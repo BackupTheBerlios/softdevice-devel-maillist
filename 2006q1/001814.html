@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Cannot compile recent CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Cannot%20compile%20recent%20CVS&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D151%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001813.html">
+   <LINK REL="Next"  HREF="001815.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Cannot compile recent CVS</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Cannot%20compile%20recent%20CVS&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D151%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] Cannot compile recent CVS">Neumann at do-net.de
+       </A><BR>
+    <I>Sun Mar 12 12:26:32 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001813.html">[Softdevice-devel] [Bug #6551] Keine Transparenz
+</A></li>
+        <LI>Next message: <A HREF="001815.html">[Softdevice-devel] Cannot compile recent CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1814">[ date ]</a>
+              <a href="thread.html#1814">[ thread ]</a>
+              <a href="subject.html#1814">[ subject ]</a>
+              <a href="author.html#1814">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+ 
+when compiling recent cvs i get the following:
+ 
+make[1]: Leaving directory `/usr/local/src/vdr-1.3.44/PLUGINS/src/sky'
+Plugin softdevice:
+make[1]: Entering directory `/usr/local/src/vdr-1.3.44/PLUGINS/src/softdevice-CVS'
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual -c -DUSE_MMX -DUSE_MMX2 -DUSE_SUBPLUGINS -DDFB_SUPPORT -DPP_LIBAVCODEC -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/local/include/dfb++ -I/usr/local/include/directfb SoftOsd.c
+SoftOsd.c: In member function `void cSoftOsd::OsdCommit()':
+SoftOsd.c:173: error: no matching function for call to `cVideoOut::
+   CommitUnlockSoftOsdSurface()'
+video.h:212: error: candidates are: virtual void
+   cVideoOut::CommitUnlockSoftOsdSurface(int, int)
+video.h:167: error: `int cVideoOut::Osd_changed' is private
+SoftOsd.c:182: error: within this context
+make[1]: *** [SoftOsd.o] Error 1
+make[1]: Leaving directory `/usr/local/src/vdr-1.3.44/PLUGINS/src/softdevice-CVS'
+
+-------------
+Andre Neumann
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001813.html">[Softdevice-devel] [Bug #6551] Keine Transparenz
+</A></li>
+	<LI>Next message: <A HREF="001815.html">[Softdevice-devel] Cannot compile recent CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1814">[ date ]</a>
+              <a href="thread.html#1814">[ thread ]</a>
+              <a href="subject.html#1814">[ subject ]</a>
+              <a href="author.html#1814">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

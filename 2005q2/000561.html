@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C20050426180534.GB8796%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000592.html">
+   <LINK REL="Next"  HREF="000562.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C20050426180534.GB8796%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Repeatable crash">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Apr 26 20:05:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000592.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+        <LI>Next message: <A HREF="000562.html">[Softdevice-devel] Repeatable crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#561">[ date ]</a>
+              <a href="thread.html#561">[ thread ]</a>
+              <a href="subject.html#561">[ subject ]</a>
+              <a href="author.html#561">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Apr 01, 2005 at 12:04:19AM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> Well, such crashes affect the overall usability of the product.  I think
+</I>&gt;<i> it's a design flaw to have assertions fail on garbage input.  It's so likely
+</I>&gt;<i> to get garbage DVB data.  Next time when I get such a crash, I promise to
+</I>&gt;<i> save the clip and to analyze it further.
+</I>
+Now I managed to get a repeatable crash with one particular clip.  It could
+be related to aspect ratio change (4:3 for the announcement, 16:9 for the
+program) or subtitles (although it still crashes without the &quot;subtitles&quot;
+plugin being loaded in VDR 1.3.23).
+
+I also got some other crashes recently, especially when using the pause,
+fast forward, rewind, and slow motion functions in rapid succession.  Maybe
+libavcodec can be left in inconsistent state during these functions?
+
+It's kind of funny and lucky that a crash of the player thread does not always
+stop the recording thread, but today it unfortunately did once, even though
+the svdrp thread was still running.  On Sunday, there was a crash during or
+after unattended recording.  The recording was complete.
+
+I can upload the repeatably-crashing clip to an http server, but I don't want
+to announce the URL in public.  So, could the interested parties please reply?
+
+By the way, the &quot;mute&quot; function does not interrupt audio playback or make the
+sound completely inaudible.  Can someone look at that?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000592.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+	<LI>Next message: <A HREF="000562.html">[Softdevice-devel] Repeatable crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#561">[ date ]</a>
+              <a href="thread.html#561">[ thread ]</a>
+              <a href="subject.html#561">[ subject ]</a>
+              <a href="author.html#561">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

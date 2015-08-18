@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200604241300.59604.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001905.html">
+   <LINK REL="Next"  HREF="001908.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C200604241300.59604.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Mon Apr 24 14:00:59 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001905.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="001908.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1907">[ date ]</a>
+              <a href="thread.html#1907">[ thread ]</a>
+              <a href="subject.html#1907">[ subject ]</a>
+              <a href="author.html#1907">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 24 Apr 2006 09:58, Nicolas Huillard wrote:
+&gt;<i> Martin Wache a &#233;crit :
+</I>&gt;<i> &gt; I have to admit that the progress is currently slow, I don't have
+</I>&gt;<i> &gt; that much time to spent on the softdevice and there are many things
+</I>&gt;<i> &gt; to be done... What I plan is to integrate the Via Xvmc acceleration
+</I>&gt;<i> &gt; into the softdevice. Unfortunately the current design of the video
+</I>&gt;<i> &gt; out doesn't allow this (direct rendering is needed, different image
+</I>&gt;<i> &gt; formats...), so I have to change quite fundamental things in the
+</I>&gt;<i> &gt; softdevice. Since I want not to mess up the softdevice code I have to
+</I>&gt;<i> &gt; do that in small pieces...
+</I>&gt;<i>
+</I>&gt;<i> What Laz is interested into (and I too) is hardware MPEG2 decoding with
+</I>&gt;<i> the DirectFB output method, ie. without X dependencies.
+</I>&gt;<i> That's not the so-called XVMC implementation, which inherently has X
+</I>&gt;<i> dependency...
+</I>
+That's about it: I have had hardware decoding going with xine and XVMC but 
+I don't really want the additional overhead of running X on my vdr box!
+
+;)
+
+&gt;<i> &gt;&gt;I think the information is there it just needs someone to pull it all
+</I>&gt;<i> &gt;&gt;together!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Did I understand correctly, that you will try to do this? That would
+</I>&gt;<i> &gt; be great!
+</I>&gt;<i>
+</I>&gt;<i> From my latest private mail exchange with Laz : yes, DirectFB.
+</I>&gt;<i> I think XVMC is far more advanced and should not be a real problem (and
+</I>&gt;<i> you mention patches to ffmpeg that should add XVMC to softdevice
+</I>&gt;<i> without much work or no work at all in softdevice).
+</I>
+At the moment, I'm just trying to get something that works before trying 
+to incorporate it into anything... Eventually, I hope to create either 
+another output driver for softdevice or incorporate it into the existing 
+video-dfb.c (although that might be more difficult because libsoftmpeg 
+takes care of the A-V sync and the actual audio and video output).
+
+&gt;<i> &gt; I think I remember that the openchrome developers once search for
+</I>&gt;<i> &gt; someone who would integrate the mpeg2 hardware acceleration into
+</I>&gt;<i> &gt; DirectFB, but obviously the didn't find anyone...
+</I>&gt;<i>
+</I>&gt;<i> What I remenber is DirectFB developers searching for someone to
+</I>&gt;<i> integrate openchrome hardware decoding into DirectFB, removing X
+</I>&gt;<i> dependencies.
+</I>&gt;<i> I do not read openchrome's ML, though, so you might also be right.
+</I>
+I have yet to get my head around how this would fit into either DirectFB 
+or ffmpeg...
+
+&gt;<i> &gt; What I can say is that the patch to ffmpeg to use the VLD-Xvmc is
+</I>&gt;<i> &gt; rather small (it can be extracted from the mplayer patch on
+</I>&gt;<i> &gt; openchrome), so getting support form ffmpeg should not be difficult.
+</I>&gt;<i>
+</I>&gt;<i> If that patch doesn't add X dependency (or run-time X dependency), that
+</I>&gt;<i> would be great !
+</I>
+Most of what I've seen depends heavily on X.
+
+:<i>-(
+</I>
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001905.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="001908.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1907">[ date ]</a>
+              <a href="thread.html#1907">[ thread ]</a>
+              <a href="subject.html#1907">[ subject ]</a>
+              <a href="author.html#1907">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

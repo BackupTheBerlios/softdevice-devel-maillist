@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Video covered by OSD permanently
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Video%20covered%20by%20OSD%20permanently&In-Reply-To=%3C200802222018.13745.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003021.html">
+   <LINK REL="Next"  HREF="003023.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Video covered by OSD permanently</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Video%20covered%20by%20OSD%20permanently&In-Reply-To=%3C200802222018.13745.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Video covered by OSD permanently">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Feb 22 20:18:13 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003021.html">[Softdevice-devel] Video covered by OSD permanently
+</A></li>
+        <LI>Next message: <A HREF="003023.html">[Softdevice-devel] Video covered by OSD permanently
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3022">[ date ]</a>
+              <a href="thread.html#3022">[ thread ]</a>
+              <a href="subject.html#3022">[ subject ]</a>
+              <a href="author.html#3022">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 21 February 2008, Thomas Eckhardt wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> i have a strange problem running softdevice &quot;vo: xv&quot; on a S100 media
+</I>&gt;<i> player (video-chip: Intel 830M, using streamdev as input, CPU Celeron
+</I>&gt;<i> Mobile 733). As soon as the vdr OSD is shown the actual video is about
+</I>&gt;<i> 99% covered by a black frame. Only a small part of the video on the
+</I>&gt;<i> bottom is still visible. Audio continues as normal.
+</I>
+Is it related to this thread ?
+<A HREF="http://vdr-portal.de/board/thread.php?threadid=74159">http://vdr-portal.de/board/thread.php?threadid=74159</A>
+I already had a look at it, but no further idea, but this may change.
+Can you show us your xorg.config file ?
+
+
+&gt;<i> 
+</I>&gt;<i> Of course OSD is shown by vdr right after starting it so i tried to use
+</I>&gt;<i> &quot;vo: shm&quot; and waited a few seconds after firing up vdr to start
+</I>&gt;<i> ShmClient. Beside the fact that the colors with ShmClient are
+</I>&gt;<i> disarranged (eg blue is red, maybe related:
+</I>&gt;<i> <A HREF="http://mythtv.org/pipermail/mythtv-dev/2006-September/050834.html">http://mythtv.org/pipermail/mythtv-dev/2006-September/050834.html</A>) i
+</I>&gt;<i> have a running stream on my TV. Calling the OSD for the first time gives
+</I>&gt;<i> me a transparent OSD with the actual video stream behind it. But as soon
+</I>&gt;<i> as i close the OSD i have the same black frame as with &quot;vo: xv&quot;. Calling
+</I>&gt;<i> the OSD again does not change this behavior.
+</I>&gt;<i> 
+</I>&gt;<i> Back to xv: Stopping the playback at the softdevice OSD i get - as
+</I>&gt;<i> expected - a freeze image with the OSD being transparent above it. Also
+</I>&gt;<i> while switching aspect ratio i get a fraction of a second a clear picture.
+</I>&gt;<i> 
+</I>&gt;<i> Example vid (mp4 - cell phone):
+</I>&gt;<i> <A HREF="http://fileserver.eckieck.de/s100-softdevice.avi">http://fileserver.eckieck.de/s100-softdevice.avi</A>
+</I>&gt;<i> 
+</I>&gt;<i> This applies to recordings also. OSDaphablend = software neither gives
+</I>&gt;<i> me video nor OSD. VGA, S-VIDEO or &quot;SCART&quot; as output makes no difference.
+</I>&gt;<i> 
+</I>&gt;<i> Debian etch, Xorg 7.1.1, IEGD 6.1, vdr 1.4.7
+</I>
+Is IEGD a binary only driver ?
+If yes, can you switch to a opensource driver, as I guess we have
+to modify something.
+
+You may get an impression by looking at pipe_a vs. pipe_b
+statements here:
+<A HREF="http://vdr-portal.de/board/thread.php?threadid=54640">http://vdr-portal.de/board/thread.php?threadid=54640</A>
+
+
+Did you try DirectFB output ?
+Is your hardware similar to this one ?
+<A HREF="../2007q4/002978.html">http://lists.berlios.de/pipermail/softdevice-devel/2007q4/002978.html</A>
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003021.html">[Softdevice-devel] Video covered by OSD permanently
+</A></li>
+	<LI>Next message: <A HREF="003023.html">[Softdevice-devel] Video covered by OSD permanently
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3022">[ date ]</a>
+              <a href="thread.html#3022">[ thread ]</a>
+              <a href="subject.html#3022">[ subject ]</a>
+              <a href="author.html#3022">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

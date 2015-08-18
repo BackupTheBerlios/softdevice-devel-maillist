@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Blue vertical bar on left side of the picture
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%0A%20picture&In-Reply-To=%3C1118760403659.voitto.tuomainen.71713.A0nkb9Gt3-h8bsiqc0nMvw%40luukku.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000890.html">
+   <LINK REL="Next"  HREF="000896.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Blue vertical bar on left side of the picture</H1>
+    <B>Voitto Tuomainen</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blue%20vertical%20bar%20on%20left%20side%20of%20the%0A%20picture&In-Reply-To=%3C1118760403659.voitto.tuomainen.71713.A0nkb9Gt3-h8bsiqc0nMvw%40luukku.com%3E"
+       TITLE="[Softdevice-devel] Blue vertical bar on left side of the picture">voitto.tuomainen at luukku.com
+       </A><BR>
+    <I>Tue Jun 14 16:46:43 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000890.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+        <LI>Next message: <A HREF="000896.html">[Softdevice-devel] Problem running vdr+softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#891">[ date ]</a>
+              <a href="thread.html#891">[ thread ]</a>
+              <a href="subject.html#891">[ subject ]</a>
+              <a href="author.html#891">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke kirjoitti 14.06.2005 kello 11:59:
+&gt;<i> Quoting Voitto Tuomainen:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; I didn't read carefully your last message. But here are the results:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Jun 13 22:58:26 miuvdr vdr[4279]: [VideoOut]: aspect changed (-100 -&gt; 0 ;
+</I>&gt;<i> -100.000000 -&gt; 1.333333)
+</I>&gt;<i> &gt; Jun 13 22:58:26 miuvdr vdr[4279]: [VideoOut]: 720x576 [0,0 720x576] -&gt;
+</I>&gt;<i> 1280x720 [159,0 962x720]
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Jun 13 23:00:06 miuvdr vdr[4291]: [VideoOut]: aspect changed (0 -&gt; 0 ;
+</I>&gt;<i> 1.333333 -&gt; 1.777778)
+</I>&gt;<i> &gt; Jun 13 23:00:06 miuvdr vdr[4291]: [VideoOut]: 720x576 [0,0 720x576] -&gt;
+</I>&gt;<i> 1280x720 [0,0 1280x719]
+</I>&gt;<i> 
+</I>&gt;<i> Seems to be a small rounding issue 719 should be 720 as height, and
+</I>&gt;<i>  xoffset
+</I>&gt;<i> 159
+</I>&gt;<i> should be even too (158).
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Jun 14 10:12:47 miuvdr vdr[4348]: [VideoOut]: aspect changed (8 -&gt; 8 ;
+</I>&gt;<i> 1.333333 -&gt; 1.777778)
+</I>&gt;<i> &gt; Jun 14 10:12:47 miuvdr vdr[4348]: [VideoOut]: 720x576 [0,0 720x576] -&gt;
+</I>&gt;<i> 768x576 [0,72 768x431]
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Jun 14 10:12:53 miuvdr vdr[4354]: [VideoOut]: aspect changed (8 -&gt; 0 ;
+</I>&gt;<i> 1.777778 -&gt; 1.333333)
+</I>&gt;<i> &gt; Jun 14 10:12:53 miuvdr vdr[4354]: [VideoOut]: 720x576 [0,0 720x576] -&gt;
+</I>&gt;<i> 768x576 [0,0 768x575]
+</I>&gt;<i> 
+</I>&gt;<i> Again rounding.
+</I>&gt;<i> 
+</I>&gt;<i> Did you set the monitor aspect correct ? Even when X11 provides us
+</I>&gt;<i>  with some
+</I>&gt;<i> physical geometry dimensions, these are not allways correct. I've to set
+</I>&gt;<i> mine
+</I>&gt;<i> to 5:4 for my 1280x1024 lcd monitor too, to avoid some rounding gliches.
+</I>&gt;<i> 
+</I>&gt;<i> In which of the your mailed/above cases do you see the blue vertical
+</I>&gt;<i>  bar ??
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+Hi,
+I don't remember which one is which. So I did one more experiment.
+
+My softdevice configuration is such, that
+Xv startup aspect: 4:3 normal
+Screen Aspect: Default
+- if I change any of above, they did not change the situation
+
+
+My plasma does not give proper modelines using DDC, so it must be set by hand in xorg.conf. Mine is
+Modeline &quot;1280x720_50&quot; 74.25 1280 1360 1872 1976 720 725 730 750 -hsync -vsync
+
+
+Here is log from last time I started vdr. Channel 3 does not have bar on left side or at least it is not visible.
+
+Jun 14 16:39:01 miuvdr vdr[4293]: switching to channel 3
+Jun 14 16:39:01 miuvdr vdr[4311]: [VideoOut]: 736x576 [0,0 736x576] -&gt; 768x576 [0,0 768x575]
+Jun 14 16:39:01 miuvdr vdr[4311]: [VideoOut]: 736x576 [0,0 736x576] -&gt; 768x576 [0,0 768x575]
+Jun 14 16:39:01 miuvdr vdr[4311]: [VideoOut]: 736x576 [0,0 736x576] -&gt; 1280x720 [159,0 962x720]
+Jun 14 16:39:02 miuvdr vdr[4293]: creating directory /vtx/T-8438-8193-49
+Jun 14 16:39:02 miuvdr vdr[4313]: transfer thread started (pid=4313, tid=163851)
+Jun 14 16:39:02 miuvdr vdr[4314]: receiver on device 1 thread started (pid=4314, tid=180236)
+Jun 14 16:39:02 miuvdr vdr[4317]: TS buffer on device 1 thread started (pid=4317, tid=229391)
+Jun 14 16:39:02 miuvdr vdr[4303]: channel 3 (MTV3) event 00:45 'MTV3 Chat' status 4
+Jun 14 16:39:02 miuvdr vdr[4303]: channel 4 (Nelonen) event 15:50 'Felicity' status 4
+Jun 14 16:39:02 miuvdr vdr[4303]: channel 7 (Subtv) event 16:35 'Ritari &#196;ss&#228;' status 4
+Jun 14 16:39:02 miuvdr vdr[4303]: channel 9 (MTV3+) event 16:15 'Polttopallo' status 4
+Jun 14 16:39:02 miuvdr vdr[4303]: channel 10 (Nelonen Plus) event 16:00 'Mobiilipeli: Blockate' status 4
+Jun 14 16:39:03 miuvdr vdr[4313]: setting audio track to 1
+Jun 14 16:39:03 miuvdr vdr[4319]: [VideoOut]: resolution changed: W(736 -&gt; 720); H(576 -&gt;576)
+Jun 14 16:39:03 miuvdr vdr[4319]: [VideoOut]: aspect changed (-100 -&gt; 0 ; -100.000000 -&gt; 1.333333)
+Jun 14 16:39:03 miuvdr vdr[4319]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 1280x720 [159,0 962x720]
+Jun 14 16:39:03 miuvdr vdr[4320]: [softdevice-audio] samplerate: 48000Hz, channels: #2
+Jun 14 16:39:03 miuvdr vdr[4320]: [softdevice-audio] Period size 1152 Buffer size 9216
+Jun 14 16:39:03 miuvdr vdr[4320]: [softdevice-audio] Hardware initialized
+Jun 14 16:39:03 miuvdr vdr[4320]: [softdevice-audio]: xrun
+Jun 14 16:39:05 miuvdr vdr[4319]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 1280x720 [159,0 962x720]
+Jun 14 16:39:05 miuvdr vdr[4319]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,0 768x575]
+Jun 14 16:39:08 miuvdr vdr[4293]: assuming manual start of VDR
+Jun 14 16:39:09 miuvdr vdr[4320]: [softdevice-audio]: xrun
+Jun 14 16:39:11 miuvdr vdr[4320]: [softdevice-audio]: xrun
+Jun 14 16:39:13 miuvdr vdr[4320]: [softdevice-audio]: xrun
+Jun 14 16:39:37 miuvdr vdr[4320]: [softdevice-audio]: xrun
+Jun 14 16:39:59 miuvdr vdr[4303]: channel 4 (Nelonen) event 16:40 'P&#228;ivien viem&#228;&#228;' status 4
+Jun 14 16:40:02 miuvdr vdr[4320]: [softdevice-audio]: xrun
+Jun 14 16:40:13 miuvdr vdr[4293]: switching to channel 1
+Jun 14 16:40:13 miuvdr vdr[4313]: transfer thread ended (pid=4313, tid=163851)
+Jun 14 16:40:13 miuvdr vdr[4293]: buffer stats: 131412 (6%) used
+Jun 14 16:40:13 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:14 miuvdr vdr[4339]: transfer thread started (pid=4339, tid=294923)
+Jun 14 16:40:14 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:14 miuvdr vdr[4293]: creating directory /vtx/T-8438-4097-17
+Jun 14 16:40:14 miuvdr vdr[4303]: channel 13 (YLE FSR+) event 16:15 'Vega: Inblick + Rapido' status 4
+Jun 14 16:40:14 miuvdr vdr[4303]: channel 5 (YLE Teema) event 09:00 'Ei esityst&#228;' status 4
+Jun 14 16:40:14 miuvdr vdr[4303]: channel 1 (YLE TV1) event 16:05 'Murhasta tuli totta' status 4
+Jun 14 16:40:14 miuvdr vdr[4303]: channel 17 (YLE PEILI) event 04:30 'Clazz radio 2' status 4
+Jun 14 16:40:14 miuvdr vdr[4303]: channel 2 (YLE TV2) event 15:55 'TV2: Summeri' status 4
+Jun 14 16:40:15 miuvdr vdr[4303]: channel 15 (YLEQ) event 15:02 'P&#228;iv&#228; Kuussa. Marce Rendic. www.yleq.fi.' status 4
+Jun 14 16:40:15 miuvdr vdr[4303]: changing pids of channel 2 from 513+129:660=sve:2321 to 513+129:660=fin:2321
+Jun 14 16:40:15 miuvdr vdr[4303]: channel 12 (YLE FST) event 09:00 'Jakten p&#229; Mauritius' status 4
+Jun 14 16:40:15 miuvdr vdr[4303]: channel 18 (YLEN KLASSINEN) event 12:00 'P&#228;iv&#228;klassinen.' status 4
+Jun 14 16:40:15 miuvdr vdr[4303]: channel 6 (YLE24) event 16:10 'Euronews' status 4
+Jun 14 16:40:15 miuvdr vdr[4343]: [VideoOut]: aspect changed (0 -&gt; 8 ; 1.333333 -&gt; 1.333333)
+Jun 14 16:40:15 miuvdr vdr[4339]: setting audio track to 1
+Jun 14 16:40:16 miuvdr vdr[4303]: changing pids of channel 5 from 516+132:690=fra:2321 to 516+132:690=fin:2321
+Jun 14 16:40:16 miuvdr vdr[4344]: [softdevice-audio]: xrun
+Jun 14 16:40:17 miuvdr vdr[4293]: switching to channel 2
+Jun 14 16:40:17 miuvdr vdr[4339]: transfer thread ended (pid=4339, tid=294923)
+Jun 14 16:40:17 miuvdr vdr[4293]: buffer stats: 109416 (5%) used
+Jun 14 16:40:17 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:17 miuvdr vdr[4345]: transfer thread started (pid=4345, tid=393227)
+Jun 14 16:40:17 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:17 miuvdr vdr[4293]: creating directory /vtx/T-8438-4097-33
+Jun 14 16:40:18 miuvdr vdr[4349]: [VideoOut]: aspect changed (8 -&gt; 8 ; 1.333333 -&gt; 1.777778)
+Jun 14 16:40:18 miuvdr vdr[4349]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,72 768x431]
+Jun 14 16:40:18 miuvdr vdr[4345]: setting audio track to 1
+Jun 14 16:40:19 miuvdr vdr[4350]: [softdevice-audio]: xrun
+Jun 14 16:40:19 miuvdr vdr[4293]: switching to channel 3
+Jun 14 16:40:19 miuvdr vdr[4345]: transfer thread ended (pid=4345, tid=393227)
+Jun 14 16:40:20 miuvdr vdr[4293]: buffer stats: 104152 (4%) used
+Jun 14 16:40:20 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:20 miuvdr vdr[4351]: transfer thread started (pid=4351, tid=491531)
+Jun 14 16:40:20 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:21 miuvdr vdr[4355]: [VideoOut]: aspect changed (8 -&gt; 0 ; 1.777778 -&gt; 1.333333)
+Jun 14 16:40:21 miuvdr vdr[4355]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,0 768x575]
+Jun 14 16:40:21 miuvdr vdr[4351]: setting audio track to 1
+Jun 14 16:40:21 miuvdr vdr[4356]: [softdevice-audio]: xrun
+Jun 14 16:40:22 miuvdr vdr[4356]: [softdevice-audio]: xrun
+Jun 14 16:40:23 miuvdr vdr[4293]: switching to channel 4
+Jun 14 16:40:23 miuvdr vdr[4351]: transfer thread ended (pid=4351, tid=491531)
+Jun 14 16:40:23 miuvdr vdr[4293]: buffer stats: 135924 (6%) used
+Jun 14 16:40:23 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:23 miuvdr vdr[4357]: transfer thread started (pid=4357, tid=589835)
+Jun 14 16:40:23 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:23 miuvdr vdr[4293]: creating directory /vtx/T-8438-8193-65
+Jun 14 16:40:24 miuvdr vdr[4357]: setting audio track to 1
+Jun 14 16:40:24 miuvdr vdr[4360]: [VideoOut]: aspect changed (0 -&gt; 8 ; 1.333333 -&gt; 1.333333)
+Jun 14 16:40:24 miuvdr vdr[4361]: [softdevice-audio]: xrun
+Jun 14 16:40:24 miuvdr vdr[4361]: [softdevice-audio]: xrun
+Jun 14 16:40:25 miuvdr vdr[4361]: [softdevice-audio]: xrun
+Jun 14 16:40:25 miuvdr vdr[4361]: [softdevice-audio]: xrun
+Jun 14 16:40:25 miuvdr vdr[4361]: [softdevice-audio]: xrun
+Jun 14 16:40:26 miuvdr vdr[4361]: [softdevice-audio]: xrun
+Jun 14 16:40:27 miuvdr vdr[4361]: [softdevice-audio]: xrun
+Jun 14 16:40:27 miuvdr vdr[4293]: switching to channel 5
+Jun 14 16:40:27 miuvdr vdr[4357]: transfer thread ended (pid=4357, tid=589835)
+Jun 14 16:40:28 miuvdr vdr[4293]: buffer stats: 119944 (5%) used
+Jun 14 16:40:28 miuvdr vdr[4317]: TS buffer on device 1 thread ended (pid=4317, tid=229391)
+Jun 14 16:40:28 miuvdr vdr[4314]: buffer stats: 145136 (6%) used
+Jun 14 16:40:28 miuvdr vdr[4314]: receiver on device 1 thread ended (pid=4314, tid=180236)
+Jun 14 16:40:28 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:28 miuvdr vdr[4293]: creating directory /vtx/T-8438-4097-145
+Jun 14 16:40:28 miuvdr vdr[4362]: transfer thread started (pid=4362, tid=671755)
+Jun 14 16:40:28 miuvdr vdr[4363]: receiver on device 1 thread started (pid=4363, tid=688140)
+Jun 14 16:40:28 miuvdr vdr[4367]: TS buffer on device 1 thread started (pid=4367, tid=753680)
+Jun 14 16:40:30 miuvdr vdr[4362]: setting audio track to 1
+Jun 14 16:40:30 miuvdr vdr[4369]: [softdevice-audio]: xrun
+Jun 14 16:40:31 miuvdr vdr[4293]: switching to channel 6
+Jun 14 16:40:31 miuvdr vdr[4362]: transfer thread ended (pid=4362, tid=671755)
+Jun 14 16:40:31 miuvdr vdr[4293]: buffer stats: 95880 (4%) used
+Jun 14 16:40:31 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:31 miuvdr vdr[4370]: transfer thread started (pid=4370, tid=802827)
+Jun 14 16:40:31 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:31 miuvdr vdr[4293]: creating directory /vtx/T-8438-4097-129
+Jun 14 16:40:32 miuvdr vdr[4370]: setting audio track to 1
+Jun 14 16:40:33 miuvdr vdr[4375]: [softdevice-audio]: xrun
+Jun 14 16:40:35 miuvdr vdr[4303]: changing pids of channel 1 from 512+128:650=fin:2321 to 512+128:650=eng,652=dut:2321
+Jun 14 16:40:35 miuvdr vdr[4293]: switching to channel 7
+Jun 14 16:40:35 miuvdr vdr[4370]: transfer thread ended (pid=4370, tid=802827)
+Jun 14 16:40:35 miuvdr vdr[4293]: buffer stats: 97948 (4%) used
+Jun 14 16:40:35 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:36 miuvdr vdr[4376]: transfer thread started (pid=4376, tid=901131)
+Jun 14 16:40:36 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:36 miuvdr vdr[4293]: creating directory /vtx/T-8438-8193-97
+Jun 14 16:40:37 miuvdr vdr[4376]: setting audio track to 1
+Jun 14 16:40:37 miuvdr vdr[4380]: [VideoOut]: aspect changed (8 -&gt; 0 ; 1.333333 -&gt; 1.333333)
+Jun 14 16:40:37 miuvdr vdr[4381]: [softdevice-audio]: xrun
+Jun 14 16:40:39 miuvdr vdr[4293]: switching to channel 8
+Jun 14 16:40:39 miuvdr vdr[4376]: transfer thread ended (pid=4376, tid=901131)
+Jun 14 16:40:39 miuvdr vdr[4293]: buffer stats: 104528 (4%) used
+Jun 14 16:40:39 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:40 miuvdr vdr[4382]: transfer thread started (pid=4382, tid=999435)
+Jun 14 16:40:40 miuvdr vdr[4293]: buffer stats: 0 (0%) used
+Jun 14 16:40:40 miuvdr vdr[4293]: creating directory /vtx/T-8438-12289-113
+Jun 14 16:40:40 miuvdr vdr[4303]: channel 19 (CANAL+ Finland) event 16:15 'Willard' status 4
+Jun 14 16:40:40 miuvdr vdr[4303]: channel 20 (CANAL+ FILM 1) event 14:40 '21 grammaa' status 4
+Jun 14 16:40:40 miuvdr vdr[4303]: channel 8 (Urheilukanava) event 16:00 'Veikkauskanava' status 4
+Jun 14 16:40:40 miuvdr vdr[4303]: channel 21 (CANAL+ FILM 2) event 16:40 'Ken sutta pelk&#228;&#228;' status 4
+Jun 14 16:40:40 miuvdr vdr[4303]: channel 22 (CANAL+ SPORT) event 16:40 'Allsvenskan: Helsingborg - Malm&#246;' status 4
+Jun 14 16:40:40 miuvdr vdr[4385]: [VideoOut]: aspect changed (0 -&gt; 8 ; 1.333333 -&gt; 1.333333)
+Jun 14 16:40:41 miuvdr vdr[4382]: setting audio track to 1
+Jun 14 16:40:42 miuvdr vdr[4386]: [softdevice-audio]: xrun
+
+______
+BR, Voitto
+
+...................................................................
+Luukku Plus paketilla p&#228;&#228;set eroon tila- ja turvallisuusongelmista.
+Hanki Luukku Plus ja helpotat el&#228;m&#228;&#228;si. <A HREF="http://www.mtv3.fi/luukku">http://www.mtv3.fi/luukku</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000890.html">[Softdevice-devel] Blue vertical bar on left side of the picture
+</A></li>
+	<LI>Next message: <A HREF="000896.html">[Softdevice-devel] Problem running vdr+softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#891">[ date ]</a>
+              <a href="thread.html#891">[ thread ]</a>
+              <a href="subject.html#891">[ subject ]</a>
+              <a href="author.html#891">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

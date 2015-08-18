@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] make mgatv default to TV output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20make%20mgatv%20default%20to%20TV%20output&In-Reply-To=%3C1158435696.11326.14.camel%40marumake%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002458.html">
+   <LINK REL="Next"  HREF="002464.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] make mgatv default to TV output</H1>
+    <B>Heikki Lindholm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20make%20mgatv%20default%20to%20TV%20output&In-Reply-To=%3C1158435696.11326.14.camel%40marumake%3E"
+       TITLE="[Softdevice-devel] [PATCH] make mgatv default to TV output">holindho at cs.helsinki.fi
+       </A><BR>
+    <I>Sat Sep 16 21:41:35 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002458.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+        <LI>Next message: <A HREF="002464.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2459">[ date ]</a>
+              <a href="thread.html#2459">[ thread ]</a>
+              <a href="subject.html#2459">[ subject ]</a>
+              <a href="author.html#2459">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>la, 2006-09-16 kello 20:31 +0200, Stefan Lucke kirjoitti:
+&gt;<i> On Samstag 16 September 2006 19:21, Heikki Lindholm wrote:
+</I>&gt;<i> &gt; I didn't like the need to have &quot;primary-layer=2&quot; in /etc/directfbrc, and 
+</I>&gt;<i> &gt; I also think mgatv output should always go to TV regardless of the 
+</I>&gt;<i> &gt; primary layer. The included patch always defaults both OSD and video 
+</I>&gt;<i> &gt; layers to crtc2 when mgatv option is used.
+</I>&gt;<i> 
+</I>&gt;<i> Good to know, that even of  my previous replies your are still interested
+</I>&gt;<i> in some improvements of softdevice.
+</I>
+Hehe. If you want to scare off people as a maintainer, you still have a
+lot to learn - go read glibc-devel and learn from the masters ;) As I
+said, I try to post stuff that I think *might* be useful to somebody.
+Mailing lists are for discussion, and I really don't expect maintainers
+to readily accept patches sent out of nowhere by people they've never
+heard of.
+
+&gt;<i> In case of option mgatv, there are some other parameters of directfbrc
+</I>&gt;<i> obsolete, like:
+</I>&gt;<i> 
+</I>&gt;<i>   depth = 32
+</I>&gt;<i>   pixelformat=ARGB
+</I>&gt;<i> 
+</I>&gt;<i> and pal implies:
+</I>&gt;<i>   matrox-tv-standard=pal
+</I>&gt;<i>   mode=720x576
+</I>&gt;<i> ntsc implies:
+</I>&gt;<i>   matrox-tv-standard=ntsc
+</I>&gt;<i>   mode=720x480
+</I>&gt;<i> 
+</I>&gt;<i> Passing these parameters to directfb could be done via the Init() call.
+</I>&gt;<i> 
+</I>&gt;<i> char *matroxTvArgs[6] = {
+</I>&gt;<i>   &quot;depth = 32&quot;,
+</I>&gt;<i>   &quot;pixelformat = ARGB&quot;,
+</I>&gt;<i>   &quot;matrox-crtc2&quot;,
+</I>&gt;<i>   NULL,
+</I>&gt;<i>   NULL,
+</I>&gt;<i>   NULL};
+</I>&gt;<i> 
+</I>&gt;<i> dfbInitArgc = 0
+</I>&gt;<i> dfbInitArgv = NULL;
+</I>&gt;<i> if (setupstore-&gt;useMGAtv) {
+</I>&gt;<i>   dfbInitArgc = 3;
+</I>&gt;<i>   dfbInitArgv = matroxTvArgs;
+</I>&gt;<i> }
+</I>&gt;<i> 
+</I>&gt;<i> DirectFB::Init(dfbInitARgc, dfbInitArgv);
+</I>&gt;<i> 
+</I>&gt;<i> What do you think of such a way ?
+</I>
+The matrox-crtc2 is debatable, I think. Maybe someone who omits it from
+directfbrc actually expects programs that try to use crtc2 to fail.
+
+&gt;<i> I guess we need a way to switch TV-norm on the fly.
+</I>&gt;<i> Going from PAL to PAL60 depending on current frame duration.
+</I>
+I'm no expert on dfb, but can't the tv norm be changed by any other way
+than Init()? Redoing Init() does not sound nice if a mere channel change
+would be enough to trigger a norm change.
+
+-- Heikki Lindholm
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002458.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+	<LI>Next message: <A HREF="002464.html">[Softdevice-devel] [PATCH] make mgatv default to TV output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2459">[ date ]</a>
+              <a href="thread.html#2459">[ thread ]</a>
+              <a href="subject.html#2459">[ subject ]</a>
+              <a href="author.html#2459">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> AW: [Softdevice-devel] new OSD support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C1136733427.4459.12.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001646.html">
+   <LINK REL="Next"  HREF="001649.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>AW: [Softdevice-devel] new OSD support</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C1136733427.4459.12.camel%40localhost.localdomain%3E"
+       TITLE="AW: [Softdevice-devel] new OSD support">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Sun Jan  8 16:17:06 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001646.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+        <LI>Next message: <A HREF="001649.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1647">[ date ]</a>
+              <a href="thread.html#1647">[ thread ]</a>
+              <a href="subject.html#1647">[ subject ]</a>
+              <a href="author.html#1647">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, 2006-01-08 at 14:46 +0100, Andre Neumann wrote:
+&gt;<i> Works great here now :)
+</I>&gt;<i> 
+</I>&gt;<i> Thank you.
+</I>&gt;<i> 
+</I>&gt;<i> A big thanks to you and all the other programmers of this project. Without you, my homecinema would not
+</I>&gt;<i> exist :)
+</I>&gt;<i> 
+</I>&gt;<i> The only thing now we all waiting for is a good deinterlacer :)
+</I>
+Since you said the ONLY thing we are ALL waiting for I had to join in:
+
+I am also waiting for stretchblits that honor field parity in dfb so I
+can view letterboxed 16:9 content on my 4:3 TV (using dfb and g450 tv
+out).  It would also allow ntsc material to look correct.  And softplay
+material.  And...
+
+Not that I am complaining at all.  I have been meaning to chip in and
+work on the code myself but have not got the time to do it.  (Plus my
+vdr is in production here at home) ;)
+
+
+&gt;<i> -------------
+</I>&gt;<i> Andre Neumann 
+</I>&gt;<i> 
+</I>&gt;<i> -----Urspr&#252;ngliche Nachricht-----
+</I>&gt;<i> Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] Im Auftrag von Martin Wache
+</I>&gt;<i> Gesendet: Sonntag, 8. Januar 2006 13:48
+</I>&gt;<i> An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+</I>&gt;<i> Betreff: Re: AW: AW: [Softdevice-devel] new OSD support
+</I>&gt;<i> 
+</I>&gt;<i> Andre Neumann schrieb:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Andre Neumann schrieb:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;I tried you new version, same problem. I also tried a different cvs 
+</I>&gt;<i> &gt;&gt;version (i'm using cvs from some days ago), no luck at all.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Sorry, i wanted to say i tested your new cvs version also with different ffmpeg builds.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I now changed /etc/directfbrc mode=1280x720 to mode=720x576 and now it works. 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> That is a very good hint! Thank you!
+</I>&gt;<i> 
+</I>&gt;<i> &gt; When using 1280x720 it did not work. Have you tested it with bigger resolutions than 576 ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Yes, I tested them, but only to resolutions with a x-resolution up to
+</I>&gt;<i> 1024 (my old monitor doesn't do much more :-(). I found a small bug in the code which causes a crash one higher resolutions, so I guess that's your problem :-)
+</I>&gt;<i> 
+</I>&gt;<i> Please try the attatched patch.
+</I>&gt;<i> Martin
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001646.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+	<LI>Next message: <A HREF="001649.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1647">[ date ]</a>
+              <a href="thread.html#1647">[ thread ]</a>
+              <a href="subject.html#1647">[ subject ]</a>
+              <a href="author.html#1647">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

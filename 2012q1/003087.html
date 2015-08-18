@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2012q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.25.1331738297.11969.softdevice-devel%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002912.html">
+   <LINK REL="Next"  HREF="003173.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.25.1331738297.11969.softdevice-devel%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:17:53 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002912.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="003173.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3087">[ date ]</a>
+              <a href="thread.html#3087">[ thread ]</a>
+              <a href="subject.html#3087">[ subject ]</a>
+              <a href="author.html#3087">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> - Suspend output on user inactivity (see README): patch by Marko =
+M=E4kel=E4
+
+-------------
+Andre Neumann
+
+-----Urspr=FCngliche Nachricht-----
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-bounces at lists.berlios.de</A> =
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-bounces at lists.berlios.de</A>] Im Auftrag von Claas =
+Hilbrecht
+Gesendet: Montag, 28. April 2008 11:25
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+Betreff: Re: [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+
+--Am Freitag, 18. April 2008 18:01 +0200 Stefan Lucke=20
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; schrieb:
+
+&gt;<i> Supported vdr versions: 1.4.x, 1.5.x and 1.6.x
+</I>
+After switching from vdr 1.6.0 and softdevice 2008-02-26 to vdr 1.6.0-1 =
+and=20
+softdevice 0.5.0 I have a problem. I use the softdevice audio output =
+only=20
+and after the upgrade the audio is &quot;killed&quot; after some hours. If I =
+change=20
+the channel via vdr live plugin the sounds comes back. I use softdevice =
+as=20
+a radio broadcast system here. Looking at syslog I only find this=20
+information regarding softdevice:
+
+Apr 27 21:42:36 funfix vdr: [15174] 1 cRepacker messages suppressed
+Apr 27 21:42:36 funfix vdr: [15174] cAudioRepacker(0xC0): skipped 312 =
+bytes=20
+while syncing on next audio frame
+Apr 27 21:42:36 funfix vdr: [15140] cAudioRepacker(0xC0): skipped 1148=20
+bytes while syncing on next audio frame
+Apr 27 21:42:46 funfix vdr: [15140] cAudioRepacker(0xC0): skipped 4 =
+bytes=20
+to sync on next audio frame
+Apr 27 21:42:48 funfix vdr: [15174] 2 cRepacker messages suppressed
+Apr 27 21:42:48 funfix vdr: [15174] cAudioRepacker(0xC0): skipped 4 =
+bytes=20
+to sync on next audio frame
+
+But this is only logged once and the audio killing occured so far &gt;5 =
+times.=20
+I didn't change any configuration or libs since the last update. =
+softdevice=20
+is build with this configuration: ./configure --disable-vidix =
+--disable-fb=20
+--disable-dfb --disable-cle266 --disable-xv --disable-xinerama=20
+--disable-oss --disable-suspendkey --disable-yaepg.
+
+I will now try vdr 1.6.0-1 with the &quot;old&quot; softdevice from cvs to locate =
+the=20
+problem.
+
+--=20
+ Claas Hilbrecht
+ <A HREF="http://www.jucs-kramkiste.de">http://www.jucs-kramkiste.de</A>
+
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002912.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="003173.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3087">[ date ]</a>
+              <a href="thread.html#3087">[ thread ]</a>
+              <a href="subject.html#3087">[ subject ]</a>
+              <a href="author.html#3087">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

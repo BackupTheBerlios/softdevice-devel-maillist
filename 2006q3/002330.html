@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 Vertical Refresh
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20Vertical%20Refresh&In-Reply-To=%3C44ED5D02.7000408%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002329.html">
+   <LINK REL="Next"  HREF="002331.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 Vertical Refresh</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20Vertical%20Refresh&In-Reply-To=%3C44ED5D02.7000408%40huillard.net%3E"
+       TITLE="[Softdevice-devel] CLE266 Vertical Refresh">nicolas at huillard.net
+       </A><BR>
+    <I>Thu Aug 24 10:02:10 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002329.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+        <LI>Next message: <A HREF="002331.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2330">[ date ]</a>
+              <a href="thread.html#2330">[ thread ]</a>
+              <a href="subject.html#2330">[ subject ]</a>
+              <a href="author.html#2330">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kim Fredenberg a &#233;crit :
+&gt;<i> What am I doing wrong? Why can't I adjust the frequencies using fbset?
+</I>&gt;<i> Is my Epia board overriding the settings from linux in any way?
+</I>
+The framebuffer driver adjusts the frequencies of the VGA output when
+TV-out is activated, in order to align the VGA out timings to the TV
+signal. The TV encoder just encodes the signal without changing the
+frequencies.
+Thus no change with fbset will have any effect when TV-out is on.
+Mark Adams did a very good job to adjust timings in the &quot;tv tables&quot;
+inside the framebuffer driver, but did only take PAL into account.
+AFAIK, noone ever tried to adjust NTSC setting to proper full-frame
+(considering you're using NTSC).
+&quot;tv tables&quot; are found in the kernel driver code... You could try to get
+old posts from Mark Adams on the directfb-users ML, where he might
+explain how he did it. IIRC, this was between september and december 2005.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002329.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+	<LI>Next message: <A HREF="002331.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2330">[ date ]</a>
+              <a href="thread.html#2330">[ thread ]</a>
+              <a href="subject.html#2330">[ subject ]</a>
+              <a href="author.html#2330">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

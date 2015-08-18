@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Other playback formats than mpeg2 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Other%20playback%20formats%20than%20mpeg2%20%3F&In-Reply-To=%3C424C324B.4030903%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000410.html">
+   <LINK REL="Next"  HREF="000416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Other playback formats than mpeg2 ?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Other%20playback%20formats%20than%20mpeg2%20%3F&In-Reply-To=%3C424C324B.4030903%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Other playback formats than mpeg2 ?">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Mar 31 19:24:27 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000410.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+        <LI>Next message: <A HREF="000416.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#413">[ date ]</a>
+              <a href="thread.html#413">[ thread ]</a>
+              <a href="subject.html#413">[ subject ]</a>
+              <a href="author.html#413">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;<i> 
+</I>&gt;<i> Does format recognition apply for file reading only (seeking in file) or
+</I>&gt;<i> does it work for other &quot;stream format as well ?
+</I>I think currently it only works for file reading. In fact I open the 
+file in my player-plugin and send only packets to the softdevice. You 
+could do it similar, have a look at the DecodePackt method. Auto 
+detection of stream files is not that easy (since you can not seek 
+there), but I think it can be done.
+I will send my player to the list on saturday. Unfortunatly I don't have 
+it with me...
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Unfortunatly I have to rely on some seek functions which are only 
+</I>&gt;&gt;<i>available for ffmpeg-0.4.9pre1 ( and they already changed the parameters 
+</I>&gt;&gt;<i>of one function in their current CVS )....
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> There are already defines which depend on ffmpegs internal version
+</I>&gt;<i> number as: &quot;#if LIBAVCODEC_BUILD &gt; 4686&quot;. So we'll get som others ;-) .
+</I>&gt;<i> 
+</I>Yes I know, I just did not have the time to have a look at which version 
+the changed it. And I don't like having lots of #ifdefs in the code...
+
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000410.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+	<LI>Next message: <A HREF="000416.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#413">[ date ]</a>
+              <a href="thread.html#413">[ thread ]</a>
+              <a href="subject.html#413">[ subject ]</a>
+              <a href="author.html#413">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

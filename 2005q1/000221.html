@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C4204C393.7030802%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000251.html">
+   <LINK REL="Next"  HREF="000222.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] PATCH: OSD scaling &amp;&amp; and real alpha blending for XV</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%20for%20XV&In-Reply-To=%3C4204C393.7030802%40gmx.net%3E"
+       TITLE="[Softdevice-devel] PATCH: OSD scaling &amp;&amp; and real alpha blending for XV">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Feb  5 14:01:07 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000251.html">[Softdevice-devel] Tearing w I4&quot;0 output
+</A></li>
+        <LI>Next message: <A HREF="000222.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#221">[ date ]</a>
+              <a href="thread.html#221">[ thread ]</a>
+              <a href="subject.html#221">[ subject ]</a>
+              <a href="author.html#221">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I've created a patch which adds true alpha blending done in software to 
+XV-out. The method is the following, first it transforms the OSD to YUV 
+format and scales it down, if the current video stream is smaller than 
+the DVB standard 736x576. This image is then overlayed over each video 
+frame, respecting the alpha values. The result is shown via the normal 
+output method. In principle this should be feasible for all output 
+methods, but for now I only implemented it for xv.
+Since I had to write a scaling routine I also implemented OSD scaling to 
+Xv out, changing between true alpha blending and pseudo alpha blending 
+can be done via OSD menu.
+
+It works already quite well, I tested it with the text2skin plugin 
+version 1.0 and several skins. The speed for the software overlay is 
+quite okay, the routine uses MMX optimized code. On my machine, an 
+Athlon-1GHz the cpu usage raises from ca. 30% to ca 40% when OSD is 
+shown. Since the Athlon doesn't have MMX2 (only 3Dnow, which is somehow 
+similar) I could not test MMX2 and  I would like to ask people owning a 
+processor which has MMX2 extension to test my patch and report if its 
+working (especially people who own an intel processor).
+Ah, and before I forget to mention it, I didn't test the other output 
+methods and vdr-1.2.6, so this patch might break other things than 
+vdr-1.3.19 and XV-out...
+
+I would appreciate any comments!
+Cheers,
+Martin
+
+
+
+
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: Alpha_blend.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050205/c21c0d0c/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050205/c21c0d0c/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000251.html">[Softdevice-devel] Tearing w I4&quot;0 output
+</A></li>
+	<LI>Next message: <A HREF="000222.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#221">[ date ]</a>
+              <a href="thread.html#221">[ thread ]</a>
+              <a href="subject.html#221">[ subject ]</a>
+              <a href="author.html#221">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

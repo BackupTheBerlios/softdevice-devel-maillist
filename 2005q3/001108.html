@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] xrun problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C42FF8FAB.8060903%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001106.html">
+   <LINK REL="Next"  HREF="001141.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] xrun problems</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C42FF8FAB.8060903%40gmx.net%3E"
+       TITLE="[Softdevice-devel] xrun problems">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Aug 14 20:38:35 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001106.html">[Softdevice-devel] xrun problems
+</A></li>
+        <LI>Next message: <A HREF="001141.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1108">[ date ]</a>
+              <a href="thread.html#1108">[ thread ]</a>
+              <a href="subject.html#1108">[ subject ]</a>
+              <a href="author.html#1108">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Claas Hilbrecht schrieb:
+&gt;<i> --Am Montag, 8. August 2005 17:03 +0200 Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;
+</I>&gt;<i> schrieb:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> You can try to switch on the BUFDEB (by uncommenting the define in
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> 
+</I>&gt;&gt;<i> when Xruns happen?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, I was busy the last days. Here's the log. But I didn't see the
+</I>&gt;<i> message you mentioned.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+&gt;<i> mpegdec[3563]:Got pts: pictno 132467  pts: 515563493 lastIdx 8
+</I>&gt;<i> mpegdec[3563]:video pts: 515563493, values.pkt : 515563493 pts - valid
+</I>&gt;<i> PTS: 0 pictno: 132467 idx: 7
+</I>&gt;<i> mpegdec[3563]:Frame# 132466  aPTS: 515562216 offset: -877 delay 40823
+</I>&gt;<i> mpegdec[3575]:audio: count: 220790  Length: 2034 len: 576 a_size: 4608
+</I>&gt;<i> a_delay: 0
+</I>&gt;<i> audio: xrun
+</I>&gt;<i> mpegdec[3575]:audio pts 515563951 pkt-&gt;PTS : 515563951 pts - valid PTS: 0
+</I>&gt;<i> mpegdec[3575]:audio pts offset -93341592
+</I>&gt;<i> mpegdec[3576]:audio: count: 220791  Length: 2034 len: 576 a_size: 4608
+</I>&gt;<i> a_delay: 231
+</I>&gt;<i> mpegdec[3576]:audio pts offset -93341592
+</I>&gt;<i> mpegdec[3576]:audio: count: 220792  Length: 2034 len: 576 a_size: 4608
+</I>&gt;<i> a_delay: 464
+</I>&gt;<i> mpegdec[3576]:audio pts offset -93341591
+</I>&gt;<i> mpegdec[3576]:audio: count: 220793  Length: 2034 len: 306 a_size: 0
+</I>&gt;<i> a_delay: 703
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+That's the wrong debug output, you've activated MPGDEB, not BUFDEB.
+Unfortunatly I can't see much from this log....
+
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001106.html">[Softdevice-devel] xrun problems
+</A></li>
+	<LI>Next message: <A HREF="001141.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1108">[ date ]</a>
+              <a href="thread.html#1108">[ thread ]</a>
+              <a href="subject.html#1108">[ subject ]</a>
+              <a href="author.html#1108">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

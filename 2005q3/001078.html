@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] VDR with DirectFB &amp; Softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VDR%20with%20DirectFB%20%26%20Softdevice&In-Reply-To=%3C20050802115640.GE3864%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001077.html">
+   <LINK REL="Next"  HREF="001079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] VDR with DirectFB &amp; Softdevice</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VDR%20with%20DirectFB%20%26%20Softdevice&In-Reply-To=%3C20050802115640.GE3864%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] VDR with DirectFB &amp; Softdevice">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Aug  2 13:56:40 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001077.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+        <LI>Next message: <A HREF="001079.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1078">[ date ]</a>
+              <a href="thread.html#1078">[ thread ]</a>
+              <a href="subject.html#1078">[ subject ]</a>
+              <a href="author.html#1078">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Aug 02, 2005 at 12:36:26PM +0200, Rose M wrote:
+&gt;<i> I compiled last version of softdevice and libs has
+</I>&gt;<i> been created.
+</I>&gt;<i> But... vdr doesn't work, it crash with a segfault.
+</I>&gt;<i> This is the output:
+</I>&gt;<i> 
+</I>&gt;<i> ./vdr -Psoftdevice
+</I>&gt;<i> [softdevice] processing args
+</I>&gt;<i> [softdevice]   argv [0] = softdevice
+</I>&gt;<i> Segmentation fault
+</I>
+Have you checked that the file PLUGINS/lib/libvdr-softdevice*
+(or something like that) has a recent modification date?  It
+should have been built by the most recent &quot;make plugins&quot;.
+
+Hmm, was my patch a couple of months ago (crash on start) committed to CVS?
+Which one are you using: the last released version of softdevice or the most
+recent CVS snapshot?  That bug might be present in the last released
+version of softdevice.
+
+&gt;<i> Any idea about this problem with segmentation fault?
+</I>&gt;<i> Thanks in advance!
+</I>
+Run vdr inside gdb:
+$ gdb vdr
+(gdb) run -Psoftdevice
+
+When it crashes, type &quot;bt&quot; or &quot;bt full&quot; at the &quot;(gdb) &quot; prompt
+and post the resulting stack trace.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001077.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+	<LI>Next message: <A HREF="001079.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1078">[ date ]</a>
+              <a href="thread.html#1078">[ thread ]</a>
+              <a href="subject.html#1078">[ subject ]</a>
+              <a href="author.html#1078">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

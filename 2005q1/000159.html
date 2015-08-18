@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Raw%20PCM%20out%20%28makes%20dvd-plugin%20work%20with%20softdevice%29&In-Reply-To=%3C200501102120.24019.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000158.html">
+   <LINK REL="Next"  HREF="000164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Raw%20PCM%20out%20%28makes%20dvd-plugin%20work%20with%20softdevice%29&In-Reply-To=%3C200501102120.24019.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Jan 10 21:20:23 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000158.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)
+</A></li>
+        <LI>Next message: <A HREF="000164.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work	with softdevice)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#159">[ date ]</a>
+              <a href="thread.html#159">[ thread ]</a>
+              <a href="subject.html#159">[ subject ]</a>
+              <a href="author.html#159">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 10. Januar 2005 17:40, Martin Wache wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Stream id 0x01bd (private stream) is used for ac3 too. But we get the ac3
+</I>&gt;<i> &gt; via PlayAudio ( .. ) .
+</I>&gt;<i> Not if we recieve data from the dvd-plugin, the dvd-plugin sends data 
+</I>&gt;<i> directly to the primary device.
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt;We could easily replay .avi files with vdr, we 
+</I>&gt;<i> &gt;&gt;would just need an additional cPlayer...). 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; That should be the way to go. Hopefully this could be done without patching
+</I>&gt;<i> &gt; vdr. Normal cDevice has to method of specifying different output formats.
+</I>&gt;<i> But that doesn't mean that the softdevice can't have a method to switch 
+</I>&gt;<i> formats ;-). I have not checked everything, but I'm pretty sure that we 
+</I>&gt;<i> won't need to patch vdr...
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I tested this with vdr-1.3.17. Just with two different dvds. Xv-out method.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; - Contact
+</I>&gt;<i> &gt; 	aspect ratio ok, sound complete out of sync,
+</I>&gt;<i> &gt; 	video jerky (as no one throttles us).
+</I>
+I'll do some traces. So after traceing this, there was a large offset
+offset = aPTS - pts; it starts with 12000 and went down to 7300.
+After changeing the language via OSD, A/V was in sync ;-) for all
+languages (german, english, spain) .
+
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; - Herr der Ringe, die zwei T&#252;rme
+</I>&gt;<i> &gt; 	aspect ratio wrong (shown as 4:3 within my 1024x768 window),
+</I>&gt;<i> &gt; 	sound out of sync, video jerky (as no one throttles us).
+</I>
+With this DVD I have to re-test, Contact was complete out of sync.
+So now it seems to be ok.
+
+&gt;<i> That sounds like the softdevice doesn't get video or audio PTS... Hm 
+</I>&gt;<i> that's strange, for me it is working with all my dvds...
+</I>&gt;<i> Apart from not beeing in sync with the video,is the sound okay? I guess 
+</I>&gt;<i> you are useing the latest version of the dvd-plugin?
+</I>
+I use dvd-0.3.5b06 , should I switch to cvs version ?
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000158.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)
+</A></li>
+	<LI>Next message: <A HREF="000164.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work	with softdevice)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#159">[ date ]</a>
+              <a href="thread.html#159">[ thread ]</a>
+              <a href="subject.html#159">[ subject ]</a>
+              <a href="author.html#159">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

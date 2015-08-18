@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] On my vdr suspend patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20On%20my%20vdr%20suspend%20patch&In-Reply-To=%3C20050905190521.GA3197%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001176.html">
+   <LINK REL="Next"  HREF="001167.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] On my vdr suspend patch</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20On%20my%20vdr%20suspend%20patch&In-Reply-To=%3C20050905190521.GA3197%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] On my vdr suspend patch">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Sep  5 21:05:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001176.html">[Softdevice-devel] On my vdr suspend patch
+</A></li>
+        <LI>Next message: <A HREF="001167.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1183">[ date ]</a>
+              <a href="thread.html#1183">[ thread ]</a>
+              <a href="subject.html#1183">[ subject ]</a>
+              <a href="author.html#1183">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Sep 05, 2005 at 11:21:44AM +0200, Nicolas Huillard wrote:
+&gt;<i> &gt; Users of nvram-wakeup may find the configurable suspend-to-shutdown
+</I>&gt;<i> &gt; feature useful.  Those whose boxes run 24&#215;7 may just appreciate the
+</I>&gt;<i> &gt; reduced power consumption and heat production.
+</I>&gt;<i> 
+</I>&gt;<i> cpu-freq can also be a great addition WRT power consumption. Did anyone
+</I>&gt;<i> tested that yet ?
+</I>
+I'm using cpufreq and the 'ondemand' or 'conservative' scaling governor
+on this IBM Thinkpad T41.  The fan makes less noise when the system is
+running at the lowest clock frequency, but it usually still does make noise.
+The lowest clock frequency is 600 MHz, and the highest is 1400 MHz.  I'm
+only using 'userspace' scaling governor (i.e., manual clock rate
+selection) when I want to make repeatable performance measurements.
+I don't have a power meter, so I haven't made any exact measurements.
+
+My VDR box doesn't support frequency scaling, but it's running very
+quiet now, considering that it is an air-cooled system.
+
+&gt;<i> Longhaul on VIA C3 seems to be well supported. I'll try after when time
+</I>&gt;<i> comes.
+</I>
+It should be a matter of recompiling the kernel or loading the right
+modules.  No changes to the software should be needed.  I would expect
+the 'conservative' scaling governor to be better than 'ondemand' when
+the frequency switching is slow or the 'ondemand' scaling governor
+would oscillate between two settings, causing jitter in the application.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001176.html">[Softdevice-devel] On my vdr suspend patch
+</A></li>
+	<LI>Next message: <A HREF="001167.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1183">[ date ]</a>
+              <a href="thread.html#1183">[ thread ]</a>
+              <a href="subject.html#1183">[ subject ]</a>
+              <a href="author.html#1183">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

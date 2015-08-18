@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050904192000.GC3134%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001183.html">
+   <LINK REL="Next"  HREF="001169.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050904192000.GC3134%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Sep  4 21:20:00 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001183.html">[Softdevice-devel] On my vdr suspend patch
+</A></li>
+        <LI>Next message: <A HREF="001169.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1167">[ date ]</a>
+              <a href="thread.html#1167">[ thread ]</a>
+              <a href="subject.html#1167">[ subject ]</a>
+              <a href="author.html#1167">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sometimes, rewinding a recording so that the aspect ratio will switch
+from 16:9 to 4:3 (i.e., the recording contains a 4:3-&gt;16:9 transition)
+does not work properly.  I have noticed two kinds of buggy behaviour
+on DirectFB output:
+
+(1) The 4:3 picture will be displayed at the pixel aspect ratio of the
+16:9 picture.  The right-hand part of the screen remains uninitialized;
+e.g., it will keep flipping between the two last 16:9 fields that were
+displayed previously.
+
+(2) vdr crashes.
+
+Are others seeing these?  I'm happy to provide test recordings to make
+this repeatable.  I've got multiple crashes in the past few days, and
+I'd hate to learn to avoid rewinding recordings when a timed recording
+is active.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001183.html">[Softdevice-devel] On my vdr suspend patch
+</A></li>
+	<LI>Next message: <A HREF="001169.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1167">[ date ]</a>
+              <a href="thread.html#1167">[ thread ]</a>
+              <a href="subject.html#1167">[ subject ]</a>
+              <a href="author.html#1167">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

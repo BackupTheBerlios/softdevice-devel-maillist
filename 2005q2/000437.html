@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspending the playback at shutdown
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C4252B8B4.7070205%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000431.html">
+   <LINK REL="Next"  HREF="000438.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspending the playback at shutdown</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C4252B8B4.7070205%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Suspending the playback at shutdown">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr  5 18:11:32 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000431.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+        <LI>Next message: <A HREF="000438.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#437">[ date ]</a>
+              <a href="thread.html#437">[ thread ]</a>
+              <a href="subject.html#437">[ subject ]</a>
+              <a href="author.html#437">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Apr 02, 2005 at 04:32:31PM +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Go ahead, if there is an easy way to improve the performance of the 
+</I>&gt;&gt;<i>softdevice we will certainly accept a patch.
+</I>&gt;&gt;<i>What I was thinking about to introduce at some point is direct 
+</I>&gt;&gt;<i>rendering, i.e. let ffmpeg write directly to the video memory. That 
+</I>&gt;&gt;<i>would save some time since there would be no need of copying the 
+</I>&gt;&gt;<i>pictures any more, but I want to finish the audio things first...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> It would be helpful to link libvdr-softdevice-dfb.so and libvdr-softdevice.so
+</I>&gt;<i> statically with the vdr executable, so that complete stack traces can be
+</I>&gt;<i> obtained.  For some reason, I was unable to get oprofile's opstack to work
+</I>&gt;<i> yet.  (I had similar problems on other systems, so that's nothing new.)
+</I>&gt;<i> Thus, I got the statistics for &quot;vdr&quot; and the softdevice libraries separately.
+</I>&gt;<i> Here is the top for vdr when playing live stream:
+</I>&gt;<i> 
+</I>&gt;<i> CPU: PIII, speed 906.845 MHz (estimated)
+</I>&gt;<i> Counted CPU_CLK_UNHALTED events (clocks processor is not halted) with a unit mask of 0x00 (No unit mask) count 9000
+</I>&gt;<i> samples  %        symbol name
+</I>&gt;<i> 11330    14.0482  cRemux::ScanVideoPacket(unsigned char const*, int, int, unsigned char&amp;)
+</I>&gt;<i> 8735     10.8306  cSchedule::GetEvent(unsigned short, long) const
+</I>&gt;<i> 5337      6.6174  SI::CRC32::crc32(char const*, int, unsigned int)
+</I>&gt;<i> 3364      4.1711  cSectionHandler::Action()
+</I>&gt;<i> 2618      3.2461  cChannels::GetByChannelID(tChannelID, bool, bool)
+</I>&gt;<i> 2286      2.8344  cDevice::Action()
+</I>&gt;<i> 2055      2.5480  cTS2PES::instant_repack(unsigned char const*, int)
+</I>&gt;<i> 1813      2.2480  cSchedules::GetSchedule(tChannelID) const
+</I>&gt;<i> 1789      2.2182  cRingBufferLinear::Put(unsigned char const*, int)
+</I>&gt;<i> 1568      1.9442  cRingBuffer::UpdatePercentage(int)
+</I>&gt;<i> [truncated]
+</I>&gt;<i> 
+</I>&gt;<i> And here is the list for libvdr-softdevice-dfb:
+</I>&gt;<i> 
+</I>&gt;<i> samples  %        symbol name
+</I>&gt;<i> 9980     84.3832  cDFBVideoOut::YUV(unsigned char*, unsigned char*, unsigned char*, int, int, int, int)
+</I>&gt;<i> 581       4.9125  cVideoOut::CheckAspectDimensions(AVFrame*, AVCodecContext*)
+</I>&gt;<i> 453       3.8302  cDFBVideoOut::SetParams()
+</I>&gt;<i> 425       3.5935  cVideoOut::CheckAspect(int, float)
+</I>&gt;<i> 343       2.9001  cDFBRemote::Action()
+</I>&gt;<i> 45        0.3805  cDFBVideoOut::ProcessEvents()
+</I>&gt;<i> [complete list]
+</I>These numbers are quite like I would expect them...
+
+&gt;<i> 
+</I>&gt;<i> Finally, here is the list for libvdr-softdevice:
+</I>&gt;<i> 
+</I>&gt;<i> samples  %        symbol name
+</I>&gt;<i> 2986     26.1219  cVideoStreamDecoder::DecodePacket(AVPacket*)
+</I>&gt;<i> 1320     11.5475  cStreamDecoder::Action()
+</I>Actualy this is quite interessting. Action() should do nothing except 
+waiting for new packets and call DecodePacket() for each packet. I would 
+not expect it use so much time. Sleeping and the call to DecodePacket 
+should not count, so where does it spend the time? Maybe the mutex... I 
+guess playing around in this function may give some improvements..
+&gt;<i> 1083      9.4742  cMpeg2Decoder::read_packet(unsigned char*, int)
+</I>&gt;<i> 956       8.3632  cAudioStreamDecoder::DecodePacket(AVPacket*)
+</I>&gt;<i> 740       6.4736  cRelTimer::GetRelTime()
+</I>Ups, also much more than I thought...
+&gt;<i> 533       4.6628  cSoftRingBufferLinear::Available()
+</I>&gt;<i> 466       4.0766  cPacketQueue::PutPacket(AVPacket const&amp;)
+</I>&gt;<i> 433       3.7879  cMpeg2Decoder::Action()
+</I>&gt;<i> 426       3.7267  cMpeg2Decoder::DecodePacket(AVFormatContext const*, AVPacket&amp;)347       3.0356  cAlsaAudioOut::SetParams(SampleContext&amp;)
+</I>&gt;<i> 323       2.8256  cAlsaAudioOut::Write(unsigned char*, int)
+</I>&gt;<i> 301       2.6332  cAudioStreamDecoder::GetPTS()
+</I>&gt;<i> 265       2.3183  cPacketQueue::GetReadPacket()
+</I>&gt;<i> 223       1.9508  cClock::GetPTS()
+</I>&gt;<i> [truncated]
+</I>
+I never used oprofile before, only gprof so I don't now exactly what 
+these numbers mean. What is samples exactly, I asume it is the overall 
+cpu time spend in a function? Is there a statistic like numbers of calls 
+and time consumed per call?
+
+&gt;<i> 
+</I>&gt;<i> It seems that the percentages are relative to that executable only.  But the
+</I>&gt;<i> numbers of samples should be global.  So, even though cDFBVideoOut::YUV()
+</I>&gt;<i> seems to consume a large percentage of CPU cycles, at 9980 samples it's
+</I>&gt;<i> behind cRemux::ScanVideoPacket(), which has been sampled 11330 times.
+</I>&gt;<i> 
+</I>&gt;<i> It'd be really helpful to link the plugins statically to vdr, because then
+</I>&gt;<i> the percentage figures could be compared directly, and also stack traces would
+</I>&gt;<i> look more meaningful.  How can that be done?
+</I>You can disable USE_SUBPLUGINS in the softdevice makefile and you will 
+get at least one library for the softdevice.
+&gt;<i> 
+</I>&gt;<i> If you want to play with oprofile yourself, be sure to enable the following
+</I>
+I guess if I find the time I will try gprof. I know it much better and 
+we can compare the results...
+
+&gt;<i> 
+</I>&gt;<i> Okay.  Anyway, this will not be needed if you can figure out how to get
+</I>&gt;<i> the timing right without using the RTC device.
+</I>&gt;<i> 
+</I>I already tried using the sigalarm mechanism, the timing works nice also 
+for greater sleeps times. Looks much better than usleep timing, also it 
+is slightly less precise than RTC timing.
+
+&gt;<i> 
+</I>&gt;<i> I have a snapshot &quot;softdevice-work.tar.gz&quot; from about 3 weeks ago, which
+</I>&gt;<i> I guess I downloaded from
+</I>&gt;<i> <A HREF="http://www.lucke.in-berlin.de/vdr-softdevice-work.tar.gz">http://www.lucke.in-berlin.de/vdr-softdevice-work.tar.gz</A> when the berlios
+</I>&gt;<i> server was unavailable.  (It worked on Saturday but didn't on Sunday, or
+</I>&gt;<i> something like that.)
+</I>Are the above oprof outputs from the old snapshot or from the new one? 
+If it is the new one then please check if in your old snapshot in 
+mpeg2decoder is a function &quot;int cMpeg2Decoder::read_packet(uint8_t *buf, 
+int buf_size)&quot;. About three weeks ago I introduced libavformat parsing 
+into the softdevice and I like to know if the working version was before 
+that or after that change.
+&gt;<i> 
+</I>&gt;<i> The CVS snapshot I took on March 31 didn't display any subtitles.  I haven't
+</I>&gt;<i> tried a more recent CVS snapshot yet.  So, I took the old snapshot and
+</I>&gt;<i> patched the setup parsing code there.
+</I>&gt;<i> 
+</I>I guess I will try the subtitles plugin myself. I wonder if in Germany 
+there are stations which provide subtitles...
+
+&gt;<i> 
+</I>&gt;<i> Of course, it could also be a problem in the stream itself.  I haven't seen
+</I>&gt;<i> subtitles in any other DVB-T receiver, so I can't say for sure.  The
+</I>&gt;<i> subtitles seem to work much better in softdevice than dxr3, where the
+</I>&gt;<i> subtitles often appear in bursts.  However, sometimes the subtitles
+</I>&gt;<i> could be one or two seconds too early.
+</I>&gt;<i> 
+</I>&gt;<i> Finally, I noticed another interesting thing: the subtitles will continue to
+</I>&gt;<i> change, even if playback is suspended!
+</I>Now that is strange... GetSTC should not return anything meaningfull if 
+the playback is suspended...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000431.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+	<LI>Next message: <A HREF="000438.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#437">[ date ]</a>
+              <a href="thread.html#437">[ thread ]</a>
+              <a href="subject.html#437">[ subject ]</a>
+              <a href="author.html#437">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

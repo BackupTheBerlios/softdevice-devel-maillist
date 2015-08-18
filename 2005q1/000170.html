@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Raw%20PCM%20out%20%28makes%20dvd-plugin%20work%20with%20softdevice%29&In-Reply-To=%3C1105632261.41e69c0529cde%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000172.html">
+   <LINK REL="Next"  HREF="000178.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20Raw%20PCM%20out%20%28makes%20dvd-plugin%20work%20with%20softdevice%29&In-Reply-To=%3C1105632261.41e69c0529cde%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Jan 13 17:04:21 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000172.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin	work	with softdevice)
+</A></li>
+        <LI>Next message: <A HREF="000178.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#170">[ date ]</a>
+              <a href="thread.html#170">[ thread ]</a>
+              <a href="subject.html#170">[ subject ]</a>
+              <a href="author.html#170">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Mittwoch, 12. Januar 2005 18:13, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;On Mon, 2005-01-10 at 17:40 +0100, Martin Wache wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;Is there somebody else who tried the patch?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;Do you have an updated patch relative to the quickfix patch for running
+</I>&gt;<i> &gt;&gt;softdevice under vdr 1.3.18?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; As the dvd-plugin has his own modified version with vdr-1.3.18 support in
+</I>&gt;<i> cvs,
+</I>&gt;<i> &gt; Martin should decide how to proceed. Haven't tested that combination.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; To my opinion it would be best to focus on vdr-1.3.18 with dvd-plugin from
+</I>&gt;<i> cvs,
+</I>&gt;<i> &gt; and I don't belive we could support all new features with all vdr version
+</I>&gt;<i> (1.2.x).
+</I>&gt;<i> 
+</I>&gt;<i> I'm sorry that I'm answering so late... I'm also working on a different 
+</I>&gt;<i> patch, I still have some unfinished patches around which I want to 
+</I>&gt;<i> finish bevore I start to work on the inclusion of libavformat for the 
+</I>&gt;<i> parsing.
+</I>&gt;<i> I think we should not delay the development of the softdevice for a 
+</I>&gt;<i> working dvd-plugin, so lets make the softdevice compatible with 
+</I>&gt;<i> vdr-1.3.18 and than look for the dvd-plugin.
+</I>
+So I'll commit my vdr-1.3.18 patch.
+
+&gt;<i> And I also think we should 
+</I>&gt;<i> not put too much work into the patch I send around, it will be obsolete 
+</I>&gt;<i> anyway if we move to parsing with libavformat... I just proposed to 
+</I>&gt;<i> include it into cvs because it was working without any problems for me, 
+</I>&gt;<i> and I didn't expect that there will be problems. Ah yes, and I found a 
+</I>&gt;<i> small bug in the calculation of the audio pts, it still uses a fixed 
+</I>&gt;<i> bitrate and number of channels, I will fix this in the cvs this 
+</I>&gt;<i> afternoon. So maybe this is the reason for the problems with the sync...
+</I>
+As you come back to audio sync..
+1. The call of GetRelTime() after displaying a frame is not guarantied to
+   measure only the display time. If the delay-loops are not executed
+   it will measure to the last call (at the same place).
+2. Before entering the delay loop shouldn't we reduce/adjust delay by the
+   time of the last measurement point &quot;delay -= GetRelTime()&quot; ?
+3. I've noticed that a usleep(x), sleeps at least for 10000 usecs.
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000172.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin	work	with softdevice)
+</A></li>
+	<LI>Next message: <A HREF="000178.html">[Softdevice-devel] Patch: Raw PCM out (makes dvd-plugin work with softdevice)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#170">[ date ]</a>
+              <a href="thread.html#170">[ thread ]</a>
+              <a href="subject.html#170">[ subject ]</a>
+              <a href="author.html#170">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

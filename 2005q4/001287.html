@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] StretchBlit problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20StretchBlit%20problem&In-Reply-To=%3C200510021105.49138.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001286.html">
+   <LINK REL="Next"  HREF="001289.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] StretchBlit problem</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20StretchBlit%20problem&In-Reply-To=%3C200510021105.49138.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] StretchBlit problem">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct  2 11:05:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001286.html">[Softdevice-devel] StretchBlit problem
+</A></li>
+        <LI>Next message: <A HREF="001289.html">[Softdevice-devel] StretchBlit problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1287">[ date ]</a>
+              <a href="thread.html#1287">[ thread ]</a>
+              <a href="subject.html#1287">[ subject ]</a>
+              <a href="author.html#1287">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 2. Oktober 2005 02:49, Heikki Satomaa wrote:
+&gt;<i> Hi,
+</I>&gt;<i> I'm trying to use softdevice+directfb with my projector with it's native 
+</I>&gt;<i> resolution 960x540. Graphics card is a Matrox G550. 4:3 is perfect(without 
+</I>&gt;<i> StretchBlit), but with 16:9 the picture is very ugly.
+</I>
+What does ugly mean in that case ? With height 540 it is for now not
+possible to show PAL resolution height without downscaling. So you
+see probably the downscaling effects.
+
+&gt;<i> Setting StretchBlit on 
+</I>&gt;<i> from the menus fixes this, but then all the black areas in the picture get 
+</I>&gt;<i> transparent showing some garbage.
+</I>
+When working with my monitor I see that too, when switching from
+color key OSD to stretchblit mode. Usually a restart with stretchblit
+enabled, fixes that.
+
+&gt;<i> 
+</I>&gt;<i> The picture showing in the background through the transparent areas seems to 
+</I>&gt;<i> be the picture which was on the screen while setting StretchBlit on. So if I 
+</I>&gt;<i> select a scrambled channel (black only) and set StretchBlit on from there, 
+</I>&gt;<i> everything seems to be ok. Is there a way to fix this? I have newest cvs 
+</I>&gt;<i> versions of everything dealing with softdevice and directfb and my kernel is 
+</I>&gt;<i> 2.6.13.2. 
+</I>
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001286.html">[Softdevice-devel] StretchBlit problem
+</A></li>
+	<LI>Next message: <A HREF="001289.html">[Softdevice-devel] StretchBlit problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1287">[ date ]</a>
+              <a href="thread.html#1287">[ thread ]</a>
+              <a href="subject.html#1287">[ subject ]</a>
+              <a href="author.html#1287">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

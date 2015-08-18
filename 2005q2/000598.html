@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio : my proposal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C4276D592.5060809%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000586.html">
+   <LINK REL="Next"  HREF="000648.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio : my proposal</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C4276D592.5060809%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio : my proposal">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Tue May  3 03:36:18 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000586.html">[Softdevice-devel] Image scaling vs. visible resolution
+</A></li>
+        <LI>Next message: <A HREF="000648.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#598">[ date ]</a>
+              <a href="thread.html#598">[ thread ]</a>
+              <a href="subject.html#598">[ subject ]</a>
+              <a href="author.html#598">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+After I have read and I hope understood what you all did describe, I can 
+sum-up thing here :
+
+1) option to set physical display size
+* use choose from &quot;16/9&quot;, &quot;4/3&quot;, even &quot;16/10&quot;, or so
+* this is stored as a a decimal value : 1.777, 1.333, 1.6, etc.
+* this may be stored as the physical H + V sizes of the screen (as X does)
+* this option is selected once for all
+* it is independent of the resolution of the screen : think about 16/9 
+display at 800x600, or 16/10 at 1400x1050, or the new plasmas 16/9 at 
+1024x1024
+* maybe this option is already present in the standard config / DVB card 
+/ video format option (from VDR's MANUAL : &quot;Video format = 4:3     The 
+video format (or aspect ratio) of the tv set in use (4:3 or 16:9)&quot;
+* display ratio, and display resolution can be used together to 
+calculate the pixel aspect ratio : 800/600 / (16/9) = 0.75 ; 1280/768 / 
+(16/9) = 0.9375 ; 720/576 / (4/3) = 0.9375 ; etc.
+
+2) auto-detection of aspect ratio
+* the WSS bit can be set by the broadcaster to set the aspect ratio to 
+16/9 (I think the only time I saw it was with Arte on analog broadcast, 
+because the TV switches to the full-frame display automagically)
+* other auto-detect features can be used, to set wether the frame is 
+meant to be viewed as 16/9 or 4/3 (or something else)
+* if no detection is done (I don't expect anything here in France), the 
+frame ratio will probably be advertised as 4/3
+* this is something the user has no impact on
+
+3) user-set programme aspect ratio
+* the user may choose not to trust the broadcaster advertised aspect 
+ratio (I won't)
+* the user selects the actual image ratio inside the frame : 4/3, 16/9, 
+1.85, 2.35, etc.
+* the special value &quot;trust the broadcaster&quot; is simply the fact that the 
+image fills the entire frame, whatever the aspect ratio (&quot;full-frame&quot;)
+* that would be the option the user changes most often : the one to 
+match to a remote key
+
+4) match between frame ratio and programme ratio
+* the match between frame ratio and image ratio is obvious : if the 
+broadcaster says the frame is 4:3 but I see a 16/9 image, the image 
+fills (4/3) / (16/9) = 0.75, leaving horizontal black bars ; if the 
+broadcaster says the frame is 16/9 but I see vertical black bars, the 
+image is in fact 4/3
+* the calculations begin to be difficult for me ;-)
+* this match is used to crop the image : strip black bars, the right 
+thickness, at the right places
+
+5) scaling between the frame/image ratio and the screen
+* once the image is cropped by the match between the frame and the 
+image, it can be scaled to the screen
+* scaling uses the calculated image size and the actual screen size
+* it also uses the screen aspect ratio, in another crop stage : fitting 
+a 4/3 image in a 16/9 screen, or a 16/9 image in a 4/3 screen, can be 
+done by upscaling of downscaling
+
+It might seem complicated, but user action is limited to selecting 
+screen size or ratio once, and selecting the proper image ratio, if the 
+programme doesn't include it. That's something I always do on my TV (but 
+softdevice will do this much better, not loosing resolution).
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000586.html">[Softdevice-devel] Image scaling vs. visible resolution
+</A></li>
+	<LI>Next message: <A HREF="000648.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#598">[ date ]</a>
+              <a href="thread.html#598">[ thread ]</a>
+              <a href="subject.html#598">[ subject ]</a>
+              <a href="author.html#598">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

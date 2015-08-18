@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1157959324.3372.38.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002427.html">
+   <LINK REL="Next"  HREF="002436.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1157959324.3372.38.camel%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">malcolm.caldwell at cdu.edu.au
+       </A><BR>
+    <I>Mon Sep 11 09:22:04 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002427.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002436.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2435">[ date ]</a>
+              <a href="thread.html#2435">[ thread ]</a>
+              <a href="subject.html#2435">[ subject ]</a>
+              <a href="author.html#2435">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On a related front:
+
+Anyone know how to have a &quot;normal&quot; console on the first head at the same
+time as mgatv on the second?
+
+On Sat, 2006-09-09 at 21:27 +0100, Alasdair Campbell wrote:
+&gt;<i> On 09/09/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela-pBLobWGMV7c at public.gmane.org</A>&gt; wrote:
+</I>&gt;<i> &gt; The first time I tested with your configuration, I got a picture.
+</I>&gt;<i> &gt; &quot;top&quot; indicated 60% CPU usage, which is slightly more than with
+</I>&gt;<i> &gt; mgatv.  So, I tried to switch from YUY2 to I420.  The CPU load
+</I>&gt;<i> &gt; would drop to around 40%, but the video overlay would be all black.
+</I>&gt;<i> &gt; Switching back to YUY2 did affect CPU usage, but the video overlay
+</I>&gt;<i> &gt; remained black.  Even rebooting did not help.
+</I>&gt;<i> 
+</I>&gt;<i> Well when I was fiddling with different modes in softdevice using -vo
+</I>&gt;<i> dfb:, I noticed that if I changed away from YUY2, the 2nd head went
+</I>&gt;<i> blank, and the video appeared on the 1st head with the wrong colours.
+</I>&gt;<i> After changing back to YUY2 I had to reset the STRETCH BLIT option
+</I>&gt;<i> just below. It has to be ON for me to see an image. The OSD works
+</I>&gt;<i> throughout this.
+</I>&gt;<i> 
+</I>&gt;<i> don't know why rebooting didn't help though...
+</I>&gt;<i> 
+</I>&gt;<i> &gt; In the log, I can see messages like this:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+</I>&gt;<i> &gt; [dfb]: SetParams: failed to set buffermode to back video, reverting to normal
+</I>&gt;<i> &gt; [dfb] SetParams: action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), result=Not supported!
+</I>&gt;<i> &gt; Can't configure ScreenLocation. Hope it is Fullscreen
+</I>&gt;<i> &gt; [surface capabilities] videoSurface: videoonly PixelFormat = 0x00200801
+</I>&gt;<i> &gt; [dfb] (re)configured 0x00200806
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any ideas?  -vo dfb:mgatv works fine.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;         Marko
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Softdevice-devel mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel-0fE9KPoRgkgATYTw5x5z8w at public.gmane.org</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002427.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002436.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2435">[ date ]</a>
+              <a href="thread.html#2435">[ thread ]</a>
+              <a href="subject.html#2435">[ subject ]</a>
+              <a href="author.html#2435">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

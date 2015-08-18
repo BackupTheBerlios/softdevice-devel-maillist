@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314931%5D%20compilation%20fails%20with%20last%20ffmpeg&In-Reply-To=%3C200812281619.mBSGJXfJ024589%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003190.html">
+   <LINK REL="Next"  HREF="003192.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314931%5D%20compilation%20fails%20with%20last%20ffmpeg&In-Reply-To=%3C200812281619.mBSGJXfJ024589%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg">admin at berlios.de
+       </A><BR>
+    <I>Sun Dec 28 17:19:33 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003190.html">[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg
+</A></li>
+        <LI>Next message: <A HREF="003192.html">[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3191">[ date ]</a>
+              <a href="thread.html#3191">[ thread ]</a>
+              <a href="subject.html#3191">[ subject ]</a>
+              <a href="author.html#3191">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #14931, was updated on 2008-Dec-14 17:57
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: davide125
+Assigned to : lucke
+Summary: compilation fails with last ffmpeg
+
+Details: Softdevice needs to be updated for libavcodec v52 API
+
+Follow-Ups:
+
+Date: 2008-Dec-28 17:19
+By: davide125
+
+Comment:
+I finally found out it was a problem on my system, HAS_ERROR_RECOGNITION wasn't being properly defined. Sorry for the noise, please close the bug.
+-------------------------------------------------------
+
+Date: 2008-Dec-24 11:55
+By: davide125
+
+Comment:
+Here's the log using today's ffmpeg r16304 and softdevice cvs from 25/10/2008.
+
+/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -DUSE_IPTV -DUSE_MENUORG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;/usr/lib/vdr&quot;' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include -I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale mpeg2decoder.c
+In file included from video.h:26,
+                 from video.c:17:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+video.c: In member function 'virtual void cVideoOut::EvaluateDelay(uint64_t, uint64_t, int)':
+video.c:558: warning: deprecated conversion from string constant to 'char*'
+video.c:586: warning: deprecated conversion from string constant to 'char*'
+video.c:595: warning: deprecated conversion from string constant to 'char*'
+video.c:602: warning: deprecated conversion from string constant to 'char*'
+video.c: In member function 'virtual void cVideoOut::ResetDelay()':
+video.c:619: warning: deprecated conversion from string constant to 'char*'
+/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/bin/i586-geexbox-linux-gnu-g++ -Os -Wall -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=c3 -s -fomit-frame-pointer  -c -DHAVE_CONFIG -DUSE_LIEMIKUUTIO -DUSE_CHANNELSCAN -DUSE_DOLBYINREC -DUSE_MAINMENUHOOKS -DUSE_IPTV -DUSE_MENUORG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;/usr/lib/vdr&quot;' -DSHM_SUPPORT -I../freetype-2.3.7/include -I../vdr-1.6.0/include -I../../../../DVB/include -I../vdr-1.6.0 -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavcodec -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libavformat -I/home/davide/geexbox/dev/geexbox-davide/build.i386.glibc/toolchain/i586-geexbox-linux-gnu/sysroot/usr/local/include/libswscale audio.c
+In file included from video.h:26,
+                 from mpeg2decoder.h:31,
+                 from mpeg2decoder.c:15:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+mpeg2decoder.c: In constructor 'cStreamDecoder::cStreamDecoder(AVCodecContext*, bool)':
+mpeg2decoder.c:146: error: 'struct AVCodecContext' has no member named 'error_resilience'
+mpeg2decoder.c: In member function 'void cMpeg2Decoder::Freeze(int, bool)':
+mpeg2decoder.c:1472: warning: suggest parentheses around comparison in operand of &amp;
+make: *** [mpeg2decoder.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from video.h:26,
+                 from mpeg2decoder.h:31,
+                 from softdevice.h:18,
+                 from softdevice.c:9:
+PicBuffer.h:60: warning: 'typedef' was ignored in this declaration
+softdevice.c: In constructor 'cPluginSoftDevice::cPluginSoftDevice()':
+softdevice.c:819: warning: deprecated conversion from string constant to 'char*'
+
+-------------------------------------------------------
+
+Date: 2008-Dec-15 20:50
+By: lucke
+
+Comment:
+Which version of softdevice do you use ? In case of current cvs, please post exact ffmpeg version which fails and the error message of compilation.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14931&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14931&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003190.html">[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg
+</A></li>
+	<LI>Next message: <A HREF="003192.html">[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3191">[ date ]</a>
+              <a href="thread.html#3191">[ thread ]</a>
+              <a href="subject.html#3191">[ subject ]</a>
+              <a href="author.html#3191">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

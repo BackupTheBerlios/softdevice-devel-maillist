@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice xv and i915 Notebook
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C1159280431.4519372f56bd8%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002535.html">
+   <LINK REL="Next"  HREF="002543.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice xv and i915 Notebook</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C1159280431.4519372f56bd8%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice xv and i915 Notebook">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Sep 26 16:20:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002535.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+        <LI>Next message: <A HREF="002543.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2536">[ date ]</a>
+              <a href="thread.html#2536">[ thread ]</a>
+              <a href="subject.html#2536">[ subject ]</a>
+              <a href="author.html#2536">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Thomas Erdmann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">t-erdmann at web.de</A>&gt;:
+
+&gt;<i> &gt; Which OSD drawing method did you choose (pseudo or software)?
+</I>&gt;<i> &gt; Does this happen if you choose the other one too ?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Stefan Lucke
+</I>&gt;<i>
+</I>&gt;<i> softdevice.OSDalphablend=0 is configured.
+</I>&gt;<i> With the other setting (=1) the OSD is only visable for short times when a key
+</I>&gt;<i> is pressed, so i never used it.
+</I>
+Thats strange.
+
+&gt;<i> As i wrote earlyer in this Thread sometimes the VDR crashes while resizing to
+</I>&gt;<i> fullscreen or when switching between channels (which perhaps use different
+</I>&gt;<i> Screen ratios ?) or when stopping and restarting the VDR some times.
+</I>&gt;<i> A fresh booted System with VDR started and without resizing the Softdevice
+</I>&gt;<i> Window and without often switching channels runs 10 hours and more without
+</I>&gt;<i> Problems.
+</I>
+To locate the source of the crash, you should run vdr from gdb. For example
+# gdb ./ vdr
+&gt;<i> set args your_complete_parameterlist_for vdr
+</I>&gt;<i> run
+</I>
+-- crash --
+
+&gt;<i> bt
+</I>&gt;<i> bt full
+</I>
+
+&gt;<i> The whole VDR Project with Plugins is compiled on this System and on another
+</I>&gt;<i> with nvidia graphics and there it runs without any stability problems.
+</I>&gt;<i> So i think it must be the interaction between softdevice and X-Server (XOrg
+</I>&gt;<i> i810).
+</I>&gt;<i> Both Systems are Debian based and the Notebook System is a nearly clone copy
+</I>&gt;<i> of the older System but with normal adjustings, e.g. other xorg.conf and so
+</I>&gt;<i> on.
+</I>&gt;<i> What can i try to improve stability ?
+</I>&gt;<i>
+</I>&gt;<i> THX
+</I>&gt;<i>   Thomas
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002535.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+	<LI>Next message: <A HREF="002543.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2536">[ date ]</a>
+              <a href="thread.html#2536">[ thread ]</a>
+              <a href="subject.html#2536">[ subject ]</a>
+              <a href="author.html#2536">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

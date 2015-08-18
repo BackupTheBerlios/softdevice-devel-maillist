@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #7147] cvs - expand top/bottom lines
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%237147%5D%20cvs%20-%20expand%20top/bottom%20lines&In-Reply-To=%3C200710011305.l91D56cv019677%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="002911.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #7147] cvs - expand top/bottom lines</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%237147%5D%20cvs%20-%20expand%20top/bottom%20lines&In-Reply-To=%3C200710011305.l91D56cv019677%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #7147] cvs - expand top/bottom lines">admin at berlios.de
+       </A><BR>
+    <I>Mon Oct  1 15:05:06 CEST 2007</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="002911.html">[Softdevice-devel] [Bug #7365] Crash bei Kanalwechsel +	ExpandBottomLines
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2910">[ date ]</a>
+              <a href="thread.html#2910">[ thread ]</a>
+              <a href="subject.html#2910">[ subject ]</a>
+              <a href="author.html#2910">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #7147, was updated on 2006-Apr-15 02:17
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Invalid
+Bug Group: None
+Priority: 5
+Submitted by: daliman
+Assigned to : none
+Summary: cvs - expand top/bottom lines
+
+Details: Ich bin mir nicht sicher ob man das Folgende als Fehler bezeichnen kann, aber ich kann es ja versuchen.
+
+Mit diesem Wert wird der Bildschirm nach oben erweitert, wobei die untere &quot;Kante&quot; fast an der selben Stelle bleibt. Bei manchen Sendern ist die obere Bildschirmkante bereits bei einem Wert von 14 erreicht. Wenn man die Postition, wie z.B. mit ZoomCenter(x,y) jetzt korrigieren k&#246;nnte, also nach unten verschieben, dann k&#246;nnte man weiter bis 25 erh&#246;hen  und eine Bildschirmf&#252;llende Ausgabe erreichen. Welche Variablen m&#252;ssten dazu ver&#228;ndert werden?
+   
+
+Follow-Ups:
+
+Date: 2007-Oct-01 15:05
+By: lucke
+
+Comment:
+Verhalten kann nicht reproduziert werden.
+-------------------------------------------------------
+
+Date: 2006-Apr-15 02:57
+By: lucke
+
+Comment:
+Die beiden Kanten sollten sich gleichzeitig und im gleichen Umfang verschieben. 
+Wurde eine make clean in softdevice-verzeichnis ausgef&#252;hrt (falls cvs update gemacht wurde)?
+Welche Ausgabemethode wird verwendet?
+Ich habe nur mit xv getestet.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=7147&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=7147&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="002911.html">[Softdevice-devel] [Bug #7365] Crash bei Kanalwechsel +	ExpandBottomLines
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2910">[ date ]</a>
+              <a href="thread.html#2910">[ thread ]</a>
+              <a href="subject.html#2910">[ subject ]</a>
+              <a href="author.html#2910">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

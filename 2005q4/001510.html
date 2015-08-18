@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] Seg fault in dfb_gfxcard_state_check with softdevice...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Seg%20fault%20in%20dfb_gfxcard_state_check%20with%0A%20softdevice...&In-Reply-To=%3C1131447795.14296.15.camel%40laser2.york.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001531.html">
+   <LINK REL="Next"  HREF="001512.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] Seg fault in dfb_gfxcard_state_check with softdevice...</H1>
+    <B>Laurence Abbott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Seg%20fault%20in%20dfb_gfxcard_state_check%20with%0A%20softdevice...&In-Reply-To=%3C1131447795.14296.15.camel%40laser2.york.ac.uk%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] Seg fault in dfb_gfxcard_state_check with softdevice...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Tue Nov  8 12:03:15 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001531.html">[Softdevice-devel] dvd-plugin and wrong menus
+</A></li>
+        <LI>Next message: <A HREF="001512.html">[Softdevice-devel] EPIA M10000 hardware mpeg decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1510">[ date ]</a>
+              <a href="thread.html#1510">[ thread ]</a>
+              <a href="subject.html#1510">[ subject ]</a>
+              <a href="author.html#1510">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, 2005-11-08 at 10:39 +0000, Mark Adams wrote:
+&gt;<i> &gt; #0  0xb751cec1 in dfb_gfxcard_state_check ()
+</I>&gt;<i> &gt;   from /usr/lib/libdirectfb-0.9.so.24
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> 
+</I>&gt;<i> &gt; #9  0xb7d08ade in exit () from /lib/libc.so.6
+</I>&gt;<i> &gt; #10 0x0810a3f2 in Watchdog (signum=14) at vdr.c:89
+</I>&gt;<i> 
+</I>&gt;<i> Signal SIGALRM was caught by a function 'Watchdog' which called exit. 
+</I>&gt;<i> The crash happened later, as a result of a number of destructors
+</I>&gt;<i> getting called.  Presumably, the 'Watchdog' is designed to kill the
+</I>&gt;<i> app if it gets stuck somewhere.  Presumably that somewhere was:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; #16 0xb7eec1d7 in <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">pthread_cond_timedwait at GLIBC_2.0</A> ()
+</I>&gt;<i> &gt; from /lib/libpthread.so.0
+</I>&gt;<i> &gt; #17 0x081013f6 in cCondVar::TimedWait (this=0xfffffffc,
+</I>&gt;<i> &gt; Mutex=@0x81e0610,
+</I>&gt;<i> &gt;    TimeoutMs=-4) at thread.c:122
+</I>&gt;<i> 
+</I>&gt;<i> Doesn't seem very much to do with DirectFB, this one.
+</I>
+DOH! Didn't look that far down!
+
+:<i>-$
+</I>
+That should kick in when something gets 'stuck'. There is still the
+question of why it takes longer to sort itself out sometimes.
+
+Cheers,
+
+Laz
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001531.html">[Softdevice-devel] dvd-plugin and wrong menus
+</A></li>
+	<LI>Next message: <A HREF="001512.html">[Softdevice-devel] EPIA M10000 hardware mpeg decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1510">[ date ]</a>
+              <a href="thread.html#1510">[ thread ]</a>
+              <a href="subject.html#1510">[ subject ]</a>
+              <a href="author.html#1510">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

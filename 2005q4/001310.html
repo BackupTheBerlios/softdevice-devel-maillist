@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20VIA%20epia%20framerate%20WaitForSync%28%29&In-Reply-To=%3C43457520.805%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001309.html">
+   <LINK REL="Next"  HREF="001311.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20VIA%20epia%20framerate%20WaitForSync%28%29&In-Reply-To=%3C43457520.805%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu Oct  6 21:04:00 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001309.html">[Softdevice-devel] Re: [directfb-users] VIA epia framerate	WaitForSync()
+</A></li>
+        <LI>Next message: <A HREF="001311.html">[Softdevice-devel] 0.1.3 bug : lavc can be set but nor unset
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1310">[ date ]</a>
+              <a href="thread.html#1310">[ thread ]</a>
+              <a href="subject.html#1310">[ subject ]</a>
+              <a href="author.html#1310">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nicolas Huillard a &#233;crit :
+&gt;<i> I just applied the first part of the patch (since I don't mind about
+</I>&gt;<i> field parity), and I get the following result (0.1.3) :
+</I>&gt;<i> 
+</I>&gt;<i> [dfb] Display frame time is 17668 microseconds
+</I>&gt;<i> 
+</I>&gt;<i> (was something like 99950 us before the patch, and video was a
+</I>&gt;<i> succession of 1s fast-paced images and 1s still-image, like someone
+</I>&gt;<i> described on the ML recently)
+</I>&gt;<i> 
+</I>&gt;<i> Since I output on PAL TV @ 50Hz, this timing seems odd (should be 20000
+</I>&gt;<i> us, isn't it ? not 17,668 ms / 56Hz) I'm not in front of the TV so I
+</I>&gt;<i> can't check image quality.
+</I>
+As far as I can tell after a quarter of hour watching various german 
+channels and recordings, everything is good with that odd timing 
+information : sound is marvelous, video is synchronous, with no drops or 
+artifacts.
+Remember I do not need field parity because I almost always stretch the 
+image, and thus use deinterlace filter.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001309.html">[Softdevice-devel] Re: [directfb-users] VIA epia framerate	WaitForSync()
+</A></li>
+	<LI>Next message: <A HREF="001311.html">[Softdevice-devel] 0.1.3 bug : lavc can be set but nor unset
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1310">[ date ]</a>
+              <a href="thread.html#1310">[ thread ]</a>
+              <a href="subject.html#1310">[ subject ]</a>
+              <a href="author.html#1310">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

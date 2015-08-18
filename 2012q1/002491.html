@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2012q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.21.1331738292.11969.softdevice-devel%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000024.html">
+   <LINK REL="Next"  HREF="002701.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.21.1331738292.11969.softdevice-devel%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:17:53 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000024.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="002701.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2491">[ date ]</a>
+              <a href="thread.html#2491">[ thread ]</a>
+              <a href="subject.html#2491">[ subject ]</a>
+              <a href="author.html#2491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> I didn't receive the above Martin's message at all - off list, perhaps? 
+</I>&gt;<i> Anyway, if it's still about the topic in question, the keyword for using 
+</I>&gt;<i> the subpicture layer from my perspective is 'incompetence': I couldn't 
+</I>&gt;<i> get crtc2 (mgatv) video layer working with YV12 colourspace and blitted 
+</I>&gt;<i> OSD, so, I thought maybe it'd work with a subpicture layer more 
+</I>&gt;<i> effortlessly, and it did. So, the advantage for me isn't the OSD really, 
+</I>&gt;<i> but the YV12 for the crtc2 video. YV12-&gt;YUY2 was simply too slow.
+</I>&gt;<i> 
+</I>Ah, yes I see. I forgot that for mgatv the default is YUY2, I thought
+that it is I420. Of course YV12 is faster compared to YUY2...
+
+Why is YUY2 is the default at all? Is the OSD not working at all or is
+only the StrechtBlitting not working?
+
+&gt;<i> Using YV12 and LUT44 both bring advantages of reduced memory 
+</I>&gt;<i> requirements and are generally faster. I didn't implement the scaling 
+</I>&gt;<i> routines for the LUT44 OSD, because I simply didn't grasp the idea of 
+</I>&gt;<i> the existing code in 5 seconds, and realized that scaling would 
+</I>&gt;<i> practically never be required by the tv output.
+</I>&gt;<i> 
+</I>Scaling LUT44 makes not much sense, the quality would be very low
+because of the limited colors. The simplest and fastest solution one
+could do, would be to skip or repeat pixels. To adopt the existing
+scaling routines to indexed bitmaps would be dead slow, and probably
+still have a limited quality.
+I saw that you implemented ScaleVUpXXXLut() and ScaleVDownXXXLut(), that
+is not needed, if you don't scale only a CopyToBitmapLut() should be enough.
+But without scaling there probably will be complaints again because of
+the shift of the menu cursor and the menu when using the DVD-plugin.
+
+&gt;&gt;<i> I would not mind adding support for an indexed bitmap, but currently I
+</I>&gt;&gt;<i> don't see the advantage. If we do that we should probably think again
+</I>&gt;&gt;<i> about the interface of GetOSDMode(), I never liked that very much, it
+</I>&gt;&gt;<i> was a hack from the start...
+</I>&gt;<i> 
+</I>&gt;<i> And I didn't add much style to that either :) Adding the indexed code is
+</I>&gt;<i> useless if there are no other users and I'm not going to clean up the
+</I>&gt;<i> mess I made in video-dfb anytime soon. Of course, if you'd add just the
+</I>&gt;<i> SoftOsd bits (without maybe the OSD_WIDTH changes), it would make my
+</I>&gt;<i> life easier when trying to keep up with cvs updates. 
+</I>&gt;<i>
+</I>No, either we apply the DFB part and the OSD part together or nothing. I
+don't want to have some code in the softdevice which is not used and
+probably never will be used.
+What I wanted to say is, if you agree with Stefan on the DFB part, I
+don't mind if we add the OSD part (maybe with some modifications...).
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000024.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="002701.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2491">[ date ]</a>
+              <a href="thread.html#2491">[ thread ]</a>
+              <a href="subject.html#2491">[ subject ]</a>
+              <a href="author.html#2491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio handling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C426F6D0B.5010407%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000570.html">
+   <LINK REL="Next"  HREF="000575.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio handling</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C426F6D0B.5010407%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio handling">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Wed Apr 27 12:44:27 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000570.html">[Softdevice-devel] VIA audio quality or lack thereof
+</A></li>
+        <LI>Next message: <A HREF="000575.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#564">[ date ]</a>
+              <a href="thread.html#564">[ thread ]</a>
+              <a href="subject.html#564">[ subject ]</a>
+              <a href="author.html#564">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello all,
+
+I've connected my VDR/softdevice box to the TV (PAL 16/9), and have a 
+few problems
+with aspect ratio handling by softdevice vs. EPIA TV output size/aspect.
+
+Hardware-wise :
+* the EPIA M10k has a s-video output, driven by a VT1622 chip
+* this chip receive configuration data from the viafb frame-buffer
+kernel driver, upon mode change
+* these data tables come from VIA, and have a few derivatives on various
+files on the net (XFree drivers, viafb patches to the kernel, etc.)
+
+TV-wise :
+* with the tvoverscan module parameter, the output is adequately large
+(there is really an overscan, that is the image goes beyond the edges of
+the visible part of the screen, but I don't know how far)
+* in 800x600 (not taking /etc/fb.modes into account), the image is
+blurred by the anti-flicker filter : this is really bad, because VDR
+does not need it, and blurring decrease quality
+* in 720x576, the image is not blurred (the configuration data for this
+mode might not have the anti-flicker option set : good), but there are
+missing lines on the screen : about 24 lines (seems to be 600 - 576) are
+not shown on the screen (the horizontal bar of the A is missing)
+* I will check the viafb TV tables to tune them (remove anti-flicker in
+800x600 or add the missing lines in 720x576), but they are very obscure
+
+User-wise :
+* I would like to have the video output of VDR covering the maximum
+surface, not leaving blacks bars on top/bottom or left-right edges
+* sat TV programs in France almost always have horizontal black bars in
+the stream : a 2.35 aspect ratio is sent in a 720x576 frame, with 1/4
+black at top and 1/4 black at bottom. Even 16/9 broadcasts have black
+bars, that need to be removed when showed on the 16/9 screen
+
+VDR/softdevice-wise :
+* the pixel aspect ratio setting is something I don't seem to master
+myself : I'm always confused by naming, meaning, etc.
+* there are two setting : crop-mode and pixel format. This is not really
+easy to find the right combination, and to change the setting when the
+stream changes (not easy for me, thus undoable for the rest of the familly)
+* the 800x600 ratio is not the same as 720x576 : 1.33 vs. 1.25. Along
+with the fact that the TV is 16/9, not 4/3, I'm totally lost...
+* the resize algo makes sure the whole image fit the screen : a 720x576
+stream inside a 800x600 screen will never be wider than 750, even though
+there are black bar on top and bottom
+
+Questions :
+* does anyone have already dug into the viafb TV tables (PAL 800x600,
+720x576) ?
+* is it possible to implement in softdevice aspect-ratio handling
+something like &quot;maximize the size of the image&quot;, along with the current
+&quot;make sure the image fits in the screen&quot; ? This way a scaling that
+currently scale an image to 750 wide with in-stream black bar on
+top/bottom, would scale it to 800 wide cropping a few black lines on top
+and bottom.
+* can the softdevice plug-in receive LIRC events to change aspect ratio
+on a single remote keypress ?
+
+I will provide real sample values when I have them (stream sizes,
+softdevice logs, approximate useful image sizes).
+
+(just an idea after writing this : the crop-mode has the &quot;none&quot;, &quot;4:3&quot;
+and &quot;16:9&quot; options. Maybe I need a &quot;16:9 screen on 4:3 resolution&quot; vs.
+&quot;16:9 screen on 5:4 resolution&quot; option, or this should adapt to the
+actual resolution)
+
+-- 
+NH
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000570.html">[Softdevice-devel] VIA audio quality or lack thereof
+</A></li>
+	<LI>Next message: <A HREF="000575.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#564">[ date ]</a>
+              <a href="thread.html#564">[ thread ]</a>
+              <a href="subject.html#564">[ subject ]</a>
+              <a href="author.html#564">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

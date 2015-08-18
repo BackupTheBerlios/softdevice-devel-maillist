@@ -1,0 +1,940 @@
+From zzam at gentoo.org  Sun Jul  8 22:47:49 2007
+From: zzam at gentoo.org (Matthias Schwarzott)
+Date: Sun, 8 Jul 2007 22:47:49 +0200
+Subject: [Softdevice-devel] Compilation agains new ffmpeg snapshot
+Message-ID: <200707082247.49294.zzam@gentoo.org>
+
+Hi there!
+
+vdr-softdevice cvs version does not compile against new ffmpeg snapshot (using 
+ebuilds this is from 2007/06/16).
+
+The reason is they finally removed the extern "C" statements from their 
+headers.
+Then adding extern "C" to the configure script where it misses makes 
+vdr-softdevice compilable again.
+
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: new-ffmpeg-extern-c.diff
+Type: text/x-diff
+Size: 961 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070708/e471df0c/attachment.diff>
+
+From zzam at gentoo.org  Mon Jul  9 11:37:58 2007
+From: zzam at gentoo.org (Matthias Schwarzott)
+Date: Mon, 9 Jul 2007 11:37:58 +0200
+Subject: [Softdevice-devel] Compilation agains new ffmpeg snapshot
+In-Reply-To: <200707082247.49294.zzam@gentoo.org>
+References: <200707082247.49294.zzam@gentoo.org>
+Message-ID: <200707091137.58946.zzam@gentoo.org>
+
+On Sonntag, 8. Juli 2007, Matthias Schwarzott wrote:
+
+Hi there!
+
+>
+> vdr-softdevice cvs version does not compile against new ffmpeg snapshot
+> (using ebuilds this is from 2007/06/16).
+>
+> The reason is they finally removed the extern "C" statements from their
+> headers.
+> Then adding extern "C" to the configure script where it misses makes
+> vdr-softdevice compilable again.
+
+There were still a few additional unresolved symbols. The updated patch should 
+now solve all.
+
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: new-ffmpeg-extern-c.diff
+Type: text/x-diff
+Size: 1526 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070709/b95c5094/attachment.diff>
+
+From stefan at lucke.in-berlin.de  Wed Jul 11 19:58:14 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 11 Jul 2007 19:58:14 +0200
+Subject: [Softdevice-devel] Compilation agains new ffmpeg snapshot
+In-Reply-To: <200707091137.58946.zzam@gentoo.org>
+References: <200707082247.49294.zzam@gentoo.org>
+	<200707091137.58946.zzam@gentoo.org>
+Message-ID: <200707111958.14445.stefan@lucke.in-berlin.de>
+
+On Monday 09 July 2007 11:37, Matthias Schwarzott wrote:
+> On Sonntag, 8. Juli 2007, Matthias Schwarzott wrote:
+> 
+> Hi there!
+> 
+> >
+> > vdr-softdevice cvs version does not compile against new ffmpeg snapshot
+> > (using ebuilds this is from 2007/06/16).
+> >
+> > The reason is they finally removed the extern "C" statements from their
+> > headers.
+> > Then adding extern "C" to the configure script where it misses makes
+> > vdr-softdevice compilable again.
+> 
+> There were still a few additional unresolved symbols. The updated patch should 
+> now solve all.
+
+Thanks, applied.
+
+-- 
+Stefan Lucke
+
+
+From zzam at gentoo.org  Thu Jul 12 12:14:47 2007
+From: zzam at gentoo.org (Matthias Schwarzott)
+Date: Thu, 12 Jul 2007 12:14:47 +0200
+Subject: [Softdevice-devel] [PATCH] shm init in incorrect order [was:
+	ShmClient: XvVideoOut.Reconfigure format > 3!]
+In-Reply-To: <200705221311.54727.zzam@gentoo.org>
+References: <200705221311.54727.zzam@gentoo.org>
+Message-ID: <200707121214.48028.zzam@gentoo.org>
+
+On Dienstag, 22. Mai 2007, Matthias Schwarzott wrote:
+> Hi there!
+>
+> Using latest cvs snapshot, and starting vdr with:
+> vdr -Psoftdevice" -vo shm:" [... other options]
+>
+> and then starting ShmClient gets me this output (of ShmClient):
+>
+> dsyslog:[XvVideoOut]: patch version (2006-11-05)
+> [XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+> dsyslog:[XvVideoOut]: Initialize XShmCreateImage Successful (0x80be610)
+> [XvVideoOut]: osd_image shmid = 229379
+> dsyslog:[XvVideoOut]: Initialize shmget Successful (2949120 bytes)
+> dsyslog:[XvVideoOut]: Initialize shmat Successful
+> [XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120,
+> Bpp 32
+> dsyslog:[softdevice-xscreensaver]: xscreensaver not running
+>
+> dsyslog:[XvVideoOut]: initialized OK
+> XvVideoOut.Reconfigure format > 3!
+> [XvVideoOut]: Xinerama-Screen changed to 0
+> dsyslog:[VideoOut]: 736x576 [0,0 736x576] -> 1024x576 [122,0 778x576]
+> XvVideoOut.Reconfigure format > 3!
+> reconfigure failed
+> dsyslog:[VideoOut]: resolution changed: W(736 -> 528); H(576 ->576)
+>
+> dsyslog:[VideoOut]: 528x576 [0,0 528x576] -> 1024x576 [132,0 759x576]
+> XvVideoOut.Reconfigure format > 3!
+> reconfigure failed
+> XvVideoOut.Reconfigure format > 3!
+> reconfigure failed
+>
+>
+>
+>
+> audio starts, but video is just black. The last two lines loop endlessly.
+> Stopping and restarting ShmClient does not change anything.
+>
+> Stopping vdr, and then starting it DOES help.
+> It can be reproduced then by stopping vdr, deleting the shared memory
+> region, and starting it.
+> Some debugging showed me that the pixelformat var had the value 14 ?!?
+>
+
+Debugged the problem further:
+Starting softdevice with shm output and no shm segment exists:
+cPluginSoftDevice starts, does net get a shm segment.
+Thus it creates the setupStore, but cannot write the Shmid of it into normal 
+shm segment.
+Later video-shm is started, and does create the shm segment.
+
+
+Needed now is some way to put the shmid of setupStore in the shm segment.
+The attached patch is a bit a hack, as it stores the shmid of setupStore 
+inside setupStore (as this is the only place it seems the subplugin video-shm 
+can access). 
+
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: shm-new-create.diff
+Type: text/x-diff
+Size: 1241 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070712/a68ccc22/attachment.diff>
+
+From per at mellander.org  Mon Sep 17 15:03:45 2007
+From: per at mellander.org (Per Mellander)
+Date: Mon, 17 Sep 2007 15:03:45 +0200
+Subject: [Softdevice-devel] Problem with segfaulting softplay.
+Message-ID: <46EE7B31.5090402@mellander.org>
+
+Hi!
+
+Just curious to here from you? Haven't been any traffic lately?
+
+I have had some problems when I reinstalled my VDR setup that
+softplay segfaults when I try to use it. I use softplay/ffmpeg etc
+as of 070831.
+
+Which packets should I make sure to have installed to get the most out of
+ffmpeg? I now it's depending of the material I want to play and it's usually
+mpeg1-2, divx etc.
+
+Is:
+
+./configure --enable-shared --enable-gpl --enable-pp
+
+enough for a 'good' ffmpeg. It's been such a long time since I installed my
+previous VDR+softdevice that I've forgot half of it :)
+
+Btw. I'm running VDR 1.4.5 for some obscure reasons.
+
+
+
+From admin at berlios.de  Thu Sep 27 21:46:09 2007
+From: admin at berlios.de (admin at berlios.de)
+Date: Thu, 27 Sep 2007 20:46:09 +0100 (BST)
+Subject: [Softdevice-devel] [Bug #12090] softplay: problems with recent
+	ffmpeg snapshot
+Message-ID: <200709271946.l8RJk9qv009190@unicorn.berlios.de>
+
+Bug #12090, was updated on 2007-Sep-27 20:46
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: blueman
+Assigned to : none
+Summary: softplay: problems with recent ffmpeg snapshot
+
+Details: Hi,
+
+I have problems with softplay when I use a newer ffmpeg version.
+
+compiling:
+Plugin softplay:
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Leaving directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  softplay.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  SoftPlayer.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+SoftPlayer.c: In member function 'int cSoftPlayer::GetPlayMode(AVFormatContext*)':
+SoftPlayer.c:380: warning: comparison between signed and unsigned integer expressions
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayList.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayListMenu.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  i18n.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  FileIndex.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Receiver.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Setup.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -shared softplay.o SoftPlayer.o PlayList.o PlayListMenu.o i18n.o FileIndex.o Receiver.o Setup.o -L/usr/include/ffmpeg/ -L/usr/include/ffmpeg//libavformat -L/usr/include/ffmpeg//libavcodec -L/usr/include/ffmpeg//libavutil -lavformat -lavcodec -lz -lavutil -o libvdr-softplay.so
+
+when starting vdr:
+vdr: ./PLUGINS/lib/libvdr-softplay.so.1.5.1: undefined symbol: _Z15av_register_allv
+
+softdevice (cvs today) runs fine...
+
+thanks
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=12090&group_id=2051
+
+
+From admin at berlios.de  Thu Sep 27 22:42:42 2007
+From: admin at berlios.de (admin at berlios.de)
+Date: Thu, 27 Sep 2007 21:42:42 +0100 (BST)
+Subject: [Softdevice-devel] [Bug #12090] softplay: problems with recent
+	ffmpeg snapshot
+Message-ID: <200709272042.l8RKggfx018230@unicorn.berlios.de>
+
+Bug #12090, was updated on 2007-Sep-27 20:46
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: blueman
+Assigned to : none
+Summary: softplay: problems with recent ffmpeg snapshot
+
+Details: Hi,
+
+I have problems with softplay when I use a newer ffmpeg version.
+
+compiling:
+Plugin softplay:
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Leaving directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  softplay.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  SoftPlayer.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+SoftPlayer.c: In member function 'int cSoftPlayer::GetPlayMode(AVFormatContext*)':
+SoftPlayer.c:380: warning: comparison between signed and unsigned integer expressions
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayList.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayListMenu.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  i18n.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  FileIndex.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Receiver.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Setup.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -shared softplay.o SoftPlayer.o PlayList.o PlayListMenu.o i18n.o FileIndex.o Receiver.o Setup.o -L/usr/include/ffmpeg/ -L/usr/include/ffmpeg//libavformat -L/usr/include/ffmpeg//libavcodec -L/usr/include/ffmpeg//libavutil -lavformat -lavcodec -lz -lavutil -o libvdr-softplay.so
+
+when starting vdr:
+vdr: ./PLUGINS/lib/libvdr-softplay.so.1.5.1: undefined symbol: _Z15av_register_allv
+
+softdevice (cvs today) runs fine...
+
+thanks
+
+Follow-Ups:
+
+Date: 2007-Sep-27 21:42
+By: blueman
+
+Comment:
+Update:
+
+I found out, that I had a old libvdr-softplay in the lib folder, now I deleted this file but at compiling I get the same as above, but it doesnt create a new  ibvdr-softplay.so.1.5.1 file.
+
+strane...
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=12090&group_id=2051
+
+
+From admin at berlios.de  Fri Sep 28 17:55:40 2007
+From: admin at berlios.de (admin at berlios.de)
+Date: Fri, 28 Sep 2007 17:55:40 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #12090] softplay: problems with recent
+	ffmpeg snapshot
+Message-ID: <200709281555.l8SFtebV019587@unicorn.berlios.de>
+
+Bug #12090, was updated on 2007-Sep-27 21:46
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: blueman
+Assigned to : none
+Summary: softplay: problems with recent ffmpeg snapshot
+
+Details: Hi,
+
+I have problems with softplay when I use a newer ffmpeg version.
+
+compiling:
+Plugin softplay:
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Leaving directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  softplay.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  SoftPlayer.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+SoftPlayer.c: In member function 'int cSoftPlayer::GetPlayMode(AVFormatContext*)':
+SoftPlayer.c:380: warning: comparison between signed and unsigned integer expressions
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayList.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayListMenu.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  i18n.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  FileIndex.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Receiver.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Setup.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -shared softplay.o SoftPlayer.o PlayList.o PlayListMenu.o i18n.o FileIndex.o Receiver.o Setup.o -L/usr/include/ffmpeg/ -L/usr/include/ffmpeg//libavformat -L/usr/include/ffmpeg//libavcodec -L/usr/include/ffmpeg//libavutil -lavformat -lavcodec -lz -lavutil -o libvdr-softplay.so
+
+when starting vdr:
+vdr: ./PLUGINS/lib/libvdr-softplay.so.1.5.1: undefined symbol: _Z15av_register_allv
+
+softdevice (cvs today) runs fine...
+
+thanks
+
+Follow-Ups:
+
+Date: 2007-Sep-28 17:55
+By: lucke
+
+Comment:
+Please do a cvs update to get the fix.
+
+Stefan
+-------------------------------------------------------
+
+Date: 2007-Sep-27 22:42
+By: blueman
+
+Comment:
+Update:
+
+I found out, that I had a old libvdr-softplay in the lib folder, now I deleted this file but at compiling I get the same as above, but it doesnt create a new  ibvdr-softplay.so.1.5.1 file.
+
+strane...
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=12090&group_id=2051
+
+
+From admin at berlios.de  Sat Sep 29 20:27:40 2007
+From: admin at berlios.de (admin at berlios.de)
+Date: Sat, 29 Sep 2007 19:27:40 +0100 (BST)
+Subject: [Softdevice-devel] [Bug #12090] softplay: problems with recent
+	ffmpeg snapshot
+Message-ID: <200709291827.l8TIRe94025636@unicorn.berlios.de>
+
+Bug #12090, was updated on 2007-Sep-27 20:46
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: blueman
+Assigned to : none
+Summary: softplay: problems with recent ffmpeg snapshot
+
+Details: Hi,
+
+I have problems with softplay when I use a newer ffmpeg version.
+
+compiling:
+Plugin softplay:
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Leaving directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  softplay.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  SoftPlayer.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+SoftPlayer.c: In member function 'int cSoftPlayer::GetPlayMode(AVFormatContext*)':
+SoftPlayer.c:380: warning: comparison between signed and unsigned integer expressions
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayList.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayListMenu.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  i18n.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  FileIndex.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Receiver.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Setup.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -shared softplay.o SoftPlayer.o PlayList.o PlayListMenu.o i18n.o FileIndex.o Receiver.o Setup.o -L/usr/include/ffmpeg/ -L/usr/include/ffmpeg//libavformat -L/usr/include/ffmpeg//libavcodec -L/usr/include/ffmpeg//libavutil -lavformat -lavcodec -lz -lavutil -o libvdr-softplay.so
+
+when starting vdr:
+vdr: ./PLUGINS/lib/libvdr-softplay.so.1.5.1: undefined symbol: _Z15av_register_allv
+
+softdevice (cvs today) runs fine...
+
+thanks
+
+Follow-Ups:
+
+Date: 2007-Sep-29 19:27
+By: blueman
+
+Comment:
+Hi,
+
+I made an cvs update and now vdr ist starting with softplay, but when I start a file vdr crashes with the following error:
+
+PLDBG: Activate 1 
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x81e6a10
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mpg
+open file '/multimedia/media/testfile.mpg'
+(!) [ 7848:    0.000] --> Caught signal 11 (at (nil), invalid address) <--
+Aborted
+
+
+-------------------------------------------------------
+
+Date: 2007-Sep-28 16:55
+By: lucke
+
+Comment:
+Please do a cvs update to get the fix.
+
+Stefan
+-------------------------------------------------------
+
+Date: 2007-Sep-27 21:42
+By: blueman
+
+Comment:
+Update:
+
+I found out, that I had a old libvdr-softplay in the lib folder, now I deleted this file but at compiling I get the same as above, but it doesnt create a new  ibvdr-softplay.so.1.5.1 file.
+
+strane...
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=12090&group_id=2051
+
+
+From stefan at lucke.in-berlin.de  Sat Sep 29 23:20:04 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sat, 29 Sep 2007 23:20:04 +0200
+Subject: [Softdevice-devel] Problem with segfaulting softplay.
+In-Reply-To: <46EE7B31.5090402@mellander.org>
+References: <46EE7B31.5090402@mellander.org>
+Message-ID: <200709292320.04810.stefan@lucke.in-berlin.de>
+
+On Montag, 17. September 2007, Per Mellander wrote:
+> Hi!
+> 
+> Just curious to here from you? Haven't been any traffic lately?
+> 
+> I have had some problems when I reinstalled my VDR setup that
+> softplay segfaults when I try to use it. I use softplay/ffmpeg etc
+> as of 070831.
+
+For me av_open_input_file () now segfaults. Looks like the
+same problem, which was reported first on april 3rd.
+My working ffmpeg is from 2007-08-11: svn-10066.
+
+++ B 0 256 1 mp3
+++ B 0 0 1 mpc
+++ B 0 9 1 mpeg
+++ C
+Segmentation fault
+
+That is generated by ffmpeg's av_probe_input2() function (file libavformat/utils.c):
+    for(fmt1 = first_iformat; fmt1 != NULL; fmt1 = fmt1->next) {
+fprintf(stderr,"++ B %d %d %d %s\n",is_opened, fmt1->flags, AVFMT_NOFILE, fmt1->name);
+        if (!is_opened == !(fmt1->flags & AVFMT_NOFILE))
+            continue;
+fprintf(stderr,"++ C\n");
+
+FFplay does not segfault when it should play the same mp3 file:
+++ B 0 256 1 mp3
+++ B 0 0 1 mpc
+++ B 0 8 1 mpeg
+++ B 0 8 1 mpegts
+
+Output is a bit different, as AVFMT_NOFILE is _not_ set now.
+
+-- 
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Sun Sep 30 09:44:47 2007
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 30 Sep 2007 09:44:47 +0200
+Subject: [Softdevice-devel] Problem with segfaulting softplay.
+In-Reply-To: <200709292320.04810.stefan@lucke.in-berlin.de>
+References: <46EE7B31.5090402@mellander.org>
+	<200709292320.04810.stefan@lucke.in-berlin.de>
+Message-ID: <200709300944.47346.stefan@lucke.in-berlin.de>
+
+On Samstag, 29. September 2007, Stefan Lucke wrote:
+> On Montag, 17. September 2007, Per Mellander wrote:
+> > Hi!
+> > 
+> > Just curious to here from you? Haven't been any traffic lately?
+> > 
+> > I have had some problems when I reinstalled my VDR setup that
+> > softplay segfaults when I try to use it. I use softplay/ffmpeg etc
+> > as of 070831.
+> 
+> For me av_open_input_file () now segfaults. Looks like the
+> same problem, which was reported first on april 3rd.
+> My working ffmpeg is from 2007-08-11: svn-10066.
+> 
+> ++ B 0 256 1 mp3
+> ++ B 0 0 1 mpc
+> ++ B 0 9 1 mpeg
+> ++ C
+> Segmentation fault
+> 
+> That is generated by ffmpeg's av_probe_input2() function (file libavformat/utils.c):
+>     for(fmt1 = first_iformat; fmt1 != NULL; fmt1 = fmt1->next) {
+> fprintf(stderr,"++ B %d %d %d %s\n",is_opened, fmt1->flags, AVFMT_NOFILE, fmt1->name);
+>         if (!is_opened == !(fmt1->flags & AVFMT_NOFILE))
+>             continue;
+> fprintf(stderr,"++ C\n");
+> 
+> FFplay does not segfault when it should play the same mp3 file:
+> ++ B 0 256 1 mp3
+> ++ B 0 0 1 mpc
+> ++ B 0 8 1 mpeg
+> ++ B 0 8 1 mpegts
+> 
+> Output is a bit different, as AVFMT_NOFILE is _not_ set now.
+
+AVFMT_NOFILE is set for format "mpeg" in softdevice's mpeg2decoder.c
+line 1126. Without this we'll get errors from softdevice.
+
+OT: Don't know if mail distribution works. prev mail is visible via web.
+
+-- 
+Stefan Lucke
+
+
+From admin at berlios.de  Sun Sep 30 16:54:56 2007
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 30 Sep 2007 16:54:56 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #12090] softplay: problems with recent
+	ffmpeg snapshot
+Message-ID: <200709301454.l8UEsubq029501@unicorn.berlios.de>
+
+Bug #12090, was updated on 2007-Sep-27 21:46
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: blueman
+Assigned to : none
+Summary: softplay: problems with recent ffmpeg snapshot
+
+Details: Hi,
+
+I have problems with softplay when I use a newer ffmpeg version.
+
+compiling:
+Plugin softplay:
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Leaving directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  softplay.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  SoftPlayer.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+SoftPlayer.c: In member function 'int cSoftPlayer::GetPlayMode(AVFormatContext*)':
+SoftPlayer.c:380: warning: comparison between signed and unsigned integer expressions
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayList.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayListMenu.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  i18n.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  FileIndex.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Receiver.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Setup.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -shared softplay.o SoftPlayer.o PlayList.o PlayListMenu.o i18n.o FileIndex.o Receiver.o Setup.o -L/usr/include/ffmpeg/ -L/usr/include/ffmpeg//libavformat -L/usr/include/ffmpeg//libavcodec -L/usr/include/ffmpeg//libavutil -lavformat -lavcodec -lz -lavutil -o libvdr-softplay.so
+
+when starting vdr:
+vdr: ./PLUGINS/lib/libvdr-softplay.so.1.5.1: undefined symbol: _Z15av_register_allv
+
+softdevice (cvs today) runs fine...
+
+thanks
+
+Follow-Ups:
+
+Date: 2007-Sep-30 16:54
+By: lucke
+
+Comment:
+I'm seeing a similar problem (described on the ml, accessable via web only). It seems to caused by softdevice, setting AVFMT_NOFILE for format mpeg. De / reasserting this flag in softplay ake some avi's play again, but mp3 playback is still inop.
+Index: SoftPlayer.c
+===================================================================
+RCS file: /cvsroot/softdevice/softplay/SoftPlayer.c,v
+retrieving revision 1.16
+diff -n -b -U3 -r1.16 SoftPlayer.c
+cvs server: conflicting specifications of output style
+--- SoftPlayer.c        12 Mar 2007 21:32:03 -0000      1.16
++++ SoftPlayer.c        30 Sep 2007 14:54:43 -0000
+@@ -445,14 +445,20 @@
+        };
+
+         printf("open file '%s'\n",filename);
++AVInputFormat *fmt;
++fmt=av_find_input_format("mpeg");
++fmt->flags &= ~AVFMT_NOFILE;
+         char str[60];
+-        if ( (ret=av_open_input_file( &ic, filename, NULL, 0, NULL)) ) {
++        //if ( (ret=av_open_input_file( &ic, filename, NULL, 0, NULL)) ) {
++        if ( (ret=av_open_input_file( &ic, filename, NULL, FFM_PACKET_SIZE, NULL)) ) {
+                 snprintf(str,60,"%s %s!","Could not open file",filename);
+-                Skins.Message(mtError, str);
++                //Skins.Message(mtError, str);
+                 printf("could not open file. Return value %d\n",ret);
+                 ic=0;
++fmt->flags |= AVFMT_NOFILE;
+                 return;
+         };
++fmt->flags |= AVFMT_NOFILE;
+
+         if ( av_find_stream_info( ic ) ) {
+                 printf("could not find stream info\n");
+
+-------------------------------------------------------
+
+Date: 2007-Sep-29 20:27
+By: blueman
+
+Comment:
+Hi,
+
+I made an cvs update and now vdr ist starting with softplay, but when I start a file vdr crashes with the following error:
+
+PLDBG: Activate 1 
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x81e6a10
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mpg
+open file '/multimedia/media/testfile.mpg'
+(!) [ 7848:    0.000] --> Caught signal 11 (at (nil), invalid address) <--
+Aborted
+
+
+-------------------------------------------------------
+
+Date: 2007-Sep-28 17:55
+By: lucke
+
+Comment:
+Please do a cvs update to get the fix.
+
+Stefan
+-------------------------------------------------------
+
+Date: 2007-Sep-27 22:42
+By: blueman
+
+Comment:
+Update:
+
+I found out, that I had a old libvdr-softplay in the lib folder, now I deleted this file but at compiling I get the same as above, but it doesnt create a new  ibvdr-softplay.so.1.5.1 file.
+
+strane...
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=12090&group_id=2051
+
+
+From admin at berlios.de  Sun Sep 30 17:34:25 2007
+From: admin at berlios.de (admin at berlios.de)
+Date: Sun, 30 Sep 2007 17:34:25 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #12090] softplay: problems with recent
+	ffmpeg snapshot
+Message-ID: <200709301534.l8UFYPdd029828@unicorn.berlios.de>
+
+Bug #12090, was updated on 2007-Sep-27 21:46
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: blueman
+Assigned to : none
+Summary: softplay: problems with recent ffmpeg snapshot
+
+Details: Hi,
+
+I have problems with softplay when I use a newer ffmpeg version.
+
+compiling:
+Plugin softplay:
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Leaving directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  softplay.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  SoftPlayer.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+SoftPlayer.c: In member function 'int cSoftPlayer::GetPlayMode(AVFormatContext*)':
+SoftPlayer.c:380: warning: comparison between signed and unsigned integer expressions
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayList.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayListMenu.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  i18n.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  FileIndex.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Receiver.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='"softplay"' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Setup.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -shared softplay.o SoftPlayer.o PlayList.o PlayListMenu.o i18n.o FileIndex.o Receiver.o Setup.o -L/usr/include/ffmpeg/ -L/usr/include/ffmpeg//libavformat -L/usr/include/ffmpeg//libavcodec -L/usr/include/ffmpeg//libavutil -lavformat -lavcodec -lz -lavutil -o libvdr-softplay.so
+
+when starting vdr:
+vdr: ./PLUGINS/lib/libvdr-softplay.so.1.5.1: undefined symbol: _Z15av_register_allv
+
+softdevice (cvs today) runs fine...
+
+thanks
+
+Follow-Ups:
+
+Date: 2007-Sep-30 17:34
+By: lucke
+
+Comment:
+I'm seeing a similar problem (described on the ml, accessable via web only). It seems to caused by softdevice, setting AVFMT_NOFILE for format mpeg. De / reasserting this flag in softplay ake some avi's play again, but mp3 playback is still inop.
+Index: SoftPlayer.c
+===================================================================
+RCS file: /cvsroot/softdevice/softplay/SoftPlayer.c,v
+retrieving revision 1.16
+diff -n -b -U3 -r1.16 SoftPlayer.c
+cvs server: conflicting specifications of output style
+--- SoftPlayer.c        12 Mar 2007 21:32:03 -0000      1.16
++++ SoftPlayer.c        30 Sep 2007 14:54:43 -0000
+@@ -445,14 +445,20 @@
+        };
+
+         printf("open file '%s'\n",filename);
++AVInputFormat *fmt;
++fmt=av_find_input_format("mpeg");
++fmt->flags &= ~AVFMT_NOFILE;
+         char str[60];
+-        if ( (ret=av_open_input_file( &ic, filename, NULL, 0, NULL)) ) {
++        //if ( (ret=av_open_input_file( &ic, filename, NULL, 0, NULL)) ) {
++        if ( (ret=av_open_input_file( &ic, filename, NULL, FFM_PACKET_SIZE, NULL)) ) {
+                 snprintf(str,60,"%s %s!","Could not open file",filename);
+-                Skins.Message(mtError, str);
++                //Skins.Message(mtError, str);
+                 printf("could not open file. Return value %d\n",ret);
+                 ic=0;
++fmt->flags |= AVFMT_NOFILE;
+                 return;
+         };
++fmt->flags |= AVFMT_NOFILE;
+
+         if ( av_find_stream_info( ic ) ) {
+                 printf("could not find stream info\n");
+
+-------------------------------------------------------
+
+Date: 2007-Sep-30 16:54
+By: lucke
+
+Comment:
+I'm seeing a similar problem (described on the ml, accessable via web only). It seems to caused by softdevice, setting AVFMT_NOFILE for format mpeg. De / reasserting this flag in softplay ake some avi's play again, but mp3 playback is still inop.
+Index: SoftPlayer.c
+===================================================================
+RCS file: /cvsroot/softdevice/softplay/SoftPlayer.c,v
+retrieving revision 1.16
+diff -n -b -U3 -r1.16 SoftPlayer.c
+cvs server: conflicting specifications of output style
+--- SoftPlayer.c        12 Mar 2007 21:32:03 -0000      1.16
++++ SoftPlayer.c        30 Sep 2007 14:54:43 -0000
+@@ -445,14 +445,20 @@
+        };
+
+         printf("open file '%s'\n",filename);
++AVInputFormat *fmt;
++fmt=av_find_input_format("mpeg");
++fmt->flags &= ~AVFMT_NOFILE;
+         char str[60];
+-        if ( (ret=av_open_input_file( &ic, filename, NULL, 0, NULL)) ) {
++        //if ( (ret=av_open_input_file( &ic, filename, NULL, 0, NULL)) ) {
++        if ( (ret=av_open_input_file( &ic, filename, NULL, FFM_PACKET_SIZE, NULL)) ) {
+                 snprintf(str,60,"%s %s!","Could not open file",filename);
+-                Skins.Message(mtError, str);
++                //Skins.Message(mtError, str);
+                 printf("could not open file. Return value %d\n",ret);
+                 ic=0;
++fmt->flags |= AVFMT_NOFILE;
+                 return;
+         };
++fmt->flags |= AVFMT_NOFILE;
+
+         if ( av_find_stream_info( ic ) ) {
+                 printf("could not find stream info\n");
+
+-------------------------------------------------------
+
+Date: 2007-Sep-29 20:27
+By: blueman
+
+Comment:
+Hi,
+
+I made an cvs update and now vdr ist starting with softplay, but when I start a file vdr crashes with the following error:
+
+PLDBG: Activate 1 
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x81e6a10
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mpg
+open file '/multimedia/media/testfile.mpg'
+(!) [ 7848:    0.000] --> Caught signal 11 (at (nil), invalid address) <--
+Aborted
+
+
+-------------------------------------------------------
+
+Date: 2007-Sep-28 17:55
+By: lucke
+
+Comment:
+Please do a cvs update to get the fix.
+
+Stefan
+-------------------------------------------------------
+
+Date: 2007-Sep-27 22:42
+By: blueman
+
+Comment:
+Update:
+
+I found out, that I had a old libvdr-softplay in the lib folder, now I deleted this file but at compiling I get the same as above, but it doesnt create a new  ibvdr-softplay.so.1.5.1 file.
+
+strane...
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=12090&group_id=2051
+
+

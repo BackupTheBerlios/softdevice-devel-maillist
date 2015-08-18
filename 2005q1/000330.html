@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] use libavformat in mpeg2decoder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C200503181458.00052.softdevice%40ckollmeier.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000316.html">
+   <LINK REL="Next"  HREF="000331.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] use libavformat in mpeg2decoder</H1>
+    <B>Carsten Kollmeier</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C200503181458.00052.softdevice%40ckollmeier.de%3E"
+       TITLE="[Softdevice-devel] use libavformat in mpeg2decoder">softdevice at ckollmeier.de
+       </A><BR>
+    <I>Fri Mar 18 14:57:59 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000316.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+        <LI>Next message: <A HREF="000331.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#330">[ date ]</a>
+              <a href="thread.html#330">[ thread ]</a>
+              <a href="subject.html#330">[ subject ]</a>
+              <a href="author.html#330">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Am Donnerstag, 17. M&#228;rz 2005 21:22 schrieb Martin Wache:
+
+&gt;<i> I just commited the new mpeg2decoder, now the PES stream is not
+</I>&gt;<i> parsed anymore by the mpeg2decoder itself, but it is passed to
+</I>&gt;<i> libavformat. ...
+</I>
+Hi!
+
+I checked out the changes in the cvs, but I can't get vdr to work 
+with softdevice. Here is, what it tells me: (The last part of it, 
+tell me if you need more)
+
+BTW, I'm using vdr 1.3.22, DirectFB 0.9.22, ffmpeg 0.4.9_pre1, kernel 
+2.6.11 (gentoo-r3)
+
+Carsten
+
+--snip--
+
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 12926)...
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 12950)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** 
+[reactor.c:802]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'LiRC Input' (INPUT, 12951)...
+(*) DirectFB/Input: LIRC Device 0.2 (convergence integrated media 
+GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 12968)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G400 0.7 (convergence integrated media 
+GmbH)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 8388608 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine 
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize 
+SrcColorkey Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 16</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 16</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x400 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">400x300 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">320x240 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">320x200 at 16</A>
+[dfb] Enumeratig display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+  Caps: brightness contrast deinterlacing dst_colorkey 
+screen_location surface
+[dfb] width = 768, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [768x576])
+osdSurface::
+ - videoonly
+ - flipping
+ (!!!)  *** WARNING [letting unprivileged 
+IDirectFBDisplayLayer::GetSurface() call pass until cooperative 
+level handling is finished] *** [idirectfbdisplaylayer.c:170 in 
+IDirectFBDisplayLayer_GetSurface()]
+videoSurface::
+ - videoonly
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: Matrox Backend Scaler
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] (re)configured 0x08100609
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+CMD[5224]:Start IsSuspended 0
+init put byte finished
+CMD[6223]:Neuer Thread gestartet: Mpeg2Decoder pid 12977
+CMD[6223]:Neuer StreamDecoder type 12977
+Set up to use linux RTC
+CMD[6243]:Neuer Thread gestartet: pid:12978 type 0
+[softdevice] allocating picture buffer for resolution 720x576
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] (re)configured 0x08100609
+CMD[6540]:Neuer StreamDecoder type 12977
+CMD[6544]:Neuer Thread gestartet: pid:12979 type 1
+(!) [12978:    0.000] --&gt; Caught signal 8 (at 0xb7d6a90d, integer 
+divide by zero) &lt;--
+(!) [12897:    0.114] --&gt; Caught signal 11 (at 0x40, invalid address) 
+&lt;--
+alsa-audio: SetParams
+Killed
+
+---snip---
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000316.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+	<LI>Next message: <A HREF="000331.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#330">[ date ]</a>
+              <a href="thread.html#330">[ thread ]</a>
+              <a href="subject.html#330">[ subject ]</a>
+              <a href="author.html#330">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

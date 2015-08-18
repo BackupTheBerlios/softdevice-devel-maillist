@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703062357.59400.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002777.html">
+   <LINK REL="Next"  HREF="002770.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703062357.59400.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Mar  6 23:57:59 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002777.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002770.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2778">[ date ]</a>
+              <a href="thread.html#2778">[ thread ]</a>
+              <a href="subject.html#2778">[ subject ]</a>
+              <a href="author.html#2778">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 04 March 2007 22:10, Hugo Visser wrote:
+&gt;<i> 
+</I>&gt;<i> On Mar 4, 2007, at 6:51 PM, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; A fews days are over and SetSourceRectangle (the real name of  
+</I>&gt;<i> &gt; DirectFB's
+</I>&gt;<i> &gt; function) is now runtime selectable.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But for some reason Blit() of the unichrome driver seems to be broken
+</I>&gt;<i> &gt; when not beeing called with the entire area. So the result with HW  
+</I>&gt;<i> &gt; assisted
+</I>&gt;<i> &gt; decoding is broken when SetSourceRectangle is disabled, and the  
+</I>&gt;<i> &gt; scaling
+</I>&gt;<i> &gt; is wrong when it is enabled :-( .
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Thanks Stefan, that was really fast :) Unfortunately HW decoding is  
+</I>&gt;<i> almost a must have to run decent decoding on epia's. 
+</I>
+50 to 60 % cpu load with sw decodeing vs.
+30 - 40 % is not that much difference I guess.
+
+But here is my suggestion to fix the DirectFB unichrome blit bug.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: uc_accel.c
+===================================================================
+RCS file: /cvs/directfb/DirectFB/gfxdrivers/unichrome/uc_accel.c,v
+retrieving revision 1.6
+diff -U 3 -r1.6 uc_accel.c
+--- uc_accel.c	2 Jan 2007 17:46:19 -0000	1.6
++++ uc_accel.c	6 Mar 2007 22:42:09 -0000
+@@ -258,8 +258,8 @@
+ {
+     UC_ACCEL_BEGIN()
+ 
+-    int uv_dst_offset = ucdev-&gt;dst_offset + (ucdev-&gt;dst_pitch * rect-&gt;h);
+-    int uv_src_offset = ucdev-&gt;src_offset + (ucdev-&gt;src_pitch * rect-&gt;h);
++    int uv_dst_offset = ucdev-&gt;dst_offset + (ucdev-&gt;dst_pitch * ucdev-&gt;dst_height);
++    int uv_src_offset = ucdev-&gt;src_offset + (ucdev-&gt;src_pitch * ucdev-&gt;src_height);
+     
+     int uv_dst_pitch = ucdev-&gt;dst_pitch / 2;
+     int uv_src_pitch = ucdev-&gt;src_pitch / 2;
+@@ -292,8 +292,8 @@
+     
+     // now for the second chrominance plane
+     
+-    uv_src_offset += uv_src_pitch * rect2.h;
+-    uv_dst_offset += uv_dst_pitch * rect2.h;
++    uv_src_offset += uv_src_pitch * ucdev-&gt;src_height/2;
++    uv_dst_offset += uv_dst_pitch * ucdev-&gt;dst_height/2;
+     
+     UC_FIFO_PREPARE ( fifo, 6 );
+     UC_FIFO_ADD_HDR( fifo, HC_ParaType_NotTex &lt;&lt; 16 );
+Index: uc_hwset.c
+===================================================================
+RCS file: /cvs/directfb/DirectFB/gfxdrivers/unichrome/uc_hwset.c,v
+retrieving revision 1.6
+diff -U 3 -r1.6 uc_hwset.c
+--- uc_hwset.c	2 Jan 2007 17:45:58 -0000	1.6
++++ uc_hwset.c	6 Mar 2007 22:42:09 -0000
+@@ -161,6 +161,7 @@
+      int                    dst_bpp     = DFB_BYTES_PER_PIXEL( dst_format );
+ 
+ 
++     ucdev-&gt;dst_height = destination-&gt;height;
+      /* Save FIFO space and CPU cycles. */
+      if (ucdev-&gt;dst_format == dst_format &amp;&amp;
+          ucdev-&gt;dst_offset == dst_offset &amp;&amp;
+@@ -223,6 +224,7 @@
+      
+      ucdev-&gt;src_offset = buffer-&gt;video.offset;
+      ucdev-&gt;src_pitch = buffer-&gt;video.pitch;
++     ucdev-&gt;src_height = state-&gt;source-&gt;height;
+ 
+      UC_VALIDATE( uc_source2d );
+ }
+@@ -244,7 +246,7 @@
+      if (UC_IS_VALID( uc_source3d ))
+           return;
+ 
+-     src_height = source-&gt;height;
++     ucdev-&gt;src_height = src_height = source-&gt;height;
+      src_offset = buffer-&gt;video.offset;
+      src_pitch  = buffer-&gt;video.pitch;
+ 
+Index: unichrome.h
+===================================================================
+RCS file: /cvs/directfb/DirectFB/gfxdrivers/unichrome/unichrome.h,v
+retrieving revision 1.6
+diff -U 3 -r1.6 unichrome.h
+--- unichrome.h	1 Feb 2007 18:42:44 -0000	1.6
++++ unichrome.h	6 Mar 2007 22:42:10 -0000
+@@ -108,8 +108,10 @@
+      DFBSurfacePixelFormat   dst_format; // destination pixel format
+      int                     dst_offset; // destination buffer byte offset
+      int                     dst_pitch;  // destination buffer byte pitch
++     int                     dst_height;
+      int                     src_offset; // source buffer byte offset
+      int                     src_pitch;  // source buffer byte pitch
++     int                     src_height;
+ 
+      int                     field;      // source field
+ 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002777.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002770.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2778">[ date ]</a>
+              <a href="thread.html#2778">[ thread ]</a>
+              <a href="subject.html#2778">[ subject ]</a>
+              <a href="author.html#2778">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Matrox field based blitting now in CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Matrox%20field%20based%20blitting%20now%20in%20CVS&In-Reply-To=%3C20060627203023.GC3594%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002205.html">
+   <LINK REL="Next"  HREF="002201.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Matrox field based blitting now in CVS</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Matrox%20field%20based%20blitting%20now%20in%20CVS&In-Reply-To=%3C20060627203023.GC3594%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Re: Matrox field based blitting now in CVS">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Jun 27 22:30:24 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002205.html">[Softdevice-devel] Re: Matrox field based blitting now in CVS
+</A></li>
+        <LI>Next message: <A HREF="002201.html">[Softdevice-devel] PAL and NTSC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2206">[ date ]</a>
+              <a href="thread.html#2206">[ thread ]</a>
+              <a href="subject.html#2206">[ subject ]</a>
+              <a href="author.html#2206">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jun 27, 2006 at 11:05:10PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Tue, Jun 27, 2006 at 07:57:23AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Dienstag 27 Juni 2006 02:25, Lucian Muresan wrote:
+</I>&gt;<i> &gt; &gt; - video on my G400 TVout is very smooth;
+</I>&gt;<i> &gt; &gt; - OSD has double height (only see upper half over whole screen area);
+</I>&gt;<i> &gt; &gt; - during and once more 2 or 3 seconds after channel change, and on
+</I>&gt;<i> &gt; &gt; showing/hiding the OSD as well, there is a very visible flicker in which
+</I>&gt;<i> &gt; &gt; one can always see what looks like one field of the video displayed only
+</I>&gt;<i> &gt; &gt; in the upper half of the screen (288 lines, squashed).
+</I>&gt;<i> 
+</I>&gt;<i> Ditto, with current CVS of softdevice and DirectFB, on Debian GNU/Linux
+</I>&gt;<i> unstable (updated tonight) and Matrox G450.
+</I>
+Short profiling results:
+
+opcontrol --start;sleep 20;opcontrol --stop
+
+According to opreport -l, yv12_to_yuy2_il_mmx2() is consuming
+26% of all CPU time (across all processes and libraries).
+According to opreport -l path/to/libvdr-softdevice.so.1.4.0,
+it is 37.4% of softdevice time (with statically linked ffmpeg
+and no subplugins).
+
+$ opreport -t 2 -l path/to/libvdr-softdevice.so.1.4.0
+
+CPU: PIII, speed 906.836 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (clocks processor is not halted) with a unit mask of 0x00 (No unit mask) count 90000
+samples  %        symbol name
+37575    37.3903  yv12_to_yuy2_il_mmx2(unsigned char const*, unsigned char const*, unsigned char const*, unsigned char*, int, int, int, int, int)
+9302      9.2563  mpeg_decode_mb
+7787      7.7487  put_pixels16_mmx
+7454      7.4174  ff_mpa_synth_filter
+6509      6.4770  put_pixels8_mmx
+4693      4.6699  ff_simple_idct_add_mmx
+2730      2.7166  MPV_decode_mb
+2545      2.5325  put_pixels16_xy2_mmx
+
+$ opreport --global-percent
+
+CPU: PIII, speed 906.836 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (clocks processor is not halted) with a unit mask of 0x00 (No unit mask) count 90000
+CPU_CLK_UNHALT...|
+  samples|      %|
+------------------
+   100494 69.8108 libvdr-softdevice.so.1.4.0
+    20979 14.5736 vmlinux
+     4681  3.2518 oprofiled
+     3847  2.6724 libc-2.3.6.so
+     3371  2.3418 cx8802
+     2811  1.9527 cx8800
+     2022  1.4046 oprofile
+     1372  0.9531 vdr
+     1194  0.8294 libasound.so.2.0.0
+      568  0.3946 cx88xx
+      516  0.3585 libpthread-2.3.6.so
+      373  0.2591 bash
+      364  0.2529 libdirectfb_matrox.so
+      274  0.1903 libdirectfb-0.9.so.26.0.0
+[snip]
+
+So, there's no busy waiting in DirectFB any more.  The playback is smooth,
+and frames are dropped very seldomly, even though CPU load is slightly
+over 50%.
+
+I hope that the OSD bugs can be fixed ASAP.  Stefan, I'd appreciate a
+notification on the softdevice mailing list when this happens.
+
+One more bug: the top of the framebuffer is not cleared (made black) when
+viewing a 16:9 program and hitting CropModeToggleKey.  The two most recent
+fields will just repeat infinitely.
+
+Related bug: when viewing a 16:9 program on a 4:3 screen letterboxed
+(full horizontal resolution, downscaled vertical resolution), the
+top black bar will be replaced with the topmost lines of the two
+interlaced video frames whenever the OSD is either enabled or disabled.
+(i.e., hit Schedule to enable the OSD, watch the top lines change; then
+hit Back to disable the OSD and watch the top lines change again).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002205.html">[Softdevice-devel] Re: Matrox field based blitting now in CVS
+</A></li>
+	<LI>Next message: <A HREF="002201.html">[Softdevice-devel] PAL and NTSC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2206">[ date ]</a>
+              <a href="thread.html#2206">[ thread ]</a>
+              <a href="subject.html#2206">[ subject ]</a>
+              <a href="author.html#2206">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3CPine.LNX.4.61.0507011557330.6190%40pub6.ifh.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000916.html">
+   <LINK REL="Next"  HREF="000918.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Patrick Boettcher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3CPine.LNX.4.61.0507011557330.6190%40pub6.ifh.de%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">patrick.boettcher at desy.de
+       </A><BR>
+    <I>Fri Jul  1 16:00:19 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000916.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000918.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#917">[ date ]</a>
+              <a href="thread.html#917">[ thread ]</a>
+              <a href="subject.html#917">[ subject ]</a>
+              <a href="author.html#917">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+On Fri, 1 Jul 2005, Martin Wache wrote:
+&gt;<i> Alternativly you can try the untested attached patch for vdr-1.3.27 (if
+</I>&gt;<i> it doesn't compile, maybe you can fix it, I guess the idea is clear...).
+</I>&gt;<i> It will cause vdr to sleep when it doesn't have any new frame for the
+</I>&gt;<i> softdevice. That will hopefully break the busy loop, but please undo the
+</I>&gt;<i> previous patch for the softdevice when trying this.
+</I>
+I changed it back to &gt; 90 and applied your patch to VDR. And now it seems 
+to work.
+
+Still some av-asynchronous (livetv and recordings), but by setting it to 2 
+for correction it is OK again.
+
+Thanks for the work. Now please convince Klaus to merge it to mainstream 
+vdr.
+
+Patrick.
+
+--
+   Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">patrick.boettcher at desy.de</A>
+   WWW:  <A HREF="http://www.wi-bw.tfh-wildau.de/~pboettch/">http://www.wi-bw.tfh-wildau.de/~pboettch/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000916.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000918.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#917">[ date ]</a>
+              <a href="thread.html#917">[ thread ]</a>
+              <a href="subject.html#917">[ subject ]</a>
+              <a href="author.html#917">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

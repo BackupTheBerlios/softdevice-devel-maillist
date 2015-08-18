@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] crash with latest cvs code
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20crash%20with%20latest%20cvs%20code&In-Reply-To=%3C42519393.6060005%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000429.html">
+   <LINK REL="Next"  HREF="000432.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] crash with latest cvs code</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20crash%20with%20latest%20cvs%20code&In-Reply-To=%3C42519393.6060005%40gmx.net%3E"
+       TITLE="[Softdevice-devel] crash with latest cvs code">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Apr  4 21:20:51 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000429.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+        <LI>Next message: <A HREF="000432.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#430">[ date ]</a>
+              <a href="thread.html#430">[ thread ]</a>
+              <a href="subject.html#430">[ subject ]</a>
+              <a href="author.html#430">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo wrote:
+&gt;<i> [XvVideoOut]: using area size 2048 x 2048
+</I>&gt;<i> Subplugin successfully opend
+</I>&gt;<i> [softdevice] Video Out seems to be OK
+</I>&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;<i> cSoftDevice::MakePrimaryDevice
+</I>&gt;<i> [New Thread 114696 (LWP 5510)]
+</I>&gt;<i> [New Thread 131081 (LWP 5511)]
+</I>&gt;<i> [New Thread 147466 (LWP 5513)]
+</I>&gt;<i> CMD[2932]:SetPlayMode PmAudioVideo
+</I>&gt;<i> CMD[2932]:Start IsSuspended 0
+</I>&gt;<i> init put byte finished
+</I>&gt;<i> [New Thread 163851 (LWP 5515)]
+</I>&gt;<i> CMD[3213]:Neuer Thread gestartet: Mpeg2Decoder pid 5515
+</I>&gt;<i> BUF[3213]:av_read_frame start
+</I>&gt;<i> BUF[3213]:read_packet: StreamBuffer: 0
+</I>&gt;<i> [New Thread 180236 (LWP 5517)]
+</I>&gt;<i> [Thread 131081 (LWP 5511) exited]
+</I>&gt;<i> CMD[5861]:Stop
+</I>&gt;<i> BUF[5866]:cMpeg2Decoder Stream Error!!!!!!!!!!!!!!!!!!
+</I>&gt;<i> CMD[5878]:Thread beendet : mpegDecoder pid 5515
+</I>&gt;<i> [Thread 163851 (LWP 5515) exited]
+</I>&gt;<i> CMD[5883]:Stop finished
+</I>&gt;<i> GetSpuDecoder 0
+</I>&gt;<i> [Thread 180236 (LWP 5517) exited]
+</I>&gt;<i> [Thread 147466 (LWP 5513) exited]
+</I>&gt;<i> [New Thread 196617 (LWP 5518)]
+</I>&gt;<i> [New Thread 213002 (LWP 5519)]
+</I>&gt;<i> CMD[6005]:SetPlayMode PmAudioVideo
+</I>&gt;<i> CMD[6005]:Start IsSuspended 0
+</I>&gt;<i> init put byte finished
+</I>&gt;<i> [New Thread 229387 (LWP 5520)]
+</I>&gt;<i> CMD[6011]:Neuer Thread gestartet: Mpeg2Decoder pid 5520
+</I>&gt;<i> BUF[6011]:av_read_frame start
+</I>&gt;<i> BUF[6011]:read_packet: StreamBuffer: 0
+</I>&gt;<i> [New Thread 245772 (LWP 5521)]
+</I>&gt;<i> BUF[6408]:Decode b32eec88, Length 2048
+</I>&gt;<i> BUF[6409]:Deocde finished
+</I>&gt;<i> BUF[6409]:Decode b32efc88, Length 2048
+</I>&gt;<i> BUF[6409]:Deocde finished
+</I>&gt;<i> BUF[6409]:Decode b32f0488, Length 2048
+</I>&gt;<i> BUF[6409]:Deocde finished
+</I>&gt;<i> BUF[6409]:Decode b32f0c88, Length 2048
+</I>&gt;<i> BUF[6409]:Deocde finished
+</I>&gt;<i> BUF[6409]:Decode b32f1488, Length 2048
+</I>&gt;<i> BUF[6409]:Deocde finished
+</I>&gt;<i> BUF[6409]:Decode b32f1c88, Length 2048
+</I>&gt;<i> BUF[6409]:Deocde finished
+</I>&gt;<i> BUF[6418]:read_packet: sleeping while data (12288) in buffer
+</I>&gt;<i> BUF[6418]:read_packet: got 12280 bytes
+</I>&gt;<i> BUF[6418]:got packet from av_read_frame!
+</I>&gt;<i> BUF[6418]:QueuePacket AudioIdx: -1 VideoIdx -1 pkt.stream_index: 0
+</I>&gt;<i> 
+</I>&gt;<i> Program received signal SIGSEGV, Segmentation fault.
+</I>&gt;<i> [Switching to Thread 229387 (LWP 5520)]
+</I>&gt;<i> 0xb78668af in cMpeg2Decoder::QueuePacket ()
+</I>&gt;<i>    from ./PLUGINS/lib/libvdr-softdevice.so.1.3.23
+</I>&gt;<i> (gdb) ba
+</I>&gt;<i> #0  0xb78668af in cMpeg2Decoder::QueuePacket ()
+</I>&gt;<i>    from ./PLUGINS/lib/libvdr-softdevice.so.1.3.23
+</I>&gt;<i> #1  0xb7866c98 in cMpeg2Decoder::Action ()
+</I>&gt;<i>    from ./PLUGINS/lib/libvdr-softdevice.so.1.3.23
+</I>&gt;<i> #2  0x080d0740 in cThread::StartThread (Thread=0x85d0ef0) at
+</I>&gt;<i> thread.c:227
+</I>&gt;<i> #3  0xb7f69ce1 in pthread_start_thread () from /lib/i686/libpthread.so.0
+</I>&gt;<i> #4  0xb7f69e51 in pthread_start_thread_event ()
+</I>&gt;<i> from /lib/i686/libpthread.so.0
+</I>&gt;<i> #5  0xb7e0913a in clone () from /lib/i686/libc.so.6
+</I>&gt;<i> (gdb)
+</I>&gt;<i> 
+</I>
+Sorry, right now I can't say why this happend. Can you tell me a bit 
+more about how you produced this crash? Is it reproducible? Can you 
+print the line where the softdevice crashed? Did you check the messages 
+in the syslog?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000429.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+	<LI>Next message: <A HREF="000432.html">[Softdevice-devel] crash with latest cvs code
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#430">[ date ]</a>
+              <a href="thread.html#430">[ thread ]</a>
+              <a href="subject.html#430">[ subject ]</a>
+              <a href="author.html#430">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C446A235A.6010805%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002037.html">
+   <LINK REL="Next"  HREF="002043.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C446A235A.6010805%40huillard.net%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">nicolas at huillard.net
+       </A><BR>
+    <I>Tue May 16 21:09:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002037.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="002043.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2041">[ date ]</a>
+              <a href="thread.html#2041">[ thread ]</a>
+              <a href="subject.html#2041">[ subject ]</a>
+              <a href="author.html#2041">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz a &#233;crit :
+&gt;<i> On Monday 15 May 2006 22:27, Martin Wache wrote:
+</I>
+&gt;&gt;<i>The most pressing question on my mind is: is it possible to reduce the
+</I>&gt;&gt;<i>CPU load by getting rid of the busy loop while waiting for the decoder
+</I>&gt;&gt;<i>to become ready again? It's quite stupid to waste CPU time just for
+</I>&gt;&gt;<i>waiting for the decoder if the goal of using the decoder was to save CPU
+</I>&gt;&gt;<i>time :-)
+</I>&gt;<i> 
+</I>&gt;<i> Good point! It's a great improvement in saving CPU time as it is but could be 
+</I>&gt;<i> better.
+</I>
+Not having looked at the code, and only thinking from your comments, I
+wonder if no busy waiting could be achieved with some kind of multiple
+buffers, or pipeline, frame queuing :
+* 1st stage : feed some frames to the decoder
+* 2nd stage : post-process decoded frames
+* 3rd stage : flip to the screen at interrupt-time
+
+All stages could be driven by the actual interrupt : first flip what's
+available, then post-process what's been decoded and is waiting (given
+the decoder is faster than the interrupt interval), then feed the
+decoder with another set of frames.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002037.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="002043.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2041">[ date ]</a>
+              <a href="thread.html#2041">[ thread ]</a>
+              <a href="subject.html#2041">[ subject ]</a>
+              <a href="author.html#2041">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606181205.23935.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002167.html">
+   <LINK REL="Next"  HREF="002174.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606181205.23935.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sun Jun 18 13:05:23 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002167.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002174.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2172">[ date ]</a>
+              <a href="thread.html#2172">[ thread ]</a>
+              <a href="subject.html#2172">[ subject ]</a>
+              <a href="author.html#2172">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 18 June 2006 00:09, Stefan Lucke wrote:
+&gt;<i> On Sonntag 18 Juni 2006 00:45, Rolf Ahrenberg wrote:
+</I>&gt;<i> &gt; On Sat, 17 Jun 2006, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; You can _now_ as described above (2. &amp; 3.) .
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt; Let's first get current modification stable.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Ok. The cle266 option doesn't currently set 'viaTv', that's used to
+</I>&gt;<i> &gt; enable field parity for Unichrome. Is this intentional?
+</I>&gt;<i>
+</I>&gt;<i> Yes, as I guess you can specify -vo:dfb:cle266:viatv or
+</I>&gt;<i> -vo:dfb:viatv:cle266 . If that doesn't work, we have to change something.
+</I>
+Nice work with integrating the CLE266 decoding stuff! When I last had a chance 
+to test this, the aspect ratios were all incorrect but now it's sorted.
+
+I have just checked out softdevice cvs and it is running nicely 
+with &quot;-vo:dfb:viatv:cle266&quot;. CPU usage like this is ca. 28% like this on a 1 
+GHz Epia MII-12000. With &quot;-vo:dfb:viatv&quot;, CPU usage is ca. 82% for the same 
+channel.
+
+I'll leave it on hardware decoding for now to see how it works long term... 
+The only current issue so far is that the A-V sync isn't quite perfect but I 
+think that is mainly down to the DirectFB triple buffering for the TV-out 
+stuff.
+
+Switching channels or starting/stopping a recording doesn't look as clean as 
+with software decoding because I'm seeing block artifacts when the stream is 
+changed. The decoder buffers probably clearing or the decoder needs resetting 
+somewhere.
+
+Looking good!
+
+:<i>)
+</I>
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002167.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002174.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2172">[ date ]</a>
+              <a href="thread.html#2172">[ thread ]</a>
+              <a href="subject.html#2172">[ subject ]</a>
+              <a href="author.html#2172">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

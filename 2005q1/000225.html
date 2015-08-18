@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Re%3A%20G550%2C%20TV-Out%2C%20SetFieldParity&In-Reply-To=%3C20050208230409.GB5452%40realh.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000224.html">
+   <LINK REL="Next"  HREF="000226.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity</H1>
+    <B>Tony Houghton</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Re%3A%20G550%2C%20TV-Out%2C%20SetFieldParity&In-Reply-To=%3C20050208230409.GB5452%40realh.co.uk%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity">h at realh.co.uk
+       </A><BR>
+    <I>Wed Feb  9 00:04:09 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000224.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+        <LI>Next message: <A HREF="000226.html">[Softdevice-devel] RE: [directfb-users] Re: df_xine with Matrox G450 TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#225">[ date ]</a>
+              <a href="thread.html#225">[ thread ]</a>
+              <a href="subject.html#225">[ subject ]</a>
+              <a href="author.html#225">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">200502082314.30756.stefan at lucke.in-berlin.de</A>&gt;, you wrote:
+
+&gt;<i> &gt; &gt; (a) A/V sync is a bit of a problem. It's probably mostly my fault for
+</I>&gt;<i> &gt; &gt; buying a sound card that cost only about &#163;5 new and may therefore have a
+</I>&gt;<i> &gt; &gt; dodgy clock, but without any guarantee that a more expensive card would
+</I>&gt;<i> &gt; &gt; fix the problem I'd rather see a software workaround of dynamic
+</I>&gt;<i> &gt; &gt; resampling. I'm willing to do most of the work on this myself, but I
+</I>&gt;<i> &gt; &gt; think I might need lots of help from you, explaining the stages the
+</I>&gt;<i> &gt; &gt; sound goes through as it's decoded and buffered etc.
+</I>&gt;<i> 
+</I>&gt;<i> Is that sync issue common between all channels or for a specific one ?
+</I>
+I haven't had time to sit and watch anything long enough to really tell
+the extent, but it seems all channels can go out of sync a little bit.
+One time on BBC 1 it got really bad. I heard a few vague things
+suggesting BBC may have issues that other channels don't.
+
+&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; (b) Sometimes when starting VDR after using MPlayer I get the blank
+</I>&gt;<i> &gt; &gt; white screen problem again and I can't make it work properly until I
+</I>&gt;<i> &gt; &gt; reboot.
+</I>&gt;<i> 
+</I>&gt;<i> mplayer problem !?
+</I>
+MPlayer works OK, and IIRC it can be restarted and work normally after
+VDR has failed in this way. Those are the only two working DFP apps I
+have currently. If it's beyond softdevice's control, I would have
+thought it's more likely to be DirectFB's fault than MPlayer's.
+
+&gt;<i> &gt; &gt; (c) I can't use VDR's mplayer plugin for two reasons. One is that
+</I>&gt;<i> &gt; &gt; softdevice appears to be leaving the sound card tied up, so mplayer
+</I>&gt;<i> &gt; &gt; can't play sound. The other is that when returning to VDR it either
+</I>&gt;<i> &gt; &gt; plays a couple of seconds of sound with a black screen, then locks up
+</I>&gt;<i> &gt; &gt; with lots of ringbuffer errors in the log, or produces a garbled screen
+</I>&gt;<i> &gt; &gt; in garish colours with only room for about half the OSD. When I used to
+</I>&gt;<i> &gt; &gt; use th DXR3 plugin, starting the mplayer plugin would pop up a message
+</I>&gt;<i> &gt; &gt; about releasing DXR3 devices, so I guess something similar is needed for
+</I>&gt;<i> &gt; &gt; softdevice to make it fully shut down and reinitialise.
+</I>&gt;<i> 
+</I>&gt;<i> So dfb-out should resume reconnect (as xv-out does) dfb, someone else
+</I>&gt;<i> asked for that too. The only problem I see with such a feature is that I see
+</I>&gt;<i> no way at the moment to reconnect, as in such a situation I have to release
+</I>&gt;<i> everything I allocated of dfb.
+</I>
+Can't you release it all before mplayer.sh starts, then reallocate it
+afterwards?
+
+-- 
+TH * <A HREF="http://www.realh.co.uk">http://www.realh.co.uk</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000224.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+	<LI>Next message: <A HREF="000226.html">[Softdevice-devel] RE: [directfb-users] Re: df_xine with Matrox G450 TV-out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#225">[ date ]</a>
+              <a href="thread.html#225">[ thread ]</a>
+              <a href="subject.html#225">[ subject ]</a>
+              <a href="author.html#225">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

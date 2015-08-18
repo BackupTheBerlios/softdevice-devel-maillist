@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] buffer overflow caused by softdevice plugin
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20buffer%20overflow%20caused%20by%20softdevice%20plugin&In-Reply-To=%3C430E1BF2.2070307%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001142.html">
+   <LINK REL="Next"  HREF="001147.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] buffer overflow caused by softdevice plugin</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20buffer%20overflow%20caused%20by%20softdevice%20plugin&In-Reply-To=%3C430E1BF2.2070307%40gmx.net%3E"
+       TITLE="[Softdevice-devel] buffer overflow caused by softdevice plugin">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Aug 25 21:28:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001142.html">[Softdevice-devel] buffer overflow caused by softdevice plugin
+</A></li>
+        <LI>Next message: <A HREF="001147.html">[Softdevice-devel] buffer overflow caused by softdevice plugin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1145">[ date ]</a>
+              <a href="thread.html#1145">[ thread ]</a>
+              <a href="subject.html#1145">[ subject ]</a>
+              <a href="author.html#1145">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Claas Hilbrecht schrieb:
+&gt;<i> A few days ago I posted my xrun problem report to the list. After
+</I>&gt;<i> playing around I got another problem. If I use the softdevice plugin for
+</I>&gt;<i> some time sooner or later I get buffer overflows (see log below) as you
+</I>&gt;<i> can see in the log. If the buffer overflow occurs I can kill the VDR
+</I>&gt;<i> only with &quot;killall -9&quot;. A normal kill won't work. Sometimes it takes
+</I>&gt;<i> only several minutes, sometime it takes several hours to trigger the
+</I>&gt;<i> problem. I don't know how to reproduce the problem by hand. Running the
+</I>&gt;<i> VDR without the softdevice plugin (I just remove -P softdevice from VDR)
+</I>&gt;<i> the VDR system runs the last four days without any problem. So I'm
+</I>&gt;<i> pretty sure the softdevice is the problem.
+</I>&gt;<i> 
+</I>&gt;<i> I'm running VDR 1.3.30 with 4 DVB-S budget cards. The softdevice plugin
+</I>&gt;<i> is called with &quot;-P'softdevice -ao alsa:hw:0,0 -vo dummy:'&quot;. The VDR is
+</I>&gt;<i> running on a Pentium IV with 1.7 GHz and 256 MB Ram.
+</I>&gt;<i> 
+</I>&gt;<i> Aug 25 16:19:21 xxx vdr[25821]: closing SVDRP connection
+</I>&gt;<i> Aug 25 16:20:47 xxx vdr[25947]: clearing device because of consecutive
+</I>&gt;<i> poll timeouts
+</I>&gt;<i> Aug 25 16:21:22 xxx vdr[25948]: buffer usage: 70% (tid=425995)
+</I>&gt;<i> Aug 25 16:21:27 xxx vdr[25948]: buffer usage: 80% (tid=425995)
+</I>&gt;<i> Aug 25 16:21:32 xxx vdr[25948]: buffer usage: 90% (tid=425995)
+</I>&gt;<i> Aug 25 16:21:37 xxx vdr[25948]: buffer usage: 100% (tid=425995)
+</I>&gt;<i> Aug 25 16:21:37 xxx vdr[25948]: ERROR: 1 ring buffer overflow (177 bytes
+</I>&gt;<i> dropped)
+</I>&gt;<i> Aug 25 16:21:43 xxx vdr[25948]: ERROR: 1329 ring buffer overflows
+</I>&gt;<i> (249852 bytes dropped)
+</I>&gt;<i> Aug 25 16:21:49 xxx vdr[25948]: ERROR: 1351 ring buffer overflows
+</I>&gt;<i> (253988 bytes dropped)
+</I>&gt;<i> Aug 25 16:21:55 xxx vdr[25948]: ERROR: 1355 ring buffer overflows
+</I>&gt;<i> (254740 bytes dropped)
+</I>&gt;<i> 
+</I>
+I guess the two problems you reported are related, there seems to be
+something wrong with the buffering.
+Usually the video buffer is more filled than the audio buffer, in your
+case when only listening to radio that's different.
+
+The debug output you send in the other mail was a bit short, and now
+seeing this problem I would like to see what happens internally in the
+softdevice during these hangs.
+Can you please send me a zipped debug output of BUFDEB in a personal
+e-mail, if possible when one of these buffer overflows happend and
+containing about the last 1-2 minutes before the buffer overflow?
+
+Do these problems also occur when replaying a recorded stream?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001142.html">[Softdevice-devel] buffer overflow caused by softdevice plugin
+</A></li>
+	<LI>Next message: <A HREF="001147.html">[Softdevice-devel] buffer overflow caused by softdevice plugin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1145">[ date ]</a>
+              <a href="thread.html#1145">[ thread ]</a>
+              <a href="subject.html#1145">[ subject ]</a>
+              <a href="author.html#1145">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

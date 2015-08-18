@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Fwd: Re: swscale lib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Fwd%3A%20Re%3A%20swscale%20lib&In-Reply-To=%3C200412301311.06553.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000117.html">
+   <LINK REL="Next"  HREF="000119.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Fwd: Re: swscale lib</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Fwd%3A%20Re%3A%20swscale%20lib&In-Reply-To=%3C200412301311.06553.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Fwd: Re: swscale lib">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Dec 30 13:11:06 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000117.html">[Softdevice-devel] [Bug #2971] Short gaps in audio output
+</A></li>
+        <LI>Next message: <A HREF="000119.html">[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#118">[ date ]</a>
+              <a href="thread.html#118">[ thread ]</a>
+              <a href="subject.html#118">[ subject ]</a>
+              <a href="author.html#118">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>----------  Forwarded Message  ----------
+
+Subject: Re: swscale lib
+Date: Freitag, 24. Dezember 2004 09:17
+From: Andrei Naouman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">anaouman at gmail.com</A>&gt;
+To: Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;
+
+Hi Stefan!
+
+What do you think about author's - Michael Niedermayer - advice :) ?
+
+Anyway I did not find stand alone library for software scaling. Other
+projects like Video Lan and 'drip' do the same thing to Mplayer's
+postproc...
+So we could include the code so far until guys move the library to ffmpeg.
+
+Another ugly solution - I could statically link code to MPlayer
+libswscale.a (and couple of it dependent *.a). But that would force
+users to build MPlayer from sources...
+
+Yet another solution is to extract exactly YV12 MMX scaler code from
+the labrary but that whould involve even more customization than
+extract the whole library...
+
+What do you think? 
+
+Andrei.
+
+On Wed, 22 Dec 2004 12:59:45 +0100, Michael Niedermayer
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">michaelni at gmx.at</A>&gt; wrote:
+&gt;<i> Hi
+</I>&gt;<i> 
+</I>&gt;<i> On Wednesday 22 December 2004 08:59, Andrei Naouman wrote:
+</I>&gt;<i> &gt; Hi Michael,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I wrote video out for Matrox card's TV-out for vdr/softdevice project
+</I>&gt;<i> &gt; (SAT TV). Since the card's second head does not have hardware scaling
+</I>&gt;<i> &gt; ability, a software scaler required to stretch SAT-TV picture (like
+</I>&gt;<i> &gt; 704 -&gt; 768).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Currently I use MPlayer's /postpoc code for that purpose. But I am
+</I>&gt;<i> &gt; searching for stand alone library for that.
+</I>&gt;<i> 
+</I>&gt;<i> try google :)
+</I>&gt;<i> 
+</I>&gt;<i> anyway, the swscaler will be moved from mplayer to ffmpeg, at least its
+</I>&gt;<i> planned to do that since a long time, though probably u dont want to wait for
+</I>&gt;<i> that to happen, so until then simply including the required files from
+</I>&gt;<i> postproc, while ugly is the simplest solution
+</I>&gt;<i> &quot;maintaining&quot; it also shouldnt be much work, its simply a matter of
+</I>&gt;<i> occasionally diffing the files against the ones from mplayer/postproc and
+</I>&gt;<i> merging the differences
+</I>&gt;<i> 
+</I>&gt;<i> another minor thing i should mention is that IMHO scaling/colorspace
+</I>&gt;<i> conversation doesnt belong into a driver not directly nor indirectly but in
+</I>&gt;<i> the application using the driver or some common API layer maybe, i dunno
+</I>&gt;<i> whichever way u have implemented it, and its your decision anyway how to do
+</I>&gt;<i> it ...
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> --
+</I>&gt;<i> Michael
+</I>&gt;<i> 
+</I>&gt;<i> &quot;I do not agree with what you have to say, but I'll defend to the death your
+</I>&gt;<i> right to say it.&quot; -- Voltaire
+</I>&gt;<i>
+</I>
+
+
+-------------------------------------------------------
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000117.html">[Softdevice-devel] [Bug #2971] Short gaps in audio output
+</A></li>
+	<LI>Next message: <A HREF="000119.html">[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#118">[ date ]</a>
+              <a href="thread.html#118">[ thread ]</a>
+              <a href="subject.html#118">[ subject ]</a>
+              <a href="author.html#118">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

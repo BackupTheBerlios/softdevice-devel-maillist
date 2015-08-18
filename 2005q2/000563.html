@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C20050427092737.GA99555%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000562.html">
+   <LINK REL="Next"  HREF="000565.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash&In-Reply-To=%3C20050427092737.GA99555%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Repeatable crash">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Apr 27 11:27:37 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000562.html">[Softdevice-devel] Repeatable crash
+</A></li>
+        <LI>Next message: <A HREF="000565.html">[Softdevice-devel] Repeatable crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#563">[ date ]</a>
+              <a href="thread.html#563">[ thread ]</a>
+              <a href="subject.html#563">[ subject ]</a>
+              <a href="author.html#563">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Apr 27, 2005 at 09:39:26AM +0200, Stefan Lucke wrote:
+&gt;<i> I've some of crash situation my self. But I'll ve a look at your test
+</I>&gt;<i> stream later this evening. For me it happens upon 4:3 -&gt; 16:9 switch.
+</I>&gt;<i> I think it is related to this:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://mplayerhq.hu/pipermail/ffmpeg-devel/2005-April/000027.html">http://mplayerhq.hu/pipermail/ffmpeg-devel/2005-April/000027.html</A>
+</I>&gt;<i> 
+</I>&gt;<i> You may try that with vdr running for gdb too.
+</I>
+Thanks, I'll try that tonight.
+
+&gt;<i> Please run vdr from gdb to get a back trace.
+</I>&gt;<i> example:
+</I>&gt;<i>   gdb ./ vdr
+</I>&gt;<i>   set args your_usual_commandline for vdr
+</I>&gt;<i> 
+</I>&gt;<i> if vdr crashed:
+</I>&gt;<i>   bt
+</I>
+I'd also try:
+i thr
+thr 1
+bt
+thr 2
+bt
+...
+(Or is there a simpler way to extract the stack traces from all threads?)
+
+&gt;<i> But you can controll volume setting via vdr ?
+</I>
+Yes.  If I set the volume to the minimum, it will be about the same level
+as with the Mute button.  I'm using the computer's onboard AC97 audio
+connected to a set of speakers that are powered from the PC's 12-volt
+power supply.  The sound drivers are the ALSA drivers in Linux 2.6.11.6,
+for a VIA sound controller if I remember correctly.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000562.html">[Softdevice-devel] Repeatable crash
+</A></li>
+	<LI>Next message: <A HREF="000565.html">[Softdevice-devel] Repeatable crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#563">[ date ]</a>
+              <a href="thread.html#563">[ thread ]</a>
+              <a href="subject.html#563">[ subject ]</a>
+              <a href="author.html#563">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

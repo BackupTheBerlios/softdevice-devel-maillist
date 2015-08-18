@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20crash&In-Reply-To=%3C200507301656.13625.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001038.html">
+   <LINK REL="Next"  HREF="001055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice crash</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20crash&In-Reply-To=%3C200507301656.13625.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice crash">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jul 30 16:56:13 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001038.html">[Softdevice-devel] Softdevice crash
+</A></li>
+        <LI>Next message: <A HREF="001055.html">[Softdevice-devel] Softdevice crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1054">[ date ]</a>
+              <a href="thread.html#1054">[ thread ]</a>
+              <a href="subject.html#1054">[ subject ]</a>
+              <a href="author.html#1054">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 26. Juli 2005 10:34, Seppo Ingalsuo wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> Here is core file information about a softdevice-cvs (2005-07-23) crash
+</I>&gt;<i> 
+</I>&gt;<i> (gdb) where
+</I>&gt;<i> #0  0x087fd768 in ?? ()
+</I>&gt;<i> #1  0xb7c6fc53 in cMpeg2Decoder::BufferFill (this=0x84edbe8) at 
+</I>&gt;<i> mpeg2decoder.c:1492
+</I>&gt;<i> #2  0xb7c67d43 in cSoftDevice::Poll (this=0x848b3f8, Poller=@0xbdbffa04, 
+</I>&gt;<i> TimeoutMs=100)
+</I>&gt;<i>     at softdevice.c:516
+</I>&gt;<i> #3  0x080985da in cDvbPlayer::Action (this=0xb575b4a0) at dvbplayer.c:493
+</I>&gt;<i> #4  0x080e66b6 in cThread::StartThread (Thread=0xb575b4ac) at thread.c:233
+</I>&gt;<i> #5  0xb7ea1e51 in pthread_start_thread () from /lib/libpthread.so.0
+</I>&gt;<i> #6  0xb7d5892a in clone () from /lib/libc.so.6
+</I>&gt;<i> 
+</I>&gt;<i> If I recall right vdr got stuck when attempting to resume paused 
+</I>&gt;<i> recording playback. I'm currently running vdr with 
+</I>&gt;<i> LD_ASSUME_KERNEL=2.4.1. There was nothing interesting in vdr log files 
+</I>&gt;<i> when crash happened.
+</I>&gt;<i> 
+</I>
+If that crash is reproducable you (doesn't happen for me), please try
+attached patch, which protects aout and vout access by a mutex.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: softdevice-avMutex.diff
+Type: text/x-diff
+Size: 5507 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050730/d4b8a12f/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050730/d4b8a12f/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001038.html">[Softdevice-devel] Softdevice crash
+</A></li>
+	<LI>Next message: <A HREF="001055.html">[Softdevice-devel] Softdevice crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1054">[ date ]</a>
+              <a href="thread.html#1054">[ thread ]</a>
+              <a href="subject.html#1054">[ subject ]</a>
+              <a href="author.html#1054">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

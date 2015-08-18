@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Progress%20with%20DirectFB%20%28Work%20on%20Debian%20package%20still%20in%20progress...%29&In-Reply-To=%3C20050731192407.GA433171%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001060.html">
+   <LINK REL="Next"  HREF="001066.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Progress%20with%20DirectFB%20%28Work%20on%20Debian%20package%20still%20in%20progress...%29&In-Reply-To=%3C20050731192407.GA433171%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Jul 31 21:24:07 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001060.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+        <LI>Next message: <A HREF="001066.html">[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1061">[ date ]</a>
+              <a href="thread.html#1061">[ thread ]</a>
+              <a href="subject.html#1061">[ subject ]</a>
+              <a href="author.html#1061">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jul 31, 2005 at 08:14:23PM +0200, Tobias Grimm wrote:
+&gt;<i> Guillem Jover now has packaged dfb++, so I thought it's time to continue
+</I>&gt;<i> working on the vdr-plugin-softdevice package. I've sucessfully built the
+</I>&gt;<i> package with directFB support, but could need some help with getting it
+</I>&gt;<i> up and running.
+</I>
+&gt;<i> [dfb] Enumeratig display Layers
+</I>&gt;<i> Layer 0 FBDev Primary Layer  Type: graphics
+</I>&gt;<i>   Caps: brightness contrast saturation surface
+</I>&gt;<i> (!) [12950:    0.000] --&gt; Caught signal 6 (sent by pid 12950, uid 0) &lt;--
+</I>&gt;<i> /usr/sbin/runvdr: line 1: 12950 Get&#246;tet                
+</I>
+Search for the mailing list archive for SIGABRT (that's what signal 6 is
+on GNU/Linux).  I reported that a few months ago.  If I remember correctly,
+it was a permissions problem.  Try to run as root, or try adding
+no-vt-switch, no-vt-switching, and perhaps other options to your /etc/directfbrc.
+You could also try building vdr.o with make NO_KBD=1.
+
+&gt;<i> LD_ASSUME_KERNEL=2.4.1 /usr/bin/vdr -v /var/lib/video.00 -c /var/lib/vdr
+</I>&gt;<i> -L /usr/lib/vdr/plugins -r
+</I>
+Try adding &quot;strace&quot; before /usr/bin/vdr.  Then you should get an idea where it
+fails.
+
+By the way, under kernel 2.6.12.3 and DirectFB 0.9.22, vdr-softdevice works
+pretty nicely, apart from the fact that I had to add a few infrared key
+mappings for the new Hauppauge Nova-T PCI 90002 RCU to the kernel and to
+the DirectFB.  (These mappings should now be in the development trees.)
+There were far more glitches in 2.6.8 or maybe even 2.6.11.6.
+
+I'm able to use virtual consoles while softdevice is running.  Apparently,
+the consoles share the display layer with the OSD (at least on my
+Matrox G450).  If I want to hide the text of the virtual consoles, I just
+switch back to the virtual console &quot;owned&quot; by VDR and trigger OSD output.
+
+If I'm on a different virtual console than where VDR was started from,
+VDR occasionally crashes when trying to update the OSD.  I haven't tracked
+this down, because for some reason, my system doesn't usually create core
+dumps despite ulimit -c unlimited.  This would be nice to fix, because
+the subtitles plugin initiates OSD events regularly.  In order to be able
+to use the screen as a terminal without crashing VDR, I have to first
+switch to a channel that won't display subtitles.  Suspending softdevice
+won't help, because subtitles will be displayed independent of softdevice's
+MPEG decoder.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001060.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+	<LI>Next message: <A HREF="001066.html">[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1061">[ date ]</a>
+              <a href="thread.html#1061">[ thread ]</a>
+              <a href="subject.html#1061">[ subject ]</a>
+              <a href="author.html#1061">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

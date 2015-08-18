@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspending the playback at shutdown
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C4242D9CB.7090505%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000375.html">
+   <LINK REL="Next"  HREF="000388.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspending the playback at shutdown</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspending%20the%20playback%20at%20shutdown&In-Reply-To=%3C4242D9CB.7090505%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Suspending the playback at shutdown">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Mar 24 16:16:27 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000375.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+        <LI>Next message: <A HREF="000388.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#378">[ date ]</a>
+              <a href="thread.html#378">[ thread ]</a>
+              <a href="subject.html#378">[ subject ]</a>
+              <a href="author.html#378">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I'm setting up timed recordings with nvram-wakeup.  On shutdown, nvram-wakeup
+</I>&gt;<i> complains that /dev/rtc is busy, unless I first manually suspend softdevice
+</I>&gt;<i> playback.  I tried to solve the problem by adding a
+</I>&gt;<i> PluginManager.StopPlugins() call right before SystemExec() in vdr.c, but
+</I>&gt;<i> that didn't work reliably.
+</I>The softdevice tries to use the RTC for the A/V sync, I always wanted to 
+add some option to disable this, but I never did. You can disable this 
+by commenting all the lines in mpeg2decoder.c line 411 to 429 ( where it 
+opens /dev/rtc and does the ioctl calls) and add a line like rtc_fd=-1;. 
+The softdevice will then fallback to usleep() timing.
+Or wait until I managed to add an option to disable the RTC timing, I 
+hope that I manage soon.
+
+&gt;<i> 
+</I>&gt;<i> Is there any simple and reliable way to control the softdevice playback mode
+</I>&gt;<i> from vdr.c?
+</I>As far as I now not. But maybe you can the softdevice's setupStore, then 
+it would be possible..
+
+&gt;<i> 
+</I>&gt;<i> Furthermore, I'd like to start with playback suspended when doing an
+</I>&gt;<i> unattended timed recording.  In that way, corrupt DVB packets are less likely
+</I>&gt;<i> to crash or hang VDR during recording.  I've heard that full-featured cards
+</I>&gt;<i> may lock up when fed garbage, and I have experienced one repeatable softdevice
+</I>&gt;<i> crash myself.
+</I>Actualy  on the start of vdr the softdevice should start in the same 
+playback mode it was when the vdr was stopped, provided it saved the 
+setupSore, but I never tried that.
+What about this repeatable softdevice crash, was it due to bad signal 
+quality, or something different? If you know how to reproducible crash 
+the softdevice, then please tell us how, so that we can fix it.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000375.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+	<LI>Next message: <A HREF="000388.html">[Softdevice-devel] Suspending the playback at shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#378">[ date ]</a>
+              <a href="thread.html#378">[ thread ]</a>
+              <a href="subject.html#378">[ subject ]</a>
+              <a href="author.html#378">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605231157.24962.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002061.html">
+   <LINK REL="Next"  HREF="002063.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605231157.24962.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue May 23 11:57:24 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002061.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+        <LI>Next message: <A HREF="002063.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2062">[ date ]</a>
+              <a href="thread.html#2062">[ thread ]</a>
+              <a href="subject.html#2062">[ subject ]</a>
+              <a href="author.html#2062">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 23 Mai 2006 11:33, Laz wrote:
+&gt;<i> On Tuesday 23 May 2006 09:37, Stefan Lucke wrote:
+</I>&gt;<i> &gt; So here is the version that works current DirectFB (cvs from
+</I>&gt;<i> &gt; 2006-05-10) and softdevice cvs. Needs to be tested on _all_ other
+</I>&gt;<i> &gt; cards/configurations.
+</I>&gt;<i> 
+</I>&gt;<i> Good work. Looks like you've tidied the code up a bit too.
+</I>
+A bit yes.
+I've an update of the patch, as it didn't pass the test with my old
+DirectFB version and VIA.
+
+Current test status is (with dfb-via-fix02.patch):
+Passed tests:
+VIA, VGA-out DirectFB cvs from 2006-05-10 OK
+VIA, VGA-out DirectFB cvs from 2005-09-24 OK
+RADEON, VGA-out DirectFB cvs from 2006-04-14 OK
+
+Pending tests:
+VIA, TV-out with current DirecFB version (newer than december 2005)
+VIA, TV-out with old DirecFB version (older than october 2005)
+Matrox, TV-out with current DirectFB cvs
+Matrox, VGA-out with current DirectFB cvs
+
+&gt;<i> 
+</I>&gt;<i> I'll give it a go this evening.
+</I>
+Some TV-out test ?
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb-via-fix02.patch
+Type: text/x-diff
+Size: 11283 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060523/a39222d6/attachment.patch">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060523/a39222d6/attachment.patch</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002061.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+	<LI>Next message: <A HREF="002063.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2062">[ date ]</a>
+              <a href="thread.html#2062">[ thread ]</a>
+              <a href="subject.html#2062">[ subject ]</a>
+              <a href="author.html#2062">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

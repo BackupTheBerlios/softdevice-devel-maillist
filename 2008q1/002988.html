@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice+dvd plugin - audio jerks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%2Bdvd%20plugin%20-%20audio%20jerks&In-Reply-To=%3C477A3A82.3020202%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="002989.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice+dvd plugin - audio jerks</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%2Bdvd%20plugin%20-%20audio%20jerks&In-Reply-To=%3C477A3A82.3020202%40globall.ru%3E"
+       TITLE="[Softdevice-devel] softdevice+dvd plugin - audio jerks">bob at globall.ru
+       </A><BR>
+    <I>Tue Jan  1 14:05:06 CET 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="002989.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2988">[ date ]</a>
+              <a href="thread.html#2988">[ thread ]</a>
+              <a href="subject.html#2988">[ subject ]</a>
+              <a href="author.html#2988">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have found out, that the problem is caused here with this code
+(workaround for some ac3 decoding issues?):
+
+    // no new frame decoded, continue but ...
+    if (audio_size &lt;= 0) {
+      // AC3 oddities:
+      //   1st call processes header and adjusts channels.
+      //   2nd call delivers data.
+      if (context-&gt;codec_id == CODEC_ID_AC3) {
+        len=avcodec_decode_audio(context, (short *)audiosamples,
+                                 &amp;audio_size, data, 1);
+        //fprintf(stderr,&quot;2nd call len: %d a_size: %d\n&quot;, len, audio_size);
+      }
+      if (audio_size &lt;= 0)
+        continue;
+    }
+
+If revert this changes, dvd plugin works normally.
+
+Regards,
+Vladimir Monchenko.
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="002989.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2988">[ date ]</a>
+              <a href="thread.html#2988">[ thread ]</a>
+              <a href="subject.html#2988">[ subject ]</a>
+              <a href="author.html#2988">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

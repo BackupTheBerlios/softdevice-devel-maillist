@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Epia EN1500G + softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C48D90D15.4080107%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003143.html">
+   <LINK REL="Next"  HREF="003145.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Epia EN1500G + softdevice</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C48D90D15.4080107%40globall.ru%3E"
+       TITLE="[Softdevice-devel] Epia EN1500G + softdevice">bob at globall.ru
+       </A><BR>
+    <I>Tue Sep 23 17:36:53 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003143.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+        <LI>Next message: <A HREF="003145.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3144">[ date ]</a>
+              <a href="thread.html#3144">[ thread ]</a>
+              <a href="subject.html#3144">[ subject ]</a>
+              <a href="author.html#3144">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> This description reminds me of pitch size mismatch for OSD.
+</I>&gt;<i> Can you add some debug message(s) to method GetLockOsdSurface()
+</I>&gt;<i> around line 1192, after commented out printf.
+</I>&gt;<i>
+</I>&gt;<i> softlog-&gt;Log(SOFT_LOG_INFO, 0, &quot;[dfb--] osd surface pitch is (%d)\n&quot;, pitch),
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>After experiments, I have detected that this effect depends on the 
+resolution with which it is started vdr.
+In resolutions 640x480, 800x600 and 1024x768 OSD works not correctly. It 
+does not depend on customisations of video output (dfb:, dfb:cle266, 
+dfb:cle266:viatv).
+In reslution 720x576 OSD works normally.
+I have added an output of debug messages in video-dfb.c.
+Here a log vdr sessions:
+
+
+Sep 22 19:09:29 epia-en vdr: [5266] VDR version 1.6.0-2 started
+Sep 22 19:09:29 epia-en vdr: [5266] codeset is 'UTF-8' - known
+Sep 22 19:09:29 epia-en vdr: [5266] found 23 locales in /usr/share/locale
+Sep 22 19:09:29 epia-en vdr: [5266] loading plugin: 
+/usr/lib/vdr/libvdr-softdevice.so.1.6.0
+Sep 22 19:09:29 epia-en vdr: [5266] loading plugin: 
+/usr/lib/vdr/libvdr-softplay.so.1.6.0
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/setup.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/sources.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/diseqc.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/channels.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/timers.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/reccmds.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/svdrphosts.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/remote.conf
+Sep 22 19:09:29 epia-en vdr: [5266] loading /etc/vdr/keymacros.conf
+Sep 22 19:09:29 epia-en vdr: [5266] ERROR: unknown plugin 'prefermenu'
+Sep 22 19:09:29 epia-en vdr: [5266] ERROR: empty key macro
+Sep 22 19:09:29 epia-en vdr: [5267] video directory scanner thread 
+started (pid=5266, tid=5267)
+Sep 22 19:09:29 epia-en vdr: [5267] video directory scanner thread ended 
+(pid=5266, tid=5267)
+Sep 22 19:09:29 epia-en vdr: [5268] video directory scanner thread 
+started (pid=5266, tid=5268)
+Sep 22 19:09:29 epia-en vdr: [5268] video directory scanner thread ended 
+(pid=5266, tid=5268)
+Sep 22 19:09:29 epia-en vdr: [5266] reading EPG data from 
+/mnt/pub/video/epg.data
+Sep 22 19:09:29 epia-en vdr: [5266] no DVB device found
+Sep 22 19:09:29 epia-en vdr: [5266] initializing plugin: softdevice 
+(0.5.0): ??????????-??????????? MPEG-2 ??????????
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] init
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Supported video Modes are:
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Enumerating display Layers
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Configuring CooperativeLevel 
+for OSD
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] disabling hw-decode support 
+for this layer
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (osdLayer): flags, options, 
+pixelformat: 0000000f, 00000000 80418c0d
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (osdLayer): width, height: 800 600
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] osdLayer has alpha channel
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Set DLBM_TRIPLE for layer [VIA 
+Unichrome Video 3]
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] DLOP_FIELD_PARITY supported by 
+layer [VIA Unichrome Video 3]
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Set layer [VIA Unichrome Video 
+3] to (TOP field first)
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(scrSurface): videoonly, double-buffered, flipping, PixelFormat = 0x80418c0d
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] width = 800, height = 600
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] got fmt = 0x80418c0d bpp = 32
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for OSD: (VIA 
+CLE266 Graphics - [800x600])
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(osdSurface): videoonly, double-buffered, flipping, PixelFormat = 0x00418c04
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Configuring CooperativeLevel 
+for Overlay
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(videoSurface): videoonly, PixelFormat = 0x00200806
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for OSD: VIA 
+CLE266 Graphics
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Using this layer for Video 
+out: VIA Unichrome Video 3
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] Display frame time is 16653 
+microseconds
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (re)configuring Videolayer to 
+720 x 576 (720x576)
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb] (re)configured 0x00200806
+Sep 22 19:09:29 epia-en vdr: [5266] [softdevice-audio] Opening alsa 
+device default
+Sep 22 19:09:29 epia-en vdr: [5266] [softdevice-audio] Using alsa AC3 
+device hw:0,1
+Sep 22 19:09:29 epia-en vdr: [5266] [softdevice-audio] Device opened! 
+Ready to play
+Sep 22 19:09:29 epia-en vdr: [5266] initializing plugin: softplay 
+(0.0.2): SoftPlay play media files with the softdevice
+Sep 22 19:09:29 epia-en vdr: [5266] setting primary device to 1
+Sep 22 19:09:29 epia-en vdr: [5266] assuming manual start of VDR
+Sep 22 19:09:29 epia-en vdr: [5266] SVDRP listening on port 2001
+Sep 22 19:09:29 epia-en vdr: [5266] setting current skin to &quot;sttng&quot;
+Sep 22 19:09:29 epia-en vdr: [5266] loading 
+/etc/vdr/themes/sttng-default.theme
+Sep 22 19:09:29 epia-en vdr: [5266] starting plugin: softdevice
+Sep 22 19:09:29 epia-en vdr: [5266] plugin 'softdevice' called obsolete 
+function RegisterI18n()
+Sep 22 19:09:29 epia-en vdr: [5266] starting plugin: softplay
+Sep 22 19:09:29 epia-en vdr: [5266] plugin 'softplay' called obsolete 
+function RegisterI18n()
+Sep 22 19:09:29 epia-en vdr: [5274] KBD remote control thread started 
+(pid=5266, tid=5274)
+Sep 22 19:09:29 epia-en vdr: [5266] remote control softdevice-dfb - keys 
+known
+Sep 22 19:09:29 epia-en vdr: [5266] remote control KBD - keys known
+Sep 22 19:09:29 epia-en vdr: [5266] switching to channel 1
+Sep 22 19:09:29 epia-en vdr: [5266] info: ????? ??????????!
+Sep 22 19:09:29 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:32 epia-en vdr: [5266] switching to channel 1
+Sep 22 19:09:32 epia-en vdr: [5266] info: ????? ??????????!
+Sep 22 19:09:32 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:32 epia-en vdr: [5273] [VideoOut]: resolution changed: 
+W(720 -&gt; 736); H(576 -&gt;576)
+Sep 22 19:09:32 epia-en vdr: [5273] [VideoOut]: 736x576 [0,0 736x576] -&gt; 
+800x600 [16,0 767x600]
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] (re)configuring Videolayer to 
+736 x 576 (736x576)
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] SetParams: Enabling 
+DLOP_FIELD_PARITY
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] surface capabilities for 
+(videoSurface): videoonly, flipping, triple-buffered, PixelFormat = 
+0x00200806
+Sep 22 19:09:32 epia-en vdr: [5273] [dfb] (re)configured 0x00200806
+Sep 22 19:09:34 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:41 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:43 epia-en vdr: [5266] switching to channel 1
+Sep 22 19:09:43 epia-en vdr: [5266] info: ????? ??????????!
+Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:44 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:45 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:46 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:46 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:47 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+Sep 22 19:09:47 epia-en vdr: [5266] confirm: ????????????? ??????????????
+Sep 22 19:09:47 epia-en vdr: [5266] warning: ????????????? ??????????????
+Sep 22 19:09:47 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+Sep 22 19:09:47 epia-en vdr: [5266] confirmed
+Sep 22 19:09:47 epia-en vdr: [5266] stopping plugin: softplay
+Sep 22 19:09:47 epia-en vdr: [5266] stopping plugin: softdevice
+Sep 22 19:09:47 epia-en vdr: [5274] KBD remote control thread ended 
+(pid=5266, tid=5274)
+Sep 22 19:09:47 epia-en vdr: [5266] saved setup to /etc/vdr/setup.conf
+Sep 22 19:09:47 epia-en vdr: [5266] Releasing DFB
+Sep 22 19:09:47 epia-en vdr: [5266] [VideoOut]: Good bye
+Sep 22 19:09:47 epia-en vdr: [5266] deleting plugin: softplay
+Sep 22 19:09:47 epia-en vdr: [5266] deleting plugin: softdevice
+Sep 22 19:09:47 epia-en vdr: [5266] exiting, exit code 1
+
+Regards,
+Vladimir Monchenko.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003143.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+	<LI>Next message: <A HREF="003145.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3144">[ date ]</a>
+              <a href="thread.html#3144">[ thread ]</a>
+              <a href="subject.html#3144">[ subject ]</a>
+              <a href="author.html#3144">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

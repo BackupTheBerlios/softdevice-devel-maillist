@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice + libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C44B29904.5000904%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002225.html">
+   <LINK REL="Next"  HREF="002228.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice + libcle266mpegdec</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C44B29904.5000904%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softdevice + libcle266mpegdec">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Jul 10 20:14:28 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002225.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002228.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2227">[ date ]</a>
+              <a href="thread.html#2227">[ thread ]</a>
+              <a href="subject.html#2227">[ subject ]</a>
+              <a href="author.html#2227">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Per Mellander schrieb:
+&gt;<i> I've managed to setup my EPIA MII 12000 to use the HW support from CLE266. ( I think )
+</I>&gt;<i> 
+</I>&gt;<i> In short words this is what I've done.
+</I>&gt;<i> 
+</I>&gt;<i> * linux-viafb CVS 20060706
+</I>&gt;<i> * libcle266mpegdec-0.1, from Rolf A's website
+</I>&gt;<i> * DFB++ CVS 20060706 - patched with patch from libcle266mpegdec-0.1 packages
+</I>&gt;<i> * DirectFB CVS 20060706 - patched with patch from libcle266mpegdec-0.1 packages
+</I>&gt;<i> * ffmpeg SVN 20060710
+</I>&gt;<i> * vdr-1.4.1
+</I>&gt;<i> * softdevice CVS 20060710
+</I>&gt;<i> 
+</I>&gt;<i> Do I have to patch anything in the softdevice code? It looks like the patch from
+</I>&gt;<i> libcle266mpegdec-0.1 package already are in CVS?
+</I>&gt;<i>
+</I>Yes, the CVS version of the softdevice should work with the hardware
+decoding.
+
+
+&gt;<i> /Per
+</I>&gt;<i> 
+</I>&gt;<i> ---------------8&lt;--------------------------------------------------------------------
+</I>&gt;<i> ./configure gives:
+</I>&gt;<i> 
+</I>&gt;<i> Checking for ffmpeg... Ok.
+</I>&gt;<i> Checking for DirectFB and DFB++... Enabled video-dfb.
+</I>&gt;<i> Checking for vidix... Not found.
+</I>&gt;<i> Checking for libcle266mpegdec ... Enabled cle266 hardware decoding.
+</I>&gt;<i> Checking for Xv... Enabled video-xv.
+</I>&gt;<i> Checking for Xinerama... Enabled Xinerama.
+</I>&gt;<i> ---------------8&lt;--------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> Starting vdr it gives the initial 'remote detection' screen but after a few seconds it
+</I>&gt;<i> dies. Following is the log output:
+</I>&gt;<i> 
+</I>Hmm, I don't see anything wrong in the log until it dies...
+You seem to have X installed on you system? Is X still runnning in the
+background? Was X running before you started the softdevice? Is it
+working without hardware decoding (&quot;-vo dfb:&quot;)? Is it working with Xv?
+Many questions... ;-)
+The nicest would be a traceback of the crash, but as far as I know
+DirectFB overloads the crash handler so that you don't get a core dump
+anymore. Or does anyone know how to get one? I only know that one can
+compile DirectFB with a debug option which enables some kind of
+backtrace, but I don't remember the details. So if you could try to
+produce some kind of traceback, that would be nice!
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002225.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002228.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2227">[ date ]</a>
+              <a href="thread.html#2227">[ thread ]</a>
+              <a href="subject.html#2227">[ subject ]</a>
+              <a href="author.html#2227">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

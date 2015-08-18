@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C43D50FB9.8050601%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001721.html">
+   <LINK REL="Next"  HREF="001666.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()</H1>
+    <B>Anssi Hannula</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C43D50FB9.8050601%40gmail.com%3E"
+       TITLE="[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()">anssi.hannula at gmail.com
+       </A><BR>
+    <I>Mon Jan 23 18:17:45 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001721.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+        <LI>Next message: <A HREF="001666.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1725">[ date ]</a>
+              <a href="thread.html#1725">[ thread ]</a>
+              <a href="subject.html#1725">[ subject ]</a>
+              <a href="author.html#1725">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Jan 21, 2006 at 06:30:49PM +0200, Anssi Hannula wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Marko M&#228;kel&#228; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>The bottleneck with dfb:mgatv seems to be the yv12_to_yuy2() conversion
+</I>&gt;&gt;&gt;<i>routine.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>[...]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Would it even be possible to decode directly into YUY2 color space?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>I'm no expert on this colorspace stuff, but don't the G400 and up
+</I>&gt;&gt;<i>support YV12 output, or am I missing something here?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> For VGA output (using the back-end scaler) it does.  Maybe it does also
+</I>&gt;<i> for TV output, but I don't know how.
+</I>
+When playing a file in CRTC2 with &quot;mplayer -vo dfbmga&quot; mplayer prints
+that it's using colorspace YV12.
+So either G400+ do support YV12, or the video just gets converted to
+YUY2 in some later place?
+
+-- 
+Anssi Hannula
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001721.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+	<LI>Next message: <A HREF="001666.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1725">[ date ]</a>
+              <a href="thread.html#1725">[ thread ]</a>
+              <a href="subject.html#1725">[ subject ]</a>
+              <a href="author.html#1725">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

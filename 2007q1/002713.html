@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Pause%20the%20playback%20of%0A%09recordings%09when%20suspended&In-Reply-To=%3C20070208082600.GA3239%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002712.html">
+   <LINK REL="Next"  HREF="002714.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Pause%20the%20playback%20of%0A%09recordings%09when%20suspended&In-Reply-To=%3C20070208082600.GA3239%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Feb  8 09:26:00 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002712.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+        <LI>Next message: <A HREF="002714.html">[Softdevice-devel] [PATCH] Pause the playback	of	recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2713">[ date ]</a>
+              <a href="thread.html#2713">[ thread ]</a>
+              <a href="subject.html#2713">[ subject ]</a>
+              <a href="author.html#2713">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Feb 08, 2007 at 08:50:00AM +0100, Stefan Lucke wrote:
+&gt;<i> Transferring() was introduced in vdr-1.3.42. So this needs an extra #if
+</I>&gt;<i> # if VDRVERSNUM &gt;= 10342
+</I>&gt;<i> 
+</I>&gt;<i> Looking at the implementation of Transferring() in device.c I'm just
+</I>&gt;<i> wondering of the difference compared to Replaying() 
+</I>&gt;<i> !Transferring() == true -&gt; no player (player == NULL) or
+</I>&gt;<i> player is not derived from cTransfer.
+</I>&gt;<i> 
+</I>&gt;<i> device.c around line 948:
+</I>&gt;<i> 
+</I>&gt;<i> bool cDevice::Replaying(void) const
+</I>&gt;<i> {
+</I>&gt;<i>   return player != NULL;
+</I>&gt;<i> }
+</I>&gt;<i> 
+</I>&gt;<i> bool cDevice::Transferring(void) const
+</I>&gt;<i> {
+</I>&gt;<i>   return dynamic_cast&lt;cTransfer *&gt;(player) != NULL;
+</I>&gt;<i> }
+</I>
+It seems to me that Replaying() would always return true when called
+from cSoftDevice::PlayVideo() or PlayAudio().  I would guess that
+player != NULL when playing a recording or a live stream.
+
+Are you suggesting that we should replace Transferring()
+with dynamic_cast&lt;cTransfer*&gt;(player) to avoid the VDRVERSNUM check?
+
+There is another method that could possibly be used, something like
+cPlayerControl::NowReplaying().  I don't have the source tree at hand
+right now, but I can check it tonight.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002712.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+	<LI>Next message: <A HREF="002714.html">[Softdevice-devel] [PATCH] Pause the playback	of	recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2713">[ date ]</a>
+              <a href="thread.html#2713">[ thread ]</a>
+              <a href="subject.html#2713">[ subject ]</a>
+              <a href="author.html#2713">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%232972%5D%20Picture%20disappears%20when%20OSD%20goes%20off&In-Reply-To=%3C200412292246.iBTMkvp4007628%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000114.html">
+   <LINK REL="Next"  HREF="000116.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off</H1>
+    <B>noreply at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%232972%5D%20Picture%20disappears%20when%20OSD%20goes%20off&In-Reply-To=%3C200412292246.iBTMkvp4007628%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off">noreply at berlios.de
+       </A><BR>
+    <I>Wed Dec 29 23:46:57 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000114.html">[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+</A></li>
+        <LI>Next message: <A HREF="000116.html">[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #2972, was updated on 2004-Dec-29 23:38
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: xv-out
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: vesuri
+Assigned to : none
+Summary: Picture disappears when OSD goes off
+
+Details: The OSD works on top of the video display but when no button is pressed and the OSD goes off after a few seconds the window goes completely blank. Moving the window makes the picture appear again but this repeats every time the OSD goes off. Subtitles seemed to have the same effect.
+
+Setup:
+
+- vdr-1.3.17
+- vdr-softdevice-0.0.8pre1
+- GCC 3.4.2
+- glibc 2.3.4
+- Linux 2.6.9-mh3
+- ALSA 1.0.7
+- Current FFMPEG CVS as of 20041229
+
+
+Follow-Ups:
+
+Date: 2004-Dec-30 00:46
+By: vesuri
+
+Comment:
+XFree86 is version 4.3.0 and I'm using ATis proprietary XFree86 driver fglrx-4.3.0-3.14.6.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:40
+By: lucke
+
+Comment:
+Which exact version of X11 do you use and which driver is in use ? This is perhaps similar to this report on vdr mailing list:
+<A HREF="http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html">http://www.linuxtv.org/mailinglists/vdr/2004/12-2004/msg00885.html</A>
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:34
+By: vesuri
+
+Comment:
+Ah, forgot to mention XFree86 4.3.0. I'll move (back) to X.org 6.8.1 as soon as ATi releases their new driver that will support X.org.
+-------------------------------------------------------
+
+Date: 2004-Dec-30 00:31
+By: none
+
+Comment:
+Are you using XFree 4.*? There was another user which had similar problems a few weeks ago, and he apparently fixed the problem by moving to the xorg server.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=2972&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=2972&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000114.html">[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+</A></li>
+	<LI>Next message: <A HREF="000116.html">[Softdevice-devel] [Bug #2972] Picture disappears when OSD goes off
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

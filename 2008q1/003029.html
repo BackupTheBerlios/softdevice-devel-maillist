@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] no output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20output&In-Reply-To=%3C200803011703.25517.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003028.html">
+   <LINK REL="Next"  HREF="003030.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] no output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20output&In-Reply-To=%3C200803011703.25517.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] no output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Mar  1 17:03:25 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003028.html">[Softdevice-devel] no output
+</A></li>
+        <LI>Next message: <A HREF="003030.html">[Softdevice-devel] no output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3029">[ date ]</a>
+              <a href="thread.html#3029">[ thread ]</a>
+              <a href="subject.html#3029">[ subject ]</a>
+              <a href="author.html#3029">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 01 March 2008, Malcolm Caldwell wrote:
+&gt;<i> 
+</I>&gt;<i> On Sat, 2008-03-01 at 14:06 +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Saturday 01 March 2008, Malcolm Caldwell wrote:
+</I>
+&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I fixed the issue by reverting to my older version of ffmpeg and
+</I>&gt;<i> &gt; &gt; softdevice (from around May 2007). 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; So you kept your vdr version, right ? 
+</I>&gt;<i> 
+</I>&gt;<i> Yes.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Which one ?
+</I>&gt;<i> 
+</I>&gt;<i> 1.4.3
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Can you tell us the exact ffmpeg version which fails,
+</I>&gt;<i> &gt; and the configuration options ?
+</I>&gt;<i> 
+</I>&gt;<i> I tried two versions: r10703 and r12271 both failed in the same way.
+</I>&gt;<i> 
+</I>&gt;<i> r12271 was configured with:
+</I>&gt;<i> 
+</I>&gt;<i> --enable-liba52 --enable-libfaac --enable-libfaad --enable-libgsm
+</I>&gt;<i> --enable-libmp3lame --enable-libtheora --enable-libvorbis
+</I>&gt;<i> --enable-libxvid --enable-libx264 --enable-pp --enable-swscaler
+</I>&gt;<i> --enable-pthreads --disable-static --enable-shared --enable-gpl
+</I>&gt;<i> --disable-debug --disable-strip --enable-nonfree
+</I>&gt;<i> 
+</I>
+Now I tried ffmpeg r12271 with configuration:
+--enable-shared --enable-pp --enable-gpl --enable-swscaler
+--enable-liba52 --enable-libfaac --enable-libfaad --enable-pthreads
+
+plain vdr-1.4.3 with softdevice-cvs and video-xv out.
+There are no problems except some stations where signal is bad
+due to my indoor antenna (as before).
+
+When your setup fails, is it possible to play back recordings which
+were recorded with your previous working setup ?
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003028.html">[Softdevice-devel] no output
+</A></li>
+	<LI>Next message: <A HREF="003030.html">[Softdevice-devel] no output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3029">[ date ]</a>
+              <a href="thread.html#3029">[ thread ]</a>
+              <a href="subject.html#3029">[ subject ]</a>
+              <a href="author.html#3029">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

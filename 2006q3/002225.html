@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice + libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C20060710114955.M36064%40mellander.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002226.html">
+   <LINK REL="Next"  HREF="002227.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice + libcle266mpegdec</H1>
+    <B>Per Mellander</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C20060710114955.M36064%40mellander.org%3E"
+       TITLE="[Softdevice-devel] softdevice + libcle266mpegdec">per at mellander.org
+       </A><BR>
+    <I>Mon Jul 10 14:08:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002226.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+        <LI>Next message: <A HREF="002227.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2225">[ date ]</a>
+              <a href="thread.html#2225">[ thread ]</a>
+              <a href="subject.html#2225">[ subject ]</a>
+              <a href="author.html#2225">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've managed to setup my EPIA MII 12000 to use the HW support from CLE266. ( I think )
+
+In short words this is what I've done.
+
+* linux-viafb CVS 20060706
+* libcle266mpegdec-0.1, from Rolf A's website
+* DFB++ CVS 20060706 - patched with patch from libcle266mpegdec-0.1 packages
+* DirectFB CVS 20060706 - patched with patch from libcle266mpegdec-0.1 packages
+* ffmpeg SVN 20060710
+* vdr-1.4.1
+* softdevice CVS 20060710
+
+Do I have to patch anything in the softdevice code? It looks like the patch from
+libcle266mpegdec-0.1 package already are in CVS?
+
+/Per
+
+---------------8&lt;--------------------------------------------------------------------
+./configure gives:
+
+Checking for ffmpeg... Ok.
+Checking for DirectFB and DFB++... Enabled video-dfb.
+Checking for vidix... Not found.
+Checking for libcle266mpegdec ... Enabled cle266 hardware decoding.
+Checking for Xv... Enabled video-xv.
+Checking for Xinerama... Enabled Xinerama.
+---------------8&lt;--------------------------------------------------------------------
+
+Starting vdr it gives the initial 'remote detection' screen but after a few seconds it
+dies. Following is the log output:
+
+---------------8&lt;--------------------------------------------------------------------
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at localhost</A> vdr-1.4.1]# ./vdr -P&quot;softdevice -vo dfb:cle266&quot;
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: dfb:cle266 
+[softdevice] enabling CLE266 HW decoding
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(SVN-r5704) build(3344896)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.26 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH  
+             (c) 2002-2004  convergence GmbH                   
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2006-07-10 07:19) 
+(*) Direct/Memcpy: Using SSE optimized memcpy()
+(*) Direct/Modules: suppress module 'lirc'
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 2315)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:853]
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 2316)...
+(*) DirectFB/Input: ImExPS/2 Logitech Wheel Mouse (2) 0.1 (convergence integrated media
+GmbH)
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 2317)...
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) Direct/Modules: suppress module 'cle266'
+(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 33288192 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle Blit
+StretchBlit All 
+[dfb] Drawing Flags: Blend Xor 
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey
+DstColorkey Deinterlace 
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> 
+[dfb] Enumerating display Layers
+[dfb] Configuring CooperativeLevel for OSD
+Layer 0 VIA CLE266 Graphics  Type: graphics 
+  Caps: alphachannel brightness contrast opacity saturation src_colorkey surface 
+Layer 1 VIA Unichrome Video  Type: graphics picture video 
+  Caps: deinterlacing dst_colorkey levels field_parity opacity screen_location surface 
+Initialising CLE266 decoder (/dev/fb0): MMIO addr: 0xb173a000
+success!
+CLE266: Creating buffers for decoder
+CLE266: Creating buffer number 0
+CLE266: Creating buffer number 1
+CLE266: Creating buffer number 2
+CLE266: Creating buffer number 3
+CLE266: passing mpegfb_stride
+CLE266: passing buffers to decoder
+[dfb] (osdLayer): flags, options, pixelformat: 0000000f, 00000000 00418c04
+[dfb] (osdLayer): width, height:               720 576
+[dfb] osdLayer has alpha channel
+[surface capabilities] scrSurface: videoonly double-buffered flipping PixelFormat =
+0x00418c04 
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (VIA CLE266 Graphics - [720x576])
+[surface capabilities] osdSurface: videoonly double-buffered flipping PixelFormat =
+0x00418c04 
+[dfb] Configuring CooperativeLevel for Overlay
+[surface capabilities] videoSurface: videoonly PixelFormat = 0x0810060a 
+[dfb] Using this layer for OSD:        VIA CLE266 Graphics
+[dfb] Using this layer for Video out:  VIA Unichrome Video
+[dfb] Display frame time is 16665 microseconds
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping PixelFormat =
+0x08100609 
+[dfb] (re)configured 0x08100609
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[dfb] (re)configuring Videolayer to 736 x 576 (736x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping PixelFormat =
+0x08100609 
+[dfb] (re)configured 0x08100609
+(!) [ 2314:    0.000] --&gt; Caught signal 11 (at 0x93669770, invalid address) &lt;--
+---------------8&lt;--------------------------------------------------------------------
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at localhost</A> softdevice]# more /etc/directfbrc 
+fbdev=/dev/fb0
+mode=720x576
+depth=32
+pixelformat=ARGB
+disable-module=cle266
+disable-module=lirc
+no-vt
+---------------8&lt;--------------------------------------------------------------------
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002226.html">[Softdevice-devel] live HDTV channel not playing smooth
+</A></li>
+	<LI>Next message: <A HREF="002227.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2225">[ date ]</a>
+              <a href="thread.html#2225">[ thread ]</a>
+              <a href="subject.html#2225">[ subject ]</a>
+              <a href="author.html#2225">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Displaying images
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C44007CD6.3000904%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001790.html">
+   <LINK REL="Next"  HREF="001804.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Displaying images</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C44007CD6.3000904%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Displaying images">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Feb 25 16:50:46 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001790.html">[Softdevice-devel] Displaying images
+</A></li>
+        <LI>Next message: <A HREF="001804.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1793">[ date ]</a>
+              <a href="thread.html#1793">[ thread ]</a>
+              <a href="subject.html#1793">[ subject ]</a>
+              <a href="author.html#1793">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+&gt;<i> On Thu, Feb 23, 2006 at 10:50:15PM +0100, Sebastian Vandersee wrote:
+</I>&gt;&gt;&gt;&gt;<i> No problem.  BTW, do you know if there is any JPEG viewer that would
+</I>&gt;&gt;&gt;&gt;<i> do the color space transformation (normally YCbCr -&gt; RGB) and scaling
+</I>&gt;&gt;&gt;&gt;<i> in hardware (Xv)?  I guess it would save some CPU if the Y component
+</I>&gt;&gt;&gt;&gt;<i> could be passed as is.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> No, I don't know one and I doubt that there is one. I don't think the
+</I>&gt;&gt;&gt;<i> savings on the CPU time is worth the efforts, and you add requirements
+</I>&gt;&gt;&gt;<i> to the video driver.
+</I>&gt;&gt;&gt;<i> But if Sebastian manages to decode the images the softdevice will do it
+</I>&gt;&gt;&gt;<i> like this :-)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> Hehe, that puts some pressure on me to implement jpeg decoding ;-)
+</I>&gt;&gt;<i> Hopefully I can start looking at it next week.
+</I>&gt;<i> 
+</I>&gt;<i> Well, if I were you, I'd probably go the YCbCr -&gt; RGB -&gt; YUV route first,
+</I>&gt;<i> and then determine that implementing all possible conversions YCbCr -&gt; I420,
+</I>&gt;<i> YCbCr -&gt; YV12, YCbCr -&gt; YUY2 etc. is not worth the effort. :-)
+</I>&gt;<i> 
+</I>Maybe I'm mistaken, but isn't the only difference between jpeg's YCrCr
+and the YUV format used by mpeg2 the range of the values? To my
+knowledge one format doesn't use the full range of 0-255 possible for a
+byte. So the conversion from YCbCr to YUV should be a lot simpler that
+going via RGB. And the only necessary format to support would be YUV420P
+(YUV planar, U and V component having 1/4 of the resolution of the Y
+component) since the softdevice can do all the conversions from YUV420P :-)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001790.html">[Softdevice-devel] Displaying images
+</A></li>
+	<LI>Next message: <A HREF="001804.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1793">[ date ]</a>
+              <a href="thread.html#1793">[ thread ]</a>
+              <a href="subject.html#1793">[ subject ]</a>
+              <a href="author.html#1793">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

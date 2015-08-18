@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] I couldn't compile softdevice from cvs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20couldn%27t%20compile%20softdevice%20from%20cvs&In-Reply-To=%3C20081005115602.0810c1c9%40bk.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003157.html">
+   <LINK REL="Next"  HREF="003159.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] I couldn't compile softdevice from cvs</H1>
+    <B>Goga777</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20I%20couldn%27t%20compile%20softdevice%20from%20cvs&In-Reply-To=%3C20081005115602.0810c1c9%40bk.ru%3E"
+       TITLE="[Softdevice-devel] I couldn't compile softdevice from cvs">goga777 at bk.ru
+       </A><BR>
+    <I>Sun Oct  5 09:56:02 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003157.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+        <LI>Next message: <A HREF="003159.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3158">[ date ]</a>
+              <a href="thread.html#3158">[ thread ]</a>
+              <a href="subject.html#3158">[ subject ]</a>
+              <a href="author.html#3158">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>during this 2 days I corrected something in y debian and now I have follow situation
+
+/src/softdevice# ./configure
+
+Testing system and cpu type... found Linux on i386 cpu.
+Checking for pkg-config... Found.
+Checking for ffmpeg... Ok.
+Checking for ffmpeg/libswscale... Using libswscale.
+Checking for pp_postprocess 1st arg ... is: const uint8_t **
+Checking ffmpeg for member of AVCodecContext: error_recognition ...  'error_recognition' found
+Checking for ALSA sound... Enabled audio-alsa.
+Checking for OSS sound... Enabled audio-oss.
+Checking for linux frambuffer... Enabled video-fb.
+Checking for yaepg patch... Not Found.
+Checking for DirectFB and DFB++... Not Found.
+Checking for vidix... Not found.
+Checking for Xv... Enabled video-xv.
+Checking for Xinerama... Enabled Xinerama.
+Creating temporary config.h and config.mak
+config.h is unchanged
+config.mak is unchanged
+Configure is finished. Please check config.log in case of problems.
+
+
+
+goga:/usr/src/vdr170/PLUGINS/src/softdevice# make
+
+[skip]
+
+-I/usr/local/include -I/usr/include/postproc   softdevice.c
+In file included from video.h:25,
+                 from mpeg2decoder.h:30,
+                 from softdevice.h:17,
+                 from softdevice.c:8:
+PicBuffer.h:60: warning: &#8216;typedef&#8217; was ignored in this declaration
+softdevice.c: In constructor &#8216;cSoftDevice::cSoftDevice(int, int, char*)&#8217;:
+softdevice.c:188: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+softdevice.c:194: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+softdevice.c:209: warning: deprecated conversion from string constant to &#8216;char*&#8217;
+softdevice.c: In constructor &#8216;cPluginSoftDevice::cPluginSoftDevice()&#8217;:
+softdevice.c:819: warning: deprecated conversion from string constant
+
+
+any advice ?
+
+
+Goga
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003157.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+	<LI>Next message: <A HREF="003159.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3158">[ date ]</a>
+              <a href="thread.html#3158">[ thread ]</a>
+              <a href="subject.html#3158">[ subject ]</a>
+              <a href="author.html#3158">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

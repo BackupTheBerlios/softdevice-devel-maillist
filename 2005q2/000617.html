@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay: pause handling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%3A%20pause%20handling&In-Reply-To=%3C427DE09C.9040807%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000613.html">
+   <LINK REL="Next"  HREF="000620.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay: pause handling</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%3A%20pause%20handling&In-Reply-To=%3C427DE09C.9040807%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softplay: pause handling">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun May  8 11:49:16 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000613.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+        <LI>Next message: <A HREF="000620.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#617">[ date ]</a>
+              <a href="thread.html#617">[ thread ]</a>
+              <a href="subject.html#617">[ subject ]</a>
+              <a href="author.html#617">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;<i> 
+</I>&gt;<i> The jump is not last_played+puse_time. It is always for about
+</I>&gt;<i> 13 seconds as a new audio stream is reported after play. So the causer
+</I>&gt;<i> is located in softdevice. Softdevice Play() is calling Trickspeed(1)
+</I>&gt;<i> which in term sets:
+</I>&gt;<i>   if (trickSpeed!=1) {
+</I>&gt;<i>     if (aout)
+</I>&gt;<i>       aout-&gt;Clear();
+</I>&gt;<i>     AudioIdx=DONT_PLAY;
+</I>&gt;<i>   } //else AudioIdx=NO_STREAM;
+</I>&gt;<i> 
+</I>&gt;<i> By commenting the else part like above, there are no jumps anymore
+</I>&gt;<i> in softplay mp3 playback. We have to check the influence on other
+</I>&gt;<i> playback types.
+</I>&gt;<i> 
+</I>Great, this make sense! As far as I remember the AudioIdx=NO_STREAM is 
+needed when changing from slow motion or fast forward/backward to normal 
+playback. Could you try if this is still working (ie if there is sound 
+when changing back to normal speed)? If not maybe something like this helps:
+
+    if (trickSpeed!=1) {
+      if (aout)
+        aout-&gt;Clear();
+      AudioIdx=DONT_PLAY;
+    } else  if (AudioIdx==DONT_PLAY)
+                 AudioIdx=NO_STREAM;
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000613.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+	<LI>Next message: <A HREF="000620.html">[Softdevice-devel] softplay: pause handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#617">[ date ]</a>
+              <a href="thread.html#617">[ thread ]</a>
+              <a href="subject.html#617">[ subject ]</a>
+              <a href="author.html#617">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

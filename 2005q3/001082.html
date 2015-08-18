@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] libavcodec does not match avcodec.h
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20libavcodec%20does%20not%20match%20avcodec.h&In-Reply-To=%3C42F0ED76.4050804%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001079.html">
+   <LINK REL="Next"  HREF="001086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] libavcodec does not match avcodec.h</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20libavcodec%20does%20not%20match%20avcodec.h&In-Reply-To=%3C42F0ED76.4050804%40calidae.net%3E"
+       TITLE="[Softdevice-devel] libavcodec does not match avcodec.h">leo at calidae.net
+       </A><BR>
+    <I>Wed Aug  3 18:14:46 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001079.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+        <LI>Next message: <A HREF="001086.html">[Softdevice-devel] Automatic softdevice suspension?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1082">[ date ]</a>
+              <a href="thread.html#1082">[ thread ]</a>
+              <a href="subject.html#1082">[ subject ]</a>
+              <a href="author.html#1082">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!,
+
+After having my vdr with dvb output I have decide try softdevice and use 
+the svideo out of my epia (unichrome).
+I have directfb, ffmpeg and (I think) have all the stuff to run ok. But 
+in the vdr output appears some warnings that I can't understand.
+And finally appears an error that hangs vdr.
+I think the problem is between libavcodec, avcodec.h and ffmpeg???? 
+because seems to be diferent incompatible builds (4753-4752).
+Anyone knows how solve the problem?
+I have kernel 2.6.11, one ff card and one budget and debian as distribution.
+Thanks!!!!
+I put all the putput here:
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(cvs) build(4752)
+[dfb] init
+
+       ---------------------- DirectFB v0.9.22 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-05-27 21:18)
+(*) Direct/Memcpy: Using SSE optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 3178)...
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 3179)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:802]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 3180)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: VIA/S3G UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">848x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">856x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x512 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1400x1050 at 32</A>
+[dfb] Enumeratig display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+  Caps: deinterlacing dst_colorkey opacity screen_location surface
+uc_overlay: color-keying is disabled
+[surface capabilities] scrSurface: primary videoonly double-buffered 
+flipping
+[dfb] width = 640, height = 480
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [640x480])
+[surface capabilities] osdSurface: videoonly double-buffered flipping
+ (!!!)  *** WARNING [letting unprivileged 
+IDirectFBDisplayLayer::GetSurface() call pass until cooperative level 
+handling is finished] *** [idirectfbdisplaylayer.c:170 in 
+IDirectFBDisplayLayer_GetSurface()]
+[surface capabilities] videoSurface: videoonly
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: VIA Unichrome Video
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+Caught: action=IDirectFBDisplayLayer::SetLevel(int), result=Not 
+supported! Failed: SetLevel()
+uc_overlay: color-keying is enabled
+uc_overlay: color-keying is enabled
+uc_overlay: color-keying is enabled
+uc_overlay: color-keying is enabled
+[surface capabilities] videoSurface: videoonly double-buffered flipping
+[dfb] (re)configured 0x08100609
+Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+Fatal Error! Libavcodec library build(4753) doesn't match avcodec.h 
+build(4752)!!!
+Check your ffmpeg installation / the pathes in the Makefile!!!
+ (!!!)  *** WARNING [Application exited without deinitialization of 
+DirectFB!] *** [core.c:628 in dfb_core_deinit_check()]
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001079.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+	<LI>Next message: <A HREF="001086.html">[Softdevice-devel] Automatic softdevice suspension?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1082">[ date ]</a>
+              <a href="thread.html#1082">[ thread ]</a>
+              <a href="subject.html#1082">[ subject ]</a>
+              <a href="author.html#1082">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

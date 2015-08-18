@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C200604251554.10504.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001918.html">
+   <LINK REL="Next"  HREF="001920.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C200604251554.10504.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Tue Apr 25 16:54:10 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001918.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+        <LI>Next message: <A HREF="001920.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1919">[ date ]</a>
+              <a href="thread.html#1919">[ thread ]</a>
+              <a href="subject.html#1919">[ subject ]</a>
+              <a href="author.html#1919">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tuesday 25 Apr 2006 15:48, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Tue, Apr 25, 2006 at 07:00:38AM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; Could it be that video-dfb.c triggers OSD updates by three things:
+</I>&gt;<i> &gt; &gt; new video frame, DFBInputEvent (cDFBVideoOut::ProcessEvents()), and
+</I>&gt;<i> &gt; &gt; a very slow timer?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Events were and are processed after each frame gets displayed.
+</I>&gt;<i> &gt; Additional they were and are processed from a background thread,
+</I>&gt;<i> &gt; previously from dfb-remote thread, now from video class, and that
+</I>&gt;<i> &gt; lacked an OSD refresh call. Should be fixed.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Can you try to cvs update ?
+</I>&gt;<i>
+</I>&gt;<i> Thanks, it fixes the issue.
+</I>&gt;<i>
+</I>&gt;<i> BTW, was the flicker removed when pausing the video? Or does it only
+</I>&gt;<i> occur with dfb-vga output? (I'm using mgatv now.)
+</I>
+I've just noticed that after updating to softdevice cvs from last weekend 
+(also updated DirectFB then, too). It gives a brief flash about once a 
+second when paused! This is with DirectFB output with viatv.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001918.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+	<LI>Next message: <A HREF="001920.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1919">[ date ]</a>
+              <a href="thread.html#1919">[ thread ]</a>
+              <a href="subject.html#1919">[ subject ]</a>
+              <a href="author.html#1919">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

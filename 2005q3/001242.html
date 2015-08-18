@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20video-dfb.c%3A%20handle%20key-repeat%20events&In-Reply-To=%3C20050914214149.GB71839%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001248.html">
+   <LINK REL="Next"  HREF="001243.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20video-dfb.c%3A%20handle%20key-repeat%20events&In-Reply-To=%3C20050914214149.GB71839%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Sep 14 23:41:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001248.html">[Softdevice-devel] softieee1394, fighting with pts values
+</A></li>
+        <LI>Next message: <A HREF="001243.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1242">[ date ]</a>
+              <a href="thread.html#1242">[ thread ]</a>
+              <a href="subject.html#1242">[ subject ]</a>
+              <a href="author.html#1242">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>My patch to DirectFB was not accepted as such, but the feature was
+implemented in a slightly different way, by introducing a DIEF_REPEAT
+event flag.  (Note that it is an enum constant, not a #define.)
+The attached patch works against current DirectFB CVS.  A 0.9.23
+release should occur soon.
+
+I wish the video4linux developers were as responsive.  It looks like
+all video4linux remotes implement key-repeat asynchronously to the
+actual code frames sent by the remote control unit.  My remarks about
+this appear to have been ignored on the mailing list.
+
+	Marko
+-------------- next part --------------
+Index: video-dfb.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.c,v
+retrieving revision 1.39
+diff -p -u -r1.39 video-dfb.c
+--- video-dfb.c	4 Sep 2005 05:49:18 -0000	1.39
++++ video-dfb.c	14 Sep 2005 20:59:54 -0000
+@@ -562,33 +562,24 @@ void cDFBVideoOut::ProcessEvents ()
+ 
+   while (events-&gt;GetEvent( DFB_EVENT(&amp;event) ))
+   {
+-    switch (event.type)
++    if (event.type == DIET_KEYPRESS &amp;&amp; dfbRemote)
+     {
+-      case DIET_KEYPRESS:
+-#ifdef DFB_SUPPORTS_REPEAT
+-      case DIET_KEYREPEAT:
+-#endif /* DFB_SUPPORTS_REPEAT */
+-        if (dfbRemote)
+-        {
+-          switch (event.key_symbol)
+-          {
+-            case DIKS_SHIFT: case DIKS_CONTROL: case DIKS_ALT:
+-            case DIKS_ALTGR: case DIKS_META: case DIKS_SUPER: case DIKS_HYPER:
+-              break;
+-            default:
+-              if (event.type != DIET_KEYPRESS ||
+-                  !setupStore-&gt;CatchRemoteKey(dfbRemote-&gt;Name(),
+-                                              event.key_symbol))
+-              {
+-                dfbRemote-&gt;PutKey(event.key_symbol,
+-                                  event.type != DIET_KEYPRESS);
+-              }
+-              break;
+-          }
+-        }
++      switch (event.key_symbol)
++      {
++      case DIKS_SHIFT: case DIKS_CONTROL: case DIKS_ALT:
++      case DIKS_ALTGR: case DIKS_META: case DIKS_SUPER: case DIKS_HYPER:
+         break;
+       default:
++        if (!setupStore-&gt;CatchRemoteKey(dfbRemote-&gt;Name(), event.key_symbol))
++        {
++#if DIRECTFB_MAJOR_VERSION &gt; 0 || DIRECTFB_MINOR_VERSION &gt; 9 || DIRECTFB_MICRO_VERSION &gt;= 23
++          dfbRemote-&gt;PutKey(event.key_symbol, event.flags &amp; DIEF_REPEAT);
++#else
++          dfbRemote-&gt;PutKey(event.key_symbol, false);
++#endif
++        }
+         break;
++      }
+     }
+   }
+ }
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001248.html">[Softdevice-devel] softieee1394, fighting with pts values
+</A></li>
+	<LI>Next message: <A HREF="001243.html">[Softdevice-devel] [PATCH] video-dfb.c: handle key-repeat events
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1242">[ date ]</a>
+              <a href="thread.html#1242">[ thread ]</a>
+              <a href="subject.html#1242">[ subject ]</a>
+              <a href="author.html#1242">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

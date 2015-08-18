@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] cDFBVideoOut::SetParams() wastes 20% of CPU on -vo dfb:mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cDFBVideoOut%3A%3ASetParams%28%29%20wastes%2020%25%20of%20CPU%20on%20-vo%20dfb%3Amgatv&In-Reply-To=%3C20060118202941.GC3474%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001686.html">
+   <LINK REL="Next"  HREF="001688.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] cDFBVideoOut::SetParams() wastes 20% of CPU on -vo dfb:mgatv</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cDFBVideoOut%3A%3ASetParams%28%29%20wastes%2020%25%20of%20CPU%20on%20-vo%20dfb%3Amgatv&In-Reply-To=%3C20060118202941.GC3474%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] cDFBVideoOut::SetParams() wastes 20% of CPU on -vo dfb:mgatv">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Jan 18 21:29:41 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001686.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+        <LI>Next message: <A HREF="001688.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1687">[ date ]</a>
+              <a href="thread.html#1687">[ thread ]</a>
+              <a href="subject.html#1687">[ subject ]</a>
+              <a href="author.html#1687">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jan 18, 2006 at 11:16:47AM +0200, Marko M&#228;kel&#228; wrote:
+&gt;<i> I tried your patch quickly.  top still reports 60 to 70 percent CPU usage.
+</I>&gt;<i> I'll make OProfile measurements later.
+</I>
+Oh, I just noticed that last night, I was measuring DATA_MEM_REFS instead
+of CPU_CLK_UNHALTED.  That's pretty useless, since the count will include
+all memory references, no matter if they are cached or not.  So, please
+disregard all my measurements from yesterday.
+
+Here are some new measurements of
+opcontrol --event=CPU_CLK_UNHALTED:9000:0:1:1,
+each viewing 20 seconds of live video:
+
+Unmodified softdevice from CVS a couple of days ago:
+   104091 65.9275 libvdr-softdevice.so.1.3.37
+23835    22.8982  yv12_to_yuy2()
+23079    22.1719  cDFBVideoOut::SetParams()
+[top shows around 65..76% of CPU usage for the vdr process]
+
+Commenting out the SetParams() call in cDFBVideoOut::YUV():
+    81825 62.9496 libvdr-softdevice.so.1.3.37
+23904    29.2136  yv12_to_yuy2()
+[no samples logged for cDFBVideoOut::SetParams()]
+[top shows around 45..56% of CPU usage for the vdr process]
+
+So, getting rid of the unnecessary SetParams() calls will save about 20%
+of the CPU time.  I also (accidentally) measured DATA_MEM_REFS, and there the
+savings were about 14%.  That might explain why I see 20% savings in top
+instead of 29%*63% = 18%.  This is a huge difference!
+
+Your patch:
+   101188 66.3880 libvdr-softdevice.so.1.3.37
+23224    22.9513  yv12_to_yuy2()
+23019    22.7487  cDFBVideoOut::SetParams()
+
+Your patch, commented out SetParams():
+    76838 62.0567 libvdr-softdevice.so.1.3.37
+23489    30.5695  yv12_to_yuy2()
+
+If you compare the figures to the ones above (without your patch), there
+is no significant difference.  To get more accuracy, the measurements should
+be run for several minutes while playing exactly the same frames of a
+recording.  But I don't think that saving 1 or 2 percent of execution time
+on one particular processor would justify the change, if there is a
+possibility that the new code will perform worse on other systems.
+
+Bottom line: Please eliminate unnecessary SetParams() calls or unnecessary
+code paths within cDFBVideoOut::SetParams() when it is invoked from
+cDFBVideoOut::YUV().  This still won't get completely rid of audio chopping
+on my system, but it's almost gone, even when quickly browsing the EPG or
+the Recordings menus.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001686.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+	<LI>Next message: <A HREF="001688.html">[Softdevice-devel] 100000% speed-up for cDFBVideoOut::SetParams()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1687">[ date ]</a>
+              <a href="thread.html#1687">[ thread ]</a>
+              <a href="subject.html#1687">[ subject ]</a>
+              <a href="author.html#1687">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice 0.1.3 no alsa audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C59870.192.168.1.241.1128210255.squirrel%40192.168.1.241%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001284.html">
+   <LINK REL="Next"  HREF="001288.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice 0.1.3 no alsa audio</H1>
+    <B>Peter Andersson</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C59870.192.168.1.241.1128210255.squirrel%40192.168.1.241%3E"
+       TITLE="[Softdevice-devel] softdevice 0.1.3 no alsa audio">peter at legio.mine.nu
+       </A><BR>
+    <I>Sun Oct  2 01:44:15 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001284.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+        <LI>Next message: <A HREF="001288.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1285">[ date ]</a>
+              <a href="thread.html#1285">[ thread ]</a>
+              <a href="subject.html#1285">[ subject ]</a>
+              <a href="author.html#1285">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the quick reply!
+
+&gt;<i> Are there error messages ? Usually we don't start if we cannot open alsa
+</I>&gt;<i> device.
+</I>
+These are the outputs from softdevice when i ran it with these flags:
+-P'softdevice -ao alsa:default -vo dummy:'
+
+Everything looks ok to me,
+
+[softdevice]   argv [1] = -ao
+[softdevice] using alsa device default
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] A/V Offset set to (0)
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+
+I tried to use mplayer while running vdr and softdevice. Mplayer didn't
+start playing until i shut down vdr. So the softdevice plugin is doing
+something with the soundcard.
+
+&gt;<i> Is master volume unmuted and set to non zero value ?
+</I>&gt;<i> We adjust volume via PCM volume (not master volume).
+</I>
+Yep, i have cranked the volume to the maximum and unmuted all channels. I
+have checked this with both with a gtk app and with alsamixer. Mplayer
+uses the pcm volume control too and i can verify that it is working by
+playing music and changing the pcm volume.
+
+Any other ideas?
+
+/Peter
+
+&gt;<i> On Samstag, 1. Oktober 2005 22:40, Peter Andersson wrote:
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i> I'm trying to get audio output via softdevice without any luck.
+</I>&gt;&gt;<i> I launch softdevice with these options: -P'softdevice -ao alsa:hw:0,0
+</I>&gt;&gt;<i> -vo
+</I>&gt;&gt;<i> xv:'.
+</I>&gt;&gt;<i> I have verified that the settings are correct by using mplayer with the
+</I>&gt;&gt;<i> setting -ao alsa:device=hw=0,0.
+</I>&gt;<i>
+</I>&gt;<i> Usually I don't need to specify an alsa device name, as the default
+</I>&gt;<i> name &quot;default&quot; works well. Just checked both variants and they both work.
+</I>&gt;<i>
+</I>&gt;<i> -P'softdevice -ao alsa:hw:0,0 -vo xv:'
+</I>&gt;<i> Oct  2 00:02:23 jarada vdr[6673]: [softdevice-audio] Opening alsa device
+</I>&gt;<i> hw:0,0
+</I>&gt;<i> Oct  2 00:02:23 jarada vdr[6673]: [softdevice-audio] Device opened! Ready
+</I>&gt;<i> to play
+</I>&gt;<i>
+</I>&gt;<i> -P'softdevice -ao alsa:default -vo xv:'
+</I>&gt;<i> Oct  2 00:02:43 jarada vdr[6686]: [softdevice-audio] Opening alsa device
+</I>&gt;<i> default
+</I>&gt;<i> Oct  2 00:02:43 jarada vdr[6686]: [softdevice-audio] Device opened! Ready
+</I>&gt;<i> to play
+</I>&gt;<i>
+</I>&gt;<i> Are there error messages ? Usually we don't start if we cannot open alsa
+</I>&gt;<i> device.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I have also played a couple of recordings made by vdr just to make sure
+</I>&gt;&gt;<i> that they include sound.
+</I>&gt;&gt;<i> I'm using fedora core 3, softdevice 0.1.3 and kernel 2.6.13.2 with
+</I>&gt;&gt;<i> included alsa and dvb modules.
+</I>&gt;<i>
+</I>&gt;<i> Is master volume unmuted and set to non zero value ?
+</I>&gt;<i> We adjust volume via PCM volume (not master volume).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001284.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+	<LI>Next message: <A HREF="001288.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1285">[ date ]</a>
+              <a href="thread.html#1285">[ thread ]</a>
+              <a href="subject.html#1285">[ subject ]</a>
+              <a href="author.html#1285">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

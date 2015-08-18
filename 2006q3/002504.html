@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C20060919194839.GB2796%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002503.html">
+   <LINK REL="Next"  HREF="002505.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C20060919194839.GB2796%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Sep 19 21:48:39 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002503.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+        <LI>Next message: <A HREF="002505.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2504">[ date ]</a>
+              <a href="thread.html#2504">[ thread ]</a>
+              <a href="subject.html#2504">[ subject ]</a>
+              <a href="author.html#2504">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Sep 19, 2006 at 10:37:44PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> After the hang, I attached gdb to the process and captured full stack trace
+</I>&gt;<i> of all threads (gzipped output attached).  I hope that this helps.
+</I>
+There was also another vdr process that had consumed virtually no CPU,
+consisting of a single thread:
+
+#0  0xa7dd4e19 in poll () from /lib/tls/libc.so.6
+#1  0xa77ae441 in snd_pcm_direct_check_interleave ()
+   from /usr/lib/libasound.so.2
+#2  0xa77ae95c in snd_pcm_direct_server_create () from /usr/lib/libasound.so.2
+#3  0xa77a7b8c in snd_pcm_dmix_open () from /usr/lib/libasound.so.2
+#4  0xa77a7fd2 in _snd_pcm_dmix_open () from /usr/lib/libasound.so.2
+#5  0xa776d824 in snd_pcm_free () from /usr/lib/libasound.so.2
+#6  0xa776dea8 in snd_pcm_free () from /usr/lib/libasound.so.2
+#7  0xa776e143 in snd_pcm_open_slave () from /usr/lib/libasound.so.2
+#8  0xa77928f4 in _snd_pcm_plug_open () from /usr/lib/libasound.so.2
+#9  0xa776d824 in snd_pcm_free () from /usr/lib/libasound.so.2
+#10 0xa776e172 in snd_pcm_open_slave () from /usr/lib/libasound.so.2
+#11 0xa77aeb92 in _snd_pcm_asym_open () from /usr/lib/libasound.so.2
+#12 0xa776d824 in snd_pcm_free () from /usr/lib/libasound.so.2
+#13 0xa776dea8 in snd_pcm_free () from /usr/lib/libasound.so.2
+#14 0xa78715e4 in cAlsaAudioOut (this=0xa77aea60, setupStore=0xa7b4eb00)
+    at audio-alsa.c:44
+#15 0xa785b382 in cSoftDevice (this=0x8286d88, method=3, audioMethod=1,
+    pluginPath=0x81cf0a0 &quot;./PLUGINS/lib/&quot;) at softdevice.c:299
+#16 0xa785b468 in cPluginSoftDevice::Initialize (this=0x81cf080)
+    at softdevice.c:1039
+#17 0x080cd2e8 in cPluginManager::InitializePlugins (this=0xafba7bc4)
+    at plugin.c:340
+#18 0x080fc8f3 in main (argc=9, argv=0xafba7d14) at vdr.c:567
+
+According to the pid, this process is slightly newer than the multi-threaded
+vdr process:
+
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY        TIME CMD
+0 T  1001   637   620 14  76   0 - 37515 ptrace ?         17:16 ./vdr -l1 -Psoft
+1 T  1001   699     1  0  75   0 - 22133 ptrace ?          0:00 ./vdr -l1 -Psoft
+
+I don't think that it was launched by my runvdr script (PID 620).
+Besides, there is only one line &quot;[softdevice] processing args&quot;
+in my /tmp/vdr.log.  Could vdr fork processes for plugin initialization?
+This is on NPTL.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002503.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+	<LI>Next message: <A HREF="002505.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2504">[ date ]</a>
+              <a href="thread.html#2504">[ thread ]</a>
+              <a href="subject.html#2504">[ subject ]</a>
+              <a href="author.html#2504">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

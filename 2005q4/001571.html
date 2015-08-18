@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D0390B06DD%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001606.html">
+   <LINK REL="Next"  HREF="001577.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%20video/audio%20problem&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D0390B06DD%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem">Neumann at do-net.de
+       </A><BR>
+    <I>Tue Dec  6 11:13:45 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001606.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+        <LI>Next message: <A HREF="001577.html">AW: [Softdevice-devel] Speeding up softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+i noticed performance problems with my setup, too. I'm using DirectFB,
+too.
+Can you please test mplayer playback with one of your HD files ?
+(mplayer -vo directfb file.mpg)
+
+Does it play smooth ?
+
+-------------
+Andre Neumann
+ 
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> 
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] On Behalf Of 
+</I>&gt;<i> Zdzislaw Gorlicki
+</I>&gt;<i> Sent: Monday, December 05, 2005 6:41 PM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+</I>&gt;<i> Subject: [Softdevice-devel] softdevice &amp; HDTV 
+</I>&gt;<i> choppy/out-of-sync video/audio problem
+</I>&gt;<i> 
+</I>&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> My Config:
+</I>&gt;<i> Athlon64 3700+
+</I>&gt;<i> 1GB RAM
+</I>&gt;<i> Nexus-s 2.2 (drivers load with budget patch)
+</I>&gt;<i> ATI Radeon 9200SE 128MB (standard PCI)
+</I>&gt;<i> vdr-1.3.36
+</I>&gt;<i> softdevice-0.2.2.1
+</I>&gt;<i> output via DVI @ 1280x720
+</I>&gt;<i> using radeonfb driver
+</I>&gt;<i> CPU utilization 50% for 720p, 80%~90% for 1080i
+</I>&gt;<i> 
+</I>&gt;<i> I've been unsuccesfully trying to get a smooth
+</I>&gt;<i> playback of HD content with softdevice using directfb.
+</I>&gt;<i> Video seems to be dropping a lot of frames and out of
+</I>&gt;<i> sync with audio. In addition video and audio freezes
+</I>&gt;<i> for a split secend, every few seconds. So far I've
+</I>&gt;<i> been able to determine this:
+</I>&gt;<i> 
+</I>&gt;<i> When I play HD contant, in vdr log I start to see
+</I>&gt;<i> message &quot;allocating picture buffer for resolution
+</I>&gt;<i> 1280x720&quot; then asterisk (*) start going up. as soon as
+</I>&gt;<i> I start seeing *, audio gets choppy. when * gets to
+</I>&gt;<i> the end, video &amp; audio freezes for a split second,
+</I>&gt;<i> then the process starts again with &quot;allocating picture
+</I>&gt;<i> buffer for resolution 1280x720&quot;. audio is good for 2
+</I>&gt;<i> or 3 sec, then I start seeing the * again, and audio
+</I>&gt;<i> gets choppy. at the same time it looks like video is
+</I>&gt;<i> skipping a lot of frames, and it gets worse when I
+</I>&gt;<i> start seeing * in the log. I assume the * shows the
+</I>&gt;<i> buffer status.
+</I>&gt;<i> 
+</I>&gt;<i> Monitoring syslog output, I see notices that the
+</I>&gt;<i> buffer is 70%, 80%, 90% full, at that point the buffer
+</I>&gt;<i> gets cleared, audio &amp; video freezes for a sec. I also
+</I>&gt;<i> get alot of [softdevice-audio] xrun errors. so I tried
+</I>&gt;<i> -ao dummy: but it made no difference.
+</I>&gt;<i> 
+</I>&gt;<i> can someone please help. I've been trying to resolve
+</I>&gt;<i> this for over a week now with no success. I'me not
+</I>&gt;<i> sure where to look for the problem anymore.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 		
+</I>&gt;<i> __________________________________ 
+</I>&gt;<i> Start your day with Yahoo! - Make it your home page! 
+</I>&gt;<i> <A HREF="http://www.yahoo.com/r/hs">http://www.yahoo.com/r/hs</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001606.html">[Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+	<LI>Next message: <A HREF="001577.html">AW: [Softdevice-devel] Speeding up softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

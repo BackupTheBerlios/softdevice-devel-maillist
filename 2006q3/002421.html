@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Contrast%2C%20brightness%2C%20saturation%2C%0A%09etc.%20on%20dfb%20output...&In-Reply-To=%3C200609091559.04973.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002420.html">
+   <LINK REL="Next"  HREF="002429.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Contrast%2C%20brightness%2C%20saturation%2C%0A%09etc.%20on%20dfb%20output...&In-Reply-To=%3C200609091559.04973.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat Sep  9 16:59:04 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002420.html">[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+</A></li>
+        <LI>Next message: <A HREF="002429.html">[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2421">[ date ]</a>
+              <a href="thread.html#2421">[ thread ]</a>
+              <a href="subject.html#2421">[ subject ]</a>
+              <a href="author.html#2421">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 09 September 2006 13:05, Stefan Lucke wrote:
+&gt;<i> On Samstag 09 September 2006 13:29, Laz wrote:
+</I>&gt;<i> &gt; Is any one working on implementing vidCaps for the DirectFB output of
+</I>&gt;<i> &gt; softdevice (I see it has just been added to the vidix driver). If no one
+</I>&gt;<i> &gt; is, I'll have a go at implementing it.
+</I>&gt;<i>
+</I>&gt;<i> The reasons I did not go further in this directtion were:
+</I>&gt;<i> - At the time I tried, DFB++ had a bug and need a patch to call
+</I>&gt;<i> SetColorAdjustment() - When working with TV-out and touching color
+</I>&gt;<i> registers, it was not possible for me to get the original values back.
+</I>&gt;<i> Maybe that's due to our 0 .. 100% logic. Value range of DirectFB is
+</I>&gt;<i> unsigned short.
+</I>&gt;<i>
+</I>&gt;<i> Attached is my old diff (2005-11-10) , untested with current cvs.
+</I>
+I was originally thinking of using this on my main vdr system which uses viatv 
+output but I've since found out that the primary layer supports this but the 
+video overlay layer doesn't! I could have adjusted my OSD but not the video! 
+Still, I've now had a go on my Matox system.
+
+The actual settings bit seems to work on my Matrox system but it still needs a 
+bit of tweaking because I think things have been reordered since the patch 
+was written: your patch calls CheckVideoParmChange() before SetParam() is 
+called and so videoParmLayer is unset when CheckVideoParmChange() is called 
+so it returns straight away.
+
+At the moment, CheckVideoParmChange() is only called from 
+GetDisplayFrameTime() at startup and I'm not sure of the best place to add a 
+further call: adding it at the end of SetParam() sort of works but it only 
+gets called when the aspect ratio, resolution, etc. changes! Ideally, it 
+should update the screen as the values are changed in the setup.
+
+Using a combination of playing back recordings at various resolutions (so that 
+SetParam() gets called) I can alter the brightness, contrast, etc. for the 
+video layer (and OSD layer in this case).
+
+The bug in DFB++ seems to have been fixed (at last, looking back through DFB 
+mailing list archives!): I'm using DFB and DirectFB cvs from about April.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002420.html">[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+</A></li>
+	<LI>Next message: <A HREF="002429.html">[Softdevice-devel] Contrast, brightness, saturation,	etc. on dfb output...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2421">[ date ]</a>
+              <a href="thread.html#2421">[ thread ]</a>
+              <a href="subject.html#2421">[ subject ]</a>
+              <a href="author.html#2421">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

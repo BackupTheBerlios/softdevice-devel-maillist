@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nvidia OSD patches...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C45025793.6050700%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002409.html">
+   <LINK REL="Next"  HREF="002414.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nvidia OSD patches...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C45025793.6050700%40gmx.net%3E"
+       TITLE="[Softdevice-devel] nvidia OSD patches...">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Sep  9 07:56:35 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002409.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+        <LI>Next message: <A HREF="002414.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2412">[ date ]</a>
+              <a href="thread.html#2412">[ thread ]</a>
+              <a href="subject.html#2412">[ subject ]</a>
+              <a href="author.html#2412">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Matthias Schwarzott schrieb:
+&gt;<i> On Friday 08 September 2006 22:56, Stefan Lucke wrote:
+</I>&gt;&gt;<i> On Freitag 08 September 2006 21:48, Chris Elsworth wrote:
+</I>&gt;&gt;&gt;<i> On Fri, Sep 08, 2006 at 09:10:24PM +0200, Matthias Schwarzott wrote:
+</I>&gt;&gt;&gt;&gt;<i> Then I found a working version:
+</I>&gt;&gt;&gt;&gt;<i> Compiling softdevice with -O0 instead of -O2 made it working :)))
+</I>&gt;&gt;&gt;&gt;<i> (Exactly I use normally: -O2 -march=athlon-xp -fomit-frame-pointer
+</I>&gt;&gt;&gt;&gt;<i> -pipe, and changed the -O2 to -O0 leaving the rest as they are).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> It works now with -vo xv: and also with -vo shm:, the colors are
+</I>&gt;&gt;&gt;&gt;<i> correct for all channels not only these with 720px width.
+</I>&gt;&gt;&gt;<i> Wow! Nice catch! I can confirm exactly the same result here, using
+</I>&gt;&gt;&gt;<i> CXXFLAGS=-O0 -g -Wall -fPIC -Woverloaded-virtual
+</I>&gt;&gt;<i> I'd like to know:
+</I>&gt;&gt;<i> 1. compiler version
+</I>&gt;&gt;<i>    mine is:
+</I>&gt;&gt;<i>    gcc (GCC) 3.4.4 (Gentoo 3.4.4-r1, ssp-3.4.4-1.0, pie-8.7.8)
+</I>&gt;&gt;<i>    Copyright (C) 2004 Free Software Foundation, Inc.
+</I>&gt;&gt;<i>
+</I>&gt;<i> gcc-Version 4.1.1 (Gentoo 4.1.1-r1)
+</I>&gt;<i> 
+</I>
+Maybe it is a compiler bug or at least a change in the behaviour. I had
+a similar problem some time ago, it went away when I disabled the mmx
+optimization. If with -O2 and --disable-mmx the code works, could you
+please try to enable the mmx by hand in the SoftOsd.c file separately
+for the Methods ScaleDownHoriz_MMX() and ScaleDownVert_MMX()? The best
+method to do this is to insert
+#define USE_MMX
+#define USE_MMX2
+before the method and
+#undef USE_MMX
+#undef USE_MMX2
+after it. If that breaks again, please tell me which method causes the
+problems.
+
+Thanks,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002409.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+	<LI>Next message: <A HREF="002414.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2412">[ date ]</a>
+              <a href="thread.html#2412">[ thread ]</a>
+              <a href="subject.html#2412">[ subject ]</a>
+              <a href="author.html#2412">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

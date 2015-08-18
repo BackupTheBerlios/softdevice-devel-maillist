@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] last softdevice/ffmpeg branch	and	blank	video...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20last%20softdevice/ffmpeg%20branch%0A%09and%09blank%09video...&In-Reply-To=%3C20071017165837.179400%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002951.html">
+   <LINK REL="Next"  HREF="002955.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] last softdevice/ffmpeg branch	and	blank	video...</H1>
+    <B>Thomas Herrmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20last%20softdevice/ffmpeg%20branch%0A%09and%09blank%09video...&In-Reply-To=%3C20071017165837.179400%40gmx.net%3E"
+       TITLE="[Softdevice-devel] last softdevice/ffmpeg branch	and	blank	video...">ollo.diab at gmx.de
+       </A><BR>
+    <I>Wed Oct 17 18:58:37 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002951.html">[Softdevice-devel] last softdevice/ffmpeg branch and	blank	video...
+</A></li>
+        <LI>Next message: <A HREF="002955.html">[Softdevice-devel] Pro7HD .ts sample
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2954">[ date ]</a>
+              <a href="thread.html#2954">[ thread ]</a>
+              <a href="subject.html#2954">[ subject ]</a>
+              <a href="author.html#2954">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+-------- Original-Nachricht --------
+&gt;<i> Datum: Tue, 16 Oct 2007 20:50:54 +0200
+</I>&gt;<i> Von: &quot;Thomas Herrmann&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">ollo.diab at gmx.de</A>&gt;
+</I>&gt;<i> An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> Betreff: Re: [Softdevice-devel] last softdevice/ffmpeg branch and	blank	video...
+</I>
+&gt;<i> 
+</I>&gt;<i> -------- Original-Nachricht --------
+</I>&gt;<i> &gt; Datum: Sun, 14 Oct 2007 11:21:01 +0200
+</I>&gt;<i> &gt; Von: Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;
+</I>&gt;<i> &gt; An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> &gt; Betreff: Re: [Softdevice-devel] last softdevice/ffmpeg branch and
+</I>&gt;<i> blank	video...
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Is there an h264 support ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I'm waiting for a more stabilized versions of the drivers.
+</I>&gt;<i> &gt; Last time I tested DVB-S2 there were some problems with ffmpeg,
+</I>&gt;<i> &gt; as they didn't support MBAFF/PAFF. That seems to have changed.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> DVB-S2 driver runs reasonable well already! But ffmpeg PAFF still lacks
+</I>&gt;<i> some interlaced feature support. This is what I get while streaming TS to
+</I>&gt;<i> mplayer (from cvs) - like Sat.1 HD:
+</I>&gt;<i> [h264 @ 0xdeb420]Interlaced pictures + spatial direct mode is not
+</I>&gt;<i> implemented
+</I>&gt;<i> 
+</I>&gt;<i> Anyhow, while we are that topic, any chance to get ffmpeg multi threading
+</I>&gt;<i> support enabled? Again, while running mplayer -lavdopts threads=2, it works
+</I>&gt;<i> well on my low power dual core CPU (AMD Athlon BE-2350).
+</I>
+... or how about to make all ffmpeg -lavdopts useable by softdevice - maybe via config file. I can imagine those options might be quite helpfull for lower performance systems.
+
+Thanks,  Thomas
+&gt;<i> 
+</I>&gt;<i> Regards,  Thomas
+</I>&gt;<i> -- 
+</I>&gt;<i> GMX FreeMail: 1 GB Postfach, 5 E-Mail-Adressen, 10 Free SMS.
+</I>&gt;<i> Alle Infos und kostenlose Anmeldung: <A HREF="http://www.gmx.net/de/go/freemail">http://www.gmx.net/de/go/freemail</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+-- 
+Ist Ihr Browser Vista-kompatibel? Jetzt die neuesten 
+Browser-Versionen downloaden: <A HREF="http://www.gmx.net/de/go/browser">http://www.gmx.net/de/go/browser</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002951.html">[Softdevice-devel] last softdevice/ffmpeg branch and	blank	video...
+</A></li>
+	<LI>Next message: <A HREF="002955.html">[Softdevice-devel] Pro7HD .ts sample
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2954">[ date ]</a>
+              <a href="thread.html#2954">[ thread ]</a>
+              <a href="subject.html#2954">[ subject ]</a>
+              <a href="author.html#2954">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

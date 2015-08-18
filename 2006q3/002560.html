@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD layer not always fully cleared on mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609292134.39322.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002552.html">
+   <LINK REL="Next"  HREF="002564.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD layer not always fully cleared on mgatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609292134.39322.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OSD layer not always fully cleared on mgatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Sep 29 21:34:39 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002552.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+        <LI>Next message: <A HREF="002564.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2560">[ date ]</a>
+              <a href="thread.html#2560">[ thread ]</a>
+              <a href="subject.html#2560">[ subject ]</a>
+              <a href="author.html#2560">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 28 September 2006 20:57, Stefan Lucke wrote:
+&gt;<i> On Donnerstag 28 September 2006 00:09, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Mittwoch 27 September 2006 21:05, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; On Mon, Sep 25, 2006 at 11:24:32PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; So my tv-out test is still pending, but I've a new version of the patch.
+</I>&gt;<i> &gt; &gt; &gt; If it still happens for you sometimes, there is the possibility to enable
+</I>&gt;<i> &gt; &gt; &gt; a mutex around Flip() and Blit() calls. To enable this, USE_TEST_MUTEX
+</I>&gt;<i> &gt; &gt; &gt; should be defined to 1.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Sorry, I haven't gotten around to testing this yet.  Should I revert the
+</I>&gt;<i> &gt; &gt; -03 patch and apply this one instead?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Please don't test the -04 patch. It has still the osdMutex in. Have to test
+</I>&gt;<i> &gt; this on my system with tv-out first. 
+</I>&gt;<i> 
+</I>&gt;<i> So her comes -05 version of the patch. I tested this with tv-out.
+</I>&gt;<i> My testing was fast scrolling through the channel list.
+</I>&gt;<i> I did not see any issues with a missed flip on OSD drawing.
+</I>&gt;<i> 
+</I>&gt;<i> So I had no need for enabling the dfbFlipMutex.
+</I>&gt;<i> 
+</I>&gt;<i> The final version will have method ShowOSD() removed.
+</I>
+Final version is in cvs now.
+With an extra change, see below.
+
+&gt;<i> 
+</I>&gt;<i> If you ask for differences between -03 and -05 ..
+</I>&gt;<i> Upon processing events there will be never an internal OSD refresh
+</I>&gt;<i> via ShowOSD() .
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; By the way, the -03 patch does slow 
+</I>&gt;<i> &gt; &gt; down my system too much from time to time, especially when watching programs
+</I>&gt;<i> &gt; &gt; containing DVB subtitles, which are mapped to OSD by the subtitles plugin.
+</I>&gt;<i> 
+</I>&gt;<i> If you've still this issue, I think black bar clearing could be done after
+</I>&gt;<i> scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC); 
+</I>&gt;<i> to clear borders of the next frame.
+</I>
+Upon OSD activation/deactivation, there is no extra clear of entire
+screen. Only non video area will be cleared.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002552.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+	<LI>Next message: <A HREF="002564.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2560">[ date ]</a>
+              <a href="thread.html#2560">[ thread ]</a>
+              <a href="subject.html#2560">[ subject ]</a>
+              <a href="author.html#2560">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

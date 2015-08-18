@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: A media file player for vdr with softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20Softplay-0.0.1%3A%20A%20media%20file%20player%20for%20vdr%20with%20softdevice&In-Reply-To=%3C200504052126.08079.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000427.html">
+   <LINK REL="Next"  HREF="000444.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: A media file player for vdr with softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20Softplay-0.0.1%3A%20A%20media%20file%20player%20for%20vdr%20with%20softdevice&In-Reply-To=%3C200504052126.08079.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: A media file player for vdr with softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Apr  5 21:26:07 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000427.html">[Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: A media file player for vdr with softdevice
+</A></li>
+        <LI>Next message: <A HREF="000444.html">[Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: A media file player for vdr with softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#441">[ date ]</a>
+              <a href="thread.html#441">[ thread ]</a>
+              <a href="subject.html#441">[ subject ]</a>
+              <a href="author.html#441">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 4. April 2005 12:49, Nicolas Huillard wrote:
+&gt;<i> Martin Wache a &#233;crit :
+</I>&gt;<i> &gt; so here is the first version of my media player for the vdr with
+</I>&gt;<i> &gt; softdevice as output device. It plays .avi with various codecs (if
+</I>&gt;<i> &gt; supported by ffmpeg) and .mp3.
+</I>&gt;<i> 
+</I>&gt;<i> Great ! Congratulations !
+</I>&gt;<i> 
+</I>&gt;<i> &gt; PS: Stefan and me have started a discussion wether to include this 
+</I>&gt;<i> &gt; SoftPlay plugin into the SoftDevice while the mailing list was down...
+</I>&gt;<i> &gt; Now I'm curious what you think about this. Basicly there are two ways:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; -Include everything in the softdevice (only one plugin) and have compile
+</I>&gt;<i> &gt;  options to decide what to be build.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; -Seperate plugins: a softdevice mostly like it is now, and have a
+</I>&gt;<i> &gt;  seperate plugin which implements the player capabilities.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Stefan prefers the first possibility, I prefer the first.
+</I>
+The first too :-) ?, I thought the second.
+
+&gt;<i> &gt; Which way would do you like better?
+</I>&gt;<i> 
+</I>&gt;<i>  From the packager's point of view, I think the second solution would be 
+</I>&gt;<i> a little better (don't have to create two packages : just compile 
+</I>&gt;<i> everything, and let the user decide if he actually loads the player)
+</I>&gt;<i> But it's not that important, in fact...
+</I>
+As I got my own extension work right now, DV camcorder access,
+I think makeing a separate plugin like soft-IEEE1394 is the better
+way as there could be separate releases independant of
+softdevice release cycle. (OT shouldn't we make a new one 0.1.1?).
+
+So we get a bunch of plugins building the softdevice plugin family.
+soft-player, soft-IEEE1394, ..
+
+&gt;<i> The real question seems to be : who will actually *not* want to have a 
+</I>&gt;<i> media-player-capable softdevice VDR ? I mean, in the softdevice context, 
+</I>&gt;<i> where you use the full-featured VGA card instead of the limited MPEG 
+</I>&gt;<i> output of the DVB card, will there be a lot of people not wanting to 
+</I>&gt;<i> view Divx, especially since VGA output is *the* way to view Divx ?
+</I>
+If the additional plugins are more stable and have more features,
+perhaps we can integrate them back (once we have something like ./configure).
+
+PS:
+The capability of my extension is:
+	- detect (report via OSD message) plugged and removed firewire devices,
+	- show live stream from DV camcorder,
+	- some simple camcorder commands like: PLAY, PAUSE, FF, FRew.
+
+Tanks to Martin's packet interface.
+
+DV decoding is a bit more CPU intensive than mpeg decoding. My P4-2.2
+is occupied between 50-60 %.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000427.html">[Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: A media file player for vdr with softdevice
+</A></li>
+	<LI>Next message: <A HREF="000444.html">[Softdevice-devel] [ANNOUNCE] Softplay-0.0.1: A media file player for vdr with softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#441">[ date ]</a>
+              <a href="thread.html#441">[ thread ]</a>
+              <a href="subject.html#441">[ subject ]</a>
+              <a href="author.html#441">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

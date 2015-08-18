@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C20060117214725.GD3460%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001677.html">
+   <LINK REL="Next"  HREF="001682.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Apparent%20cache%20misses%20in%20yv12_to_yuy2%28%29&In-Reply-To=%3C20060117214725.GD3460%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Jan 17 22:47:25 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001677.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+        <LI>Next message: <A HREF="001682.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1679">[ date ]</a>
+              <a href="thread.html#1679">[ thread ]</a>
+              <a href="subject.html#1679">[ subject ]</a>
+              <a href="author.html#1679">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jan 17, 2006 at 10:21:47PM +0100, Martin Wache wrote:
+&gt;<i> &gt; On mine, they probably aren't.  I set a breakpoint in yv12_to_yuy2()
+</I>&gt;<i> &gt; and found out that on the first round, srfc==0xb51dd000.  In /proc/mtrr,
+</I>&gt;<i> &gt; I have the following:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; reg00: base=0x00000000 (   0MB), size= 128MB: write-back, count=1
+</I>&gt;<i> &gt; reg01: base=0xd6000000 (3424MB), size=  32MB: write-combining, count=1
+</I>&gt;<i> &gt; reg06: base=0xe0000000 (3584MB), size=  64MB: write-combining, count=1
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; What should I write and where to correct the situation?  Again, this is
+</I>&gt;<i> &gt; DirectFB on a &quot;Matrox Graphics, Inc. Millennium G450 32Mb SDRAM Dual Head&quot;
+</I>&gt;<i> &gt; (description from lspci -vv)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> I guess the entry is correct, you can check the addresses with the
+</I>&gt;<i> address lspci reports, the one you get from srfc is meaningless because
+</I>&gt;<i> of the virtual memory system. You just don't now which virtual address
+</I>&gt;<i> maps to which real memory address (I think only the kernel can tell that).
+</I>
+lspci says:
+
+        Region 0: Memory at d6000000 (32-bit, prefetchable) [size=32M]
+        Region 1: Memory at d9efc000 (32-bit, non-prefetchable) [size=16K]
+        Region 2: Memory at d9000000 (32-bit, non-prefetchable) [size=8M]
+
+So, I guess it's properly set up.
+
+&gt;<i> &gt;&gt; Can you confirm the speedup when commenting the write to the video memory?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I commented out the two movntq(mm?,*srfc) in the j loop.  Viewing live video
+</I>&gt;<i> &gt; before the modification for 21 seconds:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; opreport --global-percent:
+</I>&gt;<i> &gt;    158838 62.5346 libvdr-softdevice.so.1.3.37
+</I>&gt;<i> &gt; opreport -l libvdr-softdevice.so.1.3.37:
+</I>&gt;<i> &gt; 10479     6.5973  yv12_to_yuy2()
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; After the modification (black video surface) for 23 seconds:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; opreport --global-percent:
+</I>&gt;<i> &gt;    171060 62.4015 libvdr-softdevice.so.1.3.37
+</I>&gt;<i> &gt; opreport -l libvdr-softdevice.so.1.3.37:
+</I>&gt;<i> &gt; 7080      4.1389  yv12_to_yuy2()
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On my system, the improvement is only 4.1389/6.5973 - 1 = -37%.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> That's not that much. Did you try the opposite test, just commenting the
+</I>&gt;<i> memory read movq/movd instructions to see if there is also a speedup?
+</I>
+I just did:
+
+   171866 62.6012 libvdr-softdevice.so.1.3.37
+3295      1.9172  yv12_to_yuy2()
+
+So, it looks like my original analysis was correct: the memory-to-register
+moves are the bottleneck on my system.  I'd try unrolling the loop a few
+times and perhaps adding prefetch instructions.  However, I have very little
+idea how MMX instructions are scheduled and executed inside the processor
+and how the prefetch mechanism really works.  Of course, this is the
+opportunity to learn. :-)
+
+Anyway, this would only save 3 or 4 percent of softdevice execution time.
+
+Interestingly, this method is taking a lot of CPU:
+
+21191    12.3300  cDFBVideoOut::SetParams()
+
+Maybe it should not be called from cDFBVideoOut::YUV(), or maybe the
+method should be split, so that only those things that are absolutely
+necessary to update in cDFBVideoOut::YUV() are updated.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001677.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+	<LI>Next message: <A HREF="001682.html">[Softdevice-devel] Apparent cache misses in yv12_to_yuy2()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1679">[ date ]</a>
+              <a href="thread.html#1679">[ thread ]</a>
+              <a href="subject.html#1679">[ subject ]</a>
+              <a href="author.html#1679">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

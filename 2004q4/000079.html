@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb support using overlay?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20support%20using%20overlay%3F&In-Reply-To=%3C200411101955.56000.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000078.html">
+   <LINK REL="Next"  HREF="000080.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb support using overlay?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20support%20using%20overlay%3F&In-Reply-To=%3C200411101955.56000.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] dfb support using overlay?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Nov 10 19:55:55 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000078.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+        <LI>Next message: <A HREF="000080.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#79">[ date ]</a>
+              <a href="thread.html#79">[ thread ]</a>
+              <a href="subject.html#79">[ subject ]</a>
+              <a href="author.html#79">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 8. November 2004 17:23, Torgeir Veimo wrote:
+&gt;<i> I've been trying to get a directfb setup running and have temporarily
+</I>&gt;<i> given up on my radeon.
+</I>&gt;<i> 
+</I>&gt;<i> I've tried with a g450 card with better results, but softdevice doesn't
+</I>&gt;<i> seem to use the scaler on the card; I'd like to use the native
+</I>&gt;<i> resolution of my projector. Is this possible? 
+</I>
+So what is the &quot;native resolution&quot; of your projector ?
+
+&gt;<i> 
+</I>&gt;<i> 720x576 works, but gives me tearing. Is there anything I can do to avoid
+</I>&gt;<i> this?
+</I>
+tearing ? .. could you describe that a bit more ?
+
+&gt;<i> 
+</I>&gt;<i> [VDR]# fbset -i
+</I>&gt;<i> 
+</I>&gt;<i> mode &quot;720x576-50&quot;
+</I>&gt;<i>     # D: 32.043 MHz, H: 31.049 kHz, V: 49.999 Hz
+</I>&gt;<i>     geometry 720 576 736 1152 32
+</I>&gt;<i>     timings 31208 144 40 32 10 128 3
+</I>&gt;<i>     rgba 8/16,8/8,8/0,8/24
+</I>&gt;<i> endmode
+</I>&gt;<i> 
+</I>
+&gt;<i> Screen (00) FBDev Primary Screen            (primary screen)
+</I>&gt;<i>    Caps: VSYNC POWER_MANAGEMENT
+</I>&gt;<i> 
+</I>&gt;<i>      Layer (00) FBDev Primary Layer             (primary layer)
+</I>&gt;<i>         Type: GRAPHICS
+</I>&gt;<i>         Caps: SURFACE BRIGHTNESS CONTRAST SATURATION
+</I>&gt;<i> 
+</I>&gt;<i>      Layer (01) Matrox Backend Scaler
+</I>&gt;<i>         Type: GRAPHICS VIDEO STILL_PICTURE
+</I>&gt;<i>         Caps: SURFACE SCREEN_LOCATION DEINTERLACING DST_COLORKEY
+</I>&gt;<i> BRIGHTNESS CONTRAST
+</I>&gt;<i> 
+</I>
+&gt;<i> [dfb] Enumeratig display Layers
+</I>&gt;<i> Layer 0 FBDev Primary Layer  Type: graphics
+</I>&gt;<i>   Caps: brightness contrast saturation surface
+</I>&gt;<i> Layer 1 Matrox Backend Scaler  Type: graphics picture video
+</I>&gt;<i>   Caps: brightness contrast deinterlacing dst_colorkey screen_location
+</I>&gt;<i> surface
+</I>&gt;<i>   This is our videoLayer
+</I>&gt;<i> [dfb] width = 720, height = 576
+</I>&gt;<i> [dfb] got fmt = 0x00418c04 bpp = 32
+</I>&gt;<i> [dfb] Using this layer for OSD: (FBDev Primary Layer - [720x576])
+</I>&gt;<i> osdSurface::
+</I>&gt;<i>  - videoonly
+</I>&gt;<i>  - flipping
+</I>&gt;<i> videoSurface::
+</I>&gt;<i>  - videoonly
+</I>&gt;<i> [dfb] Configuring CooperativeLevel for Overlay
+</I>&gt;<i> [dfb] Configuring ColorKeying
+</I>&gt;<i> [dfb] Configuring CooperativeLevel for OSD
+</I>&gt;<i> [dfb] Using this layer for OSD: FBDev Primary Layer
+</I>&gt;<i> [dfb] Using this layer for Video out: Matrox Backend Scaler
+</I>
+We use the scaler. That's ok.
+
+&gt;<i> [dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+</I>
+720x576 is not optimal as it needs some special handling.
+Currently the scaling operation assumes operating in square pixel mode.
+So for a tft screen that is ok. But for TV-out width 720 should not be scaled.
+
+For adjust screen pixel aspect via OSD I made a preliminar modification.
+
+
+-- 
+stefan lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: non-square.diff
+Type: text/x-diff
+Size: 6010 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041110/71ab3f22/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20041110/71ab3f22/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000078.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+	<LI>Next message: <A HREF="000080.html">[Softdevice-devel] dfb support using overlay?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#79">[ date ]</a>
+              <a href="thread.html#79">[ thread ]</a>
+              <a href="subject.html#79">[ subject ]</a>
+              <a href="author.html#79">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

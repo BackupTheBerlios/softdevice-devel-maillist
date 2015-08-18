@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] terrible judder and stuttering
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20terrible%20judder%20and%20stuttering&In-Reply-To=%3C200504171932.58149.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000532.html">
+   <LINK REL="Next"  HREF="000534.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] terrible judder and stuttering</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20terrible%20judder%20and%20stuttering&In-Reply-To=%3C200504171932.58149.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] terrible judder and stuttering">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr 17 19:32:58 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000532.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+        <LI>Next message: <A HREF="000534.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#533">[ date ]</a>
+              <a href="thread.html#533">[ thread ]</a>
+              <a href="subject.html#533">[ subject ]</a>
+              <a href="author.html#533">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 17. April 2005 14:36, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Apr 16, 2005 at 08:01:48PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Samstag, 16. April 2005 13:49, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; On Tue, Apr 12, 2005 at 11:18:17PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; There are some problems with flickering OSD when not all screen
+</I>&gt;<i> &gt; &gt; &gt; backbuffers where cleared. Switched to triple buffering too which
+</I>&gt;<i> &gt; &gt; &gt; seems to fix a &quot;from time to time flicker&quot; when OSD is shown.
+</I>&gt;<i> &gt; &gt; &gt; And times the OSD _was_ not shown (subtitles ??).
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; I'll test that tomorrow on my production system.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Do you have any news regarding this?  I just tried an up-to-date CVS snapshot
+</I>&gt;<i> &gt; &gt; of softdevice today, and the subtitles weren't displayed.  Otherwise, the
+</I>&gt;<i> &gt; &gt; OSD was fine.  I'm using VGA-style output on the primary head of Matrox G450.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Did you try that with my patch posted on tuesday ? If there are still no
+</I>&gt;<i> &gt; subtitles then this my be caused by coordinate mismatch between
+</I>&gt;<i> &gt; drawing function (scaled down ??) and OSD backcopy which takes
+</I>&gt;<i> &gt; OSD coordinates as given by vdr.
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, I assumed that you would commit it to CVS.  I now applied that patch, but
+</I>&gt;<i> got still no subtitles with dfb output.  After recompiling with XV output, everything
+</I>&gt;<i> worked fine.
+</I>
+Now I've a patch vdr version myself to get subtitles. After a few tests,
+ it starts to drive me crazy. Old versions of dfb-out work
+(before 2005-03-27). But I just don't see the problem as all vdr
+menues work. The only thing I know that it is _not_ a coordinate
+scaling mismatch.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000532.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+	<LI>Next message: <A HREF="000534.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#533">[ date ]</a>
+              <a href="thread.html#533">[ thread ]</a>
+              <a href="subject.html#533">[ subject ]</a>
+              <a href="author.html#533">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

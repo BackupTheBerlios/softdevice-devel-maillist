@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice and vdr-plugin-mplayer
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20vdr-plugin-mplayer&In-Reply-To=%3CPine.LNX.4.44.0610200029180.3099-100000%40polarfrost%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002635.html">
+   <LINK REL="Next"  HREF="002628.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice and vdr-plugin-mplayer</H1>
+    <B>Samuli Sorvakko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20vdr-plugin-mplayer&In-Reply-To=%3CPine.LNX.4.44.0610200029180.3099-100000%40polarfrost%3E"
+       TITLE="[Softdevice-devel] Softdevice and vdr-plugin-mplayer">samuli at sorvakko.net
+       </A><BR>
+    <I>Thu Oct 19 23:50:21 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002635.html">[Softdevice-devel] softdevice and &quot;Return to Live TV&quot;
+</A></li>
+        <LI>Next message: <A HREF="002628.html">[Softdevice-devel] hurry_up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2626">[ date ]</a>
+              <a href="thread.html#2626">[ thread ]</a>
+              <a href="subject.html#2626">[ subject ]</a>
+              <a href="author.html#2626">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello.
+
+I tried trawling through the archives but couldn't find anything too
+relevan. Sorry for bothering if this issue has been discussed previously.
+This message is being sent to the softdevice mailing list instead of the
+mplayer plugin developers, as I have a feeling that the problem really
+lies more withing softdevice than mplayer.
+
+I have a peculiar problem trying to use Softdevice and the VDR Mplayer
+plugin at the same time. The symptoms are as follows: (snip from ps -ax)
+
+ 7177 tty1     Tl     0:35 vdr ....
+-P softdevice -vo xv:full -ao alsa:pcm=default#ac3=plug:spdif#
+-Pmplayer --mplayer /usr/share/vdr-plugin-mplayer/mplayer .....
+ 7183 ?        S      0:00 [kdvb-fe-0]
+ 7229 tty1     T      0:00 /bin/bash /usr/share/vdr-plugin-mplayer/mplayer
+/my/video/file.avi
+ 7269 tty1     T      0:00 /bin/bash /usr/share/vdr-plugin-mplayer/mplayer
+/my/video/file.avi
+ 7270 tty1     T      0:00 /usr/bin/mplayer -identify -vo null -ao null
+-frames 0 /my/video/file.avi
+ 7271 tty1     T      0:00 grep -i -e ^ID_
+
+As can be seen, all interesting processes (vdr itself and all its child
+processes) are in state T, i.e. stopped (or being traced, which should not
+be the case here). The Mplayer script (and everything above/below it)
+stops at this point:
+TEMP1=`$MPLAYER -identify -vo null -ao null -frames 0 &quot;$FILE&quot; 2&gt;/dev/null
+|<i> grep -i -e &quot;^ID_&quot;`
+</I>
+As can be seen, the processes are all stopped. Sending them SIGCONT (once
+or thousands of times or everything in between) doesn't help.
+
+Now here is where I think this issue is tied to softdevice: When I run the
+mplayer script without the softdevice plugin (with dummy or stream
+output), everything works fine. When I run mplayer with the same options
+as the script runs outside VDR (with $DISPLAY set properly, of course)
+everything again works fine (except that VDR is still running in the
+background so I get a hit on CPU performance and two distinct audio
+streams.. :) The only thing that gets hung is mplayer spawned from under
+VDR with softdevice running. Softdevice synch settings (usleep, sig or
+rtc) don't have any effect on this behavior.
+
+You might of course inquire why I don't use Softplay. I do, and would
+prefer that over mplayer - if it would play my files correctly.. I have
+all kinds of synch problems with many DivX/Xvid files even though some
+others play fine. This is of course understandable, as Softplay is still
+in version 0.0.2... :)
+
+So. If anybody has _any_ idea on how to start debugging this problem,
+please respond.
+
+Kind regards,
+	Samuli
+
+-- 
+Samuli Sorvakko                 	&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">samuli at sorvakko.net</A>&gt;
+Viherlaaksonranta 15B25,02710 Espoo, Finland     +358 440 942762
+&quot;vinkiksi; ei kande kuoria j&#228;nnitteellisi&#228; johtoja hampailla.&quot;
+        -- Antti &quot;Zapo&quot; Maula, 14.5.2003
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002635.html">[Softdevice-devel] softdevice and &quot;Return to Live TV&quot;
+</A></li>
+	<LI>Next message: <A HREF="002628.html">[Softdevice-devel] hurry_up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2626">[ date ]</a>
+              <a href="thread.html#2626">[ thread ]</a>
+              <a href="subject.html#2626">[ subject ]</a>
+              <a href="author.html#2626">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C4613D481.4050308%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002841.html">
+   <LINK REL="Next"  HREF="002848.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay, unable to play (mpeg) movies.</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C4613D481.4050308%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softplay, unable to play (mpeg) movies.">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Apr  4 18:38:25 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002841.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+        <LI>Next message: <A HREF="002848.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2843">[ date ]</a>
+              <a href="thread.html#2843">[ thread ]</a>
+              <a href="subject.html#2843">[ subject ]</a>
+              <a href="author.html#2843">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Per Mellander schrieb:
+&gt;<i> Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> In principle softplay should be able to replay those files without
+</I>&gt;&gt;<i> problems. I suspect that the auto detection of the file format fails.
+</I>&gt;&gt;<i> Could you please try if ffmpeg or ffplay detect the files correctly?
+</I>&gt;&gt;<i> What does softplay report when you've opened one of those files? There
+</I>&gt;&gt;<i> should be some lines starting with &quot;Input #0, mpeg, from 'test'&quot;, could
+</I>&gt;&gt;<i> you please send me those lines?
+</I>&gt;<i> 
+</I>&gt;<i> @home with FFmpeg version SVN-r7991 and softplay CVS 20070312
+</I>&gt;<i> 
+</I>&gt;<i> I don't see any messages that looks like that. Maybe I've got the wrong 
+</I>&gt;<i> setting for debug output or maybe it's because I'm running vdr from 
+</I>&gt;<i> .xinitrc and the messages from vdr is supressed somewhere. I 'm only 
+</I>&gt;<i> getting the 'X' output in my console where I do 'startx'. What I do find 
+</I>&gt;<i> is lines like ( in syslog):
+</I>&gt;<i> 
+</I>&gt;<i> Apr  1 17:55:42 mm vdr: [14307] ERROR: Could not open file 
+</I>&gt;<i> /data2/movies/Teletubbies.mpg! &lt;--------------- extra '!'
+</I>&gt;<i> Apr  1 17:55:57 mm vdr: [14318] ERROR: Could not open file 
+</I>&gt;<i> /data2/movies/Barn/NallePuhAdventure.mp &lt;------ missing 'g'
+</I>&gt;<i> Apr  1 17:56:11 mm vdr: [14329] ERROR: Could not open file 
+</I>&gt;<i> /data2/movies/Barn/NallePuhChristofferR &lt;------ missing rest of filename 
+</I>&gt;<i> 'obin.mpg'
+</I>&gt;<i> 
+</I>&gt;<i> There is something fishy here connected with the char str[60] used when 
+</I>&gt;<i> creating the error string. It seems that the last character(s) is 
+</I>&gt;<i> missed/overwritten/replaced in some way. Is the length of 60 choosen 
+</I>&gt;<i> because of the OSD?
+</I>&gt;<i> 
+</I>&gt;<i> Haven't tested ffplay @home
+</I>&gt;<i> 
+</I>&gt;<i> Later on I continued this message @work where I run FFmpeg version 
+</I>&gt;<i> SVN-r8487 and softplay CVS 20070323. Same problem with same files.
+</I>&gt;<i> 
+</I>&gt;<i> console says:
+</I>&gt;<i> 
+</I>&gt;<i> PLDBG: Activate 1
+</I>&gt;<i> PLDBG: Thread started: SoftPlayer
+</I>&gt;<i> softdevicePlugin 0xa1468b8
+</I>&gt;<i> Service 'softdevice-GetPacketHandles-v1.0'
+</I>&gt;<i> IsStream .mpg
+</I>&gt;<i> open file '/transfer/download/film/Pettson och Findus - Kattonauten .mpg'
+</I>&gt;<i> PLDBG: ~cSoftControl()
+</I>&gt;<i> PLDBG: ~cSoftPlayer
+</I>&gt;<i> could not open file. Return value -84
+</I>
+-84= AVERROR_NOFMT, so the format is not correctly detected. That is
+strange, ffplay detects it, but softplay doesn't detect it. Maybe you
+can add some printfs to libavformat av_open_input_file() (in
+libavformat/util.c, and #undef printf to get rid of the linking error)
+to find out what goes wrong...
+
+I will try to reproduce the problems when I'm at home.
+
+Bye,
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002841.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+	<LI>Next message: <A HREF="002848.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2843">[ date ]</a>
+              <a href="thread.html#2843">[ thread ]</a>
+              <a href="subject.html#2843">[ subject ]</a>
+              <a href="author.html#2843">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] &quot;-vo shm:&quot; / ShmClient a simple client/server model for the softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%22-vo%20shm%3A%22%20/%20ShmClient%20a%20simple%20client/server%0A%20model%20for%20the%20softdevice&In-Reply-To=%3C43D3EC64.8030909%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001716.html">
+   <LINK REL="Next"  HREF="001683.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] &quot;-vo shm:&quot; / ShmClient a simple client/server model for the softdevice</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%22-vo%20shm%3A%22%20/%20ShmClient%20a%20simple%20client/server%0A%20model%20for%20the%20softdevice&In-Reply-To=%3C43D3EC64.8030909%40gmx.net%3E"
+       TITLE="[Softdevice-devel] &quot;-vo shm:&quot; / ShmClient a simple client/server model for the softdevice">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Jan 22 21:34:44 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001716.html">[Softdevice-devel] &quot;-vo shm:&quot; / ShmClient a simple client/server model for the softdevice
+</A></li>
+        <LI>Next message: <A HREF="001683.html">[Softdevice-devel] Softplay shows dvb subtitles from tv broadcast
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1717">[ date ]</a>
+              <a href="thread.html#1717">[ thread ]</a>
+              <a href="subject.html#1717">[ subject ]</a>
+              <a href="author.html#1717">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Seppo Ingalsuo schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> This is great for my vdr setup! I managed to compile it with vdr 1.3.39
+</I>&gt;<i> by adding -ljpg and ../../../osdcontroller.o to link command line.
+</I>&gt;<i>
+</I>Up to now I only tested it with vdr-1.3.37, I will see how can manage to
+make it compile also for &gt;vdr-1.3.37. Thank you for the report!
+
+&gt;<i> However the result was not that successful. I got to my 1280x720 X
+</I>&gt;<i> display almost black and white live tv picture with two small picture
+</I>&gt;<i> copies on the top of the screen, a kind of picture-in-picture look.
+</I>&gt;<i> There was no OSD.
+</I>&gt;<i> 
+</I>There is a small bug somwhere which causes that, usually closing the
+ShmClient and restarting it helps.
+The OSD currently only works in software alpha blending mode, so please
+switch to it before using the ShmClient.
+I'm currently working on speeding the -vo shm up useing direct
+rendering, but that means I have to implement direct rendering first for
+Xv-Out ;-). I will tackle the missing features and the bugs when direct
+rendering is finished, however, I can't promise when that will be...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001716.html">[Softdevice-devel] &quot;-vo shm:&quot; / ShmClient a simple client/server model for the softdevice
+</A></li>
+	<LI>Next message: <A HREF="001683.html">[Softdevice-devel] Softplay shows dvb subtitles from tv broadcast
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1717">[ date ]</a>
+              <a href="thread.html#1717">[ thread ]</a>
+              <a href="subject.html#1717">[ subject ]</a>
+              <a href="author.html#1717">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

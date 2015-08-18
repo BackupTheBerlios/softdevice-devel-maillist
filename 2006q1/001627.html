@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] MPEG4/H.264 w/ softdevice?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MPEG4/H.264%20w/%20softdevice%3F&In-Reply-To=%3C1136605342.19313.4.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001626.html">
+   <LINK REL="Next"  HREF="001624.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] MPEG4/H.264 w/ softdevice?</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20MPEG4/H.264%20w/%20softdevice%3F&In-Reply-To=%3C1136605342.19313.4.camel%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] MPEG4/H.264 w/ softdevice?">torgeir at pobox.com
+       </A><BR>
+    <I>Sat Jan  7 04:42:19 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001626.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001624.html">[Softdevice-devel] Hint: SPDIF out with SUSE 9.3 / 10.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1627">[ date ]</a>
+              <a href="thread.html#1627">[ thread ]</a>
+              <a href="subject.html#1627">[ subject ]</a>
+              <a href="author.html#1627">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, 2006-01-06 at 11:06 +0200, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Fri, Jan 06, 2006 at 12:05:26AM +0100, Harald Milz wrote:
+</I>&gt;<i> &gt; On Tue, Jan 03, 2006 at 08:40:02AM +0100, Andre Neumann wrote:
+</I>&gt;<i> &gt; &gt; The Question is if ffmpeg supports multiple cores. I never tested it,
+</I>&gt;<i> &gt; &gt; but i think
+</I>&gt;<i> &gt; &gt; you will get better performance with dual-core A64, Intel or Intel HT
+</I>&gt;<i> &gt; &gt; CPU.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Hmmm - I'd really like to give this a test sooner or later. Currently
+</I>&gt;<i> &gt; I am still somewhat puzzled about vdr/softdevice always using about 55
+</I>&gt;<i> &gt; +/- 5 % CPU on my machine, no matter what clock rate I use (Asus A7V8X,
+</I>&gt;<i> &gt; Athlon XP-M 2400+ @ 1800, G55 DVI, 1280x720p). Could it be that there
+</I>&gt;<i> &gt; is a busy wait somewhere?
+</I>&gt;<i> 
+</I>&gt;<i> Is this with recordings or with live stream?  When I did some OProfile
+</I>&gt;<i> measurements on my 900 MHz Celeron system last summer or spring, I noticed
+</I>&gt;<i> that the synchronisation primitives (mutex operations) took much more time
+</I>&gt;<i> when playing back recordings than when displaying live DVB-T stream.
+</I>
+It's probably some fishyness in dvbplayer.c when playing back
+recordings. It probably doesn't happen if playback of the same material
+is done using softplay. 
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001626.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001624.html">[Softdevice-devel] Hint: SPDIF out with SUSE 9.3 / 10.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1627">[ date ]</a>
+              <a href="thread.html#1627">[ thread ]</a>
+              <a href="subject.html#1627">[ subject ]</a>
+              <a href="author.html#1627">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] lots of repeated frames
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20lots%20of%20repeated%20frames&In-Reply-To=%3C7EC1DC39-D9A4-4246-8E6C-6829845AE141%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002885.html">
+   <LINK REL="Next"  HREF="002888.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] lots of repeated frames</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20lots%20of%20repeated%20frames&In-Reply-To=%3C7EC1DC39-D9A4-4246-8E6C-6829845AE141%40pobox.com%3E"
+       TITLE="[Softdevice-devel] lots of repeated frames">torgeir at pobox.com
+       </A><BR>
+    <I>Thu May 31 04:24:24 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002885.html">[Softdevice-devel] ShmClient: XvVideoOut.Reconfigure format &gt; 3!
+</A></li>
+        <LI>Next message: <A HREF="002888.html">[Softdevice-devel] PicBuffer Problem?!?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2887">[ date ]</a>
+              <a href="thread.html#2887">[ thread ]</a>
+              <a href="subject.html#2887">[ subject ]</a>
+              <a href="author.html#2887">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've recently upgraded my whole system to fc6 and some stuff from fc7- 
+pre, and now i'm getting a lot of repeated frames;
+
+02:47:20.0336 D [18957] [dfb] (re)configured 0x00200806
+02:47:23.0692 D [18957] [VideoOut] video now synced (72 - -82)
+02:52:20.0849 D [18957] [VideoOut] sync info: repF = 729, drpF = 0,  
+totF = 7500
+02:57:20.0849 D [18957] [VideoOut] sync info: repF = 1502, drpF = 0,  
+totF = 15000
+03:02:20.0967 D [18957] [VideoOut] sync info: repF = 2245, drpF = 0,  
+totF = 22500
+03:07:20.0965 D [18957] [VideoOut] sync info: repF = 2912, drpF = 0,  
+totF = 30000
+03:12:21.0003 D [18957] [VideoOut] sync info: repF = 3506, drpF = 0,  
+totF = 37500
+
+- which is about 1 repeated frame per 10 frames.
+
+My output frequency is quite accurate,
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at htpc</A> src]# ./vsynctest
+testing refresh rate using FB_WAITFORVSYNC ioctl, standby while i  
+loop 5000 times..
+time elapsed: 100.04 secs, refresh rate is 49.98 Hz
+
+- so I think it must be due to a skewed clock on my sound card (intel  
+HDA). Have any of you tried to read out the accuracy of the sound  
+card clock in some way? The intel audio hardware is quite  
+programmable, but probably not from userland. I'm trying to  
+experiment with both oss and also output, but so far i'm getting the  
+same result with both.
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002885.html">[Softdevice-devel] ShmClient: XvVideoOut.Reconfigure format &gt; 3!
+</A></li>
+	<LI>Next message: <A HREF="002888.html">[Softdevice-devel] PicBuffer Problem?!?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2887">[ date ]</a>
+              <a href="thread.html#2887">[ thread ]</a>
+              <a href="subject.html#2887">[ subject ]</a>
+              <a href="author.html#2887">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

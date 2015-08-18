@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.3&In-Reply-To=%3C200604301649.46396.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002007.html">
+   <LINK REL="Next"  HREF="001962.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.3</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.3&In-Reply-To=%3C200604301649.46396.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.3">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr 30 16:49:46 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002007.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="001962.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1961">[ date ]</a>
+              <a href="thread.html#1961">[ thread ]</a>
+              <a href="subject.html#1961">[ subject ]</a>
+              <a href="author.html#1961">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+softdevice team (Torgeir Veimo, Martin Wache and me, Stefan Lucke)
+is pleased to announce a new release of vdr softdevice plugin.
+
+General info:
+  Softdevice plugin enables vdr to run on your desktop with
+  so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+  DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+
+Supported vdr versions: 1.2.x, 1.3.x and 1.4.0
+
+Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+
+Changelog since last release:
+2006-04-30: softdevice-0.2.3
+2006-04-29:
+   - enable build of ShmClient and video-shm when possible.
+   - disable interlaced vs. not-interlaced (progressive) reporting
+     via syslog. it's changing in seconds intervall for some stations.
+   - dfb: fix screen not blanked with audio only stream.
+2006-04-27:
+   - change volume handling to no longer change the alsa-mixer settings
+   - fix black screen for some aspect ratios using ShmClient
+2006-04-25:
+   - fix ShmClient blank screen every 4s
+2006-04-24:
+   - xv + dfb: removed some unused code.
+   - vidix + fb: adjusted to use videoInitialized.
+   - call Initialize() after all video constructors.
+   - dfb: OSD responsivness in paused mode.
+2006-04-23:
+   - added volume changing without changing the alsa-mixer control (to use it
+     add -DNO_MIXER, currently experimental)
+   - fix for vdr-1.3.48
+   - remove duplicate remote code, call ProcessEvents() from the video thread
+     and remove the RC thread
+   - no longer link ShmClient to vdr objects
+   - fix some includes
+   - probably fix for processors not supporting mmx2
+2006-04-21:
+   - updated finnish translations (by Rolf Ahrenberg).
+   - video-dfb: fix for crash at startup when software OSD blending was active.
+   - video-xv: changed local flag initialized to videoInitialized of our super class.
+2006-04-17:
+   - cut away the left- and rightmost column of the osd
+2006-04-14:
+   - Expand top/bottom line and left/right coloumns (from vdr-portal).
+   - Zoom feature, zoomed area may be shifted around.
+   - yv12 -&gt; yuy2 converter for field based chroma.
+   - remember interlaced mode of current frame.
+   - some preparations for some more XvImage formats (not yet selectable).
+   - Restricted OSD alpha blend option to XV and VIDIX out.
+   - started some documentation of our various OSD options.
+   - applied patch for mono upmix from Lucian Muresan
+2006-04-01:
+   - applied Makefile patch from Antti Sepp&#228;l&#228;
+   - apply slightly modified patch by Thomas G&#252;nter which fixes improper
+     includes of vdr header files
+   - fix compilation without Xinerama support
+2006-03-31:
+   - Xinerama support (detection and build requires to run configure).
+   - reactivate use of source x/y offsets for Xv*PutImage(..) operations.
+2006-03-21:
+   - remove the image copy overhead from the ShmClient
+   - catch errors on osd and xv image creation
+   - support for non-shared memory xv
+2006-03-12:
+   - Fix StillPicture handling when no PES header is sent
+     (for example streamdev-server-plugin)
+   - redraw video layer on OSD close in software mode
+   - use OsdWidth and OsdHeight for drawing osd layer
+2006-03-11:
+   - MMX version of AYUV_to_AYUV420P()
+   - shortcut for AYUV no scale OSD modes
+2006-03-10:
+   - tune some parameters to avoid unecessary rescaling/redrawing of the OSD
+2006-02-19:
+   - some german translations
+   - fix compilation of shm-client
+   - fix compilation of video-shm
+2006-02-18:
+   - fix OSD drawn at wrong location in software OSD blending mode when
+     cropping is active
+2006-02-17:
+   - fix bug #6409 (OSD not refreshed fast enough in software OSD blending mode
+     when video is paused)
+   - fix crash / deadlocks at startup in 16:9 mode in software OSD blending mode
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002007.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="001962.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1961">[ date ]</a>
+              <a href="thread.html#1961">[ thread ]</a>
+              <a href="subject.html#1961">[ subject ]</a>
+              <a href="author.html#1961">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

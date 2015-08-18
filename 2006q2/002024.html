@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] colored snow with softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3CPine.LNX.4.64.0605141421100.9954%40pub4.ifh.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002032.html">
+   <LINK REL="Next"  HREF="002025.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] colored snow with softplay</H1>
+    <B>Patrick Boettcher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20colored%20snow%20with%20softplay&In-Reply-To=%3CPine.LNX.4.64.0605141421100.9954%40pub4.ifh.de%3E"
+       TITLE="[Softdevice-devel] colored snow with softplay">patrick.boettcher at desy.de
+       </A><BR>
+    <I>Sun May 14 14:47:43 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002032.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+        <LI>Next message: <A HREF="002025.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2024">[ date ]</a>
+              <a href="thread.html#2024">[ thread ]</a>
+              <a href="subject.html#2024">[ subject ]</a>
+              <a href="author.html#2024">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+Hi Tobi,
+
+first of all a big thank you to the softdevice-team for providing 
+softdevice and softplay. I'm using it now since one year and after some 
+starting difficulties and after switching to e-tobi.net (for using vdr 
+without headaches) I have to say this solution is very stable. Is it time 
+for softdevice 1.0?
+
+When Tobi included softplay as a package I considered to use it to watch 
+xvids (instead of manual invoking mplayer on my vdr-machine). And another 
+time I was convinced that softdevice/softplay is a stable solution. 
+Setting up a vdr with softdevice/play is easier than using vdr with a 
+ff-card and the mplayer-plugin.
+
+Unfortunately softplay seems not to be so popular and I think that is why 
+the softplay-plugin is not up-to-date in his repository. It currently 
+needs vdr-1.3.41 . I was staying at that version as long as I could resist 
+to update, but now there is vdr 1.4 and I really wanted to update.
+
+So I updated normally apt-get update ... bla. Except softplay everything 
+is working very fine.
+
+This morning I simply thought, just getting the vdr-plugin-softplay 
+package source, getting the -dev-dependencies and a simply 
+dpkg-buildpackage is enough to create a softplay-package for vdr-1.4 . I 
+was not completely wrong:
+
+The softplay menu entry appears, I can select all my media files but one 
+thing is strange:
+
+When I play a file (which was working yesterday with 1.3.41 and softplay) 
+I just get audio now and &quot;colored snow&quot; as a picture. I have absolutely no 
+idea what is wrong. My feeling is, that the video cannot be decoded by 
+libavcodec. When updating Debian not only e-tobi was updated, but also 
+other packages from testing. I also used the latest CVS source of softplay 
+- result is the same.
+
+I tried it on my vdr-machine (using dfb with mga) and on my 
+desktop-machine using xv - both have the same symptoms.
+
+During the compilation I saw some warnings (attached is the build-output).
+
+I have the feeling there is a lot I could do to track down the problem, 
+but to be honest, I don't exactly know where to start. I would appreciate 
+if someone can help me debugging this issue and I'll be happy to provide 
+useful information.
+
+best regards,
+Patrick.
+
+--
+  Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">patrick.boettcher at desy.de</A>
+  WWW:  <A HREF="http://www.wi-bw.tfh-wildau.de/~pboettch/">http://www.wi-bw.tfh-wildau.de/~pboettch/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002032.html">[Softdevice-devel] CLE266 hardware decoding: a bit of progress
+</A></li>
+	<LI>Next message: <A HREF="002025.html">[Softdevice-devel] colored snow with softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2024">[ date ]</a>
+              <a href="thread.html#2024">[ thread ]</a>
+              <a href="subject.html#2024">[ subject ]</a>
+              <a href="author.html#2024">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

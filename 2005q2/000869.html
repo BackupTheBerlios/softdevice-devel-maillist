@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Many xrun(s) with latest cvs changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C42AC71B5.4080800%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000858.html">
+   <LINK REL="Next"  HREF="000761.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Many xrun(s) with latest cvs changes.</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C42AC71B5.4080800%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Many xrun(s) with latest cvs changes.">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Jun 12 19:32:37 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000858.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+        <LI>Next message: <A HREF="000761.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#869">[ date ]</a>
+              <a href="thread.html#869">[ thread ]</a>
+              <a href="subject.html#869">[ subject ]</a>
+              <a href="author.html#869">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+
+&gt;<i> 
+</I>&gt;<i> I got a bit further. So for now I don't think that my problem is with
+</I>&gt;<i> buffering. I think it is a problem in the sync change, that is now
+</I>&gt;<i> with pthread_cond_timedwait() .  It looks like upon call of this function
+</I>&gt;<i> it allways returns upon the expired time and never at arrival of
+</I>&gt;<i> a signal.
+</I>
+&gt;<i> BUF[3148]:wakeup consumer
+</I>&gt;<i> BUF[3148]:producer sleep    &lt;+++
+</I>&gt;<i> BUF[3168]:-- consumer sleep done
+</I>&gt;<i> BUF[3171]:-- wakeup producer
+</I>&gt;<i> BUF[3171]:-- consumer sleep    &lt;---
+</I>&gt;<i> BUF[3188]:-- consumer sleep done    &lt;--- delta = 17ms
+</I>&gt;<i> BUF[3208]:producer sleep done    &lt;+++ delta = 60ms
+</I>&gt;<i> BUF[3208]:wakeup consumer
+</I>&gt;<i> BUF[3208]:-- wakeup producer
+</I>&gt;<i> BUF[3208]:-- consumer sleep
+</I>&gt;<i> BUF[3208]:wakeup consumer
+</I>&gt;<i> 
+</I>
+Hmm, I can't say much currently, as it is not easy to see which messages
+belong to the audio packet queue and which to the video queue.
+But there is one thing which you may want to try: change
+cSigTimer::Sleep(), so that it doesn't set got_signal to false on a
+start of the sleep. Currently the signal gets lost if the signal arrives
+even before the consumer started sleeping.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000858.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+	<LI>Next message: <A HREF="000761.html">[Softdevice-devel] Problems while playing recordings and in startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#869">[ date ]</a>
+              <a href="thread.html#869">[ thread ]</a>
+              <a href="subject.html#869">[ subject ]</a>
+              <a href="author.html#869">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

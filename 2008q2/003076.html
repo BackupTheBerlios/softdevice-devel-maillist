@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.5.0&In-Reply-To=%3C200804181801.24987.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003072.html">
+   <LINK REL="Next"  HREF="003077.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.5.0&In-Reply-To=%3C200804181801.24987.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Apr 18 18:01:24 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003072.html">[Softdevice-devel] [PATCH] Suspend output on user inactivity
+</A></li>
+        <LI>Next message: <A HREF="003077.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3076">[ date ]</a>
+              <a href="thread.html#3076">[ thread ]</a>
+              <a href="subject.html#3076">[ subject ]</a>
+              <a href="author.html#3076">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+we got a new release :-) .
+
+Supported vdr versions: 1.4.x, 1.5.x and 1.6.x
+
+Changelog since last release:
+2008-04-18: softdevice-0.5.0
+   - Check configuration for ffmpeg &lt; r11816.
+   - Removed timestamps, email addrs and src line # comments from *.po.
+2008-04-16:
+   - Silence some warnings.
+   - softdevice.c: Fix spelling &amp; version check for trNOOP().
+   - Suspend output on user inactivity (see README): patch by Marko M&#65533;kel&#65533;
+2008-04-15:
+   - Fixed (changed) some italian chars.
+   - Added local translations of yes/no.
+   - Switched to vdr-1.5.x OSD translation.
+   - Switched from av_read_packet() to av_read_frame().
+2008-04-14:
+   - Italian translation by Diego.
+2008-04-13:
+   - audio: fix ac3 downmix request for ffmpeg &gt;= r10199.
+2008-04-10:
+   - SoftOsd: Adjust constructor definition to implementation.
+2008-02-26:
+   - fix for ffmpeg &gt;= r12194.
+   - video-fb: via OSD selected screen aspect was not honored.
+2008-02-20:
+   - VideoFilter.c: fix some warnings and compile error with ffmpeg &gt;= r11816
+2008-01-26:
+   - OSD: missing call to ClearOSD() of output device.
+2008-01-19:
+   - OSD: fix drawing (missing method SetAreas()).
+2007-12-25:
+   - license: included gpl notice &quot;v2 or any later&quot; to README.
+   - border detect: fix rounding issue.
+   - audio: \n\r -&gt; \n substitution for ac3pt,
+            some indentation cleanup (Xrun())
+   - shm-out: ensure nonNULL vout-&gt;ctl in Stop(); by Axel Naumann
+2007-12-24:
+   - mpegdecoder: compile fix for ffmpeg svn &gt;= r11071.
+                  revert AVFMT_NOFILE trick for actual ffmpeg &gt;= 11071.
+                  recommended ffmpeg versions: A) &lt; r11071 B) &gt;= r11307
+2007-10-13:
+   - shm-out: applied patch from Matthias Schwarzott to make ShmClient work
+              at 1st start of softdevice with &quot;-vo shm:&quot;.
+              allow xv startup aspect selection for shm out too.
+2007-09-27:
+   - audio: added open for number of channels device names CH1, CH2, CH3, .. .
+   - mpeg2decoder: workaround for some ac3 decoding issues.
+2007-09-23:
+   - configure: fix framebuffer check.
+2007-09-16:
+   - border detect: whole black area was cut out. that's not correct when aspect
+     ratio is greater than 16/9. limit cut out area to 16/9.
+   - russian translation by neptunvasja
+2007-08-29:
+   - compile fix for vdr-1.5.9 based on Stone's patch.
+2007-07-12:
+   - video / dfb: moved some code from video.c to video-dfb.c as announced
+                  and changed some constants to those I use in productive VDR.
+2007-07-11:
+   - compile fix for: ./configure --disable-shm
+   - applied patch from Matthias Schwarzott for compile issues with
+     newer ffmpeg versions
+   - applied patch from Artur Skawina for memory alignment error
+   - video-xv: fix OSD parially not drawn or cleared in pseudo mode:
+               - a small stripe remains on the right side, when video changed
+                 from 16:9 to 4:3
+               - only modified OSD was shown when deinterlacer was toggled
+                 on/off.
+2007-05-10:
+   - use libswscale if available.
+   - remove left over code from the old video-fb.
+   - remove pixel mask option from SoftOsd.[hc] and video*, which was only used
+     by the old video-fb.
+   - adapt MacVdrClient.c to the setupStore in shared memory.
+   - remove softlog from setupStore. Pointers aren't valid in a shared memory
+     block.
+   - remove private variable setupStore from audio out methods. They can
+     access the global variable.
+   - move setupStore into a shared memory block. This allows ShmClient to
+     have acces to the setupStore.
+   - move CatchRemoteKey() into utils.c, else setup-softdevice.o would
+     have to be linked into libsoftdevice-xv.so and -dfb.so
+2007-04-12:
+   - ShmClient: revertet previous change, as it breaks argument style
+                of softdevice.
+   - configure: fix typo (yaepg),
+                rm .dependencies in case of changes,
+                new opt: --disable-xinerama (by Matthias Schwarzott)
+   - fix osdMode not initialized (by Matthias Schwarzott)
+   - ShmClient: full screen start option (by Matthias Schwarzott)
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003072.html">[Softdevice-devel] [PATCH] Suspend output on user inactivity
+</A></li>
+	<LI>Next message: <A HREF="003077.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3076">[ date ]</a>
+              <a href="thread.html#3076">[ thread ]</a>
+              <a href="subject.html#3076">[ subject ]</a>
+              <a href="author.html#3076">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

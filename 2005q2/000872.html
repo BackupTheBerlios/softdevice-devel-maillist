@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Can't get composite sync from G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C42ACB13F.4080202%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000867.html">
+   <LINK REL="Next"  HREF="000873.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Can't get composite sync from G450</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C42ACB13F.4080202%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Can't get composite sync from G450">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Mon Jun 13 00:03:43 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000867.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+        <LI>Next message: <A HREF="000873.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#872">[ date ]</a>
+              <a href="thread.html#872">[ thread ]</a>
+              <a href="subject.html#872">[ subject ]</a>
+              <a href="author.html#872">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>prelude a &#233;crit :
+&gt;<i> Hi
+</I>&gt;<i> 
+</I>&gt;<i> It's more likely &quot;problem&quot; whit scaling. When you scale image whit
+</I>&gt;<i> &quot;StretchBlit&quot; function you will see same kind effect what you see when
+</I>&gt;<i> you use wrong field parity. (I hit my head to rock about 2 weeks whit
+</I>&gt;<i> df_xine when i hunt that).
+</I>&gt;<i> 
+</I>&gt;<i> Someday when i have enough time (i'm not a programmer) i try to
+</I>&gt;<i> implement &quot;correct&quot; aspect ratio handling to softdevice when you use
+</I>&gt;<i> matrox TV out. (Point is that you use &quot;Blit&quot; and normaly newer use
+</I>&gt;<i> &quot;StretchBlit&quot; whit video data)
+</I>&gt;<i> Example:
+</I>&gt;<i> your TV aspect ratio is old 4/3. (720*576):
+</I>&gt;<i> Incoming video is 720*576 -&gt; blit it directly
+</I>&gt;<i> Incoming video is 630x576 -&gt; make buffer to 720*576 size -&gt; clear it -&gt;
+</I>&gt;<i> blit video to that buffer whit 45 ((720-630)/2) pixel offset.
+</I>&gt;<i> Incoming video is 720x486 -&gt; make buffer to 720*576 size -&gt; clear it -&gt;
+</I>&gt;<i> blit video to that buffer whit 45 ((576-286)/2) lines offset.
+</I>&gt;<i> Incoming video is 360*576 -&gt; make StretchBlit.
+</I>&gt;<i> etc.
+</I>&gt;<i> 
+</I>&gt;<i> It's not probably a correct way to handle it but whit that picture looks
+</I>&gt;<i> good.
+</I>&gt;<i> 
+</I>&gt;<i> Ouh yeah..Btw.. Why softdevice make that YUV420 -&gt; RGB conversion.
+</I>&gt;<i> (libavout send YUV420 and you can use that directly whit matrox
+</I>&gt;<i> (YUV420=YV12)?. I ask it because that conversion makes picture bit less
+</I>&gt;<i> good and because conversions it's use much processor power)
+</I>
+Stephan is currently working on aspect ratio handling, upon suggestions
+from me and others.
+I first decided to ignore the field parity / interlacing problem when
+scaling, partly because I didn't see any artifacts with the current
+scaling code (with the material I actually watch), partly because when
+taking interlacing into account, one shouldn't scale at all (that's what
+you suggest) (this is true for interlaced material on interlaced display).
+Maybe the current scaling setup take your problem into account. It's far
+behind in my head right now, I must admit...
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000867.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+	<LI>Next message: <A HREF="000873.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#872">[ date ]</a>
+              <a href="thread.html#872">[ thread ]</a>
+              <a href="subject.html#872">[ subject ]</a>
+              <a href="author.html#872">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C8309F703-A1DE-4E47-AADC-EDAC0A850B7D%40scene.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002741.html">
+   <LINK REL="Next"  HREF="002744.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Hugo Visser</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C8309F703-A1DE-4E47-AADC-EDAC0A850B7D%40scene.nl%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">joegi at scene.nl
+       </A><BR>
+    <I>Mon Feb 26 23:13:09 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002741.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002744.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2742">[ date ]</a>
+              <a href="thread.html#2742">[ thread ]</a>
+              <a href="subject.html#2742">[ subject ]</a>
+              <a href="author.html#2742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Feb 26, 2007, at 10:31 PM, Stefan Lucke wrote:
+
+&gt;<i> Did you select the correct display aspect ratio for your device ?
+</I>&gt;<i> What is the native resolution of your TV ?
+</I>&gt;<i>
+</I>&gt;<i> Some plasma TVs have 1024x768 as a native 16:9 resolution (non  
+</I>&gt;<i> square pixels).
+</I>&gt;<i>
+</I>
+The offical supported resolutions are 640x480 and 1024x768 according  
+to the (sparse) manual, but the panel itself is W-XGA 1366x768  
+pixels. I'm running 1024x768 in &quot;full&quot; or 16:9 mode, so the pixels  
+must be non square. It's a JVC LT-26x70s.
+
+&gt;&gt;<i> What it should do is zoom
+</I>&gt;&gt;<i> the picture, so that the black bars get &quot;out of screen&quot; to fill the
+</I>&gt;&gt;<i> entire screen. I'm running on DirectFB, maybe that matters?
+</I>&gt;<i>
+</I>&gt;<i> The &quot;should do&quot; is the expected behaviour.
+</I>&gt;<i> What is your selected display resolution ?
+</I>&gt;<i>
+</I>&gt;<i> Choosen resolution for displaying is reported via syslog.
+</I>&gt;<i> Can you show us such lines for which you see wrong aspect on your  
+</I>&gt;<i> screen ?
+</I>&gt;<i> They  look like:
+</I>&gt;<i> vdr: [14328] [VideoOut]: 720x576 [0,72 720x432] -&gt; 1024x576 [0,0  
+</I>&gt;<i> 1024x576]
+</I>
+Feb 26 22:52:14 localhost vdr: [6553] [VideoOut]: resolution changed:  
+W(736 -&gt; 704); H(576 -&gt;576)
+Feb 26 22:52:14 localhost vdr: [6553] [VideoOut]: aspect changed (0 - 
+ &gt; 0 ; 1.366667 -&gt; 1.333333)
+Feb 26 22:52:14 localhost vdr: [6553] [VideoOut]: 704x576 [0,0  
+704x576] -&gt; 1024x768 [128,0 768x768]
+
+Then I tried with a fb.modes line of 1366x768 that I dug up on google  
+(not quite correct but just for testing), and got these lines
+
+Feb 26 23:05:13 localhost vdr: [6878] [VideoOut]: 528x576 [0,40  
+528x496] -&gt; 1368x768 [84,0 1197x768]
+Feb 26 23:05:14 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  
+528x576] -&gt; 1368x768 [170,0 1026x768]
+Feb 26 23:05:21 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  
+528x576] -&gt; 1368x768 [114,0 1140x768]
+Feb 26 23:05:22 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  
+528x576] -&gt; 1368x768 [136,0 1094x768]
+Feb 26 23:05:24 localhost vdr: [6878] [VideoOut]: 528x576 [0,0  
+528x576] -&gt; 1368x768 [172,0 1024x768]
+
+I'm still getting the same cropping results in this mode.
+
+Hugo
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002741.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002744.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2742">[ date ]</a>
+              <a href="thread.html#2742">[ thread ]</a>
+              <a href="subject.html#2742">[ subject ]</a>
+              <a href="author.html#2742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

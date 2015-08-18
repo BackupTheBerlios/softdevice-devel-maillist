@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Feature Request: Autocrop and smooth zoom in	softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Feature%20Request%3A%20Autocrop%20and%20smooth%20zoom%0A%20in%09softdevice&In-Reply-To=%3C4606452D.6020805%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002804.html">
+   <LINK REL="Next"  HREF="002805.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Feature Request: Autocrop and smooth zoom in	softdevice</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Feature%20Request%3A%20Autocrop%20and%20smooth%20zoom%0A%20in%09softdevice&In-Reply-To=%3C4606452D.6020805%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Feature Request: Autocrop and smooth zoom in	softdevice">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Mar 25 11:47:25 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002804.html">[Softdevice-devel] Feature Request: Autocrop and smooth zoom in	softdevice
+</A></li>
+        <LI>Next message: <A HREF="002805.html">[Softdevice-devel] weird osd effect during channel change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2808">[ date ]</a>
+              <a href="thread.html#2808">[ thread ]</a>
+              <a href="subject.html#2808">[ subject ]</a>
+              <a href="author.html#2808">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Andre Neumann schrieb:
+&gt;<i> 
+</I>&gt;<i> Hi list,
+</I>&gt;<i>  
+</I>&gt;<i> i've just tested the very good xineliboutput plugin for vdr. Since im
+</I>&gt;<i> only using softdevice till now, i know how
+</I>&gt;<i> good softdevice works. Again my respect to Stefan, Martin and the others.
+</I>&gt;<i>  
+</I>&gt;<i> While testing the xineliboutput plugin i noticed some really nice features.
+</I>&gt;<i>  
+</I>&gt;<i> The xineliboutput plugins features a autocrop mode. That means, when
+</I>&gt;<i> using a 16:9 TV and when watching a 4:3 movie with black bars, the
+</I>&gt;<i> plugin sets the crop mode to 16:9 automaticly. And it also zooms slowly
+</I>&gt;<i> into that
+</I>&gt;<i> crop mode. Very nice feature i think. My girlfriend likes it, and me too :)
+</I>&gt;<i>  
+</I>&gt;<i> I know that this feature is from the xine-lib, but maybe it is possible
+</I>&gt;<i> to integrate it into softdevice.
+</I>&gt;<i>  
+</I>&gt;<i> One person from vdrportal.de a while ago posted such patches, but they
+</I>&gt;<i> do not work for me. The smooth zoom patch does not work at all, the
+</I>&gt;<i> autocrop patch works, but not as good as the xine think.
+</I>&gt;<i>  
+</I>I personally don't own a 16:9 screen, so I would not use such a
+feature... However I had a look at the patch by <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">pram at vdrportal.de</A> and
+updated them to the softdevice cvs. I also improved some things, and
+made it possible to switch the border detection on and of. I also tried
+a smooth zoom, but with video-xv the video will flicker during the zoom,
+so I left it out for now. Also currently the aspect is switched for the
+every frame, I think it would be better to wait until one detects a
+aspect change in a series of frames and switch the aspect only once.
+
+I attached the result, please try it and tell me if you like it/ what
+could be improved.
+
+Bye,
+
+martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: borderdetect.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070325/df3fcedd/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070325/df3fcedd/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002804.html">[Softdevice-devel] Feature Request: Autocrop and smooth zoom in	softdevice
+</A></li>
+	<LI>Next message: <A HREF="002805.html">[Softdevice-devel] weird osd effect during channel change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2808">[ date ]</a>
+              <a href="thread.html#2808">[ thread ]</a>
+              <a href="subject.html#2808">[ subject ]</a>
+              <a href="author.html#2808">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

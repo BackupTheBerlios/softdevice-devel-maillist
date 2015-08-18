@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Epia EN1500G + softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C200809222032.47739.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003140.html">
+   <LINK REL="Next"  HREF="003144.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Epia EN1500G + softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C200809222032.47739.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Epia EN1500G + softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Sep 22 20:32:47 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003140.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+        <LI>Next message: <A HREF="003144.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3143">[ date ]</a>
+              <a href="thread.html#3143">[ thread ]</a>
+              <a href="subject.html#3143">[ subject ]</a>
+              <a href="author.html#3143">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 20 September 2008, Vladimir Monchenko wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> About two years I use vdr+DirectFb+softdevice on VIA Epia ME6000. All 
+</I>&gt;<i> works excellently - the video very smooth, problems with interlaced 
+</I>&gt;<i> video are not present. My TV is connected with vdr box through s-video 
+</I>&gt;<i> cable. It would be desirable only two things - smooth playback mpeg4 
+</I>&gt;<i> video and connect the TV through a component (YPbPr) input.
+</I>&gt;<i> For this purpose I have gained recently system board VIA Epia EN1500G 
+</I>&gt;<i> (CN700 North Bridge) and have started to build vdr on HOWTO from 
+</I>&gt;<i> vdrportal.de -  (<A HREF="http://www.vdrportal.de/board/thread.php?">http://www.vdrportal.de/board/thread.php?</A> 
+</I>&gt;<i> threadid=59950&amp;hilight=cn700).
+</I>&gt;<i> Basically all works, but the result has turned out worse, than at use 
+</I>&gt;<i> ME6000.
+</I>&gt;<i> I could get correct operation OSD only with versions DirectFB-1.0.0 and 
+</I>&gt;<i> less.
+</I>&gt;<i> With the last DirectFB (1.2.0-1.3.0) I gain strange effect which depends 
+</I>&gt;<i> on pressing of buttons the keyboard:
+</I>&gt;<i> 1. Start vdr (OSD ok)
+</I>&gt;<i> 2. Press DOWN (OSD not ok)
+</I>&gt;<i> 3. Press DOWN (OSD ok)
+</I>&gt;<i> 4. Press UP (OSD not ok)
+</I>&gt;<i> 5. Press UP (OSD ok)
+</I>&gt;<i> 6. Press something (OSD not ok)
+</I>&gt;<i> 7. Press something (OSD ok)
+</I>&gt;<i> 8. ...
+</I>&gt;<i> 9. ...
+</I>&gt;<i> When OSD not ok, it looks as though horizontal synchronisation not 
+</I>&gt;<i> correctly works, thus video overlay works correctly.
+</I>
+This description reminds me of pitch size mismatch for OSD.
+Can you add some debug message(s) to method GetLockOsdSurface()
+around line 1192, after commented out printf.
+
+softlog-&gt;Log(SOFT_LOG_INFO, 0, &quot;[dfb--] osd surface pitch is (%d)\n&quot;, pitch),
+
+&gt;<i> On video I see movement artefacts, jitter and small jerks on the 
+</I>&gt;<i> scrolling text. CPU is loaded on 50-55 % at live video or record playback.
+</I>&gt;<i> The problem with OSD - regression DirectFB or is required modification 
+</I>&gt;<i> softdevice?
+</I>
+We'll see.
+
+&gt;<i> Whether it is possible to improve quality of video?
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003140.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+	<LI>Next message: <A HREF="003144.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3143">[ date ]</a>
+              <a href="thread.html#3143">[ thread ]</a>
+              <a href="subject.html#3143">[ subject ]</a>
+              <a href="author.html#3143">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

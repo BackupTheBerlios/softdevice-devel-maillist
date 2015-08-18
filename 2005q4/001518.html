@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and nvram-wakeup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20nvram-wakeup&In-Reply-To=%3C437384D2.2010108%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001515.html">
+   <LINK REL="Next"  HREF="001519.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and nvram-wakeup</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20nvram-wakeup&In-Reply-To=%3C437384D2.2010108%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softdevice and nvram-wakeup">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Nov 10 18:35:14 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001515.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+        <LI>Next message: <A HREF="001519.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1518">[ date ]</a>
+              <a href="thread.html#1518">[ thread ]</a>
+              <a href="subject.html#1518">[ subject ]</a>
+              <a href="author.html#1518">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+&gt;<i> On Wed, Nov 09, 2005 at 06:20:48PM +0100, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>RTC has the best time resolution of about 1ms. The time resolution of
+</I>&gt;&gt;<i>the other methods depend on the kerner timer resolution which is for
+</I>&gt;&gt;<i>kernels &gt;2.6.13 4ms and older 2.6 kernels 1ms.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> In 2.6.13.4, there are three possible choices (100 Hz, 250 Hz, and 1000 Hz)
+</I>&gt;<i> for the timer resolution in &quot;make menuconfig&quot;.
+</I>&gt;<i> 
+</I>yes, that's true. 4ms = 250Hz is the default
+
+&gt;<i> 
+</I>&gt;&gt;<i>So if you want to have a perfect A-V sync RTC timing is the best, but
+</I>&gt;&gt;<i>for DFB this doesn't matter so much, since it syncs to the video retrace
+</I>&gt;&gt;<i>rather than to the audio.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Does video-dfb.c drop or duplicate audio frames to adjust the A-V sync, or
+</I>&gt;<i> does it perhaps fine-tune the audio sample rate (if it is at all possible)?
+</I>&gt;<i> I haven't experienced any A-V sync issues on DFB output lately.
+</I>&gt;<i> 
+</I>No, the audio is not synced at all, only the video is synced to the
+audio. But DFB uses on top the video retrace (don't ask me how this
+works in detail - I only use Xv out ;-)
+I started working on a resampler which would make it possible to fine
+tune the audio sample rate, but I stopped at some point... In fact the
+resampler is finished, but the syncing code is still missing.
+
+&gt;<i> I have the impression that improving the kernel timer resolution will cause
+</I>&gt;<i> more context switches per time unit.  It'd be better to use a very low
+</I>&gt;<i> kernel timer resolution and to use the RTC timer, as it will generate
+</I>&gt;<i> interrupt events.  Am I correct about this?
+</I>&gt;<i> 
+</I>I would not call me an expert on this, but I think you will get context
+switches no matter what method you use. Well maybe only as long as the
+softdevice is reading from /dev/rtc, but I'm not sure. I prefer RTC
+because it doesn't depend on the kernel timer and from some tests I did
+I found that the RTC is more reliable and precise.
+
+&gt;<i> Some day, I might figure out if there is a way to use softdevice RTC timing
+</I>&gt;<i> and nvram-wakeup simultaneously.  Perhaps softdevice could release the
+</I>&gt;<i> timer device when the output is suspended, so that the wakeup timer can be
+</I>&gt;<i> programmed.
+</I>&gt;<i> 
+</I>
+I didn't check but I think just calling cmpeg2decoder::Stop() in
+Suspend() and Start() in Resume() should be enough to do that.
+
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001515.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+	<LI>Next message: <A HREF="001519.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1518">[ date ]</a>
+              <a href="thread.html#1518">[ thread ]</a>
+              <a href="subject.html#1518">[ subject ]</a>
+              <a href="author.html#1518">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

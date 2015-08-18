@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.2%20%2B%20vdr%201.3.27%20on%20EPIA%20M10000%20-%20flickering%20or%20hanging&In-Reply-To=%3C42CE756E.4040705%40smega.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000934.html">
+   <LINK REL="Next"  HREF="000937.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging</H1>
+    <B>Felix</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.2%20%2B%20vdr%201.3.27%20on%20EPIA%20M10000%20-%20flickering%20or%20hanging&In-Reply-To=%3C42CE756E.4040705%40smega.com%3E"
+       TITLE="[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging">felix_lists at smega.com
+       </A><BR>
+    <I>Fri Jul  8 14:45:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000934.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000937.html">[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#936">[ date ]</a>
+              <a href="thread.html#936">[ thread ]</a>
+              <a href="subject.html#936">[ subject ]</a>
+              <a href="author.html#936">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi everybody,
+
+after one week of trying all possibilities to get live TV running on the 
+above setup, you are my last hope.
+
+With fb, Live TV output is flickering like hell, and sound his jerky. It 
+looks like i only got a third of the framerate and the output is not in 
+sync with screen refresh. However, for about half a second after 
+starting vdr, the output looks good.
+
+The kernel fb is a:
+    VIA Graphics Intergration Chipset framebuffer 0.9 initializing
+configured at kernel startup with
+   append=&quot;video=viafb:720x576,bpp=16&quot;
+&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>&gt;
+When starting with dfb, vdr just locks with a black screen after giving 
+the following output. I have to kill -9 it.
+
+Any hints?
+
+... Felix
+
+This is the output with -vo fb:
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.9-pre1) build(4757)
+[video-fb] Initializing Driver
+[video-fb] Truecolor FB found
+[video-fb] init 720 x 576 (Size: 33288192 Bytes LineLen 1440) Bpp: 16
+[video-fb] Clearing the FB
+Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+CMD[4019]:SetAudioMode 0
+CMD[4024]:SetPlayMode PmAudioVideo
+CMD[4024]:Start IsSuspended 0
+CMD[4024]:init put byte finished
+CMD[4033]:Neuer Thread gestartet: Mpeg2Decoder pid 1851
+CMD[4241]:new Video stream index.. old -1 new 0
+CMD[4241]:Neuer StreamDecoder Pid: 1851 context 0x83d4ca8 type 0
+
+this with -vo dfb:
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (2)
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] deinterlace method set to 0 none
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.9-pre1) build(4757)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.22 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH 
+             (c) 2002-2004  convergence GmbH                  
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-07-03 19:04)
+(*) Direct/Memcpy: Using SSE optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 1926)...
+(*) Direct/Modules: suppress module 'linux_input'
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 1927)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:802]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'LiRC Input' (INPUT, 1928)...
+(*) DirectFB/Input: LIRC Device 0.2 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 1929)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) Direct/Modules: suppress module 'cle266'
+(*) DirectFB/Graphics: VIA/S3G UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 33288192 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine 
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Xor
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize 
+SrcColorkey DstColorkey Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">848x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">856x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x512 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1400x1050 at 32</A>
+[dfb] Enumeratig display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+  Caps: deinterlacing dst_colorkey opacity screen_location surface
+uc_overlay: color-keying is disabled
+[surface capabilities] scrSurface: primary videoonly double-buffered 
+flipping
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [720x576])
+[surface capabilities] osdSurface: videoonly double-buffered flipping
+ (!!!)  *** WARNING [letting unprivileged 
+IDirectFBDisplayLayer::GetSurface() call pass until cooperative level 
+handling is finished] *** [idirectfbdisplaylayer.c:170 in 
+IDirectFBDisplayLayer_GetSurface()]
+[surface capabilities] videoSurface: videoonly
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: VIA Unichrome Video
+[dfb] Display frame time is 100010&#181;s
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+Caught: action=IDirectFBDisplayLayer::SetLevel(int), result=Not 
+supported! Failed: SetLevel()
+uc_overlay: color-keying is enabled
+uc_overlay: color-keying is enabled
+uc_overlay: color-keying is enabled
+uc_overlay: color-keying is enabled
+[surface capabilities] videoSurface: videoonly double-buffered flipping
+[dfb] (re)configured 0x08100609
+Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+
+
+# fbset -i
+
+mode &quot;720x576-74&quot;
+    # D: 41.475 MHz, H: 44.693 kHz, V: 74.488 Hz
+    geometry 720 576 720 1152 16
+    timings 24111 88 32 16 4 88 4
+    rgba 5/11,6/5,5/0,0/0
+endmode
+
+Frame buffer device information:
+    Name        : UNICHROME
+    Address     : 0xd8000000
+    Size        : 33288192
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 0
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 1440
+    MMIO Address: 0xdc000000
+    MMIO Size   : 16777216
+    Accelerator : Unknown (77)
+
+# dfbinfo
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.22 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH 
+             (c) 2002-2004  convergence GmbH                  
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-07-03 19:04)
+(*) Direct/Memcpy: Using SSE optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 1909)...
+(*) Direct/Modules: suppress module 'linux_input'
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 1910)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:802]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'LiRC Input' (INPUT, 1911)...
+(*) DirectFB/Input: LIRC Device 0.2 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 1912)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) Direct/Modules: suppress module 'cle266'
+(*) DirectFB/Graphics: VIA/S3G UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+
+
+Screen (00) FBDev Primary Screen            (primary screen)
+   Caps: VSYNC POWER_MANAGEMENT
+
+     Layer (00) FBDev Primary Layer             (primary layer)
+        Type:    GRAPHICS
+        Caps:    SURFACE BRIGHTNESS CONTRAST SATURATION
+
+     Layer (01) VIA Unichrome Video          
+        Type:    GRAPHICS VIDEO STILL_PICTURE
+        Caps:    SURFACE OPACITY SCREEN_LOCATION DEINTERLACING 
+DST_COLORKEY SCREEN_POSITION SCREEN_SIZE
+
+     Layer (02) VIA Unichrome DVD Subpicture 
+        Type:    GRAPHICS VIDEO STILL_PICTURE
+        Caps:    SURFACE OPACITY
+
+
+Input (01) IMPS/2 Mouse                    (primary mouse)
+   Type: MOUSE
+   Caps: AXES BUTTONS
+
+Input (03) LIRC Device                     (primary remote control)
+   Type: REMOTE
+   Caps: KEYS
+
+Input (00) Keyboard                        (primary keyboard)
+   Type: KEYBOARD
+   Caps: KEYS
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000934.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000937.html">[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#936">[ date ]</a>
+              <a href="thread.html#936">[ thread ]</a>
+              <a href="subject.html#936">[ subject ]</a>
+              <a href="author.html#936">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

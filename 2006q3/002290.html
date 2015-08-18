@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180607250223m114e8d61qfde92def54e06435%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002288.html">
+   <LINK REL="Next"  HREF="002291.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Alasdair Campbell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180607250223m114e8d61qfde92def54e06435%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">ragawu at gmail.com
+       </A><BR>
+    <I>Tue Jul 25 11:23:15 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002288.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002291.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2290">[ date ]</a>
+              <a href="thread.html#2290">[ thread ]</a>
+              <a href="subject.html#2290">[ subject ]</a>
+              <a href="author.html#2290">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 22/07/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt; wrote:
+&gt;<i> For the record, I referred to the vdr-subtitles plugin
+</I>&gt;<i> (<A HREF="http://www.virtanen.org/vdr/subtitles/">http://www.virtanen.org/vdr/subtitles/</A>) that implements the bitmapped
+</I>&gt;<i> subtitle layer defined in the DVB standards.  It is implemented on the
+</I>&gt;<i> OSD layer, similar to menus.
+</I>
+Thanks for that link, I now have subtitles working really well.
+
+&gt;<i> Hm, shouldn't &quot;make install&quot; put it to --prefix=/usr/local by default,
+</I>&gt;<i> e.g., /usr/local/include, /usr/local/lib, etc.?
+</I>
+I thought that too,
+&gt;<i>
+</I>&gt;<i> &gt; Well one thing that has changed is that the only Deinterlace method
+</I>&gt;<i> &gt; available is lavc ( as opposed to before, where I had FB-Intern and a
+</I>&gt;<i> &gt; bunch of others). This may be crazy talk but I had always thought that
+</I>&gt;<i> &gt; FB-Intern was the option I was trying to get to work right. (When I
+</I>&gt;<i> &gt; chose this before I saw the exact same as with 'none', ie interlacing
+</I>&gt;<i> &gt; artifacts on some channels/programmes).
+</I>&gt;<i>
+</I>&gt;<i> Aren't you using -vo dfb:mgatv, i.e., TV output?  It should be interlaced,
+</I>&gt;<i> and you shouldn't need any deinterlacing.  Deinterlacing is only needed
+</I>&gt;<i> on VGA or DVI output, as far as I know.
+</I>
+Well the question in the first email was whether I should use -vo dfb
+or -vo dfb:mgatv! I also mentioned that I was using a home made vga to
+scart cable. I do not own the matrox tv out adaptor. I believe that
+when I was using CVS DirectFB the interlaced output worked with &quot;-vo
+dfb:&quot; although the OSD was halved, enlarged and flickered. Also there
+was a copy of the video stream above the 16:9 stream. I will confirm
+this soon.
+
+&gt;<i> My vdr box is switched off right now, but are you aware that there are two
+</I>&gt;<i> menu items (in different menus) related to this: the screen aspect ratio
+</I>&gt;<i> (which I have set to 4:3) and the crop mode (which I usually set to 4:3,
+</I>&gt;<i> meaning that the left and right borders are cut off).  When a 16:9 program
+</I>&gt;<i> is running, I can change the crop mode (to &quot;none&quot; or &quot;16:9&quot;) without seeing
+</I>&gt;<i> any interlacing artefacts.
+</I>
+I have screen aspect ratio to 4:3 and crop mode to &quot;none&quot; - I can see
+the artifacts. The majority of tv in the uk is now broadcast in 16:9,
+so I have no need to change crop mode back to 4:3 really. Also,
+softdevce seems to manage to scale 4:3 correctly without any cropping!
+
+
+&gt;<i> If you could make a short 16:9 clip available on some http server and
+</I>&gt;<i> tell the URL to me, I can check it on my system and tell if it looks okay.
+</I>&gt;<i> The clip should preferrably contain horizontal movement and be interlaced
+</I>&gt;<i> in the first place (not a movie).  Maybe there is something unusual in
+</I>&gt;<i> the DVB streams you receive, e.g., different field order.
+</I>
+Here is a clip of the BBC rolling news channel, I can see LOTs of
+artifacts with the camera movements, and the scrolling text at the
+bottom looks poor:
+
+<A HREF="http://ginezbukov.com/artifacts.tar.bz2">http://ginezbukov.com/artifacts.tar.bz2</A>
+
+-- 
+A l a s d a i r   C a m p b e l l
+
+r a g a w u @ g m a i l . c o m
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002288.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002291.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2290">[ date ]</a>
+              <a href="thread.html#2290">[ thread ]</a>
+              <a href="subject.html#2290">[ subject ]</a>
+              <a href="author.html#2290">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

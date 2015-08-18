@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Blanking the screen when no video; standby mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blanking%20the%20screen%20when%20no%20video%3B%20standby%20mode&In-Reply-To=%3C200505091947.53469.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000634.html">
+   <LINK REL="Next"  HREF="000631.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Blanking the screen when no video; standby mode</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Blanking%20the%20screen%20when%20no%20video%3B%20standby%20mode&In-Reply-To=%3C200505091947.53469.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Blanking the screen when no video; standby mode">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon May  9 19:47:53 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000634.html">[Softdevice-devel] Blanking the screen when no video; standby mode
+</A></li>
+        <LI>Next message: <A HREF="000631.html">16:9-switch-crash (was: Re: [Softdevice-devel] Blanking the screen when no video; standby mode)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#628">[ date ]</a>
+              <a href="thread.html#628">[ thread ]</a>
+              <a href="subject.html#628">[ subject ]</a>
+              <a href="author.html#628">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 9. Mai 2005 17:50, Patrick Boettcher wrote:
+&gt;<i> On Sun, 8 May 2005, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Originally, I was an unhappy DXR3 card user.  The card ended my pains by
+</I>&gt;<i> &gt; letting the magic smoke out.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; However, there was one thing that the DXR3 plugin or the DXR3 card did
+</I>&gt;<i> &gt; better than softdevice: it blanked the screen after a short while of no
+</I>&gt;<i> &gt; video, such as when listening to the radio programs.  (The state-owned
+</I>&gt;<i> &gt; Finnish broadcaster YLE is phasing out DAB and going for DVB-based digital
+</I>&gt;<i> &gt; radio.)  Could the softdevice plugin have a similar timer?  Blanking the
+</I>&gt;<i> &gt; screen would save power consumption and the operating life of CRT screens.
+</I>&gt;<i> 
+</I>&gt;<i> I second this request too. I thought that this is only a problem of 
+</I>&gt;<i> softdevice using together with dfb:mga.
+</I>
+I think we could do something in that direction as directfb supports some
+suspend functionality for output connectors. Nver tried that, but ..
+
+&gt;<i> 
+</I>&gt;<i> Vdr-xine solves this by playing the no-signel.pes file, which is a black 
+</I>&gt;<i> stream. I don't know if it is possible to introduce this in softdevice 
+</I>&gt;<i> too.
+</I>&gt;<i> 
+</I>&gt;<i> Btw. thanks for the great Plugin, it saves me a lot of nerves since my 
+</I>&gt;<i> FF-card is faulty somehow. Besides the 16:9 and 4:3 switch-crashes it is 
+</I>&gt;<i> rock-stable.
+</I>
+Which ffmpeg version (if cvs from which day) do you use ?
+Can you try attached patch to see if it fexes that for you (too) ?
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: parser-01.diff
+Type: text/x-diff
+Size: 1062 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050509/7e0666d3/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050509/7e0666d3/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000634.html">[Softdevice-devel] Blanking the screen when no video; standby mode
+</A></li>
+	<LI>Next message: <A HREF="000631.html">16:9-switch-crash (was: Re: [Softdevice-devel] Blanking the screen when no video; standby mode)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#628">[ date ]</a>
+              <a href="thread.html#628">[ thread ]</a>
+              <a href="subject.html#628">[ subject ]</a>
+              <a href="author.html#628">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

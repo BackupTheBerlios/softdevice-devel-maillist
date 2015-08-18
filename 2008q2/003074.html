@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%201.6.0%2C%20old%20recordings%20and%20bad%20audio&In-Reply-To=%3C200804170825.47672.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003073.html">
+   <LINK REL="Next"  HREF="003075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr 1.6.0, old recordings and bad audio</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%201.6.0%2C%20old%20recordings%20and%20bad%20audio&In-Reply-To=%3C200804170825.47672.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] vdr 1.6.0, old recordings and bad audio">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr 17 08:25:47 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003073.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+        <LI>Next message: <A HREF="003075.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3074">[ date ]</a>
+              <a href="thread.html#3074">[ thread ]</a>
+              <a href="subject.html#3074">[ subject ]</a>
+              <a href="author.html#3074">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 16 April 2008, Malcolm Caldwell wrote:
+&gt;<i> On Wed, 2008-04-16 at 10:53 +0200, Stefan Lucke wrote:
+</I>
+&gt;<i> &gt; No, I only did a search for NTSC in our mail archive and your name
+</I>&gt;<i> &gt; was found a few times.
+</I>&gt;<i> &gt; I guess your recordings won't change TV-norm just when they are replayed
+</I>&gt;<i> &gt; with a different vdr ;-).
+</I>&gt;<i> 
+</I>&gt;<i> If they have changed I am really in trouble!
+</I>&gt;<i> 
+</I>&gt;<i> &gt; So I think it's best to get a short example from you and play around
+</I>&gt;<i> &gt; with pts tracing in different vdr versions.
+</I>&gt;<i> 
+</I>&gt;<i> I will upload one in the next 12 hours. (Tomorrow morning my time)
+</I>&gt;<i> 
+</I>
+Thanks, got your example.
+If possible keep it online for a while.
+
+The problem I guess is in ffmpeg, as ffplay has the same sync issue.
+
+FFplay version SVN-r12850, Copyright (c) 2003-2008 Fabrice Bellard, et al.
+  configuration: --enable-shared --enable-postproc --enable-gpl --enable-swscale --enable-liba52 --enable-libfaac --enable-libfaad --enable-pthreads
+  libavutil version: 49.6.0
+  libavcodec version: 51.54.0
+  libavformat version: 52.13.0
+  libavdevice version: 52.0.0
+  built on Apr 16 2008 16:40:22, gcc: 4.1.2 (Gentoo 4.1.2)
+[mpeg @ 0xb7f46b94]Further flags set but no bytes left
+[mpeg @ 0xb7f46b94]Further flags set but no bytes left
+
+from softdevice:
+[XvVideoOut]: using area size 720 x 576
+[mpeg @ 0xb7ca0b94]Further flags set but no bytes left
+[mpeg @ 0xb7ca0b94]Further flags set but no bytes left
+[mpeg @ 0xb7ca0b94]Further flags set but no bytes left
+[mpeg @ 0xb7ca0b94]Further flags set but no bytes left
+[mpeg @ 0xb7ca0b94]Further flags set but no bytes left
+
+My old mplayer version has no sync issue.
+MPlayer dev-SVN-r23741-4.1.2 (C) 2000-2007 MPlayer Team
+CPU: AMD Athlon(tm) 64 X2 Dual Core Processor 3800+ (Family: 15, Model: 75, Stepping: 2)
+CPUflags:  MMX: 1 MMX2: 1 3DNow: 1 3DNow2: 1 SSE: 1 SSE2: 1
+Compiled for x86 CPU with extensions: MMX MMX2 3DNow 3DNowEx SSE SSE2
+
+Looked through my test streams and found a similar one which
+I got in May 2004.
+
+So I do a search for the ffmpeg revision which breaks us.
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003073.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+	<LI>Next message: <A HREF="003075.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3074">[ date ]</a>
+              <a href="thread.html#3074">[ thread ]</a>
+              <a href="subject.html#3074">[ subject ]</a>
+              <a href="author.html#3074">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

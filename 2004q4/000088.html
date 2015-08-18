@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr-1.2.1 build fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr-1.2.1%20build%20fails&In-Reply-To=%3C200411142152.42808.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000087.html">
+   <LINK REL="Next"  HREF="000089.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr-1.2.1 build fails</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr-1.2.1%20build%20fails&In-Reply-To=%3C200411142152.42808.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] vdr-1.2.1 build fails">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Nov 14 21:52:42 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000087.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+        <LI>Next message: <A HREF="000089.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 14. November 2004 21:21, Martin Wache wrote:
+
+&gt;<i> I'm sorry... I hope my last change fixed this. By the way where can I get 
+</I>&gt;<i> these old versions of vdr?
+</I>
+Now the Free () problen is back:
+../../../include/vdr/ringbuffer.h: In member function `virtual void
+   cStreamDecoder::Clear()':
+../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+   protected
+mpeg2decoder.c:256: error: within this context
+../../../include/vdr/ringbuffer.h:34: error: `int cRingBuffer::Free()' is
+   protected
+mpeg2decoder.c:262: error: within this context
+mpeg2decoder.c: In member function `virtual int
+   cAudioStreamDecoder::DecodeData(uchar*, int)':
+mpeg2decoder.c:321: Warnung: unused variable `int delay'
+make[1]: *** [mpeg2decoder.o] Fehler 1
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000087.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+	<LI>Next message: <A HREF="000089.html">[Softdevice-devel] vdr-1.2.1 build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

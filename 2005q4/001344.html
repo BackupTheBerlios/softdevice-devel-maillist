@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Gentoo packaging (updated)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Gentoo%20packaging%20%28updated%29&In-Reply-To=%3C434BBC07.4080902%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001336.html">
+   <LINK REL="Next"  HREF="001346.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Gentoo packaging (updated)</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Gentoo%20packaging%20%28updated%29&In-Reply-To=%3C434BBC07.4080902%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] [PATCH] Gentoo packaging (updated)">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Tue Oct 11 15:20:07 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001336.html">[Softdevice-devel] ffmpeg : pkg-config vs. ffmpeg-config
+</A></li>
+        <LI>Next message: <A HREF="001346.html">[Softdevice-devel] softplay Debian packaging : problems related to development
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1344">[ date ]</a>
+              <a href="thread.html#1344">[ thread ]</a>
+              <a href="subject.html#1344">[ subject ]</a>
+              <a href="author.html#1344">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I updated the gentoo packaging.
+
+Patch to support gentoo in the distribution archive itself:
+<A HREF="http://www.muresan.de/softdevice/softdevice-gentoo_packaging.diff">http://www.muresan.de/softdevice/softdevice-gentoo_packaging.diff</A>
+- no longer touches the makefile
+- gnerates just one ebuild, usable for both release, and CVS,
+controllable via the USE flag &quot;cvs_softdevice&quot;;
+
+For &quot;gentoo end-users&quot;, the ebuild that would be generated for the
+current version:
+<A HREF="http://www.muresan.de/softdevice/vdrplugin-softdevice-0.2.0.ebuild">http://www.muresan.de/softdevice/vdrplugin-softdevice-0.2.0.ebuild</A>
+If you get this ebuild, put this in it's &quot;files&quot; subdirectory:
+<A HREF="http://www.muresan.de/softdevice/vdr.softdevice">http://www.muresan.de/softdevice/vdr.softdevice</A>
+
+I thought just one ebuild is easier to maintain instead of two, and
+because I intend to write ebuilds for softplay and why not, softieee1394
+as well, as they depend on softdevice, the two ebuilds would have
+required complicated dependency hacks.
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001336.html">[Softdevice-devel] ffmpeg : pkg-config vs. ffmpeg-config
+</A></li>
+	<LI>Next message: <A HREF="001346.html">[Softdevice-devel] softplay Debian packaging : problems related to development
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1344">[ date ]</a>
+              <a href="thread.html#1344">[ thread ]</a>
+              <a href="subject.html#1344">[ subject ]</a>
+              <a href="author.html#1344">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

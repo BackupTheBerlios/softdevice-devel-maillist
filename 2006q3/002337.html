@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060903151350.GB2861%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002293.html">
+   <LINK REL="Next"  HREF="002338.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060903151350.GB2861%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Sep  3 17:13:51 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002293.html">[Softdevice-devel] scaling problem in g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002338.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2337">[ date ]</a>
+              <a href="thread.html#2337">[ thread ]</a>
+              <a href="subject.html#2337">[ subject ]</a>
+              <a href="author.html#2337">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jul 25, 2006 at 10:23:15AM +0100, Alasdair Campbell wrote:
+&gt;<i> &gt; If you could make a short 16:9 clip available on some http server and
+</I>&gt;<i> &gt; tell the URL to me, I can check it on my system and tell if it looks okay.
+</I>&gt;<i> &gt; The clip should preferrably contain horizontal movement and be interlaced
+</I>&gt;<i> &gt; in the first place (not a movie).  Maybe there is something unusual in
+</I>&gt;<i> &gt; the DVB streams you receive, e.g., different field order.
+</I>&gt;<i> 
+</I>&gt;<i> Here is a clip of the BBC rolling news channel, I can see LOTs of
+</I>&gt;<i> artifacts with the camera movements, and the scrolling text at the
+</I>&gt;<i> bottom looks poor:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://ginezbukov.com/artifacts.tar.bz2">http://ginezbukov.com/artifacts.tar.bz2</A>
+</I>
+I don't know if your sample is still available, but I saw similar artifacts
+(16:9 material vertically scaled on 4:3 screen on -vo dfb:mgatv) earlier
+this week.  I made a short clip that contains some horizontal movement.
+
+Are there any news on the DirectFB front?  I would appreciate an
+interrupt-driven interface, to avoid burning CPU in the Flip() method.
+Besides, the code from DirectFB CVS for better interlaced output broke
+the OSD.  Has the situation improved since I last checked (June perhaps)?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002293.html">[Softdevice-devel] scaling problem in g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002338.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2337">[ date ]</a>
+              <a href="thread.html#2337">[ thread ]</a>
+              <a href="subject.html#2337">[ subject ]</a>
+              <a href="author.html#2337">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

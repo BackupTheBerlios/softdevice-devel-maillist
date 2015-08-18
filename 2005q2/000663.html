@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20%28SOLVED%2C%20VERIFIED%20%21%21%29&In-Reply-To=%3C200505142324.08963.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000662.html">
+   <LINK REL="Next"  HREF="000664.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20%28SOLVED%2C%20VERIFIED%20%21%21%29&In-Reply-To=%3C200505142324.08963.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat May 14 23:24:08 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000662.html">[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+</A></li>
+        <LI>Next message: <A HREF="000664.html">[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#663">[ date ]</a>
+              <a href="thread.html#663">[ thread ]</a>
+              <a href="subject.html#663">[ subject ]</a>
+              <a href="author.html#663">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 14. Mai 2005 22:55, Stefan Lucke wrote:
+&gt;<i> On Samstag, 14. Mai 2005 21:48, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; Stefan,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On Sat, May 14, 2005 at 06:14:55PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; On Samstag, 14. Mai 2005 08:54, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; On Mittwoch, 11. Mai 2005 21:51, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; In between I got a crash even in softplay and randomly some great
+</I>&gt;<i> &gt; &gt; &gt; disortions at aspect switch. I'm of the opinion that the real cause
+</I>&gt;<i> &gt; &gt; &gt; is in ffmpegs code, but it is hard to convince them.
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Can you try attached diff. 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Forget the patch. A fix for this is now in ffmpeg's cvs.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Great, thanks! Now the clip with the fatal 4:3-&gt;16:9 switch plays nicely.
+</I>&gt;<i> &gt; I got another 4:3-&gt;16:9 crash this morning, but it was on a live stream that
+</I>&gt;<i> &gt; was not being recorded, so I can't test that one.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Do you have any opinion or educated guess how good the fix in ffmpeg's cvs
+</I>&gt;<i> &gt; is?  Does it fix this problem once and for all, or is it just a kludge?
+</I>&gt;<i> 
+</I>&gt;<i> My opinion is that it really _fixes_ the problem, as the errounuosly freed
+</I>&gt;<i> parse buffer to which other functions still hold pointers, is not freed
+</I>&gt;<i> anymore when stream info changes.
+</I>
+And it will fix even more crashes. Think of bad signal quality when
+width or high are decoded wrong. This would previously cause freeing
+of parse buffers too.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000662.html">[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+</A></li>
+	<LI>Next message: <A HREF="000664.html">[Softdevice-devel] Repeatable crash (SOLVED, VERIFIED !!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#663">[ date ]</a>
+              <a href="thread.html#663">[ thread ]</a>
+              <a href="subject.html#663">[ subject ]</a>
+              <a href="author.html#663">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] XV-out, toggle fullscreen while playback paused
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%20paused&In-Reply-To=%3C200601221732.48198.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001706.html">
+   <LINK REL="Next"  HREF="001715.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] XV-out, toggle fullscreen while playback paused</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20XV-out%2C%20toggle%20fullscreen%20while%20playback%20paused&In-Reply-To=%3C200601221732.48198.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] XV-out, toggle fullscreen while playback paused">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Jan 22 17:32:48 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001706.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+        <LI>Next message: <A HREF="001715.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1712">[ date ]</a>
+              <a href="thread.html#1712">[ thread ]</a>
+              <a href="subject.html#1712">[ subject ]</a>
+              <a href="author.html#1712">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 22. Januar 2006 13:54, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I get an odd behaviour when toggleing fullscreen mode while playback
+</I>&gt;<i> &gt; is paused. It took a few seconds until still video image is shown
+</I>&gt;<i> &gt; after toggle.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; To fix this, I'm using attached dif to get instant video refresh.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; map_count is used for limiting redraw operations to every third
+</I>&gt;<i> &gt; event of interest. So when event processing loop terminates, there
+</I>&gt;<i> &gt; may be some yet unhandled events. In that case redrawing of
+</I>&gt;<i> &gt; current (still) picture is required too. XClearArea() should be
+</I>&gt;<i> &gt; called too so that parts of screen which do not hold video,
+</I>&gt;<i> &gt; get cleared. After reenabling this code video I got a huge number
+</I>&gt;<i> &gt; of Expose events, so I disabled map_count increment for this 
+</I>&gt;<i> &gt; (new handled) event type.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Martin, in which situations did you encounter problems with old logic ?
+</I>&gt;<i> &gt;
+</I>
+&gt;<i> I think it's stupid to randomly only to handle every third event, and
+</I>&gt;<i> I'm sure that this was needed because the drawing mechanism of the
+</I>&gt;<i> softdevice was/is broken.
+</I>
+No that's not stupid, it's just optimizing. Think of resizing. In that
+situation you'll get ContigureNotify on every pixel size change
+and a final Expose.
+
+&gt;<i> For instance the OSD was redrawn every other
+</I>&gt;<i> video frame and not just on OSD change or window format change.
+</I>
+Hm, could be part of logic from vdr-1.2.x. OSD (re)draw was quite
+different from that now.
+
+&gt;<i> The Expose events are send by the xlib in case the window has to be
+</I>&gt;<i> redrawn, for example because the window was partly overdrawn by an other
+</I>&gt;<i> window and is put in front again. So in principle one only has to draw
+</I>&gt;<i> the OSD in Expose events and on OSD change.
+</I>&gt;<i> But as far as I understand the XClearArea() usage in the softdevice is
+</I>&gt;<i> mostly wrong, usually we use XClearArea() and then immediately redraw
+</I>&gt;<i> the window. 
+</I>
+&gt;<i>This is wrong, because the XClearArea() call automatically
+</I>&gt;<i> generates Expose events, so that the redrawing happens automatically
+</I>&gt;<i> from ProcessEvents. And that is also the reason why XClearArea() should
+</I>&gt;<i> not be called on Expose events.
+</I>
+Ah, thats why I never handled/looked at Expose events :-) .
+
+&gt;<i> I'm still new to xlib programming, so I maybe wrong somewhere, but to my
+</I>&gt;<i> experience now the cpu usage of the xlib is smaller when osd is shown.
+</I>&gt;<i> And there are still a lot of things which could be cleaned up...
+</I>&gt;<i> 
+</I>
+[snip code]
+
+&gt;<i> 
+</I>&gt;<i> To fix your problem, isn't it enough to uncomment XvShmPutImage()?
+</I>
+No, when going from full to windowed mode, it is required to clear
+the entire area. Assume displaying a 4:3 video in a 16:9 window.
+Without clear(), there may some parts of a previous drawn OSD left
+and right of the video area.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001706.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+	<LI>Next message: <A HREF="001715.html">[Softdevice-devel] XV-out, toggle fullscreen while playback paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1712">[ date ]</a>
+              <a href="thread.html#1712">[ thread ]</a>
+              <a href="subject.html#1712">[ subject ]</a>
+              <a href="author.html#1712">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

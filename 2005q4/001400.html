@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice-dfb contents ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-dfb%20contents%20%3F&In-Reply-To=%3C435EAD2E.4000802%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001394.html">
+   <LINK REL="Next"  HREF="001404.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice-dfb contents ?</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice-dfb%20contents%20%3F&In-Reply-To=%3C435EAD2E.4000802%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] softdevice-dfb contents ?">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Wed Oct 26 00:09:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001394.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+        <LI>Next message: <A HREF="001404.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1400">[ date ]</a>
+              <a href="thread.html#1400">[ thread ]</a>
+              <a href="subject.html#1400">[ subject ]</a>
+              <a href="author.html#1400">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; a &#233;crit :
+&gt;<i> On Mon, Oct 24, 2005 at 11:34:06PM +0200, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>I can't manage to learn remote keys for the softdevice-dfb remote (used 
+</I>&gt;&gt;<i>for crop-mode, isn't it ?)
+</I>&gt;&gt;<i>Does anyone have a sample content for that remote config ? Are the codes 
+</I>&gt;&gt;<i>the same as the LIRC codes, or keyboard codes ?
+</I>&gt;<i> 
+</I>&gt;<i> It depends.  DirectFB supports several different remote control units,
+</I>&gt;<i> as far as I've understood.  I'm using the linux input event interface
+</I>&gt;<i> to the supplied RCU of my Nova-T PCI 90002 card.
+</I>&gt;<i> 
+</I>&gt;<i> Add a printf to an appropriate place in video-dfb.c.  That's what I did
+</I>&gt;<i> when VDR wouldn't accept any keys in the learn mode.  I redirected
+</I>&gt;<i> the added debug output to a file, dug the keycodes from there and
+</I>&gt;<i> wrote them to the remote.conf file.  Not exactly user friendly, but
+</I>&gt;<i> I didn't have time to study the problem at that time.
+</I>
+I put fprintf's in cDFBVideoOut::ProcessEvents to get remote key codes.
+What I didn't understand at first is that, using LIRC through DFB :
+1) those codes are not the same as LIRC codes that the normal VDR LURC 
+remote receives
+2) not all remote keys are actually received by DFB
+
+In fact, LIRC remote key codes are translated, by the LIRC DirectFB 
+input driver, into a set of &quot;known&quot; keycodes. There is a lot of those 
+codes in directfb_keynames.h, but not the random codes one used for a 
+random remote. Those codes are then translated into an interger, which 
+is received by the softdevice remote object (in it's hex form).
+I tried to use the &quot;A/B&quot; key, which is only know by DirectFB as &quot;AB&quot;. 
+The &quot;EXT&quot; key next to it have no obvious DirectFB name.
+
+The resulting remotes.conf file the contains :
+
+softdevice-dfb.User2      000000000000F04F
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001394.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+	<LI>Next message: <A HREF="001404.html">[Softdevice-devel] softdevice-dfb contents ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1400">[ date ]</a>
+              <a href="thread.html#1400">[ thread ]</a>
+              <a href="subject.html#1400">[ subject ]</a>
+              <a href="author.html#1400">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

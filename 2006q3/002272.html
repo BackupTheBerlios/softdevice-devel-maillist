@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] pseudo alpha mmx2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20alpha%20mmx2&In-Reply-To=%3C44BBBB12.7000909%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002271.html">
+   <LINK REL="Next"  HREF="002273.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] pseudo alpha mmx2</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20alpha%20mmx2&In-Reply-To=%3C44BBBB12.7000909%40pobox.com%3E"
+       TITLE="[Softdevice-devel] pseudo alpha mmx2">torgeir at pobox.com
+       </A><BR>
+    <I>Mon Jul 17 18:30:10 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002271.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+        <LI>Next message: <A HREF="002273.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2272">[ date ]</a>
+              <a href="thread.html#2272">[ thread ]</a>
+              <a href="subject.html#2272">[ subject ]</a>
+              <a href="author.html#2272">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+&gt;<i> Torgeir Veimo schrieb:
+</I>&gt;&gt;<i> Martin Wache wrote:
+</I>&gt;&gt;&gt;<i> I think we would have to change the interface of the convert functions,
+</I>&gt;&gt;&gt;<i> and also pass a line number. For the mmx part there are to possible ways:
+</I>&gt;&gt;&gt;<i> 1. convert a single pixel using the c code for odd lines, and convert
+</I>&gt;&gt;&gt;<i>    the rest using the mmx code. The drawback is that the memory access
+</I>&gt;&gt;&gt;<i>    won't be aligned anymore, and I guess all the speed advantage will be
+</I>&gt;&gt;&gt;<i>    gone.
+</I>&gt;&gt;&gt;<i> 2. have different mmx codes for odd and even lines. To produce this code
+</I>&gt;&gt;&gt;<i>    is quite simple, but the code will be doubled.
+</I>&gt;&gt;<i> What about doing the dithering in the OSD buffer before it's transferred 
+</I>&gt;&gt;<i> to screen? 
+</I>&gt;<i> That would also be before it is scaled, I don't think that would look good.
+</I>
+This is only when using &quot;pseudo&quot; transparency, it wouldn't apply to 
+software OSD, and thus no scaling would occur.
+
+&gt;&gt;<i> Since the OSD stride is fixed it should be easier to create 
+</I>&gt;&gt;<i> MMX code that is single pass?
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> I'm not sure if I understand you... The MMX code would have to process
+</I>&gt;<i> each line only once, however we would need to have separate source code
+</I>&gt;<i> for odd and even lines, which means code duplication. But there won't be
+</I>&gt;<i> any speed impact on the second solution. Probably one could come around
+</I>&gt;<i> the code duplication using macros. If you want you can change the C part
+</I>&gt;<i> to the check board pattern and disable the MMX code. I will have a look
+</I>&gt;<i> at the MMX code when I find some time.
+</I>
+My idea was to pre-process the OSD buffer before blitting to video ram. 
+We'd pass over the buffer turning transparent values into black in a 
+dithered pattern. This would require a new method or code step, which 
+could potentially be written in MMX.
+
+When the ARGB_to_RGB32 method is called, there's no need to do any 
+dithering, so the existing MMX code could be simplified.
+
+I can write some code that does this.
+
+-- 
+-Torgeir
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002271.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+	<LI>Next message: <A HREF="002273.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2272">[ date ]</a>
+              <a href="thread.html#2272">[ thread ]</a>
+              <a href="subject.html#2272">[ subject ]</a>
+              <a href="author.html#2272">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio handling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C42721851.4040306%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000578.html">
+   <LINK REL="Next"  HREF="000590.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio handling</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C42721851.4040306%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Aspect ratio handling">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Fri Apr 29 13:19:45 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000578.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+        <LI>Next message: <A HREF="000590.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#580">[ date ]</a>
+              <a href="thread.html#580">[ thread ]</a>
+              <a href="subject.html#580">[ subject ]</a>
+              <a href="author.html#580">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;&gt;<i>I'll try to think of a simple two-phase system :
+</I>&gt;&gt;<i>* you describe your setup once : ratio of the screen, prefer to scale as 
+</I>&gt;&gt;<i>wide/tall as possible, or the contrary, etc.
+</I>&gt;&gt;<i>* a simple option switch between a few different possibilities, for easy 
+</I>&gt;&gt;<i>scaling
+</I>&gt;<i> 
+</I>&gt;<i> Yes, the physical setup which describes your TV /Monitor display aspect
+</I>&gt;<i> can be defined in some menues. Selecting the something like center
+</I>&gt;<i> cut out CropMode/Bildausschnitt should be available via some hotkey.
+</I>&gt;<i> 
+</I>&gt;<i> For that we need our own control, which gets all keys from vdr' remote.
+</I>&gt;<i> We need an additional setup entry, which describes which logical
+</I>&gt;<i> vdr USER_X key should be mapped to this functionality.
+</I>
+Your implementation details seems to fit the bill ;-)
+Since I'm no good at coding, but would do specs correctly, may I suggest 
+that you all describe the streams and hardware you actually have, and 
+what you would like to see, and I'll try to get the Right Thing that 
+will be as simple as possible, please most people, and be usable for 
+children. Warning : I'm no fast, as you could have experienced...
+
+I first just need small explanation of what we could rely on :
+* typical frame size you have (I use femon to show that)
+* what &quot;aspect ratio indicator&quot; is broadcast with the stream (if any : 
+femon show an aspect ratio icon, but it's always 4:3 for my channels)
+* reading the softdevice code, I understand that we can stretch and move 
+the image wherever we want : is it really free, or are there limits 
+(problems when streching more than the visible size, etc.)
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000578.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+	<LI>Next message: <A HREF="000590.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#580">[ date ]</a>
+              <a href="thread.html#580">[ thread ]</a>
+              <a href="subject.html#580">[ subject ]</a>
+              <a href="author.html#580">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

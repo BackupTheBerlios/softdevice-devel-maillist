@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] VDR with DirectFB &amp; Softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VDR%20with%20DirectFB%20%26%20Softdevice&In-Reply-To=%3C20050802082205.95907.qmail%40web26303.mail.ukl.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001072.html">
+   <LINK REL="Next"  HREF="001074.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] VDR with DirectFB &amp; Softdevice</H1>
+    <B>Rose M</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VDR%20with%20DirectFB%20%26%20Softdevice&In-Reply-To=%3C20050802082205.95907.qmail%40web26303.mail.ukl.yahoo.com%3E"
+       TITLE="[Softdevice-devel] VDR with DirectFB &amp; Softdevice">linuxtvmaker at yahoo.es
+       </A><BR>
+    <I>Tue Aug  2 10:22:05 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001072.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+        <LI>Next message: <A HREF="001074.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1073">[ date ]</a>
+              <a href="thread.html#1073">[ thread ]</a>
+              <a href="subject.html#1073">[ subject ]</a>
+              <a href="author.html#1073">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Stefan (&amp; all), 
+
+ --- Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;
+escribi&#243;:
+
+&gt;<i> On Montag, 1. August 2005 12:27, Rose M wrote:
+</I>&gt;<i> &gt; Hello list, 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I've compiled DirectFB like in VDR wiki is post to
+</I>&gt;<i> use
+</I>&gt;<i> &gt; softdevice with a matrox G550 card. All seems to
+</I>&gt;<i> be
+</I>&gt;<i> &gt; ok, but when I run vdr with softdevice plugin the
+</I>&gt;<i> only
+</I>&gt;<i> &gt; output I got is that:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; [softdevice] processing args
+</I>&gt;<i> &gt; [softdevice]   argv [0] = softdevice
+</I>&gt;<i> &gt; [softdevice] initializing Plugin
+</I>&gt;<i> &gt; [softdevice] Initializing Video Out
+</I>&gt;<i> &gt; [softdevice] ffmpeg version(0.4.9-pre1)
+</I>&gt;<i> build(4718)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; my /var/log/messages:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Aug  1 12:22:57 sony-42d550fe10 vdr[12876]: VDR
+</I>&gt;<i> &gt; version 1.3.17 started
+</I>&gt;<i> &gt; Aug  1 12:22:57 sony-42d550fe10 vdr[12876]:
+</I>&gt;<i> loading
+</I>&gt;<i> &gt; plugin: ./PLUGINS/lib/libvdr-softdevice.so.1.3.17
+</I>&gt;<i> 
+</I>&gt;<i> [ .. ]
+</I>&gt;<i> &gt; Aug  1 12:22:57 sony-42d550fe10 vdr[12876]: found
+</I>&gt;<i> 1
+</I>&gt;<i> &gt; video device
+</I>&gt;<i> &gt; Aug  1 12:22:57 sony-42d550fe10 vdr[12876]:
+</I>&gt;<i> &gt; initializing plugin: softdevice (0.1.1): A
+</I>&gt;<i> software
+</I>&gt;<i> &gt; emulated MPEG2 device
+</I>&gt;<i> 
+</I>&gt;<i> Version 0.1.1 is a bit outdated.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Aug  1 12:22:57 sony-42d550fe10 vdr[12876]:
+</I>&gt;<i> &gt; [softdevice] could not load
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>(./PLUGINS/lib/libvdr-softdevice-dfb.so.1.3.17)[./PLUGINS/lib/libvdr-softdevice-dfb.so.1.3.17:
+&gt;<i> &gt; cannot open shared object file: No such file or
+</I>&gt;<i> &gt; directory] exiting
+</I>&gt;<i> 
+</I>&gt;<i> Did you change something (option USE_SUBPLUGINS) in
+</I>&gt;<i> your Makefile _without_ &quot;make clean&quot; in
+</I>&gt;<i> softdevice directory or &quot;make plugins-clean&quot; in vdr
+</I>&gt;<i> directory ?
+</I>&gt;<i> 
+</I>
+If this means change vdr Makefile, no. I only changed
+softdevice Makefile to comment the lines that refers
+to FB_SUPPORT, VIDIX_SUPPORT, etc. leaving only the
+DFB_SUPPORT.
+I've tried compiling with FB and DFB but I've done
+make clean before anything. I will repeat it now cause
+maybe it's possible that I make something wrong. If
+you think in another thing, let me know. I would reply
+in short.
+
+Thanks anyway!
+
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; But my question is: How this lib is created?
+</I>&gt;<i> &gt; Softdevice only creates
+</I>&gt;<i> libvdr-softdevice.so.1.3.17!
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Is it caused by Ffmpeg?
+</I>&gt;<i> No.
+</I>&gt;<i> -- 
+</I>&gt;<i> Stefan Lucke
+</I>
+
+
+
+		
+______________________________________________ 
+Renovamos el Correo Yahoo! 
+Nuevos servicios, m&#225;s seguridad 
+<A HREF="http://correo.yahoo.es">http://correo.yahoo.es</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001072.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+	<LI>Next message: <A HREF="001074.html">[Softdevice-devel] VDR with DirectFB &amp; Softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1073">[ date ]</a>
+              <a href="thread.html#1073">[ thread ]</a>
+              <a href="subject.html#1073">[ subject ]</a>
+              <a href="author.html#1073">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

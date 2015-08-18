@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] witch softdevice output depending on hard and soft
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%20and%20soft&In-Reply-To=%3C448FE494.5080908%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002130.html">
+   <LINK REL="Next"  HREF="002132.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] witch softdevice output depending on hard and soft</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%20and%20soft&In-Reply-To=%3C448FE494.5080908%40calidae.net%3E"
+       TITLE="[Softdevice-devel] witch softdevice output depending on hard and soft">leo at calidae.net
+       </A><BR>
+    <I>Wed Jun 14 12:27:32 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002130.html">[Softdevice-devel] softdevice/softplay clipping picture
+</A></li>
+        <LI>Next message: <A HREF="002132.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2129">[ date ]</a>
+              <a href="thread.html#2129">[ thread ]</a>
+              <a href="subject.html#2129">[ subject ]</a>
+              <a href="author.html#2129">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm in the way of set different vdr clients based on softdevice and
+streamdev-client.
+Depending on each I have to decide witch softdevice output use.
+For example, one client is a debian gnome desktop machine with a pci
+express radeon X700.
+
+The output of :
+
+xdpyinfo |grep Video
+
+Returns only XVideo. What is the best way to set that I want? I have
+tried to set the xv option but when I start VDR with:
+
+-P&quot;softdevice -vo xv:&quot;
+
+It says me that softdevice is not compiled with xv support.
+I have been checked the softdevice Makefile and XV_SUPPORT is set to 1
+But I have noticed that when I execute in the softdevice dir the
+./configure command with an option related to xv then the config.h and
+config.mak don't change. For example if I execute ./config --disable-fb
+I see config.h and config.mak updated.
+But if I execute ./configure --disable-xv don't update anything. If
+after that I execute again only ./configure anything changed again and
+it must update to enable all the outputs again.
+
+The other type of client I want set is a non x-window system based. I
+have tried it with directfb without luck. The hardware is geoforce mx
+4400 or 5500.
+
+I know there is a lot of docs and I have readed a lot of them but I'm
+confused about how to set the best output. I know that the fb output is
+bad because cpu have a lot of work. At the moment the fb output is the
+only way softdevice worked to me.
+I understand that xvmc or directfb is the best way but I don't know
+exactly how to set up these.
+
+Thanks.
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002130.html">[Softdevice-devel] softdevice/softplay clipping picture
+</A></li>
+	<LI>Next message: <A HREF="002132.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2129">[ date ]</a>
+              <a href="thread.html#2129">[ thread ]</a>
+              <a href="subject.html#2129">[ subject ]</a>
+              <a href="author.html#2129">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

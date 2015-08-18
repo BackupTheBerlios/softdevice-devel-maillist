@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame-buffer%20driver%20%3A%20%22state%0A%20of%20the%20art%22&In-Reply-To=%3C42931736.9090502%40eunet.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000716.html">
+   <LINK REL="Next"  HREF="000718.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;</H1>
+    <B>Michael Reinelt</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame-buffer%20driver%20%3A%20%22state%0A%20of%20the%20art%22&In-Reply-To=%3C42931736.9090502%40eunet.at%3E"
+       TITLE="[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;">reinelt at eunet.at
+       </A><BR>
+    <I>Tue May 24 13:59:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000716.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+        <LI>Next message: <A HREF="000718.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#717">[ date ]</a>
+              <a href="thread.html#717">[ thread ]</a>
+              <a href="subject.html#717">[ subject ]</a>
+              <a href="author.html#717">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Nicolas and others,
+
+I did some testing lately, and came to similar results.
+
+I'm using a EPIA-M6000 board, VGA connected to a LCD TV set. I *don't*
+use TV-out. I want to use VDR/softdevice/DirectFB/VGA. I've seen the
+quality this combination delivers, its marvellous compared to the
+S-Video I'm using at the moment.
+
+the driver from viaarena does not work here with DirectFB and
+softdevice, but provides correct modes.
+
+The driver from Andre Kriehn works, but most of the video modes (not
+only TV-out!) are incorrect. This driver seems to be quite buggy (I
+tried to find out why some of the modes don't work, and found that
+there's a problem with the refresh tables: there is a index into this
+tables called 'resMode', this variable is initialized to a 720x576 mode,
+but never assigned to).
+
+I too think that the viaarena driver looks cleaner. Although I'm a bit
+confused about the fact that the release date on viaarena says
+2005-05-20, but the driver file is called
+linux-fbdev-kernel-src_20050203.tgz... maybe a wrong file has been
+released???
+
+I'd appreciate very much a cleanup/merge of the different drivers, and
+if I can be of any help anywhere, just let me know.
+
+
+bye, Michael
+
+-- 
+Michael Reinelt &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">reinelt at eunet.at</A>&gt;
+<A HREF="http://home.pages.at/reinelt">http://home.pages.at/reinelt</A>
+GPG-Key 0xDF13BA50
+ICQ #288386781
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000716.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+	<LI>Next message: <A HREF="000718.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#717">[ date ]</a>
+              <a href="thread.html#717">[ thread ]</a>
+              <a href="subject.html#717">[ subject ]</a>
+              <a href="author.html#717">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

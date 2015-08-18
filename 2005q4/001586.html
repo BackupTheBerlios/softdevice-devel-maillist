@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%0A%20video/audio%20problem&In-Reply-To=%3C439AF0C9.8050904%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001584.html">
+   <LINK REL="Next"  HREF="001592.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%26%20HDTV%20choppy/out-of-sync%0A%20video/audio%20problem&In-Reply-To=%3C439AF0C9.8050904%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Dec 10 16:14:17 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001584.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+        <LI>Next message: <A HREF="001592.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV	choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1586">[ date ]</a>
+              <a href="thread.html#1586">[ thread ]</a>
+              <a href="subject.html#1586">[ subject ]</a>
+              <a href="author.html#1586">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zdzislaw Gorlicki schrieb:
+&gt;<i> So I played around with the buffers for last few days. I tried a lot of
+</I>&gt;<i> different possibilities, but with littlle or no success.
+</I>&gt;<i> 
+</I>&gt;<i> increasing dvb_buf_size[] seems to make no diference.
+</I>&gt;<i> 
+</I>&gt;<i> increasing packet_buf_size[] allows the audio to play smooth longer.
+</I>&gt;<i> 
+</I>&gt;<i> I might be wrong about the video frames dropping though. It seems like
+</I>&gt;<i> all the frames are there, it's just that it looks like the video is
+</I>&gt;<i> playing in slow motion so the video falls behind.
+</I>&gt;<i> 
+</I>&gt;<i> As the buffer get's filled, audio starts to sound choppy and it looks
+</I>&gt;<i> like as the buffer gets full, a new buffer is created at which time, the
+</I>&gt;<i> audio and video resyncs, so there is a freeze in audio and video and the
+</I>&gt;<i> process starts all over again.
+</I>&gt;<i> 
+</I>If the demuxing buffer is to small, we get audio buffer underruns
+(because the video buffer is full and we can't accept any data). Since
+we sync to the audio the video will be displayed slower. So vdr's
+buffers fill up, once they are filled vdr triggers a clear buffer which
+clears all buffers, and everything starts from the beginnig.
+So what you describe matches what one would see with too small demuxing
+buffer.
+
+In the mpeg2decoder there is the method cMpeg2Decoder::BufferFill(), if
+you activate the printouts in this function you can see the buffer fill
+of the audio and video demuxing buffers separatly. So you could see if
+the demuxing buffers are really to small or if it is some different problem.
+
+Bye,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001584.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV choppy/out-of-sync video/audio problem
+</A></li>
+	<LI>Next message: <A HREF="001592.html">[Softdevice-devel] Re: [Softdevice-devel] softdevice &amp; HDTV	choppy/out-of-sync video/audio problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1586">[ date ]</a>
+              <a href="thread.html#1586">[ thread ]</a>
+              <a href="subject.html#1586">[ subject ]</a>
+              <a href="author.html#1586">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

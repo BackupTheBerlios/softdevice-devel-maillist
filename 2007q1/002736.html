@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Suspend output when the user is inactive
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Suspend%20output%20when%20the%20user%20is%20inactive&In-Reply-To=%3C20070225203000.GB28061%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002735.html">
+   <LINK REL="Next"  HREF="002743.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Suspend output when the user is inactive</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Suspend%20output%20when%20the%20user%20is%20inactive&In-Reply-To=%3C20070225203000.GB28061%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [PATCH] Suspend output when the user is inactive">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Feb 25 21:30:00 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002735.html">[Softdevice-devel] Aspect ratio from DVB settings and WSS	signalling. (WAS: Re: Zoom to 16:9)
+</A></li>
+        <LI>Next message: <A HREF="002743.html">[Softdevice-devel] directfb no system found :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2736">[ date ]</a>
+              <a href="thread.html#2736">[ thread ]</a>
+              <a href="subject.html#2736">[ subject ]</a>
+              <a href="author.html#2736">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Now that VDR 1.5.1 includes the rewritten shutdown logic by Udo Richter,
+I hope that the attached patch can be applied to softdevice.  It
+suspends the output when ShutdownHandler.IsUserInactive() holds.
+The setup menu item for suspending output still works.
+
+Please note that the variable &quot;Shutdown&quot; of Udo's patch was renamed to
+&quot;ShutdownHandler&quot; in VDR 1.5.1.  The attached patch uses &quot;ShutdownHandler&quot;.
+
+	Marko
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: shutdown-softdevice.patch
+Type: text/x-diff
+Size: 4792 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070225/5070e900/attachment.patch">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070225/5070e900/attachment.patch</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002735.html">[Softdevice-devel] Aspect ratio from DVB settings and WSS	signalling. (WAS: Re: Zoom to 16:9)
+</A></li>
+	<LI>Next message: <A HREF="002743.html">[Softdevice-devel] directfb no system found :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2736">[ date ]</a>
+              <a href="thread.html#2736">[ thread ]</a>
+              <a href="subject.html#2736">[ subject ]</a>
+              <a href="author.html#2736">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] move setupStore into shared memory (for	ShmClient)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20move%20setupStore%20into%20shared%20memory%20%28for%0A%09ShmClient%29&In-Reply-To=%3C450FF853.9040306%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002548.html">
+   <LINK REL="Next"  HREF="002502.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] move setupStore into shared memory (for	ShmClient)</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20move%20setupStore%20into%20shared%20memory%20%28for%0A%09ShmClient%29&In-Reply-To=%3C450FF853.9040306%40gmx.net%3E"
+       TITLE="[Softdevice-devel] [PATCH] move setupStore into shared memory (for	ShmClient)">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Sep 19 16:01:55 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002548.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002502.html">[Softdevice-devel] [PATCH] move setupStore into shared memory (for	ShmClient)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2501">[ date ]</a>
+              <a href="thread.html#2501">[ thread ]</a>
+              <a href="subject.html#2501">[ subject ]</a>
+              <a href="author.html#2501">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi List,
+
+I'm posting a patch for testing which moves the setupStore into shared
+memory. This enables some more features, like changing brightness, hue
+and contrast for the ShmClient.
+This patch is quite intrusive, but most of the changes are trivial
+because the variable setupStore is now a pointer. If this patch works
+and is merged into the CVS we can start introducing parameters for the
+ShmClient.
+Comments and failure/success reports are welcome!
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002548.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002502.html">[Softdevice-devel] [PATCH] move setupStore into shared memory (for	ShmClient)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2501">[ date ]</a>
+              <a href="thread.html#2501">[ thread ]</a>
+              <a href="subject.html#2501">[ subject ]</a>
+              <a href="author.html#2501">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

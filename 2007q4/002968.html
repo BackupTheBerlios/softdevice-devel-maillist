@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] mpeg2decoder.c compile error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C1198237027.476ba563ced67%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002967.html">
+   <LINK REL="Next"  HREF="002969.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] mpeg2decoder.c compile error</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C1198237027.476ba563ced67%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] mpeg2decoder.c compile error">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Dec 21 12:37:07 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002967.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+        <LI>Next message: <A HREF="002969.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2968">[ date ]</a>
+              <a href="thread.html#2968">[ thread ]</a>
+              <a href="subject.html#2968">[ subject ]</a>
+              <a href="author.html#2968">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;:
+
+&gt;<i> Quoting Per Mellander &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">per at mellander.org</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I've noticed that newer ffmpeg doesn't match softdevice.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I did the actual setup of my EPIA MII 12000 last week. Can't look at it now
+</I>&gt;<i> &gt; because it's powered off and @home but I recognize the error. I took an older
+</I>&gt;<i> &gt; ffmpeg and it compiled.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Looking at my main VDR @home, I'm running softdevice-cvs-071220 + FFmpeg version
+</I>&gt;<i> &gt; SVN-r10885.
+</I>&gt;<i>
+</I>&gt;<i> At a first glance it looks like ffmpeg svn-11071 is causing some troubles.
+</I>&gt;<i> Comment of this change is: &quot;Use dynamically allocated ByteIOContext in AVFormatContext&quot;
+</I>&gt;<i>
+</I>&gt;<i> So we have to adapte our sources :-).
+</I>&gt;<i> LIBAVFORMAT_VERSION  changed from &quot;51.19.0&quot; to &quot;52.0.0&quot;
+</I>&gt;<i>
+</I>&gt;<i> For troubles in line 1081 it should be something like:
+</I>&gt;<i>
+</I>&gt;<i> #if LIBAVFORMAT_BUILD &gt;= ((52&lt;&lt;16)+(0&lt;&lt;8)+0)
+</I>&gt;<i>        ic-&gt;pb-&gt;buffer=u;
+</I>&gt;<i> #else
+</I>&gt;<i>        ic-&gt;pb.buffer=u;
+</I>&gt;<i> #endif
+</I>&gt;<i>
+</I>
+Seems to be a more serious problem as fixing this,
+still causes segfaults during av_open_input_file(&amp;ic, &quot;null&quot;,fmt,0,NULL)
+or with fmt-&gt;flags |= AVFMT_NOFILE; commented out, during
+init_put_byte ().
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002967.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+	<LI>Next message: <A HREF="002969.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2968">[ date ]</a>
+              <a href="thread.html#2968">[ thread ]</a>
+              <a href="subject.html#2968">[ subject ]</a>
+              <a href="author.html#2968">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with nvidia TwinView and ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710041958.01318.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002917.html">
+   <LINK REL="Next"  HREF="002919.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with nvidia TwinView and ShmClient</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C200710041958.01318.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems with nvidia TwinView and ShmClient">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Oct  4 19:58:01 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002917.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+        <LI>Next message: <A HREF="002919.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2918">[ date ]</a>
+              <a href="thread.html#2918">[ thread ]</a>
+              <a href="subject.html#2918">[ subject ]</a>
+              <a href="author.html#2918">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 4. Oktober 2007, Michael Rademacher wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I'd like to use the softdevice plugin on my desktop. I have this graphics
+</I>&gt;<i> adapter:
+</I>&gt;<i> 
+</I>&gt;<i> zentrale:~# lspci | grep VGA
+</I>&gt;<i> 01:00.0 VGA compatible controller: nVidia Corporation NV44 [GeForce 6200 TurboCache(TM)] (rev a1)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Connected are two LCD flat screen monitors in a dual head configuration with
+</I>&gt;<i> TwinView enabled (see attached xorg.conf). For information about TwinView
+</I>&gt;<i> and its Xinerama hinting see
+</I>&gt;<i> <A HREF="http://www.nvidia.com/object/feature_twinview.html">http://www.nvidia.com/object/feature_twinview.html</A> and
+</I>&gt;<i> <A HREF="http://us.download.nvidia.com/XFree86/Linux-x86/100.14.19/README/index.html.">http://us.download.nvidia.com/XFree86/Linux-x86/100.14.19/README/index.html.</A>
+</I>&gt;<i> Xinerama without TwinView is not an option as I did not manage to get this
+</I>&gt;<i> running with both the nv and nvidia drivers (apparently a known problem).
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+&gt;<i> When I start ShmClient I see a normal window with a half-width TV picture
+</I>&gt;<i> (see screenshot at <A HREF="http://www.radylon.com/ShmClient.png">http://www.radylon.com/ShmClient.png</A> ). Text output of
+</I>&gt;<i> ShmClient as follows:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">radi at zentrale</A>:~$ ShmClient
+</I>&gt;<i> dsyslog:[XvVideoOut]: patch version (2006-11-05)
+</I>&gt;<i> [XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+</I>&gt;<i> [XvVideoOut]: Xinerama Screen 1: 1280,0  1280x1024
+</I>
+
+&gt;<i> dsyslog:[XvVideoOut]: shmat Successful
+</I>&gt;<i> dsyslog:[XvVideoOut]: XShmAttach    rc = 1 (should be OK)
+</I>&gt;<i> dsyslog:[VideoOut]: resolution changed: W(736 -&gt; 704); H(576 -&gt;576)
+</I>&gt;<i> 
+</I>&gt;<i> dsyslog:[VideoOut]: 704x576 [0,0 704x576] -&gt; 768x576 [194,0 379x576]
+</I>&gt;<i> [XvVideoOut]: Xinerama-Screen changed to 0
+</I>&gt;<i> dsyslog:[VideoOut]: 704x576 [8,0 687x576] -&gt; 768x576 [194,0 379x576]
+</I>
+The xoffset 194 seems to be strange, as I could not provoke such a value
+with various combinations of wrong selected display aspect ratios.
+
+But I want to ask you, which geometry did you specify (5:4, 16:9, .. )?
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Any hint what to do to get a normal sized picture out of ShmClient?
+</I>&gt;<i> Any other details you need to have a look into this issue?
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002917.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+	<LI>Next message: <A HREF="002919.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2918">[ date ]</a>
+              <a href="thread.html#2918">[ thread ]</a>
+              <a href="subject.html#2918">[ subject ]</a>
+              <a href="author.html#2918">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

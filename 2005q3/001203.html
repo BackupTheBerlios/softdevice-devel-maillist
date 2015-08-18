@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay issue ( ie. ffmpeg )
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20issue%20%28%20ie.%20ffmpeg%20%29&In-Reply-To=%3C431F2720.40302%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001200.html">
+   <LINK REL="Next"  HREF="001206.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay issue ( ie. ffmpeg )</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20issue%20%28%20ie.%20ffmpeg%20%29&In-Reply-To=%3C431F2720.40302%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softplay issue ( ie. ffmpeg )">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Sep  7 19:45:04 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001200.html">[Softdevice-devel] Softplay issue ( ie. ffmpeg )
+</A></li>
+        <LI>Next message: <A HREF="001206.html">[Softdevice-devel] Whats the deal with the xv option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1203">[ date ]</a>
+              <a href="thread.html#1203">[ thread ]</a>
+              <a href="subject.html#1203">[ subject ]</a>
+              <a href="author.html#1203">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Per Mellander schrieb:
+&gt;<i> I'm running vdr-1.3.31 with softdevice (xv ) and softplay. ffmpeg and the 
+</I>&gt;<i> plugins are from CVS 20050905. ffmpeg is compiled with:
+</I>&gt;<i> 
+</I>&gt;<i> ./configure  --enable-pp \
+</I>&gt;<i>              --enable-xvid \  # xvidcore-1.1.0-beta2
+</I>&gt;<i>              --enable-shared \
+</I>&gt;<i>              --enable-shared-pp \
+</I>&gt;<i>              --enable-gpl \
+</I>&gt;<i>              --enable-mp3lame # lame-devel-0.lvn.1.3.rpm
+</I>&gt;<i> 
+</I>&gt;<i> I have a mpeg movie that plays well with MPlayer but not with softplay. It 
+</I>&gt;<i> starts ok with softplay and I can stop the replay by pressing 'stop'. The 
+</I>&gt;<i> problem is that the sound is all messed ( cracks 'n pops ) and I only get a 
+</I>&gt;<i> black picture. I'm not that great at ffmpeg but I really would like to know 
+</I>&gt;<i> what I'm missing to get this movie running under softplay.
+</I>&gt;<i> 
+</I>&gt;<i> As I see it mplayer is using libmpeg2 for this but I understood it as ffmpeg 
+</I>&gt;<i> would be able to handle this?
+</I>&gt;<i> 
+</I>&gt;<i> [<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at ponton</A> ~]# more softplay.log 
+</I>&gt;<i> PLDBG: Thread started: SoftPlayer
+</I>&gt;<i> CMD[8821]:SetPlayMode PmAudioOnly
+</I>&gt;<i> CMD[8821]:Start IsSuspended 0
+</I>&gt;<i> CMD[8822]:init put byte finished
+</I>&gt;<i> CMD[8832]:new Audio stream index.. old -1 new 0
+</I>&gt;<i> CMD[8832]:Neuer StreamDecoder Pid: 4494 context 0x8321420 type 1
+</I>&gt;<i> Streams: 1
+</I>&gt;<i> Codec 0 ID: 69640
+</I>&gt;<i> CMD[8837]:Neuer Thread gestartet: pid:4494 type 1
+</I>&gt;<i> Input #0, psxstr, from 'test':
+</I>&gt;<i>   Duration: N/A, bitrate: N/A
+</I>&gt;<i>   Stream #0.0: Audio: adpcm_xa, 18900 Hz, stereo
+</I>&gt;<i> 
+</I>&gt;<i> [<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at ponton</A> ~]# more mplayer.log 
+</I>&gt;<i> MPEG-PS file format detected.
+</I>&gt;<i> VIDEO:  MPEG2  480x576  (aspect 2)  25.000 fps  2530.0 kbps (316.2 kbyte/s)
+</I>&gt;<i> ==========================================================================
+</I>&gt;<i> Opening audio decoder: [mp3lib] MPEG layer-2, layer-3
+</I>&gt;<i> AUDIO: 44100 Hz, 2 ch, s16le, 224.0 kbit/15.87% (ratio: 28000-&gt;176400)
+</I>&gt;<i> Selected audio codec: [mp3] afm:mp3lib (mp3lib MPEG layer-2, layer-3)
+</I>&gt;<i> ==========================================================================
+</I>&gt;<i> vo: X11 running at 1280x1024 with depth 16 and 16 bpp (&quot;:0.0&quot; =&gt; local 
+</I>&gt;<i> display)
+</I>&gt;<i> ==========================================================================
+</I>&gt;<i> Opening video decoder: [mpegpes] MPEG 1/2 Video passthrough
+</I>&gt;<i> VDec: vo config request - 480 x 576 (preferred csp: Mpeg PES)
+</I>&gt;<i> Could not find matching colorspace - retrying with -vf scale...
+</I>&gt;<i> Opening video filter: [scale]
+</I>&gt;<i> The selected video_out device is incompatible with this codec.
+</I>&gt;<i> VDecoder init failed :(
+</I>&gt;<i> Opening video decoder: [libmpeg2] MPEG 1/2 Video decoder libmpeg2-v0.4.0b
+</I>&gt;<i> Selected video codec: [mpeg12] vfm:libmpeg2 (MPEG-1 or 2 (libmpeg2))
+</I>&gt;<i> ==========================================================================
+</I>&gt;<i> 
+</I>It seems that softplay uses the wrong file format, instead of MPEG-PS it
+uses psxstr. Your configuration should be fine, just the autodetection
+of the file format failed.
+
+Please try to play the file with ffplay, the player which comes with
+ffmpeg and if it also fails please report that to the ffmpeg mailling
+list. If ffplay plays the file properly it is a bug in softplay and I
+will have a look at it.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001200.html">[Softdevice-devel] Softplay issue ( ie. ffmpeg )
+</A></li>
+	<LI>Next message: <A HREF="001206.html">[Softdevice-devel] Whats the deal with the xv option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1203">[ date ]</a>
+              <a href="thread.html#1203">[ thread ]</a>
+              <a href="subject.html#1203">[ subject ]</a>
+              <a href="author.html#1203">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

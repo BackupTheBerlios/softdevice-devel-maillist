@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Trouble%20and%20crash%20with%20vdr-dvd%20plugin%20on%20DirectFB&In-Reply-To=%3C20051216101808.GB3595%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001607.html">
+   <LINK REL="Next"  HREF="001613.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Trouble%20and%20crash%20with%20vdr-dvd%20plugin%20on%20DirectFB&In-Reply-To=%3C20051216101808.GB3595%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Dec 16 11:18:08 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001607.html">[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB
+</A></li>
+        <LI>Next message: <A HREF="001613.html">[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1608">[ date ]</a>
+              <a href="thread.html#1608">[ thread ]</a>
+              <a href="subject.html#1608">[ subject ]</a>
+              <a href="author.html#1608">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Dec 15, 2005 at 11:07:24PM +0100, Martin Wache wrote:
+&gt;<i> &gt; A perhaps crazy idea: Would it make sense to implement DVD playback
+</I>&gt;<i> &gt; in a subplugin of softdevice, similar to the softplay plugin?  Without
+</I>&gt;<i> &gt; knowing any details, I have the feeling that DVD menus could perhaps
+</I>&gt;<i> &gt; be handled more easily in that way.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Of course that could be done, however I'm not sure if it would be really
+</I>&gt;<i> easier. The SPU decoder which is (as far as I know) responsible for
+</I>&gt;<i> displaying the menu and the subtitles is already part of vdr. Also mpeg2
+</I>&gt;<i> audio and video can be handled by vdr (as well as ac3 and pcm), so many
+</I>&gt;<i> things which are needed are already in place and you don't need to
+</I>&gt;<i> bypass vdr (like softplay does) if you want to playback a dvd.
+</I>
+Right.  Bypassing vdr would bring its own set of problems.  Examples of
+current problems are vdr being unaware of softdevice.Suspended and
+CropModeToggleKey.  (Did you or Stefan have a chance of looking at my
+crash report of CropModeToggleKey detection already?)
+
+&gt;<i> I would prefer to improve the cooperation of the dvd-plugin and the
+</I>&gt;<i> softdevice rather to start a compeletly new plugin.
+</I>
+Sure.  Starting from the scratch does not make sense unless there is some
+fundamental problem with the current solution.  I'm glad there is none.
+
+By the way, this may be a stupid question, but how can I contact the
+authors of the vdr-dvd plugin?  It is not obvious from the SourceForge
+project page &lt;<A HREF="http://sourceforge.net/projects/dvdplugin/">http://sourceforge.net/projects/dvdplugin/</A>&gt;.  I did not find
+any active mailing list.  I see that there is some activity going on:
+the latest change in CVS is 3 months old.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001607.html">[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB
+</A></li>
+	<LI>Next message: <A HREF="001613.html">[Softdevice-devel] Trouble and crash with vdr-dvd plugin on DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1608">[ date ]</a>
+              <a href="thread.html#1608">[ thread ]</a>
+              <a href="subject.html#1608">[ subject ]</a>
+              <a href="author.html#1608">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

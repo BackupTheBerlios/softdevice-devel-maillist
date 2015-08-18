@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20VGA%20%28not%20mgatv%29%20to%20SCART%20pinout%3F&In-Reply-To=%3C200602202302.52976.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001761.html">
+   <LINK REL="Next"  HREF="001769.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20VGA%20%28not%20mgatv%29%20to%20SCART%20pinout%3F&In-Reply-To=%3C200602202302.52976.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Feb 20 23:02:52 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001761.html">[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+</A></li>
+        <LI>Next message: <A HREF="001769.html">[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1763">[ date ]</a>
+              <a href="thread.html#1763">[ thread ]</a>
+              <a href="subject.html#1763">[ subject ]</a>
+              <a href="author.html#1763">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 20. Februar 2006 20:33, Marko M&#228;kel&#228; wrote:
+&gt;<i> I'm trying to connect my RGB video monitor to the VGA output of the G450,
+</I>&gt;<i> so that the color space conversion could be avoided.
+</I>&gt;<i> 
+</I>&gt;<i> The mgatv output works fine with this cable connected to the secondary
+</I>&gt;<i> head: <A HREF="http://forum.matrox.com/mga/viewtopic.php?t=4383">http://forum.matrox.com/mga/viewtopic.php?t=4383</A>
+</I>&gt;<i> 
+</I>&gt;<i> However, I was unable to figure out where to get composite sync from
+</I>&gt;<i> the primary head.  The link to <A HREF="http://www.sm.go.dlr.de/%7Ebob/scart/scart.gif">http://www.sm.go.dlr.de/%7Ebob/scart/scart.gif</A>
+</I>&gt;<i> at <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A> doesn't respond.
+</I>
+Thanks, have to correct the link. Did a google search for pictures
+with scart.gif, and found that picture as the 2nd from left in the
+1st row:
+<A HREF="http://images.google.de/images?hl=de&amp;ie=ISO-8859-1&amp;q=scart.gif&amp;btnG=Suche&amp;sa=N&amp;tab=wi">http://images.google.de/images?hl=de&amp;ie=ISO-8859-1&amp;q=scart.gif&amp;btnG=Suche&amp;sa=N&amp;tab=wi</A>
+
+<A HREF="http://www.obsolyte.com/sunFAQ/faq_framebuffer/fbfaq_files/scart.gif">http://www.obsolyte.com/sunFAQ/faq_framebuffer/fbfaq_files/scart.gif</A>
+
+&gt;<i> 
+</I>&gt;<i> As I don't have access to an oscilloscope right now, I don't know if the
+</I>&gt;<i> sync problems are due to bad fbset timings (/etc/fb.modes) or wrong cable.
+</I>&gt;<i> I tried with and without the DDC loop (pins 12 and 15), hoping to find
+</I>&gt;<i> composite sync on pins 5, 13 or 14.
+</I>&gt;<i> 
+</I>&gt;<i> While testing, I noticed that DirectFB insists on having mode=%ux%u in
+</I>&gt;<i> /etc/directfbrc.  I wonder where it takes the timings.  Does it get the
+</I>&gt;<i> first entry with matching xres and yres from /etc/fb.modes?
+</I>
+Yes.
+
+&gt;<i> 
+</I>&gt;<i> Last but not least, are the &quot;my-pal-32&quot; timings posted at
+</I>&gt;<i> <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A> a bit off?  If I understood correctly,
+</I>&gt;<i> they give a line time of 66.9 &#181;s, while 64 &#181;s would be correct (AFAIK).
+</I>
+No fb.mode calculation is a bit complicated: result is about 63.998235 &#181;s :-)
+mode &quot;my-pal-32&quot;
+    geometry 768 576 768 576 32
+    timings  67723 106 1 44 1 70 4
+    csync high
+    laced true
+    bcast true
+endmode
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001761.html">[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+</A></li>
+	<LI>Next message: <A HREF="001769.html">[Softdevice-devel] Matrox G450 VGA (not mgatv) to SCART pinout?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1763">[ date ]</a>
+              <a href="thread.html#1763">[ thread ]</a>
+              <a href="subject.html#1763">[ subject ]</a>
+              <a href="author.html#1763">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

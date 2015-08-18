@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nvidia OSD patches...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C4503DF87.5040402%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002430.html">
+   <LINK REL="Next"  HREF="002410.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nvidia OSD patches...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C4503DF87.5040402%40gmx.net%3E"
+       TITLE="[Softdevice-devel] nvidia OSD patches...">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Sep 10 11:48:55 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002430.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+        <LI>Next message: <A HREF="002410.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2431">[ date ]</a>
+              <a href="thread.html#2431">[ thread ]</a>
+              <a href="subject.html#2431">[ subject ]</a>
+              <a href="author.html#2431">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Prakash Punnoor schrieb:
+&gt;<i> Am Samstag 09 September 2006 14:50 schrieb Martin Wache:
+</I>&gt;&gt;<i> Maybe there is a simpler workaround, or it is some bug in the code...
+</I>&gt;<i> 
+</I>&gt;<i> Yes, it seems like it:
+</I>&gt;<i> 
+</I>&gt;<i> Index: SoftOsd.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> RCS file: /cvsroot/softdevice/softdevice/SoftOsd.c,v
+</I>&gt;<i> retrieving revision 1.16
+</I>&gt;<i> diff -u -r1.16 SoftOsd.c
+</I>&gt;<i> --- SoftOsd.c   10 Jul 2006 18:23:28 -0000      1.16
+</I>&gt;<i> +++ SoftOsd.c   10 Sep 2006 08:02:43 -0000
+</I>&gt;<i> @@ -1381,10 +1381,10 @@
+</I>&gt;<i>  #ifdef USE_MMX2
+</I>&gt;<i>          __asm__ __volatile__ (
+</I>&gt;<i>                   &quot; pxor %%mm0,%%mm0 \n&quot; //mm0: dest pixel
+</I>&gt;<i> -                 &quot; movd (%0),%%mm6  \n&quot;
+</I>&gt;<i> +                 &quot; movd %0,%%mm6  \n&quot;
+</I>&gt;<i>                   &quot; pshufw $0,%%mm6,%%mm6 \n&quot;// mm6: new_pixel_width_rec
+</I>&gt;<i>                   &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+</I>&gt;<i> -                 : : &quot;r&quot; (&amp;new_pixel_width_rec)  );
+</I>&gt;<i> +                 : : &quot;r&quot; (new_pixel_width_rec)  );
+</I>&gt;<i>  #endif
+</I>&gt;<i>          SCALEDEBH(&quot;OSD_WIDTH: %d dest_width: %d new_pixel_width: %d\n&quot;,
+</I>&gt;<i>                          OSD_WIDTH,dest_Width,new_pixel_width);
+</I>&gt;<i> 
+</I>
+Yes, this should fix it. To me this looks like a compiler bug, in
+SoftOsd.sO2 the initialization of new_pixel_width_rec is moved below
+this part of the code. It seems like a reference to the address is not
+treated any more as a reference to the value. I don't know the
+specification, but I doubt that this is correct.
+I will check if this works also with the older compiler version and then
+apply this fix.
+Thank you, and Chris for your help!
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002430.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+	<LI>Next message: <A HREF="002410.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2431">[ date ]</a>
+              <a href="thread.html#2431">[ thread ]</a>
+              <a href="subject.html#2431">[ subject ]</a>
+              <a href="author.html#2431">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

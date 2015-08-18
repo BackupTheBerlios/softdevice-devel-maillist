@@ -1,0 +1,780 @@
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.0.1331738273.11969.softdevice-devel@lists.berlios.de>
+
+
+Stefan Lucke
+
+
+
+
+
+-------------------------------------------------------
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.1.1331738273.11969.softdevice-devel@lists.berlios.de>
+
+the A-V sync should not have changed... Did you try to go back to AVPatch01?
+
+Martin
+
+-- 
+NEU +++ DSL Komplett von GMX +++ http://www.gmx.net/de/go/dsl
+GMX DSL-Netzanschluss + Tarif zum superg?nstigen Komplett-Preis!
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.2.1331738274.11969.softdevice-devel@lists.berlios.de>
+
+which is another output option for me; but it can't do 'head on/off'
+like vdr-xine can do.  I guess thats all thats missing for me to
+switch my setup to directfb..
+
+Mick
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.3.1331738274.11969.softdevice-devel@lists.berlios.de>
+
+So please try that from main-menu -> setup -> plugins -> softdevice .
+
+> What actually works is the parsing of the options, so if you want to 
+> have software alpha blending osd from start adding a line similar to
+> "softdevice.OSDalphablend = 1"
+> to your /video/setup.conf should help. I'm sorry I'm not at home right 
+> now, so I can't check what the actual line was like...
+> 
+> So I will start to work on the implentation of software osd alpha 
+> blending for vidix-out, that should one be easy. Standard fb-out will be 
+> difficult, or at least slow because we would have to do additional 
+> copying, so I wont do it now. What about directfb? Is software osd alpha 
+> blending needed/wanted for directfb?
+
+Currenlty I think it is not need as this could be done in hardware
+(matrox, radeon & via-epia).
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.4.1331738280.11969.softdevice-devel@lists.berlios.de>
+
+Libavformats version number changed a few days (chg. on 2005-06-03)
+after they changed this function prototype (chg. on 2005-05-30).
+By this our version check fails if your checkout date is in between
+those days.
+
+> mpeg2decoder.c: In member function `void cMpeg2Decoder::QueuePacket(const
+>     AVFormatContext*, AVPacket&)':
+> mpeg2decoder.c:1100: error: request for member `codec_type' in `
+>  
+> ic->AVFormatContext::streams[pkt->AVPacket::stream_index]->AVStream::codec',
+>     which is of non-class type `AVCodecContext*'
+> mpeg2decoder.c:1112: error: no matching function for call to `
+>     cAudioStreamDecoder::cAudioStreamDecoder(AVCodecContext**, 
+> cAudioOut*&, int&
+>     )'
+> mpeg2decoder.h:136: error: candidates are:
+>     cAudioStreamDecoder::cAudioStreamDecoder(const cAudioStreamDecoder&)
+> mpeg2decoder.c:236: error:
+>     cAudioStreamDecoder::cAudioStreamDecoder(AVCodecContext*, 
+> cAudioOut*, int)
+> mpeg2decoder.c:1115: error: request for member `codec_type' in `
+>  
+> ic->AVFormatContext::streams[pkt->AVPacket::stream_index]->AVStream::codec',
+>     which is of non-class type `AVCodecContext*'
+> mpeg2decoder.c:1127: error: no matching function for call to `
+>     cVideoStreamDecoder::cVideoStreamDecoder(AVCodecContext**, cVideoOut*&,
+>     cClock*, int&)'
+> mpeg2decoder.h:162: error: candidates are:
+>     cVideoStreamDecoder::cVideoStreamDecoder(const cVideoStreamDecoder&)
+> mpeg2decoder.c:383: error:
+>     cVideoStreamDecoder::cVideoStreamDecoder(AVCodecContext*, cVideoOut*,
+>     cClock*, int)
+> "
+
+Just don't know whats wrong here. Please give a newer ffmpeg version a try.
+
+> 
+> My enviroment is as following:
+> 
+> Suse 9.3 32bit
+> gcc 3.3.5
+> kernel 2.6.11.4-21.7 (compiled with Matrox FB support)
+> 
+> I am no C programmer, so I have no clue, what this nice error message 
+> should tell me...
+> 
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.5.1331738281.11969.softdevice-devel@lists.berlios.de>
+
+support only this as max resolution on both DVI connectors.
+
+With current code and number and size of buffer we use, I expect some
+difficulties with HDTV resolutions. Matrox cards only have 32MB :-) .
+
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.6.1331738282.11969.softdevice-devel@lists.berlios.de>
+
+an YV12, YUY2 surface ton an rgb surface.
+
+> 
+> So for now I did a short test on my gentoo epia system. My old gentoo
+> does not like my new kernel. No sound device available. With the old kernel
+> 2.6.7, there is a strange A/V sync behavior vieable. Recordings started at
+> full speed, ways too fast. Video is not throttled to audio. Could it be
+> that rtc timer does not work ? My main systems cannot use /dev/rtc
+> for syncing as chrony has this device. But on my epia box, there is no chrony.
+
+Found the reason, but not the fault :-) .
+Reported display time is very strange:
+
+[dfb] Display frame time is 99949 microseconds
+
+As a hack I set that to 16667. There should be some bounds check or some
+more measurement points.
+
+This strange display time is reproducable after each reconfigure.
+
+[dfb] (re)configured 0x08100609
+[dfb] Display frame time is 99949 microseconds
+[dfb] Display frame time is 99950 microseconds
+
+I cannot say very much about sync as audio out seems to broken.
+Both active speaker sets are nearly and almost silent. But there
+are no '+' chars written for skipping frames.
+
+Cpu load is around 45% for recordings (no tuner connected) 1GHz Nehemia.
+
+> 
+> Can you try to choose another sync timer ? mpeg2decoder line 463:
+> syncTimer = new cSyncTimer (emRtcTimer);
+> 
+> change emRtcTimer to emSigTimer or emUsleepTimer .
+> Shouldn't that be emSigTimer always ?
+> 
+> Let's see when emerge -e world finishs .
+
+Took about 8 hours :-( .
+
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.7.1331738283.11969.softdevice-devel@lists.berlios.de>
+
+which supports from specs 1920x1024, but with largest resolution 
+1024x768 mentioned in the manual. Don't know how that works together.
+
+But paying around 1350 euros for that, is an other story, even if that
+one supports a 2:2 pull down recovery (mentioned in german user
+manual only).
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.8.1331738284.11969.softdevice-devel@lists.berlios.de>
+
+Stefan Lucke
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.9.1331738284.11969.softdevice-devel@lists.berlios.de>
+
+softdevice-dfb.User3 	some_key_value
+
+> 
+> and in setup.conf
+> 
+> softdevice.CropModeToggleKey = 3
+> 
+> but nothing happens... everything else on the remote control works fine.
+> What am I missing? 
+
+Unfortunately this works only, if you use directfb's remote .
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.10.1331738285.11969.softdevice-devel@lists.berlios.de>
+
+Softdevice uses only hardware acclerated functions from directfb such as
+scaling etc, no actual decoding.
+
+MPEG4/H.264 decoding is supported by ffmpeg, but i think you muste use
+some dual xeon system or better to get 720p/1080i H.264 material
+decoded.
+
+-------------
+Andre Neumann
+
+> -----Original Message-----
+> From: softdevice-devel-admin at berlios.de 
+> [mailto:softdevice-devel-admin at berlios.de] On Behalf Of Harald Milz
+> Sent: Wednesday, December 28, 2005 7:24 AM
+> To: softdevice-devel at berlios.de
+> Subject: [Softdevice-devel] MPEG4/H.264 w/ softdevice?
+> 
+> Hi,
+> 
+> I am still unsure about the current status of suftdevice / directfb on
+> VIA CN400 (Unichrome Pro) with regard to MPEG4/H.264. The VIA 
+> kernel and
+> Xorg drivers basically support MPEG4/H.264 but what about 
+> softdevice and
+> directfb? Can somebody please shed some light on this? 
+> 
+> And - would softdevice still support cropping when decoding 
+> the MPEG2/4
+> stream in hardware?
+> 
+> What software components do I need? 
+> 
+> 
+> -- 
+> Heaven, n.:
+> 	A place where the wicked cease from troubling you with talk of
+> their personal affairs, and the good listen with attention while you
+> expound your own.
+> 		-- Ambrose Bierce, "The Devil's Dictionary"
+> _______________________________________________
+> Softdevice-devel mailing list
+> Softdevice-devel at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/softdevice-devel
+> 
+> 
+> 
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.11.1331738286.11969.softdevice-devel@lists.berlios.de>
+
+             geometry <xres> <yres> <vxres> <vyres> <depth>
+             timings <pixclock> <left> <right>  <upper>  <lower> <hslen> <vslen>
+
+              htotal = left + xres + right + hslen
+              vtotal = upper + yres + lower + vslen
+
+htotal = 106 + 768 + 1 + 70 = 945 (pixels)
+vtotal = 44  + 576 + 1 + 4 = 625 (lines)
+
+So that should be 945 * 67723 = 63998235 picoseconds * 625 lines,
+which is about 39.998896875ms frame duration.
+
+> The frame time is about 19.470 ms, while it should be 20 ms to get a 50 Hz
+> frame rate.  As I couldn't get my monitor to synchronize by fiddling with
+> the values, I do not think that this is my problem.
+
+Is that a monitor device or tv device ?
+Only tv devices should get a sync. The disadvantage is that I don't
+know how to select field parity in that mode .
+
+-- 
+Stefan Lucke
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.12.1331738287.11969.softdevice-devel@lists.berlios.de>
+
+decoder decodes slices rather than frames: the input stream is broken into 
+the relevant slices, these are fed into the decoder, the decoding is 
+initiated, and then the slices are read back out and combined into a frame. 
+Now, I'm not totally sure whether the data can be read back from the decoder 
+or whether it goes directly to a framebuffer from there, somehow!
+
+It doesn't look like mtest has been touched since 2004. I think Ivor's 
+libddmpeg has been replaced by the Unichrome project which is a driver for 
+Xorg.
+
+Has anyone made any more progress with this or am I starting from scratch? 
+Ultimately, the best route would probably be to incorporate hardware decoding 
+into ffmpeg or similar but, for now, I'd just be happy to get it working from 
+softdevice!
+
+:)
+
+Cheers,
+
+Laz
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.13.1331738287.11969.softdevice-devel@lists.berlios.de>
+
+I think XVMC is far more advanced and should not be a real problem (and
+you mention patches to ffmpeg that should add XVMC to softdevice without
+much work or no work at all in softdevice).
+
+> I think I remember that the openchrome developers once search for
+> someone who would integrate the mpeg2 hardware acceleration into
+> DirectFB, but obviously the didn't find anyone...
+
+What I remenber is DirectFB developers searching for someone to
+integrate openchrome hardware decoding into DirectFB, removing X
+dependencies.
+I do not read openchrome's ML, though, so you might also be right.
+
+> What I can say is that the patch to ffmpeg to use the VLD-Xvmc is rather
+> small (it can be extracted from the mplayer patch on openchrome), so
+> getting support form ffmpeg should not be difficult.
+
+If that patch doesn't add X dependency (or run-time X dependency), that
+would be great !
+
+-- 
+NH
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.14.1331738288.11969.softdevice-devel@lists.berlios.de>
+
+With DirectFB modification:
+
+procs -----------memory---------- ---swap-- -----io---- --system-- ----cpu----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in    cs us sy id wa
+ 0  0      0 947200   8452  39792    0    0    25     7 2040  1646 11  1 87  1
+ 0  0      0 947200   8452  39792    0    0     0     0 4081  3259 22  0 78  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4072  2903 21  2 77  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4085  3230 22  0 78  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4063  3257 22  1 77  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4073  2940 21  0 79  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4076  3033 22  2 76  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4096  2964 21  0 79  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4070  2941 20  1 79  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4074  3162 21  0 79  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4078  3042 19  1 80  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4091  2917 14  3 83  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4065  2827 14  0 86  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4078  2885 11  1 88  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4070  2923 13  0 87  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4079  3027 12  1 87  0
+ 0  0      0 947200   8452  39792    0    0     0     0 4079  3028 12  0 88  0
+
+DirectFB modification reverted, kernel mod kept:
+procs -----------memory---------- ---swap-- -----io---- --system-- ----cpu----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in    cs us sy id wa
+ 3  0      0 899844  13760  71000    0    0    24    11 2449  2007 15  1 83  1
+ 0  0      0 899844  13760  71000    0    0     0     0 4067  3598 27  1 72  0
+ 0  0      0 899844  13760  71000    0    0     0     0 4078  3621 24  1 75  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4079  3814 23  2 75  0
+ 0  0      0 899732  13760  71000    0    0     0     0 4077  3825 24  0 76  0
+ 0  0      0 899732  13760  71000    0    0     0     0 4072  3612 22  1 77  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4074  3467 21  0 79  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4077  3553 22  1 77  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4103  3523 23  0 77  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4067  3666 22  2 76  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4079  3888 22  0 78  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4073  3783 29  0 71  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4080  3691 31  0 69  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4070  3835 31  1 68  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4077  4060 31  1 68  0
+ 0  0      0 899760  13760  71000    0    0     0     0 4072  4150 30  0 70  0
+ 1  0      0 899760  13760  71000    0    0     0     0 4114  3698 31  0 69  0
+
+
+-- 
+Stefan Lucke
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.15.1331738288.11969.softdevice-devel@lists.berlios.de>
+
+Whats your setting for OSD drawing ?
+
+Did a short test Xv-out, expand set to max (25), OSD pseudo and
+no crash happend.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=7365&group_id=2051
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.16.1331738288.11969.softdevice-devel@lists.berlios.de>
+
+small, so in my opinion we can merge it into the softdevice as soon as
+it works stable and the above issue is solved. I also remember that you
+used the SetupStore for some global variables which weren't really setup
+options. Please don't do that, especially the index of the next picture
+doesn't belong there.
+
+Bye,
+Martin
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.17.1331738288.11969.softdevice-devel@lists.berlios.de>
+
+unichrome driver would report capability DLCAPS_ALPHACHANNEL. Reporting
+DLCAPS_ALPHACHANNEL has to be fixed in DirectFB/gfxdrivers/unichrome/uc_overlay.h
+line 5 or 6, by or'ing this together with other flags .
+
+Stefan Lucke
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.18.1331738288.11969.softdevice-devel@lists.berlios.de>
+
+mind, and what Xine couldn't do becasue of it's own architecture.
+
+Just my 2c
+
+-- 
+NH
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.19.1331738289.11969.softdevice-devel@lists.berlios.de>
+
+I got the famous sig-11 ). The first OSD was shown, but I guess the OSD 
+refresh gets active, while the first video frame is about to be displayed.
+
+> > 
+> I could not yet reproduce the crashes, so I'm not sure what causes them,
+> I assume it is a wrongly initialized variable.
+
+Got the update, now it seems to be impossible to turn deinterlacing on:
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+warning unsupported pixel format(22)!
+[softdevice] error, libavcodec deinterlacer failure
+[softdevice] switching deinterlacing off !
+
+> I fixed a few bugs in PicBuffer.c and VideoFilter.c, but I'm not sure if
+> I catched the one which causes this. It would be nice to have the output
+> of a crash with PICDEB in Picbuffer.c enabled.
+
+Will try that soon.
+
+-- 
+Stefan Lucke
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.20.1331738289.11969.softdevice-devel@lists.berlios.de>
+
+* There are different hardware variants of the Unichrome chips.  Since
+  the revision number can only be read by superuser processes, a utility
+  'find_revision.sh' is provided.  The value it reports should be used
+  in /etc/directfbrc in a line of the form 'unichrome-revision=xx'.
+  
+  Symptoms of an incorrect revision number are corrupt images on the
+  video overlay layer or incorrect colors when using YUY2 or YV12
+  pixel formats.
+
+
+-- 
+Stefan Lucke
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.21.1331738292.11969.softdevice-devel@lists.berlios.de>
+
+> I didn't receive the above Martin's message at all - off list, perhaps? 
+> Anyway, if it's still about the topic in question, the keyword for using 
+> the subpicture layer from my perspective is 'incompetence': I couldn't 
+> get crtc2 (mgatv) video layer working with YV12 colourspace and blitted 
+> OSD, so, I thought maybe it'd work with a subpicture layer more 
+> effortlessly, and it did. So, the advantage for me isn't the OSD really, 
+> but the YV12 for the crtc2 video. YV12->YUY2 was simply too slow.
+> 
+Ah, yes I see. I forgot that for mgatv the default is YUY2, I thought
+that it is I420. Of course YV12 is faster compared to YUY2...
+
+Why is YUY2 is the default at all? Is the OSD not working at all or is
+only the StrechtBlitting not working?
+
+> Using YV12 and LUT44 both bring advantages of reduced memory 
+> requirements and are generally faster. I didn't implement the scaling 
+> routines for the LUT44 OSD, because I simply didn't grasp the idea of 
+> the existing code in 5 seconds, and realized that scaling would 
+> practically never be required by the tv output.
+> 
+Scaling LUT44 makes not much sense, the quality would be very low
+because of the limited colors. The simplest and fastest solution one
+could do, would be to skip or repeat pixels. To adopt the existing
+scaling routines to indexed bitmaps would be dead slow, and probably
+still have a limited quality.
+I saw that you implemented ScaleVUpXXXLut() and ScaleVDownXXXLut(), that
+is not needed, if you don't scale only a CopyToBitmapLut() should be enough.
+But without scaling there probably will be complaints again because of
+the shift of the menu cursor and the menu when using the DVD-plugin.
+
+>> I would not mind adding support for an indexed bitmap, but currently I
+>> don't see the advantage. If we do that we should probably think again
+>> about the interface of GetOSDMode(), I never liked that very much, it
+>> was a hack from the start...
+> 
+> And I didn't add much style to that either :) Adding the indexed code is
+> useless if there are no other users and I'm not going to clean up the
+> mess I made in video-dfb anytime soon. Of course, if you'd add just the
+> SoftOsd bits (without maybe the OSD_WIDTH changes), it would make my
+> life easier when trying to keep up with cvs updates. 
+>
+No, either we apply the DFB part and the OSD part together or nothing. I
+don't want to have some code in the softdevice which is not used and
+probably never will be used.
+What I wanted to say is, if you agree with Stefan on the DFB part, I
+don't mind if we add the OSD part (maybe with some modifications...).
+
+Bye,
+Martin
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.22.1331738294.11969.softdevice-devel@lists.berlios.de>
+
+directfbrc
+     pixelformat=AiRGB must be specified.
+
+Regards,
+Vladimir Monchenko.
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.23.1331738294.11969.softdevice-devel@lists.berlios.de>
+
+rev 7877 : muxing packets with unknown timestamps is not allowed
+rev 7879 : iam pretty sure send time is dts and not pts ...
+
+Would you like to do some further checks?
+Does revision 7876 still work?
+If answer is yes which of above revision kicks us ?
+If answer is no, I've to guess some more.
+
+>
+> Between these two versions I removed old /usr/lib/libav* and
+> /usr/lib/libpostproc* files to make sure no previous binary version was
+> hiding somewhere.  I also made "make clean" to VDR and softdevice plugin
+> sources between these tests.
+
+>
+> The next step was to re-configure, recompile and install FFMPEG.
+> cd /usr/src/ffmpeg/
+> ./configure --prefix=/usr
+
+Stefan Lucke
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.24.1331738295.11969.softdevice-devel@lists.berlios.de>
+
+Whats your setting for OSD drawing ?
+
+Did a short test Xv-out, expand set to max (25), OSD pseudo and
+no crash happend.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=7365&group_id=2051
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.25.1331738297.11969.softdevice-devel@lists.berlios.de>
+
+ - Suspend output on user inactivity (see README): patch by Marko =
+M=E4kel=E4
+
+-------------
+Andre Neumann
+
+-----Urspr=FCngliche Nachricht-----
+Von: softdevice-devel-bounces at lists.berlios.de =
+[mailto:softdevice-devel-bounces at lists.berlios.de] Im Auftrag von Claas =
+Hilbrecht
+Gesendet: Montag, 28. April 2008 11:25
+An: softdevice-devel at lists.berlios.de
+Betreff: Re: [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+
+--Am Freitag, 18. April 2008 18:01 +0200 Stefan Lucke=20
+<stefan at lucke.in-berlin.de> schrieb:
+
+> Supported vdr versions: 1.4.x, 1.5.x and 1.6.x
+
+After switching from vdr 1.6.0 and softdevice 2008-02-26 to vdr 1.6.0-1 =
+and=20
+softdevice 0.5.0 I have a problem. I use the softdevice audio output =
+only=20
+and after the upgrade the audio is "killed" after some hours. If I =
+change=20
+the channel via vdr live plugin the sounds comes back. I use softdevice =
+as=20
+a radio broadcast system here. Looking at syslog I only find this=20
+information regarding softdevice:
+
+Apr 27 21:42:36 funfix vdr: [15174] 1 cRepacker messages suppressed
+Apr 27 21:42:36 funfix vdr: [15174] cAudioRepacker(0xC0): skipped 312 =
+bytes=20
+while syncing on next audio frame
+Apr 27 21:42:36 funfix vdr: [15140] cAudioRepacker(0xC0): skipped 1148=20
+bytes while syncing on next audio frame
+Apr 27 21:42:46 funfix vdr: [15140] cAudioRepacker(0xC0): skipped 4 =
+bytes=20
+to sync on next audio frame
+Apr 27 21:42:48 funfix vdr: [15174] 2 cRepacker messages suppressed
+Apr 27 21:42:48 funfix vdr: [15174] cAudioRepacker(0xC0): skipped 4 =
+bytes=20
+to sync on next audio frame
+
+But this is only logged once and the audio killing occured so far >5 =
+times.=20
+I didn't change any configuration or libs since the last update. =
+softdevice=20
+is build with this configuration: ./configure --disable-vidix =
+--disable-fb=20
+--disable-dfb --disable-cle266 --disable-xv --disable-xinerama=20
+--disable-oss --disable-suspendkey --disable-yaepg.
+
+I will now try vdr 1.6.0-1 with the "old" softdevice from cvs to locate =
+the=20
+problem.
+
+--=20
+ Claas Hilbrecht
+ http://www.jucs-kramkiste.de
+
+_______________________________________________
+Softdevice-devel mailing list
+Softdevice-devel at lists.berlios.de
+https://lists.berlios.de/mailman/listinfo/softdevice-devel
+
+
+
+
+From bogus@does.not.exist.com  Wed Mar 14 16:17:53 2012
+From: bogus@does.not.exist.com ()
+Date: Wed, 14 Mar 2012 15:17:53 -0000
+Subject: No subject
+Message-ID: <mailman.26.1331738298.11969.softdevice-devel@lists.berlios.de>
+
+
+> (gdb) run
+> Starting program: /usr/src/vdr1_70/vdr -P "softdevice -vo xv:"
+> [Thread debugging using libthread_db enabled]
+>
+> [4]+  Stopped                 gdb ./vdr
+> goga at goga:/usr/src/vdr1_70$
+
+Stopped messages are usually caused by pressing CONTROL-Z.
+
+>
+>
+> I don't know why I have [4]+  Stopped                 gdb ./vdr
+
+Command "fg" brings suspended (stopped) processes back to foreground
+of controlling terminal.
+
+If you want to detach a suspended (stopped) process, command "bg"
+background can be used to append and "&" to previous issued command.
+
+Stefan Lucke
+
+

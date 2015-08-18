@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20color%20problem%20-%20Video%20file%20with%20defects%20and%20log%20of%20VDR%20%28Fixed%20mistake%29&In-Reply-To=%3C200604130017.22399.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001853.html">
+   <LINK REL="Next"  HREF="001865.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Packed%20color%20problem%20-%20Video%20file%20with%20defects%20and%20log%20of%20VDR%20%28Fixed%20mistake%29&In-Reply-To=%3C200604130017.22399.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr 13 00:17:22 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001853.html">[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)
+</A></li>
+        <LI>Next message: <A HREF="001865.html">[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1863">[ date ]</a>
+              <a href="thread.html#1863">[ thread ]</a>
+              <a href="subject.html#1863">[ subject ]</a>
+              <a href="author.html#1863">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 11 April 2006 09:41, jonis2006 wrote:
+&gt;<i> Hello !
+</I>&gt;<i> Sorry I mistake URL of the file in a previous message:
+</I>&gt;<i> <A HREF="http://vm22.on.ufanet.ru/002.vdr">http://vm22.on.ufanet.ru/002.vdr</A>
+</I>
+Thanks for the file.
+
+&gt;<i> I have already wrote to Softdevice mailing list about my problem, and
+</I>&gt;<i> Stefan Lucke requsted a vdr file with defects: 
+</I>&gt;<i> Here is:
+</I>&gt;<i> <A HREF="http://vm22.on.ufanet.ru/002.vdr">http://vm22.on.ufanet.ru/002.vdr</A>
+</I>&gt;<i> Look at the red human - If you will use yuy2 color with directfb, you will
+</I>&gt;<i> get red lines on TV screen. If you will use YV12 (He is not working on
+</I>&gt;<i> Matrox G450 with softdevice) picture will be displayed properly.
+</I>
+With matrox cards I never had problems switching between color
+formats via OSD when vga out is used. For TV-out only YUY2 is
+supported.
+
+&gt;<i> With Mplayer DFB YV12 output works well.
+</I>&gt;<i> /etc/directfbrc
+</I>&gt;<i> # layer setup 
+</I>&gt;<i> # 
+</I>&gt;<i> mode=768x576-32
+</I>&gt;<i> primary-layer=2
+</I>&gt;<i> pixelformat=YV12
+</I>
+Can you try to use pixelformat=ARGB as mentioned on
+<A HREF="http://softdevice.berlios.de">http://softdevice.berlios.de</A> .
+
+&gt;<i> depth=32
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001853.html">[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)
+</A></li>
+	<LI>Next message: <A HREF="001865.html">[Softdevice-devel] Packed color problem - Video file with defects and log of VDR (Fixed mistake)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1863">[ date ]</a>
+              <a href="thread.html#1863">[ thread ]</a>
+              <a href="subject.html#1863">[ subject ]</a>
+              <a href="author.html#1863">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

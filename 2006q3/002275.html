@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Exit out on wrong audio rates?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Exit%20out%20on%20wrong%20audio%20rates%3F&In-Reply-To=%3C44BC4A81.2040605%40optionsdsl.ca%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002269.html">
+   <LINK REL="Next"  HREF="002276.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Exit out on wrong audio rates?</H1>
+    <B>Dave</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Exit%20out%20on%20wrong%20audio%20rates%3F&In-Reply-To=%3C44BC4A81.2040605%40optionsdsl.ca%3E"
+       TITLE="[Softdevice-devel] Exit out on wrong audio rates?">dave at optionsdsl.ca
+       </A><BR>
+    <I>Tue Jul 18 04:42:09 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002269.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+        <LI>Next message: <A HREF="002276.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2275">[ date ]</a>
+              <a href="thread.html#2275">[ thread ]</a>
+              <a href="subject.html#2275">[ subject ]</a>
+              <a href="author.html#2275">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Here is the actual log entry:
+
+Jul 17 22:33:32 vdr vdr: [8262] [softdevice-audio] Rate 24000 Hz is not
+possible (and using instead 48000 Hz is not implemented) FATAL exiting
+
+This drives me nuts!
+
+
+Torgeir Veimo wrote:
+&gt;<i> Dave wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I tried posted this to mailing list before but Im not sure it ever made
+</I>&gt;&gt;<i> it or not, so forgive me if I duplicate post:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  I have this problem occasionally with softdevice exiting out due to
+</I>&gt;&gt;<i> unsupported audio sample rates. for example 44100 khz causes softdevice
+</I>&gt;&gt;<i> to exit and kill VDR.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Is there a better way to handle this rather than to kill VDR
+</I>&gt;&gt;<i>  completely? I have 3 DVB-S cards in one box, and 3 dishes. I often am
+</I>&gt;&gt;<i>  recording 3-4 programs at the same time, and for example a brief hard
+</I>&gt;&gt;<i>  rain comes by and lowers the signal too low and causes video/audio
+</I>&gt;&gt;<i>  errors I lose all my other recordings currently being recorded which
+</I>&gt;&gt;<i>  encountered no problems at all. I would much rather have a recording
+</I>&gt;&gt;<i>  with some video/audio errors than no recordings at all.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Im open to suggestions  :) 
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Can you maybe provide a backtrace from a crash running under gdb? Run it 
+</I>&gt;<i> as gdb --args vdr -v /video/vdr [...] etc. and run the command 'ba' 
+</I>&gt;<i> after it segfaults on such a programme.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002269.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+	<LI>Next message: <A HREF="002276.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2275">[ date ]</a>
+              <a href="thread.html#2275">[ thread ]</a>
+              <a href="subject.html#2275">[ subject ]</a>
+              <a href="author.html#2275">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

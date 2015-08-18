@@ -1,0 +1,88 @@
+From admin at berlios.de  Mon Feb  7 08:07:16 2011
+From: admin at berlios.de (admin at berlios.de)
+Date: Mon, 7 Feb 2011 09:07:16 +0200 (EET)
+Subject: [Softdevice-devel] [Patch #3128] Fix logging crash
+Message-ID: <201102070707.p1777GMJ026872@unicorn.berlios.de>
+
+Patch #3128 has been updated. 
+
+Project: softdevice
+Category: None
+Status: Open
+Submitted by: scop
+Assigned to : none
+Summary: Fix logging crash
+
+-------------------------------------------------------
+For more info, visit:
+
+http://developer.berlios.de/patch/?func=detailpatch&patch_id=3128&group_id=2051
+
+
+From admin at berlios.de  Mon Feb  7 08:08:45 2011
+From: admin at berlios.de (admin at berlios.de)
+Date: Mon, 7 Feb 2011 09:08:45 +0200 (EET)
+Subject: [Softdevice-devel] [Patch #3128] Fix logging crash
+Message-ID: <201102070708.p1778jGr000865@unicorn.berlios.de>
+
+Patch #3128 has been updated. 
+
+Project: softdevice
+Category: None
+Status: Open
+Submitted by: scop
+Assigned to : none
+Summary: Fix logging crash
+
+Follow-Ups:
+
+Date: 2011-Feb-07 09:08
+By: scop
+
+Comment:
+Log() may end up using the arg list twice without calling va_end() and va_start() again which crashes immediately for me. The attached patch fixes it.
+-------------------------------------------------------
+
+-------------------------------------------------------
+For more info, visit:
+
+http://developer.berlios.de/patch/?func=detailpatch&patch_id=3128&group_id=2051
+
+
+From admin at berlios.de  Mon Feb  7 08:09:03 2011
+From: admin at berlios.de (admin at berlios.de)
+Date: Mon, 7 Feb 2011 09:09:03 +0200 (EET)
+Subject: [Softdevice-devel] [Patch #3128] Fix logging crash
+Message-ID: <201102070709.p17793Vc001844@unicorn.berlios.de>
+
+Patch #3128 has been updated. 
+
+Project: softdevice
+Category: None
+Status: Open
+Submitted by: scop
+Assigned to : none
+Summary: Fix logging crash
+
+Follow-Ups:
+
+Date: 2011-Feb-07 09:09
+By: scop
+
+Comment:
+Forgot to note that this is against current softdevice CVS.
+-------------------------------------------------------
+
+Date: 2011-Feb-07 09:08
+By: scop
+
+Comment:
+Log() may end up using the arg list twice without calling va_end() and va_start() again which crashes immediately for me. The attached patch fixes it.
+-------------------------------------------------------
+
+-------------------------------------------------------
+For more info, visit:
+
+http://developer.berlios.de/patch/?func=detailpatch&patch_id=3128&group_id=2051
+
+

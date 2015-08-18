@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C445FA071.9040208%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001983.html">
+   <LINK REL="Next"  HREF="002002.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C445FA071.9040208%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon May  8 21:48:01 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001983.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="002002.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1987">[ date ]</a>
+              <a href="thread.html#1987">[ thread ]</a>
+              <a href="subject.html#1987">[ subject ]</a>
+              <a href="author.html#1987">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> On Sunday 07 May 2006 14:08, Stefan Lucke wrote:
+</I>&gt;&gt;<i> On Mittwoch 03 Mai 2006 10:51, Laz wrote:
+</I>&gt;&gt;&gt;<i> I've had a private email from Rolf Ahrenberg who got this working and
+</I>&gt;&gt;&gt;<i> had the same quarter-sized image. However, he tells me that setting
+</I>&gt;&gt;&gt;<i> &quot;context-&gt;width = 720; context-&gt;height = 576;&quot; around where the
+</I>&gt;&gt;&gt;<i> decoder is called gives a full-screen picture.
+</I>&gt;&gt;<i> They should be available in CLE266MPEGDecoderState.width ( and height).
+</I>&gt;&gt;<i> Hopefully it is accessible, should be as it is not declared private.
+</I>&gt;<i> 
+</I>&gt;<i> Ah yes: didn't think of that at the time! I should probably add the 'which 
+</I>&gt;<i> buffer contains the decoded frame' variable to that structure to make it 
+</I>&gt;<i> a bit more self-contained.
+</I>&gt;<i>
+</I>The softdevice currently doesn't support direct rendering, and that is
+what the hardware decoder actually does. I have a patch which starts to
+implement the direct rendering, unfortunately it isn't finished yet.
+With proper direct rendering support passing the correct FB will not be
+a problem, so I would suggest to leave it as it is for now.
+
+
+&gt;&gt;<i> But some information for aspect calculation and interlaced/progressive
+</I>&gt;&gt;<i> detection is taken from the decoded frame (AVFrame).
+</I>&gt;<i> 
+</I>&gt;<i> I thought it might be a bit more complicated. Does any of the A-V sync 
+</I>&gt;<i> stuff come from the decoding or is all of that from the libavformat bit?
+</I>&gt;<i> 
+</I>Libavformat delivers the pts for the coded frame which starts in the
+packet. The difficult bit is to find the correct decoded frame to that
+pts, since they are reordered for displaying. I will try to have a look
+at it...
+
+I also have the patches running now, it works nice except for the aspect
+ratio and some a-v syncing issues.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001983.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="002002.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1987">[ date ]</a>
+              <a href="thread.html#1987">[ thread ]</a>
+              <a href="subject.html#1987">[ subject ]</a>
+              <a href="author.html#1987">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

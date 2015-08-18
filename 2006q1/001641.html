@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] new OSD support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C43C10DA7.8090706%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001639.html">
+   <LINK REL="Next"  HREF="001642.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] new OSD support</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C43C10DA7.8090706%40gmx.net%3E"
+       TITLE="[Softdevice-devel] new OSD support">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Jan  8 14:03:35 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001639.html">[Softdevice-devel] new OSD support
+</A></li>
+        <LI>Next message: <A HREF="001642.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1641">[ date ]</a>
+              <a href="thread.html#1641">[ thread ]</a>
+              <a href="subject.html#1641">[ subject ]</a>
+              <a href="author.html#1641">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+
+&gt;<i> 
+</I>&gt;<i> It's an Epia MII-12000 with a Nehemiah processor. I'll test that system more 
+</I>&gt;<i> later on. The CPU usage sits between ca. 65% and 85%, depending on the 
+</I>&gt;<i> bitrate of the channel, so it isn't totally ideal! With the xine plugin and 
+</I>&gt;<i> hardware MPEG2 decoding, it is down at about 35% (from memory) but the OSD 
+</I>&gt;<i> wasn't as good (software blended, and really sluggish unless it was opaque), 
+</I>&gt;<i> and that also requires the extra overhead of X running!
+</I>&gt;<i>
+</I>Since you mention it, is hardware MPEG2 decoding for the epias now in
+DirectFB? I think I read somewhere that this feature is planned...
+
+&gt;<i> Don't get me wrong here: the OSD is still really good just not as responsive 
+</I>&gt;<i> as on my other Matrox system! E.g. on the Matrox system, if I hold down the 
+</I>&gt;<i> 'down' key on a menu, the selection tracks down smoothly. On the epia system, 
+</I>&gt;<i> the selection skips lines as it moves down, looking as if the OSD isn't 
+</I>&gt;<i> updated as quickly, or something.
+</I>&gt;<i> 
+</I>&gt;<i> I've just noticed that MMX2 is enabled by default in softdevice; this CPU 
+</I>&gt;<i> doesn't have this: not sure whether disabling that would make any difference 
+</I>&gt;<i> but I'll give it a go!
+</I>
+Don't worry, if you processor would not support MMX2 the softdevice
+would crash ;-). What the softdevice calls MMX2 is actually a small set
+of instructions which is also part of 3Dnow! and is also sometimes
+called mmxext. In fact it is only is only PREFETCH and MOVQNT. As far as
+I know all Via processors from Erza onwards support these instructions.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001639.html">[Softdevice-devel] new OSD support
+</A></li>
+	<LI>Next message: <A HREF="001642.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1641">[ date ]</a>
+              <a href="thread.html#1641">[ thread ]</a>
+              <a href="subject.html#1641">[ subject ]</a>
+              <a href="author.html#1641">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

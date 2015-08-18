@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A-V sync problems with directfb on	unichrome...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on%0A%09unichrome...&In-Reply-To=%3C1127465509.2670.12.camel%40laser2.york.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001258.html">
+   <LINK REL="Next"  HREF="001261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A-V sync problems with directfb on	unichrome...</H1>
+    <B>Laurence Abbott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on%0A%09unichrome...&In-Reply-To=%3C1127465509.2670.12.camel%40laser2.york.ac.uk%3E"
+       TITLE="[Softdevice-devel] A-V sync problems with directfb on	unichrome...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Fri Sep 23 10:51:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001258.html">[Softdevice-devel] A-V sync problems with directfb on unichrome...
+</A></li>
+        <LI>Next message: <A HREF="001261.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1259">[ date ]</a>
+              <a href="thread.html#1259">[ thread ]</a>
+              <a href="subject.html#1259">[ subject ]</a>
+              <a href="author.html#1259">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, 2005-09-22 at 19:03 +0200, Martin Wache wrote:
+&gt;<i> Laurence Abbott schrieb:
+</I>&gt;<i> &gt; Should this one work or is it hanging around from a previous version, or
+</I>&gt;<i> &gt; something?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Looking through the source, I can't see why I should be getting nan,
+</I>&gt;<i> &gt; unless offset is being set to nan by:
+</I>&gt;<i> &gt; (mpeg2decoder.c, line 620):
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;   uint64_t aPTS = clock-&gt;GetPTS();
+</I>&gt;<i> &gt;   // update video pts
+</I>&gt;<i> &gt;   cClock::AdjustVideoPTS(pts);
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;   if ( aPTS )
+</I>&gt;<i> &gt;     offset = aPTS - pts ;
+</I>&gt;<i> &gt;   else offset = 0;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Could this be the source of my problems, or am I barking up the wrong
+</I>&gt;<i> &gt; tree here?!
+</I>&gt;<i> &gt; 
+</I>&gt;<i> If offset is nan, then you surely have a problem with the A-V sync.
+</I>
+Will it be using these nan values for the timing or is it just for the
+printing?
+
+&gt;<i> However I think that the nans you see are just because I was a bit lazy
+</I>&gt;<i> with the conversions: (float)dispTime/1000  is not necessarly of type
+</I>&gt;<i> float again. Probably an additional conversion or replacing 1000 by
+</I>&gt;<i> 1000.0 helps, I think I remember that some compilers didn't like these
+</I>&gt;<i> constructs.
+</I>
+I'll add a few more '.0' bits and see if it makes any difference. I
+could see the /1000 giving an int and rounding errors but not nan!
+Looking at mpeg2decoder.c, these are only used in the printfs so it
+can't affect the actual behaviour.
+
+&gt;<i> About the source of the bad A-V sync I'm not sure... As far as I
+</I>&gt;<i> remember DireftFB out tries to sync to the refreshrate of the TV. Are
+</I>&gt;<i> you using a TV for output? What is the refreshrate of the videomode?
+</I>&gt;<i> Could you please check if you see a line
+</I>&gt;<i> [dfb] Display frame time is XXX microseconds
+</I>&gt;<i> on the stdout and report that time?
+</I>
+I have both a (PAL) TV and monitor attached. Both are running at 50 Hz
+(TV because it's PAL, and monitor reports as such on it's OSD). The
+output shows:
+
+[dfb] Display frame time is 19994 microseconds
+
+which I work out to be 50 Hz.
+
+The A-V sync is correct for some of the time but it does wander a lot.
+Let me know if there are any things I can do to try to track down the
+source of the problem.
+
+How good is A-V sync on unichrome with directfb output when it hasn't
+been patched for field-sync? Looking through the list archives, most of
+the development seems to be done on Matrox cards. Is unichrome output
+known to be less good at present because not many people are using /
+testing it?
+
+Cheers,
+
+Laz
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001258.html">[Softdevice-devel] A-V sync problems with directfb on unichrome...
+</A></li>
+	<LI>Next message: <A HREF="001261.html">[Softdevice-devel] A-V sync problems with directfb on	unichrome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1259">[ date ]</a>
+              <a href="thread.html#1259">[ thread ]</a>
+              <a href="subject.html#1259">[ subject ]</a>
+              <a href="author.html#1259">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

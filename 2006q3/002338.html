@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180609031626l7a7cdab6l7732e39e6e067c91%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002337.html">
+   <LINK REL="Next"  HREF="002339.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Alasdair Campbell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180609031626l7a7cdab6l7732e39e6e067c91%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">ragawu at gmail.com
+       </A><BR>
+    <I>Mon Sep  4 01:26:57 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002337.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002339.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2338">[ date ]</a>
+              <a href="thread.html#2338">[ thread ]</a>
+              <a href="subject.html#2338">[ subject ]</a>
+              <a href="author.html#2338">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 03/09/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt; wrote:
+&gt;<i> On Tue, Jul 25, 2006 at 10:23:15AM +0100, Alasdair Campbell wrote:
+</I>&gt;<i> &gt; Here is a clip of the BBC rolling news channel, I can see LOTs of
+</I>&gt;<i> &gt; artifacts with the camera movements, and the scrolling text at the
+</I>&gt;<i> &gt; bottom looks poor:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="http://ginezbukov.com/artifacts.tar.bz2">http://ginezbukov.com/artifacts.tar.bz2</A>
+</I>&gt;<i>
+</I>&gt;<i> I don't know if your sample is still available, but I saw similar artifacts
+</I>&gt;<i> (16:9 material vertically scaled on 4:3 screen on -vo dfb:mgatv) earlier
+</I>&gt;<i> this week.  I made a short clip that contains some horizontal movement.
+</I>
+Clip is still available if anyone is interested in trying it out - BBC
+News 24 clip broadcast on UK DVB-T transmission.
+
+&gt;<i> Are there any news on the DirectFB front?  I would appreciate an
+</I>&gt;<i> interrupt-driven interface, to avoid burning CPU in the Flip() method.
+</I>&gt;<i> Besides, the code from DirectFB CVS for better interlaced output broke
+</I>&gt;<i> the OSD.  Has the situation improved since I last checked (June perhaps)?
+</I>
+I've been meaning to do more investigating on this, but things have
+been tough this past month and my girlfriend is certain that she likes
+vdr and that she doesn't want me messing about with it's inards!
+
+I ended up using the Gentoo ebuilds to build my system from scratch
+because I thought make things easier for me. However they have been
+even less reliable than my own compiled setup so I'm going back to
+running CVS versions etc.
+
+I'd like to investigate the output using &quot;softdevice -vo dfb:&quot; as I
+seem to rememebr that although the OSD was broken and there was a
+mirroring of picture above and below the 'letter box' there were no
+artifacts, and there was also an option to use the Fb-Intern(al)
+de-interlacer. Does that have anything to do with the matrox's
+Interlaced output(?).
+
+Some sort of reply from the softdevice programmers or any one from
+directFB would be useful in determining what could and couldn't work.
+
+-- 
+A l a s d a i r   C a m p b e l l
+
+r a g a w u @ g m a i l . c o m
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002337.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002339.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2338">[ date ]</a>
+              <a href="thread.html#2338">[ thread ]</a>
+              <a href="subject.html#2338">[ subject ]</a>
+              <a href="author.html#2338">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

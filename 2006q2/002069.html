@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] direct rendering
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20direct%20rendering&In-Reply-To=%3C44738612.7040503%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002033.html">
+   <LINK REL="Next"  HREF="002039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] direct rendering</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20direct%20rendering&In-Reply-To=%3C44738612.7040503%40gmx.net%3E"
+       TITLE="[Softdevice-devel] [PATCH] direct rendering">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed May 24 00:00:50 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002033.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+        <LI>Next message: <A HREF="002039.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2069">[ date ]</a>
+              <a href="thread.html#2069">[ thread ]</a>
+              <a href="subject.html#2069">[ subject ]</a>
+              <a href="author.html#2069">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache schrieb:
+&gt;<i> Hi list,
+</I>&gt;<i> 
+</I>&gt;<i> I'm sending you my first concept for direct rendering with the
+</I>&gt;<i> softdevice, meaning that the video-out allocates the picture buffes (not
+</I>&gt;<i> necessarily in video memory, which may be slower). There are many
+</I>&gt;<i> advantages of direct rendering, for example the pictures get allocated
+</I>&gt;<i> by the video out, so they can be used at any time by the video out,
+</I>&gt;<i> without having to fear that they have been deleted (because the
+</I>&gt;<i> mpeg2decoder has been reseted). Very nice for software alpha blending
+</I>&gt;<i> and we can also implement screenshots a lot easier :-). X11 XvMC needs
+</I>&gt;<i> direct rendering and I think Laz patches also could benefit from it. For
+</I>&gt;<i> Xv-out it would also be faster to use direct rendering.
+</I>&gt;<i> 
+</I>
+Ok, so here is my second version of the direct rendering, in my opinion
+almost ready for inclusion. I moved the buffer managing into a separate
+file, as well as most of the video filtering (this is not yet complete)
+and the filters now use the new structure sPicBuffer.
+This patch also removes the dependency on avcodec.h from video.h and
+calculates the aspect ratio of the stream inside of mpeg2decoder.c.
+I also moved the call to av_codec_decode_video() into a separate method
+together with all the avcodec specific pts calculations.
+If there are no objections I will commit this patch soon.
+
+Bye,
+Martin
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: direct_rendering1.patch.gz
+Type: application/x-gzip
+Size: 13585 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060524/3694efcf/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060524/3694efcf/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002033.html">[Softdevice-devel] [PATCH] direct rendering
+</A></li>
+	<LI>Next message: <A HREF="002039.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2069">[ date ]</a>
+              <a href="thread.html#2069">[ thread ]</a>
+              <a href="subject.html#2069">[ subject ]</a>
+              <a href="author.html#2069">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

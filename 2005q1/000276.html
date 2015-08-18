@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] HDTV &amp; XV out &amp; scaling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HDTV%20%26%20XV%20out%20%26%20scaling&In-Reply-To=%3C200503062156.15206.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000275.html">
+   <LINK REL="Next"  HREF="000277.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] HDTV &amp; XV out &amp; scaling</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HDTV%20%26%20XV%20out%20%26%20scaling&In-Reply-To=%3C200503062156.15206.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] HDTV &amp; XV out &amp; scaling">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Mar  6 21:56:15 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000275.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+        <LI>Next message: <A HREF="000277.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#276">[ date ]</a>
+              <a href="thread.html#276">[ thread ]</a>
+              <a href="subject.html#276">[ subject ]</a>
+              <a href="author.html#276">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 6. M&#228;rz 2005 09:51, Thomas Herrmann wrote:
+&gt;<i> Hi Stefan &amp; list,
+</I>&gt;<i> 
+</I>&gt;<i> I have a question on the softdevice XV out scaling viewing HDTV channels
+</I>&gt;<i> like HD1. I run the X server at 1280x1024 resolution because this is the
+</I>&gt;<i> native resolution of my LCD. Softdevice runs and scales great using PAL
+</I>&gt;<i> resolutions, but if I switch to HD1 the XV window stays the same size, but
+</I>&gt;<i> the visuable picture is only a fraction of the full picture. It still scales
+</I>&gt;<i> with the XV window, but I can not see the full 1920x1080 picture. It's hard
+</I>&gt;<i> to describe and I was not (yet) able to make a screenshot of the behavior
+</I>&gt;<i> I'm talking about.
+</I>
+Up to now I haven't spend any time on thinking of support for HDTV.
+It should be easy (tm) to add support for larger areas.
+Query the max supported xv dimensions and allocated matching shared
+memory area. I don't know the performance implication of allocating
+the largest possible area always.
+
+&gt;<i> 
+</I>&gt;<i> Is there a limitation on how a larger input stream gets scaled down to a
+</I>&gt;<i> smaller output resolution of the XV out driver?
+</I>
+There are area limitations which are driver dependant. For my G550
+largest xv imgae size is 1024x1024 :-(. You can check your limits with
+xvinfo .
+
+
+PS: This list is for members only. So please subscribe. Post from
+non-members have to be approved individually which may
+cause delays.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000275.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+	<LI>Next message: <A HREF="000277.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#276">[ date ]</a>
+              <a href="thread.html#276">[ thread ]</a>
+              <a href="subject.html#276">[ subject ]</a>
+              <a href="author.html#276">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

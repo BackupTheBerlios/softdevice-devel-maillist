@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C4300AB42.3010306%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001114.html">
+   <LINK REL="Next"  HREF="001116.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C4300AB42.3010306%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Aug 15 16:48:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001114.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001116.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1115">[ date ]</a>
+              <a href="thread.html#1115">[ thread ]</a>
+              <a href="subject.html#1115">[ subject ]</a>
+              <a href="author.html#1115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+&gt;<i> On Mon, Aug 15, 2005 at 03:40:41PM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Next, I'll try to downgrade the kernel and softdevice, one at a time.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> With kernel 2.6.11.6, I get delay=0 as well, but I feel that the lip
+</I>&gt;<i> sync is better than with kernel 2.6.12.3.  With softdevice 0.1.2
+</I>&gt;<i> on kernel 2.6.12.3, the lip sync is better than with softdevice-cvs.
+</I>&gt;<i> On kernel 2.6.11.6, there is a slightly visible sync problem with
+</I>&gt;<i> softdevice-cvs, but softdevice-0.1.2 looks perfect.
+</I>&gt;<i> 
+</I>Hmm so it is not the kernel which did the change but the softdevice
+version.
+I attached another patch which is for the softdevice cvs but I think it
+should apply as well to softdevice-0.1.2, it prints the raw delay like
+the softdevice gets it from libasound as well as the delay like it is
+used for the A-V synchronisation.
+Maybe there is an integer overflow in the calculation of the delay, but
+I doubt that, I would not expect to get 0 in that case...
+Are you using MPlayer? I'm just a bit curious, maybe you can try to
+check if MPlayer is getting the audio delay correctly. To do this you
+have to edit libao2/ao_alsa.c in MPlayer's source directory. Search for
+get_delay and print out the result of their delay calculation, please
+note that they are useing floats for the delay.
+
+&gt;<i> How can we debug this further?  Should I try a sound card (ES1371)
+</I>&gt;<i> instead of the onboard via82xx?
+</I>Strange, I'm useing also a via82xx, kernel 2.6.12 without any problems.
+But I'm useing an older alsa-library: 1.0.3b.
+
+I'm not so shure what to do. If MPlayer has the correct audio delay,
+maybe the softdevice queries the audio delay the wrong way. But there is
+hardly anything which one could do wrong.
+So I suspect the alsa library or the alsa driver is buggy, but I would
+like to have that verified with some other program.
+You can also try another soundcard, maybe it's the driver after all...
+
+I wonder how many people have this problems, as Stefan already stated if
+you build some alsa filter chains the delay is not reported correctly.
+Do you use by any chance some alsa filters?
+
+I guess we can try to work around that by just using the system clock to
+calculate the audio delay, but then we wouldn't be able to detect drifts
+of the sound clock.
+
+Thanks for you reports!
+Martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: audio_delay_debug.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050815/9816a092/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050815/9816a092/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001114.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001116.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1115">[ date ]</a>
+              <a href="thread.html#1115">[ thread ]</a>
+              <a href="subject.html#1115">[ subject ]</a>
+              <a href="author.html#1115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice, VDR and Fast Forward
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809131724.46866.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003127.html">
+   <LINK REL="Next"  HREF="003129.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice, VDR and Fast Forward</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809131724.46866.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Softdevice, VDR and Fast Forward">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat Sep 13 18:24:46 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003127.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+        <LI>Next message: <A HREF="003129.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3128">[ date ]</a>
+              <a href="thread.html#3128">[ thread ]</a>
+              <a href="subject.html#3128">[ subject ]</a>
+              <a href="author.html#3128">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+&gt;<i> On Saturday 13 September 2008, Laz wrote:
+</I>&gt;<i> &gt; I've been seeing the same thing since back in May with DirectFB / Matrox
+</I>&gt;<i> &gt; G450 output with softdevice (see thread &quot;Trickspeed jumps huge
+</I>&gt;<i> &gt; distances...&quot; back in May). This was a newly built system but I've not
+</I>&gt;<i> &gt; had this problem before with the same type of hardware.
+</I>&gt;<i>
+</I>&gt;<i> Which version of ffmpeg do you use ?
+</I>
+Just checked and it's ffmpeg svn from 29/07/08 (happy to check out a new 
+version, if you think that would help!). I'm pretty sure I had the same 
+issues with svn from 24/04/08: I think I upgraded it to see if it fixed the 
+problem!
+
+:<i>-)
+</I>
+&gt;<i> &gt; My initial suspicions were that it had to do with the virtual function
+</I>&gt;<i> &gt; cDevice::HasIBPTrickSpeed which was introduced in vdr 1.5.15. However,
+</I>&gt;<i> &gt; I've played about enabling and disabling that in softdevice but get the
+</I>&gt;<i> &gt; same outcome as you describe.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I also see poor A-V synch after using fast or slow speeds: this can be
+</I>&gt;<i> &gt; corrected by jumping backwards or forwards! I think there is a limit to
+</I>&gt;<i> &gt; the A-V offset so that if the offset is greater than that value it is set
+</I>&gt;<i> &gt; to zero: I'm pretty sure this is connected with the &quot;position&quot; in the
+</I>&gt;<i> &gt; file and the current frames being shown being so far apart after using a
+</I>&gt;<i> &gt; fast or slow speed.
+</I>&gt;<i>
+</I>&gt;<i> For sync issues, you may use attached patch, see below.
+</I>&gt;<i>
+</I>&gt;<i> &gt; If I jump forward or backwards by a minute, the actual position jumped
+</I>&gt;<i> &gt; (as shown by the counter) is something like 1:12 forwards and 50 s
+</I>&gt;<i> &gt; backwards, rather than a minute as it should be. Also, when setting a cut
+</I>&gt;<i> &gt; mark, the position jumps forward quite a few I-frames, rather than just
+</I>&gt;<i> &gt; to the next one.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm pretty sure that all of these are connected but whether it's down to
+</I>&gt;<i> &gt; changes in vdr or in softdevice...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any clues?
+</I>&gt;<i>
+</I>&gt;<i> Can you both try attached patch ?
+</I>&gt;<i>
+</I>&gt;<i> There are 2 changes:
+</I>&gt;<i> 1st Makes use of av_read_frame() selectable via OSD.
+</I>&gt;<i>     Thats because I noticed some serrious sync issues with my old ffmpeg
+</I>&gt;<i>     version I use on my prod system. Deactivating av_read_frame() and
+</I>&gt;<i>     using av_read_packed() instead solved that for me.
+</I>&gt;<i> 2nd Feature makes field selectable which is displayed in still picture
+</I>&gt;<i>     mode, but unfortunately this doesn't work at the moment.
+</I>
+Will try patch and get back with the results ASAP...
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003127.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+	<LI>Next message: <A HREF="003129.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3128">[ date ]</a>
+              <a href="thread.html#3128">[ thread ]</a>
+              <a href="subject.html#3128">[ subject ]</a>
+              <a href="author.html#3128">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

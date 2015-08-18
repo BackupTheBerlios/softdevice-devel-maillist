@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Picture color defects.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Picture%20color%20defects.&In-Reply-To=%3C4512375E.3090409%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002508.html">
+   <LINK REL="Next"  HREF="002520.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Picture color defects.</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Picture%20color%20defects.&In-Reply-To=%3C4512375E.3090409%40huillard.net%3E"
+       TITLE="[Softdevice-devel] Picture color defects.">nicolas at huillard.net
+       </A><BR>
+    <I>Thu Sep 21 08:55:26 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002508.html">[Softdevice-devel] Picture color defects.
+</A></li>
+        <LI>Next message: <A HREF="002520.html">[Softdevice-devel] Picture color defects.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2512">[ date ]</a>
+              <a href="thread.html#2512">[ thread ]</a>
+              <a href="subject.html#2512">[ subject ]</a>
+              <a href="author.html#2512">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>jonis2006 a &#233;crit :
+&gt;<i> Hello !
+</I>&gt;<i> 
+</I>&gt;<i> When I watching channels sometime I see color defects at the edges of objects in the screen. 
+</I>&gt;<i> Here is screenshots which describing this problem.
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://woody.on.ufanet.ru/001.vdr">http://woody.on.ufanet.ru/001.vdr</A>
+</I>&gt;<i> <A HREF="http://woody.on.ufanet.ru/defect1.JPG">http://woody.on.ufanet.ru/defect1.JPG</A> (Pink lines near red color)
+</I>&gt;<i> <A HREF="http://woody.on.ufanet.ru/defect2.JPG">http://woody.on.ufanet.ru/defect2.JPG</A> (Edges of circle with picks)
+</I>&gt;<i> <A HREF="http://woody.on.ufanet.ru/defect3.JPG">http://woody.on.ufanet.ru/defect3.JPG</A> (Edges of circle with picks)
+</I>
+It seems like artifacts I had while tuning TV-out registers on VT1622
+(S-video output on EPIA M10k).
+* wrong color lines may be related to S-video ou Composite, or color
+conversion inside the TV encoder (VT1622)
+* edges in circles (or generally steps on diangonal lines) is related to
+vertical scaling that take place inside the TV encoder (some lines are
+dropped, and even the smoothing engine can add more obvious artifact on
+particular patterns only)
+
+Can you detail the outpu you use ?
+If using a TV encoder, you should adjust the scaling/color correcton
+that that place there.
+
+&gt;<i> In Mplayer I got same problem.
+</I>&gt;<i> 
+</I>&gt;<i> Is this possible to fix ?
+</I>&gt;<i> Maybe packed color (Packed YUY2) causes problem ?
+</I>&gt;<i> 
+</I>&gt;<i> With best regards.
+</I>&gt;<i> Jonis.
+</I>
+-- 
+NH
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002508.html">[Softdevice-devel] Picture color defects.
+</A></li>
+	<LI>Next message: <A HREF="002520.html">[Softdevice-devel] Picture color defects.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2512">[ date ]</a>
+              <a href="thread.html#2512">[ thread ]</a>
+              <a href="subject.html#2512">[ subject ]</a>
+              <a href="author.html#2512">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

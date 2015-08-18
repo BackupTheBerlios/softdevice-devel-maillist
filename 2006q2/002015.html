@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605131116.25524.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001984.html">
+   <LINK REL="Next"  HREF="001977.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605131116.25524.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sat May 13 12:16:25 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001984.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="001977.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2015">[ date ]</a>
+              <a href="thread.html#2015">[ thread ]</a>
+              <a href="subject.html#2015">[ subject ]</a>
+              <a href="author.html#2015">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 08 May 2006 17:51, Rolf Ahrenberg wrote:
+&gt;<i> On Mon, 8 May 2006, Laz wrote:
+</I>&gt;<i> &gt; I think Rolf has tidied it up a bit but I haven't had a chance to look
+</I>&gt;<i> &gt; yet: he may have sorted out the variables.
+</I>&gt;<i>
+</I>&gt;<i> Nope. I didn't touch any of them, because I don't know how you guys want
+</I>&gt;<i> to implement the whole hw decoding feature into softdevice. I just
+</I>&gt;<i> modified the library to better suit for automatic compilation and
+</I>&gt;<i> installing (for my gentoo box) and the patch to include preliminary (and
+</I>&gt;<i> untested) support for configure with some minor additional cleanups.
+</I>&gt;<i>
+</I>&gt;<i> The library requires some interface changes (i.e. getter for
+</I>&gt;<i> width/height/aspectratio, framebuffer device for opening, etc.), but I
+</I>&gt;<i> stopped working on that until things clear up a bit on the softdevice
+</I>&gt;<i> side.
+</I>
+I just did a quick test adding a usleep(100) to the hwdec_wait() polling 
+function and my total CPU usage dropped from ca. 70-80% with software 
+decoding, to ca. 35% without the usleep, to ca. 15% with it!
+
+:<i>)
+</I>
+I'm also tidying up some bits in softdevice but I've just managed to break 
+software decoding!
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001984.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="001977.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2015">[ date ]</a>
+              <a href="thread.html#2015">[ thread ]</a>
+              <a href="subject.html#2015">[ subject ]</a>
+              <a href="author.html#2015">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

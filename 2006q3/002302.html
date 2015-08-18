@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Way to get best image quality with MGA400 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C20060726153218.GC11812%40MAIL.13thfloor.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002301.html">
+   <LINK REL="Next"  HREF="002303.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Way to get best image quality with MGA400 ?</H1>
+    <B>Herbert Poetzl</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C20060726153218.GC11812%40MAIL.13thfloor.at%3E"
+       TITLE="[Softdevice-devel] Way to get best image quality with MGA400 ?">herbert at 13thfloor.at
+       </A><BR>
+    <I>Wed Jul 26 17:32:19 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002301.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+        <LI>Next message: <A HREF="002303.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2302">[ date ]</a>
+              <a href="thread.html#2302">[ thread ]</a>
+              <a href="subject.html#2302">[ subject ]</a>
+              <a href="author.html#2302">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jul 26, 2006 at 04:26:15PM +0100, Laz wrote:
+&gt;<i> On Wednesday 26 July 2006 16:21, Herbert Poetzl wrote:
+</I>&gt;<i> &gt; On Wed, Jul 26, 2006 at 03:48:31PM +0100, Laz wrote:
+</I>&gt;<i> &gt; &gt; That's one thing which is still a bit of a pain: switch on the vdr
+</I>&gt;<i> &gt; &gt; box and then press about 3 buttons on my TV remote to set it to the
+</I>&gt;<i> &gt; &gt; right A-V input!
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; :(
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I've thought about trying to do this in the past but never got round
+</I>&gt;<i> &gt; &gt; to it. Seems pointless reinventing the wheel, if someone else has
+</I>&gt;<i> &gt; &gt; done it!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; okay, here is what I could find on a quick check :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; the solutions are listed in chronological order, they
+</I>&gt;<i> &gt; all work (for me) and have slightly different properties
+</I>&gt;<i> &gt; regarding adjustment, quality of voltages and amount of
+</I>&gt;<i> &gt; power drained from the serial port, also note that some
+</I>&gt;<i> &gt; laptops only provide about +/-5V on the serial port
+</I>&gt;<i> &gt; which is not enough to reach the 9.5-12V range required
+</I>&gt;<i> &gt; for the 4:3 mode, but it is sufficient to trigger the
+</I>&gt;<i> &gt; 4.5-7V range (16:9) and/or to trigger the 'source has
+</I>&gt;<i> &gt; signal'
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;  <A HREF="http://www.13thfloor.at/~herbert/scart.eps">http://www.13thfloor.at/~herbert/scart.eps</A>
+</I>&gt;<i> &gt;  <A HREF="http://www.13thfloor.at/~herbert/ser2scart.pdf">http://www.13thfloor.at/~herbert/ser2scart.pdf</A>
+</I>&gt;<i> &gt;  <A HREF="http://www.13thfloor.at/~herbert/ser2scart_V2.pdf">http://www.13thfloor.at/~herbert/ser2scart_V2.pdf</A>
+</I>&gt;<i> &gt;  <A HREF="http://www.13thfloor.at/~herbert/ser2scart_V3.pdf">http://www.13thfloor.at/~herbert/ser2scart_V3.pdf</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; of course the std disclaimer applies here:
+</I>&gt;<i> &gt; If you fry your computer or TV with one of the
+</I>&gt;<i> &gt; circuits, we do NOT accept any responsibility.
+</I>&gt;<i> &gt; Proceed at your own risk.
+</I>&gt;<i> 
+</I>&gt;<i> Looks good. All we need now is something to drive the serial port on
+</I>&gt;<i> startup and then on aspect-ratio change...
+</I>
+oh, I forgot to attach the source code for a small tool
+for such purpose, here it is:
+
+ <A HREF="http://www.13thfloor.at/~herbert/serport.c">http://www.13thfloor.at/~herbert/serport.c</A>
+
+you use it like this:
+
+ ./serport -p 0 0
+ ./serport -p 0 1
+ ./serport -p 0 2
+ ./serport -p 0 3
+
+best,
+Herbert
+
+&gt;<i> Cheers,
+</I>&gt;<i> 
+</I>&gt;<i> Laz
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://bat.berlios.de/mailman/listinfo/softdevice-devel">http://bat.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002301.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+	<LI>Next message: <A HREF="002303.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2302">[ date ]</a>
+              <a href="thread.html#2302">[ thread ]</a>
+              <a href="subject.html#2302">[ subject ]</a>
+              <a href="author.html#2302">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

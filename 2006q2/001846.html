@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Vertical line at right OSD border
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Vertical%20line%20at%20right%20OSD%20border&In-Reply-To=%3C20060409194817.GB4337%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001844.html">
+   <LINK REL="Next"  HREF="001848.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Vertical line at right OSD border</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Vertical%20line%20at%20right%20OSD%20border&In-Reply-To=%3C20060409194817.GB4337%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Vertical line at right OSD border">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Apr  9 21:48:17 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001844.html">[Softdevice-devel] Vertical line at right OSD border
+</A></li>
+        <LI>Next message: <A HREF="001848.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1846">[ date ]</a>
+              <a href="thread.html#1846">[ thread ]</a>
+              <a href="subject.html#1846">[ subject ]</a>
+              <a href="author.html#1846">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Apr 09, 2006 at 01:05:41PM +0200, Martin Wache wrote:
+&gt;<i> &gt; I'm getting it on DirectFB VGA no matter what screen aspect or crop mode
+</I>&gt;<i> &gt; is selected.  Sometimes, the bar only fills part of the right border
+</I>&gt;<i> &gt; (e.g., when the &quot;||&quot; (Pause) symbol is displayed at the bottom of the screen
+</I>&gt;<i> &gt; when using the classic theme).
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; The bar is somewhat annoying, because it is displayed for a few seconds
+</I>&gt;<i> &gt; whenever subtitles appear or disappear (and that is practically always
+</I>&gt;<i> &gt; when watching a foreign program on any of the state-run channels in
+</I>&gt;<i> &gt; Finland).
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Please try the attached patch, it won't fix the original problem (which
+</I>&gt;<i> I already tried to find some time ago) but it should cure the symptons
+</I>
+Yes, cutting the 2 pixels from the right cures the symptoms.
+
+&gt;<i> &gt; I also noticed some flicker when the OSD is active.  Alpha blending is set
+</I>&gt;<i> &gt; to &quot;pseudo&quot;.  I don't remember experiencing such flicker before.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> The alpha blending setting has no effect on directFB, it's only for
+</I>&gt;<i> vidix and Xv-video out.
+</I>
+Would it be possible to omit the irrelevant entries from the menu?
+For instance, do not show the alpha blending setting when DirectFB output
+is selected.  That would be less confusing.
+
+&gt;<i> Is the OSD flickering or the video flickering?
+</I>
+I'm not sure, but I think it is the OSD.  It occurs very rarely, so it
+is hard to repeat.  The CPU is a bit over 50% idle.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001844.html">[Softdevice-devel] Vertical line at right OSD border
+</A></li>
+	<LI>Next message: <A HREF="001848.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1846">[ date ]</a>
+              <a href="thread.html#1846">[ thread ]</a>
+              <a href="subject.html#1846">[ subject ]</a>
+              <a href="author.html#1846">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

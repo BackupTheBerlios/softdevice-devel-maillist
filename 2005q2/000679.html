@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] blank screen after some time with no signal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C42891CE0.2070500%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000675.html">
+   <LINK REL="Next"  HREF="000680.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] blank screen after some time with no signal</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C42891CE0.2070500%40gmx.net%3E"
+       TITLE="[Softdevice-devel] blank screen after some time with no signal">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue May 17 00:21:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000675.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+        <LI>Next message: <A HREF="000680.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#679">[ date ]</a>
+              <a href="thread.html#679">[ thread ]</a>
+              <a href="subject.html#679">[ subject ]</a>
+              <a href="author.html#679">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;&gt;&gt;<i>I was just wondering why, when I use xv-out screen gets blanked when
+</I>&gt;&gt;&gt;<i>I'm watching a recording and enter pause. Now that's the same with
+</I>&gt;&gt;&gt;<i>dfb-out. This happens within a few seconds.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Good point I missed this, it should be like this. Up to now there is no 
+</I>&gt;&gt;<i>way to distinguish between pause mode and no signal. I will change this.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> As that's a desired behaviour and not a bug as I original thought, we
+</I>&gt;<i> should have a device method, so that each out-method can act on it's
+</I>&gt;<i> own upon idle calls. When xv-out is started by commandline in fullscreen
+</I>&gt;<i> mode, we deactivate the screensaver and any power save modes. Even
+</I>&gt;<i> with dfb there could be done more than a simple black screen.
+</I>Sorry, I was in hurry when I wrote my previous e-mail. It's a bug, I 
+just forgot to think about what happens in pause mode, so the way I 
+implemented this now it's the expected behavior to blank the screen in 
+pause mode. But I did not intend to have it like this and I will change 
+it, it just need to make pause mode available to the video out class.
+
+It would be nice to have a real power save mode for both xv and dfb-out, 
+but there is also the case when softplay is playing audio only files. In 
+this case a working OSD is quite important and I think a black screen is 
+nicer than some old picture from the TV. Of course, in the long term I 
+would like to have the ability to load background pictures from 
+.jpg/.png :-).
+So I think we should have both methods with adjustable timeouts, or the 
+powersave mode triggered by suspending of the replay?
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000675.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+	<LI>Next message: <A HREF="000680.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#679">[ date ]</a>
+              <a href="thread.html#679">[ thread ]</a>
+              <a href="subject.html#679">[ subject ]</a>
+              <a href="author.html#679">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

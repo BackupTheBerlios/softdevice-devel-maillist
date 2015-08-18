@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] libpostproc dependency not resolved..
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20libpostproc%20dependency%20not%20resolved..&In-Reply-To=%3CFE1EB369-B22B-45B0-85A2-8EF24DA1DBE8%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002890.html">
+   <LINK REL="Next"  HREF="002892.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] libpostproc dependency not resolved..</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20libpostproc%20dependency%20not%20resolved..&In-Reply-To=%3CFE1EB369-B22B-45B0-85A2-8EF24DA1DBE8%40pobox.com%3E"
+       TITLE="[Softdevice-devel] libpostproc dependency not resolved..">torgeir at pobox.com
+       </A><BR>
+    <I>Sat Jun 16 19:17:16 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002890.html">[Softdevice-devel] PATCH: add progressive frame detection (with	on/off switch in setup)
+</A></li>
+        <LI>Next message: <A HREF="002892.html">[Softdevice-devel] cle266 playback
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2891">[ date ]</a>
+              <a href="thread.html#2891">[ thread ]</a>
+              <a href="subject.html#2891">[ subject ]</a>
+              <a href="author.html#2891">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm having some troubles setting up on a new box; shouldn't libvdr- 
+softdevice.so.* depend on libpostproc.so?
+
+I've got
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at htpc2</A> VDR]# ldd /usr/local/src/VDR/PLUGINS/lib/libvdr- 
+softdevice.so.1.5.1
+         linux-gate.so.1 =&gt;  (0x00eec000)
+         libavformat.so.51 =&gt; /usr/local/lib/libavformat.so.51  
+(0x00cba000)
+         libavcodec.so.51 =&gt; /usr/local/lib/libavcodec.so.51  
+(0x007ac000)
+         libz.so.1 =&gt; /lib/libz.so.1 (0x002f8000)
+         libavutil.so.49 =&gt; /usr/local/lib/libavutil.so.49 (0x00112000)
+         libasound.so.2 =&gt; /lib/libasound.so.2 (0x00394000)
+         libcle266mpegdec-0.5.so =&gt; /usr/local/lib/ 
+libcle266mpegdec-0.5.so (0x00f59000)
+         libstdc++.so.6 =&gt; /usr/lib/libstdc++.so.6 (0x00679000)
+         libm.so.6 =&gt; /lib/libm.so.6 (0x0011c000)
+         libgcc_s.so.1 =&gt; /lib/libgcc_s.so.1 (0x00145000)
+         libc.so.6 =&gt; /lib/libc.so.6 (0x00472000)
+         libdl.so.2 =&gt; /lib/libdl.so.2 (0x0031f000)
+         libpthread.so.0 =&gt; /lib/libpthread.so.0 (0x00151000)
+         /lib/ld-linux.so.2 (0x80000000)
+
+and running VDR gives me this error:
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at htpc2</A> VDR]# ./vdr -P&quot;softdevice -vo dfb:cle266&quot;
+vdr: ./PLUGINS/lib/libvdr-softdevice.so.1.5.1: undefined symbol:  
+_Z12pp_free_modePv
+
+ From what I can see, shouldn't we link with -lpostproc during the  
+build, in addition to -lavcodec and -lavformat ?
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070616/cecc6ce8/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070616/cecc6ce8/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002890.html">[Softdevice-devel] PATCH: add progressive frame detection (with	on/off switch in setup)
+</A></li>
+	<LI>Next message: <A HREF="002892.html">[Softdevice-devel] cle266 playback
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2891">[ date ]</a>
+              <a href="thread.html#2891">[ thread ]</a>
+              <a href="subject.html#2891">[ subject ]</a>
+              <a href="author.html#2891">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

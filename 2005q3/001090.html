@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Initial version of Debian packag vdr-plugin-softdevice released
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Initial%20version%20of%20Debian%20packag%20vdr-plugin-softdevice%20released&In-Reply-To=%3C42F5EB48.8060203%40e-tobi.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001089.html">
+   <LINK REL="Next"  HREF="001091.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Initial version of Debian packag vdr-plugin-softdevice released</H1>
+    <B>Tobias Grimm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Initial%20version%20of%20Debian%20packag%20vdr-plugin-softdevice%20released&In-Reply-To=%3C42F5EB48.8060203%40e-tobi.net%3E"
+       TITLE="[Softdevice-devel] Initial version of Debian packag vdr-plugin-softdevice released">listaccount at e-tobi.net
+       </A><BR>
+    <I>Sun Aug  7 13:06:48 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001089.html">[Softdevice-devel] Automatic softdevice suspension?
+</A></li>
+        <LI>Next message: <A HREF="001091.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1090">[ date ]</a>
+              <a href="thread.html#1090">[ thread ]</a>
+              <a href="subject.html#1090">[ subject ]</a>
+              <a href="author.html#1090">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+
+After testing for a while with more or less success, I thought it is
+time to release the package. It is available here:
+
+
+deb <A HREF="http://www.e-tobi.net/vdr/sarge/experimental/binary">http://www.e-tobi.net/vdr/sarge/experimental/binary</A> vdr/standard/
+deb <A HREF="http://www.e-tobi.net/vdr/sarge/experimental/binary">http://www.e-tobi.net/vdr/sarge/experimental/binary</A> backports/
+
+deb-src <A HREF="http://www.e-tobi.net/vdr/sarge/experimental/source">http://www.e-tobi.net/vdr/sarge/experimental/source</A> vdr/
+deb-src <A HREF="http://www.e-tobi.net/vdr/sarge/experimental/source">http://www.e-tobi.net/vdr/sarge/experimental/source</A> backports/
+
+
+Please note, that alle necessary backports for sarge are included in my
+backports repository. But you will need this repository for Sid too,
+because dfb++ hasn't been uploaded to Sid yet. You will also need the
+libdirectfb from my repository, because the latest Debian version
+0.9.22-5 contains a bug.
+
+The binary package in vdr/standard/ does only work with the vdr package
+in there. You have to recompile vdr-plugin-softdevice, if you are using
+different patches.
+
+bye,
+
+Tobias
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001089.html">[Softdevice-devel] Automatic softdevice suspension?
+</A></li>
+	<LI>Next message: <A HREF="001091.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1090">[ date ]</a>
+              <a href="thread.html#1090">[ thread ]</a>
+              <a href="subject.html#1090">[ subject ]</a>
+              <a href="author.html#1090">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

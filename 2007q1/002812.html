@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Is%20there%20a%20known%20A/V%20sync%20issue%20with%20current%0A%09softdevice.&In-Reply-To=%3C4607AF1C.8090802%40mellander.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002810.html">
+   <LINK REL="Next"  HREF="002813.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.</H1>
+    <B>Per Mellander</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Is%20there%20a%20known%20A/V%20sync%20issue%20with%20current%0A%09softdevice.&In-Reply-To=%3C4607AF1C.8090802%40mellander.org%3E"
+       TITLE="[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.">per at mellander.org
+       </A><BR>
+    <I>Mon Mar 26 13:31:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002810.html">[Softdevice-devel] [PATCH] softdevice xv autosuspend
+</A></li>
+        <LI>Next message: <A HREF="002813.html">[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2812">[ date ]</a>
+              <a href="thread.html#2812">[ thread ]</a>
+              <a href="subject.html#2812">[ subject ]</a>
+              <a href="author.html#2812">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+VDR 1.4.5
+softdevice CVS 20070312
+softplay CVS 20070312
+FFmpeg version SVN-r7991, Copyright (c) 2000-2007 Fabrice Bellard, et al.
+   configuration: --enable-shared --enable-pp --enable-gpl
+   libavutil version: 49.3.0
+   libavcodec version: 51.33.0
+   libavformat version: 51.10.0
+   built on Feb 17 2007 21:53:00, gcc: 4.1.1 20070105 (Red Hat 4.1.1-51)
+
+I've also patched softdevice with a patch that should have solved 
+another issue for me. ( Unfortunately it didn't ) It was the patch 
+released on the list here:
+
+<A HREF="http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html">http://www.linuxtv.org/pipermail/vdr/2007-March/012476.html</A>
+
+Have noticed an unwanted A/V-sync issue with my current setup. I've 
+recently switched to faster/better hardware ( Core 2, 1.86GHz ). The 
+problem I've got is that when watching live TV I've getting this nasty 
+A/V sync problem. Sometimes it fixes itself (!) and also sometimes it 
+will get in sync after I switch channel. IIRC I didn't have this problem 
+running the installation with my old hardware. The difference is that 
+I'm running a kernel compiled with coretemp patch and with another 
+processor selected.
+
+I have one DVB-S and one DVB-T, ( both budget cards ) and I've got the 
+same problem on either card, so I don't think it has anything to do with 
+a weak signal (?).
+
+I've got a feeling that it has something to do with backgrounding tasks 
+as I see temp raises from ~46 to ~54 degrees Celsius when it starts to 
+loose sync. I've also noticed that idle drops from about 96 to 87 when 
+the problem occurs. Maybe it's the patch mentioned earlier in this 
+message? I'll try with a fresh install later today to sort things out.
+
+Anyone with this problem?
+
+Sincerely,
+Per
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002810.html">[Softdevice-devel] [PATCH] softdevice xv autosuspend
+</A></li>
+	<LI>Next message: <A HREF="002813.html">[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2812">[ date ]</a>
+              <a href="thread.html#2812">[ thread ]</a>
+              <a href="subject.html#2812">[ subject ]</a>
+              <a href="author.html#2812">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

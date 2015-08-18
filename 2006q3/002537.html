@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C20060926151323.GA21046%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002530.html">
+   <LINK REL="Next"  HREF="002538.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C20060926151323.GA21046%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Sep 26 17:13:23 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002530.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+        <LI>Next message: <A HREF="002538.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2537">[ date ]</a>
+              <a href="thread.html#2537">[ thread ]</a>
+              <a href="subject.html#2537">[ subject ]</a>
+              <a href="author.html#2537">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I got another hang today.  I don't know the circumstances, since I was not
+there when the hang occurred.  But I think it was caused by a decoding
+error or by suspending and resuming vdr (using my patch), as the log
+ended with this:
+
+[dfb] (re)configured 0x00200806
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface (stretchBlit)
+[surface capabilities] videoSurface: videoonly interlaced PixelFormat = 0x00200806
+[dfb] (re)configured 0x00200806
+[dfb] (re)configuring Videolayer to 704 x 576 (704x576)
+[dfb] creating new surface (stretchBlit)
+[surface capabilities] videoSurface: videoonly interlaced PixelFormat = 0x00200806
+[dfb] (re)configured 0x00200806
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 17 20
+[mpeg2video @ 0xa7af58a8]00 motion_type at 4 18
+[mpeg2video @ 0xa7af58a8]invalid mb type in P Frame at 13 19
+[mpeg2video @ 0xa7af58a8]00 motion_type at 1 20
+[mpeg2video @ 0xa7af58a8]00 motion_type at 5 21
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 3 22
+[mpeg2video @ 0xa7af58a8]invalid cbp at 25 23
+[mpeg2video @ 0xa7af58a8]00 motion_type at 7 24
+[mpeg2video @ 0xa7af58a8]00 motion_type at 3 25
+[mpeg2video @ 0xa7af58a8]00 motion_type at 1 26
+[mpeg2video @ 0xa7af58a8]00 motion_type at 1 27
+[mpeg2video @ 0xa7af58a8]00 motion_type at 14 29
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 29
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 30
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 31
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 32
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 33
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 34
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 35
+[mpeg2video @ 0xa7af58a8]Warning MVs not available
+[mpeg2video @ 0xa7af58a8]concealing 792 DC, 792 AC, 792 MV errors
++++[mpeg2video @ 0xa7af58a8]ac-tex damaged at 39 15
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 1 15
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 16
+[mpeg2video @ 0xa7af58a8]invalid mb type in I Frame at 0 17
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 18
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 19
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 20
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 21
+[mpeg2video @ 0xa7af58a8]invalid mb type in I Frame at 0 22
+[mpeg2video @ 0xa7af58a8]skipped MB in I frame at 1 23
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 24
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 25
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 26
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 27
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 1 28
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 29
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 30
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 31
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 32
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 33
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 34
+[mpeg2video @ 0xa7af58a8]ac-tex damaged at 0 35
+[mpeg2video @ 0xa7af58a8]Warning MVs not available
+[mpeg2video @ 0xa7af58a8]concealing 924 DC, 924 AC, 924 MV errors
+*hang*
+
+By the way, it could be useful to have timestamps in the log entries,
+or to log via syslog.
+
+Attached are the full stack traces of the two running vdr processes.
+
+Software:
+
+vdr 1.4.2
+ffmpeg CVS from months ago
+DirectFB CVS from weeks ago
+softdevice CVS from 2006-09-22, plus dfb-blbar-clear-03.patch and the
+following:
+
+diff -p -u -r1.71 video-dfb.c
+--- video-dfb.c 16 Sep 2006 09:30:19 -0000      1.71
++++ video-dfb.c 26 Sep 2006 15:08:19 -0000
+@@ -1072,7 +1072,7 @@ void cDFBVideoOut::GetLockOsdSurface(uin
+   try
+   {
+     dirtyLines=DirtyLines=new bool[Yres];
+-    memset(dirtyLines,false,sizeof(dirtyLines));
++    memset(dirtyLines,false,sizeof(*dirtyLines) * Yres);
+
+     tmpOsdSurface = (useStretchBlit) ? osdSurface : scrSurface;
+     tmpOsdSurface-&gt;Lock(DSLF_WRITE, (void **)&amp;dst, &amp;pitch) ;
+@@ -1283,6 +1283,7 @@ void cDFBVideoOut::ShowOSD ()
+         scrSurface-&gt;SetBlittingFlags(DSBLIT_BLEND_ALPHACHANNEL);
+         scrSurface-&gt;Blit(osdSurface, &amp;osdsrc, 0, 0);
+       }
++      usleep(1000);
+       scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+
+     }
+@@ -1471,6 +1472,7 @@ void cDFBVideoOut::YUV(sPicBuffer *buf)
+
+       }
+       //scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
++      usleep(2000);
+       scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+     }
+     else
+
+I don't think vdr was suspended this time, but I will ask my wife if she
+remembers.
+
+	Marko
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: gdb-637.txt.gz
+Type: application/octet-stream
+Size: 4820 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060926/9a85d431/attachment.obj">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060926/9a85d431/attachment.obj</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: gdb-714.txt.gz
+Type: application/octet-stream
+Size: 1727 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060926/9a85d431/attachment-0001.obj">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060926/9a85d431/attachment-0001.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002530.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+	<LI>Next message: <A HREF="002538.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2537">[ date ]</a>
+              <a href="thread.html#2537">[ thread ]</a>
+              <a href="subject.html#2537">[ subject ]</a>
+              <a href="author.html#2537">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

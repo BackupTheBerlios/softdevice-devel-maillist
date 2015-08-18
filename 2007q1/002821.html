@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Is%20there%20a%20known%20A/V%20sync%20issue%20with%20current%0A%09softdevice.&In-Reply-To=%3C1E27249A-0365-4C1B-884B-52326537A33B%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002820.html">
+   <LINK REL="Next"  HREF="002822.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Is%20there%20a%20known%20A/V%20sync%20issue%20with%20current%0A%09softdevice.&In-Reply-To=%3C1E27249A-0365-4C1B-884B-52326537A33B%40pobox.com%3E"
+       TITLE="[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.">torgeir at pobox.com
+       </A><BR>
+    <I>Tue Mar 27 12:04:19 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002820.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+        <LI>Next message: <A HREF="002822.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2821">[ date ]</a>
+              <a href="thread.html#2821">[ thread ]</a>
+              <a href="subject.html#2821">[ subject ]</a>
+              <a href="author.html#2821">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 27 Mar 2007, at 10:15, Per Mellander wrote:
+
+&gt;<i> Torgeir Veimo wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Make sure you have syslog set to debug output, also change line 917
+</I>&gt;&gt;<i> of mpeg2decoder.c from #if 0 to #if 1, which will result in some
+</I>&gt;&gt;<i> stats on dropped / repeted frames.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You said you had better sync with an older version? Which version was
+</I>&gt;&gt;<i> that? Or was it simply older hardware?
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Older hardware only, ie. P4 Prescott @ 3GHz. I took the old  
+</I>&gt;<i> installation
+</I>&gt;<i> and booted the new hardware. Did a quick test and after that I patched
+</I>&gt;<i> the kernel 2.6.20 with cputemp, changed the CPU-type. Recompile,  
+</I>&gt;<i> install
+</I>&gt;<i> etc. Noticed the sync problem and started this thread.
+</I>
+Can you set up an a/v offset (delay) of 40 in softdevice  
+configuration? It's needed when doing double buffering as the Xv  
+output does.
+
+What hardware are you using?
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002820.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+	<LI>Next message: <A HREF="002822.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2821">[ date ]</a>
+              <a href="thread.html#2821">[ thread ]</a>
+              <a href="subject.html#2821">[ subject ]</a>
+              <a href="author.html#2821">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

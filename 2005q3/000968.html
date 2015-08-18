@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and 4:2:2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%204%3A2%3A2&In-Reply-To=%3C42D6901C.90606%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000967.html">
+   <LINK REL="Next"  HREF="000972.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and 4:2:2</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%204%3A2%3A2&In-Reply-To=%3C42D6901C.90606%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softdevice and 4:2:2">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Jul 14 18:17:32 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000967.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+        <LI>Next message: <A HREF="000972.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#968">[ date ]</a>
+              <a href="thread.html#968">[ thread ]</a>
+              <a href="subject.html#968">[ subject ]</a>
+              <a href="author.html#968">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Malcolm Caldwell schrieb:
+&gt;<i> On Tue, 2005-07-12 at 09:35 +0200, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>On Dienstag, 12. Juli 2005 02:52, Malcolm Caldwell wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>On Mon, 2005-07-11 at 23:01 +0200, Stefan Lucke wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>On Montag, 11. Juli 2005 15:43, Malcolm Caldwell wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>On Mon, 2005-07-11 at 09:32 +0300, Vadim Catana wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>Martin Wache wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>That mostly depends on if libavcodec properly decodes the samples. If it
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>does, which I currently assume since you get some kind of picture, we
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>just need to transform from YUV422 to YUV420 colourspace which should be
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>easy.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>If the videocard supports YUV422 in hardware we don't need to transform
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>anything. BTW, did you try to change the pixel format from softdevice menu ?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>Is this driver dependant? On my laptop I using xv, and I don't see any
+</I>&gt;&gt;&gt;&gt;&gt;<i>options to change the format in the menu.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>Most xv driver support YUV422 too. Do you know if it is planar or
+</I>&gt;&gt;&gt;&gt;<i>packed format ? 
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>I am not sure, I guess that it is somewhat dependant on libavcodec?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Looking at it I would guess planer, but thats just a guess.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Yes, it is planar. That is ffmpeg's pix_fmt == 4. So the options are
+</I>&gt;&gt;<i>a. convert 422 planar to 422 packed,
+</I>&gt;&gt;<i>b. convert 422 planar to 420 planar.
+</I>&gt;&gt;<i>c. find a way to get ffmpeg deliver 420 planar (preferred) or 422 packed.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Option &quot;c&quot; is would be best way. Option &quot;b&quot; is less cpu intensive than &quot;a&quot;, as
+</I>&gt;&gt;<i>it requires only touching the color components. Finally option &quot;a&quot;
+</I>&gt;&gt;<i>preserves the best color quality.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> OK, I have had a quick look, and I can't see a way to do Option c.
+</I>&gt;<i>
+</I>There is a - to my knowledge - unfinished option in libavcodec to
+request pixelformats. I guess Stefan was referring to that, but I think
+ffmpeg can't do that yet.
+
+&gt;<i> Here is a first-shot at support for 422 using option b.  I have used
+</I>&gt;<i> ffmpeg's conversion code. There is probably some optimisations to do.
+</I>&gt;<i> (eg I think mplayer has a mmx version of the conversion code)
+</I>&gt;<i> 
+</I>&gt;<i> It should also be fairly easy to support YUV444, if that is useful to
+</I>&gt;<i> anyone.  (See the code, all that is needed is to increase the buffer
+</I>&gt;<i> size in case of 444)
+</I>&gt;<i> 
+</I>&gt;<i> Let me know what you think.
+</I>I kind of like it, it could also be used to create for instance  RGB24
+formats for plain FB-out.
+However in case of YUV422 to YUV420 I would prefer to do the conversion
+on the fly during the copying to the video memory. That's usually much
+faster since the memory transfer is slower than the CPU so during
+waiting for the next data the CPU can do the conversion. It's done
+already similar for YUV420 to YV12 conversion in DirectFB and vidix out.
+
+In the case YUV422 to YUV420 we just have to average every two lines of
+U and V components to one and we're done. That's just a couple of
+instructions in MMX so it shouldn't even slow down the copy process.
+
+As far as I understood you do the conversion for all pixel formats, it
+would be better to call libavcodec_img_convert() only if necessary
+otherwise every frame will be copied -&gt; that's slow!!
+A minor thing, you called diff with the files in the wrong sequence...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000967.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+	<LI>Next message: <A HREF="000972.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#968">[ date ]</a>
+              <a href="thread.html#968">[ thread ]</a>
+              <a href="subject.html#968">[ subject ]</a>
+              <a href="author.html#968">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with nvidia TwinView and ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C20071004162142.GA15672%40radylon.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002941.html">
+   <LINK REL="Next"  HREF="002918.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with nvidia TwinView and ShmClient</H1>
+    <B>Michael Rademacher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C20071004162142.GA15672%40radylon.com%3E"
+       TITLE="[Softdevice-devel] Problems with nvidia TwinView and ShmClient">radi at radylon.com
+       </A><BR>
+    <I>Thu Oct  4 18:21:42 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002941.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+        <LI>Next message: <A HREF="002918.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2917">[ date ]</a>
+              <a href="thread.html#2917">[ thread ]</a>
+              <a href="subject.html#2917">[ subject ]</a>
+              <a href="author.html#2917">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'd like to use the softdevice plugin on my desktop. I have this graphics
+adapter:
+
+zentrale:~# lspci | grep VGA
+01:00.0 VGA compatible controller: nVidia Corporation NV44 [GeForce 6200 TurboCache(TM)] (rev a1)
+
+
+Connected are two LCD flat screen monitors in a dual head configuration with
+TwinView enabled (see attached xorg.conf). For information about TwinView
+and its Xinerama hinting see
+<A HREF="http://www.nvidia.com/object/feature_twinview.html">http://www.nvidia.com/object/feature_twinview.html</A> and
+<A HREF="http://us.download.nvidia.com/XFree86/Linux-x86/100.14.19/README/index.html.">http://us.download.nvidia.com/XFree86/Linux-x86/100.14.19/README/index.html.</A>
+Xinerama without TwinView is not an option as I did not manage to get this
+running with both the nv and nvidia drivers (apparently a known problem).
+
+
+The following software (and some more) is installed:
+
+zentrale:~# dpkg -l vdr vdr-plugin-softdevice libavcodec0d libavformat0d libx11-6 libxext6 libxinerama1 libxv1 nvidia-kernel-2.6.22-2-686 nvidia-glx xserver-xorg
+Desired=Unknown/Install/Remove/Purge/Hold
+|<i> Status=Not/Installed/Config-files/Unpacked/Failed-config/Half-installed
+</I>|<i>/ Err?=(none)/Hold/Reinst-required/X=both-problems (Status,Err: uppercase=bad)
+</I>||<i>/ Name                             Version                          Description
+</I>+++-================================-================================-================================================================================
+ii  libavcodec0d                     0.cvs20060823-8                  ffmpeg codec library
+ii  libavformat0d                    0.cvs20060823-8                  ffmpeg file format library
+ii  libx11-6                         2:1.0.3-7                        X11 client-side library
+ii  libxext6                         1:1.0.3-2                        X11 miscellaneous extension library
+ii  libxinerama1                     1:1.0.2-1                        X11 Xinerama extension library
+ii  libxv1                           1:1.0.3-1                        X11 Video extension library
+ii  nvidia-glx                       100.14.19-1                      NVIDIA binary Xorg driver
+ii  nvidia-kernel-2.6.22-2-686       100.14.19-1+2.6.22-4             NVIDIA binary kernel module for Linux 2.6.22-2-686
+ii  vdr                              1.4.7-2ctvdr3                    Video Disk Recorder for DVB cards
+ii  vdr-plugin-softdevice            0.4.0-5                          VDR plugin for frame-buffer output
+ii  xserver-xorg                     1:7.2-5                          the X.Org X server
+
+
+When I start ShmClient I see a normal window with a half-width TV picture
+(see screenshot at <A HREF="http://www.radylon.com/ShmClient.png">http://www.radylon.com/ShmClient.png</A> ). Text output of
+ShmClient as follows:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">radi at zentrale</A>:~$ ShmClient
+dsyslog:[XvVideoOut]: patch version (2006-11-05)
+[XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+[XvVideoOut]: Xinerama Screen 1: 1280,0  1280x1024
+dsyslog:[XvVideoOut]: Initialize XShmCreateImage Successful (0x80bfcb8)
+[XvVideoOut]: osd_image shmid = 204996613
+dsyslog:[XvVideoOut]: Initialize shmget Successful (5898240 bytes)
+dsyslog:[XvVideoOut]: Initialize shmat Successful
+[XvVideoOut]: got osd_image: width 2560 height 1024, bytes per line 10240, Bpp 32
+dsyslog:[softdevice-xscreensaver]: xscreensaver not running
+
+dsyslog:[XvVideoOut]: initialized OK
+dsyslog:[XvVideoOut]: NV17 Video Texture: available ports 355 - 386
+dsyslog:[XvVideoOut]: grabbed port 355
+[XvVideoOut]: max area size 2046 x 2046
+dsyslog:[XvVideoOut]: max area size 2046 x 2046
+[XvVideoOut]: using area size 736 x 576
+dsyslog:[XvVideoOut]: using area size 736 x 576
+dsyslog:[XvVideoOut]:   XV_SET_DEFAULTS           NOT-XvGettable     XvSettable (       0 [0x00000000] -        0 [0x00000000]) (       0 [0x00000000]
+dsyslog:[XvVideoOut]:   XV_ITURBT_709                 XvGettable     XvSettable (       0 [0x00000000] -        1 [0x00000001]) (       0 [0x00000000]
+dsyslog:[XvVideoOut]:   XV_SYNC_TO_VBLANK             XvGettable     XvSettable (       0 [0x00000000] -        1 [0x00000001]) (       1 [0x00000001]
+dsyslog:[XvVideoOut]: using color key 0x1a0f00
+dsyslog:[XvVideoOut]: XvShmCreateImage Successful (0x80c0808)
+dsyslog:[XvVideoOut]: shmget Successful (0 bytes)
+dsyslog:[XvVideoOut]: shmat Successful
+dsyslog:[XvVideoOut]: XShmAttach    rc = 1 (should be OK)
+dsyslog:[VideoOut]: resolution changed: W(736 -&gt; 704); H(576 -&gt;576)
+
+dsyslog:[VideoOut]: 704x576 [0,0 704x576] -&gt; 768x576 [194,0 379x576]
+[XvVideoOut]: Xinerama-Screen changed to 0
+dsyslog:[VideoOut]: 704x576 [8,0 687x576] -&gt; 768x576 [194,0 379x576]
+
+
+Any hint what to do to get a normal sized picture out of ShmClient?
+Any other details you need to have a look into this issue?
+
+
+Many thanks in advance,
+kind regards -
+
+Michael Rademacher.
+
+-- 
+====================================================================//====
+ Michael Rademacher     fon +49-4103-8036388       RADYLON Netzwerkdesign
+ Schillerstr. 31        fax +49-4103-8036389      <A HREF="http://www.radylon.com/">http://www.radylon.com/</A>
+ D-22880 Wedel          gsm +49-170-4543911       eMail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">radi at radylon.com</A>
+ GPG Key fingerprint = C713 8AA0 8EE7 4B02 73A6  0948 EA48 B6CD 55CB 7337
+==========================================================================
+-------------- next part --------------
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type &quot;man xorg.conf&quot; at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section &quot;Files&quot;
+EndSection
+
+Section &quot;InputDevice&quot;
+	Identifier	&quot;Generic Keyboard&quot;
+	Driver		&quot;kbd&quot;
+	Option		&quot;CoreKeyboard&quot;
+	Option		&quot;XkbRules&quot;	&quot;xorg&quot;
+	Option		&quot;XkbModel&quot;	&quot;type5&quot;
+	Option		&quot;XkbLayout&quot;	&quot;de&quot;
+	Option		&quot;XkbVariant&quot;	&quot;nodeadkeys&quot;
+EndSection
+
+Section &quot;InputDevice&quot;
+	Identifier	&quot;Configured Mouse&quot;
+	Driver		&quot;mouse&quot;
+	Option		&quot;CorePointer&quot;
+	Option		&quot;Device&quot;		&quot;/dev/input/mice&quot;
+	Option		&quot;Protocol&quot;		&quot;ExplorerPS/2&quot;
+EndSection
+
+Section &quot;Device&quot;
+	Identifier	&quot;nVidia Corporation NV44 [GeForce 6200 TurboCache(TM)]&quot;
+	Driver		&quot;nvidia&quot;
+	BusID		&quot;PCI:1:0:0&quot;
+	Option		&quot;NoLogo&quot;		&quot;True&quot;
+	Option		&quot;TwinView&quot;
+	Option		&quot;TwinViewOrientation&quot;	&quot;RightOf&quot;
+EndSection
+
+Section &quot;Monitor&quot;
+	Identifier	&quot;Xerox&quot;
+	Option		&quot;DPMS&quot;
+	HorizSync	30-100
+	VertRefresh	50-160
+EndSection
+
+Section &quot;Monitor&quot;
+	Identifier	&quot;BENQ&quot;
+	Option		&quot;DPMS&quot;
+	HorizSync	30-100
+	VertRefresh	50-160
+EndSection
+
+Section &quot;Screen&quot;
+	Identifier	&quot;Default Screen&quot;
+	Device		&quot;nVidia Corporation NV44 [GeForce 6200 TurboCache(TM)]&quot;
+	Monitor		&quot;Xerox&quot;
+	DefaultDepth	24
+	SubSection &quot;Display&quot;
+		Modes		&quot;1280x1024&quot; &quot;1152x864&quot; &quot;1024x768&quot; &quot;800x600&quot; &quot;640x480&quot;
+	EndSubSection
+EndSection
+
+Section &quot;ServerLayout&quot;
+	Identifier	&quot;Default Layout&quot;
+	Screen		&quot;Default Screen&quot;
+	InputDevice	&quot;Generic Keyboard&quot;
+	InputDevice	&quot;Configured Mouse&quot;
+EndSection
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: Digital signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071004/222cc41e/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071004/222cc41e/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002941.html">[Softdevice-devel] Loop when jumping to cut marks ?
+</A></li>
+	<LI>Next message: <A HREF="002918.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2917">[ date ]</a>
+              <a href="thread.html#2917">[ thread ]</a>
+              <a href="subject.html#2917">[ subject ]</a>
+              <a href="author.html#2917">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] blank screen after some time with no signal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C200505180831.05934.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000685.html">
+   <LINK REL="Next"  HREF="000689.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] blank screen after some time with no signal</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C200505180831.05934.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] blank screen after some time with no signal">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed May 18 08:31:05 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000685.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+        <LI>Next message: <A HREF="000689.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#686">[ date ]</a>
+              <a href="thread.html#686">[ thread ]</a>
+              <a href="subject.html#686">[ subject ]</a>
+              <a href="author.html#686">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 17. Mai 2005 00:21, Martin Wache wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt;&gt;I was just wondering why, when I use xv-out screen gets blanked when
+</I>&gt;<i> &gt;&gt;&gt;I'm watching a recording and enter pause. Now that's the same with
+</I>&gt;<i> &gt;&gt;&gt;dfb-out. This happens within a few seconds.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;Good point I missed this, it should be like this. Up to now there is no 
+</I>&gt;<i> &gt;&gt;way to distinguish between pause mode and no signal. I will change this.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; As that's a desired behaviour and not a bug as I original thought, we
+</I>&gt;<i> &gt; should have a device method, so that each out-method can act on it's
+</I>&gt;<i> &gt; own upon idle calls. When xv-out is started by commandline in fullscreen
+</I>&gt;<i> &gt; mode, we deactivate the screensaver and any power save modes. Even
+</I>&gt;<i> &gt; with dfb there could be done more than a simple black screen.
+</I>&gt;<i> Sorry, I was in hurry when I wrote my previous e-mail. It's a bug, I 
+</I>&gt;<i> just forgot to think about what happens in pause mode, so the way I 
+</I>&gt;<i> implemented this now it's the expected behavior to blank the screen in 
+</I>&gt;<i> pause mode. But I did not intend to have it like this and I will change 
+</I>&gt;<i> it, it just need to make pause mode available to the video out class.
+</I>
+With dfb-out it seems to be fixed, but with xv-out not. Screen gets
+blanked immedeately and the pause osd symbol appears at a different
+position than play osd symbol  (software psd alpha blending).
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000685.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+	<LI>Next message: <A HREF="000689.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#686">[ date ]</a>
+              <a href="thread.html#686">[ thread ]</a>
+              <a href="subject.html#686">[ subject ]</a>
+              <a href="author.html#686">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

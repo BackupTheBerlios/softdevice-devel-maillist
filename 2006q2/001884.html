@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Joining%20the%20club%20of%20%22Caught%20signal%2011%20..%22%20users&In-Reply-To=%3C200604200755.57250.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001883.html">
+   <LINK REL="Next"  HREF="001873.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Joining%20the%20club%20of%20%22Caught%20signal%2011%20..%22%20users&In-Reply-To=%3C200604200755.57250.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr 20 07:55:57 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001883.html">[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users
+</A></li>
+        <LI>Next message: <A HREF="001873.html">[Softdevice-devel] Sound crashes :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1884">[ date ]</a>
+              <a href="thread.html#1884">[ thread ]</a>
+              <a href="subject.html#1884">[ subject ]</a>
+              <a href="author.html#1884">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 20 April 2006 07:44, Stefan Lucke wrote:
+&gt;<i> On Montag 17 April 2006 03:28, Dave wrote:
+</I>&gt;<i> &gt; Im using:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; gcc version 3.4.5 (Gentoo 3.4.5, ssp-3.4.5-1.0, pie-8.7.9)
+</I>&gt;<i> &gt; Softdevice CVS and DirectFB CVS probably from a few weeks ago now.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Very stable here. But didnt compile with --enable-debug or --enable-trace
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for your reply,
+</I>&gt;<i> but when configured with --enable-debug I had to set optimize level
+</I>&gt;<i> to -O2 for a successful compile.
+</I>&gt;<i> 
+</I>&gt;<i> Results are very strange. I thought a fprintf to stderr is unbuffered,
+</I>&gt;<i> but that seem to be no longer true, as I see your SetParms() method
+</I>&gt;<i> beeing called when _not_ all messages from constructor are printed.
+</I>&gt;<i> 
+</I>&gt;<i> With TV-out enabled &quot;-vo dfb:mgatv:&quot; it stil failes. With vga-out it
+</I>&gt;<i> sometimes works. Even dfbinfo terminates with a segfault.
+</I>&gt;<i> 
+</I>
+Damm, closeing mail window results in mail sent.
+
+Wanted to add 2 other outputs too:
+In dfb-run-03 we reach at least our YUV() method 
+before initially reported happens.
+
+&gt;<i> &gt;(!) [10775:    0.197] --&gt; Caught signal 11 (at 0x4, invalid address) &lt;--
+</I>&gt;<i> &gt;(!) [10769:    0.198] --&gt; Caught signal 11 (at 0xb565d54e, invalid address) &lt;--
+</I>
+But in dfb-run-01 we do an exit() because there is &quot;No Videolayer&quot;. That should
+never happen.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb-run-01.bz2
+Type: application/x-bzip2
+Size: 1729 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060420/1661aa09/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060420/1661aa09/attachment.bin</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb-run-03.bz2
+Type: application/x-bzip2
+Size: 4540 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060420/1661aa09/attachment-0001.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060420/1661aa09/attachment-0001.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001883.html">[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users
+</A></li>
+	<LI>Next message: <A HREF="001873.html">[Softdevice-devel] Sound crashes :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1884">[ date ]</a>
+              <a href="thread.html#1884">[ thread ]</a>
+              <a href="subject.html#1884">[ subject ]</a>
+              <a href="author.html#1884">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

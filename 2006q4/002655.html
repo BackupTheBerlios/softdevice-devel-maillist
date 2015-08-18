@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Wrong colours in grabbed image
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Wrong%20colours%20in%20grabbed%20image&In-Reply-To=%3C200611141942.12222.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002653.html">
+   <LINK REL="Next"  HREF="002656.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Wrong colours in grabbed image</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Wrong%20colours%20in%20grabbed%20image&In-Reply-To=%3C200611141942.12222.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Wrong colours in grabbed image">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Tue Nov 14 20:42:12 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002653.html">[Softdevice-devel] Wrong colours in grabbed image
+</A></li>
+        <LI>Next message: <A HREF="002656.html">[Softdevice-devel] Wrong colours in grabbed image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2655">[ date ]</a>
+              <a href="thread.html#2655">[ thread ]</a>
+              <a href="subject.html#2655">[ subject ]</a>
+              <a href="author.html#2655">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 13 November 2006 08:45, Laz wrote:
+&gt;<i> On Sunday 12 November 2006 18:54, Martin Wache wrote:
+</I>&gt;<i> &gt; Laz schrieb:
+</I>&gt;<i> &gt; &gt; I'm glad to report that the newly incorporated &quot;Grab&quot; command works
+</I>&gt;<i> &gt; &gt; however, I'm getting incorrect colours. See example grabbed image at:
+</I>&gt;<i> &gt; &gt; <A HREF="http://vdr.club-burniston.co.uk/wrong_colours.jpg">http://vdr.club-burniston.co.uk/wrong_colours.jpg</A>
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I presume this is another pixel format conversion problem: it's the
+</I>&gt;<i> &gt; &gt; same blue cast I was seeing with one of the pixel formats a while
+</I>&gt;<i> &gt; &gt; back with cle266 output, although I'm not sure yet whether the
+</I>&gt;<i> &gt; &gt; grabbed image comes from the raw DVB stream or after pixel format
+</I>&gt;<i> &gt; &gt; conversion for display.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Is this using the hardware mpeg2 decoder? It might be that pixel[1] and
+</I>&gt;<i> &gt; pixel[2] have to be exchanged in SetupCle266Buffers(). Those values are
+</I>&gt;<i> &gt; only used by video filters and grab image when you use the hardware
+</I>&gt;<i> &gt; mpeg2 decoder. What happens if you exchange those two and enable the
+</I>&gt;<i> &gt; mirror filter? Is the picture still ok? And the grabbed image?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The grabbed image is just the last picture which is displayed via
+</I>&gt;<i> &gt; DrawVideo_420pl(). It should be before any format conversions.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; If you don't use the hardware mpeg2 decoder I'm a bit lost... For me it
+</I>&gt;<i> &gt; works with Xv-out.
+</I>&gt;<i>
+</I>&gt;<i> Aha! Yes, I am using hardware decoding.
+</I>&gt;<i>
+</I>&gt;<i> I'll have a play tonight to see if I can get correct colours...
+</I>
+Following up from earlier: swapping round pixel[1] and pixel[2] in 
+SetupCle266Buffers() gives me correct colours both on the grabbed image and 
+also on TV-out. N.B. I'm not using any types of image filter, i.e. I didn't 
+need to mirror. Not sure whether this would make a difference if a 
+deinterlace filter was used.
+
+Works for me, though!
+
+:<i>)
+</I>
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002653.html">[Softdevice-devel] Wrong colours in grabbed image
+</A></li>
+	<LI>Next message: <A HREF="002656.html">[Softdevice-devel] Wrong colours in grabbed image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2655">[ date ]</a>
+              <a href="thread.html#2655">[ thread ]</a>
+              <a href="subject.html#2655">[ subject ]</a>
+              <a href="author.html#2655">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

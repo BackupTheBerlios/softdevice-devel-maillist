@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay, unable to play (mpeg) movies.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C200705171630.15704.j.taimr%40chello.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002869.html">
+   <LINK REL="Next"  HREF="002871.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay, unable to play (mpeg) movies.</H1>
+    <B>j.taimr</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%2C%20unable%20to%20play%20%28mpeg%29%20movies.&In-Reply-To=%3C200705171630.15704.j.taimr%40chello.nl%3E"
+       TITLE="[Softdevice-devel] Softplay, unable to play (mpeg) movies.">j.taimr at chello.nl
+       </A><BR>
+    <I>Thu May 17 16:30:15 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002869.html">[Softdevice-devel] No picture with latest cvs
+</A></li>
+        <LI>Next message: <A HREF="002871.html">[Softdevice-devel] (no subject)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2870">[ date ]</a>
+              <a href="thread.html#2870">[ thread ]</a>
+              <a href="subject.html#2870">[ subject ]</a>
+              <a href="author.html#2870">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Apparently, I have the same problem as Per. The same symptoms, some additional 
+infos:
+Standard mpeg2 movie, nothing exceptional:
+ffplay works:
+gentoo Filmy # ffplay -stats Asterix-A.mpg
+Input #0, mpeg, from 'Asterix-A.mpg':vq=    0KB sq=    0B
+  Duration: 01:21:11.8, start: 0.264656, bitrate: 4658 kb/s
+  Stream #0.0[0x1e0]: Video: mpeg2video, yuv420p, 720x576, 4955 kb/s, 25.00 
+fps(r)
+  Stream #0.1[0x1c0]: Audio: mp2, 48000 Hz, stereo, 192 kb/s
+   2.29 A-V: -0.015 aq=   44KB vq= 1291KB sq=    0B
+(and everything is ok.)
+
+tcprobe from transcode detects all parameters correctly as well:
+gentoo Filmy # tcprobe -i Asterix-A.mpg
+[tcprobe] MPEG program stream (PS)
+[tcprobe] summary for Asterix-A.mpg, (*) = not default, 0 = not detected
+import frame size: -g 720x576 [720x576]
+     aspect ratio: 4:3 (*)
+       frame rate: -f 25.000 [25.000] frc=3
+                   PTS=0.2647, frame_time=40 ms, bitrate=5586 kbps
+      audio track: -a 0 [0] -e 48000,16,2 [48000,16,2] -n 0x50 [0x2000] (*)
+                   PTS=0.2647, bitrate=192 kbps
+                   -D 0 --av_fine_ms 0 (frames &amp; ms) [0] [0]
+
+but softplay:
+./vdr -P &quot;softdevice -vo xv: -ao 
+alsa:&quot; -P &quot;softplay --media-path /var/Data/Filmy&quot;
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x6c37e0
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mpg
+open file '/var/Data/Filmy/Asterix-A.mpg'
+PLDBG: GetPlayMode nb_streams 1
+PLDBG: GetPlayMode (&gt;4628) stream 0 codec_type 1
+PLDBG: Has_video=0, has_audio=1
+CMD[3936]:ResetDecoder 3
+CMD[3936]:new Audio stream index.. old -1 new 0
+CMD[3936]:Neuer StreamDecoder Pid: 1964 context 0x9f5e90 type 1
+CMD[3937]:Neuer Thread gestartet: pid:1964 type 1
+16:06:23.0989 D [47364899342318] [softdevice-audio]: Xrun (at least 0,000 ms 
+long)
+Input #0, mp3, from 'test':
+  Duration: 32:49:54.3, start: 0.000000, bitrate: 191 kb/s
+  Stream #0.0: Audio: mp2, 48000 Hz, stereo, 192 kb/s
+PLDBG: ~cSoftControl()
+PLDBG: ~cSoftPlayer
+So, contrary to ffplay, softplay did not detect ANY videostream and took 0.0 
+as mp3 audiostream instead! There is something seriously wrong...
+Jan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002869.html">[Softdevice-devel] No picture with latest cvs
+</A></li>
+	<LI>Next message: <A HREF="002871.html">[Softdevice-devel] (no subject)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2870">[ date ]</a>
+              <a href="thread.html#2870">[ thread ]</a>
+              <a href="subject.html#2870">[ subject ]</a>
+              <a href="author.html#2870">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

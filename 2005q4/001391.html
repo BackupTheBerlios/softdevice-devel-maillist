@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Sis 315
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Sis%20315&In-Reply-To=%3C200510242101.34736.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001390.html">
+   <LINK REL="Next"  HREF="001392.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Sis 315</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Sis%20315&In-Reply-To=%3C200510242101.34736.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Sis 315">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Oct 24 21:01:34 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001390.html">[Softdevice-devel] Sis 315
+</A></li>
+        <LI>Next message: <A HREF="001392.html">[Softdevice-devel] Crop mode in 0.2.0 vs. 0.1.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1391">[ date ]</a>
+              <a href="thread.html#1391">[ thread ]</a>
+              <a href="subject.html#1391">[ subject ]</a>
+              <a href="author.html#1391">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 24. Oktober 2005 18:51, <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">juanito at vioque.org</A> wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I am trying to use a SIS 315 (integrated in a Asus Pundit barebone) with
+</I>&gt;<i> Softdevice via Directfb.
+</I>&gt;<i> Directfb compiled and installed properly (demos are working).
+</I>&gt;<i> This is the output of modprobe:
+</I>&gt;<i> 
+</I>&gt;<i> pundit:~# modprobe sisfb
+</I>&gt;<i> sisfb: Video ROM found and copied
+</I>&gt;<i> sisfb: Framebuffer at 0xe8000000, mapped to 0xdcc80000, size 65536k
+</I>&gt;<i> sisfb: MMIO at 0xe5800000, mapped to 0xdcc40000, size 128k
+</I>&gt;<i> sisfb: Memory heap starting at 64928K, size 32K
+</I>&gt;<i> sisfb: Detected SiS301B video bridge
+</I>&gt;<i> sisfb: CRT1 DDC probing failed
+</I>&gt;<i> sisfb: Default mode is 800x600x8 (60Hz)
+</I>&gt;<i> Console: switching to colour frame buffer device 100x37
+</I>&gt;<i> sisfb: 2D acceleration is enabled, y-panning enabled (auto-max)
+</I>&gt;<i> fb0: SiS 651 frame buffer device, Version 1.7.17
+</I>&gt;<i> sisfb: (C) 2001-2004 Thomas Winischhofer.
+</I>
+&gt;<i> [dfb] Enumerating display Layers
+</I>&gt;<i> Layer 0 FBDev Primary Layer  Type: graphics
+</I>&gt;<i>   Caps: brightness contrast saturation surface
+</I>&gt;<i>   [surface capabilities] scrSurface: primary videoonly double-buffered
+</I>&gt;<i> flipping
+</I>&gt;<i>   [dfb]: could not find suitable videolayer
+</I>
+It seems that this card has no supported video acceleration by directfb.
+So you have to use either X11 or vidix. With them it should be possible
+to do YUV to RGB conversion and scaling in hardware.
+
+&gt;<i> Any idea?
+</I>&gt;<i> If this is not the right place to ask or if it is too obvious, please dont
+</I>&gt;<i> be cruel :-)
+</I>
+If you are a programmer, you could try to add more SIS315 features
+to directfb by taking X11 and vidix as a sample.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001390.html">[Softdevice-devel] Sis 315
+</A></li>
+	<LI>Next message: <A HREF="001392.html">[Softdevice-devel] Crop mode in 0.2.0 vs. 0.1.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1391">[ date ]</a>
+              <a href="thread.html#1391">[ thread ]</a>
+              <a href="subject.html#1391">[ subject ]</a>
+              <a href="author.html#1391">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

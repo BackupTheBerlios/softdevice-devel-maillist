@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%0A%20version%20and%20ffmpeg%20from%20svn&In-Reply-To=%3C20081031111132.53b92bc3%40bk.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003172.html">
+   <LINK REL="Next"  HREF="003175.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn</H1>
+    <B>Goga777</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%0A%20version%20and%20ffmpeg%20from%20svn&In-Reply-To=%3C20081031111132.53b92bc3%40bk.ru%3E"
+       TITLE="[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn">goga777 at bk.ru
+       </A><BR>
+    <I>Fri Oct 31 09:11:32 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003172.html">[Softdevice-devel] a lot of warnings with cvs softdevice	version and ffmpeg from svn
+</A></li>
+        <LI>Next message: <A HREF="003175.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3174">[ date ]</a>
+              <a href="thread.html#3174">[ thread ]</a>
+              <a href="subject.html#3174">[ subject ]</a>
+              <a href="author.html#3174">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr1_70$ gdb ./vdr
+</I>&gt;<i> &gt; GNU gdb 6.8-debian
+</I>&gt;<i> &gt; Copyright (C) 2008 Free Software Foundation, Inc.
+</I>&gt;<i> &gt; License GPLv3+: GNU GPL version 3 or later &lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;
+</I>&gt;<i> &gt; This is free software: you are free to change and redistribute it.
+</I>&gt;<i> &gt; There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+</I>&gt;<i> &gt; and &quot;show warranty&quot; for details.
+</I>&gt;<i> &gt; This GDB was configured as &quot;i486-linux-gnu&quot;...
+</I>&gt;<i> &gt; (gdb)  set args -P &quot;softdevice -vo xv:&quot;
+</I>&gt;<i> 
+</I>&gt;<i> All arguments should be specified here, symbolized by &quot;....&quot;.
+</I>&gt;<i> From your example above, &quot;-c /etc/vdr&quot; should appear too, I guess.
+</I>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr1_70$ gdb ./vdr
+GNU gdb 6.8-debian
+Copyright (C) 2008 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;i486-linux-gnu&quot;...
+(gdb) set args -c /etc/vdr -P &quot;softdevice -vo xv:&quot;
+(gdb) run
+Starting program: /usr/src/vdr1_70/vdr -c /etc/vdr -P &quot;softdevice -vo xv:&quot;
+[Thread debugging using libthread_db enabled]
+
+[1]+  Stopped                 gdb ./vdr
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr1_70$ gdb ./vdr
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; (gdb) run
+</I>&gt;<i> &gt; Starting program: /usr/src/vdr1_70/vdr -P &quot;softdevice -vo xv:&quot;
+</I>&gt;<i> &gt; [Thread debugging using libthread_db enabled]
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; [4]+  Stopped                 gdb ./vdr
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr1_70$
+</I>&gt;<i> 
+</I>&gt;<i> Stopped messages are usually caused by pressing CONTROL-Z.
+</I>
+yes, but I didn't press any control-z  :(
+
+&gt;<i> &gt; I don't know why I have [4]+  Stopped                 gdb ./vdr
+</I>&gt;<i> 
+</I>&gt;<i> Command &quot;fg&quot; brings suspended (stopped) processes back to foreground
+</I>&gt;<i> of controlling terminal.
+</I>&gt;<i> 
+</I>&gt;<i> If you want to detach a suspended (stopped) process, command &quot;bg&quot;
+</I>&gt;<i> background can be used to append and &quot;&amp;&quot; to previous issued command.
+</I>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr1_70$ gdb ./vdr
+GNU gdb 6.8-debian
+Copyright (C) 2008 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;i486-linux-gnu&quot;...
+(gdb) set args -c /etc/vdr -P &quot;softdevice -vo xv:&quot;
+(gdb) run
+Starting program: /usr/src/vdr1_70/vdr -c /etc/vdr -P &quot;softdevice -vo xv:&quot;
+[Thread debugging using libthread_db enabled]
+
+[1]+  Stopped                 gdb ./vdr
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr1_70$ fg
+gdb ./vdr
+[New Thread 0xb7bf16c0 (LWP 4639)]
+
+Program received signal SIGTTOU, Stopped (tty output).
+[Switching to Thread 0xb7bf16c0 (LWP 4639)]
+0xb7f90430 in __kernel_vsyscall ()
+(gdb) fg
+Continuing.
+
+Program received signal SIGTTOU, Stopped (tty output).
+0xb7f90430 in __kernel_vsyscall ()
+(gdb) q
+The program is running.  Exit anyway? (y or n) y
+
+
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003172.html">[Softdevice-devel] a lot of warnings with cvs softdevice	version and ffmpeg from svn
+</A></li>
+	<LI>Next message: <A HREF="003175.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3174">[ date ]</a>
+              <a href="thread.html#3174">[ thread ]</a>
+              <a href="subject.html#3174">[ subject ]</a>
+              <a href="author.html#3174">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

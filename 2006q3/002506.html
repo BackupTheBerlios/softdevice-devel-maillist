@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long	time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200609192344.05613.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002505.html">
+   <LINK REL="Next"  HREF="002509.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long	time</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%09time&In-Reply-To=%3C200609192344.05613.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long	time">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Sep 19 23:44:05 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002505.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+        <LI>Next message: <A HREF="002509.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2506">[ date ]</a>
+              <a href="thread.html#2506">[ thread ]</a>
+              <a href="subject.html#2506">[ subject ]</a>
+              <a href="author.html#2506">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 19 September 2006 22:44, Martin Wache wrote:
+&gt;<i> Marko M&#228;kel&#228; schrieb:
+</I>&gt;<i> &gt; I can't remember if the second &quot;(re)configuring&quot; message was already there
+</I>&gt;<i> &gt; before resuming playback.  The MPEG errors certainly weren't there.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; After the hang, I attached gdb to the process and captured full stack trace
+</I>&gt;<i> &gt; of all threads (gzipped output attached).  I hope that this helps.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Maybe this is something:
+</I>&gt;<i> #5  0x080f3932 in cMutex::Lock (this=0x8287eb0) at thread.c:190
+</I>&gt;<i> No locals.
+</I>&gt;<i> #6  0xa7874874 in cDFBVideoOut::YUV (this=0x8287a18, buf=0x8287a8c)
+</I>&gt;<i>     at video-dfb.c:1440
+</I>&gt;<i> 	src = {x = 90, y = 0, w = 540, h = 576}
+</I>&gt;<i> 	dst = {x = 0, y = 18, w = 720, h = 540}
+</I>&gt;<i> 	dst = (uint8_t *) 0xa3908000 &lt;Address 0xa3908000 out of bounds&gt;
+</I>&gt;<i> 	pitch = 1536
+</I>&gt;<i> 	hi = 0
+</I>&gt;<i> 	Py = (
+</I>&gt;<i>     uint8_t *) 0xa675e018
+</I>&gt;<i> &quot;\202\202\202\202\202\202\202\202\203\203\203\203\202\202\202\201\202\201\201\201\200\200\200\200\200\200\200\200\177\177\177~\177~~~}}}}}}}}|||{|{{{zzzzzzzzyyyxyxxxwwwwwwwwvvvuvuuuttttttttsssrsrrrqqqqqqqqpppopooonnnnnnnnmmmlmlllkkkkkkkkjjjijiiihhhhhhhhgggfgfffeeeeeeeedddcdcccbbbbbbbbaaa`a```____&quot;...
+</I>&gt;<i> 	Pu = (uint8_t *) 0x86542c8 '\200' &lt;repeats 200 times&gt;...
+</I>&gt;<i> 	Pv = &lt;value optimized out&gt;
+</I>&gt;<i> 	Width = 720
+</I>&gt;<i> 	Height = 576
+</I>&gt;<i> 
+</I>&gt;<i> the video decoding thread is locked by the osdMutex, but I can't find
+</I>&gt;<i> the cVideo thread, the only other thread which also takes the mutex. I
+</I>&gt;<i> don't think that the osdMutex is needed for vdr version &gt; 1.3.7, so you
+</I>&gt;<i> can try to remove the osdMutex from video-dfb. Maybe we can even remove
+</I>&gt;<i> it completely.
+</I>
+No. Don't remove osdMutex as long as video displaying is called from one,
+and OSD drawing is called from another thread.
+
+I guess old_picture is protected by the wrong mutex in Action() in video.c
+Test and call DrawStill_420pl(old_picture) must be protected against
+actions of SetOldPicture().
+
+So assingments and use of old_picture must by protected by a separate mutex.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002505.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+	<LI>Next message: <A HREF="002509.html">[Softdevice-devel] Hang after suspending MPEG stream for a long time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2506">[ date ]</a>
+              <a href="thread.html#2506">[ thread ]</a>
+              <a href="subject.html#2506">[ subject ]</a>
+              <a href="author.html#2506">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

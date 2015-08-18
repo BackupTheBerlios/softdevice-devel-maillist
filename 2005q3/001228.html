@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash when video stream is suspended or resumed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C1126251762.43213cf2366de%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001227.html">
+   <LINK REL="Next"  HREF="001229.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash when video stream is suspended or resumed</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C1126251762.43213cf2366de%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Crash when video stream is suspended or resumed">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Sep  9 09:42:42 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001227.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+        <LI>Next message: <A HREF="001229.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1228">[ date ]</a>
+              <a href="thread.html#1228">[ thread ]</a>
+              <a href="subject.html#1228">[ subject ]</a>
+              <a href="author.html#1228">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Without HAVE_SetSourceLocation your version my crash again. Thats what I ment
+</I>&gt;<i> &gt; by &quot;some small differences&quot;:
+</I>&gt;<i> &gt; -- snip --
+</I>&gt;<i> &gt; #if VDRVERSNUM &gt;= 10307
+</I>&gt;<i> &gt; /* ---------------------------------------------------------------------------
+</I>&gt;<i> &gt;  */
+</I>&gt;<i> &gt; void cDFBVideoOut::GetOSDDimension(int &amp;OsdWidth,int &amp;OsdHeight)
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt; #if HAVE_SetSourceLocation
+</I>&gt;<i> &gt;       OsdWidth   = fwidth;
+</I>&gt;<i> &gt;       OsdHeight  = fheight;
+</I>&gt;<i> &gt; #else
+</I>&gt;<i> &gt;       if (useStretchBlit)
+</I>&gt;<i> &gt;       {
+</I>&gt;<i> &gt;         OsdWidth   = fwidth;
+</I>&gt;<i> &gt;         OsdHeight  = fheight;
+</I>&gt;<i> &gt;       }
+</I>&gt;<i> &gt;       else
+</I>&gt;<i> &gt;       {
+</I>&gt;<i> &gt;         OsdWidth   = swidth;
+</I>&gt;<i> &gt;         OsdHeight  = sheight;
+</I>&gt;<i> &gt;       }
+</I>&gt;<i> &gt; #endif
+</I>&gt;<i> &gt; }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; #endif
+</I>&gt;<i> &gt; -- snip --
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> I don't like this fix very much, since it may have side effects.
+</I>&gt;<i> GetOSDDimension is used to determine the dimensions to which the OSD is
+</I>&gt;<i> scaled, and I don't think you want to have a scaled OSD.
+</I>
+Yes, I think the original idea of having a separate CheckAspectDimensions()
+is better. This check function is essential for calling YUV().
+There is another point that is not ok to my opinion.
+osdMutex is held to long.
+
+There should be a separate mutex which protects area specific stuff
+
+&gt;<i> I think the better way would be to check the dimensions of the video
+</I>&gt;<i> layer in YUV() and be shure only to copy that part of the picture which
+</I>&gt;<i> fits.
+</I>
+The sequence from CheckAspectDimensions() to YUV belongs together.
+
+&gt;<i> That would also prevent crashes when the signal qualtiy is bad and
+</I>&gt;<i> ffmpeg decodes var too big images. I had a few of these crashed some
+</I>&gt;<i> time ago but the latest ffmpeg version seems to be more stable now.
+</I>&gt;<i>
+</I>&gt;<i> Martin
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001227.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+	<LI>Next message: <A HREF="001229.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1228">[ date ]</a>
+              <a href="thread.html#1228">[ thread ]</a>
+              <a href="subject.html#1228">[ subject ]</a>
+              <a href="author.html#1228">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

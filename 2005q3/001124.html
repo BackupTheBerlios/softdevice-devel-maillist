@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C200508171917.09607.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001121.html">
+   <LINK REL="Next"  HREF="001125.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C200508171917.09607.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Aug 17 19:17:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001121.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001125.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1124">[ date ]</a>
+              <a href="thread.html#1124">[ thread ]</a>
+              <a href="subject.html#1124">[ subject ]</a>
+              <a href="author.html#1124">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 16. August 2005 22:57, Stefan Lucke wrote:
+&gt;<i> On Dienstag, 16. August 2005 20:57, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Montag, 15. August 2005 21:54, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; On Mon, Aug 15, 2005 at 04:48:34PM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Strange, I'm useing also a via82xx, kernel 2.6.12 without any problems.
+</I>&gt;<i> &gt; &gt; &gt; But I'm useing an older alsa-library: 1.0.3b.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Can you try to update your ALSA library?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I gave alsa-1.0.9 a try which resulted in no sound at all. vdr startup
+</I>&gt;<i> &gt; reported a error:
+</I>&gt;<i> &gt; ALSA lib pcm_dmix.c:802:(snd_pcm_dmix_open) unable to open slave
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; So I'm now back on alsa-1.0.5(a) [with sound ;-) ].
+</I>&gt;<i> 
+</I>&gt;<i> I tried alsa-1.0.9 a 2'nd time and this was more successful no more error
+</I>&gt;<i> messages from pcm_dmix.c.
+</I>&gt;<i> But guess what happens:
+</I>&gt;<i> 
+</I>&gt;<i> CMD[0903]:new Audio stream index.. old -1 new 1
+</I>&gt;<i> CMD[0903]:Neuer StreamDecoder Pid: 5763 context 0x8569208 type 1
+</I>&gt;<i> CMD[0903]:Neuer Thread gestartet: pid:5765 type 0
+</I>&gt;<i> CMD[0931]:Neuer Thread gestartet: pid:5766 type 1
+</I>&gt;<i> [softdevice] allocating picture buffer for resolution 704x576 format 0
+</I>&gt;<i> audioPTS[1047]:delay 0 audio pts offset -1975670690 pts 240
+</I>&gt;<i> audioPTS[1048]:delay 0 audio pts offset -1975670922 pts 480
+</I>&gt;<i> audioPTS[1049]:delay 0 audio pts offset -1975671154 pts 720
+</I>&gt;<i> audioPTS[1050]:delay 0 audio pts offset -1975671386 pts 960
+</I>&gt;<i> 
+</I>&gt;<i> NOOO audio delay any more :-((. That happens when using &quot;default&quot; as
+</I>&gt;<i> alsa device name (fromerly I changed the wrong one, we have two of
+</I>&gt;<i> them in setup.conf. one for PCM out and the other for the still missing
+</I>&gt;<i> ac3 out feature).
+</I>&gt;<i> 
+</I>&gt;<i> When using (from vdr setup.conf)
+</I>&gt;<i> softdevice.AlsaDevice = hw:0,2
+</I>&gt;<i> audio delay is back :-)) .
+</I>&gt;<i> 
+</I>&gt;<i> audioPTS[4892]:delay 1919 audio pts offset -2197036978 pts 225206895
+</I>&gt;<i> audioPTS[4916]:delay 1920 audio pts offset -2197036978 pts 225207135
+</I>&gt;<i> 
+</I>
+I found a way to get a audio delay with alsa-1.0.9 and default device.
+Please try attached patch. There are additional fprintfs which will be
+removed before committing. The messages now look like:
+
+(0 - 3115)  (0 - 3115)  audioPTS[2853]:delay 3115 audio pts offset -2197034010 pts 951384735
+(0 - 3142)  (0 - 3142)  audioPTS[2875]:delay 3142 audio pts offset -2197034008 pts 951384975
+(0 - 3169)  (0 - 3169)  audioPTS[2898]:delay 3169 audio pts offset -2197033992 pts 951385215
+(0 - 3195)  (0 - 3195)  audioPTS[2918]:delay 3195 audio pts offset -2197034004 pts 951385455
+
+Patch will return the alternate value if primay value is zero. When I use
+-ao alsa:hw:0,0 option, reported delays are in both cases similar but lower:
+
+(1916 - 1916)  (1915 - 1915)  audioPTS[9074]:delay 1915 audio pts offset -1242591583 pts 7603318
+(1916 - 1916)  (1915 - 1915)  audioPTS[9098]:delay 1915 audio pts offset -1242591583 pts 7603558
+(1915 - 1915)  (1915 - 1915)  audioPTS[9122]:delay 1915 audio pts offset -1242591584 pts 7603798
+(1913 - 1913)  (1912 - 1912)  audioPTS[9147]:delay 1912 audio pts offset -1242591583 pts 7604038
+(1920 - 1920)  (1919 - 1919)  audioPTS[9170]:delay 1919 audio pts offset -1242591583 pts 7604278
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: audio_delay_fix_01.diff
+Type: text/x-diff
+Size: 1332 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050817/369b0f53/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050817/369b0f53/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001121.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001125.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1124">[ date ]</a>
+              <a href="thread.html#1124">[ thread ]</a>
+              <a href="subject.html#1124">[ subject ]</a>
+              <a href="author.html#1124">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

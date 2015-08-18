@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A-V sync problems with directfb on	unichrome...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20%3D%3Fiso-8859-15%3Fq%3Fon%3D09unichrome%3D2E%3D2E%3D2E%3F%3D&In-Reply-To=%3C200509280004.07054.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001268.html">
+   <LINK REL="Next"  HREF="001271.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A-V sync problems with directfb on	unichrome...</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20%3D%3Fiso-8859-15%3Fq%3Fon%3D09unichrome%3D2E%3D2E%3D2E%3F%3D&In-Reply-To=%3C200509280004.07054.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] A-V sync problems with directfb on	unichrome...">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Sep 28 00:04:06 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001268.html">[Softdevice-devel] A-V sync problems with directfb
+</A></li>
+        <LI>Next message: <A HREF="001271.html">[Softdevice-devel] A-V sync problems with directfb on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1269">[ date ]</a>
+              <a href="thread.html#1269">[ thread ]</a>
+              <a href="subject.html#1269">[ subject ]</a>
+              <a href="author.html#1269">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 27. September 2005 01:28, Stefan Lucke wrote:
+&gt;<i> On Samstag, 24. September 2005 14:26, Laz wrote:
+</I>&gt;<i> &gt; On Saturday 24 September 2005 12:09, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; On Samstag, 24. September 2005 12:44, Martin Wache wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Ok, so the problem was not the nan's, but still I can not see anything
+</I>&gt;<i> &gt; &gt; &gt; wrong in mpeg2decoder. Unfortunatly some of the a-v sync debuging output
+</I>&gt;<i> &gt; &gt; &gt; has been removed by Stefan when he moved the waiting to the video out,
+</I>&gt;<i> &gt; &gt; &gt; and also the dispTime is meaningless.
+</I>&gt;<i> &gt; &gt; &gt; What I can say is that mpeg2decoder nows quite well that the A-V sync is
+</I>&gt;<i> &gt; &gt; &gt; bad and tries to compensate, in you log the video is behind the audio,
+</I>&gt;<i> &gt; &gt; &gt; and thus the delay is even negative which means there should be no delay
+</I>&gt;<i> &gt; &gt; &gt; at all. But still it takes more than 40 ms between two frames.
+</I>&gt;<i> &gt; &gt; &gt; I currently see two options: first, your computer is too slow, or second
+</I>&gt;<i> &gt; &gt; &gt; the video-out waits at some point even though the requested delay is
+</I>&gt;<i> &gt; &gt; &gt; negative.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; The speed shouldn't be a problem because I think it works fine without the 
+</I>&gt;<i> &gt; field-sync patches.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Probably you should try to switch of the wait on sync in the
+</I>&gt;<i> &gt; &gt; &gt; directFB-out. Stefan, is this easily possible?
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; That should be easy. For I420 and YV12 modes, it's around line 1260.
+</I>&gt;<i> &gt; &gt; videoSurface-&gt;Flip(NULL, DSFLIP_ONSYNC);
+</I>&gt;<i> &gt; &gt; could be changed to:
+</I>&gt;<i> &gt; &gt; videoSurface-&gt;Flip();
+</I>&gt;<i> &gt; &gt; or:
+</I>&gt;<i> &gt; &gt; videoSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I've just tried both of them and I don't see any real differences between 
+</I>&gt;<i> &gt; them!
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Does StretchBlit work on Unichrome? Should I try enabling that? I think it 
+</I>&gt;<i> &gt; bailed out when I tried it before.
+</I>&gt;<i> 
+</I>&gt;<i> Stretchblit doesn't work accelerated I think.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001268.html">[Softdevice-devel] A-V sync problems with directfb
+</A></li>
+	<LI>Next message: <A HREF="001271.html">[Softdevice-devel] A-V sync problems with directfb on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1269">[ date ]</a>
+              <a href="thread.html#1269">[ thread ]</a>
+              <a href="subject.html#1269">[ subject ]</a>
+              <a href="author.html#1269">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Again%3A%20%22result%3DOut%20of%20video%20memory%22%20with%20DFB&In-Reply-To=%3C20061003082241.GA25449%40seneca.muc.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002578.html">
+   <LINK REL="Next"  HREF="002576.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB</H1>
+    <B>Harald Milz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Again%3A%20%22result%3DOut%20of%20video%20memory%22%20with%20DFB&In-Reply-To=%3C20061003082241.GA25449%40seneca.muc.de%3E"
+       TITLE="[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB">hm at seneca.muc.de
+       </A><BR>
+    <I>Tue Oct  3 10:22:41 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002578.html">[Softdevice-devel] osd and audio ok, but black screen
+</A></li>
+        <LI>Next message: <A HREF="002576.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2575">[ date ]</a>
+              <a href="thread.html#2575">[ thread ]</a>
+              <a href="subject.html#2575">[ subject ]</a>
+              <a href="author.html#2575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm rebuilding my VDR w/ Matrox G550 DVI and softdevice CVS from today.
+More components:
+
+vdr-1.4.1
+ffmpeg CVS from today
+DirectFB-1.0.0-rc1
+DFB++-0.9.25
+OpenSUSE 10.1 w/ kernel 2.6.16.13-4-default. 
+
+This setup used to work just fine until the root disk began to produce more
+and more errors some time ago. The rest of the hardware is unchanged, as
+well as fb.modes and directfbrc (as I documented on
+<A HREF="http://www.vdr-wiki.de/wiki/index.php/Softdevice-plugin#Matrox_G550_mit_DVI-Ausgang_und_DirectFB">http://www.vdr-wiki.de/wiki/index.php/Softdevice-plugin#Matrox_G550_mit_DVI-Ausgang_und_DirectFB</A>).
+
+softdevice audio decoding via ALSA / SPDIF works fine, no probs. Video
+decoding doesn't product any output, and I get this &quot;Out of video memory&quot;
+error that was mentioned here earlier. The error log is attached. 
+
+What gives? DFB only recognizes 16MB video RAM (the card has 32). But this
+was similar when the setup worked back then, and was apparently no problem. 
+
+
+softdevice -vo vidix: sort of works, just the CPU load rises to nearly
+100% after some time (~ 10 min or more) sometimes but it's at 22-25% most
+of the time, and the console output (cursor blink) can be seen on the
+screen. setterm doesn't help because I invoke runvdr from /etc/inittab,
+and vdr isn't attached to a TTY anyway. So I'd prefer using DFB as I used
+to. 
+
+So - what's wrong with the DFB setup? 
+
+TIA!
+
+-- 
+If everybody minded their own business, the world would go
+around a deal faster.
+		-- The Duchess, &quot;Through the Looking Glass&quot;
+-------------- next part --------------
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -ao
+[softdevice] using PCM alsa device plug:spdif
+[softdevice] using AC3 alsa device plug:spdif
+[softdevice]   argv [3] = -vo
+[setup-softdevice] alsa ac3Mode set to: 1
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 3 (User3)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 1 lavc
+[setup-softdevice] mainMenu: 0
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3346432)
+[dfb] init
+
+     =======================|  DirectFB 1.0.0-rc1  |=======================
+          (c) 2001-2006  United Cultures of Earth - go for outer space!
+          (c) 2000-2004  Convergence (integrated media) GmbH
+        ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2006-10-02 13:39) 
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 8587)...
+(*) Direct/Modules: suppress module 'keyboard'
+(*) Direct/Thread: Running 'LiRC Input' (INPUT, 8588)...
+(*) DirectFB/Input: LIRC Device 0.2 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 8589)...
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 8590)...
+(*) DirectFB/Input: PC Speaker (2) 0.1 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 8591)...
+(*) DirectFB/Input: Budget-CI dvb ir receiver saa71 (3) 0.1 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G550 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 16777216 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle Blit StretchBlit All 
+[dfb] Drawing Flags: Blend Src.premultiply 
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey SrcPremultiply Deinterlace 
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> 
+[dfb] Enumerating display Layers
+[dfb] Configuring CooperativeLevel for OSD
+Layer 0 FBDev Primary Layer  Type: graphics 
+  Caps: brightness contrast saturation surface 
+Layer 1 Matrox Backend Scaler  Type: graphics picture video 
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location surface 
+[dfb] (osdLayer): flags, options, pixelformat: 0000000f, 00000000 00418c04
+[dfb] (osdLayer): width, height:               1280 720
+[dfb] osdLayer without !! alpha channel
+[surface capabilities] scrSurface: videoonly double-buffered flipping PixelFormat = 0x00418c04 
+[dfb] width = 1280, height = 720
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [1280x720])
+[surface capabilities] osdSurface: videoonly double-buffered flipping PixelFormat = 0x00418c04 
+[dfb] Configuring CooperativeLevel for Overlay
+[surface capabilities] videoSurface: videoonly PixelFormat = 0x00200806 
+[dfb] Using this layer for OSD:        FBDev Primary Layer
+[dfb] Using this layer for Video out:  Matrox Backend Scaler
+[dfb] Display frame time is 16641 microseconds
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb]: Testconfiguration failed flags: 00000040 (disabling failed flags)
+ (!!!)  *** WARNING [reallocation of video instance failed] *** [surfaces.c:1635 in dfb_surface_reallocate_buffer()]
+[dfb] SetParams: action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), result=Out of video memory!
+[surface capabilities] videoSurface: videoonly double-buffered flipping PixelFormat = 0x00200806 
+[dfb] (re)configured 0x08100609
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb]: Testconfiguration failed flags: 00000040 (disabling failed flags)
+ (!!!)  *** WARNING [reallocation of video instance failed] *** [surfaces.c:1635 in dfb_surface_reallocate_buffer()]
+[dfb] SetParams: action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), result=Out of video memory!
+[surface capabilities] videoSurface: videoonly double-buffered flipping PixelFormat = 0x00200806 
+[dfb] (re)configured 0x08100609
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+
+... many lines ...
+
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+[dfb] YUV: action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*), result=Object is suspended!
+Releasing DFB
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002578.html">[Softdevice-devel] osd and audio ok, but black screen
+</A></li>
+	<LI>Next message: <A HREF="002576.html">[Softdevice-devel] Again: &quot;result=Out of video memory&quot; with DFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2575">[ date ]</a>
+              <a href="thread.html#2575">[ thread ]</a>
+              <a href="subject.html#2575">[ subject ]</a>
+              <a href="author.html#2575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

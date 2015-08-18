@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] recent cvs &amp; HDTV issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20recent%20cvs%20%26%20HDTV%20issue&In-Reply-To=%3C21847.1113147529%40www73.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000490.html">
+   <LINK REL="Next"  HREF="000492.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] recent cvs &amp; HDTV issue</H1>
+    <B>Thomas Herrmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20recent%20cvs%20%26%20HDTV%20issue&In-Reply-To=%3C21847.1113147529%40www73.gmx.net%3E"
+       TITLE="[Softdevice-devel] recent cvs &amp; HDTV issue">ollo.diab at gmx.de
+       </A><BR>
+    <I>Sun Apr 10 17:38:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000490.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+        <LI>Next message: <A HREF="000492.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#491">[ date ]</a>
+              <a href="thread.html#491">[ thread ]</a>
+              <a href="subject.html#491">[ subject ]</a>
+              <a href="author.html#491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Stefan &amp; Martin,
+
+thanks a lot for your work on softdevice plugin. It's getting better and
+better!
+
+But I have an issue with HDTV where softdevice started with -vo xv:max-area
+does start to show HDTV picture, but keeps interrupting the decoding. I get
+in the console window the folloing output:
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[ProcessArgs] xv: using max available area
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] deinterlace method set to 1 lavc
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.9-pre1) build(4752)
+[XvVideoOut]: max area size 2046 x 2046
+[XvVideoOut]: using area size 2040 x 2046
+Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+[softdevice] allocating picture buffer for resolution 720x576
+[softdevice] allocating picture buffer for resolution 720x576
+[softdevice] allocating picture buffer for resolution 1920x1088
+[softdevice] allocating picture buffer for resolution 1920x1088
+[softdevice] allocating picture buffer for resolution 1920x1088
+[softdevice] allocating picture buffer for resolution 1920x1088
+[softdevice] allocating picture buffer for resolution 1920x1088
+[softdevice] allocating picture buffer for resolution 1920x1088
+[softdevice] allocating picture buffer for resolution 1920x1088
+
+while the last message keeps repeating.
+
+Any idea what goes wrong?
+
+Thanks,   Thomas
+
+BTW: The scaled HDTV output on a 720x576 window (when switching from STV to
+HDTV channel) has an offset, means there are some rows on the right side cut
+off the picture. By setting the window to full screen, one can see the whole
+HDTV picture, but when switched back to small window, the right side
+disappears again.
+
+
+-- 
+Sparen beginnt mit GMX DSL: <A HREF="http://www.gmx.net/de/go/dsl">http://www.gmx.net/de/go/dsl</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000490.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+	<LI>Next message: <A HREF="000492.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#491">[ date ]</a>
+              <a href="thread.html#491">[ thread ]</a>
+              <a href="subject.html#491">[ subject ]</a>
+              <a href="author.html#491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

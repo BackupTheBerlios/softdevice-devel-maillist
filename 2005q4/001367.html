@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] FFmpeg/softdevice problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20FFmpeg/softdevice%20problem&In-Reply-To=%3C200510151240.01544.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001366.html">
+   <LINK REL="Next"  HREF="001372.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] FFmpeg/softdevice problem</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20FFmpeg/softdevice%20problem&In-Reply-To=%3C200510151240.01544.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] FFmpeg/softdevice problem">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Oct 15 12:40:01 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001366.html">[Softdevice-devel] FFmpeg/softdevice problem
+</A></li>
+        <LI>Next message: <A HREF="001372.html">[Softdevice-devel] FFmpeg/softdevice problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1367">[ date ]</a>
+              <a href="thread.html#1367">[ thread ]</a>
+              <a href="subject.html#1367">[ subject ]</a>
+              <a href="author.html#1367">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 15. Oktober 2005 11:56, Seppo Ingalsuo wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I tried to upgrade latest ffmpeg CVS because softplay doesn't play Star 
+</I>&gt;<i> Wreck xvid avi correctly.  It didn't help and I got another problem: 
+</I>&gt;<i> MPEG-1 layer II audio decoding in softdevice/ffmpeg is now broken. I get 
+</I>&gt;<i> only strong noise sound for most TV channels. AC3 pass trough works and 
+</I>&gt;<i> Ogg music plays correctly. Have others seen this problem?
+</I>
+I just can confirm that there is something wrong with ffmpeg current audio
+decoding. A fresh checkout from a view minutes ago is just producing
+noise, whereas the downsampled AC3 of ZDF still works.
+
+I cannot access ffmpeg / mplayer pages. For checkout I used:
+cvs -z3 -d:pserver:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">anonymous at mplayerhq.hu</A>:/cvsroot/ffmpeg co ffmpeg
+
+My last stable version is from 2005-09-17 .
+
+On noisy channels (almost all) selecting audio from right ch, gives a very deep
+slow sound.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001366.html">[Softdevice-devel] FFmpeg/softdevice problem
+</A></li>
+	<LI>Next message: <A HREF="001372.html">[Softdevice-devel] FFmpeg/softdevice problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1367">[ date ]</a>
+              <a href="thread.html#1367">[ thread ]</a>
+              <a href="subject.html#1367">[ subject ]</a>
+              <a href="author.html#1367">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

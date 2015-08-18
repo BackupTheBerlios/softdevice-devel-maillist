@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Rescaling for a large LCD TV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039056B7A%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001459.html">
+   <LINK REL="Next"  HREF="001469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Rescaling for a large LCD TV</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039056B7A%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] Rescaling for a large LCD TV">Neumann at do-net.de
+       </A><BR>
+    <I>Fri Nov  4 08:22:21 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001459.html">[Softdevice-devel] Softplay and divx/xvid artefacts
+</A></li>
+        <LI>Next message: <A HREF="001469.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1468">[ date ]</a>
+              <a href="thread.html#1468">[ thread ]</a>
+              <a href="subject.html#1468">[ subject ]</a>
+              <a href="author.html#1468">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If you mean the HD broadcast on Pro7/Sat.1 you do not have a chance to
+view it.
+They send in DVB-S2 and also not in mpeg2. As far as i know, they also
+use 1080i
+with mpeg4/h.264 so you better buy a dual xeon system :)
+
+Dont even know if it is possible now to decode that stream under linux.
+And since
+every dvb-s card out there cant recieve dvb-s2 you (and everyone) has no
+chance.
+
+-------------
+Andre Neumann 
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> 
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] On Behalf Of Harald Milz
+</I>&gt;<i> Sent: Thursday, November 03, 2005 6:46 PM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Softdevice-devel] Rescaling for a large LCD TV
+</I>&gt;<i> 
+</I>&gt;<i> On Wed, Nov 02, 2005 at 10:24:53PM +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Mittwoch, 2. November 2005 20:53, Harald Milz wrote:
+</I>&gt;<i> &gt; &gt; On Wed, Nov 02, 2005 at 04:25:22PM +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; Should be possible to run a 2nd app when DFB is configured with
+</I>&gt;<i> &gt; &gt; &gt; enable-multi and/or fusion.
+</I>&gt;<i> &gt; &gt; Just for the text console... ? 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; That would be wasted connectors. But perhaps a small LCD-touchscreen
+</I>&gt;<i> 
+</I>&gt;<i> Nah - the VGA connectors are spare anyway. 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; device as 2nd monitor, so that you don't need to poweron 
+</I>&gt;<i> the big one.
+</I>&gt;<i> 
+</I>&gt;<i> Hehe - it's exactly for this purpose - to have both on the 
+</I>&gt;<i> big display, and
+</I>&gt;<i> I don't need another one. I tried vt-switching in directfbrc 
+</I>&gt;<i> but it didn't
+</I>&gt;<i> work for me. Question is, is there any setting that allows me 
+</I>&gt;<i> to keep the
+</I>&gt;<i> DFB on the 1st head (DVI) and the Linux console on the 2nd 
+</I>&gt;<i> (VGA). Then I
+</I>&gt;<i> can help debugging softdevice without buying another piece of 
+</I>&gt;<i> hardware... 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I went through the mail admin dialogs, but didn't find a 
+</I>&gt;<i> hint for such
+</I>&gt;<i> &gt; processing. Could you take that out, and we'll see if your 
+</I>&gt;<i> mails get archived.
+</I>&gt;<i> 
+</I>&gt;<i> Wilco. 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; too, but 1980x1080i (h264) is a quite different story :-( . 
+</I>&gt;<i> TV-stations gave
+</I>&gt;<i> &gt; us the chance to think of further investment, until DVB-S2 
+</I>&gt;<i> recivers are
+</I>&gt;<i> &gt; available. To my knowledge a 3G P4 is required for software decoding
+</I>&gt;<i> &gt; and I would like to know if 2G P-M would be enough too.
+</I>&gt;<i> 
+</I>&gt;<i> The next HD-TV broadcasting is mine. My XP-M 2400+ has apparently some
+</I>&gt;<i> capacity left as far as overclocking. As far as I know 1080i 
+</I>&gt;<i> will not be
+</I>&gt;<i> used in DE country before long, but rather 720p. As I 
+</I>&gt;<i> understand I do not
+</I>&gt;<i> need to remove my FF card when PrimaryDVB points at 
+</I>&gt;<i> softdevice, right? 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Electrocution, n.:
+</I>&gt;<i> 	Burning at the stake with all the modern improvements.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001459.html">[Softdevice-devel] Softplay and divx/xvid artefacts
+</A></li>
+	<LI>Next message: <A HREF="001469.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1468">[ date ]</a>
+              <a href="thread.html#1468">[ thread ]</a>
+              <a href="subject.html#1468">[ subject ]</a>
+              <a href="author.html#1468">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

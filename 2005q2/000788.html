@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Fwd: Re: Softdevice and via]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BFwd%3A%20Re%3A%20Softdevice%20and%20via%5D&In-Reply-To=%3C200506010801.44210.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000780.html">
+   <LINK REL="Next"  HREF="000781.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Fwd: Re: Softdevice and via]</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BFwd%3A%20Re%3A%20Softdevice%20and%20via%5D&In-Reply-To=%3C200506010801.44210.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [Fwd: Re: Softdevice and via]">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jun  1 08:01:44 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000780.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+        <LI>Next message: <A HREF="000781.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#788">[ date ]</a>
+              <a href="thread.html#788">[ thread ]</a>
+              <a href="subject.html#788">[ subject ]</a>
+              <a href="author.html#788">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 31. Mai 2005 11:41, Rene Bredlau wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt;&gt;Any idea anyone ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Which hardware ??
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; He should use either I420 or YV12. The difference between them is just
+</I>&gt;<i> &gt; the swapped color components. YUV2 with directfb automatically activates
+</I>&gt;<i> &gt; stretchBlit(), which should not be used on via.
+</I>&gt;<i> i420 and YV12 giv wrong colors, I420 looks a little bit better, but i
+</I>&gt;<i> think blue is somehow missing there. YUV2 gives me a somehow broken
+</I>&gt;<i> picture. some parts of the screen are not drawn und the picture is not
+</I>&gt;<i> constantly update (the audio is breaking up then too). But the parts of
+</I>&gt;<i> the picture is can see when YUV2 is active have correct colors.
+</I>&gt;<i> 
+</I>
+On my epia I do:
+modprobe snd-via82xx
+modprobe viafb mode=1024x768 bpp=32 refresh=60 TVon=0
+
+/etc/directfbrc :
+#mode  = 1024x768
+mode = 1280x1024
+#pixelformat=AiRGB
+pixelformat=ARGB
+disable-module=cle266
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000780.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+	<LI>Next message: <A HREF="000781.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#788">[ date ]</a>
+              <a href="thread.html#788">[ thread ]</a>
+              <a href="subject.html#788">[ subject ]</a>
+              <a href="author.html#788">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

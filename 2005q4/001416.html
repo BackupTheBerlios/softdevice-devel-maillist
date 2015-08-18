@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softplay does not honour softdevice's suspend nor vdr suspend patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20does%20not%20honour%20softdevice%27s%20suspend%20nor%20vdr%20suspend%20patch&In-Reply-To=%3C20051027213304.GA20926%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001412.html">
+   <LINK REL="Next"  HREF="001407.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softplay does not honour softdevice's suspend nor vdr suspend patch</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softplay%20does%20not%20honour%20softdevice%27s%20suspend%20nor%20vdr%20suspend%20patch&In-Reply-To=%3C20051027213304.GA20926%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] softplay does not honour softdevice's suspend nor vdr suspend patch">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Oct 27 23:33:04 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001412.html">[Softdevice-devel] softplay does not honour softdevice's suspend nor vdr suspend patch
+</A></li>
+        <LI>Next message: <A HREF="001407.html">[Softdevice-devel] Translations for core VDR + dd-record-option + suspend-0.4.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1416">[ date ]</a>
+              <a href="thread.html#1416">[ thread ]</a>
+              <a href="subject.html#1416">[ subject ]</a>
+              <a href="author.html#1416">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Oct 26, 2005 at 09:42:25PM +0200, Nicolas Huillard wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> Does the subject need more explanation ?
+</I>&gt;<i> Music or video continues to play even when suspended by activating 
+</I>&gt;<i> softdevice's Playback switch, or Marko Makela's suspend-patch (0.4.2)
+</I>
+Version 0.4.3 of the suspend patch
+(<A HREF="http://www.iki.fi/~msmakela/software/vdr/vdr-1.3.34-suspend-0.4.3.patch.gz">http://www.iki.fi/~msmakela/software/vdr/vdr-1.3.34-suspend-0.4.3.patch.gz</A>)
+defines the symbol VDR_SUSPEND in config.h.  You can define an inherited
+method of cStatus::SetSuspended(bool) #ifdef VDR_SUSPEND.
+
+Hmm, I don't see anything in softdevice that would inherit cStatus.  It
+doesn't seem logical to have methods for notifying status changes (such
+as audio volume level) in two places: in cDevice and in cStatus.
+
+It is not trivial for me to add a cStatus listener to softdevice.  I don't
+have any experience of softplay, as I only have DVB recordings on my vdr box.
+
+Two reasons why it would be nice if softdevice listened to
+cStatus::SetSuspended(bool) events:
+
+(1) Blank the screen (make it black) immediately when playback is suspended.
+The timeout-based method seems to be disabled when a recording is paused.
+
+(2) It'd be nice to power the monitor on or off by DPMS (or trigger the
+X11 screensaver on or off) based on whether the playback is suspended.
+
+Only the (1) annoys me slightly, but (2) was requested by a softdevice
+user.  I can't fix (2), as the monitor on my VDR system is a year or two
+too old to obey DPMS.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001412.html">[Softdevice-devel] softplay does not honour softdevice's suspend nor vdr suspend patch
+</A></li>
+	<LI>Next message: <A HREF="001407.html">[Softdevice-devel] Translations for core VDR + dd-record-option + suspend-0.4.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1416">[ date ]</a>
+              <a href="thread.html#1416">[ thread ]</a>
+              <a href="subject.html#1416">[ subject ]</a>
+              <a href="author.html#1416">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

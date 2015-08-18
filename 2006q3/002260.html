@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] pseudo alpha mmx2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20alpha%20mmx2&In-Reply-To=%3C44B7EF31.3040901%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002252.html">
+   <LINK REL="Next"  HREF="002266.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] pseudo alpha mmx2</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20pseudo%20alpha%20mmx2&In-Reply-To=%3C44B7EF31.3040901%40gmx.net%3E"
+       TITLE="[Softdevice-devel] pseudo alpha mmx2">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Jul 14 21:23:29 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002252.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+        <LI>Next message: <A HREF="002266.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2260">[ date ]</a>
+              <a href="thread.html#2260">[ thread ]</a>
+              <a href="subject.html#2260">[ subject ]</a>
+              <a href="author.html#2260">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo schrieb:
+&gt;<i> The new mmx2 code doing pseudo alpha (aka dithering) doesn't seem to 
+</I>&gt;<i> dither like the old non mmx2 code did. Instead of using a checker 
+</I>&gt;<i> pattern it uses vertical black lines. This obviously doesn't look too nice.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> The old code used the check
+</I>&gt;<i> 
+</I>&gt;<i> do_dither = ((x % 2 == 1 &amp;&amp; y % 2 == 1) ||
+</I>&gt;<i>               (x % 2 == 1 &amp;&amp; y % 2 == 0) || prev_pix);
+</I>&gt;<i> 
+</I>&gt;<i> the new code is (as long as mmx2 is not enabled)
+</I>&gt;<i> 
+</I>&gt;<i> if ( IS_BACKGROUND(GET_A(c)) &amp;&amp; (((intptr_t)dest) &amp; 0x4) )
+</I>&gt;<i> 
+</I>&gt;<i> which doesn't seem to take into account that the check needs to be 
+</I>&gt;<i> different for every second line.
+</I>&gt;<i> 
+</I>&gt;<i> A better check would be something like
+</I>&gt;<i> 
+</I>&gt;<i> if ( IS_BACKGROUND(GET_A(c)) &amp;&amp; (
+</I>&gt;<i>    ((intptr_t)dest) &amp; 0x04 &amp;&amp; ((((intptr_t)dest) / (1280*4)) % 2) || 
+</I>&gt;<i> 
+</I>&gt;<i>    (((intptr_t)dest)+0x04) &amp; 0x04 &amp;&amp; (((((intptr_t)dest) / (1280*4)) % 
+</I>&gt;<i> 2) == 0)
+</I>&gt;<i> )) {
+</I>&gt;<i> 
+</I>&gt;<i> but here the horizontal width (1280) is hardcoded and I'm not sure how 
+</I>&gt;<i> to translate this into mmx code. Ideas?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>I think we would have to change the interface of the convert functions,
+and also pass a line number. For the mmx part there are to possible ways:
+1. convert a single pixel using the c code for odd lines, and convert
+   the rest using the mmx code. The drawback is that the memory access
+   won't be aligned anymore, and I guess all the speed advantage will be
+   gone.
+2. have different mmx codes for odd and even lines. To produce this code
+   is quite simple, but the code will be doubled.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002252.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+	<LI>Next message: <A HREF="002266.html">[Softdevice-devel] pseudo alpha mmx2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2260">[ date ]</a>
+              <a href="thread.html#2260">[ thread ]</a>
+              <a href="subject.html#2260">[ subject ]</a>
+              <a href="author.html#2260">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

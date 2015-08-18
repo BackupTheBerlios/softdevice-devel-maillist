@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20DirectFB%20downscaling%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20From%20todays%20changelog%29&In-Reply-To=%3C200605052359.52422.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001894.html">
+   <LINK REL="Next"  HREF="001989.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20DirectFB%20downscaling%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20From%20todays%20changelog%29&In-Reply-To=%3C200605052359.52422.stefan%40lucke.in-berlin.de%3E"
+       TITLE="DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri May  5 23:59:52 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001894.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays	changelog)
+</A></li>
+        <LI>Next message: <A HREF="001989.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1972">[ date ]</a>
+              <a href="thread.html#1972">[ thread ]</a>
+              <a href="subject.html#1972">[ subject ]</a>
+              <a href="author.html#1972">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 23 April 2006 15:39, Malcolm Caldwell wrote:
+&gt;<i> On Sat, 2006-04-22 at 11:11 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Dienstag 18 April 2006 02:14, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; &gt; OK,
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Since I am one of those not on the cvs list...
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Has there been any work on the MGA TV non-field based StretchBlit bug?
+</I>&gt;<i> &gt; No.
+</I>&gt;<i> &gt; &gt; If not is anyone working on it?
+</I>&gt;<i> &gt; No.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I think your are referring to this thread on directfb-users:
+</I>&gt;<i> &gt; <A HREF="http://mail.directfb.org/pipermail/directfb-users/2005-October/000770.html">http://mail.directfb.org/pipermail/directfb-users/2005-October/000770.html</A>
+</I>&gt;<i> 
+</I>&gt;<i> Yes.  This would be the bug.
+</I>
+Ok, I made some progress. Here is the first patch for directfb.
+
+In the code, there is still something I don't like. Hardwiring these
+multiplications '*2' for YUY2 and '*4' for RGBA (source / destination),
+
++     mga_out32( mmio, mdev-&gt;src_offset[0]+mdev-&gt;src_pitch*2, TEXORG );
++     mga_out32( mmio, mdev-&gt;dst_pitch*2, PITCH );
++     mga_out32( mmio, mdev-&gt;dst_offset[0]+mdev-&gt;dst_pitch*4, DSTORG );
+
+and forcing strechblit acting allways as an interlaced blit here:
+-     matroxBlitTMU( mdrv, mdev, srect, drect, true );
+-
++       matroxBlitTMU_interlaced( mdrv, mdev, srect, drect, true );
++#if 0
++     if (mdev-&gt;blit_interlaced &amp;&amp; !mdev-&gt;blit_deinterlace) {
++       matroxBlitTMU_interlaced( mdrv, mdev, srect, drect, true );
++     } else 
++       matroxBlitTMU( mdrv, mdev, srect, drect, true );
++#endif
+
+But by this, I guess you don't need a patch for softdevice.
+
+The only thing you should modify is field based color handling.
+For this I uploaded a short test stream, which has a marker at 0:00:04.09 .
+
+<A HREF="http://www.lucke.in-berlin.de/interlaced_16_9_test_stream.tar.bz2">http://www.lucke.in-berlin.de/interlaced_16_9_test_stream.tar.bz2</A>
+
+I guess you see the difference too, as there is much movement with red color.
+To my opinion it is viewed best when function yv12_to_yuy2_il_c() gets
+called instead of yv12_to_yuy2() (lines 1309 &amp; 1310).
+I guess I should make yv12_to_yuy2_il_c() the default one, even there
+is not an mmx version.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: interlaced_blit_03.diff
+Type: text/x-diff
+Size: 8387 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060505/29aa79fb/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060505/29aa79fb/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001894.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays	changelog)
+</A></li>
+	<LI>Next message: <A HREF="001989.html">[Softdevice-devel] Re: DirectFB downscaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1972">[ date ]</a>
+              <a href="thread.html#1972">[ thread ]</a>
+              <a href="subject.html#1972">[ subject ]</a>
+              <a href="author.html#1972">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

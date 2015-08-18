@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice with vdr versions newer than	1.7.0?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2011q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20with%20vdr%20versions%20newer%20than%0A%091.7.0%3F&In-Reply-To=%3C201104142326.05289.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003264.html">
+   <LINK REL="Next"  HREF="003266.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice with vdr versions newer than	1.7.0?</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20with%20vdr%20versions%20newer%20than%0A%091.7.0%3F&In-Reply-To=%3C201104142326.05289.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice with vdr versions newer than	1.7.0?">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Apr 14 23:26:04 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003264.html">[Softdevice-devel] Softdevice with vdr versions newer than 1.7.0?
+</A></li>
+        <LI>Next message: <A HREF="003266.html">[Softdevice-devel] Softdevice with vdr versions newer than	1.7.0?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3265">[ date ]</a>
+              <a href="thread.html#3265">[ thread ]</a>
+              <a href="subject.html#3265">[ subject ]</a>
+              <a href="author.html#3265">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 14 April 2011, Laz wrote:
+&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I was beginning to think that softdevice was no longer being developed but 
+</I>&gt;<i> was pleased to see a couple of CVS updates.
+</I>
+Nice to see that there is someone still following the cvs list.
+
+
+&gt;<i> 
+</I>&gt;<i> Has anyone had any success with using softdevice with any versions of vdr 
+</I>&gt;<i> more recent than 1.7.0? This was when the change to TS happened.
+</I>
+You'll find a patch attached which does work in &quot;some way&quot; with vdr-1.7.15.
+
+It is not stable and sometimes it does not show video for some old
+recordings, but it does show contend of german ARD HD &amp; ZDF HD free
+to air stations.
+OSD is shown in upper left corner and drawing method has to be set to
+software for my onboard card:
+[    38.290] (--) RADEON(0): Chipset: &quot;ATI Radeon HD 3200 Graphics&quot; (ChipID = 0x9610)
+
+Other disappointing thing is cpu consumption. Even my &quot;AMD 64 X2 5600+&quot;
+is not enough: one core at it's limits and the other one idleing ;-) .
+
+Output method must be restructred, as decoding and displaying is done
+in one thread (if I read the sources correct).
+
+I won't promise to much, but let's see what could be done.
+
+&gt;<i> 
+</I>&gt;<i> Cheers,
+</I>&gt;<i> 
+</I>&gt;<i> Laz
+</I>
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: sd-cvsdiff-2011-04-14.diff.gz
+Type: application/x-gzip
+Size: 3198 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20110414/93e4402e/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20110414/93e4402e/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003264.html">[Softdevice-devel] Softdevice with vdr versions newer than 1.7.0?
+</A></li>
+	<LI>Next message: <A HREF="003266.html">[Softdevice-devel] Softdevice with vdr versions newer than	1.7.0?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3265">[ date ]</a>
+              <a href="thread.html#3265">[ thread ]</a>
+              <a href="subject.html#3265">[ subject ]</a>
+              <a href="author.html#3265">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

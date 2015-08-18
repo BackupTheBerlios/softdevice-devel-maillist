@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems running HD channels with vidix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3C1192092941.470de50d57cf7%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002937.html">
+   <LINK REL="Next"  HREF="002939.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems running HD channels with vidix</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3C1192092941.470de50d57cf7%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems running HD channels with vidix">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Oct 11 10:55:41 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002937.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+        <LI>Next message: <A HREF="002939.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2938">[ date ]</a>
+              <a href="thread.html#2938">[ thread ]</a>
+              <a href="subject.html#2938">[ subject ]</a>
+              <a href="author.html#2938">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Andre Neumann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Neumann at do-net.de</A>&gt;:
+
+&gt;<i> allocating buffer format orig-&gt;format 0
+</I>&gt;<i> 22:36:55.0998 I [5217] [cVidixVideoOut] Video changed format to 1920x1088
+</I>&gt;<i> 22:36:55.0998 E [5217] [cVidixVideoOut] Can't configure playback: Function not implemented
+</I>&gt;<i> exiting
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Is there some kind of limitation with vidix ??
+</I>&gt;<i>
+</I>
+Yes.
+These are width limits for some supported fourcc formats.
+
+from :
+<A HREF="http://vidix.svn.sourceforge.net/viewvc/vidix/trunk/vidix/vidix/drivers/radeon_vid.c?revision=301&amp;view=markup">http://vidix.svn.sourceforge.net/viewvc/vidix/trunk/vidix/vidix/drivers/radeon_vid.c?revision=301&amp;view=markup</A>
+
+ 1456   { IMGFMT_YV12, 1567 },
+ 1457   { IMGFMT_I420, 1567 },
+ 1458   { IMGFMT_IYUV, 1567 },
+ 1459   { IMGFMT_UYVY, 1551 },
+ 1460   { IMGFMT_YUY2, 1551 },
+
+Stefan
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002937.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+	<LI>Next message: <A HREF="002939.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2938">[ date ]</a>
+              <a href="thread.html#2938">[ thread ]</a>
+              <a href="subject.html#2938">[ subject ]</a>
+              <a href="author.html#2938">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

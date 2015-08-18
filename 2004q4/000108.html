@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%28Resend%29%3A%20Fwd%3A%20Re%3A%20Matrox%20patch&In-Reply-To=%3C200412221150.06441.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000106.html">
+   <LINK REL="Next"  HREF="000109.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] (Resend): Fwd: Re: Matrox patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%28Resend%29%3A%20Fwd%3A%20Re%3A%20Matrox%20patch&In-Reply-To=%3C200412221150.06441.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] (Resend): Fwd: Re: Matrox patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Dec 22 11:50:06 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000106.html">[Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+</A></li>
+        <LI>Next message: <A HREF="000109.html">[Softdevice-devel] Re:  Alpha Blending was: Fwd: Re: Matrox patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#108">[ date ]</a>
+              <a href="thread.html#108">[ thread ]</a>
+              <a href="subject.html#108">[ subject ]</a>
+              <a href="author.html#108">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 22. Dezember 2004 10:33, Martin Wache wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I fully aggree with you, we should not blow up the softdevice that much 
+</I>&gt;<i> just to get software scaling. But having a procedure which scales the 
+</I>&gt;<i> osd to fit the actual windowsize would also be nice for X11-out.  In 
+</I>&gt;<i> principle scaling of a picture should not be that difficult, so maybe we 
+</I>&gt;<i> can get a algorithem from somewhere an implemented it ourself.
+</I>
+We can choose another OSD-drawing method. That is: render the OSD into
+the video frame with honoring alpha blending. So OSD is scaled with video,
+but this must be done foreach frame. We need a separate copy of the last
+displayed frame too, to refresh OSD and video in pause mode.
+
+&gt;<i> I hope to have some more time during the holidays, can you send me the 
+</I>&gt;<i> patch to my private e-mail, so that I can have a look at it?
+</I>
+Done.
+
+Have a nice X-mas.
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000106.html">[Softdevice-devel] (Resend): Fwd: Re: Matrox patch
+</A></li>
+	<LI>Next message: <A HREF="000109.html">[Softdevice-devel] Re:  Alpha Blending was: Fwd: Re: Matrox patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#108">[ date ]</a>
+              <a href="thread.html#108">[ thread ]</a>
+              <a href="subject.html#108">[ subject ]</a>
+              <a href="author.html#108">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

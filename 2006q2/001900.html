@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] video.c -r1.50 broken
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video.c%20-r1.50%20broken&In-Reply-To=%3C200604232302.15388.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001898.html">
+   <LINK REL="Next"  HREF="001902.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] video.c -r1.50 broken</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video.c%20-r1.50%20broken&In-Reply-To=%3C200604232302.15388.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] video.c -r1.50 broken">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Apr 23 23:02:15 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001898.html">[Softdevice-devel] video.c -r1.50 broken
+</A></li>
+        <LI>Next message: <A HREF="001902.html">[Softdevice-devel] video.c -r1.50 broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1900">[ date ]</a>
+              <a href="thread.html#1900">[ thread ]</a>
+              <a href="subject.html#1900">[ subject ]</a>
+              <a href="author.html#1900">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 23 April 2006 22:37, Marko M&#228;kel&#228; wrote:
+&gt;<i> I just updated my vdr box to version 1.3.48.  I see that softdevice has been
+</I>&gt;<i> updated today as well, now that VDRVERSION != APIVERSION for the first time.
+</I>&gt;<i> 
+</I>&gt;<i> However, the current revision of video.c (r1.50) causes a crash at startup
+</I>&gt;<i> (vdr -P'softdevice -vo:mgatv):
+</I>&gt;<i> 
+</I>&gt;<i> Program received signal SIGSEGV, Segmentation fault.
+</I>
+Can you try to add a :
+
+if (!videoInitialized)
+	return;
+
+to top of method ProcessEvents() in video-dfb.c after line 587 ?
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001898.html">[Softdevice-devel] video.c -r1.50 broken
+</A></li>
+	<LI>Next message: <A HREF="001902.html">[Softdevice-devel] video.c -r1.50 broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1900">[ date ]</a>
+              <a href="thread.html#1900">[ thread ]</a>
+              <a href="subject.html#1900">[ subject ]</a>
+              <a href="author.html#1900">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C20050705212613.GB3302%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000926.html">
+   <LINK REL="Next"  HREF="000928.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C20050705212613.GB3302%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Jul  5 23:26:13 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000926.html">[Softdevice-devel] compile problem:parse error before string constant
+</A></li>
+        <LI>Next message: <A HREF="000928.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#927">[ date ]</a>
+              <a href="thread.html#927">[ thread ]</a>
+              <a href="subject.html#927">[ subject ]</a>
+              <a href="author.html#927">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jun 30, 2005 at 06:16:09PM +0200, Martin Wache wrote:
+&gt;<i> It would be really nice to find the reason for these troubles,
+</I>&gt;<i> unfortunatly on my box I don't see them, so for me it is impossible to
+</I>&gt;<i> find out more....
+</I>
+Don't you even see increased CPU usage when playing back recordings?
+Luckily, I don't have jerky playback (unless using Matrox tv-out, which
+consumes way more CPU than VGA for some reason).  I made two simple
+profiling runs on NPTL and vdr 1.3.27, subtitles 0.3.7 and current
+softdevice with the following settings:
+
+CropMode: 4:3
+Deinterlace: none
+Postprocess: none
+Buffer Mode: good seeking
+Pixel Format: I420
+
+In the live playback run, I recorded the stream.  Here's the top of
+opreport --global-percent:
+
+  samples|      %|
+------------------
+   151565 57.0991 libvdr-softdevice.so.1.3.27
+    52674 19.8439 libc-2.3.2.so
+    27401 10.3228 vmlinux
+     8782  3.3084 oprofiled
+     8427  3.1747 vdr
+
+Here's the output when playing back.  This should be less work, as
+there's less I/O (no I/O from the DVB tuner).  Alas, the CPU usage
+is higher:
+
+  samples|      %|
+------------------
+   170194 51.5064 libvdr-softdevice.so.1.3.27
+    43782 13.2499 libc-2.3.2.so
+    38975 11.7951 vdr
+    31644  9.5765 libpthread-0.60.so
+    20935  6.3356 vmlinux
+    11247  3.4037 oprofiled
+
+In softdevice, the top of opreport -l looks as follows for live
+playback:
+
+samples  %        symbol name
+17392    11.4749  put_pixels16_mmx
+15957    10.5282  put_pixels8_mmx
+10520     6.9409  put_pixels16_xy2_mmx
+9062      5.9790  ff_simple_idct_add_mmx
+8337      5.5006  mpeg_decode_mb
+8300      5.4762  ff_mpa_synth_filter
+6107      4.0293  mpeg2_decode_block_non_intra
+5718      3.7726  MPV_decode_mb
+5173      3.4131  mpeg2_decode_block_intra
+5017      3.3101  put_pixels16_y2_mmx2
+4760      3.1406  ff_simple_idct_put_mmx
+4326      2.8542  avg_pixels8_mmx2
+4258      2.8094  MPV_motion
+3993      2.6345  mpeg_decode_motion
+... (lots of symbols that appear to be in ffmpeg)
+654       0.4315  mpeg_decode_frame
+615       0.4058  avg_pixels8_xy2_mmx2
+599       0.3952  put_pixels_clamped_mmx
+507       0.3345  cDFBVideoOut::YUV(unsigned char*, unsigned char*,
+unsigned char*, int, int, int, int)
+378       0.2494  ff_er_add_slice
+341       0.2250  cVideoOut::Draw(cBitmap*, unsigned char*, int, bool)
+252       0.1663  ScaleBitmap(cBitmap*, int&amp;, int&amp;, int&amp;, int&amp;, int,
+int, int, int)
+186       0.1227  ff_init_block_index
+149       0.0983  cVideoStreamDecoder::DecodePacket(AVPacket*)
+134       0.0884  MPV_frame_start
+
+In &quot;dead&quot; playback, the list looks roughly the same, except for the
+method at top:
+
+samples  %        symbol name
+22284    13.0933  cStreamDecoder::BufferFill()
+16221     9.5309  put_pixels16_mmx
+15273     8.9739  put_pixels8_mmx
+9733      5.7188  put_pixels16_xy2_mmx
+8515      5.0031  ff_simple_idct_add_mmx
+7917      4.6518  mpeg_decode_mb
+7674      4.5090  ff_mpa_synth_filter
+5949      3.4954  mpeg2_decode_block_non_intra
+5487      3.2240  MPV_decode_mb
+4774      2.8050  mpeg2_decode_block_intra
+4771      2.8033  put_pixels16_y2_mmx2
+4376      2.5712  ff_simple_idct_put_mmx
+4018      2.3608  MPV_motion
+
+In live playback, the method cStreamDecoder::BufferFill() got only
+16 samples (0.0106 % of softdevice execution time).  In the output of
+&quot;opannotate -t 13 -a --source .../libvdr-softdevice-1.3.27&quot;, there
+are two weird-looking instructions that seem to consume a lot of time.
+Or maybe it's the preceding idiv that is consuming the time:
+
+   187  0.1099 :   656d3:       idiv   %ecx
+  9485  5.5731 :   656d5:       lea    (%edx,%edx,4),%edx
+   302  0.1774 :   656d8:       lea    (%edx,%edx,4),%edx
+   289  0.1698 :   656db:       lea    0x0(,%edx,4),%eax
+
+This is after the call to Available():
+               :    inline int Available()
+	       :    { return (LastPacket+MaxPackets - FirstPacket)%MaxPackets; }
+
+The &quot;+MaxPackets&quot; is redundant, isn't it?  (Unless LastPacket&lt;FirstPacket,
+of course.)
+
+But I guess the real reason why this takes so much time is that the
+BufferFill method is being called too often.  It looks like it's only
+called from cSoftDevice::Poll().  Unfortunately I can't see the caller
+of that method without linking vdr and softdevice statically (or maybe
+I can, but I haven't figured out how).
+
+After I applied the patch you posted later (Sleep=true in dvbplayer.c),
+this problem went away.  The samples reported for live and recorded
+playback are comparable - in fact, the system appears to be consuming
+slightly less CPU when playing back recorded streams.  Good work, Martin!
+
+BTW, any chance of introducing the &quot;suspended&quot; flag to vdr itself?
+That'd go with some auto-power-off logic, i.e., if suspended=true
+and vdr is currently recording, turn power off after the recording
+is completed (after some short timeout).  That'd make vdr much easier
+to use for my wife.  (We're recording children's programs daily, and
+she leaves the computer on, because she won't retry if the timed
+recording is still going on at the time she tries to power the
+system off.)
+
+Should there perhaps be a bug reporting system or a list of known
+bugs on the web page?  I have reported two bugs earlier that still
+appear to be there with vdr-1.3.27 and current softdevice CVS.
+First, the Power key is ignored when playing back recordings.
+Second, vdr crashes with Signal 11 when selecting &quot;Restart&quot; (sp?,
+my OSD is in Finnish).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000926.html">[Softdevice-devel] compile problem:parse error before string constant
+</A></li>
+	<LI>Next message: <A HREF="000928.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#927">[ date ]</a>
+              <a href="thread.html#927">[ thread ]</a>
+              <a href="subject.html#927">[ subject ]</a>
+              <a href="author.html#927">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

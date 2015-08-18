@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.1.1&In-Reply-To=%3C200504110012.38689.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000496.html">
+   <LINK REL="Next"  HREF="000504.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.1</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.1.1&In-Reply-To=%3C200504110012.38689.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.1.1">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Apr 11 00:12:38 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000496.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+        <LI>Next message: <A HREF="000504.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#498">[ date ]</a>
+              <a href="thread.html#498">[ thread ]</a>
+              <a href="subject.html#498">[ subject ]</a>
+              <a href="author.html#498">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I'm pleased to announce a new release of vdr softdevice plugin.
+
+In short words: softdevice plugin is for getting vdr to your desktop with
+so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+
+For compile options, please read the Makefile carefully and decide which of
+the available output methods fit to your system.
+
+Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+
+Changelog since last release:
+
+2005-04-10: softdevice-0.1.1
+    - xv-out: add &quot;-vo xv:full&quot; option to start up in fullsceen mode
+    - dfb-out: added dfb version check for struct access
+    - replace unneeded usleep&lt;10000usec with &gt;=10000usec
+    - add SIG_TIMING option (default: disabled, enable in mpeg2decoder.c)
+    - introduce meaningful return values in packet mode.
+    - disable debugging output.
+2005-04-09:
+    - xv-out: new command line option max-area to use the maximum
+              available area for decoded frames. &quot; .. -vo xv:max-area .. &quot;
+2005-04-02:
+    - video.c: fix possible segfault if pan_scan info is not present
+2005-03-28:
+    - dfb-out: chg. OSD drawing to update only modified areas.
+               chg. videolayer to double buffered.
+               report surface capabilities in a single line
+2005-03-25:
+    - respect replay mode
+    - disable WaitForSync in video only mode (trickspeed mode)
+    - removed unused code
+2005-03-20:
+    - video.c, Draw(): set rgb to zero (colorkey) if alpha is zero.
+    - preperations for sync on video option
+    - syncronize audio and video start
+    - all pts values now in units of 0.1ms (needed for 44.1kHz audio streams)
+    - add SpuDecoder
+2005-03-19:
+    - fix compile problems for vdr-1.2.x (OSD ok, but _no_ A/V :-( ).
+2005-03-17:
+    - add left/right channel only support
+    - be more precise in GetSTC
+    - use libavformat for PES stream parsing
+2005-03-15:
+    - get cvs version of dvd-plugin work in _non_ ac3 mode
+ 2005-03-11:
+    - xv-out: fix OSD misplacement in downscaleing mode (pseudo mode)
+    - fix OSD misplacement for software alpha when in crop mode (info menu)
+ 2005-03-10:
+    - xv-out: support max available area (pre for hdtv spport)
+    - audio-out: new dummy device (-ao dummy:)
+                 audio device constructor gets pointer to setup-store like video-out
+    - save options when called via main menu
+
+
+By subscribing to the to cvs list via
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-cvs">https://lists.berlios.de/mailman/listinfo/softdevice-cvs</A>
+you'll get informed about lastest changes.
+
+For those who are interested in active development, subscribing to
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+is a good choice.
+
+Members of softdevice development crew are:
+Torgeir Veimo, Martin Wache and me, Stefan Lucke.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000496.html">[Softdevice-devel] some issues with current cvs
+</A></li>
+	<LI>Next message: <A HREF="000504.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#498">[ date ]</a>
+              <a href="thread.html#498">[ thread ]</a>
+              <a href="subject.html#498">[ subject ]</a>
+              <a href="author.html#498">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

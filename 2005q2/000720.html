@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio : my proposal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C200505241947.44902.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000706.html">
+   <LINK REL="Next"  HREF="000722.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio : my proposal</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20%3A%20my%20proposal&In-Reply-To=%3C200505241947.44902.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Aspect ratio : my proposal">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue May 24 19:47:44 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000706.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+        <LI>Next message: <A HREF="000722.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#720">[ date ]</a>
+              <a href="thread.html#720">[ thread ]</a>
+              <a href="subject.html#720">[ subject ]</a>
+              <a href="author.html#720">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 21. Mai 2005 12:51, Nicolas Huillard wrote:
+&gt;<i> Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt; On Freitag, 20. Mai 2005 18:04, Nicolas Huillard wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt;&gt;
+</I>
+&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;I think part of the problem is that &quot;videoAspectValues&quot; are actually 
+</I>&gt;<i> &gt;&gt;&quot;resolutionValues&quot;...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Above mentioned 324, 576 values are after a second thought wrong.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; No they are not resolution values (they seem to be), they are scaling values.
+</I>&gt;<i> &gt; Damm, why didn't I wrote down the formular by which I calculated (especially the one
+</I>&gt;<i> &gt; 800, 576) them, grr.
+</I>&gt;<i> 
+</I>&gt;<i> My second thought led me to :
+</I>&gt;<i> 
+</I>&gt;<i> videoAspectValues [] = {
+</I>&gt;<i>    { 16 / 9 }, // standard 16:9, coded as a float value
+</I>&gt;<i>    { 4 / 3 }, // ie. 1,333333333
+</I>&gt;<i>    { 325 / 240 }, // actual size of my 17&quot; monitor, ie. 1,354166667
+</I>&gt;<i>    ...
+</I>&gt;<i> 
+</I>&gt;<i> After all, screen aspect ratio is a ratio with no unit, not two dimensions.
+</I>&gt;<i> 
+</I>&gt;<i> Data :
+</I>&gt;<i> 	float screenAspectRatio = 16 / 9
+</I>&gt;<i> 	int screenResolutionX = 800
+</I>&gt;<i> 	int screenResolutionY = 600
+</I>&gt;<i> Formula :
+</I>&gt;<i> 	float pixelAspectRatio = (screenResolutionX / screenResolutionY) / 
+</I>&gt;<i> screenAspectRatio
+</I>&gt;<i> 		= 0.75 (ie. pixel height = 0.75 * pixel width)
+</I>&gt;<i> 
+</I>&gt;<i> If I change the DFB resolution to 720x576, I get pixelAspectRatio = 
+</I>&gt;<i> 0.703125 on my 16:9 TV, or 0.9375 on a 4:3 TV
+</I>&gt;<i> 800x600 on a 4:3 monitor give pixelAspectRatio = 1 (ie. square pixels)
+</I>&gt;<i> The fact is the TV didn't change when I changed the resolution (I think 
+</I>&gt;<i> this is the point where we don't agree : you have the point of view of 
+</I>&gt;<i> the current code, I have a theoretical or user point of view)
+</I>
+Yes I have the point of view of current code. As I said I could not
+get the values for &quot;5:4 as 4:3&quot; recalculated, I think there is a bug
+in the code. Hopefully I found it. You are right in user definable
+aspect ratio selection. The attached patch is really preliminary.
+
+I won't do calulations for all possible screen resolutions and display
+geometrys. So output method has to calculate pixel aspect ratio
+based on given screen resolution, with a little help from the driver
+or user by specifying the display aspect.
+
+&gt;<i> 
+</I>&gt;<i> This is the first step...
+</I>&gt;<i> Next one is applying the same pixelAspectRatio to the frame (here comes 
+</I>&gt;<i> the user-selectable thing).
+</I>&gt;<i> Then find something to scale frame aspect ratio to screen aspect ratio, 
+</I>&gt;<i> or something like that...
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: par_01.diff
+Type: text/x-diff
+Size: 1687 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050524/413034b3/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050524/413034b3/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000706.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+	<LI>Next message: <A HREF="000722.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#720">[ date ]</a>
+              <a href="thread.html#720">[ thread ]</a>
+              <a href="subject.html#720">[ subject ]</a>
+              <a href="author.html#720">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

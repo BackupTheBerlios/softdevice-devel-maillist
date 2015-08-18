@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20with%20FFmpeg%20with%20--enable-dc1394%20compiled%20%28Ubuntu%29&In-Reply-To=%3C1142855002.441e955a5d525%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001822.html">
+   <LINK REL="Next"  HREF="001824.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20with%20FFmpeg%20with%20--enable-dc1394%20compiled%20%28Ubuntu%29&In-Reply-To=%3C1142855002.441e955a5d525%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Mar 20 12:43:22 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001822.html">[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+</A></li>
+        <LI>Next message: <A HREF="001824.html">Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1823">[ date ]</a>
+              <a href="thread.html#1823">[ thread ]</a>
+              <a href="subject.html#1823">[ subject ]</a>
+              <a href="author.html#1823">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Karl Glatz:
+
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> i've just installed VDR with the softdevice plugin on my Ubuntu
+</I>&gt;<i> system. As I'm using many programms wich depends on ffmpeg packages
+</I>&gt;<i> I'd like to use this instead of compiling my own.
+</I>&gt;<i>
+</I>&gt;<i> Compiling works great! But now when I try to start VDR it says:
+</I>&gt;<i> --
+</I>&gt;<i> Mar 19 23:39:57 localhost vdr: [9328] ERROR:
+</I>&gt;<i> /usr/local/lib/vdr/libvdr-softdevice.so.1.3.44: undefined symbol:
+</I>&gt;<i> dc1394_create_handle
+</I>&gt;<i> --
+</I>
+It could be cought by running configure in softdevice directory if
+your ffmpeg version supports pkg-config ;-) .
+
+Another way could be editing Makefile . There is a section
+where &quot;undefined symbol&quot; messages from ffmpeg should be handled.
+In your case a line for fixing could look like:
+
+FMPEGLIBS += -ldc1394
+
+&gt;<i>
+</I>&gt;<i> But ffplay works perfect! And libraw1394 ist also installed!
+</I>&gt;<i>
+</I>&gt;<i> I think the libvdr-softdevice calls the ffmpeg libs which compiled
+</I>&gt;<i> against libraw1394 and trys to call the dc1394_create_handle.
+</I>&gt;<i>
+</I>&gt;<i> Have anyone a Idea what I can do to solve this problem. Installing
+</I>&gt;<i> FFmpeg without the --enable-dc1394 option isn't a option for me,
+</I>&gt;<i> because I want to keep my Ubuntu package!
+</I>&gt;<i>
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001822.html">[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+</A></li>
+	<LI>Next message: <A HREF="001824.html">Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1823">[ date ]</a>
+              <a href="thread.html#1823">[ thread ]</a>
+              <a href="subject.html#1823">[ subject ]</a>
+              <a href="author.html#1823">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

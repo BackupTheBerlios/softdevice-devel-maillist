@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #7534] MMX2 detected on VIA C3, does not exist
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%237534%5D%20MMX2%20detected%20on%20VIA%20C3%2C%20does%20not%20exist&In-Reply-To=%3C200605171801.k4HI125f025458%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002048.html">
+   <LINK REL="Next"  HREF="002059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #7534] MMX2 detected on VIA C3, does not exist</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%237534%5D%20MMX2%20detected%20on%20VIA%20C3%2C%20does%20not%20exist&In-Reply-To=%3C200605171801.k4HI125f025458%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #7534] MMX2 detected on VIA C3, does not exist">admin at berlios.de
+       </A><BR>
+    <I>Wed May 17 20:01:02 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002048.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+        <LI>Next message: <A HREF="002059.html">[Softdevice-devel] One or two regressions with softdevice 0.2.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2046">[ date ]</a>
+              <a href="thread.html#2046">[ thread ]</a>
+              <a href="subject.html#2046">[ subject ]</a>
+              <a href="author.html#2046">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #7534, was updated on 2006-May-17 21:01
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: sandman72
+Assigned to : none
+Summary: MMX2 detected on VIA C3, does not exist
+
+Details: On VIA C3 CPUs configure detects the chip as having MMX2. This is not the case, it has Cyrix extended MMX, which is a bit different. I don't remember all the gory details, but here's at least some discussion about the issue: 
+<A HREF="http://comments.gmane.org/gmane.comp.video.ffmpeg.devel/31865">http://comments.gmane.org/gmane.comp.video.ffmpeg.devel/31865</A>
+
+Quick solution is to change config.h and Makefile (i.e. turn off MMX2), maybe a patch could be made so that all MMX2 stuff would not have to be disabled, as it is partially supported. Affected functions are at least fast_memcpy in utils.c and ScaleUpHoriz_MMX in SoftOsd.c around line 1516. The first asm part seems to work.
+
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=7534&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=7534&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002048.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+	<LI>Next message: <A HREF="002059.html">[Softdevice-devel] One or two regressions with softdevice 0.2.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2046">[ date ]</a>
+              <a href="thread.html#2046">[ thread ]</a>
+              <a href="subject.html#2046">[ subject ]</a>
+              <a href="author.html#2046">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

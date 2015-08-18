@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice-cvs%20%2B%20DirectFB%201.1.1%20%2B%20i810fb%20on%0A%09SMT7020s&In-Reply-To=%3C200712231644.06352.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002980.html">
+   <LINK REL="Next"  HREF="002987.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice-cvs%20%2B%20DirectFB%201.1.1%20%2B%20i810fb%20on%0A%09SMT7020s&In-Reply-To=%3C200712231644.06352.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Dec 23 16:44:06 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002980.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+        <LI>Next message: <A HREF="002987.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2981">[ date ]</a>
+              <a href="thread.html#2981">[ thread ]</a>
+              <a href="subject.html#2981">[ subject ]</a>
+              <a href="author.html#2981">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 23 December 2007, Stefan D&#246;rmann wrote:
+&gt;<i> Hi all,
+</I>&gt;<i> 
+</I>&gt;<i> Ok, i give it another try. I recently sent this message , but I couldn't find it on the list.
+</I>&gt;<i> 
+</I>&gt;<i> I am using softdevice with vdr-1.4.7 on my samsung smt7020s with directfb on i810fb. It works good if the color depth in directfbrc is set on 16, but if I use 24 or 32 bit, the video is ok, but the osd is in the background, I mean on 16:9 I can see a bit of the upper and the lower part of the osd. In addition to this the osd colour in some areas is strange (with 16bit), e.g. the green button is invisible.
+</I>&gt;<i> DirectFB is cvs from 23.12.07, softdevice is cvs from today.
+</I>&gt;<i> I also tried xineliboutput. I couldn't notice anything like that, it doesn't matter which colour depth is defined, osd looks alright, but for some reasons video is slightly stuttering, so softdevice is first choice.
+</I>&gt;<i> 
+</I>&gt;<i> By the way I have seen on vdrportal that some guys had the same issue with i810, but no solution yet.
+</I>&gt;<i> If this might be due to transparency, how can I switch off osd transparency.
+</I>&gt;<i> 
+</I>&gt;<i>  dfbinfo:
+</I>&gt;<i> 
+</I>&gt;<i> Screen (00) FBDev Primary Screen (primary screen)
+</I>&gt;<i> Caps: VSYNC POWER_MANAGEMENT
+</I>&gt;<i> 
+</I>&gt;<i> Layer (00) FBDev Primary Layer (primary layer)
+</I>&gt;<i> Type: GRAPHICS
+</I>&gt;<i> Caps: SURFACE BRIGHTNESS CONTRAST SATURATION
+</I>&gt;<i> 
+</I>&gt;<i> Layer (01) Intel 810/815 Overlay
+</I>&gt;<i> Type: GRAPHICS VIDEO STILL_PICTURE
+</I>&gt;<i> Caps: SURFACE OPACITY SCREEN_LOCATION DEINTERLACING DST_COLORKEY BRIGHTNESS CONTRAST SATURATION SCREEN_POSITION SCREEN_SIZE
+</I>&gt;<i> 
+</I>
+Looks like directfb's i810 driver has still :-) the same issue like
+the old i830 driver which was corrected.
+
+Original thread on vdr-portal:
+<A HREF="http://www.vdr-portal.de/board/thread.php?threadid=54640">http://www.vdr-portal.de/board/thread.php?threadid=54640</A>
+
+
+<A HREF="http://mail.directfb.org/pipermail/directfb-dev/2006-September/002345.html">http://mail.directfb.org/pipermail/directfb-dev/2006-September/002345.html</A>
+
+
+<A HREF="http://www.directfb.org/index.php/viewcvs.cgi/DirectFB/gfxdrivers/i830/i830_overlay.c.diff?r1=1.5&amp;r2=1.6">http://www.directfb.org/index.php/viewcvs.cgi/DirectFB/gfxdrivers/i830/i830_overlay.c.diff?r1=1.5&amp;r2=1.6</A>
+
+From file gfxdrivers/i810/i810_overlay.c:
+
+ 584     /*
+ 585      * Destination color keying.
+ 586      */
+ 587 
+ 588     primary_format = dfb_primary_layer_pixelformat();
+ 589 
+ 590     i810drv-&gt;oregs-&gt;dclrkv = dfb_color_to_pixel( primary_format,
+ 591                                                  config-&gt;dst_key.r,
+ 592                                                  config-&gt;dst_key.g,
+ 593                                                  config-&gt;dst_key.b );
+ 594 
+ 595     i810drv-&gt;oregs-&gt;dclrkm = (1 &lt;&lt; DFB_COLOR_BITS_PER_PIXEL( primary_format )) - 1;
+ 596 
+ 597     if (config-&gt;options &amp; DLOP_DST_COLORKEY)
+ 598          i810drv-&gt;oregs-&gt;dclrkm |= 0x80000000;
+
+
+Line 584 to 598 should be replaced by:
+     /*
+      * Destination color keying.
+      */
+     i810drv-&gt;oregs-&gt;dclrkv = PIXEL_RGB32 (config-&gt;dst_key.r, config-&gt;dst_key.g, config-&gt;dst_key.b );
+
+     switch (DFB_COLOR_BITS_PER_PIXEL( dfb_primary_layer_pixelformat() )) {
+          case 8:
+               i810drv-&gt;oregs-&gt;dclrkm = 0xffffff;
+               break;
+          case 15:
+               i810drv-&gt;oregs-&gt;dclrkm = 0x070707;
+               break;
+          case 16:
+               i810drv-&gt;oregs-&gt;dclrkm = 0x070307;
+               break;
+          default:
+               i810drv-&gt;oregs-&gt;dclrkm = 0;
+               break;
+     }
+
+    if (config-&gt;options &amp; DLOP_DST_COLORKEY)
+         i810drv-&gt;oregs-&gt;dclrkm |= 0x80000000;
+
+     /*
+      * Disable source color keying if not selected
+      */
+     if (!(config-&gt;options &amp; DLOP_SRC_COLORKEY)) {
+          i810drv-&gt;oregs-&gt;sclrkvh = 0;
+          i810drv-&gt;oregs-&gt;sclrkvh = 0;
+          i810drv-&gt;oregs-&gt;sclrkm  = 0;
+     }
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002980.html">[Softdevice-devel] Softdevice-cvs + DirectFB 1.1.1 + i810fb on	SMT7020s
+</A></li>
+	<LI>Next message: <A HREF="002987.html">[Softdevice-devel] softdevice+dvd plugin - audio jerks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2981">[ date ]</a>
+              <a href="thread.html#2981">[ thread ]</a>
+              <a href="subject.html#2981">[ subject ]</a>
+              <a href="author.html#2981">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

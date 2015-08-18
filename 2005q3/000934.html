@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C20050706200329.GA503208%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000931.html">
+   <LINK REL="Next"  HREF="000936.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C20050706200329.GA503208%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Jul  6 22:03:29 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000931.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000936.html">[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#934">[ date ]</a>
+              <a href="thread.html#934">[ thread ]</a>
+              <a href="subject.html#934">[ subject ]</a>
+              <a href="author.html#934">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jul 06, 2005 at 06:34:44PM +0200, Martin Wache wrote:
+&gt;<i> &gt; are two weird-looking instructions that seem to consume a lot of time.
+</I>&gt;<i> &gt; Or maybe it's the preceding idiv that is consuming the time:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;    187  0.1099 :   656d3:       idiv   %ecx
+</I>&gt;<i> &gt;   9485  5.5731 :   656d5:       lea    (%edx,%edx,4),%edx
+</I>&gt;<i> &gt;    302  0.1774 :   656d8:       lea    (%edx,%edx,4),%edx
+</I>&gt;<i> &gt;    289  0.1698 :   656db:       lea    0x0(,%edx,4),%eax
+</I>&gt;<i> I guess it's the &quot;idiv&quot; instruction which uses the time. I think shifts
+</I>&gt;<i> by one instruction is possible when using oprofile, or am I wrong?
+</I>
+Yes, I've observed shifts by one instruction when there have been memory
+faults.
+
+&gt;<i> Hmm, you should ask that question on the vdr maillinglist.
+</I>
+Time to subscribe then.
+
+&gt;<i> &gt; Second, vdr crashes with Signal 11 when selecting &quot;Restart&quot; (sp?,
+</I>&gt;<i> &gt; my OSD is in Finnish).
+</I>&gt;<i> I will try to have a look at this.
+</I>
+According to the VDR mailing list archive, this may be NPTL related.
+I haven't tried running with LinuxThreads lately.
+
+Unfortunately, I can't reboot tonight because of some ongoing recordings.
+(Maybe I should build a separate development box, so that I could leave
+the production system alone.)
+
+I'll make some more experiments tomorrow.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000931.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000936.html">[Softdevice-devel] softdevice 0.1.2 + vdr 1.3.27 on EPIA M10000 - flickering or hanging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#934">[ date ]</a>
+              <a href="thread.html#934">[ thread ]</a>
+              <a href="subject.html#934">[ subject ]</a>
+              <a href="author.html#934">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

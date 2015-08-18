@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Dolby Digital out via SPDIF
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C200503162009.55087.softdevice%40ckollmeier.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000344.html">
+   <LINK REL="Next"  HREF="000310.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Dolby Digital out via SPDIF</H1>
+    <B>Carsten Kollmeier</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C200503162009.55087.softdevice%40ckollmeier.de%3E"
+       TITLE="[Softdevice-devel] Dolby Digital out via SPDIF">softdevice at ckollmeier.de
+       </A><BR>
+    <I>Wed Mar 16 20:09:54 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000344.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+        <LI>Next message: <A HREF="000310.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#305">[ date ]</a>
+              <a href="thread.html#305">[ thread ]</a>
+              <a href="subject.html#305">[ subject ]</a>
+              <a href="author.html#305">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Am Mittwoch, 16. M&#228;rz 2005 18:14 schrieb Martin Wache:
+&gt;<i> Ok, so do I understand correctly that with only mp2-audio the
+</I>&gt;<i> combination of Bitstreamout and softdevice works except for the
+</I>&gt;<i> bad A/V sync?
+</I>
+As I experienced it, it crashed to after a while. But I didn't tried 
+it further with mp2-Sound, because it worked perfectly without 
+bitstreamout.
+
+&gt;<i> The crash in DD-mode is very likely caused by the softdevice, it
+</I>&gt;<i> doesn't understand ac3, and tries to handle it like mp2. This
+</I>&gt;<i> causes the noises and the crash. I will commit some changes to the
+</I>&gt;<i> softdevice-cvs this weekend which will hopefully cure this crash.
+</I>
+If I got it right, the bitstreamout isn't the best way to get DD into 
+my receiver, as it aims on FF-cards? The best way to handle this 
+would be to give the ac3-stream directly to the sound card? This 
+would be a nice feature (I think of an option like &quot;-ac hwac3&quot; on 
+mplayer or a configuration option like the xine plugin has).
+
+&gt;<i> &gt; Is it planned to get DD working?
+</I>&gt;<i>
+</I>&gt;<i> Sure, but I don't own any DD equipment, so I can't test SPDIF out.
+</I>
+I own some and would be willing to test :-)
+
+Carsten
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000344.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+	<LI>Next message: <A HREF="000310.html">[Softdevice-devel] Dolby Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#305">[ date ]</a>
+              <a href="thread.html#305">[ thread ]</a>
+              <a href="subject.html#305">[ subject ]</a>
+              <a href="author.html#305">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

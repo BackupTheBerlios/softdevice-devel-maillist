@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Matrox field based blitting now in CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Matrox%20field%20based%20blitting%20now%20in%20CVS&In-Reply-To=%3C44A07AEC.9090400%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002200.html">
+   <LINK REL="Next"  HREF="002204.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Matrox field based blitting now in CVS</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Matrox%20field%20based%20blitting%20now%20in%20CVS&In-Reply-To=%3C44A07AEC.9090400%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] Re: Matrox field based blitting now in CVS">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Tue Jun 27 02:25:16 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002200.html">[Softdevice-devel] Fwd: [directfb-dev] Matrox field based blitting now in CVS
+</A></li>
+        <LI>Next message: <A HREF="002204.html">[Softdevice-devel] Re: Matrox field based blitting now in CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2203">[ date ]</a>
+              <a href="thread.html#2203">[ thread ]</a>
+              <a href="subject.html#2203">[ subject ]</a>
+              <a href="author.html#2203">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> I havn't tested this one, and I don't know when this will happen,
+</I>&gt;<i> as it looks like I've lost my entire video data :-( .
+</I>&gt;<i> If you backout my directfb patch for field based blitting, and
+</I>&gt;<i> switch to dfb-cvs, you'll have to remove the &quot;#if HAVE_DSBLIT_INTERLACED&quot;
+</I>&gt;<i> conditional in line 993 and 998 of video-dfb.c to get this work.
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>
+Tried this but missed to read this message about removing the
+conditional between lines 993 and 998, and now it's sooo late, wil have
+to try tomorrow. But, I can tell you what I could see this way:
+- video on my G400 TVout is very smooth;
+- OSD has double height (only see upper half over whole screen area);
+- during and once more 2 or 3 seconds after channel change, and on
+showing/hiding the OSD as well, there is a very visible flicker in which
+one can always see what looks like one field of the video displayed only
+in the upper half of the screen (288 lines, squashed).
+What impact should have had removing that conditional, any change on
+what I described? I noticed that your configure script didn't detect
+HAVE_DSBLIT_INTERLACED, although I checked out DirectFB this evening,
+like softdevice. I grepped after DSBLIT_INTERLACED in the whole DirectFB
+source, didn't find it. I must be missing something, going to bed now...
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002200.html">[Softdevice-devel] Fwd: [directfb-dev] Matrox field based blitting now in CVS
+</A></li>
+	<LI>Next message: <A HREF="002204.html">[Softdevice-devel] Re: Matrox field based blitting now in CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2203">[ date ]</a>
+              <a href="thread.html#2203">[ thread ]</a>
+              <a href="subject.html#2203">[ subject ]</a>
+              <a href="author.html#2203">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

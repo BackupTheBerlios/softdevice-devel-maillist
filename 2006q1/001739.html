@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Fix%20softdevice%20compilation%20for%20AMD64&In-Reply-To=%3C200602111613.53160.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001668.html">
+   <LINK REL="Next"  HREF="001757.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Fix%20softdevice%20compilation%20for%20AMD64&In-Reply-To=%3C200602111613.53160.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Feb 11 16:13:53 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001668.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+        <LI>Next message: <A HREF="001757.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1739">[ date ]</a>
+              <a href="thread.html#1739">[ thread ]</a>
+              <a href="subject.html#1739">[ subject ]</a>
+              <a href="author.html#1739">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 12. Januar 2006 22:45, Janne Huttunen wrote:
+&gt;<i> 
+</I>&gt;<i> This patch makes softdevice compile again on AMD64.
+</I>&gt;<i> Works for me(tm).
+</I>&gt;<i> 
+</I>
+&gt;<i> Index: video-fb.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> RCS file: /cvsroot/softdevice/softdevice/video-fb.c,v
+</I>&gt;<i> retrieving revision 1.10
+</I>&gt;<i> diff -u -r1.10 video-fb.c
+</I>&gt;<i> --- video-fb.c	7 Jan 2006 14:28:39 -0000	1.10
+</I>&gt;<i> +++ video-fb.c	12 Jan 2006 17:07:34 -0000
+</I>&gt;<i> @@ -135,7 +135,7 @@
+</I>&gt;<i>  
+</I>&gt;<i>      OSDpresent=false;
+</I>&gt;<i>  
+</I>&gt;<i> -    printf(&quot;[video-fb] init %d x %d (Size: %d Bytes LineLen %d) Bpp: %d\n&quot;,fb_vinfo.xres, fb_vinfo.yres, size, line_len, fb_vinfo.bits_per_pixel);
+</I>&gt;<i> +    printf(&quot;[video-fb] init %d x %d (Size: %zu Bytes LineLen %d) Bpp: %d\n&quot;,fb_vinfo.xres, fb_vinfo.yres, size, line_len, fb_vinfo.bits_per_pixel);
+</I>
+As &quot;%zu&quot; failes for me on my old prod vdr:
+
+video-fb.c: In method `cFBVideoOut::cFBVideoOut(cSetupStore *)':
+video-fb.c:137: warning: unknown conversion type character `z' in format
+video-fb.c:137: warning: too many arguments for format
+
+I consider &quot;too many arguments&quot; as an error.
+
+is there any other format string to printf size_t type  values on AMD64 ?
+Or does casting &quot;size&quot; to &quot;(unsigned int) size&quot; work?
+
+&gt;<i>      // clear screens
+</I>&gt;<i>      printf(&quot;[video-fb] Clearing the FB\n&quot;);
+</I>&gt;<i>      unsigned char * fbinit;
+</I>
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001668.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+	<LI>Next message: <A HREF="001757.html">[Softdevice-devel] [PATCH] Fix softdevice compilation for AMD64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1739">[ date ]</a>
+              <a href="thread.html#1739">[ thread ]</a>
+              <a href="subject.html#1739">[ subject ]</a>
+              <a href="author.html#1739">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

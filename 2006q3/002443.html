@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Wrong field order on G400 and some other	questions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Wrong%20field%20order%20on%20G400%20and%20some%20other%0A%09questions&In-Reply-To=%3C1158151494.6170.27.camel%40marumake%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002442.html">
+   <LINK REL="Next"  HREF="002446.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Wrong field order on G400 and some other	questions</H1>
+    <B>Heikki Lindholm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Wrong%20field%20order%20on%20G400%20and%20some%20other%0A%09questions&In-Reply-To=%3C1158151494.6170.27.camel%40marumake%3E"
+       TITLE="[Softdevice-devel] Wrong field order on G400 and some other	questions">holindho at cs.helsinki.fi
+       </A><BR>
+    <I>Wed Sep 13 14:44:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002442.html">[Softdevice-devel] dfb:cle266 or dfb:viatv ?
+</A></li>
+        <LI>Next message: <A HREF="002446.html">[Softdevice-devel] Wrong field order on G400 and some other	questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2443">[ date ]</a>
+              <a href="thread.html#2443">[ thread ]</a>
+              <a href="subject.html#2443">[ subject ]</a>
+              <a href="author.html#2443">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello list,
+
+I just built myself a VDR 1.4.2 setup with a budget DVB-C card and
+softdevice. I have a Matrox G400 DualHead outputting to a 16:9 CRT TV
+using the composite output. Softdevice almost works, but there are some
+things I'd like to have working:
+- the displayed field order is wrong, which causes annoying flicker -
+seems to be deterministically so; restarts won't help
+- audio is off-sync quite a bit
+- the VDR OSD is for some reason displayed double height - it seems as
+if the OSD was drawn on only one of the fields assuming the field is the
+whole frame
+
+At the moment, I'm using today's CVS versions of directfb, DFB++, and
+softdevice; ffmpeg is SVN from maybe two days ago. I also tried with
+ubuntu breezy's included directfb 0.9.22, which gave a better OSD, but
+didn't solve the A/V sync or field order issues. The box I'm using is
+really weak, a 450MHz P2, but it seems to struggle along with 80-90% CPU
+usage according to vmstat. Mplayer can play recorded .ts's on the box
+just fine. The kernel is 2.6.12 from ubuntu configured for the P2 and
+G400.
+
+The configuration I use is pretty much copy-pasted blindly from the net:
+/etc/directfbrc:
+mode=720x576
+depth = 32
+primary-layer=2
+pixelformat=ARGB
+matrox-crtc2
+matrox-tv-standard=pal
+matrox-cable-type=composite
+
+relevant bits from VDR's setup.conf:
+softdevice.AC3Mode = 0
+softdevice.AlsaAC3Device = hw:0,1
+softdevice.AlsaDevice = default
+softdevice.avOffset = 0
+softdevice.bufferMode = 0
+softdevice.CropBottomLines = 0
+softdevice.CropLeftCols = 0
+softdevice.CropMode = 0
+softdevice.CropModeToggleKey = 0
+softdevice.CropRightCols = 0
+softdevice.CropTopLines = 0
+softdevice.Deinterlace Method = 0
+softdevice.mainMenu = 1
+softdevice.OSDalphablend = 0
+softdevice.Picture mirroring = 0
+softdevice.PixelAspect = 2
+softdevice.PixelFormat = 2
+softdevice.Postprocess Method = 0
+softdevice.Postprocess Quality = 0
+softdevice.Suspend = 0
+softdevice.syncTimerMode = 0
+softdevice.UseStretchBlit = 1
+softdevice.vidBrightness = 50
+softdevice.vidContrast = 50
+softdevice.vidHue = 50
+softdevice.vidSaturation = 50
+softdevice.Xv-Aspect = 1
+
+Two somewhat unrelated questions I didn't find an answer for are whether
+the /etc/fb.modes file has any effect when using TV output and why to
+use &quot;--enable-multi&quot; when configuring directfb for VDR use (some people
+seemed to use that, so I did, too).
+
+I'd appreciate if anyone can provide some comments/help on these
+problems. 
+
+-- Heikki Lindholm 
+ 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002442.html">[Softdevice-devel] dfb:cle266 or dfb:viatv ?
+</A></li>
+	<LI>Next message: <A HREF="002446.html">[Softdevice-devel] Wrong field order on G400 and some other	questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2443">[ date ]</a>
+              <a href="thread.html#2443">[ thread ]</a>
+              <a href="subject.html#2443">[ subject ]</a>
+              <a href="author.html#2443">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

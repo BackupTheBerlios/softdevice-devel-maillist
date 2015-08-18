@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] directfb no system found :(
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20no%20system%20found%20%3A%28&In-Reply-To=%3C45E35705.6060200%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002736.html">
+   <LINK REL="Next"  HREF="002745.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] directfb no system found :(</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20no%20system%20found%20%3A%28&In-Reply-To=%3C45E35705.6060200%40calidae.net%3E"
+       TITLE="[Softdevice-devel] directfb no system found :(">leo at calidae.net
+       </A><BR>
+    <I>Mon Feb 26 22:54:13 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002736.html">[Softdevice-devel] [PATCH] Suspend output when the user is inactive
+</A></li>
+        <LI>Next message: <A HREF="002745.html">[Softdevice-devel] directfb no system found :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2743">[ date ]</a>
+              <a href="thread.html#2743">[ thread ]</a>
+              <a href="subject.html#2743">[ subject ]</a>
+              <a href="author.html#2743">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I want to run vdr softdevice with my epia M mobo thats cames with cle266 
+chipset accelerator.
+I have followed the:
+
+*_HOWTO use the hardware mpeg decoding capabilities using 
+libcle266mpegdec and softdevice
+
+<A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+
+_*As say the how-to I have compiled the viafb module and has made a:
+
+ mode=720x576 bpp=32 refresh=50 TVon=1 TVoverscan=1
+
+In my crt tv I don't see garbage as other tries. I see my console.
+But when I start vdr with:
+
+./vdr -c /video -v /media/v0 -P&quot;softdevice -vo dfb:cle266:viatv&quot;
+
+I get:
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: dfb:cle266:viatv
+[softdevice] enabling CLE266 HW decoding
+[softdevice] enabling field parity
+[setup-softdevice] alsa ac3Mode set to: 1
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 1 lavc
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to software
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YV12)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+[Setup-Softplay] set lastDir to '/multimedia/series/Heroes'
+[Setup-Softplay] set openLastDir to 1
+[Setup-Softplay] set returnToLiveTV to 1
+[Setup-Softplay] set use file index to 0
+[Setup-Softplay] set live-TV while audio to 0
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3351040)
+[dfb] init
+
+     =======================|  DirectFB 1.0.0-rc4  |=======================
+          (c) 2001-2006  United Cultures of Earth - go for outer space!
+          (c) 2000-2004  Convergence (integrated media) GmbH
+        ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2007-02-23 21:05)
+(!) Direct/Modules: Module 'libdirectfb_fbdev.so' did not register 
+itself after loading! Trying default module constructor...
+(!) Direct/Modules: ... even did not register after explicitly calling 
+the module constructor!
+(!) DirectFB/core/system: No system found!
+[dfb] init EXITING:action=IDirectFB* DirectFB::Create(), result=No 
+(suitable) implementation found!
+
+I use vdr 1.4.3, kernel 2.6.17 and softdevice cvs and havo no idea about 
+this problem. I not consider myself a linux expert and need some help.
+
+Thanks
+
+Leo
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002736.html">[Softdevice-devel] [PATCH] Suspend output when the user is inactive
+</A></li>
+	<LI>Next message: <A HREF="002745.html">[Softdevice-devel] directfb no system found :(
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2743">[ date ]</a>
+              <a href="thread.html#2743">[ thread ]</a>
+              <a href="subject.html#2743">[ subject ]</a>
+              <a href="author.html#2743">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

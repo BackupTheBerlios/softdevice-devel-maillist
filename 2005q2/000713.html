@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Glitches with aspect ratio selection
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Glitches%20with%20aspect%20ratio%20selection&In-Reply-To=%3C20050523204855.GD199519%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000727.html">
+   <LINK REL="Next"  HREF="000714.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Glitches with aspect ratio selection</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Glitches%20with%20aspect%20ratio%20selection&In-Reply-To=%3C20050523204855.GD199519%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Glitches with aspect ratio selection">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon May 23 22:48:55 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000727.html">[Softdevice-devel] Suspending playback of a recording makes it fast-forward
+</A></li>
+        <LI>Next message: <A HREF="000714.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#713">[ date ]</a>
+              <a href="thread.html#713">[ thread ]</a>
+              <a href="subject.html#713">[ subject ]</a>
+              <a href="author.html#713">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If I pause a recording and go to the softdevice menu to change the aspect
+ratio, nothing will happen until I enable playback again.  Suggested fix:
+rescale the last decoded picture, if it's not too hard.
+
+If I change the aspect ratio from 4:3 to 16:9, the top and bottom areas of
+the screen (which should have black bars) will often blink between two
+images (maybe the two last decoded frames, maybe there must be movement
+in the top and bottom areas).  Note that the blinking may last for one or
+two seconds when OSD is off, or indefinitely when OSD is on (e.g., when
+you are still in the CropMode menu and haven't hit OK).
+Suggested fix: schedule the blanking of the bars immediately when the
+user-requested or program-requested aspect ratio changes.  
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000727.html">[Softdevice-devel] Suspending playback of a recording makes it fast-forward
+</A></li>
+	<LI>Next message: <A HREF="000714.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#713">[ date ]</a>
+              <a href="thread.html#713">[ thread ]</a>
+              <a href="subject.html#713">[ subject ]</a>
+              <a href="author.html#713">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

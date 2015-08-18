@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems running HD channels with vidix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039177CCE%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002955.html">
+   <LINK REL="Next"  HREF="002957.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems running HD channels with vidix</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039177CCE%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] Problems running HD channels with vidix">Neumann at DO-net.de
+       </A><BR>
+    <I>Fri Oct 19 19:00:32 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002955.html">[Softdevice-devel] Pro7HD .ts sample
+</A></li>
+        <LI>Next message: <A HREF="002957.html">[Softdevice-devel] [Bug #12224] openSUSE 10.3 throws X_ShmPutImage	BadValue with softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2956">[ date ]</a>
+              <a href="thread.html#2956">[ thread ]</a>
+              <a href="subject.html#2956">[ subject ]</a>
+              <a href="author.html#2956">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>runs fine here with my X300 PCIe card. Could you please e-mail the vidix
+people the change?
+
+thank you for all your work.
+
+-------------
+Andre Neumann
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-bounces at lists.berlios.de</A> 
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-bounces at lists.berlios.de</A>] On Behalf 
+</I>&gt;<i> Of Stefan Lucke
+</I>&gt;<i> Sent: Sunday, October 14, 2007 7:54 PM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Softdevice-devel] Problems running HD channels 
+</I>&gt;<i> with vidix
+</I>&gt;<i> 
+</I>&gt;<i> On Donnerstag, 11. Oktober 2007, Stefan Lucke wrote:
+</I>&gt;<i> &gt; Quoting Andre Neumann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Neumann at do-net.de</A>&gt;:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Is that a limit of the hardware? With DirectFB HD channels are ok.
+</I>&gt;<i> &gt; &gt; Any change to change this limits simply by editing them?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; You can try to change the limits. Perhaps they are dependent of the 
+</I>&gt;<i> &gt; chip type, In your case:
+</I>&gt;<i> &gt; Radeon_vid: Found chip: RV370 5B60 [Radeon X300 (PCIE)]
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; X11 and DirectFB have limits of 2048x2048.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; My R280 had some issues last time I tried HD demo files with X11.
+</I>&gt;<i> &gt; They seem to be truncated to the right, so some 1567 limit looks 
+</I>&gt;<i> &gt; reasonable. Have to do a DirectFB test.
+</I>&gt;<i> 
+</I>&gt;<i> So I did 2 tests (lspic -vv -s 01:00.0 ; see attached files):
+</I>&gt;<i>   1st rv280:
+</I>&gt;<i>     This one shows a video truncation on the right side. Both with Xv
+</I>&gt;<i>     and DirectFB. Rightmost ~300 pixels are pink ;-) .
+</I>&gt;<i> 
+</I>&gt;<i>   2nd rv350
+</I>&gt;<i>     This one shows no truncation on the right side (Xv and DirectFB).
+</I>&gt;<i>     And after modifying vidix sources, my samples play untrucated even
+</I>&gt;<i>     by vidix.
+</I>&gt;<i> 
+</I>&gt;<i> My samples trailer for testing are:
+</I>&gt;<i> -rw-r--r-- 1 stefan users 291096901 29. Okt 2005  
+</I>&gt;<i> maria_taylor_m1080p.mov
+</I>&gt;<i> -rw-r--r-- 1 stefan users 267415093 28. Jul 2006  
+</I>&gt;<i> onesixright_1080p.mov
+</I>&gt;<i> 
+</I>&gt;<i> Somewhere available from apple I guess.
+</I>&gt;<i> 
+</I>&gt;<i> I think we should ask vidix people for a change (see attached one)
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002955.html">[Softdevice-devel] Pro7HD .ts sample
+</A></li>
+	<LI>Next message: <A HREF="002957.html">[Softdevice-devel] [Bug #12224] openSUSE 10.3 throws X_ShmPutImage	BadValue with softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2956">[ date ]</a>
+              <a href="thread.html#2956">[ thread ]</a>
+              <a href="subject.html#2956">[ subject ]</a>
+              <a href="author.html#2956">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

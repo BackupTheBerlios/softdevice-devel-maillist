@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] new OSD support; DirectFB issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support%3B%20DirectFB%20issues&In-Reply-To=%3C200601120735.23700.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001659.html">
+   <LINK REL="Next"  HREF="001661.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] new OSD support; DirectFB issues</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support%3B%20DirectFB%20issues&In-Reply-To=%3C200601120735.23700.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] new OSD support; DirectFB issues">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Jan 12 07:35:23 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001659.html">[Softdevice-devel] Getting rid of vertical tearing?
+</A></li>
+        <LI>Next message: <A HREF="001661.html">[Softdevice-devel] new OSD support; DirectFB issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1660">[ date ]</a>
+              <a href="thread.html#1660">[ thread ]</a>
+              <a href="subject.html#1660">[ subject ]</a>
+              <a href="author.html#1660">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 11. Januar 2006 21:10, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Wed, Jan 11, 2006 at 10:19:56AM +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; Quoting Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+</I>&gt;<i> &gt; &gt; &gt;&gt; I'm using the primary head of a Matrox G450 card.
+</I>&gt;<i> &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; I really thought that the Matrox could do hardware alpha blending. Do
+</I>&gt;<i> &gt; &gt; you use a 32-bit colour depth?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; They can do hw alpha blend, when YUY2 format and stretchblit is used.
+</I>&gt;<i> &gt; They canNOT do this when backend scaler is used.
+</I>&gt;<i> 
+</I>&gt;<i> Does this mean that alpha blending is available on TV out?  
+</I>
+Yes,  option '-vo dfb:mgatv' implicit switches to YUY2 and stretchblit.
+
+&gt;<i> Should I
+</I>&gt;<i> perhaps give the TV out another try?  When I tried it last spring, it
+</I>&gt;<i> was unuseable slow (slower than VGA output), presumably due to color
+</I>&gt;<i> space conversion done in software.
+</I>&gt;<i> 
+</I>&gt;<i> Is StretchBlit a software or a hardware operation?  
+</I>
+Stretchblit is a hardware operation and it does the mixing (alpha
+blending) of OSD.
+
+&gt;<i> In the past, when
+</I>&gt;<i> I have tried to enable it in the OSD menu, it has reverted to disabled.
+</I>
+YUY2 was a precondition for strechtblit. I don't know if that works
+with all cards. At least YUY2 and stretch blit works on matrox.
+Stretchblit with via is tooo slow.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001659.html">[Softdevice-devel] Getting rid of vertical tearing?
+</A></li>
+	<LI>Next message: <A HREF="001661.html">[Softdevice-devel] new OSD support; DirectFB issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1660">[ date ]</a>
+              <a href="thread.html#1660">[ thread ]</a>
+              <a href="subject.html#1660">[ subject ]</a>
+              <a href="author.html#1660">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

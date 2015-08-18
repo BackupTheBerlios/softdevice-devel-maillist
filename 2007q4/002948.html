@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems running HD channels with vidix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3C200710141954.00188.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002940.html">
+   <LINK REL="Next"  HREF="002952.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems running HD channels with vidix</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20running%20HD%20channels%20with%20vidix&In-Reply-To=%3C200710141954.00188.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problems running HD channels with vidix">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct 14 19:53:59 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002940.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+        <LI>Next message: <A HREF="002952.html">[Softdevice-devel] Bug: playback option
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2948">[ date ]</a>
+              <a href="thread.html#2948">[ thread ]</a>
+              <a href="subject.html#2948">[ subject ]</a>
+              <a href="author.html#2948">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 11. Oktober 2007, Stefan Lucke wrote:
+&gt;<i> Quoting Andre Neumann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Neumann at do-net.de</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Is that a limit of the hardware? With DirectFB HD channels are ok.
+</I>&gt;<i> &gt; Any change to change this limits simply by editing them?
+</I>&gt;<i> 
+</I>&gt;<i> You can try to change the limits. Perhaps they are dependent
+</I>&gt;<i> of the chip type, In your case:
+</I>&gt;<i> Radeon_vid: Found chip: RV370 5B60 [Radeon X300 (PCIE)]
+</I>&gt;<i> 
+</I>&gt;<i> X11 and DirectFB have limits of 2048x2048.
+</I>&gt;<i> 
+</I>&gt;<i> My R280 had some issues last time I tried HD demo files with X11.
+</I>&gt;<i> They seem to be truncated to the right, so some 1567 limit
+</I>&gt;<i> looks reasonable. Have to do a DirectFB test.
+</I>
+So I did 2 tests (lspic -vv -s 01:00.0 ; see attached files):
+  1st rv280:
+    This one shows a video truncation on the right side. Both with Xv
+    and DirectFB. Rightmost ~300 pixels are pink ;-) .
+
+  2nd rv350
+    This one shows no truncation on the right side (Xv and DirectFB).
+    And after modifying vidix sources, my samples play untrucated even
+    by vidix.
+
+My samples trailer for testing are:
+-rw-r--r-- 1 stefan users 291096901 29. Okt 2005  maria_taylor_m1080p.mov
+-rw-r--r-- 1 stefan users 267415093 28. Jul 2006  onesixright_1080p.mov
+
+Somewhere available from apple I guess.
+
+I think we should ask vidix people for a change (see attached one)
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+01:00.0 VGA compatible controller: ATI Technologies Inc RV280 [Radeon 9200] (rev 01) (prog-if 00 [VGA])
+	Subsystem: Connect Components Ltd Unknown device 2801
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B-
+	Status: Cap+ 66MHz+ UDF- FastB2B+ ParErr- DEVSEL=medium &gt;TAbort- &lt;TAbort- &lt;MAbort- &gt;SERR- &lt;PERR-
+	Latency: 32 (2000ns min), Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 19
+	Region 0: Memory at e0000000 (32-bit, prefetchable) [size=256M]
+	Region 1: I/O ports at b000 [size=256]
+	Region 2: Memory at fe9f0000 (32-bit, non-prefetchable) [size=64K]
+	Expansion ROM at fe9c0000 [disabled] [size=128K]
+	Capabilities: [58] AGP version 3.0
+		Status: RQ=256 Iso- ArqSz=0 Cal=0 SBA+ ITACoh- GART64- HTrans- 64bit- FW+ AGP3+ Rate=x4,x8
+		Command: RQ=32 ArqSz=2 Cal=0 SBA+ AGP+ GART64- 64bit- FW- Rate=x4
+	Capabilities: [50] Power Management version 2
+		Flags: PMEClk- DSI- D1+ D2+ AuxCurrent=0mA PME(D0-,D1-,D2-,D3hot-,D3cold-)
+		Status: D0 PME-Enable- DSel=0 DScale=0 PME-
+
+-------------- next part --------------
+01:00.0 VGA compatible controller: ATI Technologies Inc RV350 AS [Radeon 9550] (prog-if 00 [VGA])
+	Subsystem: Micro-Star International Co., Ltd. 865PE Neo2-V (MS-6788) mainboard
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B-
+	Status: Cap+ 66MHz+ UDF- FastB2B+ ParErr- DEVSEL=medium &gt;TAbort- &lt;TAbort- &lt;MAbort- &gt;SERR- &lt;PERR-
+	Latency: 32 (2000ns min), Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 19
+	Region 0: Memory at e8000000 (32-bit, prefetchable) [size=128M]
+	Region 1: I/O ports at b000 [size=256]
+	Region 2: Memory at fe9f0000 (32-bit, non-prefetchable) [size=64K]
+	Expansion ROM at fe9c0000 [disabled] [size=128K]
+	Capabilities: [58] AGP version 3.0
+		Status: RQ=256 Iso- ArqSz=0 Cal=0 SBA+ ITACoh- GART64- HTrans- 64bit- FW+ AGP3+ Rate=x4,x8
+		Command: RQ=32 ArqSz=2 Cal=0 SBA+ AGP+ GART64- 64bit- FW- Rate=x4
+	Capabilities: [50] Power Management version 2
+		Flags: PMEClk- DSI- D1+ D2+ AuxCurrent=0mA PME(D0-,D1-,D2-,D3hot-,D3cold-)
+		Status: D0 PME-Enable- DSel=0 DScale=0 PME-
+
+-------------- next part --------------
+Index: trunk/vidix/vidix/drivers/radeon_vid.c
+===================================================================
+--- trunk/vidix/vidix/drivers/radeon_vid.c	(Revision 313)
++++ trunk/vidix/vidix/drivers/radeon_vid.c	(Arbeitskopie)
+@@ -1472,8 +1472,9 @@
+   unsigned i;
+   for(i=0;i&lt;sizeof(supported_fourcc)/sizeof(fourcc_desc_t);i++)
+   {
+-    if(fourcc==supported_fourcc[i].fourcc &amp;&amp;
+-	srcw &lt;=supported_fourcc[i].max_srcw) return 1;
++    if (fourcc == supported_fourcc [i]. fourcc /* &amp;&amp;
++	srcw &lt;= supported_fourcc [i]. max_srcw */ )
++      return 1;
+   }
+   return 0;
+ }
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002940.html">[Softdevice-devel] Problems running HD channels with vidix
+</A></li>
+	<LI>Next message: <A HREF="002952.html">[Softdevice-devel] Bug: playback option
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2948">[ date ]</a>
+              <a href="thread.html#2948">[ thread ]</a>
+              <a href="subject.html#2948">[ subject ]</a>
+              <a href="author.html#2948">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

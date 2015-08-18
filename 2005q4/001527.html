@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.1&In-Reply-To=%3C200511121735.56183.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001521.html">
+   <LINK REL="Next"  HREF="001536.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.1</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.2.1&In-Reply-To=%3C200511121735.56183.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.2.1">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Nov 12 17:35:56 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001521.html">[Softdevice-devel] 4:3 16:9 stretchblit crop problem
+</A></li>
+        <LI>Next message: <A HREF="001536.html">[Softdevice-devel] VGA card for Xvmc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1527">[ date ]</a>
+              <a href="thread.html#1527">[ thread ]</a>
+              <a href="subject.html#1527">[ subject ]</a>
+              <a href="author.html#1527">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+softdevice team (Torgeir Veimo, Martin Wache and me, Stefan Lucke)
+with help from softdevice users, is pleased to announce a 
+new release of vdr softdevice plugin.
+
+General info:
+  Softdevice plugin enables vdr to run on your desktop with
+  so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+  DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+
+Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+
+Changelog since last release:
+2005-11-12: softdevice-0.2.1
+    - speed up moving of cutmarks by a factor of about 100. I forgot to signal
+      that new data is available in StillPicture() :-/
+    - new packet mode: make some softdevice functions available to other
+      plugins like softplay useing the new service interface
+2005-11-06:
+    - video-xv: some of X11 atoms could be set via OSD too. So using hardcoded
+      hotkeys for brightness, contrast, hue and saturation is obsolete and
+      may be removed soon.
+    - video-dfb: (by Laurence Abbott) selecting field parity and triple buffering
+      on via epia boards. That could be used for others too if primary head
+      is connected to TV. Triple buffering is independently available as a
+      separate option now.
+        &quot;-vo dfb:viatv&quot;
+        &quot;-vo dfb:triple&quot;
+2005-11-04:
+    - some more finnish translations (by Rolf Ahrenberg)
+    - sync timer mode selectable via OSD
+    - removed translations of empty lines (by Rolf Ahrenberg)
+    - made sig timer the default one for new users
+2005-11-02:
+    - restructured OSD setup
+2005-11-01:
+    - some some german translations (with help from Andre Neumann)
+    - hide main menu entry via OSD
+2005-10-29:
+    - french translations (by Nicolas Huillard)
+    - packet playback: assume we get complete frames via packet interface.
+                       This fixes playing divx via softplay.
+    - fix frame dropping with IEEE1394 read.
+2005-10-26:
+    - fix cropmode handling via OSD
+    - set some vars for aspect calculation to reasonable defaults
+2005-10-25:
+    - video-xv: fix aspectratio recalculation upon ConfigureNotify events
+    - minor cleanup: moved static floats to member double (cVideoOut)
+2005-10-14:
+    - reverted change from 2005-01-12 as effect it not reproducable and delivers
+      now wrong results for some streams.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001521.html">[Softdevice-devel] 4:3 16:9 stretchblit crop problem
+</A></li>
+	<LI>Next message: <A HREF="001536.html">[Softdevice-devel] VGA card for Xvmc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1527">[ date ]</a>
+              <a href="thread.html#1527">[ thread ]</a>
+              <a href="subject.html#1527">[ subject ]</a>
+              <a href="author.html#1527">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

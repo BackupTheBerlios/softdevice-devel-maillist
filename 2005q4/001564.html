@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay does deinterlacing with 720p clips, too
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20does%20deinterlacing%20with%20720p%20clips%2C%0A%20too&In-Reply-To=%3C438351CB.20502%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001559.html">
+   <LINK REL="Next"  HREF="001566.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay does deinterlacing with 720p clips, too</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20does%20deinterlacing%20with%20720p%20clips%2C%0A%20too&In-Reply-To=%3C438351CB.20502%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softplay does deinterlacing with 720p clips, too">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Nov 22 18:13:47 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001559.html">[Softdevice-devel] Softplay does deinterlacing with 720p clips, too
+</A></li>
+        <LI>Next message: <A HREF="001566.html">[Softdevice-devel] Softplay does deinterlacing with 720p clips, too
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1564">[ date ]</a>
+              <a href="thread.html#1564">[ thread ]</a>
+              <a href="subject.html#1564">[ subject ]</a>
+              <a href="author.html#1564">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Andre Neumann schrieb:
+&gt;<i> Works fine here. Should be added to CVS.
+</I>&gt;<i> 
+</I>
+Unfortunatly my experiences are not so good. There seem to be some
+stations on which the auto detection doesn't work, and they are not
+deinterlaced any more. So I don't want to make it the default. Maybe we
+can add a switch for interlace autodetection?
+
+Martin
+
+&gt;<i> -------------
+</I>&gt;<i> Andre Neumann
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>-----Original Message-----
+</I>&gt;&gt;<i>From: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> 
+</I>&gt;&gt;<i>[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] On Behalf Of Martin Wache
+</I>&gt;&gt;<i>Sent: Monday, November 14, 2005 10:46 PM
+</I>&gt;&gt;<i>To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+</I>&gt;&gt;<i>Subject: Re: [Softdevice-devel] Softplay does deinterlacing 
+</I>&gt;&gt;<i>with 720p clips, too
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Martin Wache schrieb:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Andre Neumann schrieb:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>Hi,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>When using softplay to display 720p hdtv trailers (eg. 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>divx,mpeg2) it
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>uses the deinterlacing method which i specified in the
+</I>&gt;&gt;&gt;&gt;<i>softdevice setup. That is not right, i think. When playing 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>progressive
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>material, the deinterlacer must be switched off.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>I'm doing this manualy now, since the deinterlacer uses too much
+</I>&gt;&gt;&gt;&gt;<i>cpu-power. It would be nice, if softplay detects a progressive
+</I>&gt;&gt;&gt;&gt;<i>video and deativate the deinterlacer.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>I would like to implement that, but I don't know how to detect
+</I>&gt;&gt;&gt;<i>progressive or interlaced videos :-(
+</I>&gt;&gt;&gt;<i>I just tried to use interlaced_frame which should report interlaced
+</I>&gt;&gt;&gt;<i>frames but it is alway zero. I also remember that a ffmpeg developer
+</I>&gt;&gt;&gt;<i>once said that the detection of interlaced video and field order is
+</I>&gt;&gt;&gt;<i>broken in ffmpeg.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>If there is a simple and reliable way to detect progressive 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>videos it is
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>no problem to disable the deinterlacer, but sorry I don't 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>know how to
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>detect it...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Correction - interlaced_frame seems to work. Don't know what 
+</I>&gt;&gt;<i>I did wrong
+</I>&gt;&gt;<i>just a few moments ago...
+</I>&gt;&gt;<i>Please try the attached patch against softdevice cvs if it 
+</I>&gt;&gt;<i>works for you.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Martin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001559.html">[Softdevice-devel] Softplay does deinterlacing with 720p clips, too
+</A></li>
+	<LI>Next message: <A HREF="001566.html">[Softdevice-devel] Softplay does deinterlacing with 720p clips, too
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1564">[ date ]</a>
+              <a href="thread.html#1564">[ thread ]</a>
+              <a href="subject.html#1564">[ subject ]</a>
+              <a href="author.html#1564">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

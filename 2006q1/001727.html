@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash with DVD subtitles
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20with%20DVD%20subtitles&In-Reply-To=%3C20060123203053.GA3476%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001713.html">
+   <LINK REL="Next"  HREF="001730.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash with DVD subtitles</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20with%20DVD%20subtitles&In-Reply-To=%3C20060123203053.GA3476%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Crash with DVD subtitles">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Jan 23 21:30:53 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001713.html">[Softdevice-devel] Crash with DVD subtitles
+</A></li>
+        <LI>Next message: <A HREF="001730.html">[Softdevice-devel] Softdevice and Dolby Digital
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1727">[ date ]</a>
+              <a href="thread.html#1727">[ thread ]</a>
+              <a href="subject.html#1727">[ subject ]</a>
+              <a href="author.html#1727">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jan 22, 2006 at 05:38:32PM +0100, Martin Wache wrote:
+&gt;<i> &gt; #0  cStreamDecoder::Action (this=0x843b258) at mpeg2decoder.c:177
+</I>&gt;<i> &gt; 177       while(active)
+</I>&gt;<i> &gt; (gdb) i lo
+</I>&gt;<i> &gt; pkt = (AVPacket *) 0x0
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Should I run vdr inside gdb to get better information, or does this give
+</I>&gt;<i> &gt; enough ideas?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> A bit more informations would be nice. From a short look at the code pkt
+</I>&gt;<i> = 0 should not cause any crashes in cStreamDecoder::Action.
+</I>
+Sorry, wrong alarm.  It's an intentional throw in dvbspu.c:
+
+#6  0x080a2fe5 in cDvbSpuBitmap (this=0x9324448, size=
+      {x1 = 60, y1 = 462, x2 = 739, y2 = 551}, fodd=0x0, eodd=0x0, feven=0x0,
+    eeven=0x0) at dvbspu.c:78
+#7  0x080a3945 in cDvbSpuDecoder::setTime (this=0xafe05240, pts=261720)
+    at dvbspu.c:515
+#8  0xb76be572 in cDvdPlayer::seenSpuPts (this=0x839f200, pts=261720)
+    at player-dvd.c:1378
+#9  0xb76be95b in cDvdPlayer::seenAPTS (this=0x0, pts=0) at player-dvd.c:1371
+#10 0xb76c746f in A52decoder::decode (this=0x839f25c,
+    start=0xb2c4a263, size=1437, pktpts=&lt;value optimized out&gt;, SubStreamId=0
+    at ca52.c:409
+#11 0xb76c23e0 in cDvdPlayer::playPacket (this=0x839f200, cache_buf=@0x0,
+    trickMode=false, noAudio=false) at player-dvd.c:1761
+#12 0xb76c3391 in cDvdPlayer::Action (this=0x839f200) at player-dvd.c:1002
+#13 0x081013e0 in cThread::StartThread (Thread=0x839f20c) at thread.c:243
+#14 0xb7ec2cfd in start_thread () from /lib/tls/libpthread.so.0
+#15 0xb7d4013e in clone () from /lib/tls/libc.so.6
+
+This is because size.x2 &gt;= 720.  I'll bark the right tree (the authors of
+the DVD plugin).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001713.html">[Softdevice-devel] Crash with DVD subtitles
+</A></li>
+	<LI>Next message: <A HREF="001730.html">[Softdevice-devel] Softdevice and Dolby Digital
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1727">[ date ]</a>
+              <a href="thread.html#1727">[ thread ]</a>
+              <a href="subject.html#1727">[ subject ]</a>
+              <a href="author.html#1727">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

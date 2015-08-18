@@ -1,0 +1,304 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bdirectfb-users%5D%20field%20parity%20%3A%20viafb%2C%20TVout%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C45D06D8E.4020408%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002724.html">
+   <LINK REL="Next"  HREF="002728.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bdirectfb-users%5D%20field%20parity%20%3A%20viafb%2C%20TVout%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C45D06D8E.4020408%40huillard.net%3E"
+       TITLE="[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding">nicolas at huillard.net
+       </A><BR>
+    <I>Mon Feb 12 14:37:18 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002724.html">[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+        <LI>Next message: <A HREF="002728.html">[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2725">[ date ]</a>
+              <a href="thread.html#2725">[ thread ]</a>
+              <a href="subject.html#2725">[ subject ]</a>
+              <a href="author.html#2725">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Mark Adams a &#233;crit :
+&gt;&gt;<i> Result is :
+</I>&gt;&gt;<i> -------------------------------
+</I>&gt;&gt;<i>       1 current frame + 0 field 0 flipping on field 0
+</I>&gt;&gt;<i>       1 current frame + 2 field 0 flipping on field 0
+</I>&gt;&gt;<i>       1 current frame + 40 field 0 flipping on field 0
+</I>&gt;&gt;<i>       1 current frame + 1 field 0 flipping on field 0
+</I>&gt;&gt;<i>       2 current frame + 1 field 1 flipping on field 0
+</I>&gt;&gt;<i>      12 current frame + 1 field 0 flipping on field 0
+</I>&gt;&gt;<i>       2 current frame + 1 field 1 flipping on field 0
+</I>&gt;&gt;<i>       1 current frame + 2 field 0 flipping on field 0
+</I>&gt;&gt;<i>       2 current frame + 1 field 0 flipping on field 0
+</I>&gt;<i> 
+</I>&gt;<i> ... etc...
+</I>&gt;<i> 
+</I>&gt;<i> OK then, it appears that you're simply not able to generate frames fast
+</I>&gt;<i> enough, with the effect that frames will be repeated.  If that happens and
+</I>&gt;<i> the frames are interlaced, you will see nasty judder because you get to see
+</I>&gt;<i> something like field 1, field 2, field 3, field 4, field 3, field 4, field
+</I>&gt;<i> 7, field 8 etc.
+</I>&gt;<i> 
+</I>&gt;<i> Wherever you see '+2' in the output, that means that more than 1 frame
+</I>&gt;<i> period has elapsed since the last frame was flipped.
+</I>
+If I understand correctly, &quot;+1&quot; means that there was no dropped frames,
+whether the flip occured during field 0 or 1. Field 1 meaning that
+decoding was a bit late, but not enough to show stutter on screen...
+
+&gt;<i> You can see that often the flips occur first during field 0 of a frame,
+</I>&gt;<i> then
+</I>&gt;<i> after a few frames, they've slipped into field 1, then you skip a frame and
+</I>&gt;<i> go back to field 0.
+</I>
+That's softdevice behaviour, which tries to keep up with frame rate. OK.
+
+&gt;<i> I suspect that the DirectFB gfxdriver and the framebuffer are working
+</I>&gt;<i> perfectly but your hardware is just not able to keep up with generating
+</I>&gt;<i> frames.
+</I>
+This is a Via C3 Nehemiah 1GHz, with the following CPU usage on typical
+live TV :
+
+* software decoding:
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+ 2820 vdr       15   0  264m  54m 5696 S 58.0 24.7   0:42.09 vdr
+* hardware decoding:
+ 3118 vdr       15   0  278m  50m 5580 S 37.7 23.2   0:17.70 vdr
+
+General CPU usage (HW decoding):
+Cpu(s): 20.0% us,  9.3% sy,  0.0% ni, 66.3% id,  0.0% wa,  4.3% hi,  0.0% si
+
+Maybe the problem is the load average, which seems to reach 1.00 (after
+a few minutes):
+	load average: 1.07, 1.02, 0.50
+(this may be biased by logging and &quot;top&quot;, ssh, etc.)
+
+That's on the softdevice side it seems.
+Laz's 1.2GHz may be just the missing bit to get full synch...
+
+&gt;<i>    307 current frame + 1 field 0 flipping on field 0
+</I>&gt;<i> 
+</I>&gt;<i>    792 current frame + 1 field 0 flipping on field 0
+</I>&gt;<i> 
+</I>&gt;<i> Those bits probably displayed properly, yes?
+</I>
+I guess... Since output is directed to a buffered file, I can't say for
+sure.
+
+&gt;<i> I presume that output you quoted was for the software decode case?  How
+</I>&gt;<i> does it look when you use the hardware decoder?
+</I>
+This was the hardware decoder. The following set is with software decoding :
+
+      1 current frame + 0 field 0 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      1 current frame + 26 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 4 field 0 flipping on field 0
+     15 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+      4 current frame + 1 field 0 flipping on field 0
+      9 current frame + 1 field 1 flipping on field 0
+      1 current frame + 2 field 0 flipping on field 0
+     22 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+     16 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+     10 current frame + 1 field 0 flipping on field 0
+     16 current frame + 1 field 1 flipping on field 0
+     11 current frame + 1 field 0 flipping on field 0
+      4 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+     82 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     30 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      9 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     63 current frame + 1 field 0 flipping on field 0
+     11 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      7 current frame + 1 field 0 flipping on field 0
+      5 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     66 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      4 current frame + 1 field 0 flipping on field 0
+     14 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      6 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+     11 current frame + 1 field 1 flipping on field 0
+     59 current frame + 1 field 0 flipping on field 0
+      6 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+     67 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     16 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+     34 current frame + 1 field 0 flipping on field 0
+      7 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+     10 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      4 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      8 current frame + 1 field 1 flipping on field 0
+     85 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     29 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     28 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     17 current frame + 1 field 0 flipping on field 0
+     15 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     73 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     33 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+     21 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+      3 current frame + 1 field 0 flipping on field 0
+      2 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      7 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      3 current frame + 1 field 1 flipping on field 0
+      1 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     11 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     23 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      6 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     42 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      2 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+     20 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+      3 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+    171 current frame + 1 field 0 flipping on field 0
+      1 current frame + 1 field 1 flipping on field 0
+   1584 current frame + 1 field 0 flipping on field 0
+
+This case has no +2, except at the beginning. After that, the output is
+smooth.
+
+@Stefan : is upgrading softdevice from 0.3.1 to CVS a good idea to try
+to improve this (I know, the answer is not &quot;no&quot;) ?
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002724.html">[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+	<LI>Next message: <A HREF="002728.html">[Softdevice-devel] [directfb-users] field parity : viafb, TVout,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2725">[ date ]</a>
+              <a href="thread.html#2725">[ thread ]</a>
+              <a href="subject.html#2725">[ subject ]</a>
+              <a href="author.html#2725">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

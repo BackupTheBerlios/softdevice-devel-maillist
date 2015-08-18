@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C447F245F.9030702%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002093.html">
+   <LINK REL="Next"  HREF="002128.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C447F245F.9030702%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Jun  1 19:31:11 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002093.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002128.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2100">[ date ]</a>
+              <a href="thread.html#2100">[ thread ]</a>
+              <a href="subject.html#2100">[ subject ]</a>
+              <a href="author.html#2100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Rolf Ahrenberg schrieb:
+&gt;<i> On Mon, 29 May 2006, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> since my last changes to the cvs Ralfs and Laz patches to enable the
+</I>&gt;&gt;<i> cle266 hw decoding in the softdevice any more. I adapted Ralf's latest
+</I>&gt;&gt;<i> patch to the cvs, and fixed a few things. I also made some other
+</I>&gt;<i> 
+</I>&gt;<i> Just tried your patch and the latest CVS version. Well, the OSD
+</I>&gt;<i> transparency works now (nice! Thanks Stefan!), but the CPU load is
+</I>&gt;<i> nearly identical with &quot;cle266&quot; and &quot;viatv&quot; options. It might be just my
+</I>&gt;<i> system with messed up libraties, so could someone verify that Martin's
+</I>&gt;<i> latest patch really reduces the CPU load when using &quot;cle266&quot; instead of
+</I>&gt;<i> &quot;viatv&quot; as Laz's patch did earlier also on my setup.
+</I>&gt;<i> 
+</I>
+Unfortunately it seems that you are right, now the cpu usage is reduced
+when using the clee266 option. I don't know what could cause this, I did
+a short run with oprofile which showed this:
+
+    54118 37.5947 no-vmlinux
+    49870 34.6437 libdirect-0.9.so.25.0.0
+    27745 19.2739 libcle266mpegdec-0.1.so
+     8073  5.6082 libvdr-softdevice.so.1.3.44
+     1454  1.0101 libc-2.3.5.so
+     1280  0.8892 vdr
+      424  0.2945 libdirectfb-0.9.so.25.0.0
+      297  0.2063 libpthread-0.10.so
+      280  0.1945 libasound.so.2.0.0
+
+Not sure why vmlinux takes so much time... libdirect-0.9.so.25 belongs
+to DirectFB and contains only one method:
+
+49870    100.000  mmx2_memcpy
+
+When I commented the line
+
+videoSurface-&gt;Blit(mpegfb[currentFB], NULL, 0, 0);
+
+the cpu usage dropped drastically (of course I also could not see a
+video picture), so it seems that for some reason the blitting is done
+via mmx2_memcpy. I don't understand what change cause this. I didn't
+change much in video-dfb.c when I changed the cle266-patch, the only
+other change was Stefan's fix for the transparency. I also upgraded from
+DirectFB-0.9.23 to DirectFB-0.9.25.
+Any ideas from the DirectFB experts?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002093.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002128.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2100">[ date ]</a>
+              <a href="thread.html#2100">[ thread ]</a>
+              <a href="subject.html#2100">[ subject ]</a>
+              <a href="author.html#2100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

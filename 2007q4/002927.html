@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with nvidia TwinView and ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C20071006100432.GA23445%40radylon.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002926.html">
+   <LINK REL="Next"  HREF="002929.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with nvidia TwinView and ShmClient</H1>
+    <B>Michael Rademacher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C20071006100432.GA23445%40radylon.com%3E"
+       TITLE="[Softdevice-devel] Problems with nvidia TwinView and ShmClient">radi at radylon.com
+       </A><BR>
+    <I>Sat Oct  6 12:04:32 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002926.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+        <LI>Next message: <A HREF="002929.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2927">[ date ]</a>
+              <a href="thread.html#2927">[ thread ]</a>
+              <a href="subject.html#2927">[ subject ]</a>
+              <a href="author.html#2927">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+On Sat, 06.10.07, at 09:13 Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+
+&gt;<i> If that works now, some of your previous tests was wrong (or with
+</I>&gt;<i> a version too old, see below).
+</I>&gt;<i> From initial mail:
+</I>&gt;<i> ii &#160;vdr-plugin-softdevice &#160; &#160; &#160; &#160; &#160; &#160;0.4.0-5 &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;VDR plugin for frame-buffer output
+</I>
+Hmm, I don't know if I did something wrong but, here is what I've done:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at zentrale</A>:/usr/src/vdr/vdr-1.4.7/PLUGINS/src# apt-get source vdr-plugin-softdevice
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Need to get 199kB of source archives.
+Get:1 <A HREF="http://e-tobi.net">http://e-tobi.net</A> etch/vdr-multipatch vdr-plugin-softdevice 0.4.0-5 (dsc) [939B]
+Get:2 <A HREF="http://e-tobi.net">http://e-tobi.net</A> etch/vdr-multipatch vdr-plugin-softdevice 0.4.0-5 (tar) [191kB]
+Get:3 <A HREF="http://e-tobi.net">http://e-tobi.net</A> etch/vdr-multipatch vdr-plugin-softdevice 0.4.0-5 (diff) [7296B]
+Fetched 199kB in 0s (301kB/s)
+dpkg-source: warning: extracting unsigned source package (./vdr-plugin-softdevice_0.4.0-5.dsc)
+dpkg-source: extracting vdr-plugin-softdevice in vdr-plugin-softdevice-0.4.0
+dpkg-source: unpacking vdr-plugin-softdevice_0.4.0.orig.tar.gz
+dpkg-source: applying ./vdr-plugin-softdevice_0.4.0-5.diff.gz
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at zentrale</A>:/usr/src/vdr/vdr-1.4.7/PLUGINS/src/vdr-plugin-softdevice-0.4.0# ./configure --disable-vidix --disable-fb --disable-dfb --disable-cle266 --disable-oss --disable-yaepg
+Testing system and cpu type... found Linux on i386 cpu.
+Checking for pkg-config... Found.
+Checking for ffmpeg... Ok.
+Checking for ALSA sound... Enabled audio-alsa.
+Checking for OSS sound... Not Found.
+Checking for linux frambuffer... Not Found.
+Checking for DirectFB and DFB++... Not Found.
+Checking for vidix... Not found.
+Checking for Xv... Enabled video-xv.
+Checking for Xinerama... Enabled Xinerama.
+Creating temporary config.h and config.mak
+updated config.h
+updated config.mak
+Configure is finished. Please check config.log in case of problems.
+
+
+No errors in config.log
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at zentrale</A>:/usr/src/vdr/vdr-1.4.7/PLUGINS/src/vdr-plugin-softdevice-0.4.0# make ShmClient
+[...]
+
+
+This leads to the known problem. After applying your patch follwed by 'make
+clean ; make ShmClient' it works. I did not change anything in the setup of
+softdevice, so the aspect ratio still is 5:4.
+
+Kind regards - Michael Rademacher.
+
+-- 
+====================================================================//====
+ Michael Rademacher     fon +49-4103-8036388       RADYLON Netzwerkdesign
+ Schillerstr. 31        fax +49-4103-8036389      <A HREF="http://www.radylon.com/">http://www.radylon.com/</A>
+ D-22880 Wedel          gsm +49-170-4543911       eMail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">radi at radylon.com</A>
+ GPG Key fingerprint = C713 8AA0 8EE7 4B02 73A6  0948 EA48 B6CD 55CB 7337
+==========================================================================
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: Digital signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071006/c8481ed1/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071006/c8481ed1/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002926.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+	<LI>Next message: <A HREF="002929.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2927">[ date ]</a>
+              <a href="thread.html#2927">[ thread ]</a>
+              <a href="subject.html#2927">[ subject ]</a>
+              <a href="author.html#2927">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

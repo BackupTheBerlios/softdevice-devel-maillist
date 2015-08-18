@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] buffering issues in softdevice-0.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20buffering%20issues%20in%20softdevice-0.1.1&In-Reply-To=%3C425CD47D.2000705%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000523.html">
+   <LINK REL="Next"  HREF="000524.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] buffering issues in softdevice-0.1.1</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20buffering%20issues%20in%20softdevice-0.1.1&In-Reply-To=%3C425CD47D.2000705%40gmx.net%3E"
+       TITLE="[Softdevice-devel] buffering issues in softdevice-0.1.1">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Apr 13 10:12:45 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000523.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+        <LI>Next message: <A HREF="000524.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#526">[ date ]</a>
+              <a href="thread.html#526">[ thread ]</a>
+              <a href="subject.html#526">[ subject ]</a>
+              <a href="author.html#526">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Lucian Muresan wrote:
+
+&gt;<i> 
+</I>&gt;<i> I checked out latest CVS and tried, but it doesn't improve the 
+</I>&gt;<i> situation. Before I tried Stefan's patch on the CVS before your 
+</I>&gt;<i> buffering changes, with just slightly smoother image, but also 
+</I>&gt;<i> slow-motion and audio skipping. CPU usage is also strangely low, but a 
+</I>&gt;<i> bit higher than before your changes, it goes from 20 to 30% (1GHz 
+</I>&gt;<i> Duron), and normally, when all DVB stream frames are decoded and shown 
+</I>&gt;<i> (with mplayer, df_xine or even softdevice before this whole thing 
+</I>&gt;<i> started, I think at the time I tried softplay), CPU usage would be 
+</I>&gt;<i> something between 45 and 55, maybe 60 sometimes (SDTV of course). 
+</I>&gt;<i> Currently it behaves almost like in the better times I've had with 
+</I>&gt;<i> softdevice when switching to HDTV on my 1GHz Duron, it was just 
+</I>&gt;<i> super-slow motion and after some time crashed. At least it doesn't seem 
+</I>&gt;<i> to crash now, but I also didn't let it run too much. This time, while 
+</I>&gt;<i> this whole juddering I have some output which seems to repeat a lot, see 
+</I>&gt;<i> below.
+</I>
+Hmm, from the logs you send this looks like the same problem that Thomas 
+reported. I would like to ask you to do one of the following things (or 
+if you like both...)
+
+- What was the last version which worked for you? Go back in the CVS 
+using the command:
+&quot;cvs -d:pserver:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">anonymous at cvs.softdevice.berlios.de</A>:/cvsroot/softdevice 
+co -D 2005-03-22 softdevice&quot; (replace the date 2005-03-22 with the 
+appropiate date) and  tell us the newest version of the CVS which works 
+for you, and the first version which is broken. You can find some dates 
+you can try in the CHANGELOG. With this information we can find the 
+change which broke the softdevice for you and understand the problem.
+
+- Enable our debugging output. Edit the file mpeg2decoder.c and 
+uncomment the lines //#define BUFDEB... and //#define MPGDEB..., 
+recompile, start vdr piping all output in a file, and stop vdr after 2-3 
+minutes. Gzip or bzip the output and send it to me in a personal e-mail 
+(the list wont accept it because of the length ). If the zipped output 
+is still more than a few hundred KB you can cut the end away. By 
+enableing the debugging output you tell the softdevice to log almost 
+everything with timestamps. From this output we can find out where the 
+softdevice spends it's time and hopefully find the problem.
+
+
+Thank you,
+
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000523.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+	<LI>Next message: <A HREF="000524.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#526">[ date ]</a>
+              <a href="thread.html#526">[ thread ]</a>
+              <a href="subject.html#526">[ subject ]</a>
+              <a href="author.html#526">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

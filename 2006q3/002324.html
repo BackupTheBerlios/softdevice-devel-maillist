@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] HOWTO libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HOWTO%20libcle266mpegdec&In-Reply-To=%3C200608142010.40643.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002322.html">
+   <LINK REL="Next"  HREF="002326.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] HOWTO libcle266mpegdec</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HOWTO%20libcle266mpegdec&In-Reply-To=%3C200608142010.40643.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] HOWTO libcle266mpegdec">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Mon Aug 14 21:10:40 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002322.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002326.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2324">[ date ]</a>
+              <a href="thread.html#2324">[ thread ]</a>
+              <a href="subject.html#2324">[ subject ]</a>
+              <a href="author.html#2324">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 14 August 2006 15:31, Nicolas D&#233;ly wrote:
+&gt;<i> 2006/7/11, Per Mellander &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">per at mellander.org</A>&gt;:
+</I>&gt;<i> &gt; I've written some kind of a HOWTO for making use of the CLE266 hardware
+</I>&gt;<i> &gt; decoding with softdevice. Could you ( Laz, Martin, Stefan etc. ) take a
+</I>&gt;<i> &gt; look and comment before I drop the link on vdr ml?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+</I>&gt;<i>
+</I>&gt;<i> Thank you very much for your howto.
+</I>&gt;<i>
+</I>&gt;<i> I also had pached linux-viafb in order to add hardware ids
+</I>&gt;<i>
+</I>&gt;<i> to be very detailed your howto is missing:
+</I>&gt;<i> * &quot;./configure&quot; before  libcle266mpegdec &quot;make&quot;
+</I>&gt;<i> * &quot;./autogen.sh&quot; before DirectFB &quot;./configure&quot; or replace &quot;./configure
+</I>&gt;<i> --with-gfxdrivers=cle266,unichrome&quot; by &quot;./autogen.sh
+</I>&gt;<i> --with-gfxdrivers=cle266,unichrome&quot;
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately when I demonstated my set top box to my bosses, they
+</I>&gt;<i> told me that deinterlacing was &quot;bottom first&quot; or something like that,
+</I>&gt;<i> though it should be &quot;top first&quot; meaning that bottom frames are
+</I>&gt;<i> displayed before top frames.  On interlaced videos, there are slow
+</I>&gt;<i> movements. I hope someone understand my troubles.
+</I>
+I _think_ that without Mark Adams's field-sync patches to viafb and DirectFB 
+(posted on the directfb-users or -dev list), the field order is random for 
+each bootup due to a timing issue. With the patches, I think it keeps track 
+of the field order. I use this setup with an interlaced TV and it works fine 
+for me (or I've not noticed jagged lines form reversed field lines).
+
+As I say, I think that's what the patches do...they might not even be needed 
+these days! It was a while back that I applied them and I've forgotten why I 
+needed them!
+
+I've attached the two of them (as I said, it's been a while since I've had to 
+apply them so they might need a bit of coaxing with current versions of viafb 
+and DirectFB!).
+
+Cheers,
+
+Laz
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: viafb_flip_ioctl.patch
+Type: text/x-diff
+Size: 4357 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060814/3f435dea/attachment.patch">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060814/3f435dea/attachment.patch</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dfb_unichrome_flip_ioctl.patch
+Type: text/x-diff
+Size: 2542 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060814/3f435dea/attachment-0001.patch">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060814/3f435dea/attachment-0001.patch</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002322.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002326.html">[Softdevice-devel] HOWTO libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2324">[ date ]</a>
+              <a href="thread.html#2324">[ thread ]</a>
+              <a href="subject.html#2324">[ subject ]</a>
+              <a href="author.html#2324">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

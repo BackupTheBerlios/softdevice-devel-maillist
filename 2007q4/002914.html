@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #12090] softplay: problems with recent	ffmpeg snapshot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2312090%5D%20softplay%3A%20problems%20with%20recent%0A%09ffmpeg%20snapshot&In-Reply-To=%3C200710021640.l92GefYh020319%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002913.html">
+   <LINK REL="Next"  HREF="002915.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #12090] softplay: problems with recent	ffmpeg snapshot</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2312090%5D%20softplay%3A%20problems%20with%20recent%0A%09ffmpeg%20snapshot&In-Reply-To=%3C200710021640.l92GefYh020319%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #12090] softplay: problems with recent	ffmpeg snapshot">admin at berlios.de
+       </A><BR>
+    <I>Tue Oct  2 18:40:41 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002913.html">[Softdevice-devel] Problem with segfaulting softplay.
+</A></li>
+        <LI>Next message: <A HREF="002915.html">[Softdevice-devel] Test: ML working III?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2914">[ date ]</a>
+              <a href="thread.html#2914">[ thread ]</a>
+              <a href="subject.html#2914">[ subject ]</a>
+              <a href="author.html#2914">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #12090, was updated on 2007-Sep-27 20:46
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: blueman
+Assigned to : none
+Summary: softplay: problems with recent ffmpeg snapshot
+
+Details: Hi,
+
+I have problems with softplay when I use a newer ffmpeg version.
+
+compiling:
+Plugin softplay:
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Leaving directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+make[1]: Entering directory `/multimedia/src/vdr-1.5.2/PLUGINS/src/softplay'
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  softplay.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  SoftPlayer.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+SoftPlayer.c: In member function 'int cSoftPlayer::GetPlayMode(AVFormatContext*)':
+SoftPlayer.c:380: warning: comparison between signed and unsigned integer expressions
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayList.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  PlayListMenu.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  i18n.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  FileIndex.c
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Receiver.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -c -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softplay&quot;' -I../../../include -I../../../../DVB/include -I/usr/include/ffmpeg/ -I/usr/include/ffmpeg//libavformat -I/usr/include/ffmpeg//libavcodec -I/usr/include/ffmpeg//libavutil  Setup.c
+/usr/include/ffmpeg/avcodec.h:2246: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+/usr/include/ffmpeg/avcodec.h:2256: warning: 'ImgReSampleContext' is deprecated (declared at /usr/include/ffmpeg/avcodec.h:2240)
+g++ -g -O2 -fPIC -Wall -Woverloaded-virtual   -shared softplay.o SoftPlayer.o PlayList.o PlayListMenu.o i18n.o FileIndex.o Receiver.o Setup.o -L/usr/include/ffmpeg/ -L/usr/include/ffmpeg//libavformat -L/usr/include/ffmpeg//libavcodec -L/usr/include/ffmpeg//libavutil -lavformat -lavcodec -lz -lavutil -o libvdr-softplay.so
+
+when starting vdr:
+vdr: ./PLUGINS/lib/libvdr-softplay.so.1.5.1: undefined symbol: _Z15av_register_allv
+
+softdevice (cvs today) runs fine...
+
+thanks
+
+Follow-Ups:
+
+Date: 2007-Oct-02 17:40
+By: blueman
+
+Comment:
+Hi,
+
+ok thanks,
+I used the SoftPlayer.c patch an only this one, not the one for ffmpeg. Everything seems to be working. :)
+
+
+-------------------------------------------------------
+
+Date: 2007-Sep-30 16:34
+By: lucke
+
+Comment:
+I'm seeing a similar problem (described on the ml, accessable via web only). It seems to caused by softdevice, setting AVFMT_NOFILE for format mpeg. De / reasserting this flag in softplay ake some avi's play again, but mp3 playback is still inop.
+Index: SoftPlayer.c
+===================================================================
+RCS file: /cvsroot/softdevice/softplay/SoftPlayer.c,v
+retrieving revision 1.16
+diff -n -b -U3 -r1.16 SoftPlayer.c
+cvs server: conflicting specifications of output style
+--- SoftPlayer.c        12 Mar 2007 21:32:03 -0000      1.16
++++ SoftPlayer.c        30 Sep 2007 14:54:43 -0000
+@@ -445,14 +445,20 @@
+        };
+
+         printf(&quot;open file '%s'\n&quot;,filename);
++AVInputFormat *fmt;
++fmt=av_find_input_format(&quot;mpeg&quot;);
++fmt-&gt;flags &amp;= ~AVFMT_NOFILE;
+         char str[60];
+-        if ( (ret=av_open_input_file( &amp;ic, filename, NULL, 0, NULL)) ) {
++        //if ( (ret=av_open_input_file( &amp;ic, filename, NULL, 0, NULL)) ) {
++        if ( (ret=av_open_input_file( &amp;ic, filename, NULL, FFM_PACKET_SIZE, NULL)) ) {
+                 snprintf(str,60,&quot;%s %s!&quot;,&quot;Could not open file&quot;,filename);
+-                Skins.Message(mtError, str);
++                //Skins.Message(mtError, str);
+                 printf(&quot;could not open file. Return value %d\n&quot;,ret);
+                 ic=0;
++fmt-&gt;flags |= AVFMT_NOFILE;
+                 return;
+         };
++fmt-&gt;flags |= AVFMT_NOFILE;
+
+         if ( av_find_stream_info( ic ) ) {
+                 printf(&quot;could not find stream info\n&quot;);
+
+-------------------------------------------------------
+
+Date: 2007-Sep-30 15:54
+By: lucke
+
+Comment:
+I'm seeing a similar problem (described on the ml, accessable via web only). It seems to caused by softdevice, setting AVFMT_NOFILE for format mpeg. De / reasserting this flag in softplay ake some avi's play again, but mp3 playback is still inop.
+Index: SoftPlayer.c
+===================================================================
+RCS file: /cvsroot/softdevice/softplay/SoftPlayer.c,v
+retrieving revision 1.16
+diff -n -b -U3 -r1.16 SoftPlayer.c
+cvs server: conflicting specifications of output style
+--- SoftPlayer.c        12 Mar 2007 21:32:03 -0000      1.16
++++ SoftPlayer.c        30 Sep 2007 14:54:43 -0000
+@@ -445,14 +445,20 @@
+        };
+
+         printf(&quot;open file '%s'\n&quot;,filename);
++AVInputFormat *fmt;
++fmt=av_find_input_format(&quot;mpeg&quot;);
++fmt-&gt;flags &amp;= ~AVFMT_NOFILE;
+         char str[60];
+-        if ( (ret=av_open_input_file( &amp;ic, filename, NULL, 0, NULL)) ) {
++        //if ( (ret=av_open_input_file( &amp;ic, filename, NULL, 0, NULL)) ) {
++        if ( (ret=av_open_input_file( &amp;ic, filename, NULL, FFM_PACKET_SIZE, NULL)) ) {
+                 snprintf(str,60,&quot;%s %s!&quot;,&quot;Could not open file&quot;,filename);
+-                Skins.Message(mtError, str);
++                //Skins.Message(mtError, str);
+                 printf(&quot;could not open file. Return value %d\n&quot;,ret);
+                 ic=0;
++fmt-&gt;flags |= AVFMT_NOFILE;
+                 return;
+         };
++fmt-&gt;flags |= AVFMT_NOFILE;
+
+         if ( av_find_stream_info( ic ) ) {
+                 printf(&quot;could not find stream info\n&quot;);
+
+-------------------------------------------------------
+
+Date: 2007-Sep-29 19:27
+By: blueman
+
+Comment:
+Hi,
+
+I made an cvs update and now vdr ist starting with softplay, but when I start a file vdr crashes with the following error:
+
+PLDBG: Activate 1 
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x81e6a10
+Service 'softdevice-GetPacketHandles-v1.0'
+IsStream .mpg
+open file '/multimedia/media/testfile.mpg'
+(!) [ 7848:    0.000] --&gt; Caught signal 11 (at (nil), invalid address) &lt;--
+Aborted
+
+
+-------------------------------------------------------
+
+Date: 2007-Sep-28 16:55
+By: lucke
+
+Comment:
+Please do a cvs update to get the fix.
+
+Stefan
+-------------------------------------------------------
+
+Date: 2007-Sep-27 21:42
+By: blueman
+
+Comment:
+Update:
+
+I found out, that I had a old libvdr-softplay in the lib folder, now I deleted this file but at compiling I get the same as above, but it doesnt create a new  ibvdr-softplay.so.1.5.1 file.
+
+strane...
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=12090&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=12090&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002913.html">[Softdevice-devel] Problem with segfaulting softplay.
+</A></li>
+	<LI>Next message: <A HREF="002915.html">[Softdevice-devel] Test: ML working III?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2914">[ date ]</a>
+              <a href="thread.html#2914">[ thread ]</a>
+              <a href="subject.html#2914">[ subject ]</a>
+              <a href="author.html#2914">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

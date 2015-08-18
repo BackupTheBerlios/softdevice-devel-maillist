@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspend patch for vdr
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C43116912.4090806%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001153.html">
+   <LINK REL="Next"  HREF="001155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspend patch for vdr</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C43116912.4090806%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Suspend patch for vdr">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Aug 28 09:34:42 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001153.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+        <LI>Next message: <A HREF="001155.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1154">[ date ]</a>
+              <a href="thread.html#1154">[ thread ]</a>
+              <a href="subject.html#1154">[ subject ]</a>
+              <a href="author.html#1154">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+&gt;<i> On Sat, Aug 27, 2005 at 01:31:32AM +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Please get the improved patch
+</I>&gt;&gt;<i><A HREF="http://www.funet.fi/~msmakela/electronics/relay/suspend-relay.patch">http://www.funet.fi/~msmakela/electronics/relay/suspend-relay.patch</A>
+</I>&gt;&gt;<i>instead.  For clarity, I removed the Power key patch and ran diff
+</I>&gt;&gt;<i>on vanilla vdr-1.3.30 sources (before applying any other patches).
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Please get
+</I>&gt;<i> <A HREF="http://www.funet.fi/~msmakela/electronics/relay/vdr-suspend-relay.patch">http://www.funet.fi/~msmakela/electronics/relay/vdr-suspend-relay.patch</A>
+</I>&gt;<i> instead.  That patch suspends the DVB streams at the source
+</I>&gt;<i> (cDevice::Action() and cDvbPlayer::Action()).  Thus, no patch will be
+</I>&gt;<i> necessary in the subtitles plugin.  Also, the play mode (play, pause,
+</I>&gt;<i> rewind, fast forward, trickspeed, etc.) will be preserved across
+</I>&gt;<i> suspend/resume.
+</I>
+I just tried to get the new version of your patch, but the link seems to
+be broken :-(.
+So I will report on the older one. I installed it yesterday evening and
+it works great. Good work!
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>* There is a commented-out assignment &quot;LastActivity = 1&quot; in the kSuspend
+</I>&gt;&gt;<i>  handler of vdr.c.  If you enable it, the Suspend key will initiate a
+</I>&gt;&gt;<i>  timeout mechanism (default 60+300 seconds after the key has been pressed,
+</I>&gt;&gt;<i>  or 300 seconds after all timers have completed).
+</I>&gt;<i> 
+</I>Actually this is the prefered mode for me. So my personal suggestion
+would be just to use the power key, and extend it's features. If the
+power key is pressed, shutdown in case of no recording and the -s option
+was given, otherwise just suspend the mpeg2 decoding.
+That would be the natural behaviour for me.
+
+
+&gt;<i> This still holds.  I got some feedback from a DXR3 user.  The DXR3 will
+</I>&gt;<i> keep displaying the last image when playback is suspended.  I'm
+</I>&gt;<i> currently just calling cDevice::PrimaryDevice()-&gt;Clear(), and that
+</I>&gt;<i> won't do the trick.  (Also in softdevice, it is the &quot;out of stream&quot;
+</I>&gt;<i> timeout that kicks in.)
+</I>&gt;<i> 
+</I>cDevice-&gt;Clear() just clears the input buffers, so I guess it is not
+meant to clear the screen. Maybe a call to SetPlayMode(pmNone) would
+help, if I understand dvbplayer.c correctly that would work even for FF
+cards. Of course you'll have to restore the playmode on resume...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001153.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+	<LI>Next message: <A HREF="001155.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1154">[ date ]</a>
+              <a href="thread.html#1154">[ thread ]</a>
+              <a href="subject.html#1154">[ subject ]</a>
+              <a href="author.html#1154">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] FYI: Fwd: swscale lib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20FYI%3A%20Fwd%3A%20swscale%20lib&In-Reply-To=%3C200412221139.32453.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000109.html">
+   <LINK REL="Next"  HREF="000110.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] FYI: Fwd: swscale lib</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20FYI%3A%20Fwd%3A%20swscale%20lib&In-Reply-To=%3C200412221139.32453.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] FYI: Fwd: swscale lib">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Dec 22 11:39:32 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000109.html">[Softdevice-devel] Re:  Alpha Blending was: Fwd: Re: Matrox patch
+</A></li>
+        <LI>Next message: <A HREF="000110.html">[Softdevice-devel] [Bug #2971] Short gaps in audio output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>----------  Forwarded Message  ----------
+
+Subject: swscale lib
+Date: Mittwoch, 22. Dezember 2004 08:59
+From: Andrei Naouman &lt;..&gt;
+To: michaelni..
+Cc: Stefan Lucke &lt;..&gt;
+
+Hi Michael,
+
+I wrote video out for Matrox card's TV-out for vdr/softdevice project
+(SAT TV). Since the card's second head does not have hardware scaling
+ability, a software scaler required to stretch SAT-TV picture (like
+704 -&gt; 768).
+
+Currently I use MPlayer's /postpoc code for that purpose. But I am
+searching for stand alone library for that.
+
+Could you advice me that sort of library or may be swscale code exist
+in some other form with lower dependencies of MPlayer? (I saw drip
+project but have not investigated it yet...)
+
+Your help would be just great,
+Andrei.
+
+
+On Sun, 19 Dec 2004 23:40:11 +0100, Stefan Lucke
+&lt;..&gt; wrote:
+&gt;<i> On Sonntag, 19. Dezember 2004 17:31, Andrei Naouman wrote:
+</I>&gt;<i> &gt; Here is the patch I uploaded to the site.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &quot;This patch adds a driver dedicated to support Matrox card TV-out. See
+</I>&gt;<i> &gt; screenshot.
+</I>&gt;<i> &gt; With recently enhanced Vidix mga driver you will have Hardware OSD of
+</I>&gt;<i> &gt; Matrox card.
+</I>&gt;<i> &gt; Since CRTC2 out does not support hardware scaling a software scaler
+</I>&gt;<i> &gt; was borrowed from MPlayer project.
+</I>&gt;<i> 
+</I>&gt;<i> I'm not sure if your CRTC2 statement is correct. I think I've seen code
+</I>&gt;<i> somewhere in directFB output modules (mplayer one ?) where they do
+</I>&gt;<i> some tricks in half-frame interrupts. Thus programming double line length
+</I>&gt;<i> and changing the line start addresses upon field interrupt :-) .
+</I>&gt;<i> 
+</I>&gt;<i> I think we have to contact mplayer developer before accepting/including this
+</I>&gt;<i> huge patch into softdevice (uncompressed size is about 404K). At a first glance
+</I>&gt;<i> it looks like mplayer/postproc/* .
+</I>&gt;<i> 
+</I>&gt;<i> Do you or anyone else know of a library for software scaling?
+</I>&gt;<i> 
+</I>&gt;<i> Copying parts of mplayer is to my opinion not a clean solution, as I cannot maintain
+</I>&gt;<i> that code for bug fixing or further development.
+</I>&gt;<i> 
+</I>&gt;<i> If mplayer developers decide to make their postproc lib, part of a separate public
+</I>&gt;<i> standalone lib (or include it into ffmpeg) it would be easier for other projects
+</I>&gt;<i> to share code.
+</I>&gt;<i> 
+</I>&gt;<i> The screenshot you send to me looks nice.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> 
+</I>&gt;<i>
+</I>
+
+-------------------------------------------------------
+
+-- 
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000109.html">[Softdevice-devel] Re:  Alpha Blending was: Fwd: Re: Matrox patch
+</A></li>
+	<LI>Next message: <A HREF="000110.html">[Softdevice-devel] [Bug #2971] Short gaps in audio output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

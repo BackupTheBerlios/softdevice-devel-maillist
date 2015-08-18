@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] softdevice xv autosuspend
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%20xv%20autosuspend&In-Reply-To=%3C200703261922.06705.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002824.html">
+   <LINK REL="Next"  HREF="002825.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] softdevice xv autosuspend</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%20xv%20autosuspend&In-Reply-To=%3C200703261922.06705.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] softdevice xv autosuspend">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Mar 26 19:22:06 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002824.html">[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+</A></li>
+        <LI>Next message: <A HREF="002825.html">[Softdevice-devel] Howto control alsa volume in command line?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2817">[ date ]</a>
+              <a href="thread.html#2817">[ thread ]</a>
+              <a href="subject.html#2817">[ subject ]</a>
+              <a href="author.html#2817">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 26 March 2007 15:58, Artur Skawina wrote:
+
+Please subscribe to the list. For some reason there is no separate
+request for approval.
+
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Friday 23 March 2007 13:37, Artur Skawina wrote:
+</I>&gt;<i> &gt;&gt; Turns off the decoder when the video window isn't visible (when you switch to another
+</I>&gt;<i> &gt;&gt; (virtual) desktop, other windows cover it or screensaver kicks in etc).
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Note this will unsuspend on vdr startup when using XV even when the previously saved
+</I>&gt;<i> &gt;&gt; config value was 0 - this is probably the desired behaviour; to start XV in suspended
+</I>&gt;<i> &gt;&gt; mode make sure the window isn't visible by placing it appropriately (using geometry/WM).
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Thanks for your patch.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; We should be prepared to act on VisibilityNotify, but I don't think this should
+</I>&gt;<i> &gt; be done automagically mapped to suspend/resume action.
+</I>&gt;<i> &gt; Comments welcome.
+</I>&gt;<i> 
+</I>&gt;<i> I've now used it for a few days, some thoughts:
+</I>&gt;<i> 
+</I>&gt;<i> - it does the right thing wrt video, but turning off the audio is not always desirable;
+</I>&gt;<i>   examples would be listening to radio or some kind of music/talk channel. While the
+</I>&gt;<i>   former could be auto detected (don't suspend if no video) the latter does require
+</I>&gt;<i>   a user defined preference.
+</I>&gt;<i> - When not live viewing but playing back recordings, suspending the playback completely
+</I>&gt;<i>   when the window is hidden actually turns out to be a feature -- you can switch to
+</I>&gt;<i>   another desktop (or otherwise hide the window) and playback will pause; switch back
+</I>&gt;<i>   and the playback resumes. This turns out to be very convenient, but makes the user
+</I>&gt;<i>   pref mentioned above a bit more complicated. Is there a simple way to distinguish live
+</I>&gt;<i>   viewing from playback?
+</I>&gt;<i> - When live viewing, suspending does not stop av stream, using bw and/or keeping a dvb device
+</I>&gt;<i>   unnecessarily busy.
+</I>&gt;<i> - (un)suspending does a bit too much x/xv (de)init.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Example:
+</I>&gt;<i> &gt; - 'r' did a suspend action (video and audio stopped).
+</I>&gt;<i> &gt; - touching the window will bring back both.
+</I>&gt;<i> 
+</I>&gt;<i> I'm not using 'r' so i didn't notice this. Yes, moving anything over the window or just
+</I>&gt;<i> moving the video window itself does unsuspend. I've always considered the 'r' key a hack
+</I>&gt;<i> (the reason I sent the patch enabling it w/ configure is that it is a regression); it should
+</I>&gt;<i> be done via normal vdr input processing so that it it is accessible from remotes too.
+</I>&gt;<i> Making 'r' work independently from autosuspend would be easy (eg using a bitmask instead of int),
+</I>&gt;<i> but a more complex approach is needed anyway to handle the above mentioned cases...
+</I>&gt;<i> 
+</I>&gt;<i> &gt; and switching to another desktop with kde does not deliver
+</I>&gt;<i> &gt; VisibilityFullyObscured :-( . 
+</I>&gt;<i> 
+</I>&gt;<i> It works with fvwm2; this probably depends on the window manager. Switching away from X
+</I>&gt;<i> (eg ctrl-alt-f1) seems to work too.
+</I>&gt;<i> 
+</I>&gt;<i> I'll take a look at fixing some of the above issues in the next few days.
+</I>&gt;<i> 
+</I>&gt;<i> artur
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; diff -urp softdevice-cvs.org/video-xv.c softdevice-cvs/video-xv.c
+</I>&gt;<i> &gt;&gt; --- softdevice-cvs.org/video-xv.c	2006-12-18 00:03:46.000000000 +0100
+</I>&gt;<i> &gt;&gt; +++ softdevice-cvs/video-xv.c	2007-03-23 11:09:48.000000000 +0100
+</I>&gt;<i> &gt;&gt; @@ -579,7 +579,8 @@ void cXvVideoOut::ProcessEvents ()
+</I>&gt;<i> &gt;&gt;                                   KeyPressMask |
+</I>&gt;<i> &gt;&gt;                                   ExposureMask |
+</I>&gt;<i> &gt;&gt;                                   ConfigureNotify |
+</I>&gt;<i> &gt;&gt; -                                 StructureNotifyMask,
+</I>&gt;<i> &gt;&gt; +                                 StructureNotifyMask |
+</I>&gt;<i> &gt;&gt; +                                 VisibilityChangeMask,
+</I>&gt;<i> &gt;&gt;                                   &amp;event))
+</I>&gt;<i> &gt;&gt;    {
+</I>&gt;<i> &gt;&gt;      switch (event.type)
+</I>&gt;<i> &gt;&gt; @@ -703,6 +704,11 @@ void cXvVideoOut::ProcessEvents ()
+</I>&gt;<i> &gt;&gt;          }
+</I>&gt;<i> &gt;&gt;          break;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; +      case VisibilityNotify:
+</I>&gt;<i> &gt;&gt; +        EVDEB(&quot;VisibilityNotify\n&quot;);
+</I>&gt;<i> &gt;&gt; +        setupStore-&gt;shouldSuspend = event.xvisibility.state==VisibilityFullyObscured;
+</I>&gt;<i> &gt;&gt; +        break;
+</I>&gt;<i> &gt;&gt; +
+</I>&gt;<i> &gt;&gt;        case MapNotify:
+</I>&gt;<i> &gt;&gt;          EVDEB(&quot;MapNotify\n&quot;);
+</I>&gt;<i> &gt;&gt;          map_count++;
+</I>&gt;<i> &gt;&gt; @@ -920,7 +926,8 @@ bool cXvVideoOut::Initialize (void)
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;    XSelectInput(dpy, win, KeyPressMask | ExposureMask |
+</I>&gt;<i> &gt;&gt;                           ConfigureNotify | StructureNotifyMask |
+</I>&gt;<i> &gt;&gt; -                         PointerMotionMask | ButtonPressMask);
+</I>&gt;<i> &gt;&gt; +                         PointerMotionMask | ButtonPressMask |
+</I>&gt;<i> &gt;&gt; +                         VisibilityChangeMask);
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;    XMapRaised(dpy, win);
+</I>&gt;<i> &gt;&gt;    //XNextEvent(dpy, &amp;event);
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002824.html">[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+</A></li>
+	<LI>Next message: <A HREF="002825.html">[Softdevice-devel] Howto control alsa volume in command line?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2817">[ date ]</a>
+              <a href="thread.html#2817">[ thread ]</a>
+              <a href="subject.html#2817">[ subject ]</a>
+              <a href="author.html#2817">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

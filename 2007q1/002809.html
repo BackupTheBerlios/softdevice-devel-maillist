@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] softdevice configure SUSPEND_BY_KEY	support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%20configure%20SUSPEND_BY_KEY%0A%09support&In-Reply-To=%3C200703252013.20347.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002811.html">
+   <LINK REL="Next"  HREF="002810.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] softdevice configure SUSPEND_BY_KEY	support</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20softdevice%20configure%20SUSPEND_BY_KEY%0A%09support&In-Reply-To=%3C200703252013.20347.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] softdevice configure SUSPEND_BY_KEY	support">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Mar 25 20:13:20 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002811.html">[Softdevice-devel] Feature Request: Autocrop and smooth	zoom	insoftdevice
+</A></li>
+        <LI>Next message: <A HREF="002810.html">[Softdevice-devel] [PATCH] softdevice xv autosuspend
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2809">[ date ]</a>
+              <a href="thread.html#2809">[ thread ]</a>
+              <a href="subject.html#2809">[ subject ]</a>
+              <a href="author.html#2809">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 23 March 2007 13:12, Artur Skawina wrote:
+&gt;<i> i've been wondering why the XV suspend key stopped working a while
+</I>&gt;<i> ago, but as i was not actually using it, never investigated. Until
+</I>&gt;<i> today :) Apparently SUSPEND_BY_KEY was (and is) a makefile option,
+</I>&gt;<i> but the newer configure script does not know about this feature.
+</I>&gt;<i> Patch below enables it and adds a configure option to turn it off.
+</I>&gt;<i> 
+</I>
+Thanks for your patch.
+
+Should be ok. Reenabling the 'r/R' functionality.
+
+&gt;<i> 
+</I>&gt;<i> diff -urp softdevice-cvs.org/configure softdevice-cvs/configure
+</I>&gt;<i> --- softdevice-cvs.org/configure	2007-03-13 02:57:19.000000000 +0100
+</I>&gt;<i> +++ softdevice-cvs/configure	2007-03-23 10:23:18.000000000 +0100
+</I>&gt;<i> @@ -43,6 +43,7 @@ cle266=&quot;yes&quot;
+</I>&gt;<i>  alsa=&quot;yes&quot;
+</I>&gt;<i>  oss=&quot;yes&quot;
+</I>&gt;<i>  yaepg=&quot;auto&quot;
+</I>&gt;<i> +suspendkey=&quot;yes&quot;
+</I>&gt;<i> 
+</I>&gt;<i>  function help () {
+</I>&gt;<i>    echo &quot;Usage: configure [options]&quot;
+</I>&gt;<i> @@ -58,6 +59,7 @@ function help () {
+</I>&gt;<i>    echo &quot;  --disable-mmx2&quot;
+</I>&gt;<i>    echo &quot;  --disable-alsa&quot;
+</I>&gt;<i>    echo &quot;  --disable-oss&quot;
+</I>&gt;<i> +  echo &quot;  --disable-suspendkey&quot;
+</I>&gt;<i>    echo &quot;  --disable-yaepg / --enable-yapg (yaepg patch support)&quot;
+</I>&gt;<i>    echo &quot;  --with-ffmpeg-path YOUR_FFMPEG_PATH&quot;
+</I>&gt;<i>    echo &quot;  --with-vidix-path YOUR_VIDIX_PATH&quot;
+</I>&gt;<i> @@ -81,6 +83,7 @@ do
+</I>&gt;<i>      --disable-mmx2) shift; with_mmx2=&quot;no&quot;;;
+</I>&gt;<i>      --disable-alsa) shift; alsa=&quot;no&quot;;;
+</I>&gt;<i>      --disable-oss) shift; oss=&quot;no&quot;;;
+</I>&gt;<i> +    --disable-suspendkey) shift; suspendkey=&quot;no&quot;;;
+</I>&gt;<i>      --disable-yaepg) shift; yaepg=&quot;no&quot;;;
+</I>&gt;<i>      --enable-yaepg) shift; yaepg=&quot;yes&quot;;;
+</I>&gt;<i>      --with-ffmpeg-path) shift;
+</I>&gt;<i> @@ -586,6 +589,10 @@ if test &quot;${with_altivec}&quot; = &quot;yes&quot; ; then
+</I>&gt;<i>    echo &quot;ADD_CXXFLAGS += -faltivec&quot; &gt;&gt; $TMPM
+</I>&gt;<i>  fi
+</I>&gt;<i> 
+</I>&gt;<i> +if test &quot;${suspendkey}&quot; = &quot;yes&quot; ; then
+</I>&gt;<i> +  echo &quot;#define SUSPEND_BY_KEY 1&quot; &gt;&gt; $TMPH
+</I>&gt;<i> +fi
+</I>&gt;<i> +
+</I>&gt;<i>  if test &quot;${yaepg}&quot; = &quot;yes&quot; ; then
+</I>&gt;<i>    echo &quot;#define HAVE_YAEPGPATCH 1&quot; &gt;&gt; $TMPH
+</I>&gt;<i>  fi
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002811.html">[Softdevice-devel] Feature Request: Autocrop and smooth	zoom	insoftdevice
+</A></li>
+	<LI>Next message: <A HREF="002810.html">[Softdevice-devel] [PATCH] softdevice xv autosuspend
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2809">[ date ]</a>
+              <a href="thread.html#2809">[ thread ]</a>
+              <a href="subject.html#2809">[ subject ]</a>
+              <a href="author.html#2809">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

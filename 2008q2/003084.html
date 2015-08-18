@@ -1,0 +1,570 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] new crash :(
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20crash%20%3A%28&In-Reply-To=%3C1209309102.27882.1473.camel%40lychee.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003085.html">
+   <LINK REL="Next"  HREF="003086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] new crash :(</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20crash%20%3A%28&In-Reply-To=%3C1209309102.27882.1473.camel%40lychee.local%3E"
+       TITLE="[Softdevice-devel] new crash :(">malcolm.caldwell at gmail.com
+       </A><BR>
+    <I>Sun Apr 27 17:11:42 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003085.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+        <LI>Next message: <A HREF="003086.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3084">[ date ]</a>
+              <a href="thread.html#3084">[ thread ]</a>
+              <a href="subject.html#3084">[ subject ]</a>
+              <a href="author.html#3084">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am not having a lot of luck lately.
+
+softdevice is now segfaulting for when playing live tv, watching
+recordings etc.  It is dependant on the stream, I have some recordings
+that crash for me every time.
+
+Here is a bt:
+
+#0  ff_combine_frame (pc=0x918914c, next=-5, buf=0xaa8eb290, 
+    buf_size=0xaa8eb294) at libavcodec/parser.c:279
+#1  0x00f45c87 in ff_aac_ac3_parse (s1=0x91b1620, avctx=0x91be610, 
+    poutbuf=0xaa8eb358, poutbuf_size=0xaa8eb35c, 
+    buf=0x94c9640 &quot;\vw\212{\0360C\177&#65533;\200\001&quot;, buf_size=-5)
+    at libavcodec/aac_ac3_parser.c:62
+#2  0x00c79d6e in av_parser_parse (s=0x91b1620, avctx=0x91be610, 
+    poutbuf=0xaa8eb358, poutbuf_size=0xaa8eb35c, 
+    buf=0x94c9640 &quot;\vw\212{\0360C\177&#65533;\200\001&quot;, buf_size=1792, 
+    pts=4317394411, dts=4317394411) at libavcodec/parser.c:136
+#3  0x00206473 in av_read_frame_internal (s=0x91561a0, pkt=0xaa8eb348)
+    at libavformat/utils.c:798
+#4  0x0016b1b5 in cMpeg2Decoder::Action (this=0x90d2698) at
+mpeg2decoder.c:1176
+#5  0x0811067c in cThread::StartThread (Thread=0x90d2698) at
+thread.c:255
+#6  0x0081045b in start_thread () from /lib/libpthread.so.0
+#7  0x0076823e in clone () from /lib/libc.so.6
+
+And for even more info:
+(gdb) thread apply all bt
+
+Thread 54 (Thread -1412252784 (LWP 9803)):
+#0  yuv420_to_yuy2 (dest1=0xb71784c0 &lt;Address 0xb71784c0 out of
+bounds&gt;, 
+    dest2=0xb71790c0 &lt;Address 0xb71790c0 out of bounds&gt;, 
+    yc1=0xa93a94d0 &quot;ZZ[YZZZYZYZY\\Y[Yz\222\224\224\224\225\226&quot;, '\225'
+&lt;repeats 161 times&gt;, &quot;\223\227\200DLVVVUVUVWVWV&quot;..., 
+    yc2=0xa93a9ad0 &quot;ZZZZZYYZYZZXZYZWi\213\224\222\224&quot;, '\225' &lt;repeats
+164 times&gt;, &quot;\226xDFUWVUUVVWUWU&quot;..., 
+    uc=0x92922f8 &quot;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&quot;, '&#65533;' &lt;repeats 73 times&gt;, &quot;&#65533;&#65533;&#65533;&#65533;&#65533;\234
+\235\237\236\237\237\237\237\237\236&#65533;\237&#65533;\237\237\237\235\232\227\230
+\230\230\232unnnno}\232\237\236&quot;, '\237' &lt;repeats 33 times&gt;, &quot;\236\236&#65533;
+\237&#65533;\237\236&#65533;\235\236\237\237\237\237\237&#65533;\237\237\237\237\237\237\237
+\237&#65533;\236\235&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&#65533;&quot;..., 
+    vc=0x92aeb38 &quot;OPPPPOOOG97&quot;, '8' &lt;repeats 62 times&gt;, &quot;7&quot;, '8'
+&lt;repeats 15 times&gt;, &quot;7979Dmrononpoooooooonopb]`_l\210\220\217\220\216
+\216\205rn&quot;, 'o' &lt;repeats 37 times&gt;, &quot;npooopoon&quot;, 'o' &lt;repeats 13
+times&gt;, &quot;npc4-../.......&quot;..., 
+    pixel=720) at utils.c:119
+#1  0x0063eb77 in yv12_to_yuy2_il_mmx2 (
+    py=0xa9365030 &quot;\017\020\020\021\021\020\021\020\020\021\020\020\020
+\020\020\021\021\017\020\022\017\016\021\020\020\021\020\020\020\020\021
+\020\020\020\020\020\020\020\020\020\020\021\020\020\020\020\021\020\020
+\021\020\021\021\020\020\020\020\021\020\021\020\020\021&quot;, '\020'
+&lt;repeats 12 times&gt;, &quot;\021\021\020\020\021\021&quot;, '\020' &lt;repeats 21
+times&gt;, &quot;\021\021\021\020\020\020\020\020\017\021\021\020\020\020\021
+\020\021\020\020\020\020\020\020\020\017\020\021&quot;, '\020' &lt;repeats 15
+times&gt;, &quot;\017\017\017\017\017\017&quot;, '\020' &lt;repeats 21 times&gt;, &quot;\021\020
+\020\020\020\020\021\020\020\020\020\017\020\020\020\020\020\020\020\020
+\020\020\021\020\020\020\020\020\020&quot;..., 
+    pu=0x92811a8 &quot;\205\215\217\217\216\217\217\217\220\217\220\214&quot;,
+'\215' &lt;repeats 37 times&gt;, &quot;\216\215\215\214\214\210\210\207\210\210\211
+\210\207&quot;, '\210' &lt;repeats 77 times&gt;, &quot;\211\211&quot;, '\210' &lt;repeats 11
+times&gt;, &quot;\211\210\210\211\211\211\210\207\211\210\210\210\210\210\211
+\210\207\210\210\211\210\210\206\206\206\202\201\200\207\213\213\217\217
+\220\217\221\217\220\217\217\217\217\220\220\220\220\220\220&quot;..., 
+    pv=0x929d9e8 &quot;xnkllllmllmsvututtttu&quot;, 't' &lt;repeats 27 times&gt;,
+&quot;stutttrssrrrrrr&quot;, 's' &lt;repeats 83 times&gt;,
+&quot;rsrrtsrsttsrrrqrrrrsrrrsqrsrsrustrpqprqrrrpprqqqqqqpqq&quot;...,
+dst=0xb70efb80 &lt;Address 0xb70efb80 out of bounds&gt;, width=720, 
+    height=576, lumStride=768, chromStride=384, dstStride=1536) at
+utils.c:195
+#2  0x006443e5 in cDFBVideoOut::YUV (this=0x90640c0, buf=0x90641a0)
+    at video-dfb.c:1449
+#3  0x00640cbc in cVideoOut::DrawVideo_420pl (this=0x90640c0, 
+    syncTimer=0x9164be0, pic=0x90641a0) at video.c:488
+#4  0x0016875f in cVideoStreamDecoder::DecodePacket (this=0x9166140, 
+    pkt=0x91b64e4) at mpeg2decoder.c:931
+#5  0x001676b2 in cStreamDecoder::Action (this=0x9166140) at
+mpeg2decoder.c:199
+#6  0x0811067c in cThread::StartThread (Thread=0x9166140) at
+thread.c:255
+#7  0x0081045b in start_thread () from /lib/libpthread.so.0
+#8  0x0076823e in clone () from /lib/libc.so.6
+Current language:  auto; currently c++
+
+Thread 53 (Thread -1422742640 (LWP 9802)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x003fa8a4 in snd_pcm_wait_nocheck () from /lib/libasound.so.2
+#3  0x003faa8f in snd_pcm_wait () from /lib/libasound.so.2
+#4  0x0017bbd0 in cAlsaAudioOut::Write (this=0x90bdce8, Data=0x93624f8
+&quot;&quot;, 
+    Length=6144) at audio-alsa.c:125
+#5  0x00167f94 in cAudioStreamDecoder::DecodePacket (this=0x91852d8, 
+    pkt=0x918e9bc) at mpeg2decoder.c:506
+#6  0x001676b2 in cStreamDecoder::Action (this=0x91852d8) at
+mpeg2decoder.c:199
+#7  0x0811067c in cThread::StartThread (Thread=0x91852d8) at
+thread.c:255
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 52 (Thread -1433486448 (LWP 9801)):
+#0  ff_combine_frame (pc=0x918914c, next=-5, buf=0xaa8eb290, 
+    buf_size=0xaa8eb294) at libavcodec/parser.c:279
+#1  0x00f45c87 in ff_aac_ac3_parse (s1=0x91b1620, avctx=0x91be610, 
+    poutbuf=0xaa8eb358, poutbuf_size=0xaa8eb35c, 
+    buf=0x94c9640 &quot;\vw\212{\0360C\177&#65533;\200\001&quot;, buf_size=-5)
+    at libavcodec/aac_ac3_parser.c:62
+#2  0x00c79d6e in av_parser_parse (s=0x91b1620, avctx=0x91be610, 
+    poutbuf=0xaa8eb358, poutbuf_size=0xaa8eb35c, 
+    buf=0x94c9640 &quot;\vw\212{\0360C\177&#65533;\200\001&quot;, buf_size=1792, 
+    pts=4317394411, dts=4317394411) at libavcodec/parser.c:136
+#3  0x00206473 in av_read_frame_internal (s=0x91561a0, pkt=0xaa8eb348)
+    at libavformat/utils.c:798
+#4  0x0016b1b5 in cMpeg2Decoder::Action (this=0x90d2698) at
+mpeg2decoder.c:1176
+#5  0x0811067c in cThread::StartThread (Thread=0x90d2698) at
+thread.c:255
+#6  0x0081045b in start_thread () from /lib/libpthread.so.0
+#7  0x0076823e in clone () from /lib/libc.so.6
+Current language:  auto; currently c
+
+Thread 46 (Thread -1399776368 (LWP 9794)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110eea in cCondWait::Wait (this=0x91c02b4, TimeoutMs=1000)
+    at thread.c:69
+#3  0x080a9ce0 in cNonBlockingFileReader::Action (this=0x91c0270)
+    at dvbplayer.c:170
+#4  0x0811067c in cThread::StartThread (Thread=0x91c0270) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 45 (Thread -1443976304 (LWP 9793)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x0017222c in cSigTimer::Sleep (this=0x90d273c, timeoutUS=50000, 
+    lowLimitUS=0) at sync-timer.c:75
+#3  0x00167c99 in cMpeg2Decoder::Decode (this=0x90d2698, 
+    Data=0x96a0273 &quot;\206\215\r&lt;&#65533;\200\036&#65533;\236\221\r\026\224l\030\204m
+\233v&#65533;&#65533;\233!&#65533;&#65533;i\230&quot;, Length=2048) at mpeg2decoder.c:1708
+#4  0x00160cdb in cSoftDevice::PlayVideo (this=0x9061e20, Data=0x969fdd6
+&quot;&quot;, 
+    Length=2048) at softdevice.c:657
+#5  0x080a0316 in cDevice::PlayPesPacket (this=0x9061e20, Data=0x969fdd6
+&quot;&quot;, 
+    Length=2048, VideoOnly=false) at device.c:1251
+#6  0x080a0c8b in cDevice::PlayPes (this=0x9061e20, Data=0x969b3c0 &quot;&quot;, 
+    Length=38553, VideoOnly=false) at device.c:1371
+#7  0x080aa0ad in cDvbPlayer::Action (this=0x927f3b8) at dvbplayer.c:537
+#8  0x0811067c in cThread::StartThread (Thread=0x927f3c4) at
+thread.c:255
+#9  0x0081045b in start_thread () from /lib/libpthread.so.0
+#10 0x0076823e in clone () from /lib/libc.so.6
+
+Thread 43 (Thread -1366193264 (LWP 9791)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110e4e in cCondVar::TimedWait (this=0x91668a8,
+Mutex=@0x916688c, 
+    TimeoutMs=500) at thread.c:125
+#3  0x0062bbf8 in cTtxtSubsDisplayer::Action (this=0x9166858)
+    at ttxtsubsdisplayer.c:56
+#4  0x0811067c in cThread::StartThread (Thread=0x9166858) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 31 (Thread 28310416 (LWP 9707)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110e4e in cCondVar::TimedWait (this=0x90583d8,
+Mutex=@0x905838c, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x080a6ad5 in cDvbTuner::Action (this=0x9057ec8) at dvbdevice.c:345
+#4  0x0811067c in cThread::StartThread (Thread=0x9057ec8) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 30 (Thread 79813520 (LWP 9708)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x080f6b3d in cSectionHandler::Action (this=0x8f61260) at
+sections.c:184
+#3  0x0811067c in cThread::StartThread (Thread=0x8f61260) at
+thread.c:255
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 29 (Thread 133168016 (LWP 9710)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110e4e in cCondVar::TimedWait (this=0x8f5dd28,
+Mutex=@0x8f5dcdc, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x080a6ad5 in cDvbTuner::Action (this=0x8f5d818) at dvbdevice.c:345
+#4  0x0811067c in cThread::StartThread (Thread=0x8f5d818) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 28 (Thread 99265424 (LWP 9711)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x080f6b3d in cSectionHandler::Action (this=0x8f5dd78) at
+sections.c:184
+#3  0x0811067c in cThread::StartThread (Thread=0x8f5dd78) at
+thread.c:255
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 27 (Thread 62057360 (LWP 9716)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00814256 in pthread_cond_wait@@GLIBC_2.3.2 ()
+from /lib/libpthread.so.0
+#2  0x00991594 in vt_thread ()
+   from /usr/local/lib/directfb-0.9.26/systems/libdirectfb_fbdev.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 26 (Thread 109755280 (LWP 9717)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0099cdd4 in ps2mouseEventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_ps2mouse.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 25 (Thread 120245136 (LWP 9718)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085c3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 24 (Thread 146217872 (LWP 9719)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085c3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 23 (Thread -1227261040 (LWP 9720)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085c3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 22 (Thread -1237750896 (LWP 9721)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085c3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 21 (Thread -1248240752 (LWP 9722)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x0085c3ac in linux_input_EventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_linux_input.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 20 (Thread -1258730608 (LWP 9723)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00816e1b in read () from /lib/libpthread.so.0
+#2  0x00850ba7 in keyboardEventThread ()
+
+from /usr/local/lib/directfb-0.9.26/inputdrivers/libdirectfb_keyboard.so
+#3  0x006761b3 in direct_thread_main ()
+from /usr/local/lib/libdirect-0.9.so.26
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 19 (Thread -1269220464 (LWP 9724)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x00640eba in cVideoOut::Action (this=0x90640c0) at video.c:114
+#4  0x0811067c in cThread::StartThread (Thread=0x906451c) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 18 (Thread -1279919216 (LWP 9725)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00728976 in nanosleep () from /lib/libc.so.6
+#2  0x007618dc in usleep () from /lib/libc.so.6
+#3  0x0036c2db in cWapServer::Action ()
+from ./PLUGINS/lib/libvdr-wapd.so.1.6.0
+#4  0x0811067c in cThread::StartThread (Thread=0x90dc338) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 17 (Thread -1290409072 (LWP 9726)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x005b83a2 in cTBSelect::Select ()
+   from ./PLUGINS/lib/libvdr-streamdev-server.so.1.6.0
+#3  0x005a0b4e in cStreamdevServer::Action ()
+   from ./PLUGINS/lib/libvdr-streamdev-server.so.1.6.0
+#4  0x0811067c in cThread::StartThread (Thread=0x90d2198) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 16 (Thread -1300898928 (LWP 9727)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110e4e in cCondVar::TimedWait (this=0x90be25c,
+Mutex=@0x90be240, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x04094bb7 in vdr_burn::manager::Action ()
+   from ./PLUGINS/lib/libvdr-burn.so.1.6.0
+#4  0x0811067c in cThread::StartThread (Thread=0x90be210) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 15 (Thread -1311388784 (LWP 9728)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0081625e in <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">sem_wait at GLIBC_2.0</A> () from /lib/libpthread.so.0
+#2  0x0062854e in cPluginTtxtsubs::Action (this=0x8ef32b0) at
+ttxtsubs.c:377
+#3  0x0811067c in cThread::StartThread (Thread=0x8ef32cc) at
+thread.c:255
+#4  0x0081045b in start_thread () from /lib/libpthread.so.0
+#5  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 14 (Thread -1321878640 (LWP 9729)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110eea in cCondWait::Wait (this=0xb135b0a4, TimeoutMs=1000)
+    at thread.c:69
+#3  0x081110a0 in cCondWait::SleepMs (TimeoutMs=1000) at thread.c:58
+#4  0x030a2f8d in sleepMSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#5  0x030a2fc1 in sleepSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#6  0x030edf35 in cSearchTimerThread::Action ()
+   from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#7  0x0811067c in cThread::StartThread (Thread=0x90f9ef0) at
+thread.c:255
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 13 (Thread -1332368496 (LWP 9730)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110eea in cCondWait::Wait (this=0xb095a264, TimeoutMs=1000)
+    at thread.c:69
+#3  0x081110a0 in cCondWait::SleepMs (TimeoutMs=1000) at thread.c:58
+#4  0x030a2f8d in sleepMSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#5  0x030a2fc1 in sleepSec ()
+from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#6  0x0307ec57 in cConflictCheckThread::Action ()
+   from ./PLUGINS/lib/libvdr-epgsearch.so.1.6.0
+#7  0x0811067c in cThread::StartThread (Thread=0x90f9eb0) at
+thread.c:255
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 12 (Thread -1342858352 (LWP 9731)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x00761041 in select () from /lib/libc.so.6
+#2  0x08115935 in cFile::FileReady (FileDes=21, TimeoutMs=-1) at
+tools.c:1378
+#3  0x080bd129 in cLircRemote::Action (this=0x90fa1d0) at lirc.c:88
+#4  0x0811067c in cThread::StartThread (Thread=0x90fa1e0) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 11 (Thread -1353348208 (LWP 9732)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x08115bda in cPoller::Poll (this=0x1, TimeoutMs=50) at tools.c:1202
+#3  0x080edcc8 in cKbdRemote::ReadKey (this=0x90ff038) at remote.c:296
+#4  0x080edd6e in cKbdRemote::ReadKeySequence (this=0x90ff038) at
+remote.c:312
+#5  0x080ee43e in cKbdRemote::Action (this=0x90ff038) at remote.c:353
+#6  0x0811067c in cThread::StartThread (Thread=0x90ff048) at
+thread.c:255
+#7  0x0081045b in start_thread () from /lib/libpthread.so.0
+#8  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 9 (Thread -1376695408 (LWP 9734)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110eea in cCondWait::Wait (this=0x9123ab8, TimeoutMs=100)
+    at thread.c:69
+#3  0x080f4a64 in cRingBuffer::WaitForGet (this=0x9123a68) at
+ringbuffer.c:64
+#4  0x080f54eb in cRingBufferLinear::Get (this=0x9123a68,
+Count=@0xadf14300)
+    at ringbuffer.c:311
+#5  0x0809dd59 in cTSBuffer::Get (this=0x9123a20) at device.c:1614
+#6  0x080a28fd in cDvbDevice::GetTSPacket (this=0x9056d30,
+Data=@0xadf14378)
+    at dvbdevice.c:1205
+#7  0x080a1010 in cDevice::Action (this=0x9056d30) at device.c:1419
+#8  0x0811067c in cThread::StartThread (Thread=0x9056d30) at
+thread.c:255
+#9  0x0081045b in start_thread () from /lib/libpthread.so.0
+#10 0x0076823e in clone () from /lib/libc.so.6
+
+Thread 8 (Thread -1389286512 (LWP 9735)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x0075e643 in poll () from /lib/libc.so.6
+#2  0x08115bda in cPoller::Poll (this=0x1, TimeoutMs=100) at
+tools.c:1202
+#3  0x080a0754 in cTSBuffer::Action (this=0x9123a20) at device.c:1591
+#4  0x0811067c in cThread::StartThread (Thread=0x9123a20) at
+thread.c:255
+#5  0x0081045b in start_thread () from /lib/libpthread.so.0
+#6  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 3 (Thread -1461585008 (LWP 9741)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110eea in cCondWait::Wait (this=0x919d170, TimeoutMs=100)
+    at thread.c:69
+#3  0x080f4a64 in cRingBuffer::WaitForGet (this=0x919d120) at
+ringbuffer.c:64
+#4  0x080f54eb in cRingBufferLinear::Get (this=0x919d120,
+Count=@0xa8e1f334)
+    at ringbuffer.c:311
+#5  0x080efb7a in cRemux::Get (this=0x919b4d0, Count=@0xa8e1f378, 
+    PictureType=0x919b638 &quot;&quot;) at remux.c:2823
+#6  0x080e76b5 in cFileWriter::Action (this=0x919b5f8) at recorder.c:106
+#7  0x0811067c in cThread::StartThread (Thread=0x919b5f8) at
+thread.c:255
+#8  0x0081045b in start_thread () from /lib/libpthread.so.0
+#9  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 2 (Thread -1472074864 (LWP 9742)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110eea in cCondWait::Wait (this=0x918e7c0, TimeoutMs=100)
+    at thread.c:69
+#3  0x080f4a64 in cRingBuffer::WaitForGet (this=0x918e770) at
+ringbuffer.c:64
+#4  0x080f54eb in cRingBufferLinear::Get (this=0x918e770,
+Count=@0xa841e380)
+    at ringbuffer.c:311
+#5  0x080e780e in cRecorder::Action (this=0x90d31c0) at recorder.c:189
+#6  0x0811067c in cThread::StartThread (Thread=0x90d32e4) at
+thread.c:255
+#7  0x0081045b in start_thread () from /lib/libpthread.so.0
+#8  0x0076823e in clone () from /lib/libc.so.6
+
+Thread 1 (Thread -1208449328 (LWP 9703)):
+#0  0x00110402 in __kernel_vsyscall ()
+#1  0x008144dc in pthread_cond_timedwait@@GLIBC_2.3.2 ()
+   from /lib/libpthread.so.0
+#2  0x08110e4e in cCondVar::TimedWait (this=0x816c740,
+Mutex=@0x816c718, 
+    TimeoutMs=1000) at thread.c:125
+#3  0x080edf20 in cRemote::Get (WaitMs=1000, UnknownCode=0x0) at
+remote.c:191
+#4  0x0811bfdf in main (argc=Cannot access memory at address 0x0
+) at vdr.c:907
+279	        pc-&gt;state = (pc-&gt;state&lt;&lt;8) | pc-&gt;buffer[pc-&gt;last_index +
+next];
+(gdb) 
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003085.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+	<LI>Next message: <A HREF="003086.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.5.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3084">[ date ]</a>
+              <a href="thread.html#3084">[ thread ]</a>
+              <a href="subject.html#3084">[ subject ]</a>
+              <a href="author.html#3084">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

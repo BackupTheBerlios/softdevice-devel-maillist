@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%20cle266%20HW%20decoding&In-Reply-To=%3C45B9F9D4.7000702%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002707.html">
+   <LINK REL="Next"  HREF="002709.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%20cle266%20HW%20decoding&In-Reply-To=%3C45B9F9D4.7000702%40globall.ru%3E"
+       TITLE="[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding">bob at globall.ru
+       </A><BR>
+    <I>Fri Jan 26 13:53:40 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002707.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+        <LI>Next message: <A HREF="002709.html">[Softdevice-devel] [PATCH] Adapt for shutdown rewrite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2700">[ date ]</a>
+              <a href="thread.html#2700">[ thread ]</a>
+              <a href="subject.html#2700">[ subject ]</a>
+              <a href="author.html#2700">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz &#1087;&#1080;&#1096;&#1077;&#1090;:
+
+&gt;<i>vdr-1.5.0 --video=/video --config=/home/vdr/vdrconf --lib=/home/vdr/plugins -P'softdevice -vo 
+</I>&gt;<i>dfb:viatv:cle266'
+</I>&gt;<i>[softdevice] processing args
+</I>&gt;<i>[softdevice]   argv [0] = softdevice
+</I>&gt;<i>[softdevice]   argv [1] = -vo
+</I>&gt;<i>vo_argv: dfb:viatv:cle266
+</I>&gt;<i>[softdevice] enabling field parity
+</I>&gt;<i>[softdevice] enabling CLE266 HW decoding
+</I>&gt;<i>[setup-softdevice] alsa ac3Mode set to: 0
+</I>&gt;<i>[setup-softdevice] alsa AC3 device set to: hw:0,1
+</I>&gt;<i>[setup-softdevice] alsa device set to: default
+</I>&gt;<i>[setup-softdevice] A/V Offset set to (0)
+</I>&gt;<i>[setup-softdevice] Cropping 0 lines from bottom
+</I>&gt;<i>[setup-softdevice] Cropping 0 columns from left
+</I>&gt;<i>[setup-softdevice] cropping mode set to 0 (none)
+</I>&gt;<i>[setup-softdevice] cropping mode toggle key set to 0 (none)
+</I>&gt;<i>[setup-softdevice] Cropping 0 columns from right
+</I>&gt;<i>[setup-softdevice] Cropping 0 lines from top
+</I>&gt;<i>[setup-softdevice] deinterlace method set to 0 none
+</I>&gt;<i>[setup-softdevice] mainMenu: 1
+</I>&gt;<i>[setup-softdevice] setting alpha blend mode to pseudo
+</I>&gt;<i>[softdevice] picture mirroring set to 0 (off)
+</I>&gt;<i>[setup-softdevice] pixel format set to (I420)
+</I>&gt;<i>[setup-softdevice] shouldSuspend to: 0
+</I>&gt;<i>[setup-softdevice] syncTimerMode: sig
+</I>&gt;<i>[softdevice] UseStretchBlitset to off
+</I>&gt;<i>[setup-softdevice] vidBrightness: 50
+</I>&gt;<i>[setup-softdevice] vidContrast: 50
+</I>&gt;<i>[setup-softdevice] vidHue: 50
+</I>&gt;<i>[setup-softdevice] vidSaturation: 50
+</I>&gt;<i>[setup-softdevice] startup aspect set to (4:3 normal)
+</I>&gt;<i>[softdevice] initializing Plugin
+</I>&gt;<i>[softdevice] Initializing Video Out
+</I>&gt;<i>[softdevice] ffmpeg build(3344640)
+</I>&gt;<i>[dfb] init
+</I>&gt;<i>
+</I>&gt;<i>     =======================|  DirectFB 1.0.0-rc3  |
+</I>&gt;<i>=======================
+</I>&gt;<i>          (c) 2001-2006  United Cultures of Earth - go for outer space!
+</I>&gt;<i>          (c) 2000-2004  Convergence (integrated media) GmbH
+</I>&gt;<i>        ----------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i>(*) DirectFB/Core: Single Application Core. (2007-01-26 10:52)
+</I>&gt;<i>(*) Direct/Modules: suppress module 'linux_input'
+</I>&gt;<i>(*) Direct/Modules: suppress module 'joystick'
+</I>&gt;<i>(*) Direct/Modules: suppress module 'lirc'
+</I>&gt;<i>(*) DirectFB/Genefx: MMX detected and enabled
+</I>&gt;<i>(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+</I>&gt;<i>(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+</I>&gt;<i>[dfb] RAM: 66842624 bytes
+</I>&gt;<i>[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine 
+</I>&gt;<i>FillTriangle Blit StretchBlit All
+</I>&gt;<i>[dfb] Drawing Flags: Blend Xor
+</I>&gt;<i>[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize 
+</I>&gt;<i>SrcColorkey DstColorkey Deinterlace
+</I>&gt;<i>[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A>
+</I>&gt;<i>[dfb] Enumerating display Layers
+</I>&gt;<i>[dfb] Configuring CooperativeLevel for OSD
+</I>&gt;<i>Layer 0 VIA CLE266 Graphics  Type: graphics
+</I>&gt;<i>  Caps: alphachannel brightness contrast opacity saturation src_colorkey 
+</I>&gt;<i>surface
+</I>&gt;<i>Layer 1 VIA Unichrome Video  Type: graphics picture video
+</I>&gt;<i>  Caps: deinterlacing dst_colorkey levels field_parity opacity 
+</I>&gt;<i>screen_location surface
+</I>&gt;<i>Initialising CLE266 decoder (/dev/fb0): success!
+</I>&gt;<i>CLE266: Creating buffers for decoder
+</I>&gt;<i>CLE266: Creating buffer number 0
+</I>&gt;<i>CLE266: Creating buffer number 1
+</I>&gt;<i>CLE266: Creating buffer number 2
+</I>&gt;<i>CLE266: Creating buffer number 3
+</I>&gt;<i>CLE266: passing mpegfb_stride
+</I>&gt;<i>CLE266: passing buffers to decoder
+</I>&gt;<i>[dfb] (osdLayer): flags, options, pixelformat: 0000000f, 00000000 00418c04
+</I>&gt;<i>[dfb] (osdLayer): width, height:               720 576
+</I>&gt;<i>[dfb] osdLayer has alpha channel
+</I>&gt;<i>[dfb] init 
+</I>&gt;<i>EXITING:action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), 
+</I>&gt;<i>result=Not supported!
+</I>&gt;<i> (!!!)  *** WARNING [Application exited without deinitialization of 
+</I>&gt;<i>DirectFB!] *** [../../../src/core/core.c:745 in dfb_core_deinit_check()]
+</I>&gt;<i>
+</I>&gt;<i>Which all looks OK until I get to the end!
+</I>&gt;<i>
+</I>&gt;:<i>-(
+</I>&gt;<i>
+</I>&gt;<i>Is there anything in DirectFB which has chagned drastically for the 
+</I>&gt;<i>Unichrome driver?
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>I get week ago same error with directfb-cvs.
+Today I update softdevice from cvs and saw that was some changes.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002707.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+	<LI>Next message: <A HREF="002709.html">[Softdevice-devel] [PATCH] Adapt for shutdown rewrite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2700">[ date ]</a>
+              <a href="thread.html#2700">[ thread ]</a>
+              <a href="subject.html#2700">[ subject ]</a>
+              <a href="author.html#2700">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

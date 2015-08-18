@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20DirectFB%20downscaling%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20From%20todays%20changelog%29&In-Reply-To=%3C200604221111.57846.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001903.html">
+   <LINK REL="Next"  HREF="001892.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20DirectFB%20downscaling%20%28WAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20From%20todays%20changelog%29&In-Reply-To=%3C200604221111.57846.stefan%40lucke.in-berlin.de%3E"
+       TITLE="DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr 22 11:11:57 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001903.html">[Softdevice-devel] Next release ?
+</A></li>
+        <LI>Next message: <A HREF="001892.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1890">[ date ]</a>
+              <a href="thread.html#1890">[ thread ]</a>
+              <a href="subject.html#1890">[ subject ]</a>
+              <a href="author.html#1890">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 18 April 2006 02:14, Malcolm Caldwell wrote:
+&gt;<i> OK,
+</I>&gt;<i> 
+</I>&gt;<i> Since I am one of those not on the cvs list...
+</I>&gt;<i> 
+</I>&gt;<i> Has there been any work on the MGA TV non-field based StretchBlit bug?
+</I>No.
+&gt;<i> If not is anyone working on it?
+</I>No.
+
+I think your are referring to this thread on directfb-users:
+<A HREF="http://mail.directfb.org/pipermail/directfb-users/2005-October/000770.html">http://mail.directfb.org/pipermail/directfb-users/2005-October/000770.html</A>
+
+But before pushing that again on directfb lists, I have to test Ville's
+modifications he suggested in this thread (long time ago too):
+
+Or has anyone tried his patches from?
+<A HREF="http://mail.directfb.org/pipermail/directfb-dev/2005-October/000846.html">http://mail.directfb.org/pipermail/directfb-dev/2005-October/000846.html</A>
+
+There was low feedback on directfb-dev.
+
+&gt;<i> 
+</I>&gt;<i> This bug *severely* affects the effectiveness of softdevice for me.  I
+</I>&gt;<i> have a 4:3 TV.  This bug means:
+</I>&gt;<i>       * I have to view all my channels as centre cut instead of
+</I>&gt;<i>         letterboxed.  I would prefer not to loose the sides of every
+</I>&gt;<i>         programme I watch
+</I>
+&gt;<i>       * softplay's output is 'broken' (because hardly any material is at
+</I>&gt;<i>         a resolution the same as softdevices output)
+</I>
+That's the part I do not understand even though softplay is 
+Martin's baby. 
+
+&gt;<i>       * ntsc material is 'broken' (I know there are framerate problems
+</I>&gt;<i>         as well, but I can put up with the bad frame rate, but not the
+</I>&gt;<i>         wobbly pictures)
+</I>
+I guess you want PAL/NTSC recognition on the fly. This should be
+possible, even if we have to reinitialise directfb complete.
+
+(@Martin: In that case I need the videoInitialized variable allways,
+as state changes like: videoInitialized -&gt; !videoInitialized -&gt; videoInitialized)
+
+The only drawback is that directfb only can PAL and NTSC. PAL60 is to my 
+knowledge not possible. The difference is composite out. In NTSC mode
+you need a real NTSC device. Usually PAL TVs can do some sort
+of 60Hz mode (timing from NTSC, but color info on composite encoded
+as PAL).
+
+&gt;<i> 
+</I>&gt;<i> Basically, this bug means that MGA TV-Out softdevice is very limited.
+</I>
+Can agree to that. A few months ago when I recognized that issue,
+it was a nogo argument for me too [ switching my main TV to 
+softdevice :-( ]. It caused some frustration on me (ac3 solved but ..) .
+
+
+The most annoying thing and most difficult to resolve is to my opinion:
+16:9 downscaled on 4:3 TV.
+
+&gt;<i> 
+</I>&gt;<i> Now, I may get a chance to look at the code sometime, but I wanted to
+</I>&gt;<i> know if anyone is working on it at the moment.  (I have had a quick look
+</I>&gt;<i> and so far it is not obvious how the code works...)
+</I>&gt;<i> 
+</I>&gt;<i> On Fri, 2006-04-14 at 23:33 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; as there are only a few persons on cvs list (15 vs. 67)
+</I>&gt;<i> &gt; there is somthing new in cvs. Prehaps someone is interested in testing:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 2006-04-14:
+</I>&gt;<i> &gt;    - Expand top/bottom line and left/right coloumns (from vdr-portal).
+</I>&gt;<i> &gt;    - Zoom feature, zoomed area may be shifted around.
+</I>&gt;<i> &gt;    - yv12 -&gt; yuy2 converter for field based chroma.
+</I>&gt;<i> &gt;    - remember interlaced mode of current frame.
+</I>&gt;<i> &gt;    - some preparations for some more XvImage formats (not yet selectable).
+</I>&gt;<i> &gt;    - Restricted OSD alpha blend option to XV and VIDIX out.
+</I>&gt;<i> &gt;    - started some documentation of our various OSD options.
+</I>&gt;<i> &gt;    - applied patch for mono upmix from Lucian Muresan
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001903.html">[Softdevice-devel] Next release ?
+</A></li>
+	<LI>Next message: <A HREF="001892.html">DirectFB downscaling (WAS: Re: [Softdevice-devel] From todays changelog)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1890">[ date ]</a>
+              <a href="thread.html#1890">[ thread ]</a>
+              <a href="subject.html#1890">[ subject ]</a>
+              <a href="author.html#1890">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

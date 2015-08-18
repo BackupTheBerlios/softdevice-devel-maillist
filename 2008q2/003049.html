@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] VDR crashes after some minutes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VDR%20crashes%20after%20some%20minutes&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D0391A5012%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003048.html">
+   <LINK REL="Next"  HREF="003050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] VDR crashes after some minutes</H1>
+    <B>Neumann, Andre</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VDR%20crashes%20after%20some%20minutes&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D0391A5012%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] VDR crashes after some minutes">Neumann at do-net.de
+       </A><BR>
+    <I>Mon Apr  7 15:02:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003048.html">[Softdevice-devel] VDR crashes after some minutes
+</A></li>
+        <LI>Next message: <A HREF="003050.html">[Softdevice-devel] Problem with ac3 sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3049">[ date ]</a>
+              <a href="thread.html#3049">[ thread ]</a>
+              <a href="subject.html#3049">[ subject ]</a>
+              <a href="author.html#3049">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+No, my output device is a ati x300 card with directfb, i only have the
+lobcle266 installed.
+I will try to test without borderdetection. Strange is, that with
+vdr-1.4.7 everything works
+O.k. Only vdr-1.6.0 shows these errors.
+
+I will reply as soon as i test without border detection.
+
+-------------
+Andre Neumann
+
+On Saturday 29 March 2008, Neumann, Andre wrote:
+&gt;<i> Hi,
+</I>&gt;<i>  
+</I>&gt;<i> softdevice was running rock stable a long time in my system, but since
+</I>2 weeks or so vdr crashes always.
+&gt;<i> sometimes after 2 minutes, sometimes after 10 minutes. it happens when
+</I>watching live tv, watching recordings.
+&gt;<i>  
+</I>&gt;<i> this is the gdb output i made, maybe anyone can help me please.
+</I>&gt;<i>  
+</I>
+
+&gt;<i> Reading symbols from /usr/lib/libdfb++-1.0.so.0...done.
+</I>&gt;<i> Loaded symbols for /usr/lib/libdfb++-1.0.so.0 Reading symbols from 
+</I>&gt;<i> /usr/lib/libdirectfb-1.0.so.0...done.
+</I>&gt;<i> Loaded symbols for /usr/lib/libdirectfb-1.0.so.0 Reading symbols from 
+</I>&gt;<i> /usr/lib/libfusion-1.0.so.0...done.
+</I>&gt;<i> Loaded symbols for /usr/lib/libfusion-1.0.so.0 Reading symbols from 
+</I>&gt;<i> /usr/lib/libdirect-1.0.so.0...done.
+</I>&gt;<i> Loaded symbols for /usr/lib/libdirect-1.0.so.0 Reading symbols from 
+</I>&gt;<i> /usr/lib/libcle266mpegdec-0.5.so...done.
+</I>&gt;<i> Loaded symbols for /usr/lib/libcle266mpegdec-0.5.so
+</I>
+Is VIA-unichrome (hardware decoding via libcle266) your primary output
+device ?
+
+&gt;<i> Reading symbols from /usr/lib/libvidix.so.1.0.0...done.
+</I>&gt;<i> Loaded symbols for /usr/lib/libvidix.so.1.0.0 Reading symbols from 
+</I>&gt;<i> /usr/lib/libvdr-streamdev-server.so.1.6.0...done.
+</I>&gt;<i> Loaded symbols for /usr/lib/libvdr-streamdev-server.so.1.6.0
+</I>&gt;<i> #0  0x40250701 in kill () from /lib/i686/libc.so.6
+</I>&gt;<i> (gdb) bt
+</I>&gt;<i> #0  0x40250701 in kill () from /lib/i686/libc.so.6
+</I>&gt;<i> #1  0x4004b351 in pthread_kill () from /lib/i686/libpthread.so.0
+</I>
+My guess here: This is from followup errors, as DirectFB itself has
+caught the primary error (signal 11).
+
+&gt;<i> 
+</I>&gt;<i> the crash looks like this:
+</I>&gt;<i>  
+</I>&gt;<i> new Aspect detected 1,777778 (1,864078) / ep 82, lim 72, cb 72 
+</I>&gt;<i> 10:25:23.0270 D [2723] [dfb] (re)configuring Videolayer to 720 x 432 
+</I>&gt;<i> (720x432) 10:25:23.0270 D [2723] [dfb] surface capabilities for 
+</I>&gt;<i> (videoSurface): videoonly, double-buffered, flipping, PixelFormat = 
+</I>&gt;<i> 0x08100609 10:25:23.0270 D [2723] [dfb] (re)configured 0x08100609
+</I>&gt;<i> 10:25:26.0227 D [2727] [VideoOut] reset: sync info: repF = 312, drpF =
+</I>
+&gt;<i> 0, totF = 314 allocating buffer format orig-&gt;format 0
+</I>&gt;<i> 10:25:26.0323 D [2728] [dfb] (re)configuring Videolayer to 720 x 576 
+</I>&gt;<i> (720x576)
+</I>&gt;<i> 10:25:26.0323 D [2728] [dfb] surface capabilities for (videoSurface): 
+</I>&gt;<i> videoonly, double-buffered, flipping, PixelFormat = 0x08100609
+</I>&gt;<i> 10:25:26.0323 D [2728] [dfb] (re)configured 0x08100609
+</I>&gt;<i> 10:25:30.0476 D [2728] [VideoOut] video now synced (90 - -322) new 
+</I>&gt;<i> Aspect detected 1,777778 (1,855073) / ep 81, lim 72, cb 72
+</I>&gt;<i> 10:26:14.0378 D [2728] [dfb] (re)configuring Videolayer to 720 x 432 
+</I>&gt;<i> (720x432)
+</I>&gt;<i> 10:26:14.0379 D [2728] [dfb] surface capabilities for (videoSurface): 
+</I>&gt;<i> videoonly, double-buffered, flipping, PixelFormat = 0x08100609
+</I>&gt;<i> 10:26:14.0379 D [2728] [dfb] (re)configured 0x08100609
+</I>&gt;<i> (!) [ 2679:    0.000] --&gt; Caught signal 11 (at 0x8, invalid address)
+</I>&lt;--
+
+This is the real fault.
+Can you try to disable blackborder detection to circumvent the segfault
+?
+
+&gt;<i>  (!!!)  *** WARNING [still objects in 'Layer Region Pool'] *** 
+</I>&gt;<i> [object.c:231 in fusion_object_pool_destroy()]
+</I>&gt;<i>  (!!!)  *** WARNING [still objects in 'Layer Context Pool'] *** 
+</I>&gt;<i> [object.c:231 in fusion_object_pool_destroy()]
+</I>&gt;<i>  (!!!)  *** WARNING [still objects in 'Surface Pool'] *** 
+</I>&gt;<i> [object.c:231 in fusion_object_pool_destroy()]
+</I>&gt;<i> 10:27:32.0242 E [2728] [dfb] YUV:
+</I>action=IDirectFBSurface::Lock(DFBSurfaceLockFlags, void**, int*),
+result=Resource was destroyed!
+
+These are followup errors.
+
+
+
+--
+Stefan Lucke
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003048.html">[Softdevice-devel] VDR crashes after some minutes
+</A></li>
+	<LI>Next message: <A HREF="003050.html">[Softdevice-devel] Problem with ac3 sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3049">[ date ]</a>
+              <a href="thread.html#3049">[ thread ]</a>
+              <a href="subject.html#3049">[ subject ]</a>
+              <a href="author.html#3049">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

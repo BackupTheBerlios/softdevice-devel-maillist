@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb vs. dfb:mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20vs.%20dfb%3Amgatv&In-Reply-To=%3C20060908192553.GB3224%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002411.html">
+   <LINK REL="Next"  HREF="002413.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb vs. dfb:mgatv</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb%20vs.%20dfb%3Amgatv&In-Reply-To=%3C20060908192553.GB3224%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] dfb vs. dfb:mgatv">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Sep  8 21:25:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002411.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+        <LI>Next message: <A HREF="002413.html">[Softdevice-devel] nvidia OSD patches
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2404">[ date ]</a>
+              <a href="thread.html#2404">[ thread ]</a>
+              <a href="subject.html#2404">[ subject ]</a>
+              <a href="author.html#2404">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I measured the impact of yv12_to_yuy2_il_mmx2() by running
+OProfile for 30 seconds and playing a certain recording.
+
+My usleep() patch was applied.  To disable yv12_to_yuy2_il_mmx2(),
+I replaced the condition
+
+      if (pixelformat == DSPF_I420 || pixelformat == DSPF_YV12)
+
+in cDFBVideoOut::YUV() with
+
+      if (1)
+
+so that fast_memcpy() would be used instead.  Here are the highlights:
+
+CPU: PIII, speed 906.765 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (clocks processor is not halted) with a unit mask of 0x00 (No unit mask) count 90000
+samples  %        symbol name
+53030    32.7959  yv12_to_yuy2_il_mmx2_line(...)
+13263     8.2024  mpeg_decode_mb
+10962     6.7793  ff_mpa_synth_filter
+9032      5.5858  put_pixels16_xy2_mmx
+8593      5.3143  put_pixels8_mmx
+8041      4.9729  ff_simple_idct_add_mmx
+7233      4.4732  put_pixels16_mmx
+3945      2.4397  MPV_decode_mb
+3606      2.2301  MPV_motion
+
+CPU: PIII, speed 906.765 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (clocks processor is not halted) with a unit mask of 0x00 (No unit mask) count 90000
+samples  %        symbol name
+28314    20.3541  fast_memcpy(void*, void const*, unsigned int)
+14103    10.1382  mpeg_decode_mb
+11570     8.3173  ff_mpa_synth_filter
+9119      6.5554  put_pixels16_xy2_mmx
+8567      6.1586  put_pixels8_mmx
+7992      5.7452  ff_simple_idct_add_mmx
+7796      5.6043  put_pixels16_mmx
+4008      2.8812  MPV_decode_mb
+3903      2.8058  MPV_motion
+
+Above, you can see that fast_memcpy() results in 28314 samples
+while yv12_to_yuy2_il_mmx2_line() results in 53030 samples,
+almost twice the execution time of fast_memcpy().  The sample
+counts of the other top functions are comparable.  The variance
+is less than 10%.
+
+I consider this a good result.  Furthermore, given that the CPU
+is 50% idle according to &quot;top&quot;, reducing 10% of the CPU usage of
+softdevice would reduce the total CPU usage by only 5%.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002411.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+	<LI>Next message: <A HREF="002413.html">[Softdevice-devel] nvidia OSD patches
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2404">[ date ]</a>
+              <a href="thread.html#2404">[ thread ]</a>
+              <a href="subject.html#2404">[ subject ]</a>
+              <a href="author.html#2404">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

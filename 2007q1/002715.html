@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Fiso-8859-1%3Fq%3F%3D5BPATCH%3D5D_Pause_the_playback_%3F%3D%0A%09%3D%3Fiso-8859-1%3Fq%3Fof%3D09recordings%3D09when_suspended%3F%3D&In-Reply-To=%3C200702100050.32874.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002714.html">
+   <LINK REL="Next"  HREF="002716.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%0A%09%3D%3Fiso-8859-1%3Fq%3F%3D5BPATCH%3D5D_Pause_the_playback_%3F%3D%0A%09%3D%3Fiso-8859-1%3Fq%3Fof%3D09recordings%3D09when_suspended%3F%3D&In-Reply-To=%3C200702100050.32874.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] Pause the playback of	recordings	when suspended">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Feb 10 00:50:32 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002714.html">[Softdevice-devel] [PATCH] Pause the playback	of	recordings	when suspended
+</A></li>
+        <LI>Next message: <A HREF="002716.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2715">[ date ]</a>
+              <a href="thread.html#2715">[ thread ]</a>
+              <a href="subject.html#2715">[ subject ]</a>
+              <a href="author.html#2715">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 09 February 2007 21:03, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Thu, Feb 08, 2007 at 10:26:00AM +0200, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Thu, Feb 08, 2007 at 08:50:00AM +0100, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; Transferring() was introduced in vdr-1.3.42. So this needs an extra #if
+</I>&gt;<i> &gt; &gt; # if VDRVERSNUM &gt;= 10342
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Looking at the implementation of Transferring() in device.c I'm just
+</I>&gt;<i> &gt; &gt; wondering of the difference compared to Replaying() 
+</I>&gt;<i> &gt; &gt; !Transferring() == true -&gt; no player (player == NULL) or
+</I>&gt;<i> &gt; &gt; player is not derived from cTransfer.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; device.c around line 948:
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; bool cDevice::Replaying(void) const
+</I>&gt;<i> &gt; &gt; {
+</I>&gt;<i> &gt; &gt;   return player != NULL;
+</I>&gt;<i> &gt; &gt; }
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; bool cDevice::Transferring(void) const
+</I>&gt;<i> &gt; &gt; {
+</I>&gt;<i> &gt; &gt;   return dynamic_cast&lt;cTransfer *&gt;(player) != NULL;
+</I>&gt;<i> &gt; &gt; }
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; It seems to me that Replaying() would always return true when called
+</I>&gt;<i> &gt; from cSoftDevice::PlayVideo() or PlayAudio().  I would guess that
+</I>&gt;<i> &gt; player != NULL when playing a recording or a live stream.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Are you suggesting that we should replace Transferring()
+</I>&gt;<i> &gt; with dynamic_cast&lt;cTransfer*&gt;(player) to avoid the VDRVERSNUM check?
+</I>&gt;<i> 
+</I>&gt;<i> Hmm, the dynamic_cast won't work, because player is a private member of
+</I>&gt;<i> cDevice.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; There is another method that could possibly be used, something like
+</I>&gt;<i> &gt; cPlayerControl::NowReplaying().  I don't have the source tree at hand
+</I>&gt;<i> &gt; right now, but I can check it tonight.
+</I>&gt;<i> 
+</I>&gt;<i> cReplayControl::NowReplaying() looks efficient: a static method that
+</I>&gt;<i> references two static variables.  I tried replacing !Transferring()
+</I>&gt;<i> with cReplayControl::NowReplaying(), and it works.
+</I>
+NowReplaying() is even newer than Transferring(), appeared is 1.4.4 ;-) .
+
+&gt;<i> 
+</I>&gt;<i> Conclusion: use !Transferring() with an appropriate VDRVERSNUM check.
+</I>
+Yes.
+
+&gt;<i> Or does softdevice need to support the old development version of vdr?
+</I>
+Yes.
+
+&gt;<i> The stable 1.4 series has been around for a while now.
+</I>
+softdevice-0.3.1 last release, had support for vdr.1.2.x .
+We should support some older versions.
+
+I know we have to make a new release. But I'm still busy on tv-out
+sync issue., will soon commit some logging helper functions.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002714.html">[Softdevice-devel] [PATCH] Pause the playback	of	recordings	when suspended
+</A></li>
+	<LI>Next message: <A HREF="002716.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2715">[ date ]</a>
+              <a href="thread.html#2715">[ thread ]</a>
+              <a href="subject.html#2715">[ subject ]</a>
+              <a href="author.html#2715">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

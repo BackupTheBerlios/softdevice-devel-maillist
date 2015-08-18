@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20VIA%20epia%20framerate%20WaitForSync%28%29&In-Reply-To=%3C43452E13.8030701%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001305.html">
+   <LINK REL="Next"  HREF="001308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20VIA%20epia%20framerate%20WaitForSync%28%29&In-Reply-To=%3C43452E13.8030701%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu Oct  6 16:00:51 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001305.html">[Softdevice-devel] Re: DFB with Matrox G450 cable?
+</A></li>
+        <LI>Next message: <A HREF="001308.html">[Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1307">[ date ]</a>
+              <a href="thread.html#1307">[ thread ]</a>
+              <a href="subject.html#1307">[ subject ]</a>
+              <a href="author.html#1307">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> On Donnerstag, 29. September 2005 22:05, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>On Donnerstag, 29. September 2005 12:25, Mark Adams wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>for A/V-sync I'm measuring the frame rate of current screen with
+</I>&gt;&gt;&gt;&gt;<i>two WaitForSync() calls. for VIA unichrome I get some strange result:
+</I>&gt;&gt;&gt;&gt;<i>A/V sync seems to be OK (no frames dropped) when time is set hardcoded.
+</I>&gt;&gt;&gt;&gt;<i>Without that I'll get:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>[dfb] Display frame time is 99949 microseconds
+</I>&gt;&gt;&gt;&gt;<i>[dfb] Display frame time is 99950 microseconds
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>OK, I think I know what's happening there.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Which framebuffer driver are you using?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>The 'patcher2k' version of viafb (and possibly other versions too) has
+</I>&gt;&gt;&gt;<i>a bug in it.  The vblank interrupt is enabled and a handler installed
+</I>&gt;&gt;&gt;<i>but the interrupt then gets disabled again when the video mode is set
+</I>&gt;&gt;&gt;<i>up.  Thus the driver gets no interrupts at all.  The 0.1 second
+</I>&gt;&gt;&gt;<i>interval you are seeing is the wait timeout that's there to prevent a
+</I>&gt;&gt;&gt;<i>complete hang in the event that the interrupt never arrives.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>If you look at one of the earlier unichrome threads, you'll find a
+</I>&gt;&gt;&gt;<i>patch for that version of viafb that I posted.  It should fix this
+</I>&gt;&gt;&gt;<i>problem (as well as providing improved tv-out capability and the
+</I>&gt;&gt;&gt;<i>option of frame syncs).  If you only want to fix this bug, you should
+</I>&gt;&gt;&gt;<i>be able to find the appropriate part of the patch to apply but if not,
+</I>&gt;&gt;&gt;<i>get back to me and I'll post further details.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>If you are referring to Nicolas mail from 2005-09-06, 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i><A HREF="http://mail.directfb.org/pipermail/directfb-users/2005-September/000551.html">http://mail.directfb.org/pipermail/directfb-users/2005-September/000551.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>reenabling does not do the trick. My via_fbobj.c now has the the following
+</I>&gt;&gt;<i>diff compared to patcher2k.viafb_03.diff:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> That is/was reenabling interrupts at the wrong place :-) .
+</I>&gt;<i> This was in function VIAPostSetTV3Mode(). But I'm not using TV out,
+</I>&gt;<i> just VGA. I moved that to a place after VIAPostSetTV3Mode() gets called.
+</I>&gt;<i> 
+</I>&gt;<i> Now I get measured frame times of:
+</I>&gt;<i> [surface capabilities] videoSurface: videoonly double-buffered flipping
+</I>&gt;<i> [dfb] (re)configured 0x08100609
+</I>&gt;<i> [dfb] Display frame time is 16653 microseconds
+</I>&gt;<i> [dfb] Display frame time is 16657 microseconds
+</I>&gt;<i> [softdevice] Subplugin successfully opend
+</I>&gt;<i> 
+</I>&gt;<i> My diff against patcher2k patch is attached.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> --- via_fbobj.c.orig	2005-09-23 05:01:23.000000000 +0200
+</I>&gt;<i> +++ via_fbobj.c	2005-09-29 23:13:48.000000000 +0200
+</I>&gt;<i> @@ -427,6 +427,11 @@
+</I>&gt;<i>                  VIAPostSetTV3Mode(info,x,y,b);
+</I>&gt;<i>                  break;
+</I>&gt;<i>          }
+</I>&gt;<i> +
+</I>&gt;<i> +    /* must now re-enable vsync interrupt */
+</I>&gt;<i> +    outb(0x11, 0x3d4);
+</I>&gt;<i> +    outb(inb(0x3d5) | 0x30, 0x3d5);
+</I>&gt;<i> +
+</I>&gt;<i>      via_set_regs();
+</I>&gt;<i>      return 1;
+</I>&gt;<i>  }
+</I>&gt;<i> @@ -1019,6 +1024,8 @@
+</I>&gt;<i>      /* Turn on all Composite and S-Video output */
+</I>&gt;<i>      I2C_wdata(I2CPort, I2CAddrTV, 0x0E, 0);
+</I>&gt;<i>  
+</I>&gt;<i> +    /* Reset interrupt count (and hopefully get correct field parity) */
+</I>&gt;<i> +    par-&gt;irq_cnt = 0;
+</I>&gt;<i>  }
+</I>&gt;<i>  
+</I>&gt;<i>  void VIAPostSetTV3Mode(struct fb_info *info,int xres,int yres,int bpp)
+</I>
+I just applied the first part of the patch (since I don't mind about
+field parity), and I get the following result (0.1.3) :
+
+[dfb] Display frame time is 17668 microseconds
+
+(was something like 99950 us before the patch, and video was a
+succession of 1s fast-paced images and 1s still-image, like someone
+described on the ML recently)
+
+Since I output on PAL TV @ 50Hz, this timing seems odd (should be 20000
+us, isn't it ? not 17,668 ms / 56Hz) I'm not in front of the TV so I
+can't check image quality.
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at vdr</A>:~# fbset -i
+
+mode &quot;720x576-50&quot;
+    # D: 28.000 MHz, H: 31.250 kHz, V: 50.000 Hz
+    geometry 720 576 720 1152 32
+    timings 35714 32 8 46 0 136 3
+    rgba 8/16,8/8,8/0,8/24
+endmode
+
+Frame buffer device information:
+    Name        : UNICHROME
+    Address     : 0xe4000000
+    Size        : 33288192
+    Type        : PACKED PIXELS
+    Visual      : TRUECOLOR
+    XPanStep    : 0
+    YPanStep    : 1
+    YWrapStep   : 0
+    LineLength  : 2880
+    MMIO Address: 0xe8000000
+    MMIO Size   : 16777216
+    Accelerator : Unknown (77)
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001305.html">[Softdevice-devel] Re: DFB with Matrox G450 cable?
+</A></li>
+	<LI>Next message: <A HREF="001308.html">[Softdevice-devel] Re: [directfb-users] VIA epia framerate WaitForSync()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1307">[ date ]</a>
+              <a href="thread.html#1307">[ thread ]</a>
+              <a href="subject.html#1307">[ subject ]</a>
+              <a href="author.html#1307">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

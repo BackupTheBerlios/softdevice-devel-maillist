@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Sound crashes :(
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Sound%20crashes%20%3A%28&In-Reply-To=%3C4443EFB6.5090508%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001873.html">
+   <LINK REL="Next"  HREF="001877.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Sound crashes :(</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Sound%20crashes%20%3A%28&In-Reply-To=%3C4443EFB6.5090508%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Sound crashes :(">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Apr 17 21:42:46 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001873.html">[Softdevice-devel] Sound crashes :(
+</A></li>
+        <LI>Next message: <A HREF="001877.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1879">[ date ]</a>
+              <a href="thread.html#1879">[ thread ]</a>
+              <a href="subject.html#1879">[ subject ]</a>
+              <a href="author.html#1879">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The Fox schrieb:
+&gt;<i> My softdevice crashes on 44kHz channels, 48kHz channels is ok.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Console:
+</I>&gt;<i> _____________________________________________________________________________________________________
+</I>&gt;<i> 
+</I>&gt;<i> vdr: pcm_mmap.c:108: snd_pcm_mmap_write_areas: Assertion
+</I>&gt;<i> `snd_pcm_mmap_playback_avail(pcm) &gt;= size' failed.
+</I>&gt;<i> (!) [ 6088:    0.000] --&gt; Caught signal 6 (unknown origin) &lt;--
+</I>&gt;<i> (!) [ 6087:    0.145] --&gt; Caught signal 11 (at 0xb34145be, invalid
+</I>&gt;<i> address) &lt;--
+</I>&gt;<i> ./vdr.sh: line 11:  5469 Killed                  ./vdr -P&quot;softdevice -vo
+</I>&gt;<i> xv::&quot; -Pfemon -Ptext2skin -Pchannelscan -Pmp3 --shutdown=./stop.sh
+</I>&gt;<i> [<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at localhost</A> vdr-1.3.38]#
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> What to do ?
+</I>&gt;<i> 
+</I>Try upgrading your Alsa installation(what's your alsa version anyway?),
+to me this looks like a bug in Alsa. I also checked the alsa source in
+pcm_mmap.c, I don't see how a bug in the softdevice could cause that
+assertion failure.
+
+The softdevice always plays the audio in the same samplerate it receives
+the audio. If you use the default alsa device and your hardware can't
+playback the samplerate alsa should automatically resample the audio to
+a samplerate which is supported by your hardware. I guess that this
+somehow fails on your system.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001873.html">[Softdevice-devel] Sound crashes :(
+</A></li>
+	<LI>Next message: <A HREF="001877.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1879">[ date ]</a>
+              <a href="thread.html#1879">[ thread ]</a>
+              <a href="subject.html#1879">[ subject ]</a>
+              <a href="author.html#1879">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

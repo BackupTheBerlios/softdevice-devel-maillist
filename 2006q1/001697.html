@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Save%2010%25%20CPU%20by%20sleeping%20before%20IDirectFBSurface%3A%3AFlip%28%29&In-Reply-To=%3C1137743681.43d0974107f0c%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001696.html">
+   <LINK REL="Next"  HREF="001698.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Save%2010%25%20CPU%20by%20sleeping%20before%20IDirectFBSurface%3A%3AFlip%28%29&In-Reply-To=%3C1137743681.43d0974107f0c%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jan 20 08:54:41 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001696.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+        <LI>Next message: <A HREF="001698.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1697">[ date ]</a>
+              <a href="thread.html#1697">[ thread ]</a>
+              <a href="subject.html#1697">[ subject ]</a>
+              <a href="author.html#1697">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt;:
+
+&gt;<i> On Thu, Jan 19, 2006 at 06:25:15PM +0200, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; As expected, VGA(I420) was a little faster.  However, here we see an
+</I>&gt;<i> &gt; increase in libc processor usage:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;     71276 58.0925 libvdr-softdevice.so.1.3.37
+</I>&gt;<i> &gt;     23271 18.9667 vmlinux
+</I>&gt;<i> &gt;     13273 10.8180 libc-2.3.5.so
+</I>&gt;<i> &gt;      5016  4.0882 vdr
+</I>&gt;<i> &gt;      4296  3.5014 oprofiled
+</I>&gt;<i> &gt; ...
+</I>&gt;<i> &gt;        42  0.0342 libdirectfb_matrox.so
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any idea why there are so many samples in libc?  /lib/tls/libc-2.3.5.so
+</I>&gt;<i> &gt; lacks debugging symbols.  I guess I'll have to get a debug build of libc.
+</I>&gt;<i>
+</I>&gt;<i> I installed the Debian package libc6-dbg and set
+</I>&gt;<i> LD_LIBRARY_PATH=/usr/lib/debug for the vdr process, but could not
+</I>&gt;<i> reproduce this.  I was unable to reproduce this even with the default
+</I>&gt;<i> libc6.  The CPU usage of libc was only about 4 percent.
+</I>&gt;<i>
+</I>&gt;<i> &gt; samples  %        symbol name
+</I>&gt;<i> &gt; 14977    99.5282  matroxEngineSync
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any ideas why this is called on YUY2 but not on I420?
+</I>&gt;<i>
+</I>&gt;<i> First, this appeared to come from the OSD menu.  When viewing a program
+</I>&gt;<i> that has subtitles, there will be much OSD activity, like this:
+</I>&gt;<i>
+</I>&gt;<i> #0  0xb41a0d03 in matroxEngineSync ()
+</I>&gt;<i>    from /usr/local/lib/directfb-0.9.25/gfxdrivers/libdirectfb_matrox.so
+</I>&gt;<i> #1  0xb781f6d2 in dfb_gfxcard_sync () from /usr/local/lib/libdirectfb-0.9.so.25
+</I>&gt;<i> #2  0xb6f6bc51 in primaryFlipRegion ()
+</I>&gt;<i>    from /usr/local/lib/directfb-0.9.25/systems/libdirectfb_fbdev.so
+</I>&gt;<i> #3  0xb7829076 in dfb_layer_region_flip_update ()
+</I>&gt;<i>    from /usr/local/lib/libdirectfb-0.9.so.25
+</I>&gt;<i> #4  0xb77fe61f in IDirectFBSurface_Layer_Flip ()
+</I>&gt;<i>    from /usr/local/lib/libdirectfb-0.9.so.25
+</I>&gt;<i> #5  0xb7848da9 in IDirectFBSurface::Flip ()
+</I>&gt;<i>    from /usr/local/lib/libdfb++-0.9.so.25
+</I>&gt;<i> #6  0xb798d493 in cDFBVideoOut::CloseOSD (this=0xb6e02d68) at video-dfb.c:1198
+</I>&gt;<i> #7  0xb7987887 in ~cSoftOsd (this=0xb6e56188) at SoftOsd.c:66
+</I>&gt;<i> #8  0xb77cbe44 in SubtitlesViewer::Clear (this=0xb6e19bf0) at viewer.c:76
+</I>&gt;<i> #9  0xb77cc2cd in SubtitlesViewer::SetPage (this=0xb6e19bf0, page=0xb6e06170)
+</I>&gt;<i>     at viewer.c:97
+</I>&gt;<i> #10 0xb77ca6df in cSubtitlesReceiver::Action (this=0xb6e19ab0)
+</I>&gt;<i>     at receiver.c:112
+</I>&gt;<i> #11 0x080f6772 in cThread::StartThread (Thread=0xb6e19bc4) at thread.c:235
+</I>&gt;<i> #12 0xb7fabcfd in start_thread () from /lib/tls/libpthread.so.0
+</I>&gt;<i> #13 0xb7e2d13e in clone () from /lib/tls/libc.so.6
+</I>&gt;<i>
+</I>&gt;<i> I just switched to a channel that does not display DVB subtitles to see
+</I>&gt;<i> if the culprit really is the OSD, which would be displayed and hidden
+</I>&gt;<i> every few seconds when viewing subtitles.  There was not much difference,
+</I>&gt;<i> as cDFBVideoOut::YUV() is constantly invoking Flip().
+</I>&gt;<i>
+</I>&gt;<i> I see that there is an option for triple buffering, but apparently only
+</I>&gt;<i> for VGA.  Would it be possible to enable it for mgatv?  Could
+</I>&gt;<i> matroxEngineSync() yield the CPU to another thread?  (Is the stream being
+</I>&gt;<i> decoded in another thread?)  In DirectFB 0.9.23, which I'm using, it's
+</I>&gt;<i> just burning CPU:
+</I>&gt;<i>
+</I>&gt;<i>                :    2d30:       lea    0x1(%edx),%eax
+</I>&gt;<i>                :    2d33:       mov    %eax,0x1c(%esi)
+</I>&gt;<i>      1  0.0075 :    2d36:       mov    %eax,%edx
+</I>&gt;<i>                :    2d38:       mov    0x1e14(%edi),%eax
+</I>&gt;<i>  13280 99.0971 :    2d3e:       and    $0x30000,%eax
+</I>&gt;<i>      1  0.0075 :    2d43:       cmp    %eax,%ecx
+</I>&gt;<i>                :    2d45:       jne    2d30 &lt;matroxEngineSync+0x30&gt;
+</I>&gt;<i>
+</I>&gt;<i> Here's the corresponding source code from gfxdrivers/matrox/mmio.h,
+</I>&gt;<i> mga_waitidle():
+</I>&gt;<i>
+</I>&gt;<i>      while ((mga_in32(mdrv-&gt;mmio_base, STATUS) &amp; (DWGENGSTS | ENDPRDMASTS)) !=
+</I>&gt;<i>              mdev-&gt;idle_status) {
+</I>&gt;<i>           mdev-&gt;idle_waitcycles++;
+</I>&gt;<i>      }
+</I>
+There was a change posted by Ville on directfb-dev list in october.
+Thread title:
+
+Experimental matrox field parity/triple buffering improvement
+
+<A HREF="http://mail.directfb.org/pipermail/directfb-dev/2005-October/000851.html">http://mail.directfb.org/pipermail/directfb-dev/2005-October/000851.html</A>
+
+
+But I didn't tested this myself. Even feedback from others was low.
+
+Perhaps I should do some tests.
+
+&gt;<i>
+</I>&gt;<i> I updated DirectFB and DFB++ to CVS HEAD (this code hasn't changed there)
+</I>&gt;<i> and tried if caching the mmio_base and idle_status in registers and
+</I>&gt;<i> removing the idle_waitcycles counter makes any difference.  No:
+</I>&gt;<i>
+</I>&gt;<i>                :    2d10:       mov    (%edx),%eax
+</I>&gt;<i>  13413 99.2820 :    2d12:       and    $0x30000,%eax
+</I>&gt;<i>      1  0.0074 :    2d17:       cmp    %eax,%ecx
+</I>&gt;<i>                :    2d19:       jne    2d10 &lt;matroxEngineSync+0x20&gt;
+</I>&gt;<i>
+</I>&gt;<i> This loop is wasting 10% of all non-idle CPU (about 5% of total CPU)
+</I>&gt;<i> on my system when using the YUY2 output format.  Can't the chip generate
+</I>&gt;<i> an interrupt when it becomes idle?
+</I>&gt;<i>
+</I>&gt;<i> There do not appear to be any Flip() calls when using I420 VGA output.
+</I>&gt;<i>
+</I>&gt;<i> Here is a work-around: Sleep between the StretchBlit() and Flip() calls:
+</I>&gt;<i>
+</I>&gt;<i> diff -p -u -r1.45 video-dfb.c
+</I>&gt;<i> --- video-dfb.c 10 Jan 2006 19:40:25 -0000      1.45
+</I>&gt;<i> +++ video-dfb.c 19 Jan 2006 23:04:04 -0000
+</I>&gt;<i> @@ -1396,6 +1397,7 @@ void cDFBVideoOut::YUV(uint8_t *Py, uint
+</I>&gt;<i>  #endif
+</I>&gt;<i>
+</I>&gt;<i>        }
+</I>&gt;<i> +      usleep(2000);
+</I>&gt;<i>        //scrSurface-&gt;Flip(NULL, (setupStore-&gt;useMGAtv) ? DSFLIP_WAITFORSYNC:DSFLIP_ONSYNC);
+</I>&gt;<i>        scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC);
+</I>&gt;<i>
+</I>&gt;<i> A usleep(5000) reduced the CPU usage of libdirectfb_matrox.so from over
+</I>&gt;<i> 15000 to 83 samples.  usleep(1000) increased the number of samples
+</I>&gt;<i> to 109, with 14 samples in matroxEngineSync().  usleep(2000) resulted in
+</I>&gt;<i> 70 samples in libdirectfb_matrox.so, with 7 in matroxEngineSync().  Of
+</I>&gt;<i> course, I should have sampled longer than 20 seconds to get more accurate
+</I>&gt;<i> values.
+</I>&gt;<i>
+</I>&gt;<i> I don't know what the optimal parameter for the usleep might be.  I guess
+</I>&gt;<i> it depends on the value of HZ (which can be 100, 250, or 1000) and the
+</I>&gt;<i> video frame rate, as the granularity of usleep() is 1/HZ seconds.  For
+</I>&gt;<i> a 25 Hz frame rate (like mgatv), a frame takes 40 milliseconds.  At
+</I>&gt;<i> HZ=100 (on 2.4 kernels), the sleep granularity is 10 milliseconds, which
+</I>&gt;<i> might be too tight.  On VGA, it is even worse.  I guess that to be on the
+</I>&gt;<i> safe side, you should put usleep(1000) there.  It doesn't make so much
+</I>&gt;<i> difference if libdirectfb_matrox.so takes 0.1% or 0.06% of the CPU, but
+</I>&gt;<i> 10% (without any sleep) is definitely too much.
+</I>&gt;<i>
+</I>&gt;<i> Later, I might see if something similar can be done in
+</I>&gt;<i> cDFBVideoOut::OpenOSD(), cDFBVideoOut::RefreshOSD(),
+</I>&gt;<i> cDFBVideoOut::CloseOSD(), and cDFBVideoOut::ShowOSD().
+</I>&gt;<i> Any busy-waiting in RefreshOSD() might explain why audio and video frames
+</I>&gt;<i> are occasionally dropped while the menus are being browsed.
+</I>&gt;<i>
+</I>&gt;<i> 	Marko
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001696.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+	<LI>Next message: <A HREF="001698.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1697">[ date ]</a>
+              <a href="thread.html#1697">[ thread ]</a>
+              <a href="subject.html#1697">[ subject ]</a>
+              <a href="author.html#1697">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

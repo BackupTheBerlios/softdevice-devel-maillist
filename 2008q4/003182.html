@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14940] undefined symbol: avcodec_build
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314940%5D%20undefined%20symbol%3A%20avcodec_build&In-Reply-To=%3C200812182139.mBILdQGZ003158%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003181.html">
+   <LINK REL="Next"  HREF="003183.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14940] undefined symbol: avcodec_build</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314940%5D%20undefined%20symbol%3A%20avcodec_build&In-Reply-To=%3C200812182139.mBILdQGZ003158%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14940] undefined symbol: avcodec_build">admin at berlios.de
+       </A><BR>
+    <I>Thu Dec 18 22:39:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003181.html">[Softdevice-devel] [Bug #14940] undefined symbol: avcodec_build
+</A></li>
+        <LI>Next message: <A HREF="003183.html">[Softdevice-devel] [Bug #14940] undefined symbol: avcodec_build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3182">[ date ]</a>
+              <a href="thread.html#3182">[ thread ]</a>
+              <a href="subject.html#3182">[ subject ]</a>
+              <a href="author.html#3182">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #14940, was updated on 2008-Dec-18 15:28
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: None
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: erbse
+Assigned to : lucke
+Summary: undefined symbol: avcodec_build
+
+Details: Hallo,
+
+beim Start von vdr mit -psoftdevice -vo shm bekomme ich diese Fehlermeldung:
+
+vdr starten: vdr: /usr/local/vdr/lib/libvdr-softdevice.so.1.6.0: undefined symbol: avcodec_build
+
+FFmpeg und das Softdevice-Plugin habe ich jeweils aus der cvs gezogen (heute), bei ffmpeg bin ich nach der Anleitung aus dem VDR-Wiki (von der Softdevice-Seite) vorgegangen. Einziges Problem bei dieser Anleitung: bei ffmpeg geht &quot;make install-lib&quot; nicht, weil es anscheinend keine Regel daf&#252;r im Makefile gibt. softdevice hat aber ohne Fehlermeldung kompiliert.
+
+Gru&#223; 
+Erbse
+
+
+
+Follow-Ups:
+
+Date: 2008-Dec-18 22:39
+By: erbse
+
+Comment:
+Hi, thank you so much for replying so quickly. I eliminated all occurrencies of avcodec.h (I had thought I had deleted any former ffmpeg but indeed found one instance where I had not supected it) and eliminated an reincompiled ffmepg just to be sure.
+
+I also recompiled softdevice but nos on starting &quot;make&quot; I get the following error:
+
+-----------------
+
+make[1]: Entering directory `/root/vdr-1.6.0/PLUGINS/src/softdevice'
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include   utils.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include   i18n.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include   video.c
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual   -c -DHAVE_CONFIG -D__STDC_CONSTANT_MACROS -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DSHM_SUPPORT -I../../../include -I../../../../DVB/include -I/usr/local/include   mpeg2decoder.c
+mpeg2decoder.c: In constructor &#65533;cStreamDecoder::cStreamDecoder(AVCodecContext*, bool)&#65533;:
+mpeg2decoder.c:146: Fehler: &#65533;struct AVCodecContext&#65533; hat kein Element namens &#65533;error_resilience&#65533;
+make[1]: *** [mpeg2decoder.o] Fehler 1
+make[1]: Leaving directory `/root/vdr-1.6.0/PLUGINS/src/softdevice'
+Plugin status:
+make[1]: Entering directory `/root/vdr-1.6.0/PLUGINS/src/status'
+make[1]: F&#65533;r das Ziel &#65533;all&#65533; ist nichts zu tun.
+make[1]: Leaving directory `/root/vdr-1.6.0/PLUGINS/src/status'
+Plugin streamdev:
+make[1]: Entering directory `/root/vdr-1.6.0/PLUGINS/src/streamdev'
+make[1]: F&#65533;r das Ziel &#65533;all&#65533; ist nichts zu tun.
+make[1]: Leaving directory `/root/vdr-1.6.0/PLUGINS/src/streamdev'
+Plugin svdrpdemo:
+make[1]: Entering directory `/root/vdr-1.6.0/PLUGINS/src/svdrpdemo'
+make[1]: F&#65533;r das Ziel &#65533;all&#65533; ist nichts zu tun.
+make[1]: Leaving directory `/root/vdr-1.6.0/PLUGINS/src/svdrpdemo'
+Plugin vdrrip:
+make[1]: Entering directory `/root/vdr-1.6.0/PLUGINS/src/vdrrip-0.3.0'
+make[1]: F&#65533;r das Ziel &#65533;all&#65533; ist nichts zu tun.
+make[1]: Leaving directory `/root/vdr-1.6.0/PLUGINS/src/vdrrip-0.3.0'
+
+*** failed plugins: softdevice
+--------
+
+Hoping for further advice - good night
+Erbse
+-------------------------------------------------------
+
+Date: 2008-Dec-18 18:23
+By: lucke
+
+Comment:
+Sollte nicht passieren. Da gibt es bei Dir eine alte Version von avcodec.h in der LIBAVCODEC_VERSION_INT &lt; ((52&lt;&lt;16)+(0&lt;&lt;8)+0) definiert ist. Entferne die alten Header-Files von FFmpeg und rekonfiguriere und &#252;bersetzte softdevice neu.
+Should not happen. There is an old version of avcodec.h on your system which defines LIBAVCODEC_VERSION_INT less than ((52&lt;&lt;16)+(0&lt;&lt;8)+0). Remove old FFmpeg headers and reconfigure and recompile softdevice.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14940&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14940&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003181.html">[Softdevice-devel] [Bug #14940] undefined symbol: avcodec_build
+</A></li>
+	<LI>Next message: <A HREF="003183.html">[Softdevice-devel] [Bug #14940] undefined symbol: avcodec_build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3182">[ date ]</a>
+              <a href="thread.html#3182">[ thread ]</a>
+              <a href="subject.html#3182">[ subject ]</a>
+              <a href="author.html#3182">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

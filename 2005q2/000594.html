@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Aspect ratio handling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C200504302256.30356.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000590.html">
+   <LINK REL="Next"  HREF="000571.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Aspect ratio handling</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Aspect%20ratio%20handling&In-Reply-To=%3C200504302256.30356.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Aspect ratio handling">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr 30 22:56:30 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000590.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+        <LI>Next message: <A HREF="000571.html">[Softdevice-devel] Does anyone have a PNG image to test s-video output ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#594">[ date ]</a>
+              <a href="thread.html#594">[ thread ]</a>
+              <a href="subject.html#594">[ subject ]</a>
+              <a href="author.html#594">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 29. April 2005 13:19, Nicolas Huillard wrote:
+&gt;<i> Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt;&gt;I'll try to think of a simple two-phase system :
+</I>&gt;<i> &gt;&gt;* you describe your setup once : ratio of the screen, prefer to scale as 
+</I>&gt;<i> &gt;&gt;wide/tall as possible, or the contrary, etc.
+</I>&gt;<i> &gt;&gt;* a simple option switch between a few different possibilities, for easy 
+</I>&gt;<i> &gt;&gt;scaling
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Yes, the physical setup which describes your TV /Monitor display aspect
+</I>&gt;<i> &gt; can be defined in some menues. Selecting the something like center
+</I>&gt;<i> &gt; cut out CropMode/Bildausschnitt should be available via some hotkey.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; For that we need our own control, which gets all keys from vdr' remote.
+</I>&gt;<i> &gt; We need an additional setup entry, which describes which logical
+</I>&gt;<i> &gt; vdr USER_X key should be mapped to this functionality.
+</I>&gt;<i> 
+</I>&gt;<i> Your implementation details seems to fit the bill ;-)
+</I>&gt;<i> Since I'm no good at coding, but would do specs correctly, may I suggest 
+</I>&gt;<i> that you all describe the streams and hardware you actually have, and 
+</I>&gt;<i> what you would like to see, and I'll try to get the Right Thing that 
+</I>&gt;<i> will be as simple as possible, please most people, and be usable for 
+</I>&gt;<i> children. Warning : I'm no fast, as you could have experienced...
+</I>
+Ok. It's not as clean as expected, but as xv and dfb have theire own
+remotes .. . I commited a changed so that User1 .. User9 can be mapped
+as a direct crop mode switch.
+By that way we could additional match some other direct key bindings or
+X_ATOM changes, which where handled by our remotes to vdr UserX keys.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000590.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+	<LI>Next message: <A HREF="000571.html">[Softdevice-devel] Does anyone have a PNG image to test s-video output ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#594">[ date ]</a>
+              <a href="thread.html#594">[ thread ]</a>
+              <a href="subject.html#594">[ subject ]</a>
+              <a href="author.html#594">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

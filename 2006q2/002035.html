@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C4468F25C.6070406%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002034.html">
+   <LINK REL="Next"  HREF="002036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C4468F25C.6070406%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon May 15 23:27:56 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002034.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="002036.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2035">[ date ]</a>
+              <a href="thread.html#2035">[ thread ]</a>
+              <a href="subject.html#2035">[ subject ]</a>
+              <a href="author.html#2035">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ivor Hewitt schrieb:
+&gt;<i> Hey all,
+</I>&gt;<i> 
+</I>&gt;<i> Came into this thread late (er and sorry for breaking the threading) after 
+</I>&gt;<i> someone replied to me here:-
+</I>&gt;<i> <A HREF="http://forums.viaarena.com/messageview.aspx?catid=28&amp;threadid=72183&amp;enterthread=y">http://forums.viaarena.com/messageview.aspx?catid=28&amp;threadid=72183&amp;enterthread=y</A>
+</I>&gt;<i> 
+</I>&gt;<i> We've talked about this subject many times but always had more (self)interest 
+</I>&gt;<i> in getting working X drivers instead... and a lack of volunteers wanting to 
+</I>&gt;<i> work on frame buffer code.
+</I>&gt;<i> 
+</I>&gt;<i> Providing a mechanism by which the X specific portions can be removed from the 
+</I>&gt;<i> XvMC driver and the common code shared with directfb would be 'a really good 
+</I>&gt;<i> thing'.
+</I>&gt;<i>
+</I>
+I agree with you that it would be the best to share as much code as
+possible. I had a look at the latest libviaXvMC and in fact
+viaLowLevel.c is very similar to what Laz uses in his library. The one
+major difference is the use of DMA, and I don't know if it is simple to
+set up DMA from userspace. So maybe it is the best to start with the
+code as it is now and try to get it working and then try to synchronize
+the code bases.
+
+What I'm not really sure about is what are Laz's plans for the library.
+Laz, do you want your library to a stand alone library or would you like
+to try to integrate it into DirectFB?  I would prefer the latter - but I
+guess that means more work...
+
+&gt;<i> To clear up a couple of questions that were raised:-
+</I>&gt;<i> 
+</I>&gt;<i> The original ddmpeg library worked under both X and FB. However it is a 
+</I>&gt;<i> proprietary VIA specific interface and only taken advantage of with VeMP and 
+</I>&gt;<i> VeXP.
+</I>&gt;<i>
+</I>The most pressing question on my mind is: is it possible to reduce the
+CPU load by getting rid of the busy loop while waiting for the decoder
+to become ready again? It's quite stupid to waste CPU time just for
+waiting for the decoder if the goal of using the decoder was to save CPU
+time :-)
+
+It is really good to know that you are interested in the development, so
+we can ask a lot of questions concerning the via chipset :-)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002034.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="002036.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2035">[ date ]</a>
+              <a href="thread.html#2035">[ thread ]</a>
+              <a href="subject.html#2035">[ subject ]</a>
+              <a href="author.html#2035">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

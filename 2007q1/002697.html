@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%20cle266%20HW%20decoding&In-Reply-To=%3C45B9D8F5.9050008%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002696.html">
+   <LINK REL="Next"  HREF="002698.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%20cle266%20HW%20decoding&In-Reply-To=%3C45B9D8F5.9050008%40huillard.net%3E"
+       TITLE="[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding">nicolas at huillard.net
+       </A><BR>
+    <I>Fri Jan 26 11:33:25 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002696.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+        <LI>Next message: <A HREF="002698.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2697">[ date ]</a>
+              <a href="thread.html#2697">[ thread ]</a>
+              <a href="subject.html#2697">[ subject ]</a>
+              <a href="author.html#2697">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz a &#233;crit :
+&gt;<i> On Thursday 25 January 2007 15:09, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Maybe you're talking about this patch to DirectFB, which makes DFB talk
+</I>&gt;&gt;<i>to viafb's ioctl :
+</I>&gt;&gt;<i><A HREF="http://www.directfb.org/index.php/viewcvs.cgi/linux-viafb/patches/direc">http://www.directfb.org/index.php/viewcvs.cgi/linux-viafb/patches/direc</A>
+</I>&gt;&gt;<i>tfb-viafb-assisted-field-parity.patch?rev=1.1&amp;content-type=text/vnd.view
+</I>&gt;&gt;<i>cvs-markup
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Yes, I'm using it, in an older form, which seems to be the same, tough.
+</I>&gt;<i> 
+</I>&gt;<i> There is a patch to DirectFB which sends the FBIO_FLIPONVSYNC ioctl and a 
+</I>&gt;<i> patch to viafb which &quot;looks out for it&quot;. Looks like I still needed to 
+</I>&gt;<i> patch viafb from 2006-10-24. Try doing:
+</I>&gt;<i> 
+</I>&gt;<i> $ grep FBIO_FLIPONVSYNC linux-viafb/linux/drivers/video/c
+</I>&gt;<i> le266/via_fbobj.c
+</I>&gt;<i> 
+</I>&gt;<i> I get:
+</I>&gt;<i> #ifndef FBIO_FLIPONVSYNC
+</I>&gt;<i> #define FBIO_FLIPONVSYNC    _IOWR('F', 0x21, struct fb_flip)
+</I>&gt;<i>         case FBIO_FLIPONVSYNC:
+</I>
+I actually have the same output, and reading further my notes from
+10-2006, I can see I added the same patch, your already at that time
+sent me.
+
+&gt;<i> Looking more closely, I _think_ DirectFB and DFB++ are both cvs from 
+</I>&gt;<i> 2006-04-18. I have lots of different cvs trees which I really should 
+</I>&gt;<i> clean out.
+</I>
+My problem may be a regression in DirectFB, then. It may also be that I
+badly applied the patch to DirectFB.
+
+&gt;<i> It is currently running a 2.6.18.1 kernel.
+</I>
+2.6.17 is not that different.
+
+&gt;<i> Your best bet may be to check out a new version of linux-viafb and see if 
+</I>&gt;<i> that sorts it out.
+</I>
+I'll do that. And also add printk as Mark Adams suggested a (long) while
+ago.
+I'll keep you all updated on this.
+
+BTW : does anyone else use CLE266 hardware decoding and TV-out with
+softdevice (out of the 500+ downloads of libcle266mpegdec) ?
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002696.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+	<LI>Next message: <A HREF="002698.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2697">[ date ]</a>
+              <a href="thread.html#2697">[ thread ]</a>
+              <a href="subject.html#2697">[ subject ]</a>
+              <a href="author.html#2697">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

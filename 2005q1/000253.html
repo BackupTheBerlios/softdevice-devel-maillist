@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%0A%20for%20XV&In-Reply-To=%3C4222F4BA.8020103%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000252.html">
+   <LINK REL="Next"  HREF="000254.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%0A%20for%20XV&In-Reply-To=%3C4222F4BA.8020103%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Feb 28 11:38:50 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000252.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+        <LI>Next message: <A HREF="000254.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#253">[ date ]</a>
+              <a href="thread.html#253">[ thread ]</a>
+              <a href="subject.html#253">[ subject ]</a>
+              <a href="author.html#253">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;<i> But there are a few things. With xv-out and startup aspect wide, and crop
+</I>&gt;<i> mode 16:9 the full OSD is scaled correct and full visible, but the
+</I>&gt;<i> info OSD at bottom of the screen is mostly invisible.
+</I>I guess that is pseudo alpha blending mode?
+&gt;<i> With fb-out there are some positioning problems when I tried it at
+</I>&gt;<i> 1280x1024x16.
+</I>Can you be a bit more precise? My poor old Athlon can hardly do the 
+640x480x15 fb-out, so that's hard for me to test... Not speaking of my 
+old monitor which is only capable of doing the 1280x1024 at eye hurting 
+60Hz... I guess I have to buy a new machine soon ;-)
+Right now I'm already working on using libavformat for the parsing, but 
+I will have to change the software osd again after finishing the 
+libavformat stuff. That will be the perfect opertunity to do bug 
+hunting, so please tell all problems you know, that I can fix them.
+
+&gt;<i> That would be nice too. But the most important thing to my opinion is:
+</I>&gt;<i> AC3 out .
+</I>&gt;<i> 
+</I>In fact I already have a early version which understands ac3 :-)
+But there is still a lot to do, as this version is not very stable, A-V 
+sync is broken ( and so on and so on...its almost a complete rewrite of 
+mpeg2decoder.c) and I will be away for another week from thursday on... 
+So I guess it will take at least 2-3 weeks before I can present a quite 
+stable version.
+
+Inspired by your work with the subplugins I will create a general 
+interface for video filters like deinterleace and postproc. I plan to 
+use some kind of filter queue which can be plugged between the mpeg 
+decoder and the video out ( but not with shared libraries). Creating 
+additional filters like image scalers or format conversion would be a 
+lot easier then and could be used for all video out methods. Finally I 
+don't like to have the filters in the mpeg2decoder. They have nothing to 
+do with mpeg2 decoding, it's postprocessing what they are doing...
+
+I'm also using your subplugin option now and it works wunderfull!
+
+Bye,
+Martin
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000252.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+	<LI>Next message: <A HREF="000254.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#253">[ date ]</a>
+              <a href="thread.html#253">[ thread ]</a>
+              <a href="subject.html#253">[ subject ]</a>
+              <a href="author.html#253">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C5722D.3030702%40kapsi.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000924.html">
+   <LINK REL="Next"  HREF="000942.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Tommi Lundell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C5722D.3030702%40kapsi.fi%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">prelude at kapsi.fi
+       </A><BR>
+    <I>Fri Jul  1 18:41:17 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000924.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000942.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#921">[ date ]</a>
+              <a href="thread.html#921">[ thread ]</a>
+              <a href="subject.html#921">[ subject ]</a>
+              <a href="author.html#921">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+
+&gt;<i>Alternativly you can try the untested attached patch for vdr-1.3.27 (if
+</I>&gt;<i>it doesn't compile, maybe you can fix it, I guess the idea is clear...).
+</I>&gt;<i>It will cause vdr to sleep when it doesn't have any new frame for the
+</I>&gt;<i>softdevice. That will hopefully break the busy loop, but please undo the
+</I>&gt;<i>previous patch for the softdevice when trying this.
+</I>&gt;<i>
+</I>&gt;<i>Martin
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i>------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i>--- dvbplayer.c.orig	Fri Jul  1 15:14:49 2005
+</I>&gt;<i>+++ dvbplayer.c	Fri Jul  1 15:16:50 2005
+</I>&gt;<i>@@ -497,6 +497,7 @@
+</I>&gt;<i>                  p = NULL;
+</I>&gt;<i>                  }
+</I>&gt;<i>               }
+</I>&gt;<i>+              else Sleep=true;
+</I>&gt;<i>            }
+</I>&gt;<i>         }
+</I>&gt;<i>   active = running = false;
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+Hello
+
+I tested that also and it's seems to work ok (about 5min testing before 
+my wife 'ask' permission to look her food program)
+I made same logs what i made last night:
+<A HREF="http://prelude.kapsi.fi/jerky2.tar.gz">http://prelude.kapsi.fi/jerky2.tar.gz</A>
+(I don t understand that but maybe Martin or Stefan see is all ok now or 
+not)
+
+Anyway..Great job again guys :-)
+
+Ps. In osd menu you can select aspect ration and when you select 4:3 tv 
+and looking 16:9 material softdevice work right and add those black 
+areas top and below picture. But can we get some setup where aspect 
+ratio is ignored and sofdevice send whole picture whit out scaling to 
+screen? (So all are really  thin and tall when you look 16:9 material in 
+4:3 screen). I as that because i rather press aspect ratio button single 
+from my remote that looking scaled image (it's looking like interlace 
+problem but it is really scaling (scretchblit) problem).
+
+Tommi
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000924.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000942.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#921">[ date ]</a>
+              <a href="thread.html#921">[ thread ]</a>
+              <a href="subject.html#921">[ subject ]</a>
+              <a href="author.html#921">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

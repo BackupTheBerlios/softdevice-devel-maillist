@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] recent cvs &amp; HDTV issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20recent%20cvs%20%26%20HDTV%20issue&In-Reply-To=%3C6908.1113209418%40www43.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000500.html">
+   <LINK REL="Next"  HREF="000502.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] recent cvs &amp; HDTV issue</H1>
+    <B>Thomas Herrmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20recent%20cvs%20%26%20HDTV%20issue&In-Reply-To=%3C6908.1113209418%40www43.gmx.net%3E"
+       TITLE="[Softdevice-devel] recent cvs &amp; HDTV issue">ollo.diab at gmx.de
+       </A><BR>
+    <I>Mon Apr 11 10:50:18 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000500.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+        <LI>Next message: <A HREF="000502.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#501">[ date ]</a>
+              <a href="thread.html#501">[ thread ]</a>
+              <a href="subject.html#501">[ subject ]</a>
+              <a href="author.html#501">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Quoting Thomas Herrmann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">ollo.diab at gmx.de</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; example:
+</I>&gt;<i> &gt; &gt; vdr[7030]: [VideoOut]: aspect changed (9 -&gt; 0 ; 1,333333 -&gt; 1,333333)
+</I>&gt;<i> &gt; &gt; vdr[7030]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 1024x576 [128,0
+</I>&gt;<i> 768x576]
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hi Stefan,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; do I need to enable debugging during compile of softdevice to get such
+</I>&gt;<i> &gt; messages?
+</I>&gt;<i> 
+</I>&gt;<i> No, they are written allways. They are written with dsyslog(), which is a
+</I>&gt;<i> define
+</I>&gt;<i> and will actually translate to: syslog(LOG_DEBUG, ..). So it may depend
+</I>&gt;<i> on your syslog configuration where they actually appear. Even you can
+</I>&gt;<i> change
+</I>&gt;<i> logging information via vdr at runtime &quot;-l n[.m]&quot;. Default is loglevel 3,
+</I>&gt;<i> debug message are written.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I have quickly greped through my syslog and didn'f find any such
+</I>&gt;<i> &gt; message. I will take another look later today.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Anyhow, just to make it clear, the picture cut off on the right side of
+</I>&gt;<i> the
+</I>&gt;<i> &gt; video as described before happens since the first time HDTV works.
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> Ah. When in windowed mode, how much of the right side is cut off ?
+</I>
+I would guess 1/8th or 1/16th of the video width gets cut off. For instance
+the logo of HD1 is not visuable when in windowed mode.
+
+Thomas
+
+&gt;<i> 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>
+-- 
+Handyrechnung zu hoch? Tipp: SMS und MMS mit GMX
+Seien Sie so frei: Alle Infos unter <A HREF="http://www.gmx.net/de/go/freesms">http://www.gmx.net/de/go/freesms</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000500.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+	<LI>Next message: <A HREF="000502.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#501">[ date ]</a>
+              <a href="thread.html#501">[ thread ]</a>
+              <a href="subject.html#501">[ subject ]</a>
+              <a href="author.html#501">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

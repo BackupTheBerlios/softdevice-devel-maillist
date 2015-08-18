@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Epia EN1500G + softdevice (kernel + via	driver)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice%20%28kernel%20%2B%20via%0A%09driver%29&In-Reply-To=%3C200809262257.06012.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003152.html">
+   <LINK REL="Next"  HREF="003148.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Epia EN1500G + softdevice (kernel + via	driver)</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice%20%28kernel%20%2B%20via%0A%09driver%29&In-Reply-To=%3C200809262257.06012.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Epia EN1500G + softdevice (kernel + via	driver)">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Sep 26 22:57:05 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003152.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+        <LI>Next message: <A HREF="003148.html">[Softdevice-devel] Epia EN1500G + softdevice (kernel +	via	driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3147">[ date ]</a>
+              <a href="thread.html#3147">[ thread ]</a>
+              <a href="subject.html#3147">[ subject ]</a>
+              <a href="author.html#3147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 20 September 2008, Vladimir Monchenko wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> About two years I use vdr+DirectFb+softdevice on VIA Epia ME6000. All 
+</I>&gt;<i> works excellently - the video very smooth, problems with interlaced 
+</I>&gt;<i> video are not present. My TV is connected with vdr box through s-video 
+</I>&gt;<i> cable. It would be desirable only two things - smooth playback mpeg4 
+</I>&gt;<i> video and connect the TV through a component (YPbPr) input.
+</I>&gt;<i> For this purpose I have gained recently system board VIA Epia EN1500G 
+</I>&gt;<i> (CN700 North Bridge) and have started to build vdr on HOWTO from 
+</I>&gt;<i> vdrportal.de -  (<A HREF="http://www.vdrportal.de/board/thread.php?threadid=59950&amp;hilight=cn700">http://www.vdrportal.de/board/thread.php?threadid=59950&amp;hilight=cn700</A>).
+</I>
+Which kernel and driver do you use ?
+With gentoo kernel 2.6.25-gentoo-r7 and via's driver
+Linux-FBDev-kernel-src_2.6.00.03a I get these error
+messages on loading viafb.ko:
+
+viafb: Unknown symbol unregister_framebuffer
+viafb: Unknown symbol cfb_copyarea
+viafb: Unknown symbol register_framebuffer
+viafb: Unknown symbol cfb_imageblit
+viafb: Unknown symbol cfb_fillrect
+viafb: Unknown symbol soft_cursor
+
+DirectFB's driver doesn't compile with current kernel:
+/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c: In function 'viafb_init':
+/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.c:1796: error: implicit declaration of function 'pci_module_init'
+make[2]: *** [/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266/via_fbobj.o] Error 1
+make[1]: *** [_module_/usr/local/src/directfb-2008-09-26/linux-viafb/linux/drivers/video/cle266] Error 2
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003152.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+	<LI>Next message: <A HREF="003148.html">[Softdevice-devel] Epia EN1500G + softdevice (kernel +	via	driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3147">[ date ]</a>
+              <a href="thread.html#3147">[ thread ]</a>
+              <a href="subject.html#3147">[ subject ]</a>
+              <a href="author.html#3147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

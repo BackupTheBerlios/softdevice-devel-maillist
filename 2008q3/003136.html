@@ -1,0 +1,555 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice, VDR and Fast Forward
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809141946.40970.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003131.html">
+   <LINK REL="Next"  HREF="003137.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice, VDR and Fast Forward</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%2C%20VDR%20and%20Fast%20Forward&In-Reply-To=%3C200809141946.40970.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice, VDR and Fast Forward">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Sep 14 19:46:40 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003131.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+        <LI>Next message: <A HREF="003137.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3136">[ date ]</a>
+              <a href="thread.html#3136">[ thread ]</a>
+              <a href="subject.html#3136">[ subject ]</a>
+              <a href="author.html#3136">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 13 September 2008, Laz wrote:
+&gt;<i> On Saturday 13 September 2008 17:24:46 Laz wrote:
+</I>&gt;<i> &gt; On Saturday 13 September 2008 17:13:00 Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; Can you both try attached patch ?
+</I>
+&gt;<i> &gt; &gt; 2nd Feature makes field selectable which is displayed in still picture
+</I>&gt;<i> &gt; &gt;     mode, but unfortunately this doesn't work at the moment.
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> Excellent: I had toyed with the idea of implementing that in the past but 
+</I>&gt;<i> never got anywhere! I take it that this will remove flicker from a paused 
+</I>&gt;<i> interlaced stream?
+</I>
+Here is an other version of the patch.
+2nd feature seems to work most of the time.
+
+When switching between play / pause real fast, it doesn't work,
+as the frame is displayed just before the Freeze() command arrives.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.83
+diff -U3 -r1.83 mpeg2decoder.c
+--- mpeg2decoder.c	20 Jul 2008 16:41:01 -0000	1.83
++++ mpeg2decoder.c	14 Sep 2008 16:29:56 -0000
+@@ -1047,6 +1047,8 @@
+   IsSuspended=false;
+   Speed=1;
+   pb = NULL;
++
++  useAVReadFrame = setupStore-&gt;useAVReadFrame;
+ }
+ 
+ cMpeg2Decoder::~cMpeg2Decoder()
+@@ -1176,15 +1178,21 @@
+           usleep(50000);
+ 
+         BUFDEB(&quot;av_read_frame start\n&quot;);
+-        ret = av_read_frame(ic, &amp;pkt);
+-        //ret = av_read_packet(ic, &amp;pkt);
++
++        if (useAVReadFrame)
++            ret = av_read_frame(ic, &amp;pkt);
++        else
++            ret = av_read_packet(ic, &amp;pkt);
++
+         if (ret &lt; 0) {
+             BUFDEB(&quot;cMpeg2Decoder Stream Error!\n&quot;);
+             if (ThreadActive)
+-		    usleep(10000);
++                usleep(10000);
+             continue;
+         }
+-        av_dup_packet(&amp;pkt);
++        if (useAVReadFrame)
++            av_dup_packet(&amp;pkt);
++
+         PacketCount++;
+         BUFDEB(&quot;got packet from av_read_frame!\n&quot;);
+ 
+@@ -1413,6 +1421,8 @@
+ {
+   CMDDEB(&quot;Play\n&quot;);
+   freezeMode=false;
++fprintf(stderr,&quot;MP Play\n&quot;);
++  videoOut-&gt;SetStillPictureMode (false);
+   if (running)
+   {
+     aoutMutex.Lock();
+@@ -1433,6 +1443,9 @@
+ {
+   curPlayMode=playMode;
+   this-&gt;packetMode=packetMode;
++fprintf(stderr,&quot;MP SetPlayMode (%d, packetMode(%s))\n&quot;,playMode, packetMode?&quot;ON&quot;:&quot;OFF&quot;);
++
++  videoOut-&gt;SetStillPictureMode (false);
+   switch (curPlayMode) {
+     case PmAudioVideo:
+       CMDDEB(&quot;SetPlayMode PmAudioVideo\n&quot;);
+@@ -1456,6 +1469,10 @@
+   CMDDEB(&quot;Freeze Streams %d freeze %d\n&quot;,Stream,freeze);
+   if (Stream &amp; SOFTDEVICE_BOTH_STREAMS == SOFTDEVICE_BOTH_STREAMS )
+     freezeMode=freeze;
++fprintf(stderr,&quot;MP Freeze(%s)\n&quot;, freeze ? &quot;ON&quot;:&quot;OFF&quot;);
++  if (freeze)
++    videoOut-&gt;SetStillPictureMode (true);
++
+   // sleep a short while before putting the
+   // audio and video stream decoders to sleep
+   usleep(20000);
+@@ -1537,41 +1554,47 @@
+ 
+ /* ----------------------------------------------------------------------------
+  */
+-
+ static uint8_t pes_packet_header[] = {
+      0x00,0x00,0x01, 0xe0,           0x00,0x00,   0x84, 0x00, 0x00,0x00};
+      // startcode,  video-stream 0, packet length,      no pts
++
++/* ----------------------------------------------------------------------------
++ */
+ int cMpeg2Decoder::StillPicture(uchar *Data, int Length)
+ {
+-  bool has_pesheader=false;
+-  CMDDEB(&quot;StillPicture %p length %d \n&quot;,Data,Length);
++  bool has_pesheader = false;
++  CMDDEB(&quot;StillPicture %p length %d \n&quot;, Data,Length);
+   // XXX hack to ingore audio junk sent by vdr in the still picture
+-  AudioIdx=DONT_PLAY;
++  AudioIdx = DONT_PLAY;
+ 
+   // check if data contains a valid pes header
+ #define SEARCH_LENGTH 64
+-  if (Length&gt;SEARCH_LENGTH) {
+-    uchar *start=Data+1;
++  if (Length &gt; SEARCH_LENGTH) {
++    uchar *start = Data + 1;
+     do {
+       start++;
+-      start=(uchar *)memchr(start,0x01,Data+SEARCH_LENGTH-start);
+-      if ( start &amp;&amp; start[-1]==0 &amp;&amp; start[-2] == 0
+-          &amp;&amp; ((start[1] &amp;0xF0)==0xe0) ) { // video stream pes header
+-        has_pesheader=true;
++      start = (uchar *) memchr (start, 0x01, Data + SEARCH_LENGTH - start);
++      if ( start &amp;&amp;
++           start[-1] == 0 &amp;&amp; start[-2] == 0 &amp;&amp; 
++           ((start[1] &amp;0xF0) == 0xe0) ) { // video stream pes header
++        has_pesheader = true;
+         break;
+-      };
+-    } while (start&lt;Data+SEARCH_LENGTH &amp;&amp; start);
+-  };
++      }
++    } while (start &lt; Data + SEARCH_LENGTH &amp;&amp; start);
++  }
+ 
+-  for (int i=0; 4&gt;i;i++) {
++  videoOut-&gt;SetStillPictureMode (true);
++  for (int i = 0; 4 &gt; i; i++) {
+     if (!has_pesheader) {
+       // send a fake pes header
+-      pes_packet_header[4]=(Length+2)&gt;&gt;8 &amp; 0xFF;
+-      pes_packet_header[5]=(Length+2) &amp; 0xFF;
+-      Decode(pes_packet_header,9);
+-    };
+-    Decode(Data,Length);
++      pes_packet_header[4] = (Length + 2) &gt;&gt; 8 &amp; 0xFF;
++      pes_packet_header[5] = (Length + 2) &amp; 0xFF;
++      Decode (pes_packet_header, 9);
++    }
++    Decode (Data,Length);
+   }
++  //videoOut-&gt;SetStillPictureMode (false);
++
+   CMDDEB(&quot;StillPicture end \n&quot;);
+   return Length;
+ }
+@@ -1582,6 +1605,7 @@
+ {
+   mutex.Lock();
+   CMDDEB(&quot;Clear\n&quot;);
++  videoOut-&gt;SetStillPictureMode (true);
+   Stop(false);
+   Start(false);
+   CMDDEB(&quot;Clear finished\n&quot;);
+@@ -1593,6 +1617,7 @@
+ void cMpeg2Decoder::TrickSpeed(int trickSpeed)
+ {
+   CMDDEB(&quot;TrickSpeed %d\n&quot;,Speed);
++fprintf(stderr,&quot;MP TrickSpeed A (%d -&gt; %d)\n&quot;, Speed, trickSpeed);
+   Speed=trickSpeed;
+   // XXX hack to ingore audio junk sent by vdr in the
+   if (trickSpeed!=1) {
+@@ -1604,6 +1629,11 @@
+     AudioIdx=DONT_PLAY;
+   } else if (AudioIdx==DONT_PLAY)
+     AudioIdx=NO_STREAM;
++
++  if (trickSpeed &gt; 1)
++    videoOut-&gt;SetStillPictureMode (true);
++fprintf(stderr,&quot;MP TrickSpeed B (%d -&gt; %d)\n&quot;, Speed, trickSpeed);
++
+   Play();
+   if (running)
+   {
+Index: mpeg2decoder.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.h,v
+retrieving revision 1.44
+diff -U3 -r1.44 mpeg2decoder.h
+--- mpeg2decoder.h	26 Feb 2008 08:06:18 -0000	1.44
++++ mpeg2decoder.h	14 Sep 2008 16:29:56 -0000
+@@ -284,6 +284,7 @@
+ 
+     AVFormatContext *ic;
+     ByteIOContext   *pb;
++    bool            useAVReadFrame;
+     int LastSize;
+     cMutex  mutex;
+     cSigTimer EnablePutSignal;
+Index: setup-softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.c,v
+retrieving revision 1.56
+diff -U3 -r1.56 setup-softdevice.c
+--- setup-softdevice.c	20 Jul 2008 16:41:01 -0000	1.56
++++ setup-softdevice.c	14 Sep 2008 16:29:57 -0000
+@@ -74,6 +74,8 @@
+ 
+ const char *fieldOrderNames[SETUP_FIELD_ORDER_NAMES];
+ 
++const char *preferredFieldNames[SETUP_PREFERRED_FIELD_NAMES];
++
+ /* ----------------------------------------------------------------------------
+  */
+ cSetupStore *setupStore=NULL;
+@@ -116,6 +118,8 @@
+   useStretchBlit    = 0;
+   stretchBlitLocked = false;
+   fieldOrderMode    = 2;
++  preferredField    = bothFields;
++  useAVReadFrame    = true;
+   bufferMode      = 0;
+   mainMenu  = 1;
+   syncTimerMode = 2;
+@@ -209,6 +213,11 @@
+   fieldOrderNames[1] = &quot;Top field first&quot;;
+   fieldOrderNames[2] = &quot;Auto&quot;;
+   fieldOrderNames[3] = NULL;
++
++  preferredFieldNames[0] = tr(&quot;Both Fields&quot;);
++  preferredFieldNames[1] = tr(&quot;First Field&quot;);
++  preferredFieldNames[2] = tr(&quot;Later Field&quot;);
++  preferredFieldNames[3] = NULL;
+ }
+ 
+ bool cSetupStore::SetupParse(const char *Name, const char *Value)
+@@ -381,6 +390,14 @@
+     fieldOrderMode = clamp (0, fieldOrderMode, 2);
+     fprintf(stderr, &quot;[setup-softdevice] fieldOrderMode: %s\n&quot;,
+             fieldOrderNames[fieldOrderMode]);
++  } else if (!strcasecmp(Name, &quot;preferredField&quot;)) {
++    preferredField = (tPreferredField) atoi (Value);
++    preferredField = (tPreferredField) clamp (bothFields, preferredField, laterField);
++    fprintf(stderr, &quot;[setup-softdevice] preferrenField: %s\n&quot;,
++            preferredFieldNames[preferredField]);
++  } else if (!strcasecmp(Name, &quot;useAVReadFrame&quot;)) {
++    useAVReadFrame = (bool) atoi (Value);
++    fprintf(stderr, &quot;[setup-softdevice] useAVReadFrame: %s\n&quot;, (useAVReadFrame) ? &quot;yes&quot;: &quot;no&quot;);
+   } else if (!strcasecmp(Name, &quot;vidBrightness&quot;)) {
+     vidBrightness = atoi (Value);
+     vidBrightness = clamp (-1, vidBrightness, 100);
+Index: setup-softdevice.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice.h,v
+retrieving revision 1.46
+diff -U3 -r1.46 setup-softdevice.h
+--- setup-softdevice.h	10 Sep 2008 17:15:38 -0000	1.46
++++ setup-softdevice.h	14 Sep 2008 16:29:57 -0000
+@@ -105,6 +105,9 @@
+ #define SETUP_FIELD_ORDER_NAMES  4
+ extern const char *fieldOrderNames[SETUP_FIELD_ORDER_NAMES];
+ 
++#define SETUP_PREFERRED_FIELD_NAMES  4
++extern const char *preferredFieldNames[SETUP_PREFERRED_FIELD_NAMES];
++
+ /* ----------------------------------------------------------------------------
+  * allow changing of output pixfmt
+  */
+@@ -116,6 +119,14 @@
+ #define SETUP_SUSPENDVIDEO 3
+ extern const char *suspendVideo[SETUP_SUSPENDVIDEO];
+ 
++/*-----------------------------------------------------------------------------
++ */
++typedef enum preferredField {
++        bothFields,
++        earlierField,
++        laterField
++} tPreferredField;
++
+ /* ---------------------------------------------------------------------------
+  */
+ struct cSetupStore {
+@@ -149,6 +160,7 @@
+     int   ppQuality;
+     int   mirror;
+     int   syncOnFrames;
++    bool  useAVReadFrame;
+     int   avOffset;
+     int   screenPixelAspect;
+     int   zoom;
+@@ -182,6 +194,8 @@
+     char  alsaAC3Device [ALSA_DEVICE_NAME_LENGTH];
+ 
+     int   setupStoreShmid;
++
++    tPreferredField   preferredField;
+ };
+ 
+ #define OSDMODE_PSEUDO    0
+Index: setup-softdevice-menu.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/setup-softdevice-menu.c,v
+retrieving revision 1.15
+diff -U3 -r1.15 setup-softdevice-menu.c
+--- setup-softdevice-menu.c	20 Jul 2008 16:41:01 -0000	1.15
++++ setup-softdevice-menu.c	14 Sep 2008 16:29:57 -0000
+@@ -370,6 +370,15 @@
+                             (SETUP_FIELD_ORDER_NAMES-1),
+                             fieldOrderNames));
+ 
++  Add(new cMenuEditStraItem(tr(&quot;Still Picture Field&quot;),
++                            (int *) &amp;data-&gt;preferredField,
++                            (SETUP_PREFERRED_FIELD_NAMES-1),
++                            preferredFieldNames));
++
++  Add(new cMenuEditBoolItem(tr(&quot;Use av_read_frame()&quot;),
++                            (int *) &amp;data-&gt;useAVReadFrame, tr(&quot;no&quot;), tr(&quot;yes&quot;)));
++
++
+ #if VDRVERSNUM &gt;= 10334
+   Add(new cOsdItem(&quot; &quot;, osUnknown, false));
+ #else
+@@ -489,6 +498,8 @@
+   SetupStore (&quot;mainMenu&quot;,             setupStore-&gt;mainMenu);
+   SetupStore (&quot;syncTimerMode&quot;,        setupStore-&gt;syncTimerMode);
+   SetupStore (&quot;fieldOrderMode&quot;,       setupStore-&gt;fieldOrderMode);
++  SetupStore (&quot;preferredField&quot;,       setupStore-&gt;preferredField);
++  SetupStore (&quot;useAVReadFrame&quot;,       setupStore-&gt;useAVReadFrame);
+   SetupStore (&quot;vidBrightness&quot;,        setupStore-&gt;vidBrightness);
+   SetupStore (&quot;vidContrast&quot;,          setupStore-&gt;vidContrast);
+   SetupStore (&quot;vidHue&quot;,               setupStore-&gt;vidHue);
+Index: softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.93
+diff -U3 -r1.93 softdevice.c
+--- softdevice.c	18 Apr 2008 15:15:41 -0000	1.93
++++ softdevice.c	14 Sep 2008 16:29:58 -0000
+@@ -113,7 +113,7 @@
+ #define AOUT_OSS    3
+ #define AOUT_MACOS  4
+ 
+-//#define SOFTDEB(out...) {printf(&quot;softdeb[%04d]:&quot;,(int)(getTimeMilis() % 10000));printf(out);}
++#define SOFTDEB(out...) {printf(&quot;softdeb[%04d]:&quot;,(int)(getTimeMilis() % 10000));printf(out);}
+ 
+ #ifndef SOFTDEB
+ #define SOFTDEB(out...)
+@@ -497,9 +497,9 @@
+ void cSoftDevice::Freeze(void)
+ {
+     SOFTDEB(&quot;Freeze...\n&quot;);
+-    cDevice::Freeze();
+     if (decoder)
+       decoder-&gt;Freeze();
++    cDevice::Freeze();
+     SOFTDEB(&quot;Freeze finished.\n&quot;);
+ }
+ 
+@@ -585,7 +585,7 @@
+ int cSoftDevice::PlayAudio(const uchar *Data, int Length)
+ # endif
+ {
+-  SOFTDEB(&quot;PlayAudio... %p length %d\n&quot;,Data,Length);
++  //SOFTDEB(&quot;PlayAudio... %p length %d\n&quot;,Data,Length);
+ #if VDRVERSNUM &gt;= 10342
+   if (SHOULD_SUSPEND &amp;&amp; !Transferring()) {
+     usleep(10000); // avoid burning CPU
+@@ -646,7 +646,7 @@
+  */
+ int cSoftDevice::PlayVideo(const uchar *Data, int Length)
+ {
+-  SOFTDEB(&quot;PlayVideo %x length %d\n&quot;,Data,Length);
++  //SOFTDEB(&quot;PlayVideo %x length %d\n&quot;,Data,Length);
+ #if VDRVERSNUM &gt;= 10342
+   if (SHOULD_SUSPEND &amp;&amp; !Transferring()) {
+     usleep(10000); // avoid burning CPU
+Index: video.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.c,v
+retrieving revision 1.77
+diff -U3 -r1.77 video.c
+--- video.c	20 Jul 2008 16:41:01 -0000	1.77
++++ video.c	14 Sep 2008 16:29:58 -0000
+@@ -461,6 +461,60 @@
+ 
+ /* ---------------------------------------------------------------------------
+  */
++void cVideoOut::SetStillPictureMode(bool on)
++{
++fprintf(stderr,&quot;SetStillPictureMode: %s\n&quot;, on ? &quot;ON &quot; : &quot;OFF &quot;);
++    stillPictureMode = on;
++}
++
++/* ---------------------------------------------------------------------------
++ */
++void cVideoOut::SelectField (sPicBuffer *pic)
++{
++                unsigned char   *dest, 
++                                *src;
++                int             i;
++
++        if (!pic-&gt;interlaced_frame)
++                return;
++        if (setupStore-&gt;preferredField == bothFields)
++                return;
++
++        dest = src  = pic-&gt;pixel[0]
++                      + (pic-&gt;edge_height) * pic-&gt;stride[0]
++                      + pic-&gt;edge_width;
++
++        if (setupStore-&gt;preferredField == earlierField) {
++
++                if (pic-&gt;top_field_first)
++                        dest += pic-&gt;stride[0];
++                else
++                        src  += pic-&gt;stride[0];
++
++        } else {
++
++                if (pic-&gt;top_field_first)
++                        src  += pic-&gt;stride[0];
++                else
++                        dest += pic-&gt;stride[0];
++        }
++
++        for (i = 0; i &lt; pic-&gt;height; i += 2) {
++#if 1
++            // copy part
++            memcpy (dest, src, pic-&gt;stride[0]);
++#else
++            // set frame to very dark
++            memset (dest, 0, pic-&gt;stride[0]);
++            memset (src, 0, pic-&gt;stride[0]);
++#endif
++            dest += 2 * pic-&gt;stride[0];
++            src  += 2 * pic-&gt;stride[0];
++        }
++}
++
++/* ---------------------------------------------------------------------------
++ */
+ void cVideoOut::DrawVideo_420pl(cSyncTimer *syncTimer,
+                                 sPicBuffer *pic)
+ {
+@@ -472,6 +526,11 @@
+     return;
+   }
+ 
++  if (stillPictureMode) {
++fprintf(stderr,&quot;0&quot;);
++    SelectField (pic);
++  }
++
+   sPicBuffer *scale_pic=NULL;
+   if (scaleVid != 0) {
+           scale_pic=GetBuffer(pic-&gt;format,pic-&gt;max_width,pic-&gt;max_height);
+@@ -554,7 +613,7 @@
+   offsetIndex %= AVRG_OFF_CNT;
+ 
+   softlog-&gt;Log(SOFT_LOG_TRACE, 0,
+-                  &quot;[VideoOut] A/V (%d - %d) off = %d avoff = %d\n&quot;,
++                  &quot;[VideoOut] A/V (%lld - %lld) off = %d avoff = %d\n&quot;,
+                   aPTS, pts, offset, offsetAverage);
+ 
+   dropOffset = (useAverage4Drop) ? offsetAverage : offset;
+Index: video.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.h,v
+retrieving revision 1.56
+diff -U3 -r1.56 video.h
+--- video.h	20 Jul 2008 16:41:01 -0000	1.56
++++ video.h	14 Sep 2008 16:29:58 -0000
+@@ -66,6 +66,7 @@
+     //
+     sPicBuffer  *oldPicture;
+     cMutex      oldPictureMutex;
++    bool        stillPictureMode;
+     void        SetOldPicture(sPicBuffer *pic);
+ 
+ protected:
+@@ -192,6 +193,8 @@
+             oldPictureMutex.Unlock();
+     };
+ 
++    virtual void SetStillPictureMode (bool on);
++    virtual void SelectField (sPicBuffer *pic);
+ 
+     virtual void Action(void);
+     // osd control thread. Refreshes the osd on dimension changes and
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003131.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+	<LI>Next message: <A HREF="003137.html">[Softdevice-devel] Softdevice, VDR and Fast Forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3136">[ date ]</a>
+              <a href="thread.html#3136">[ thread ]</a>
+              <a href="subject.html#3136">[ subject ]</a>
+              <a href="author.html#3136">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Speeding up softdevice?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Speeding%20up%20softdevice%3F&In-Reply-To=%3C4383513E.4070309%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001560.html">
+   <LINK REL="Next"  HREF="001561.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Speeding up softdevice?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Speeding%20up%20softdevice%3F&In-Reply-To=%3C4383513E.4070309%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Speeding up softdevice?">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Nov 22 18:11:26 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001560.html">[Softdevice-devel] Speeding up softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001561.html">[Softdevice-devel] Nvidia card - fb.modes anyone?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1563">[ date ]</a>
+              <a href="thread.html#1563">[ thread ]</a>
+              <a href="subject.html#1563">[ subject ]</a>
+              <a href="author.html#1563">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Andre Neumann schrieb:
+&gt;<i> Hi,
+</I>&gt;<i>  
+</I>&gt;<i> yesterday i've done some performance tests with softdevice and mplayer.
+</I>&gt;<i> I played some HD mpeg files (1080i) and noticed, that with softdevice
+</I>&gt;<i> (softplay) i get much slower playback. 
+</I>&gt;<i>  
+</I>&gt;<i> CPU is about 90%, but the playback is not smooth. When using mplayer
+</I>&gt;<i> with -vo directfb the playback is excellent, no skipped frames,
+</I>&gt;<i> everything ok.
+</I>&gt;<i>  
+</I>&gt;<i> Are there any options to speed up the decoding done by
+</I>&gt;<i> softdevice/ffmpeg, because mplayer uses ffmpeg, too i think.
+</I>&gt;<i>  
+</I>&gt;<i> My setup is: Matrox G550 with DirectFB, P4 2,8GHz, 512MB.
+</I>&gt;<i>  
+</I>In DirectFB fast_memcpy is not used, this could make a difference
+especially for high resolution videos.
+
+You could try the comparison again with Xv or try to replace the memcpy
+in DirectFB with fast_memcpy.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001560.html">[Softdevice-devel] Speeding up softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001561.html">[Softdevice-devel] Nvidia card - fb.modes anyone?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1563">[ date ]</a>
+              <a href="thread.html#1563">[ thread ]</a>
+              <a href="subject.html#1563">[ subject ]</a>
+              <a href="author.html#1563">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

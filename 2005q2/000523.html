@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] buffering issues in softdevice-0.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20buffering%20issues%20in%20softdevice-0.1.1&In-Reply-To=%3C425C4E4E.5050008%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000521.html">
+   <LINK REL="Next"  HREF="000526.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] buffering issues in softdevice-0.1.1</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20buffering%20issues%20in%20softdevice-0.1.1&In-Reply-To=%3C425C4E4E.5050008%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] buffering issues in softdevice-0.1.1">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Wed Apr 13 00:40:14 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000521.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+        <LI>Next message: <A HREF="000526.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#523">[ date ]</a>
+              <a href="thread.html#523">[ thread ]</a>
+              <a href="subject.html#523">[ subject ]</a>
+              <a href="author.html#523">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I check the buffer managment in the softdevice-0.1.1 and I found a few 
+</I>&gt;<i> things which could be done better. I commited some changes which improve 
+</I>&gt;<i> the situation a bit, but there a still some open questions.
+</I>&gt;<i> Could you, Thomas and Lucian please test if this changes improve the 
+</I>&gt;<i> performace for you?
+</I>
+Hi,
+
+I checked out latest CVS and tried, but it doesn't improve the 
+situation. Before I tried Stefan's patch on the CVS before your 
+buffering changes, with just slightly smoother image, but also 
+slow-motion and audio skipping. CPU usage is also strangely low, but a 
+bit higher than before your changes, it goes from 20 to 30% (1GHz 
+Duron), and normally, when all DVB stream frames are decoded and shown 
+(with mplayer, df_xine or even softdevice before this whole thing 
+started, I think at the time I tried softplay), CPU usage would be 
+something between 45 and 55, maybe 60 sometimes (SDTV of course). 
+Currently it behaves almost like in the better times I've had with 
+softdevice when switching to HDTV on my 1GHz Duron, it was just 
+super-slow motion and after some time crashed. At least it doesn't seem 
+to crash now, but I also didn't let it run too much. This time, while 
+this whole juddering I have some output which seems to repeat a lot, see 
+below.
+
+Lucian
+
+
+
+
+&lt;/vdr -L /usr/lib/vdr -P'softdevice -L /usr/lib/vdr -vo dfb:mgatv'
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -L
+[softdevice]   argv [3] = -vo
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] deinterlace method set to 0 none
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YUV2)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.9-pre1) build(4743)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+        ---------------------- DirectFB v0.9.23 ---------------------
+              (c) 2000-2002  convergence integrated media GmbH
+              (c) 2002-2004  convergence GmbH
+         -----------------------------------------------------------
+
+(*) DirectFB/Core: Multi Application Core. (2005-04-11 23:03)
+(*) Direct/Memcpy: Using MMX optimized memcpy()
+(*) Direct/Thread: Running 'Fusion Dispatch' (MESSAGING, 19852)...
+(*) DirectFB/Core: doing sync()...
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 19887)...
+(*) Direct/Modules: suppress module 'joystick'
+(*) Direct/Modules: suppress module 'lirc'
+(*) Direct/Modules: suppress module 'ps2mouse'
+(*) Direct/Modules: suppress module 'serialmouse'
+(*) Direct/Modules: suppress module 'sonypi'
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 19888)...
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence 
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 19889)...
+(*) DirectFB/Input: PS/2 Generic Mouse (2) 0.1 (convergence integrated 
+media GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 19890)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G400 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 16</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x400 at 16</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">400x300 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">320x240 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">320x200 at 16</A>
+[dfb] Enumeratig display Layers
+Layer 2 FBDev Primary Layer  Type: graphics
+   Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+   Caps: brightness contrast deinterlacing dst_colorkey screen_location 
+surface
+Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+   Caps: brightness contrast flicker_filtering hue field_parity 
+saturation surface
+[surface capabilities] scrSurface: videoonly double-buffered flipping 
+interlaced
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (Matrox CRTC2 Layer - [720x576])
+[surface capabilities] osdSurface: videoonly double-buffered flipping
+[surface capabilities] videoSurface: videoonly
+[dfb] Using this layer for OSD: Matrox CRTC2 Layer
+[dfb] Using this layer for Video out: Matrox CRTC2 Layer
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface
+[surface capabilities] videoSurface: videoonly
+[dfb] (re)configured 0x00200806
+Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+CMD[4045]:SetPlayMode PmAudioVideo
+CMD[4045]:Start IsSuspended 0
+CMD[4045]:init put byte finished
+CMD[4161]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[5138]:new Video stream index.. old -1 new 0
+CMD[5138]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[5148]:Neuer Thread gestartet: pid:19640 type 0
+CMD[5436]:new Audio stream index.. old -1 new 1
+CMD[5436]:Neuer StreamDecoder Pid: 19640 type 1
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface
+[surface capabilities] videoSurface: videoonly
+[dfb] (re)configured 0x00200806
+CMD[5975]:Neuer Thread gestartet: pid:19640 type 1
+CMD[1144]:Clear
+CMD[1144]:Stop
+CMD[1182]:Thread beendet : mpegDecoder pid 19640
+CMD[1212]:thread finished pid: 19640 type 0
+CMD[1282]:thread finished pid: 19640 type 1
+CMD[1316]:Stop finished
+CMD[1316]:Start IsSuspended 0
+CMD[1316]:init put byte finished
+CMD[1317]:Clear finished
+CMD[1318]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[1815]:new Video stream index.. old -1 new 0
+CMD[1815]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[1816]:Neuer Thread gestartet: pid:19640 type 0
+CMD[1871]:new Audio stream index.. old -1 new 1
+CMD[1871]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[1878]:Neuer Thread gestartet: pid:19640 type 1
+CMD[9338]:Clear
+CMD[9338]:Stop
+CMD[9339]:Thread beendet : mpegDecoder pid 19640
+CMD[9371]:thread finished pid: 19640 type 0
+CMD[9394]:thread finished pid: 19640 type 1
+CMD[9404]:Stop finished
+CMD[9404]:Start IsSuspended 0
+CMD[9404]:init put byte finished
+CMD[9404]:Clear finished
+CMD[9404]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[9991]:new Video stream index.. old -1 new 0
+CMD[9991]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[9991]:new Audio stream index.. old -1 new 1
+CMD[9991]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[9997]:Neuer Thread gestartet: pid:19640 type 0
+CMD[9997]:Neuer Thread gestartet: pid:19640 type 1
+CMD[2506]:Clear
+CMD[2506]:Stop
+CMD[2541]:Thread beendet : mpegDecoder pid 19640
+CMD[2580]:thread finished pid: 19640 type 0
+CMD[2591]:thread finished pid: 19640 type 1
+CMD[2602]:Stop finished
+CMD[2602]:Start IsSuspended 0
+CMD[2602]:init put byte finished
+CMD[2603]:Clear finished
+CMD[2603]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[2916]:new Video stream index.. old -1 new 0
+CMD[2916]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[2916]:new Audio stream index.. old -1 new 1
+CMD[2916]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[2928]:Neuer Thread gestartet: pid:19640 type 0
+CMD[2946]:Neuer Thread gestartet: pid:19640 type 1
+CMD[4478]:Clear
+CMD[4478]:Stop
+CMD[4489]:Thread beendet : mpegDecoder pid 19640
+CMD[4553]:thread finished pid: 19640 type 0
+CMD[4592]:thread finished pid: 19640 type 1
+CMD[4592]:Stop finished
+CMD[4592]:Start IsSuspended 0
+CMD[4593]:init put byte finished
+CMD[4593]:Clear finished
+CMD[4593]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[4859]:new Video stream index.. old -1 new 0
+CMD[4860]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[4860]:Neuer Thread gestartet: pid:19640 type 0
+CMD[4930]:new Audio stream index.. old -1 new 1
+CMD[4930]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[4931]:Neuer Thread gestartet: pid:19640 type 1
+CMD[2954]:Clear
+CMD[2954]:Stop
+CMD[2966]:Thread beendet : mpegDecoder pid 19640
+CMD[3000]:thread finished pid: 19640 type 0
+CMD[3008]:thread finished pid: 19640 type 1
+CMD[3014]:Stop finished
+CMD[3014]:Start IsSuspended 0
+CMD[3014]:init put byte finished
+CMD[3014]:Clear finished
+CMD[3014]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[3622]:new Video stream index.. old -1 new 0
+CMD[3622]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[3622]:Neuer Thread gestartet: pid:19640 type 0
+CMD[3673]:new Audio stream index.. old -1 new 1
+CMD[3673]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[3676]:Neuer Thread gestartet: pid:19640 type 1
+CMD[2021]:Clear
+CMD[2021]:Stop
+CMD[2021]:Thread beendet : mpegDecoder pid 19640
+CMD[2033]:thread finished pid: 19640 type 0
+CMD[2044]:thread finished pid: 19640 type 1
+CMD[2053]:Stop finished
+CMD[2053]:Start IsSuspended 0
+CMD[2054]:init put byte finished
+CMD[2054]:Clear finished
+CMD[2054]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[2488]:new Video stream index.. old -1 new 0
+CMD[2488]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[2489]:Neuer Thread gestartet: pid:19640 type 0
+CMD[2606]:new Audio stream index.. old -1 new 1
+CMD[2607]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[2607]:Neuer Thread gestartet: pid:19640 type 1
+CMD[5041]:Clear
+CMD[5041]:Stop
+CMD[5052]:Thread beendet : mpegDecoder pid 19640
+CMD[5080]:thread finished pid: 19640 type 0
+CMD[5092]:thread finished pid: 19640 type 1
+CMD[5096]:Stop finished
+CMD[5096]:Start IsSuspended 0
+CMD[5097]:init put byte finished
+CMD[5097]:Clear finished
+CMD[5097]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[5388]:new Video stream index.. old -1 new 0
+CMD[5388]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[5388]:Neuer Thread gestartet: pid:19640 type 0
+CMD[5528]:new Audio stream index.. old -1 new 1
+CMD[5528]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[5530]:Neuer Thread gestartet: pid:19640 type 1
+CMD[4778]:Clear
+CMD[4778]:Stop
+CMD[4795]:Thread beendet : mpegDecoder pid 19640
+CMD[4801]:thread finished pid: 19640 type 0
+CMD[4814]:thread finished pid: 19640 type 1
+CMD[4822]:Stop finished
+CMD[4822]:Start IsSuspended 0
+CMD[4822]:init put byte finished
+CMD[4822]:Clear finished
+CMD[4822]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[5111]:new Video stream index.. old -1 new 0
+CMD[5111]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[5111]:new Audio stream index.. old -1 new 1
+CMD[5111]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[5112]:Neuer Thread gestartet: pid:19640 type 0
+CMD[5113]:Neuer Thread gestartet: pid:19640 type 1
+CMD[3582]:Clear
+CMD[3582]:Stop
+CMD[3595]:Thread beendet : mpegDecoder pid 19640
+CMD[3680]:thread finished pid: 19640 type 0
+CMD[3680]:thread finished pid: 19640 type 1
+CMD[3719]:Stop finished
+CMD[3719]:Start IsSuspended 0
+CMD[3720]:init put byte finished
+CMD[3720]:Clear finished
+CMD[3720]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[4018]:new Video stream index.. old -1 new 0
+CMD[4018]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[4018]:Neuer Thread gestartet: pid:19640 type 0
+CMD[4145]:new Audio stream index.. old -1 new 1
+CMD[4145]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[4149]:Neuer Thread gestartet: pid:19640 type 1
+CMD[4087]:Clear
+CMD[4087]:Stop
+CMD[4099]:Thread beendet : mpegDecoder pid 19640
+CMD[4295]:thread finished pid: 19640 type 0
+CMD[4302]:thread finished pid: 19640 type 1
+CMD[4308]:Stop finished
+CMD[4308]:Start IsSuspended 0
+CMD[4308]:init put byte finished
+CMD[4308]:Clear finished
+CMD[4309]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[4900]:new Video stream index.. old -1 new 0
+CMD[4900]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[4901]:new Audio stream index.. old -1 new 1
+CMD[4901]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[4901]:Neuer Thread gestartet: pid:19640 type 0
+CMD[4903]:Neuer Thread gestartet: pid:19640 type 1
+CMD[0728]:Clear
+CMD[0728]:Stop
+CMD[0739]:Thread beendet : mpegDecoder pid 19640
+CMD[0900]:thread finished pid: 19640 type 0
+CMD[0903]:thread finished pid: 19640 type 1
+CMD[0914]:Stop finished
+CMD[0914]:Start IsSuspended 0
+CMD[0914]:init put byte finished
+CMD[0914]:Clear finished
+CMD[0914]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[1492]:new Video stream index.. old -1 new 0
+CMD[1492]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[1493]:Neuer Thread gestartet: pid:19640 type 0
+CMD[1594]:new Audio stream index.. old -1 new 1
+CMD[1594]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[1595]:Neuer Thread gestartet: pid:19640 type 1
+CMD[5640]:Clear
+CMD[5640]:Stop
+CMD[5652]:Thread beendet : mpegDecoder pid 19640
+CMD[5683]:thread finished pid: 19640 type 0
+CMD[5686]:thread finished pid: 19640 type 1
+CMD[5699]:Stop finished
+CMD[5699]:Start IsSuspended 0
+CMD[5699]:init put byte finished
+CMD[5699]:Clear finished
+CMD[5704]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[5869]:new Video stream index.. old -1 new 0
+CMD[5869]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[5870]:Neuer Thread gestartet: pid:19640 type 0
+CMD[6006]:new Audio stream index.. old -1 new 1
+CMD[6006]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[6007]:Neuer Thread gestartet: pid:19640 type 1
+CMD[0426]:Clear
+CMD[0426]:Stop
+CMD[0454]:Thread beendet : mpegDecoder pid 19640
+CMD[0537]:thread finished pid: 19640 type 0
+CMD[0547]:thread finished pid: 19640 type 1
+CMD[0557]:Stop finished
+CMD[0557]:Start IsSuspended 0
+CMD[0557]:init put byte finished
+CMD[0557]:Clear finished
+CMD[0558]:Neuer Thread gestartet: Mpeg2Decoder pid 19640
+CMD[1129]:new Video stream index.. old -1 new 0
+CMD[1129]:Neuer StreamDecoder Pid: 19640 type 0
+CMD[1129]:Neuer Thread gestartet: pid:19640 type 0
+CMD[1233]:new Audio stream index.. old -1 new 1
+CMD[1233]:Neuer StreamDecoder Pid: 19640 type 1
+CMD[1236]:Neuer Thread gestartet: pid:19640 type 1
+CMD[5621]:Stop
+CMD[5635]:Thread beendet : mpegDecoder pid 19640
+CMD[5672]:thread finished pid: 19640 type 0
+CMD[5762]:thread finished pid: 19640 type 1
+CMD[5773]:Stop finished
+Releasing DFB
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000521.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+	<LI>Next message: <A HREF="000526.html">[Softdevice-devel] buffering issues in softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#523">[ date ]</a>
+              <a href="thread.html#523">[ thread ]</a>
+              <a href="subject.html#523">[ subject ]</a>
+              <a href="author.html#523">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

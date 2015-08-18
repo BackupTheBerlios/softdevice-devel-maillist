@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] improved lip sync with mgatv and viatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C200701222126.58727.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002685.html">
+   <LINK REL="Next"  HREF="002688.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] improved lip sync with mgatv and viatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C200701222126.58727.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] improved lip sync with mgatv and viatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Jan 22 21:26:58 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002685.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+        <LI>Next message: <A HREF="002688.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2687">[ date ]</a>
+              <a href="thread.html#2687">[ thread ]</a>
+              <a href="subject.html#2687">[ subject ]</a>
+              <a href="author.html#2687">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag 21 Januar 2007 11:52, Torgeir Veimo wrote:
+&gt;<i> If you're struggling with bad lip sync using either mgatv or viatv  
+</I>&gt;<i> output, try applying this patch to reduce the allowed difference  
+</I>&gt;<i> between audio and video;
+</I>
+I'm seeing a similar problem with my G400.
+But I reduced the skip limit from 8 to 6. Prehaps I should reduce it more.
+Further I added some logging:
+Jan 22 21:04:44 bodega1 vdr: [6464] [mpeg2decoder] skipped (10, 210 [2490 -&gt; 586])
+Jan 22 21:05:59 bodega1 vdr: [6464] [mpeg2decoder] skipped (9, 171 [2530 -&gt; 613])
+Jan 22 21:07:01 bodega1 vdr: [6464] [mpeg2decoder] skipped (10, 209 [2567 -&gt; 655])
+Jan 22 21:08:11 bodega1 vdr: [6464] [mpeg2decoder] skipped (9, 170 [2608 -&gt; 707])
+
+So my system skips around 9 to 10 frames per minute.
+60 * 25 = 1500 frames.
+So the TV frame rate is 25 * 1490 / 1500 = 24.833 Hz .
+
+I guess I've to ask Ville if there is a way to increase the dot clock 
+of my card in some way.
+
+diff to get the numbers:
+? dfb_report_skipped-01.diff
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.70
+diff -U3 -r1.70 mpeg2decoder.c
+--- mpeg2decoder.c	7 Nov 2006 19:01:37 -0000	1.70
++++ mpeg2decoder.c	22 Jan 2007 20:22:07 -0000
+@@ -923,10 +923,28 @@
+   else if (delay &lt; -frametime()*100)
+     delay = -frametime()*100;
+ 
+-  if (offset &gt;  8*frametime())
+-     hurry_up=1;
+-  else if ( (offset &lt; 2*frametime()) &amp;&amp; (hurry_up &gt; 0) )
+-     hurry_up=0;
++  {
++      static uint64_t skip_time = 0;
++      static int      frames_skipped = 0,
++                      start_offset = 0;
++
++    if (hurry_up)
++      frames_skipped++;
++
++    if (offset &gt;  6*frametime()) {
++      if (!hurry_up) {
++        frames_skipped = 0;
++        start_offset = offset;
++        skip_time = getTimeMilis();
++      }
++      hurry_up=1;
++    } else if ( (offset &lt; 2*frametime()) &amp;&amp; (hurry_up &gt; 0) ) {
++      hurry_up=0;
++      skip_time = getTimeMilis() - skip_time;
++      dsyslog (&quot;[mpeg2decoder] skipped (%d, %lld [%d -&gt; %d])&quot;,
++               frames_skipped, skip_time, start_offset, offset);
++    }
++  }
+ 
+ #if 1
+   int dispTime=syncTimer-&gt;GetRelTime();
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002685.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+	<LI>Next message: <A HREF="002688.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2687">[ date ]</a>
+              <a href="thread.html#2687">[ thread ]</a>
+              <a href="subject.html#2687">[ subject ]</a>
+              <a href="author.html#2687">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

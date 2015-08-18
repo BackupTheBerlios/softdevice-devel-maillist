@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] improved lip sync with mgatv and viatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C53FF12B8-D838-4DC3-B53D-9710A07BCB56%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002687.html">
+   <LINK REL="Next"  HREF="002689.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] improved lip sync with mgatv and viatv</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C53FF12B8-D838-4DC3-B53D-9710A07BCB56%40pobox.com%3E"
+       TITLE="[Softdevice-devel] improved lip sync with mgatv and viatv">torgeir at pobox.com
+       </A><BR>
+    <I>Tue Jan 23 01:25:36 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002687.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+        <LI>Next message: <A HREF="002689.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2688">[ date ]</a>
+              <a href="thread.html#2688">[ thread ]</a>
+              <a href="subject.html#2688">[ subject ]</a>
+              <a href="author.html#2688">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 22 Jan 2007, at 20:26, Stefan Lucke wrote:
+
+&gt;<i> On Sonntag 21 Januar 2007 11:52, Torgeir Veimo wrote:
+</I>&gt;&gt;<i> If you're struggling with bad lip sync using either mgatv or viatv
+</I>&gt;&gt;<i> output, try applying this patch to reduce the allowed difference
+</I>&gt;&gt;<i> between audio and video;
+</I>&gt;<i>
+</I>&gt;<i> I'm seeing a similar problem with my G400.
+</I>&gt;<i> But I reduced the skip limit from 8 to 6. Prehaps I should reduce  
+</I>&gt;<i> it more.
+</I>&gt;<i> Further I added some logging:
+</I>&gt;<i> Jan 22 21:04:44 bodega1 vdr: [6464] [mpeg2decoder] skipped (10, 210  
+</I>&gt;<i> [2490 -&gt; 586])
+</I>&gt;<i> Jan 22 21:05:59 bodega1 vdr: [6464] [mpeg2decoder] skipped (9, 171  
+</I>&gt;<i> [2530 -&gt; 613])
+</I>&gt;<i> Jan 22 21:07:01 bodega1 vdr: [6464] [mpeg2decoder] skipped (10, 209  
+</I>&gt;<i> [2567 -&gt; 655])
+</I>&gt;<i> Jan 22 21:08:11 bodega1 vdr: [6464] [mpeg2decoder] skipped (9, 170  
+</I>&gt;<i> [2608 -&gt; 707])
+</I>&gt;<i>
+</I>&gt;<i> So my system skips around 9 to 10 frames per minute.
+</I>&gt;<i> 60 * 25 = 1500 frames.
+</I>&gt;<i> So the TV frame rate is 25 * 1490 / 1500 = 24.833 Hz .
+</I>&gt;<i>
+</I>&gt;<i> I guess I've to ask Ville if there is a way to increase the dot clock
+</I>&gt;<i> of my card in some way.
+</I>
+This assumes your soundcard is perfectly clocked to the incoming DVB  
+stream? I'd assume that eventually if the soundcard is a bit faster  
+than the DVB stream, you'd get an xrun. Maybe it's an idea to add  
+xrun counts as well.
+
+Another thing which would be good to get statistics about: the  
+average number of &quot;hurryup&quot;s after a channel change.
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002687.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+	<LI>Next message: <A HREF="002689.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2688">[ date ]</a>
+              <a href="thread.html#2688">[ thread ]</a>
+              <a href="subject.html#2688">[ subject ]</a>
+              <a href="author.html#2688">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

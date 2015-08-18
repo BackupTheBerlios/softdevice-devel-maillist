@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503300855.21675.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000404.html">
+   <LINK REL="Next"  HREF="000374.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503300855.21675.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Mar 30 08:55:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000404.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000374.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#405">[ date ]</a>
+              <a href="thread.html#405">[ thread ]</a>
+              <a href="subject.html#405">[ subject ]</a>
+              <a href="author.html#405">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 30. M&#228;rz 2005 00:20, Lucian Muresan wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> ...
+</I>&gt;<i> &gt; For debugging a added interlaced and top/bottom first change reporting.
+</I>&gt;<i> &gt; With result that top_field_first is set allways and that interlaced flag
+</I>&gt;<i> &gt; is unrelaiable (changeing every now and than).
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; With attached patch you'll get field order changes reported.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> thank you for the debug patch. I've seen no filed order changes output 
+</I>&gt;<i> in my log file. 
+</I>
+As mpeg2 is most (only) top_field_first, this messages should appear
+only once. After startup when we get the first frame.
+
+
+&gt;<i> from last summer). Namely, I invoked it like
+</I>&gt;<i> vdr ..... -P'softdevice -L /usr/lib/vdr -vo:mgatv'
+</I>
+I saw the odd calling line too, but though as you wrote 
+&quot;Tonight after getting back home from work ..&quot; you just wrote
+it down in the wrong way from memory.
+Good to have some others on this list who can read carefully.
+
+
+&gt;<i> Maybe you're now able to find out what makes the non-mgatv code path in 
+</I>&gt;<i> softdevice succeed in AV-sync and the mgatv path fail. Well, what about 
+</I>&gt;<i> you, is AV in sync when using -vo dfb:mgatv (and not -vo:mgatv like I did)?
+</I>
+I think your framebuffer is running at a higher refreshrate than 50Hz
+and we can speed up when we a bit late.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000404.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000374.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#405">[ date ]</a>
+              <a href="thread.html#405">[ thread ]</a>
+              <a href="subject.html#405">[ subject ]</a>
+              <a href="author.html#405">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

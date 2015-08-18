@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606181310.14609.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002174.html">
+   <LINK REL="Next"  HREF="002176.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606181310.14609.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sun Jun 18 14:10:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002174.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002176.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2175">[ date ]</a>
+              <a href="thread.html#2175">[ thread ]</a>
+              <a href="subject.html#2175">[ subject ]</a>
+              <a href="author.html#2175">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 18 June 2006 12:56, Torgeir Veimo wrote:
+&gt;<i> On Sun, 2006-06-18 at 12:05 +0100, Laz wrote:
+</I>&gt;<i> &gt; I have just checked out softdevice cvs and it is running nicely
+</I>&gt;<i> &gt; with &quot;-vo:dfb:viatv:cle266&quot;. CPU usage like this is ca. 28% like this
+</I>&gt;<i> &gt; on a 1
+</I>&gt;<i> &gt; GHz Epia MII-12000. With &quot;-vo:dfb:viatv&quot;, CPU usage is ca. 82% for the
+</I>&gt;<i> &gt; same
+</I>&gt;<i> &gt; channel.
+</I>&gt;<i>
+</I>&gt;<i> Does this work just as good with higher resolutions without viatv? With
+</I>&gt;<i> higher resolution I'm thinking about projector native resolutions such
+</I>&gt;<i> as 1280x720 etc.
+</I>
+I know that some parts of the decoder library are hard-coded to 720x576, as 
+are the buffers used by the decoder. These could be changed, obviously, but 
+I'm not sure whether there are any limits on the actual MPEG2 decoder chip 
+itself.
+
+For now, it'll only work at 720x576 and below (unless I've missed some 
+changes). In the future, who knows. I'm not sure whether the Unichrome X 
+driver provides hardware decoding for larger frames or not.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002174.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002176.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2175">[ date ]</a>
+              <a href="thread.html#2175">[ thread ]</a>
+              <a href="subject.html#2175">[ subject ]</a>
+              <a href="author.html#2175">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

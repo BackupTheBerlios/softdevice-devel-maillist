@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay-ing%20PCM%20on%20S/PDIF%20or%20analog%20out&In-Reply-To=%3C43518909.9030309%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001374.html">
+   <LINK REL="Next"  HREF="001377.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay-ing%20PCM%20on%20S/PDIF%20or%20analog%20out&In-Reply-To=%3C43518909.9030309%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Sun Oct 16 00:56:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001374.html">[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+</A></li>
+        <LI>Next message: <A HREF="001377.html">[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1376">[ date ]</a>
+              <a href="thread.html#1376">[ thread ]</a>
+              <a href="subject.html#1376">[ subject ]</a>
+              <a href="author.html#1376">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> On Samstag, 15. Oktober 2005 16:30, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Changing the -ao softdevice param allow to output audio either on stereo
+</I>&gt;&gt;<i>analog out or S/PDIF :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>* analog : -ao alsa:pcm=default#ac3=spdif#
+</I>&gt;&gt;<i>* digital : -ao alsa:pcm=spdif#ac3=spdif#
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>When playing audio with softplay on digital-out, the audio play 1 minute
+</I>&gt;&gt;<i>of audio in 56 seconds : that's nearly 10% faster, really audible (not
+</I>&gt;&gt;<i>pitch, but rather tempo is clearly faster).
+</I>&gt;&gt;<i>Tried with OGG files played with softplay.
+</I>&gt;<i> 
+</I>&gt;<i> Are they with 44100 Hz sampled and your audio device plays out 
+</I>&gt;<i> 48000Hz only ?
+</I>
+Yes, the file is 44.1kHz :
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at vdr</A>:nhuillard$ file 01\ -\ Dancing\ Queen.ogg
+01 - Dancing Queen.ogg: Ogg data, Vorbis audio, stereo, 44100 Hz,
+~192003 bps, created by: Xiph.Org libVorbis I (1.0)
+
+I don't know what the device is capable of (EPIA M10k), but the audio
+plays well when using analog audio out (-ao alsa:pcm=default) and faster
+when using digital audio out (-ao alsa:pcm=spdif).
+
+And then again : thank you very much for the great software you built,
+and every effort you make in supporting it !
+The addition of AC3 out is a great thing !
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001374.html">[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+</A></li>
+	<LI>Next message: <A HREF="001377.html">[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1376">[ date ]</a>
+              <a href="thread.html#1376">[ thread ]</a>
+              <a href="subject.html#1376">[ subject ]</a>
+              <a href="author.html#1376">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

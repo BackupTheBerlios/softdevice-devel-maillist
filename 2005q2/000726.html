@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Unrepeatable crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C42949990.2030206%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000710.html">
+   <LINK REL="Next"  HREF="000730.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Unrepeatable crashes</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C42949990.2030206%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Unrepeatable crashes">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed May 25 17:28:16 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000710.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+        <LI>Next message: <A HREF="000730.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#726">[ date ]</a>
+              <a href="thread.html#726">[ thread ]</a>
+              <a href="subject.html#726">[ subject ]</a>
+              <a href="author.html#726">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> I just got softdevice from cvs.  It segfaulted in
+</I>&gt;<i> cPluginSoftDevice::ProcessArgs().  I fixed it by adding the &quot;continue&quot;
+</I>&gt;<i> statement below:
+</I>&gt;<i> 
+</I>&gt;<i>     if ( !strcmp(argv[i], &quot;softdevice&quot;) ) {
+</I>&gt;<i>         i++;
+</I>&gt;<i>         argc--;
+</I>&gt;<i>         continue;
+</I>&gt;<i>     };
+</I>&gt;<i> 
+</I>Ooops, that's my fault. I will fix it in the CVS, thank you for the report!
+
+&gt;<i> I've got some more crashes lately, with a CVS taken a couple of weeks ago,
+</I>&gt;<i> right before the discussion on screen blanking.  The last one was Signal 7,
+</I>&gt;<i> but it might have been because of replacing the running libvdr-softdevice.so
+</I>&gt;<i> file (I doubt that, but it's a possibility).  A previous one was Signal 11
+</I>&gt;<i> without any apparent reason, when pressing the Timers button on the remote
+</I>&gt;<i> control, the first keypress for VDR's lifetime (during timed recording).
+</I>&gt;<i> The sound output was turned off, so I can't tell if it was already crashed.
+</I>&gt;<i> It was showing a stationary outdoors picture, but there might have been some
+</I>&gt;<i> wind noise in it.
+</I>&gt;<i> 
+</I>&gt;<i> Here are the relevant log snippets:
+</I>&gt;<i> 
+</I>&gt;<i> CMD[1282]:Play
+</I>&gt;<i> CMD[1405]:new Audio stream index.. old -1 new 1
+</I>&gt;<i> CMD[1467]:thread finished pid: 3400 type 1
+</I>&gt;<i> CMD[1477]:Neuer StreamDecoder Pid: 3395 type 1
+</I>&gt;<i> CMD[1544]:Neuer Thread gestartet: pid:3406 type 1
+</I>&gt;<i> CMD[5582]:Stop
+</I>&gt;<i> CMD[5618]:thread finished pid: 3398 type 0
+</I>&gt;<i> CMD[5682]:thread finished pid: 3406 type 1
+</I>&gt;<i> CMD[5691]:Stop finished
+</I>&gt;<i> (!) [ 3612:    0.000] --&gt; Caught signal 6 (sent by pid 3612, uid 1000) &lt;--
+</I>&gt;<i> 
+</I>&gt;<i> I think that the above was on Saturday, when VDR was shut down during
+</I>&gt;<i> the playback of a recording.
+</I>&gt;<i> 
+</I>&gt;<i> [dfb] (re)configuring Videolayer to 720 x 576 (540x576)
+</I>&gt;<i> [dfb] creating new surface
+</I>&gt;<i> [surface capabilities] videoSurface: videoonly
+</I>&gt;<i> [dfb] (re)configured 0x00200806
+</I>&gt;<i> (!) [ 2974:    0.000] --&gt; Caught signal 11 (at 0x3336393e, invalid address) &lt;--
+</I>&gt;<i> 
+</I>&gt;<i> This was probably the crash from pressing the Timers key.  I have to modify
+</I>&gt;<i> my runvdr script so that it prints the timestamp also when starting vdr for
+</I>&gt;<i> the first time.  Currently I have only this:
+</I>&gt;<i> 
+</I>&gt;<i> 	date '+%Y-%m-%d %H:%M:%S killing VDR'
+</I>&gt;<i> 	killall -q -TERM vdr
+</I>&gt;<i> 	sleep 10
+</I>&gt;<i> 	date '+%Y-%m-%d %H:%M:%S restarting VDR'
+</I>&gt;<i> 
+</I>&gt;<i> [dfb] (re)configuring Videolayer to 720 x 576 (540x576)
+</I>&gt;<i> [dfb] creating new surface
+</I>&gt;<i> [surface capabilities] videoSurface: videoonly
+</I>&gt;<i> [dfb] (re)configured 0x00200806
+</I>&gt;<i> (!) [ 3066:    0.000] --&gt; Caught signal 7 (at 0xb79f3e2e, non-existent physical
+</I>&gt;<i> address) &lt;--
+</I>&gt;<i> 
+</I>
+Unfortunatly it is very difficult to find the reasons for these crashes 
+just with this information. It is possible to enable core dumps in your 
+system, so that we can have this additional information? It would make 
+finding the problem a lot easier...
+
+Thank you,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000710.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+	<LI>Next message: <A HREF="000730.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#726">[ date ]</a>
+              <a href="thread.html#726">[ thread ]</a>
+              <a href="subject.html#726">[ subject ]</a>
+              <a href="author.html#726">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

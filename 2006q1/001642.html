@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] new OSD support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C200601081320.30107.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001641.html">
+   <LINK REL="Next"  HREF="001644.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] new OSD support</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3C200601081320.30107.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] new OSD support">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Sun Jan  8 14:20:29 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001641.html">[Softdevice-devel] new OSD support
+</A></li>
+        <LI>Next message: <A HREF="001644.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1642">[ date ]</a>
+              <a href="thread.html#1642">[ thread ]</a>
+              <a href="subject.html#1642">[ subject ]</a>
+              <a href="author.html#1642">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 08 January 2006 13:03, Martin Wache wrote:
+&gt;<i> Laz schrieb:
+</I>&gt;<i> &gt; It's an Epia MII-12000 with a Nehemiah processor. I'll test that system
+</I>&gt;<i> &gt; more later on. The CPU usage sits between ca. 65% and 85%, depending on
+</I>&gt;<i> &gt; the bitrate of the channel, so it isn't totally ideal! With the xine
+</I>&gt;<i> &gt; plugin and hardware MPEG2 decoding, it is down at about 35% (from memory)
+</I>&gt;<i> &gt; but the OSD wasn't as good (software blended, and really sluggish unless
+</I>&gt;<i> &gt; it was opaque), and that also requires the extra overhead of X running!
+</I>&gt;<i>
+</I>&gt;<i> Since you mention it, is hardware MPEG2 decoding for the epias now in
+</I>&gt;<i> DirectFB? I think I read somewhere that this feature is planned...
+</I>
+As far as I know, a couple of people have mentioned the idea but so far no one 
+has managed it (unless it has sneaked into DirectFB when I wasn't looking!). 
+The main problem is that the xvmc implementation in Xorg is very tied in to X 
+and looks like it would be a nightmare to extract the relevant bits. I might 
+have another look, though...
+
+&gt;<i> &gt; I've just noticed that MMX2 is enabled by default in softdevice; this CPU
+</I>&gt;<i> &gt; doesn't have this: not sure whether disabling that would make any
+</I>&gt;<i> &gt; difference but I'll give it a go!
+</I>&gt;<i>
+</I>&gt;<i> Don't worry, if you processor would not support MMX2 the softdevice
+</I>&gt;<i> would crash ;-). What the softdevice calls MMX2 is actually a small set
+</I>&gt;<i> of instructions which is also part of 3Dnow! and is also sometimes
+</I>&gt;<i> called mmxext. In fact it is only is only PREFETCH and MOVQNT. As far as
+</I>&gt;<i> I know all Via processors from Erza onwards support these instructions.
+</I>
+Ahhhh...I was wondering why it wasn't crashing with some random error message 
+about unsupported processor features! I might as well rebuild it: I've just 
+applied your resolution patch (not that I use anything above 720x576!).
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001641.html">[Softdevice-devel] new OSD support
+</A></li>
+	<LI>Next message: <A HREF="001644.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1642">[ date ]</a>
+              <a href="thread.html#1642">[ thread ]</a>
+              <a href="subject.html#1642">[ subject ]</a>
+              <a href="author.html#1642">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

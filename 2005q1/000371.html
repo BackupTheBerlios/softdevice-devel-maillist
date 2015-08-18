@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3CPine.LNX.4.61.0503232147160.12630%40tuomi.oulu.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000366.html">
+   <LINK REL="Next"  HREF="000373.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Tomi Hautakoski</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3CPine.LNX.4.61.0503232147160.12630%40tuomi.oulu.fi%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">thauta at iki.fi
+       </A><BR>
+    <I>Wed Mar 23 21:21:03 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000366.html">resend: Re: [Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain]
+</A></li>
+        <LI>Next message: <A HREF="000373.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#371">[ date ]</a>
+              <a href="thread.html#371">[ thread ]</a>
+              <a href="subject.html#371">[ subject ]</a>
+              <a href="author.html#371">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>First, I would like to thank everyone developing softdevice+DFB. After 
+upgrading dfb to 0.9.22 and softdevice to cvs the problems with 
+interlaced G400 tv-out and sync are gone. Excellent work! =)
+
+Now I'm just wondering if anyone else is having juddering picture when 
+using the OSD? Everything is fine until I open the OSD, then the 
+video+audio start to judder. After the OSD disappears, it takes a few 
+seconds until the video and audio are playing ok again. However the 
+a-vsync gets lost and I have to change to a different channel and back to 
+recover the a-vsync. The video seems to lag ~1 sec when using the OSD for 
+3 secs to show the channel info.
+
+I'm guessing now but is there a chance that the OSD doesn't use the same 
+mechanism that the video does to sync the fields for TV? And somehow it's 
+affecting the audio+video layers too. Well, ask away any needed details if 
+anyone has suggestions.
+
+My system is G400 w/ rgb-tvout, vdr 1.3.22, softdevice cvs from today and 
+DFB 0.9.22.
+
+[22:04:09] (VDR) #./vdr -v /tmp/vdr_save/ -P'softdevice -vo dfb:mgatv'
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] deinterlace method set to 0 none
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YUV2)
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.9-pre1) build(4747)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+        ---------------------- DirectFB v0.9.22 ---------------------
+              (c) 2000-2002  convergence integrated media GmbH
+              (c) 2002-2004  convergence GmbH
+         -----------------------------------------------------------
+
+(*) DirectFB/Core: Multi Application Core. (2005-03-18 21:23)
+(*) Direct/Memcpy: Using SSE optimized memcpy()
+(*) Direct/Thread: Running 'Fusion Dispatch' (MESSAGING, 2520)...
+(*) DirectFB/Core: doing sync()...
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 2521)...
+(*) Direct/Modules: suppress module 'joystick'
+(*) Direct/Modules: suppress module 'lirc'
+(*) Direct/Modules: suppress module 'ps2mouse'
+(*) Direct/Modules: suppress module 'serialmouse'
+(*) Direct/Modules: suppress module 'sonypi'
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 2522)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G400 0.7 (convergence integrated media GmbH)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 33554432 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine 
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize 
+SrcColorkey Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 16</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 16</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x400 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">400x300 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">320x240 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">320x200 at 16</A>
+[dfb] Enumeratig display Layers
+Layer 2 FBDev Primary Layer  Type: graphics
+   Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+   Caps: brightness contrast deinterlacing dst_colorkey screen_location 
+surface
+Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+   Caps: brightness contrast flicker_filtering hue field_parity saturation 
+surface
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (Matrox CRTC2 Layer - [720x576])
+osdSurface::
+  - videoonly
+  - flipping
+videoSurface::
+  - videoonly
+[dfb] Using this layer for OSD: Matrox CRTC2 Layer
+[dfb] Using this layer for Video out: Matrox CRTC2 Layer
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface
+[dfb] (re)configured 0x00200806
+Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+CMD[2792]:Start IsSuspended 0
+init put byte finished
+CMD[2793]:Neuer Thread gestartet: Mpeg2Decoder pid 2527
+CMD[3359]:Neuer StreamDecoder Pid: 2527 type 0
+CMD[3359]:Neuer Thread gestartet: pid:2529 type 0
+Set up to use linux RTC
+CMD[4146]:Neuer StreamDecoder Pid: 2527 type 1
+CMD[4177]:Neuer Thread gestartet: pid:2530 type 1
+alsa-audio: SetParams
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface
+[dfb] (re)configured 0x00200806
+Input #0, mpeg, from 'test':
+   Duration: N/A, bitrate: N/A
+   Stream #0.0: Video: mpeg2video, 720x576, 25.00 fps, 10000 kb/s
+   Stream #0.1: Audio: mp2, 48000 Hz, stereo, 224 kb/s
+alsa-audio: Xrun
+alsa-audio: Xrun
+alsa-audio: Xrun
+alsa-audio: Xrun
+alsa-audio: Xrun
+alsa-audio: Xrun
+playmode not implemented... 0
+CMD[9161]:Stop
+CMD[9181]:Thread beendet : mpegDecoder pid 2527
+CMD[9190]:thread finished pid: 2529 type 0
+CMD[9211]:thread finished pid: 2530 type 1
+CMD[9221]:Stop finished
+GetSpuDecoder 0
+Releasing DFB
+
+Maybe these are somehow related to the problem. Noticed from the logs 
+after a longer run:
+alsa-audio: Xrun
+[mpeg2video @ 0x407f56b0]00 motion_type at 16 15
+[mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+[mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+[mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+[mpeg2video @ 0x407f56b0]MPEG motion vector out of boundary
+[mpeg2video @ 0x407f56b0]ac-tex damaged at 1 16
+[mpeg2video @ 0x407f56b0]Warning MVs not available
+[mpeg2video @ 0x407f56b0]concealing 135 DC, 135 AC, 135 MV errors
+
+
+Tomi Hautakoski
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">thauta at iki.fi</A>
+                            Queen Elizabeth rules, UK?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000366.html">resend: Re: [Softdevice-devel] CVS from last night feedback  - field parity seems to be solved :-) , some audio issues remain]
+</A></li>
+	<LI>Next message: <A HREF="000373.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#371">[ date ]</a>
+              <a href="thread.html#371">[ thread ]</a>
+              <a href="subject.html#371">[ subject ]</a>
+              <a href="author.html#371">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

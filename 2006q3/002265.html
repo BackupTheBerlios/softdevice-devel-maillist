@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180607161334g7d02834fjc94642f44f0be6e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002264.html">
+   <LINK REL="Next"  HREF="002270.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Alasdair Campbell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180607161334g7d02834fjc94642f44f0be6e%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">ragawu at gmail.com
+       </A><BR>
+    <I>Sun Jul 16 22:34:32 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002264.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002270.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2265">[ date ]</a>
+              <a href="thread.html#2265">[ thread ]</a>
+              <a href="subject.html#2265">[ subject ]</a>
+              <a href="author.html#2265">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 16/07/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt; wrote:
+&gt;<i> On Sun, Jul 16, 2006 at 05:37:00PM +0100, Alasdair Campbell wrote:
+</I>&gt;<i> &gt; I've been having trouble getting the interlaced output of the G450
+</I>&gt;<i> &gt; working correctly.
+</I>&gt;<i> &gt; With current CVS, DirectFB 0..25.1 &amp; current CVS FFMPEG no matter
+</I>&gt;<i> &gt; whether I set the post-processing option &quot;Deinterlace method&quot; to
+</I>&gt;<i> &gt; 'none' or 'FB-intern' I still see lines (interlacing artifacts) where
+</I>&gt;<i> &gt; there is quick movement or scrolling text/credits.
+</I>&gt;<i>
+</I>&gt;<i> Stefan Lucke replaced the scaler one or two months ago.  It works for me,
+</I>&gt;<i> although with DirectFB CVS the OSD is broken since some weeks.  I think
+</I>&gt;<i> I'll revert to the latest official release of DirectFB.
+</I>&gt;<i>
+</I>
+I had the problem with the broken OSD, seemed like it was linked to
+the interlacing as only half was visible and it flickered like crazy.
+
+If it works for you then I must be doing something stupid, which
+wouldn't surprise me, as I'm flying by the seat of my pants where
+linux is concerned. As the documentation is so limited, I've not been
+sure that I've compiled things correctly, especially FFMPEG - I
+followed the instructions &quot;For deinterlacing pp-filters in recent
+plugin versions,....&quot; on the vdr wiki page for the plugin. But that
+could have been talking about a totally different version or horribly
+out of date (curse o' the wiki).
+
+How did you compile FFMPEG?
+
+&gt;<i> &gt; Should I be using &quot;-vo dfb:&quot; or &quot;-vo dfb:mgatv&quot; for my G450 with diy
+</I>&gt;<i> &gt; vga to scart cable?  I should add that using &quot;mplayer -vo dfbmga&quot;
+</I>&gt;<i> &gt; shows the same lines.
+</I>&gt;<i>
+</I>&gt;<i> vdr -P'softdevice -vo dfb:mgatv' works for me.
+</I>&gt;<i>
+</I>&gt;<i> Note that if you sometimes test with VGA output, you will need a different
+</I>&gt;<i> /etc/directfbrc.  I solved the problem by creating two /etc/directfbrc.*
+</I>&gt;<i> files and symlinking the correct one to directfbrc.
+</I>&gt;<i>
+</I>
+I only test on my TV so shouldn't need that - can make for angry
+scenes where the partner needs access to big brother....
+
+&gt;<i> &gt; I've picked up on work being done to ensue scaling of 16:9 interlaced
+</I>&gt;<i> &gt; video to 4:3 tv works correctly, is this complete &amp; working now? I
+</I>&gt;<i> &gt; notice that if I set &quot;Screen Aspect&quot; to 16:9, although I'm missing a
+</I>&gt;<i> &gt; lot of the image, and the aspect ratio is incorrect, there are no
+</I>&gt;<i> &gt; lines like those mentioned above.
+</I>&gt;<i>
+</I>&gt;<i> Before the field-based scaler, it used to be like that.  I use CropMode 4:3
+</I>&gt;<i> on my 4:3 video monitor.
+</I>&gt;<i>
+</I>
+If I set CropMode to 4:3 then the overscan is too severe. Even though
+my TV is 4:3, I like to view in the 16:9 aspect ratio whenever
+possible, ie there are black bars at the top and bottom. This is how I
+want to watch dvds and dvb-t television, though I'm beginning to feel
+like this it is going to be impossible to get this setup to be
+compatible with hardware interlacing.
+
+*If someone knows a definitive answer to this I would be greatful for the email.
+
+&gt;<i> &gt; I would prefer not to use any software deinterlacing, as the main
+</I>&gt;<i> &gt; reason I bought this card was that everywhere I read I was told that
+</I>&gt;<i> &gt; the card could do all this in hardware. Other than this current
+</I>&gt;<i> &gt; problem, the output is fantastic, although the audio does seem to lose
+</I>&gt;<i> &gt; sync quite regularly.
+</I>&gt;<i>
+</I>&gt;<i> What is the other hardware like?  I have a 900 MHz Celeron running on
+</I>&gt;<i> VIA 686A chipset, tested with 128 MB and 256 MB RAM, one ATAPI hard disk
+</I>&gt;<i> and two Nova-T PCI 90002 tuner cards.  It works most of the time, using
+</I>&gt;<i> nvram-wakeup for timed recordings, but every couple of months, the board
+</I>&gt;<i> needs to be powered off completely, because something in the PCI bus
+</I>&gt;<i> controller goes bad.  The only fan is the CPU fan, which blows air directly
+</I>&gt;<i> outside via a self-made duct.  Other than the size (a large tower case)
+</I>&gt;<i> and the occasional chipset glitches, I'm very happy with the system.
+</I>&gt;<i>
+</I>
+Hardware is biostar nforce2 based motherboard, underclocked &amp;
+undervolted athlon 2500 barton, 512MB ram, one atapi disk, two kworld
+vstream dvb-t pci cards, all in an antec aria cube case which used to
+get very hot and was really noisy until I replaced the PSU fan and
+changed my heatsink fan. I have plans for another vdr box using a
+passively cooled 900 Mhz celeron and a fanless psu but that can't
+happen until I reach a perfect settlement to my g450 setup, or I find
+someother way....
+
+
+&gt;<i>         Marko
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://bat.berlios.de/mailman/listinfo/softdevice-devel">http://bat.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+-- 
+A l a s d a i r   C a m p b e l l
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002264.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002270.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2265">[ date ]</a>
+              <a href="thread.html#2265">[ thread ]</a>
+              <a href="subject.html#2265">[ subject ]</a>
+              <a href="author.html#2265">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

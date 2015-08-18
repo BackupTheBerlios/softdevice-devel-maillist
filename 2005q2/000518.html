@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] recent cvs &amp; HDTV issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20recent%20cvs%20%26%20HDTV%20issue&In-Reply-To=%3C425BF4DE.3040003%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000506.html">
+   <LINK REL="Next"  HREF="000507.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] recent cvs &amp; HDTV issue</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20recent%20cvs%20%26%20HDTV%20issue&In-Reply-To=%3C425BF4DE.3040003%40gmx.net%3E"
+       TITLE="[Softdevice-devel] recent cvs &amp; HDTV issue">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr 12 18:18:38 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000506.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+        <LI>Next message: <A HREF="000507.html">[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#518">[ date ]</a>
+              <a href="thread.html#518">[ thread ]</a>
+              <a href="subject.html#518">[ subject ]</a>
+              <a href="author.html#518">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thomas Herrmann wrote:
+&gt;<i> Hi Martin,
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Thomas Herrmann wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>[softdevice] Video Out seems to be OK
+</I>&gt;&gt;&gt;<i>[softdevice] Initializing Audio Out
+</I>&gt;&gt;&gt;<i>[softdevice] Audio out seems to be OK
+</I>&gt;&gt;&gt;<i>[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;&gt;&gt;<i>cSoftDevice::MakePrimaryDevice
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 720x576
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 720x576
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 1920x1088
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 1920x1088
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 1920x1088
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 1920x1088
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 1920x1088
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 1920x1088
+</I>&gt;&gt;&gt;<i>[softdevice] allocating picture buffer for resolution 1920x1088
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>These messages come frome the deinterlacing. Are you sure that you have 
+</I>&gt;&gt;<i>enough CPU power to watch HDTV with lavc-deinterlacing enabled? If you 
+</I>&gt;&gt;<i>don't have enought CPU power the video buffer runs full (by the way the 
+</I>&gt;&gt;<i>A-V sync will be bad as well) and it will be cleared at some point, so 
+</I>&gt;&gt;<i>some parts of the playback will be skipped.
+</I>&gt;&gt;<i>To verify this you can enable the CMDDEB in mpeg2decoder.c (just 
+</I>&gt;&gt;<i>uncomment the line starting with //#define CMDDEB(out..) and recompile).
+</I>&gt;&gt;<i>Or just disable lavc-deinterlacing...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> You might be right. I just checked the syslog and do see some buffer
+</I>&gt;<i> overruns. The odd thing is, I can watch HDTV streams (recorded with VDR
+</I>&gt;<i> while suspending softdevice) with mplayer using the xv video out driver
+</I>&gt;<i> without skips. So might be just to small buffers?
+</I>&gt;<i> 
+</I>I don't think it is too small buffers, even larger buffers will run full 
+if we are too slow. They will just run full a bit later... Hmm ,after 
+having a closer look at your log files, vdr clear the buffers every 2-3 
+seconds. Maybe you are right and the buffers are too small for HDTV. But 
+I don't think it is the only reason...
+
+Did you try to disable deinterlacing? Does it work for you without 
+deinterlacing? Did it work for you with softdevice-0.1.0 and 
+deinterlacing *enabled*?
+
+I guess I will try to change the buffering a bit, maybe it improves the 
+situation...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000506.html">[Softdevice-devel] recent cvs &amp; HDTV issue
+</A></li>
+	<LI>Next message: <A HREF="000507.html">[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#518">[ date ]</a>
+              <a href="thread.html#518">[ thread ]</a>
+              <a href="subject.html#518">[ subject ]</a>
+              <a href="author.html#518">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

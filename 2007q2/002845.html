@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] building on mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C7C0D561D-06F8-4278-89E9-BD79FC471975%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002840.html">
+   <LINK REL="Next"  HREF="002849.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] building on mac</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C7C0D561D-06F8-4278-89E9-BD79FC471975%40pobox.com%3E"
+       TITLE="[Softdevice-devel] building on mac">torgeir at pobox.com
+       </A><BR>
+    <I>Wed Apr  4 19:06:25 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002840.html">[Softdevice-devel] building on mac
+</A></li>
+        <LI>Next message: <A HREF="002849.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2845">[ date ]</a>
+              <a href="thread.html#2845">[ thread ]</a>
+              <a href="subject.html#2845">[ subject ]</a>
+              <a href="author.html#2845">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 4 Apr 2007, at 17:27, Martin Wache wrote:
+
+&gt;<i> Torgeir Veimo schrieb:
+</I>&gt;&gt;&gt;<i> Ok, that works. But I got an endian issue I guess. Are you  
+</I>&gt;&gt;&gt;<i> working on
+</I>&gt;&gt;&gt;<i> a ppc mac?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;<i> Yes :-)
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> Here's a screenshot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;<i> I had a chance to try it on an intel mac a few weeks ago, I didn't  
+</I>&gt;<i> have
+</I>&gt;<i> the time to fix those problems correctly, but this hack fixes the
+</I>&gt;<i> problems...
+</I>&gt;<i>
+</I>&gt;<i> Bye,
+</I>&gt;<i> Martin
+</I>&gt;<i> Index: utils.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+</I>&gt;<i> retrieving revision 1.25
+</I>&gt;<i> diff -u -r1.25 utils.c
+</I>&gt;<i> --- utils.c	15 Jan 2007 19:35:13 -0000	1.25
+</I>&gt;<i> +++ utils.c	4 Apr 2007 16:24:06 -0000
+</I>&gt;<i> @@ -172,9 +172,13 @@
+</I>&gt;<i>     }
+</I>&gt;<i>  #endif
+</I>&gt;<i>     for ( ; i&gt;=2; i-=2 ) {
+</I>&gt;<i> +#if 1
+</I>&gt;<i> +      *((uint32_t *)dest1) = (yc1[1] &lt;&lt; 24)+ (vc[0] &lt;&lt; 16) + (yc1 
+</I>&gt;<i> [0] &lt;&lt; 8) + (uc[0] &lt;&lt; 0);
+</I>&gt;<i> +      *((uint32_t *)dest2) = (yc2[1] &lt;&lt; 24)+ (vc[0] &lt;&lt; 16) + (yc2 
+</I>&gt;<i> [0] &lt;&lt; 8) + (uc[0] &lt;&lt; 0);
+</I>&gt;<i> +#else
+</I>&gt;<i>        *((uint32_t *)dest1) = (yc1[0] &lt;&lt; 0)+ (uc[0] &lt;&lt; 8) + (yc1[1]  
+</I>&gt;<i> &lt;&lt; 16) + (vc[0] &lt;&lt; 24);
+</I>&gt;<i>        *((uint32_t *)dest2) = (yc2[0] &lt;&lt; 0)+ (uc[0] &lt;&lt; 8) + (yc2[1]  
+</I>&gt;<i> &lt;&lt; 16) + (vc[0] &lt;&lt; 24);
+</I>&gt;<i> -      //*idst++ = (yc[0] &lt;&lt; 0)+ (uc[0] &lt;&lt; 8) + (yc[1] &lt;&lt; 16) + (vc 
+</I>&gt;<i> [0] &lt;&lt; 24);
+</I>&gt;<i> +#endif
+</I>&gt;<i>        dest1+=4;
+</I>&gt;<i>        dest2+=4;
+</I>&gt;<i>        yc1 += 2;
+</I>&gt;<i>
+</I>
+Ok, it works now. Here's a screenshot while running with streamdev. I  
+don't currently have any USB dvb device..
+
+<A HREF="http://nothome.com/mcvdr.png">http://nothome.com/mcvdr.png</A>
+
+It would be interesting to see the client running on an apple tv. It  
+should have enough RAM for VDR to run in. The shm client could run as  
+an apple tv plugin, but I wonder if it would be more efficient to  
+just run it off streamdev, as it should be capable of decoding the  
+PES stream directly.
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002840.html">[Softdevice-devel] building on mac
+</A></li>
+	<LI>Next message: <A HREF="002849.html">[Softdevice-devel] building on mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2845">[ date ]</a>
+              <a href="thread.html#2845">[ thread ]</a>
+              <a href="subject.html#2845">[ subject ]</a>
+              <a href="author.html#2845">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

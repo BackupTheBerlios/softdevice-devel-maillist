@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Flicker when video is paused
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Flicker%20when%20video%20is%20paused&In-Reply-To=%3C20060411073719.GA3769%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001849.html">
+   <LINK REL="Next"  HREF="001855.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Flicker when video is paused</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Flicker%20when%20video%20is%20paused&In-Reply-To=%3C20060411073719.GA3769%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Flicker when video is paused">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Apr 11 09:37:19 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001849.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+        <LI>Next message: <A HREF="001855.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1851">[ date ]</a>
+              <a href="thread.html#1851">[ thread ]</a>
+              <a href="subject.html#1851">[ subject ]</a>
+              <a href="author.html#1851">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Apr 10, 2006 at 11:41:44PM +0200, Stefan Lucke wrote:
+&gt;<i> Try either commenting out line 97 of video.c :
+</I>&gt;<i> OsdRefreshCounter &gt; 80 || // blanks the screen after inactivity (4s)
+</I>
+Thanks, this seems to cure the problem.  When playback is paused,
+libvdr-softdevice is using less than 0.2% of logged CPU, and vdr
+is using 2.3%.  Without the patch, softdevice uses 0.8%.
+
+Here's the CPU usage of softdevice after the patch, with playback paused:
+
+CPU: PIII, speed 906.822 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (clocks processor is not halted) with a unit mask of 0x00 (No unit mask) count 90000
+samples  %        symbol name
+14       21.2121  cSoftOsd::Action()
+9        13.6364  cRelTimer::GetRelTime()
+9        13.6364  cSoftOsd::SetMode(int, bool, bool, bool, unsigned char*)
+6         9.0909  cVideoOut::AdjustOSDMode()
+5         7.5758  cVideoOut::Action()
+4         6.0606  cDFBRemote::Action()
+4         6.0606  cSoftDevice::Poll(cPoller&amp;, int)
+4         6.0606  cStreamDecoder::Action()
+2         3.0303  cDFBVideoOut::GetOSDDimension(int&amp;, int&amp;, int&amp;, int&amp;)
+2         3.0303  cDFBVideoOut::GetOSDMode(int&amp;, bool&amp;, bool&amp;, bool&amp;, unsigned char*&amp;)
+2         3.0303  cMpeg2Decoder::Action()
+2         3.0303  cMpeg2Decoder::BufferFill(int)
+1         1.5152  cDFBVideoOut::ProcessEvents()
+1         1.5152  cDFBVideoOut::ShowOSD()
+1         1.5152  cSoftDevice::HasDecoder() const
+
+The sampler was run for 20 seconds.  To get somewhat more accurate results,
+I'd let OProfile gather samples for at least 1000 seconds.
+
+BTW, what is the difference between cRelTimer::TimePassed() and
+cRelTimer::GetRelTime()?
+
+&gt;<i> Or make OsdRefreshCounter public (or protected) again and set
+</I>&gt;<i> it to 0 at the beginning of YUV in video-dfb.c
+</I>
+Why is YUV called when the playback is paused?  Is it because ffmpeg is not
+writing directly to the frame buffer?  Interestingly, I did see a few samples
+of YUV when the patch was not applied (and none when it was).  Maybe this is
+because with the patch, the load on the memory bus (or cache) is reduced.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001849.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+	<LI>Next message: <A HREF="001855.html">[Softdevice-devel] Flicker when video is paused
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1851">[ date ]</a>
+              <a href="thread.html#1851">[ thread ]</a>
+              <a href="subject.html#1851">[ subject ]</a>
+              <a href="author.html#1851">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] blank screen after some time with no signal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C428CB40E.3010500%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000692.html">
+   <LINK REL="Next"  HREF="000697.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] blank screen after some time with no signal</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20blank%20screen%20after%20some%20time%20with%20no%20signal&In-Reply-To=%3C428CB40E.3010500%40gmx.net%3E"
+       TITLE="[Softdevice-devel] blank screen after some time with no signal">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu May 19 17:43:10 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000692.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+        <LI>Next message: <A HREF="000697.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#695">[ date ]</a>
+              <a href="thread.html#695">[ thread ]</a>
+              <a href="subject.html#695">[ subject ]</a>
+              <a href="author.html#695">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;&gt;<i>Hmm, that's a difficult one - the problem is on one side we want to have 
+</I>&gt;&gt;<i>a fast responsive OSD, for this the screen has to be redrawn in software 
+</I>&gt;&gt;<i>  alpha mode, but we havn't got the last frame any more...
+</I>&gt;&gt;<i>I guess the only solution for this is to override libavcodec's get 
+</I>&gt;&gt;<i>buffer/release buffer functions and always keep a pointer of the last 
+</I>&gt;&gt;<i>frame. If we do that we can finally can also take screenshots with the 
+</I>&gt;&gt;<i>softdevice.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Shouldn't that extra buffering be done by the output method, as that
+</I>&gt;<i> kind of OSD mixing is already done within dfb.
+</I>The trick is that this way we don't need extra buffering. If we override 
+lavc getbuffer/relasebuffer functions we can decide when to reuse/free a 
+frame buffer. So we can just keep the last frame a bit longer in case we 
+need it again and free/reuse it when we got the next frame from lavc.
+
+&gt;<i> 
+</I>&gt;&gt;<i>I would like to postpone this change until I did the first release of 
+</I>&gt;&gt;<i>softplay, which hopefully will be this weekend.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Here I see some troubles, as softplay needs a change in softdevice
+</I>&gt;<i> for pause handling. So there should be a release of softdevice too.
+</I>&gt;<i> Hm, release 0.1.1 shows a similar behaviour so fixing that
+</I>&gt;<i> can be delayed.
+</I>&gt;<i> 
+</I>&gt;<i> So there should be only changes to softdevice, if there are impacts
+</I>&gt;<i> of latest ffmpeg time effects on softplay which have to be handled
+</I>&gt;<i> in softdevice too.
+</I>&gt;<i> 
+</I>I could not yet check these time effects, but I will do so this evening.
+
+Haveing a softdevice release which works without any problems with 
+softplay would be good, that sure. On the other hand I think it would be 
+important to have the HDTV buffering issues fixed in the next release, 
+but that requires a rework of my patch. Unfortunaltly I can do only one 
+thing until the weekend: finish the HDTV buffering patch or finish softplay.
+Maybe I should only release a pre version of softplay this weekend and 
+we can have combined softdevice/softplay release on one of the following 
+weekends?
+Or we release the softdevice this weekend without the HDTV fix, that's 
+up to you.
+Well, I guess I will first have to find out what's the cause for the 
+time issues of softplay. If a fix of this requires a change of the 
+softdevice releasing softplay alone doesn't make much sense.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000692.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+	<LI>Next message: <A HREF="000697.html">[Softdevice-devel] blank screen after some time with no signal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#695">[ date ]</a>
+              <a href="thread.html#695">[ thread ]</a>
+              <a href="subject.html#695">[ subject ]</a>
+              <a href="author.html#695">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

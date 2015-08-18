@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20probs%20with%20softdevice-0.2.1%2C%20FusionSound-0.9.23%2C%20linux-fusion-1.1%2C%20DirectFB-0.9.24&In-Reply-To=%3C20051212174057.GA1400%40seneca.muc.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001593.html">
+   <LINK REL="Next"  HREF="001596.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24</H1>
+    <B>Harald Milz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20probs%20with%20softdevice-0.2.1%2C%20FusionSound-0.9.23%2C%20linux-fusion-1.1%2C%20DirectFB-0.9.24&In-Reply-To=%3C20051212174057.GA1400%40seneca.muc.de%3E"
+       TITLE="[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24">hm at seneca.muc.de
+       </A><BR>
+    <I>Mon Dec 12 18:40:57 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001593.html">[Softdevice-devel] probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+        <LI>Next message: <A HREF="001596.html">[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1595">[ date ]</a>
+              <a href="thread.html#1595">[ thread ]</a>
+              <a href="subject.html#1595">[ subject ]</a>
+              <a href="author.html#1595">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmmm - got to follow up myself.. 
+
+On Mon, Dec 12, 2005 at 04:58:58PM +0100, Harald Milz wrote:
+&gt;<i> Next, softdevice-0.2.1 doesn't compile: 
+</I>
+It does compile with DFB-0.9.22 and Fusion-0.9.22. Hmmm -
+
+Now VDR starts as before but no decoded image is displayed. Only the
+channel OSD is displayed for 3 or 4 seconds. It's probably
+this one: 
+
+Dec 12 18:30:30 linvdr vdr[7243]: remote control softdevice-dfb - keys known
+Dec 12 18:30:30 linvdr vdr[7243]: remote control KBD - keys known
+Dec 12 18:30:30 linvdr vdr[7243]: switching to channel 1
+Dec 12 18:30:30 linvdr vdr[7256]: Decruft: cleaning thread started (pid=7256, tid=147466)
+Dec 12 18:30:30 linvdr vdr[7257]: KBD remote control thread started (pid=7257, tid=163851)
+Dec 12 18:30:34 linvdr vdr[7248]: [VideoOut]: resolution changed: W(720 -&gt; 736); H(576 -&gt;576)
+Dec 12 18:30:35 linvdr vdr[7243]: ERROR: device 1 has no lock, can't attach receiver!
+Dec 12 18:30:35 linvdr vdr[7243]: OSDTeletext: Did not find appropriate device for teletext receiver for channel Das Erste,
+ PID 104
+Dec 12 18:30:35 linvdr vdr[7243]: setting watchdog timer to 60 seconds
+Dec 12 18:30:35 linvdr vdr[7259]: transfer thread started (pid=7259, tid=196621)
+
+Again, the kernel is 2.6.13-15.7-default (SL10) with the kernel dvb
+drivers. With the drivers from the 9.3 kernel (2.6.11.4-21.7) everything
+worked fine. The updated was motivated by the Skystar2 driver which is said
+to work with more recent drivers
+(<A HREF="http://www.vdr-wiki.de/wiki/index.php/DVB-S_Budget-PCI-Karten">http://www.vdr-wiki.de/wiki/index.php/DVB-S_Budget-PCI-Karten</A>) but I
+haven't gotten that far yet... 
+
+? 
+
+I'm attaching a log of the vdr output. 
+
+
+PS: BTW the Nova-s card I got
+(<A HREF="http://www.vdr-wiki.de/wiki/index.php/Hauppauge_NOVA-S">http://www.vdr-wiki.de/wiki/index.php/Hauppauge_NOVA-S</A> left pic) needs the
+budget_ci driver despite the fact that it has no CI connector at all. Duh. 
+
+
+
+
+-- 
+In Boston, it is illegal to hold frog-jumping contests in nightclubs.
+-------------- next part --------------
+/usr/src/VDR
+
+Mon Dec 12 18:30:26 CET 2005
+
+mount: asterisk:/pub/mp3 already mounted or /mp3 busy
+mount: according to mtab, asterisk:/pub/mp3 is already mounted on /mp3
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -ao
+[softdevice] using PCM alsa device plug:iec958
+[softdevice] using AC3 alsa device plug:iec958
+[softdevice]   argv [3] = -vo
+[setup-softdevice] alsa ac3Mode set to: 1
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 3 (User3)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 none
+[setup-softdevice] mainMenu: 0
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.8) build(4680)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.22 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH  
+             (c) 2002-2004  convergence GmbH                   
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Multi Application Core. (2005-12-12 16:20) 
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'Fusion Dispatch' (MESSAGING, 7249)...
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 7252)...
+(*) Direct/Modules: suppress module 'ps2mouse'
+(*) Direct/Modules: suppress module 'serialmouse'
+(*) Direct/Modules: suppress module 'sonypi'
+(*) Direct/Modules: suppress module 'sdlinput'
+(*) Direct/Modules: suppress module 'joystick'
+(*) Direct/Modules: suppress module 'keyboard'
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7253)...
+(*) DirectFB/Input: PC Speaker (1) 0.1 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 7254)...
+(*) DirectFB/Input: AT Translated Set 2 keyboard (2) 0.1 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G550 0.7 (convergence integrated media GmbH)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 16777216 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle Blit StretchBlit All 
+[dfb] Drawing Flags: Blend 
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey Deinterlace 
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> 
+[dfb] Enumerating display Layers
+Layer 0 FBDev Primary Layer  Type: graphics 
+  Caps: brightness contrast saturation surface 
+Layer 1 Matrox Backend Scaler  Type: graphics picture video 
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location surface 
+[surface capabilities] scrSurface: primary videoonly double-buffered flipping 
+[dfb] width = 1280, height = 720
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [736x576])
+[surface capabilities] osdSurface: videoonly double-buffered flipping 
+ (!!!)  *** WARNING [letting unprivileged IDirectFBDisplayLayer::GetSurface() call pass until cooperative level handling is finished] *** [idirectfbdisplaylayer.c:170 in IDirectFBDisplayLayer_GetSurface()]
+[surface capabilities] videoSurface: videoonly 
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: Matrox Backend Scaler
+[dfb] Display frame time is 16642 microseconds
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping 
+[dfb] (re)configured 0x08100609
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+[dfb] (re)configuring Videolayer to 736 x 576 (720x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping 
+[dfb] (re)configured 0x08100609
+vdradmind.pl: no process killed
+vdradmind.pl 0.97-am3.4.1 wurde mit der Prozess-ID 7264 gestartet.
+[dfb] (re)configuring Videolayer to 736 x 576 (720x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping 
+[dfb] (re)configured 0x08100609
+[dfb] (re)configuring Videolayer to 736 x 576 (720x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping 
+[dfb] (re)configured 0x08100609
+[dfb] (re)configuring Videolayer to 736 x 576 (720x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping 
+[dfb] (re)configured 0x08100609
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001593.html">[Softdevice-devel] probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+	<LI>Next message: <A HREF="001596.html">[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1595">[ date ]</a>
+              <a href="thread.html#1595">[ thread ]</a>
+              <a href="subject.html#1595">[ subject ]</a>
+              <a href="author.html#1595">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

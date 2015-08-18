@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503281002.50870.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000376.html">
+   <LINK REL="Next"  HREF="000385.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503281002.50870.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Mar 28 10:02:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000376.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000385.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#384">[ date ]</a>
+              <a href="thread.html#384">[ thread ]</a>
+              <a href="subject.html#384">[ subject ]</a>
+              <a href="author.html#384">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 23. M&#228;rz 2005 23:54, Tomi Hautakoski wrote:
+&gt;<i> On Wed, 23 Mar 2005, Stefan Lucke wrote:
+</I>&gt;<i> &gt; So your setup works better than mine (G400+celeronIII 1.2GHz, very old dfb).
+</I>&gt;<i> &gt; Whats your CPU power ?
+</I>&gt;<i> 
+</I>&gt;<i> The same. I'm not sure if it was the new dfb or softdevice which made 
+</I>&gt;<i> the difference but now I tested the system with live hockey (which seems 
+</I>&gt;<i> to be good material for testing) and the picture was perfect.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; OSD drawing with dfb has to be rewritten, as it always draws complete osd
+</I>&gt;<i> &gt; if only a small area has to be redrawn. To my experince this effect seems
+</I>&gt;<i> &gt; to be worse with the channel info osd, which in term is refreshed for about
+</I>&gt;<i> &gt; every frame. Vdr main menu menu is only refreshed after a few seconds.
+</I>&gt;<i> 
+</I>&gt;<i> Yes, I have exactly the same symptoms here. I had to remove the EPG 
+</I>&gt;<i> description field from the channel info and change the display time to 1 
+</I>&gt;<i> sec to be able to change my channel without loosing the a-vsync 
+</I>&gt;<i> completely. Still, nice to know that you have a hint what is causing the 
+</I>&gt;<i> problem. =)
+</I>&gt;<i> 
+</I>
+So hopefully I got it. OSD drawing is changed. Now there is no slowmotion
+of video while the channel info OSD is shown on my epia. Tested that
+also with Radeon-9200, G550 vga + tv-out and G400 as mentioned above.
+On G400 I've still some problems but this is probably caused by the old
+DFB version on that system (0.9.20). Other tests were done with DirectFB
+cvs from 2005-02-26.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000376.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000385.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#384">[ date ]</a>
+              <a href="thread.html#384">[ thread ]</a>
+              <a href="subject.html#384">[ subject ]</a>
+              <a href="author.html#384">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] undefined variables in configure script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20undefined%20variables%20in%20configure%20script&In-Reply-To=%3C20050930182940.GA339687%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001279.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] undefined variables in configure script</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20undefined%20variables%20in%20configure%20script&In-Reply-To=%3C20050930182940.GA339687%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] [PATCH] undefined variables in configure script">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Sep 30 20:29:40 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001279.html">Epia sound oddity (WAS: Re: [Softdevice-devel] A-V sync problems with directfb on)
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1280">[ date ]</a>
+              <a href="thread.html#1280">[ thread ]</a>
+              <a href="subject.html#1280">[ subject ]</a>
+              <a href="author.html#1280">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I wondered how my DirectFB key-repeat patch suddenly didn't work.
+The configure test worked, albeit with a warning, but config.h
+somehow defined HAVE_DIEF_REPEAT 0.  It turned out to be a
+misspelled variable.
+
+To prevent this in the future, I suggest that the script
+defines &quot;set -eu&quot; to report undefined variables.
+
+	Marko
+-------------- next part --------------
+Index: configure
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/configure,v
+retrieving revision 1.4
+diff -u -r1.4 configure
+--- configure	17 Sep 2005 16:17:15 -0000	1.4
++++ configure	30 Sep 2005 18:22:40 -0000
+@@ -5,13 +5,16 @@
+ # $Id: configure,v 1.4 2005/09/17 16:17:15 lucke Exp $
+ #
+ 
++set -eu
++
+ TMPDIR1=&quot;/tmp&quot;
+ TMPC=&quot;${TMPDIR1}/softdevice-conf-${RANDOM}-$$-${RANDOM}.c&quot;
+ TMPE=&quot;${TMPDIR1}/softdevice-conf-${RANDOM}-$$-${RANDOM}&quot;
+ TMPH=&quot;${TMPDIR1}/softdevice-conf-${RANDOM}-$$-${RANDOM}.h&quot;
+ TMPM=&quot;${TMPDIR1}/softdevice-conf-${RANDOM}-$$-${RANDOM}.mak&quot;
+ 
+-PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/
++: ${PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/}
++: ${CFLAGS=&quot;&quot;}
+ 
+ dfb=&quot;yes&quot;
+ libpostproc=&quot;no&quot;
+@@ -124,7 +127,7 @@
+ #include &lt;directfb.h&gt;
+ int main(void) {
+     DFBInputEvent event;
+-  event.flags |= DIEF_REPEAT;
++  event.flags = DIEF_REPEAT;
+   return 0;
+ }
+ EOF
+@@ -243,7 +246,7 @@
+     echo &quot;#define HAVE_DSCAPS_DOUBLE              0&quot; &gt;&gt; $TMPH
+   fi
+ 
+-  if test &quot;${dfb_dfb_dief_repeat}&quot; = &quot;yes&quot; ; then
++  if test &quot;${dfb_dief_repeat}&quot; = &quot;yes&quot; ; then
+     echo &quot;#define HAVE_DIEF_REPEAT                1&quot; &gt;&gt; $TMPH
+   else
+     echo &quot;#define HAVE_DIEF_REPEAT                0&quot; &gt;&gt; $TMPH
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001279.html">Epia sound oddity (WAS: Re: [Softdevice-devel] A-V sync problems with directfb on)
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1280">[ date ]</a>
+              <a href="thread.html#1280">[ thread ]</a>
+              <a href="subject.html#1280">[ subject ]</a>
+              <a href="author.html#1280">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Via CLE266 hardware MPEG decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C444640FD.4080408%40huillard.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001877.html">
+   <LINK REL="Next"  HREF="001882.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Via CLE266 hardware MPEG decoding...</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Via%20CLE266%20hardware%20MPEG%20decoding...&In-Reply-To=%3C444640FD.4080408%40huillard.net%3E"
+       TITLE="[Softdevice-devel] Via CLE266 hardware MPEG decoding...">nicolas at huillard.net
+       </A><BR>
+    <I>Wed Apr 19 15:54:05 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001877.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+        <LI>Next message: <A HREF="001882.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1881">[ date ]</a>
+              <a href="thread.html#1881">[ thread ]</a>
+              <a href="subject.html#1881">[ subject ]</a>
+              <a href="author.html#1881">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz a &#233;crit :
+&gt;<i> I know this has been mentioned several times in the past but I don't think 
+</I>&gt;<i> anyone has made any progress in getting hardware MPEG decoding on the Via 
+</I>&gt;<i> CLE266 and related chips from DirectFB apps. I have a Via Epia system running 
+</I>&gt;<i> vdr with softdevice using DirectFB TV-out output, and this works really well 
+</I>&gt;<i> but it is just on the limit of what the CPU can do when it is decoding the 
+</I>&gt;<i> MPEG2 stream in software, so I get a few jerks and A-V sync isn't as good as 
+</I>&gt;<i> it should be. I've started looking into this again now...
+</I>
+It's really nice to see that there is still interest in this solution !
+Since I still didn't upgrade from vdr 1.3.33 / softdevice 0.2.0, I can't
+help very much with this, but I can still recall ancient threads, test,
+etc...
+
+...
+&gt;<i> mtest: not fully built this yet because it requires a patch to DirectFB. It 
+</I>&gt;<i> seems to need /dev/cle266vgaio which linux-viafb from DirectFB doesn't 
+</I>&gt;<i> provide. (Seen mention of using the cle266vgaio module at the same time as 
+</I>&gt;<i> the viafb module: not looked into this yet.) This one only depends on 
+</I>&gt;<i> DirectFB but only decodes video and not audio.
+</I>
+cle266vgaio is an old kernel modules which should provide sufficient
+interface to the CLE266, when using the VESA frame-buffer kernel module
+with DirectFB. It should be replaced by the newer viafb from the
+DirectFB CVS (which comes from... see HISTORY file).
+I just searched through my old code and tests and found the libsoftmpeg
+library, which came (early 2004) with a VDR plugin, in order to provide
+something like softdevice does. This library was once patched to allow
+hardware MPEG decoding. I still have the whole code there, and found a
+reference to &quot;mtest&quot;, without any &quot;mtest.*&quot; file.
+Maybe I have there a useful library that you could work from ? I think
+the core is in the following directory :
+
+  2467 Feb  6  2004 libcle266mpeg/GetFBOffset.patch
+  1658 Feb  6  2004 libcle266mpeg/GetFBOffsetDFB++.patch
+  1108 Feb  6  2004 libcle266mpeg/README.txt
+  5567 Mar 23  2004 libcle266mpeg/cle266mpegdec.c
+  1786 Mar 20  2004 libcle266mpeg/cle266mpegdec.h
+  5610 Mar 21  2004 libcle266mpeg/debug.c
+   574 Feb  6  2004 libcle266mpeg/debug.h
+  7736 Mar 21  2004 libcle266mpeg/decoder.c
+  4619 Feb  6  2004 libcle266mpeg/decoder.h
+  4109 Mar 27  2004 libcle266mpeg/hwdec.c
+   874 Feb  6  2004 libcle266mpeg/hwdec.h
+ 10017 Feb  6  2004 libcle266mpeg/mpeg2defs.h
+ 10476 Feb  6  2004 libcle266mpeg/parser.c
+  3556 Feb  6  2004 libcle266mpeg/parser.h
+ 16700 Feb  6  2004 libcle266mpeg/scanner.c
+  5640 Feb  6  2004 libcle266mpeg/scanner.h
+
+I can send you the whole stuff via PM, if needed.
+
+&gt;<i> All of the above (except mtest) are tied into X so mtest is probably the 
+</I>&gt;<i> easiest starting point. Nothing that I've found does _just_ decoding: they 
+</I>&gt;<i> all decode and display the images.
+</I>
+Just saw a reference inside a file above :
+
+ * This code has no video output dependencies. The user code must
+ * set up a framebuffer for video display, and 4x YUV420 format
+ * buffers within video memory.
+ *
+ * A user code must implement the 'blah' function which
+ * is called whenever the picture size changes after a
+ * sequence header. This should rescale the video output
+ * as appropriate.
+
+ie. : the decoder outputs the decoded chunks in video memory, but you
+still have a chance to get them back (rescale, convert, grab, etc.
+That's what Xine must do to run it's post-process plug-ins).
+
+...
+&gt;<i> Has anyone made any more progress with this or am I starting from scratch? 
+</I>&gt;<i> Ultimately, the best route would probably be to incorporate hardware decoding 
+</I>&gt;<i> into ffmpeg or similar but, for now, I'd just be happy to get it working from 
+</I>&gt;<i> softdevice!
+</I>
+There are mainly two possible routes : the great and beautiful one,
+where you integrate all needed functionnaly inside one of ffmpeg,
+libavcodec, or similar library, remove X dependencies, etc. And the fast
+and hackish one, where you get small library parts, pack them together
+and have a working, albeit uncomplete thingy. That's how the viafb
+kernel module evolved... Once basic support is available, will come the
+time to write beautiful code...
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001877.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+	<LI>Next message: <A HREF="001882.html">[Softdevice-devel] Via CLE266 hardware MPEG decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1881">[ date ]</a>
+              <a href="thread.html#1881">[ thread ]</a>
+              <a href="subject.html#1881">[ subject ]</a>
+              <a href="author.html#1881">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

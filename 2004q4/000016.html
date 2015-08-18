@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] DPMS.. errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DPMS..%20errors&In-Reply-To=%3C200410242024.53598.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000014.html">
+   <LINK REL="Next"  HREF="000019.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] DPMS.. errors</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DPMS..%20errors&In-Reply-To=%3C200410242024.53598.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] DPMS.. errors">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct 24 20:24:53 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000014.html">[Softdevice-devel] DPMS.. errors
+</A></li>
+        <LI>Next message: <A HREF="000019.html">[Softdevice-devel] DPMS.. errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 24. Oktober 2004 19:17, Torgeir Veimo wrote:
+&gt;<i> On Sun, 2004-10-24 at 17:10 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; o.1.3.7: undefined symbol: _Z18DPMSQueryExtensionP9_XDisplayPiS1_
+</I>&gt;<i> 
+</I>&gt;<i> I don't understand. You did a make clean; make all, and it's still
+</I>&gt;<i> there?
+</I>&gt;<i> 
+</I>
+You need the following diff to enable compilation of DPMS support.
+
+Index: Makefile
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/Makefile,v
+retrieving revision 1.2
+diff -r1.2 Makefile
+163a164,166
+&gt;<i> ifdef LIBXDPMS_SUPPORT
+</I>&gt;<i> DEFINES += -DLIBXDPMS_SUPPORT
+</I>&gt;<i> endif
+</I>
+
+And then you need the following diff to get xscreensave.c to compile:
+
+Index: xscreensaver.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/xscreensaver.c,v
+retrieving revision 1.1
+diff -r1.1 xscreensaver.c
+44c44
+&lt;   if (disabled &amp;&amp; (DPMSQueryExtension(dpy, &amp;dpms_dummy, &amp;dpms_dummy)) &amp;&amp; DPMSCapable(dpy)) &amp;&amp; (dpms_on)) {
+---
+&gt;<i>   if (disabled &amp;&amp; (DPMSQueryExtension(dpy, &amp;dpms_dummy, &amp;dpms_dummy)) &amp;&amp; DPMSCapable(dpy) &amp;&amp; (dpms_on)) {
+</I>73a74,75
+&gt;<i>   dpms_on = !disable;
+</I>&gt;<i>
+</I>89c91
+&lt;         if (onoff) {
+---
+&gt;<i>         if (dpms_on) {
+</I>
+after that &quot;make clean&quot; in plugin directory &quot;make plugins&quot; in vdr directory
+will produce above error message at vdr startup.
+
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000014.html">[Softdevice-devel] DPMS.. errors
+</A></li>
+	<LI>Next message: <A HREF="000019.html">[Softdevice-devel] DPMS.. errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

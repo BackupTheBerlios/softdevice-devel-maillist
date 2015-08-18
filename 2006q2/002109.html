@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [vdr] G450 softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606062210.53574.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002101.html">
+   <LINK REL="Next"  HREF="002110.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [vdr] G450 softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bvdr%5D%20G450%20softdevice&In-Reply-To=%3C200606062210.53574.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: [vdr] G450 softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Jun  6 22:10:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002101.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+        <LI>Next message: <A HREF="002110.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2109">[ date ]</a>
+              <a href="thread.html#2109">[ thread ]</a>
+              <a href="subject.html#2109">[ subject ]</a>
+              <a href="author.html#2109">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 01 Juni 2006 21:06, Laz wrote:
+&gt;<i> On Thursday 01 June 2006 18:12, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Donnerstag 01 Juni 2006 16:28, Laz wrote:
+</I>&gt;<i> &gt; &gt; Ahhhh...I did see your post and never got round to following it up
+</I>&gt;<i> &gt; &gt; because I had a perfect picture (once I switched my TV to 16:9!)! DOH!
+</I>&gt;<i> &gt; &gt; Looks like my problems are down to those changes: the loss of MMX
+</I>&gt;<i> &gt; &gt; acceleration making the OSD sluggish, etc.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; OSD shapes are normal when 4:3 is displayed on 16:9 as there is no
+</I>&gt;<i> &gt; special clear of black bar area :-( .
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The MMX version of yv12_to_yuy2_il_c() is on my list.
+</I>&gt;<i> 
+</I>&gt;<i> Fair enough.
+</I>&gt;<i> 
+</I>&gt;<i> :)
+</I>
+So I did, but benchmarking is strange.
+The following numbers are 10 * 8 frame conversions. Deltas are
+usecs numbers:
+
+delta1: warmup with yv12_to_yuy2_il_mmx2()
+delta2: yv12_to_yuy2_il_mmx2()
+delta3: yv12_to_yuy2_il_c()
+delta4: yv12_to_yuy2()
+delta5: yv12 fast_memcpy() version
+
+P4 2.2 GHz:
+delta1 = 255623
+delta2 = 249383
+delta3 = 3076097
+delta4 = 577051
+delta5 = 41929
+
+real    0m4.170s
+user    0m4.148s
+sys     0m0.004s
+
+VIA Nehemiah 1GHz:
+delta1 = 192235
+delta2 = 189639
+delta3 = 803055
+delta4 = 175347
+delta5 = 145239
+
+real    0m1.452s
+user    0m1.248s
+sys     0m0.145s
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002101.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+	<LI>Next message: <A HREF="002110.html">[Softdevice-devel] Re: [vdr] G450 softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2109">[ date ]</a>
+              <a href="thread.html#2109">[ thread ]</a>
+              <a href="subject.html#2109">[ subject ]</a>
+              <a href="author.html#2109">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20%2B%20directfb%20%2B%20g400%20TV%20out%20problem.&In-Reply-To=%3C42A37458.4090808%40kapsi.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000803.html">
+   <LINK REL="Next"  HREF="000807.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice + directfb + g400 TV out problem.</H1>
+    <B>prelude</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20%2B%20directfb%20%2B%20g400%20TV%20out%20problem.&In-Reply-To=%3C42A37458.4090808%40kapsi.fi%3E"
+       TITLE="[Softdevice-devel] Softdevice + directfb + g400 TV out problem.">prelude at kapsi.fi
+       </A><BR>
+    <I>Sun Jun  5 23:53:28 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000803.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+        <LI>Next message: <A HREF="000807.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#806">[ date ]</a>
+              <a href="thread.html#806">[ thread ]</a>
+              <a href="subject.html#806">[ subject ]</a>
+              <a href="author.html#806">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+
+&gt;<i>On Sonntag, 5. Juni 2005 19:23, Ari Koponen wrote:
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i>[dfb] width = 720, height = 576
+</I>&gt;&gt;&gt;<i>[dfb] got fmt = 0x00418c04 bpp = 32
+</I>&gt;&gt;&gt;<i>(!) [ 6288:    1.152] --&gt; Caught signal 6 (sent by pid 6288, uid 0) &lt;--
+</I>&gt;&gt;&gt;<i>(!) Direct/Thread: Killing 'Fusion Dispatch' (6294)!
+</I>&gt;&gt;&gt;<i>Killed
+</I>&gt;&gt;&gt;<i>&lt;clip&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Problem coming from line 431 in video-dfb.c
+</I>&gt;&gt;&gt;<i>   osdSurface   = dfb-&gt;CreateSurface (osdDsc);
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>Any idea how i can get it working?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>      
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>I think I had similar issues few months ago (although on G450)  but
+</I>&gt;&gt;<i>can't remember for sure how I solved them. I just have a wild guess
+</I>&gt;&gt;<i>that it might have been related to the fusion module. Are you using
+</I>&gt;&gt;<i>the fusion module? If I remember correctly softdevice didn't work that
+</I>&gt;&gt;<i>enabled.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>How about the graphics card memory, is DirectFB seeing all the memory
+</I>&gt;&gt;<i>your card has? If not you could apply the full memory kernel patch
+</I>&gt;&gt;<i>that comes with DFB.
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>Good idea, but unfortunately reporting video memory is disabled
+</I>&gt;<i>for directfb incompatibilty break.. So the question is:
+</I>&gt;<i>Is matrox full memory patch applied to the kernel ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>Yes it is. (matroxfb-full-memory-linux-2.6.6.patch)
+And kernel version is 2.6.10.
+
+I allso tested DirectFB whitout fushion (&quot;modprobe -r fusion&quot; and 
+compiling all whitout &quot;--enable-multi&quot; option) but result was same.
+I dont know where i can look how mutch memory DFB use :-/
+But my  /proc/mtrr looks like that:
+reg00: base=0x00000000 (   0MB), size= 512MB: write-back, count=1
+reg01: base=0xf4000000 (3904MB), size=  16MB: write-combining, count=1
+reg07: base=0xf8000000 (3968MB), size=  64MB: write-combining, count=1
+
+and df reports:
+Filesystem           1K-blocks      Used Available Use% Mounted on
+...
+devfs                     5120      2884      2236  57% /dev
+tmpfs                  1048576       396   1048180   1% /dev/shm
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000803.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+	<LI>Next message: <A HREF="000807.html">[Softdevice-devel] Softdevice + directfb + g400 TV out problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#806">[ date ]</a>
+              <a href="thread.html#806">[ thread ]</a>
+              <a href="subject.html#806">[ subject ]</a>
+              <a href="author.html#806">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

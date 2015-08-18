@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice + libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C44B2B7C3.4000905%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002231.html">
+   <LINK REL="Next"  HREF="002233.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice + libcle266mpegdec</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C44B2B7C3.4000905%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softdevice + libcle266mpegdec">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Jul 10 22:25:39 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002231.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002233.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2232">[ date ]</a>
+              <a href="thread.html#2232">[ thread ]</a>
+              <a href="subject.html#2232">[ subject ]</a>
+              <a href="author.html#2232">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Per Mellander schrieb:
+&gt;<i> On Mon, 10 Jul 2006 20:46:30 +0200, Martin Wache wrote
+</I>&gt;&gt;<i> We had an issue like that long ago, Stefan found out that it was
+</I>&gt;&gt;<i> actually a bug in ffmpeg. How old is your ffmpeg version? I don't
+</I>&gt;&gt;<i> remember exactly which version had this problem, but if your version is
+</I>&gt;&gt;<i> about one year old you could try an update of ffmpeg.
+</I>&gt;<i> 
+</I>&gt;<i> My ffmpeg is SVN as of today.
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i> It usually happens when I stop playback rather than in the 
+</I>&gt;&gt;&gt;<i> middle of something, although I have seen it a couple of times at start up.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> Please report all crashes of the softdevice! I really don't like the
+</I>&gt;&gt;<i> idea of having crashes with the softdevice. The main problem is that to
+</I>&gt;&gt;<i> be able to do something about it we either have to be able to reproduce
+</I>&gt;&gt;<i> the crash or we must have a (meaningfull) traceback...
+</I>&gt;&gt;<i> But I would really like to try to fix all crashes :-)
+</I>&gt;<i> 
+</I>&gt;<i> I'll really try to get some useful info. My crashes are all the same as Laz describe his
+</I>&gt;<i> crashes ( segfault etc. ). On the other hand haven't I done any playback yet, only live
+</I>&gt;<i> TV. My crashes are as I said right when I start VDR. Any more ideas to get usefull
+</I>&gt;<i> tracebacks ?
+</I>&gt;<i> 
+</I>I just looked it up in the readme of DirectFB:
+
+--enable-debug Enables many debug messages and assertions
+--enable-trace Enables run time stack trace information
+
+I guess it is a good start to enable both options in the configure of
+DirectFB.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002231.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002233.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2232">[ date ]</a>
+              <a href="thread.html#2232">[ thread ]</a>
+              <a href="subject.html#2232">[ subject ]</a>
+              <a href="author.html#2232">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

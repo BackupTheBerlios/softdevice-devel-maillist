@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Slow motion, fast forward/rewind and sound
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Slow%20motion%2C%20fast%20forward/rewind%20and%20sound&In-Reply-To=%3C20050514195951.GB446593%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000724.html">
+   <LINK REL="Next"  HREF="000665.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Slow motion, fast forward/rewind and sound</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Slow%20motion%2C%20fast%20forward/rewind%20and%20sound&In-Reply-To=%3C20050514195951.GB446593%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Slow motion, fast forward/rewind and sound">marko.makela at hut.fi
+       </A><BR>
+    <I>Sat May 14 21:59:51 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000724.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+        <LI>Next message: <A HREF="000665.html">[Softdevice-devel] Got SIGABRT when powering down near the end of clip
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#661">[ date ]</a>
+              <a href="thread.html#661">[ thread ]</a>
+              <a href="subject.html#661">[ subject ]</a>
+              <a href="author.html#661">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I remember getting a crash some weeks ago when playing with the slow motion,
+pause and fast forward/rewind keys in rapid succession.  I might have got
+that kind of a crash last week when I was viewing something in slow motion.
+It was a 4:3 program, no subtitles, most likely with mono sound (unless
+DVB-T is always stereo).  Could there be some buffer overflow?
+
+If I remember correctly, the audio will take a while to catch up after
+restoring normal playback speed.  I guess this could also be because the
+audio packets are being sent a few frames earlier than the corresponding
+video frames.
+
+A crazy idea: Would it be possible to play the audio also in fast-forward
+mode?  If possible, offer two options: (a) decode and play every nth audio
+frame, producing a chopping sound, or (b) decode everything and play every
+nth sample, producing a high-pitched sound.  This would be useful when
+watching slow-paced programs that lack subtitles.
+
+This is definitely not a top priority thing, but it would most probably
+differentiate softdevice from all full-featured cards and proprietary
+recorders.  If you feel like it, implement these also for slow motion
+and rewind, but not for the 1-minute skip. :-) Pitch correction could be
+optional.
+
+The credit for this idea goes to a friend of mine who was struggling with
+math exams about 10 years ago.  The lectures were broadcast on campus TV,
+and he had recorded them on his VCR.  When I visited him in the evening
+before the exam, he was wondering whether he should modify his VCR to not
+mute the sound during fast forward.  There was not enough time before the
+exam to watch all the lectures at normal speed.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000724.html">[Softdevice-devel] Aspect ratio : my proposal
+</A></li>
+	<LI>Next message: <A HREF="000665.html">[Softdevice-devel] Got SIGABRT when powering down near the end of clip
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#661">[ date ]</a>
+              <a href="thread.html#661">[ thread ]</a>
+              <a href="subject.html#661">[ subject ]</a>
+              <a href="author.html#661">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

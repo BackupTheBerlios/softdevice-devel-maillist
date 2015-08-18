@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] ShmClient: XvVideoOut.Reconfigure format &gt; 3!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20ShmClient%3A%20XvVideoOut.Reconfigure%20format%20%3E%203%21&In-Reply-To=%3C200705221311.54727.zzam%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002886.html">
+   <LINK REL="Next"  HREF="002887.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] ShmClient: XvVideoOut.Reconfigure format &gt; 3!</H1>
+    <B>Matthias Schwarzott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20ShmClient%3A%20XvVideoOut.Reconfigure%20format%20%3E%203%21&In-Reply-To=%3C200705221311.54727.zzam%40gentoo.org%3E"
+       TITLE="[Softdevice-devel] ShmClient: XvVideoOut.Reconfigure format &gt; 3!">zzam at gentoo.org
+       </A><BR>
+    <I>Tue May 22 13:11:54 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002886.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+        <LI>Next message: <A HREF="002887.html">[Softdevice-devel] lots of repeated frames
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2885">[ date ]</a>
+              <a href="thread.html#2885">[ thread ]</a>
+              <a href="subject.html#2885">[ subject ]</a>
+              <a href="author.html#2885">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there!
+
+Using latest cvs snapshot, and starting vdr with:
+vdr -Psoftdevice&quot; -vo shm:&quot; [... other options]
+
+and then starting ShmClient gets me this output (of ShmClient):
+
+dsyslog:[XvVideoOut]: patch version (2006-11-05)
+[XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+dsyslog:[XvVideoOut]: Initialize XShmCreateImage Successful (0x80be610)
+[XvVideoOut]: osd_image shmid = 229379
+dsyslog:[XvVideoOut]: Initialize shmget Successful (2949120 bytes)
+dsyslog:[XvVideoOut]: Initialize shmat Successful
+[XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120, Bpp 
+32
+dsyslog:[softdevice-xscreensaver]: xscreensaver not running
+
+dsyslog:[XvVideoOut]: initialized OK
+XvVideoOut.Reconfigure format &gt; 3!
+[XvVideoOut]: Xinerama-Screen changed to 0
+dsyslog:[VideoOut]: 736x576 [0,0 736x576] -&gt; 1024x576 [122,0 778x576]
+XvVideoOut.Reconfigure format &gt; 3!
+reconfigure failed
+dsyslog:[VideoOut]: resolution changed: W(736 -&gt; 528); H(576 -&gt;576)
+
+dsyslog:[VideoOut]: 528x576 [0,0 528x576] -&gt; 1024x576 [132,0 759x576]
+XvVideoOut.Reconfigure format &gt; 3!
+reconfigure failed
+XvVideoOut.Reconfigure format &gt; 3!
+reconfigure failed
+XvVideoOut.Reconfigure format &gt; 3!
+reconfigure failed
+XvVideoOut.Reconfigure format &gt; 3!
+reconfigure failed
+XvVideoOut.Reconfigure format &gt; 3!
+
+
+
+
+audio starts, but video is just black. The last two lines loop endlessly.
+Stopping and restarting ShmClient does not change anything.
+
+Stopping vdr, and then starting it DOES help.
+It can be reproduced then by stopping vdr, deleting the shared memory region, 
+and starting it.
+Some debugging showed me that the pixelformat var had the value 14 ?!?
+
+Greetings
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002886.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+	<LI>Next message: <A HREF="002887.html">[Softdevice-devel] lots of repeated frames
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2885">[ date ]</a>
+              <a href="thread.html#2885">[ thread ]</a>
+              <a href="subject.html#2885">[ subject ]</a>
+              <a href="author.html#2885">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

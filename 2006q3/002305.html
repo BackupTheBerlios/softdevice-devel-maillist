@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Way to get best image quality with MGA400 ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C20060726190227.GA3733%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002303.html">
+   <LINK REL="Next"  HREF="002306.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Way to get best image quality with MGA400 ?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Way%20to%20get%20best%20image%20quality%20with%20MGA400%20%3F&In-Reply-To=%3C20060726190227.GA3733%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Way to get best image quality with MGA400 ?">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Jul 26 21:02:27 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002303.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+        <LI>Next message: <A HREF="002306.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2305">[ date ]</a>
+              <a href="thread.html#2305">[ thread ]</a>
+              <a href="subject.html#2305">[ subject ]</a>
+              <a href="author.html#2305">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jul 26, 2006 at 05:05:26PM +0100, Laz wrote:
+&gt;<i> It should be easy to build this into softdevice: just set the relevant 
+</I>&gt;<i> states of DTR and RTS whenever the aspect ratio changes.
+</I>&gt;<i> 
+</I>&gt;<i> Hmmmm...I think you might need to run as root for that sort of control of 
+</I>&gt;<i> the port, though.
+</I>
+Why?  POSIX termios doesn't require any super-user privileges.
+
+&gt;<i> Unless we use something like your 'serport' as an SUID 
+</I>&gt;<i> wrapper... I had to do that with a status LED plugin!
+</I>
+If you're using the parallel printer port, you should use ppdev instead of
+the old ioperm() system call.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002303.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+	<LI>Next message: <A HREF="002306.html">[Softdevice-devel] Way to get best image quality with MGA400 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2305">[ date ]</a>
+              <a href="thread.html#2305">[ thread ]</a>
+              <a href="subject.html#2305">[ subject ]</a>
+              <a href="author.html#2305">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

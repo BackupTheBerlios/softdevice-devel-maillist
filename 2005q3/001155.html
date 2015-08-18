@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Suspend patch for vdr
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C20050828123819.GA3084%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001154.html">
+   <LINK REL="Next"  HREF="001156.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Suspend patch for vdr</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Suspend%20patch%20for%20vdr&In-Reply-To=%3C20050828123819.GA3084%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Suspend patch for vdr">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Aug 28 14:38:19 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001154.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+        <LI>Next message: <A HREF="001156.html">[Softdevice-devel] Suspend patch for vdr; DirectFB keyrepeat bug
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1155">[ date ]</a>
+              <a href="thread.html#1155">[ thread ]</a>
+              <a href="subject.html#1155">[ subject ]</a>
+              <a href="author.html#1155">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Aug 28, 2005 at 09:34:42AM +0200, Martin Wache wrote:
+&gt;<i> &gt; Please get
+</I>&gt;<i> &gt; <A HREF="http://www.funet.fi/~msmakela/electronics/relay/vdr-suspend-relay.patch">http://www.funet.fi/~msmakela/electronics/relay/vdr-suspend-relay.patch</A>
+</I>&gt;<i> &gt; instead.  That patch suspends the DVB streams at the source
+</I>&gt;<i> &gt; (cDevice::Action() and cDvbPlayer::Action()).  Thus, no patch will be
+</I>&gt;<i> &gt; necessary in the subtitles plugin.  Also, the play mode (play, pause,
+</I>&gt;<i> &gt; rewind, fast forward, trickspeed, etc.) will be preserved across
+</I>&gt;<i> &gt; suspend/resume.
+</I>&gt;<i> 
+</I>&gt;<i> I just tried to get the new version of your patch, but the link seems to
+</I>&gt;<i> be broken :-(.
+</I>&gt;<i> So I will report on the older one. I installed it yesterday evening and
+</I>&gt;<i> it works great. Good work!
+</I>
+Sorry, the correct link is
+<A HREF="http://www.funet.fi/~msmakela/electronics/relay/vdr-suspend.patch">http://www.funet.fi/~msmakela/electronics/relay/vdr-suspend.patch</A>
+Please see also the discussion at
+<A HREF="http://www.funet.fi/~msmakela/electronics/relay/">http://www.funet.fi/~msmakela/electronics/relay/</A>
+
+There are a few glitches in the old patch you tried.  The new one is
+simpler.  I'm happy that even the old patch worked for you.
+
+&gt;<i> Actually this is the prefered mode for me. So my personal suggestion
+</I>&gt;<i> would be just to use the power key, and extend it's features. If the
+</I>&gt;<i> power key is pressed, shutdown in case of no recording and the -s option
+</I>&gt;<i> was given, otherwise just suspend the mpeg2 decoding.
+</I>&gt;<i> That would be the natural behaviour for me.
+</I>
+Yes, I'll probably map my Power key to Suspend.  I don't think that the
+behaviour of the Power key can be changed; I got some negative feedback
+for my patch to obey the Power key during playback.  We can make this
+happen by calling the key something else. :-)
+
+There is one glitch though, maybe related to DirectFB or the cx88-input
+driver: Repeated keypresses (with the RC5 toggle bit not toggling) are
+reported as new ones.  So, I would have to be very very careful to press
+the Suspend key exactly once.  If I keep it pressed down longer, vdr would
+cycle between suspended/active, or worse still, suspended/confirm/active.
+If no recording is going on, vdr will display the &quot;Press any key to
+cancel shutdown&quot; message.  If vdr gets two keypresses from the Suspend
+key, playback will remain suspended, but the shutdown timeout will be
+cancelled without any visual feedback to the user.
+
+&gt;<i> cDevice-&gt;Clear() just clears the input buffers, so I guess it is not
+</I>&gt;<i> meant to clear the screen. Maybe a call to SetPlayMode(pmNone) would
+</I>&gt;<i> help, if I understand dvbplayer.c correctly that would work even for FF
+</I>&gt;<i> cards. Of course you'll have to restore the playmode on resume...
+</I>
+Thanks, I'll try that.  Can SetPlayMode be called from any thread?
+
+I noticed that it'd be better not to call cDevice::Clear() when playing
+recordings, because then Suspend will better act as Pause (it won't
+drop any B or P frames).
+
+Can you or someone else help me to introduce a menu item for the suspend
+timeout to the vdr setup/playback menu?  The timeout would be given in
+seconds, and the value zero would disable the shutdown timeout.  Also
+the logic in vdr.c needs to be changed a little.  It'd be better to
+keep the inactivity timeout and the suspend shutdown timeout distinct
+from each other.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001154.html">[Softdevice-devel] Suspend patch for vdr
+</A></li>
+	<LI>Next message: <A HREF="001156.html">[Softdevice-devel] Suspend patch for vdr; DirectFB keyrepeat bug
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1155">[ date ]</a>
+              <a href="thread.html#1155">[ thread ]</a>
+              <a href="subject.html#1155">[ subject ]</a>
+              <a href="author.html#1155">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

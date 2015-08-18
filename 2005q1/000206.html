@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] DirectFB radeon output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DirectFB%20radeon%20output&In-Reply-To=%3C1106760704.6239.21.camel%40atlantis.netenviron.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000203.html">
+   <LINK REL="Next"  HREF="000207.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] DirectFB radeon output</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20DirectFB%20radeon%20output&In-Reply-To=%3C1106760704.6239.21.camel%40atlantis.netenviron.com%3E"
+       TITLE="[Softdevice-devel] DirectFB radeon output">torgeir at pobox.com
+       </A><BR>
+    <I>Wed Jan 26 18:31:43 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000203.html">[Softdevice-devel] HDTV support
+</A></li>
+        <LI>Next message: <A HREF="000207.html">[Softdevice-devel] DirectFB radeon output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#206">[ date ]</a>
+              <a href="thread.html#206">[ thread ]</a>
+              <a href="subject.html#206">[ subject ]</a>
+              <a href="author.html#206">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>DirectFB output works ok with an mga card, but I'm struggling with
+radeon output. The screen goes all black, and the strange thing is that
+if I start up the Xorg server after this, the Xv output windows is also
+completely black, but with OSD shown. Any ideas?
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at vigor10</A> softdevice]# cat /etc/directfbrc
+mode=720x576
+#mode=1280x720
+depth=32
+no-graphics-vt
+no-vt-switching
+no-vt-switch
+
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at vigor10</A> softdevice]# dfbinfo
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.21 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-01-24 13:32)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 5494)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:802]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 5495)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: ATI Radeon 0.2 (Michel Dnzer)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+
+
+Screen (00) Radeon Primary Screen           (primary screen)
+   Caps: VSYNC POWER_MANAGEMENT
+
+     Layer (00) FBDev Primary Layer             (primary layer)
+        Type:    GRAPHICS
+        Caps:    SURFACE BRIGHTNESS CONTRAST SATURATION
+
+     Layer (01) Radeon Overlay
+        Type:    GRAPHICS VIDEO STILL_PICTURE
+        Caps:    SURFACE OPACITY ALPHACHANNEL SCREEN_LOCATION
+SRC_COLORKEY DST_COLORKEY
+
+
+Input (01) IMPS/2 Mouse                    (primary mouse)
+   Type: MOUSE
+   Caps: AXES BUTTONS
+
+Input (00) Keyboard                        (primary keyboard)
+   Type: KEYBOARD
+   Caps: KEYS
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at vigor10</A> VDR]# ./rundfb
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+arg: /dev/cdrom
+[setup-softdevice] alsa device set to: hw:0,2
+[setup-softdevice] A/V Offset set to (-8)
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] deinterlace method set to 1 lavc
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YUV2)
+[setup-softdevice] startup aspect set to (16:9 wide)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.9-pre1) build(4736)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.21 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-01-24 13:32)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 5505)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:802]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 5506)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: ATI Radeon 0.2 (Michel Dnzer)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 67108864 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine Blit
+All
+[dfb] Drawing Flags: none
+[dfb] Surface Blitting Flags: SrcColorkey
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A>
+[dfb] Enumeratig display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Radeon Overlay  Type: graphics picture video
+  Caps: alphachannel dst_colorkey opacity screen_location src_colorkey
+surface
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00400c03 bpp = 32
+[dfb] Using this layer for OSD: (FBDev Primary Layer - [720x576])
+osdSurface::
+ - videoonly
+ - flipping
+videoSurface::
+ - videoonly
+[dfb] Configuring CooperativeLevel for Overlay
+[dfb] Configuring ColorKeying
+[dfb] Configuring CooperativeLevel for OSD
+[dfb] Using this layer for OSD: FBDev Primary Layer
+[dfb] Using this layer for Video out: Radeon Overlay
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface
+[dfb] (re)configured 0x00200806
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+ (!!!)  *** ONCE [only copying/scaling blits supported for YUV in
+software] *** [generic.c:3998 in gAcquire()]
+[softdevice] allocating picture buffer for resolution 720x576
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface
+[dfb] (re)configured 0x00200806
+
+
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000203.html">[Softdevice-devel] HDTV support
+</A></li>
+	<LI>Next message: <A HREF="000207.html">[Softdevice-devel] DirectFB radeon output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#206">[ date ]</a>
+              <a href="thread.html#206">[ thread ]</a>
+              <a href="subject.html#206">[ subject ]</a>
+              <a href="author.html#206">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

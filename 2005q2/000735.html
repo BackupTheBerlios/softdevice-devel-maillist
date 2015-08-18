@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%0A%20relay&In-Reply-To=%3C42958D11.2010306%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000732.html">
+   <LINK REL="Next"  HREF="000737.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Connecting%20the%20%22suspended%22%20flag%20to%20a%20solid-state%0A%20relay&In-Reply-To=%3C42958D11.2010306%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu May 26 10:47:13 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000732.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+        <LI>Next message: <A HREF="000737.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#735">[ date ]</a>
+              <a href="thread.html#735">[ thread ]</a>
+              <a href="subject.html#735">[ subject ]</a>
+              <a href="author.html#735">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; a &#233;crit :
+&gt;<i> Here comes the hard part: When the box starts from ATX timer (nvram-wakeup),
+</I>&gt;<i> softdevice should be initially suspended (and the monitor should remain
+</I>&gt;<i> powered off).  Otherwise (box started from power button or wake-on-LAN
+</I>&gt;<i> (triggered by remote control)), softdevice should start with playback
+</I>&gt;<i> enabled.  Is there any way to find out how the system was powered on?
+</I>
+Test at boot time if the nvram timer is within a small time-frame : less 
+than 1 minute ago).
+I guess anything else would involve hardware of chipset control.
+I was about to suggest something to indicate why the box was shut down, 
+but that's not really the same (it might have shut down because of the 
+timer, but waken up interactively).
+Maybe the right solution is not to shut down ? Just deep/not-so-deep 
+sleep ? Using ACPI events you could on some platform get the event that 
+triggered the wake-up, after the wake-up occured.
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000732.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+	<LI>Next message: <A HREF="000737.html">[Softdevice-devel] Connecting the &quot;suspended&quot; flag to a solid-state relay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#735">[ date ]</a>
+              <a href="thread.html#735">[ thread ]</a>
+              <a href="subject.html#735">[ subject ]</a>
+              <a href="author.html#735">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

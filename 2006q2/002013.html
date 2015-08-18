@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605122130.57503.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002011.html">
+   <LINK REL="Next"  HREF="002014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605122130.57503.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri May 12 21:30:57 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002011.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="002014.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2013">[ date ]</a>
+              <a href="thread.html#2013">[ thread ]</a>
+              <a href="subject.html#2013">[ subject ]</a>
+              <a href="author.html#2013">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag 12 Mai 2006 18:39, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; Quoting Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt;:
+</I>&gt;<i> &gt;&gt; I also had a look at the aspect ratio, it seems that the dtg active
+</I>&gt;<i> &gt;&gt; format is not parsed inside libcle266mpegdec. From ffmpeg the
+</I>&gt;<i> &gt;&gt; information should be inside of a user data block marked with
+</I>&gt;<i> &gt;&gt; 0x0000001b2, followed by the tag 'DTG1', have a look at the function
+</I>&gt;<i> &gt;&gt; mpeg_decode_user_data() in libavcodec/mpeg12.c.
+</I>&gt;<i> &gt;&gt; I tried to implement a parser in libcle266mpegdec, but somehow I don't
+</I>&gt;<i> &gt;&gt; understand the parser, or the information is not there ...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Do you have a test stream from which you know it has AFD data present ?
+</I>&gt;<i> &gt; I've only one and may upload it. In germany I havn't seen AFD data.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> No, I guess I haven't. I will ask you for it when I come back to
+</I>&gt;<i> implementing it. Thanks!
+</I>&gt;<i> 
+</I>
+
+&gt;<i> &gt;&gt; So I will now go on and have a look at the softdevice part. I guess I
+</I>&gt;<i> &gt;&gt; will move CheckAspectDimension() from video.c to mpegdecoder.c and
+</I>&gt;<i> &gt;&gt; reimplement it for the cle266 case.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Isn't it easier just to fill relevant info in AVFarme and codec ?
+</I>&gt;<i> &gt; I guess we allocated both.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> Yes, that is definitely simpler, but in my opinion also much uncleaner.
+</I>
+I just want to avoid that mpeg2decoder grows and grows. It should
+be split in some smaller pieces instead.
+
+I guess at the current state, the whole cle266 code is a hack. But if I would get
+my via dfbout work again (then hw accelerated :-) ), I'd like to include
+that, even in some hackish state, into our cvs. Let's polish code later.
+
+The only thing which must (should) be changed, is the layer index carried
+in setup store. This should be a public member in videoDecoder. Unused
+by others, so it doesn't harm.
+
+&gt;<i> The state of AVFrame and codec are undefined as long as we don't use
+</I>&gt;<i> libavcodec (of course we allocate it, but usually we don't fill it), so
+</I>&gt;<i> I think it's dangerous to pretend that everything is ok. 
+</I>
+Filling only those members which are sufficiant to make CheckAspect..
+and co. work, should be ok (setting only direct members, not those 
+accessed via pointers). 
+
+&gt;<i> And there will 
+</I>&gt;<i> be even more trouble if we have some variables which doesn't map 1:1 to
+</I>&gt;<i> variables of ffmpeg...
+</I>&gt;<i> Also we could remove the dependency on avcodec.h in video.h which is
+</I>&gt;<i> only needed because we calculate the aspect ratio of the stream inside
+</I>&gt;<i> of video.c.
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002011.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="002014.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2013">[ date ]</a>
+              <a href="thread.html#2013">[ thread ]</a>
+              <a href="subject.html#2013">[ subject ]</a>
+              <a href="author.html#2013">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

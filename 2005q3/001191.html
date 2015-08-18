@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Compile against ffmpeg CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Compile%20against%20ffmpeg%20CVS&In-Reply-To=%3C20050906150037.M8796%40mellander.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001180.html">
+   <LINK REL="Next"  HREF="001195.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Compile against ffmpeg CVS</H1>
+    <B>Per Mellander</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Compile%20against%20ffmpeg%20CVS&In-Reply-To=%3C20050906150037.M8796%40mellander.org%3E"
+       TITLE="[Softdevice-devel] Compile against ffmpeg CVS">per at mellander.org
+       </A><BR>
+    <I>Tue Sep  6 17:04:37 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001180.html">[Softdevice-devel] RE: [vdr] [ANNOUNCE] vdr-softdevice-0.1.3
+</A></li>
+        <LI>Next message: <A HREF="001195.html">[Softdevice-devel] Compile against ffmpeg CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1191">[ date ]</a>
+              <a href="thread.html#1191">[ thread ]</a>
+              <a href="subject.html#1191">[ subject ]</a>
+              <a href="author.html#1191">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I don't know if this is common knowledge around you guys. But I had to add 
+libavutil in the Makefile to get it to compile against ffmpeg CVS of 
+yesterday.
+
+#
+# DON'T touch this:
+FFMPEGLIBS = -lavcodec -lavformat -lavutil
+#
+
+/Mel
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001180.html">[Softdevice-devel] RE: [vdr] [ANNOUNCE] vdr-softdevice-0.1.3
+</A></li>
+	<LI>Next message: <A HREF="001195.html">[Softdevice-devel] Compile against ffmpeg CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1191">[ date ]</a>
+              <a href="thread.html#1191">[ thread ]</a>
+              <a href="subject.html#1191">[ subject ]</a>
+              <a href="author.html#1191">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

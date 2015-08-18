@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash when video stream is suspended or resumed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C20050908100128.GA3182%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001215.html">
+   <LINK REL="Next"  HREF="001217.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash when video stream is suspended or resumed</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20when%20video%20stream%20is%20suspended%20or%20resumed&In-Reply-To=%3C20050908100128.GA3182%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Crash when video stream is suspended or resumed">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Sep  8 12:01:28 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001215.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+        <LI>Next message: <A HREF="001217.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1216">[ date ]</a>
+              <a href="thread.html#1216">[ thread ]</a>
+              <a href="subject.html#1216">[ subject ]</a>
+              <a href="author.html#1216">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Sep 08, 2005 at 11:00:22AM +0200, Stefan Lucke wrote:
+&gt;<i> Quoting Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; On Wed, Sep 07, 2005 at 09:27:14PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; &gt; However, I've got another crash to report.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Did expect that kind of report :-) .
+</I>&gt;<i> 
+</I>&gt;<i> I tried joking.
+</I>
+Sure, I would have understand it as a joke even without the smiley.
+
+&gt;<i> That's what happend:
+</I>&gt;<i> We have been suspended for a while and the desired drawing area just does not fit
+</I>&gt;<i> into our current surface area. We are called with WidthxHeight = 736x576 but
+</I>&gt;<i> pitch is 704, that's the width of current surface.
+</I>&gt;<i> A segfault in that case should be expected :-( .
+</I>
+Does the OSD use the same dimensions as the video stream?  Should there
+maybe be a cDevice method for setting the dimensions?
+
+I wonder how VDR could possibly detect the changes in dimensions,
+because the MPEG PES stream will be dropped in cDevice::Action().
+It will only be passed to instances of cRecorder.
+
+Could it be that after the &quot;end of video stream&quot; timeout, softdevice
+somehow requests the dimensions of the surface area to be changed?
+Note that within softdevice, playback is running; it just won't receive
+anything from vdr due to my suspend patch.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001215.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+	<LI>Next message: <A HREF="001217.html">[Softdevice-devel] Crash when video stream is suspended or resumed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1216">[ date ]</a>
+              <a href="thread.html#1216">[ thread ]</a>
+              <a href="subject.html#1216">[ subject ]</a>
+              <a href="author.html#1216">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

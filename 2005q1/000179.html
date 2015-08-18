@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PATCH%3A%20Suspend%20audio%20and%20video%20out%20%28for%20XV%20out%29&In-Reply-To=%3C41E8F4EE.7060604%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000174.html">
+   <LINK REL="Next"  HREF="000180.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20PATCH%3A%20Suspend%20audio%20and%20video%20out%20%28for%20XV%20out%29&In-Reply-To=%3C41E8F4EE.7060604%40gmx.net%3E"
+       TITLE="[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)">M.Wache at gmx.net
+       </A><BR>
+    <I>Sat Jan 15 11:48:14 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000174.html">[Softdevice-devel] problems with mgatv
+</A></li>
+        <LI>Next message: <A HREF="000180.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#179">[ date ]</a>
+              <a href="thread.html#179">[ thread ]</a>
+              <a href="subject.html#179">[ subject ]</a>
+              <a href="author.html#179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I have another patch, I used a similar feature for some time now and on 
+the questions on the list I added the feature that XV port and audio 
+device are released.
+On pressing &quot;v&quot; (for video suspend) the softdevice stops decoding the 
+video and releases the XV port and the audio device. This saves CPU time 
+and one can watch use other programs which need the XV port or the audio 
+device while making a recoding. If one presses &quot;v&quot; again the softdevice 
+tries to reopen the XV port and the audio device, if opening of one of 
+them fails the softdevice returns to sleep mode. Sadly this doesn't work 
+properly yet for the audio device... The open function just doesn't 
+return until it can open the audio device. If the opening succeds the 
+video is decoded again.
+
+Right now the suspend is only accessible from XV-out, in principle it 
+can also be implemented for other output methods.
+
+So if you want please try the patch and tell me how it works for you, so 
+that we can include it in the CVS if you like it and its working.
+
+Bye,
+Martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: Suspend_patch.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050115/0f67e281/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050115/0f67e281/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000174.html">[Softdevice-devel] problems with mgatv
+</A></li>
+	<LI>Next message: <A HREF="000180.html">[Softdevice-devel] PATCH: Suspend audio and video out (for XV out)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#179">[ date ]</a>
+              <a href="thread.html#179">[ thread ]</a>
+              <a href="subject.html#179">[ subject ]</a>
+              <a href="author.html#179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

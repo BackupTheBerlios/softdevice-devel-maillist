@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] directfb questions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20questions&In-Reply-To=%3C200503162216.56003.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000306.html">
+   <LINK REL="Next"  HREF="000352.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] directfb questions</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20questions&In-Reply-To=%3C200503162216.56003.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] directfb questions">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Mar 16 22:16:55 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000306.html">[Softdevice-devel] directfb questions
+</A></li>
+        <LI>Next message: <A HREF="000352.html">[Softdevice-devel] directfb questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#307">[ date ]</a>
+              <a href="thread.html#307">[ thread ]</a>
+              <a href="subject.html#307">[ subject ]</a>
+              <a href="author.html#307">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 16. M&#228;rz 2005 20:24, Carsten Kollmeier wrote:
+&gt;<i> Am Mittwoch, 16. M&#228;rz 2005 19:10 schrieb Stefan Lucke:
+</I>&gt;<i> &gt; &gt; My configuration:
+</I>&gt;<i> &gt; &gt; VDR 1.3.22 on PIII 1GHz, matrox G450 card, Soundblaster Live!
+</I>&gt;<i> &gt; &gt; card.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; cpu power should be ok.
+</I>&gt;<i> 
+</I>&gt;<i> top says ~50% cpu-load.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Acceleration is used as it is available.
+</I>&gt;<i> &gt; Which version of DFB do you use ?
+</I>&gt;<i> 
+</I>&gt;<i> DirectFB 0.9.22 is running.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Which output mode do you use (vga vs tv-out) ?
+</I>&gt;<i> 
+</I>&gt;<i> I'm using vga. TV-out would be interesting, but my TV is broken...
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Which pixel format do you use YV12 vs YUV2 ?
+</I>&gt;<i> 
+</I>&gt;<i> Uhmm, I will look: Ok, softdevice tells me, it uses I420, I'm not 
+</I>&gt;<i> shure wether DirectFB uses this too (What is the default, for I have 
+</I>&gt;<i> nothing configured in directfbrc?).
+</I>
+Nothing ? Hm, Whats your screen resolution &amp; ..
+Can you post that messages written to console ?
+
+My /etc/directfb used for vga framebuffer out looks like:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at jarada</A>:~&gt; more /etc/directfbrc.fb0
+#mode  = 1024x768
+mode  = 1280x1024
+#mode=720x576
+depth = 32
+#matrox-crtc2
+#matrox-tv-standard=pal
+#primary-layer=2
+pixelformat=ARGB
+#matrox-cable-type=composite
+#pixelformat=RGB32
+
+&gt;<i> 
+</I>&gt;<i> Could this be the problem with the slow output, for DirectFB has to 
+</I>&gt;<i> convert from I420? Then I will be testing dfb-output right away, for 
+</I>&gt;<i> I don't like the vidix-output I am using not very much.
+</I>
+YV12/I420 are the ones used with BES and the default.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000306.html">[Softdevice-devel] directfb questions
+</A></li>
+	<LI>Next message: <A HREF="000352.html">[Softdevice-devel] directfb questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#307">[ date ]</a>
+              <a href="thread.html#307">[ thread ]</a>
+              <a href="subject.html#307">[ subject ]</a>
+              <a href="author.html#307">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

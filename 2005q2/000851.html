@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Can't get composite sync from G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C1118392134.42a94f46ae115%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000850.html">
+   <LINK REL="Next"  HREF="000854.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Can't get composite sync from G450</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Can%27t%20get%20composite%20sync%20from%20G450&In-Reply-To=%3C1118392134.42a94f46ae115%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Can't get composite sync from G450">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jun 10 10:28:54 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000850.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+        <LI>Next message: <A HREF="000854.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#851">[ date ]</a>
+              <a href="thread.html#851">[ thread ]</a>
+              <a href="subject.html#851">[ subject ]</a>
+              <a href="author.html#851">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Marko M&#228;kel&#228; :
+
+&gt;<i> By the way, will softdevice have to do a color space conversion
+</I>&gt;<i> (YUV-&gt;RGB), given that the TV-out frame buffer uses ARGB format?
+</I>&gt;<i> Would it make more sense to use the &quot;my-pal-32&quot; timings on the
+</I>&gt;<i> primary head?  I guess there's no simple way to make the same
+</I>&gt;<i> VGA-&gt;SCART cable work on both heads.
+</I>
+YUV -&gt; RGB conversion is done in hardware during stretch_bilt.
+
+my-pal-32 timings are used for display via vga. The disadvantage
+of that method is, that it is not possible to select field parity.
+
+For &quot;tv-out&quot; field parity select is possible and will be adjusted
+(in future) to current video material. Currently it is fixed
+to top field first.
+
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000850.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+	<LI>Next message: <A HREF="000854.html">[Softdevice-devel] Can't get composite sync from G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#851">[ date ]</a>
+              <a href="thread.html#851">[ thread ]</a>
+              <a href="subject.html#851">[ subject ]</a>
+              <a href="author.html#851">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

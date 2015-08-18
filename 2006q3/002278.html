@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] error when starting vdr &amp; softdevice on g550
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20error%20when%20starting%20vdr%20%26%20softdevice%20on%20g550&In-Reply-To=%3C44BD2219.90301%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002318.html">
+   <LINK REL="Next"  HREF="002279.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] error when starting vdr &amp; softdevice on g550</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20error%20when%20starting%20vdr%20%26%20softdevice%20on%20g550&In-Reply-To=%3C44BD2219.90301%40pobox.com%3E"
+       TITLE="[Softdevice-devel] error when starting vdr &amp; softdevice on g550">torgeir at pobox.com
+       </A><BR>
+    <I>Tue Jul 18 20:02:01 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002318.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+        <LI>Next message: <A HREF="002279.html">[Softdevice-devel] error when starting vdr &amp; softdevice on g550
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2278">[ date ]</a>
+              <a href="thread.html#2278">[ thread ]</a>
+              <a href="subject.html#2278">[ subject ]</a>
+              <a href="author.html#2278">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I haven't been using DirectFB lately, but tried today with DirectFB 
+current cvs on a Matrox G550. Here's the log output. Does anyone know 
+what might be the problem?
+[<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at htpc</A> VDR]# vdr -v /video/vdr -s &quot;killall vdr;/bin/false&quot; 
+-P&quot;softdevice -vo dfb:mgatv&quot; -P&quot;remote -i /dev/input/event1&quot; -P&quot;softplay 
+--media-path /video/vdr&quot; -Plcdproc -Pdvd
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: dfb:mgatv
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (80)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 1 (4:3)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 1 lavc
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to pseudo
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YUY2)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: rtc
+[softdevice] UseStretchBlitset to on
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3344896)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+        ---------------------- DirectFB v0.9.26 ---------------------
+              (c) 2000-2002  convergence integrated media GmbH
+              (c) 2002-2004  convergence GmbH
+         -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2006-07-18 16:14) [ DEBUG ]
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(*) Direct/Thread: Running 'VT Switcher' (CRITICAL, 2801)...
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 2802)...
+  (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] *** [reactor.c:853]
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (Convergence GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 2803)...
+(*) DirectFB/Input: AT Translated Set 2 keyboard (1) 0.1 (convergence 
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 2804)...
+(*) DirectFB/Input: Logitech USB Receiver (2) 0.1 (convergence 
+integrated media GmbH)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 2805)...
+(*) DirectFB/Input: cx88 IR (Hauppauge Nova-T DVB-T (3) 0.1 (convergence 
+integrated media GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 2806)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: Matrox G550 0.7 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] RAM: 16777216 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine 
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Src.premultiply
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize 
+SrcColorkey SrcPremultiply Deinterlace
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A>
+[dfb] Enumerating display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+   Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+   Caps: brightness contrast deinterlacing dst_colorkey screen_location 
+surface
+[dfb] New layer name allocation failed. Trying old (dfb-0.9.20) layer name
+Layer 0 FBDev Primary Layer  Type: graphics
+   Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+   Caps: brightness contrast deinterlacing dst_colorkey screen_location 
+surface
+[dfb]: could not find suitable videolayer
+  (!!!)  *** WARNING [Application exited without deinitialization of 
+DirectFB!] *** [core.c:741 in dfb_core_deinit_check()]
+
+My /etc/directfbrc:
+
+mode=1280x1024
+depth=32
+pixelformat=ARGB
+
+-- 
+-Torgeir
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002318.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+	<LI>Next message: <A HREF="002279.html">[Softdevice-devel] error when starting vdr &amp; softdevice on g550
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2278">[ date ]</a>
+              <a href="thread.html#2278">[ thread ]</a>
+              <a href="subject.html#2278">[ subject ]</a>
+              <a href="author.html#2278">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

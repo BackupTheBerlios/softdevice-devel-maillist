@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060725153115.GB3654%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002290.html">
+   <LINK REL="Next"  HREF="002292.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060725153115.GB3654%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Jul 25 17:31:15 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002290.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002292.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2291">[ date ]</a>
+              <a href="thread.html#2291">[ thread ]</a>
+              <a href="subject.html#2291">[ subject ]</a>
+              <a href="author.html#2291">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jul 25, 2006 at 10:23:15AM +0100, Alasdair Campbell wrote:
+&gt;<i> Well the question in the first email was whether I should use -vo dfb
+</I>&gt;<i> or -vo dfb:mgatv! I also mentioned that I was using a home made vga to
+</I>&gt;<i> scart cable.
+</I>
+Sorry, I must have missed that.  You should use -vo dfb:mgatv for TV output.
+My home made G450 to SCART cable probably looks like this:
+
+<A HREF="http://forum.matrox.com/mga/viewtopic.php?t=4383">http://forum.matrox.com/mga/viewtopic.php?t=4383</A>
+
+If not, it's adapted from one of the schematics listed
+at <A HREF="http://forum.matrox.com/mga/viewforum.php?f=52">http://forum.matrox.com/mga/viewforum.php?f=52</A>
+
+I'd be interested in your cable schematics, if you managed to get a picture
+from SCART.  I'd like to try out a plain VGA modeline on an interlaced
+RGB video monitor.  That would allow me to use the I420 colour space and
+thus avoid costly colour space conversion.  The -vo dfb:mgatv output requires
+a colour space transformation (between YV12 and YUY2 if I remember correctly)
+that costs 10% to 20% of CPU.
+
+&gt;<i> Here is a clip of the BBC rolling news channel, I can see LOTs of
+</I>&gt;<i> artifacts with the camera movements, and the scrolling text at the
+</I>&gt;<i> bottom looks poor:
+</I>
+Thanks, I downloaded it and will have a look later, hopefully tonight.
+Horizontally scrolling text is excellent for this purpose.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002290.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002292.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2291">[ date ]</a>
+              <a href="thread.html#2291">[ thread ]</a>
+              <a href="subject.html#2291">[ subject ]</a>
+              <a href="author.html#2291">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

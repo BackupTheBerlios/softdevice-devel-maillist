@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605100054.55340.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002068.html">
+   <LINK REL="Next"  HREF="001997.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20transparency%20%26%20DirectFB%20on%20EPIA&In-Reply-To=%3C200605100054.55340.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed May 10 00:54:55 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002068.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+        <LI>Next message: <A HREF="001997.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1994">[ date ]</a>
+              <a href="thread.html#1994">[ thread ]</a>
+              <a href="subject.html#1994">[ subject ]</a>
+              <a href="author.html#1994">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag 09 Mai 2006 20:15, Stefan Lucke wrote:
+&gt;<i> On Dienstag 09 Mai 2006 10:56, Laz wrote:
+</I>&gt;<i> &gt; On Monday 08 May 2006 22:00, Rolf Ahrenberg wrote:
+</I>&gt;<i> &gt; &gt; Hi,
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I've been playing with Softdevice in my EPIA based setup from time to
+</I>&gt;<i> &gt; &gt; time, but never managed to get the OSD transparency working. Originally
+</I>&gt;<i> &gt; &gt; I though that this was somekind of limitation in hardware/driver, but
+</I>&gt;<i> &gt; &gt; recently I noticed that Xineliboutput-plugin provides a nice
+</I>&gt;<i> &gt; &gt; transparent OSD when running it on viafb-directfb-cvs framebuffer
+</I>&gt;<i> &gt; &gt; driver and latest DirectFB libraries. So my DirectFB and framebuffer
+</I>&gt;<i> &gt; &gt; settings must be correct and functional as the Xinelibout works.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Why doesn't transparency work with Softdevice's OSD implementation on
+</I>&gt;<i> &gt; &gt; CLE266?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; It used to work well a few months back but when I updated either 
+</I>&gt;<i> &gt; softdevice or DirectFB from cvs a couple of months back (both at the same 
+</I>&gt;<i> &gt; time so I don't know which is the cause of the problem.
+</I>&gt;<i> 
+</I>&gt;<i> My last test with my via board was serveral months ago too.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; With cvs from a couple of weeks back, the only time I see transparency is 
+</I>&gt;<i> &gt; when I have black text which becomes totally see-through (with 
+</I>&gt;<i> &gt; skinsopalusika). Setting the colour to something like 0x111111 does make 
+</I>&gt;<i> &gt; it opaque again.
+</I>&gt;<i> 
+</I>&gt;<i> Full black is full transparent now ?
+</I>&gt;<i> Colud be either an issue with AlphaInversed at line 1091 or
+</I>&gt;<i> with SetLevel (1)  at line 763.
+</I>&gt;<i> 
+</I>&gt;<i> Could you try setting AlphaInversed to false fixed, and/ or
+</I>&gt;<i> either skip the call of SetLevel or replacing that with SetLevel(-1).
+</I>&gt;<i> 
+</I>&gt;<i> Won't try that here at the moment, as my epia board acts as our
+</I>&gt;<i> productive dvb-t receiver. 
+</I>
+Did a test now with vdr-1.4.0 and softdevice-cvs-head. OSD is still
+drawn in normal alpha blend mode. I did not any other plugin (skin-plugin).
+My DirectFB version on this box is somewhere outdated. I guess I've
+to upgrade.
+
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.23 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-09-24 07:55)
+
+viafb is at:
+viafb: VIA UNICHROME framebuffer 1.0 initializing
+
+&gt;<i> My dvb-s cards turned inoperable 
+</I>&gt;<i> during some slight maintenance :-( .
+</I>&gt;<i> 
+</I>&gt;<i> See (in german):
+</I>&gt;<i> <A HREF="http://www.vdr-portal.de/board/thread.php?threadid=44983">http://www.vdr-portal.de/board/thread.php?threadid=44983</A>
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I think that the depth of the alpha channel isn't quite as good as it ould 
+</I>&gt;<i> &gt; like to be (I think I had to play about a bit with the colours before 
+</I>&gt;<i> &gt; they were transparent and nicely alpha blended).
+</I>&gt;<i> 
+</I>&gt;<i> Epia boards do not support 8bit alpha values, only 4 or 5bit
+</I>&gt;<i> (the higher ones).
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002068.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+	<LI>Next message: <A HREF="001997.html">[Softdevice-devel] OSD transparency &amp; DirectFB on EPIA
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1994">[ date ]</a>
+              <a href="thread.html#1994">[ thread ]</a>
+              <a href="subject.html#1994">[ subject ]</a>
+              <a href="author.html#1994">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

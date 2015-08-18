@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050906112920.GA3206%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001188.html">
+   <LINK REL="Next"  HREF="001190.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050906112920.GA3206%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Sep  6 13:29:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001188.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+        <LI>Next message: <A HREF="001190.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1189">[ date ]</a>
+              <a href="thread.html#1189">[ thread ]</a>
+              <a href="subject.html#1189">[ subject ]</a>
+              <a href="author.html#1189">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Sep 06, 2005 at 10:26:27AM +0200, Stefan Lucke wrote:
+&gt;<i> &gt; [softdevice] picture buffer released
+</I>&gt;<i> &gt; [softdevice] allocating picture buffer for resolution 704x576 format 0
+</I>&gt;<i> 
+</I>&gt;<i> Thats stdout/stderr. That aspect changeinformation I asked for is written
+</I>&gt;<i> to syslog with dsyslog().
+</I>
+I don't have syslogd.  I guess the output won't go to stderr in that case.
+I'll #define dsyslog() to something that outputs to stderr.
+
+&gt;<i> Aspect changes should be detected immediate, but it is done in ffmpeg.
+</I>&gt;<i> Which exact version do you use ?
+</I>
+It's some CVS snapshot I took last spring.  I'll update it; maybe that is
+an ffmpeg bug after all.  I remember that when I started using
+softdevice, the aspect ratio changes were not always detected even when
+playing at normal speed.  That may have been fixed by updating ffmpeg.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001188.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+	<LI>Next message: <A HREF="001190.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1189">[ date ]</a>
+              <a href="thread.html#1189">[ thread ]</a>
+              <a href="subject.html#1189">[ subject ]</a>
+              <a href="author.html#1189">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

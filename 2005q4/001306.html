@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] ac3 passthrough 1st try
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C200510061525.15980.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001304.html">
+   <LINK REL="Next"  HREF="001315.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] ac3 passthrough 1st try</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C200510061525.15980.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] ac3 passthrough 1st try">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Oct  6 15:25:15 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001304.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+        <LI>Next message: <A HREF="001315.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1306">[ date ]</a>
+              <a href="thread.html#1306">[ thread ]</a>
+              <a href="subject.html#1306">[ subject ]</a>
+              <a href="author.html#1306">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 6. Oktober 2005 14:27, Nicolas Huillard wrote:
+&gt;<i> Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt; On Donnerstag, 6. Oktober 2005 13:47, Nicolas Huillard wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;attached is a patch which enables AC3 passthrough.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;Which version is this patch diffed against ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Current CVS version (I guess)  :-) . Any problems on patching ?
+</I>&gt;<i> 
+</I>&gt;<i> Yes.
+</I>&gt;<i> Main problem regarding the huge hunk #4 in audio.c. Maybe moving the
+</I>&gt;<i> whole code at the end of the file would help ?
+</I>&gt;<i> I'm patching 0.1.3.
+</I>&gt;<i> I can't stick to CVS version, because I aim my work at packaging stuff,
+</I>&gt;<i> and I do not have much time. You happen to release this patch at the
+</I>&gt;<i> right time for me to test.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at vdr</A>:vdr-plugin-softdevice-0.1.3$ bzcat ../ac3-pass-01.diff.bz2
+</I>&gt;<i> | patch --dry-run
+</I>&gt;<i> patching file audio.c
+</I>&gt;<i> Hunk #1 succeeded at 16 with fuzz 2 (offset -1 lines).
+</I>&gt;<i> Hunk #2 succeeded at 33 (offset -8 lines).
+</I>&gt;<i> Hunk #3 succeeded at 96 with fuzz 2 (offset -9 lines).
+</I>&gt;<i> Hunk #4 FAILED at 142.
+</I>&gt;<i> Hunk #5 FAILED at 885.
+</I>
+Ah, thats the audio debugging code, which is present past 0.1.3 .
+A uncompressed diff againt v013 is about twice as much and
+doesn't include configure as that was not present at that time.
+Did we change so mauch since last release ? Hm, time to next one.
+
+When it comes to &quot;time&quot;, I guess it's easier and  faster to checkout
+cvs into a separate directory, as manual resolving failed hunks.
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001304.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+	<LI>Next message: <A HREF="001315.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1306">[ date ]</a>
+              <a href="thread.html#1306">[ thread ]</a>
+              <a href="subject.html#1306">[ subject ]</a>
+              <a href="author.html#1306">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

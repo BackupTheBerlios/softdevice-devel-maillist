@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Cannot get remote controls to work via softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Cannot%20get%20remote%20controls%20to%20work%20via%20softdevice&In-Reply-To=%3C20050320070541.GA431019%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000367.html">
+   <LINK REL="Next"  HREF="000347.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Cannot get remote controls to work via softdevice</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Cannot%20get%20remote%20controls%20to%20work%20via%20softdevice&In-Reply-To=%3C20050320070541.GA431019%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Cannot get remote controls to work via softdevice">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Mar 20 08:05:41 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000367.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+        <LI>Next message: <A HREF="000347.html">[Softdevice-devel] Cannot get remote controls to work via softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#346">[ date ]</a>
+              <a href="thread.html#346">[ thread ]</a>
+              <a href="subject.html#346">[ subject ]</a>
+              <a href="author.html#346">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I'm sorry if this is a FAQ, but I haven't found any document that would
+answer my question.
+
+I'm using VDR 1.3.22 with a recent softdevice plugin.  Initially, I tested
+it with Xv output, but now I'm using DirectFB with a Matrox G450 card,
+running Debian GNU/Linux unstable and 2.6.11.1 kernel with some video4linux
+related patches.
+
+I compiled linux_input support in DirectFB and disabled other input modules.
+According to lsof, VDR keeps /dev/input/event* open.  However, the remote
+control learning screen of softdevice-dfb does not react to anything:
+keyboard, mouse, or the remote control of my cx88xx-based Hauppauge
+Nova-T card.  In order to disable the annoying 10-second delay, I manually
+entered a dummy line to remote.conf.
+
+I can use the remote control via the vdr-remote plugin, at least if I
+disable the linux_input module in /etc/directfbrc.
+
+I had a similar problem with softdevice-xv: it wouldn't react to the keyboard,
+no matter if the output window or the controlling terminal window has focus.
+The 'F' key toggled between fullscreen and windowed output when the output
+window had focus.
+
+Ultimately, I'd like to use the remote control via the directfb library
+instead of the vdr-remote plugin.  In my opinion, the fewer dependencies,
+the better.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000367.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+	<LI>Next message: <A HREF="000347.html">[Softdevice-devel] Cannot get remote controls to work via softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#346">[ date ]</a>
+              <a href="thread.html#346">[ thread ]</a>
+              <a href="subject.html#346">[ subject ]</a>
+              <a href="author.html#346">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

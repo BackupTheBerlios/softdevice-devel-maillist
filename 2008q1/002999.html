@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice and HD-material
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801161440.27566.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002998.html">
+   <LINK REL="Next"  HREF="003000.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice and HD-material</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801161440.27566.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice and HD-material">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jan 16 14:40:27 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002998.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+        <LI>Next message: <A HREF="003000.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2999">[ date ]</a>
+              <a href="thread.html#2999">[ thread ]</a>
+              <a href="subject.html#2999">[ subject ]</a>
+              <a href="author.html#2999">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 16 January 2008, Per Mellander wrote:
+&gt;<i> Per Mellander skrev:
+</I>&gt;<i> &gt; Hi Martin!
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;&gt; Could anyone schred som lights over the matter?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; In mpeg2decoder.c cMpeg2Decoder::initStream, the stream is hardcoded to
+</I>&gt;<i> &gt;&gt; mpeg which is actually mpeg2, you'll have to change that. Actually I
+</I>&gt;<i> &gt;&gt; guess it should be quite simple to adapt the softdevice, but I don't
+</I>&gt;<i> &gt;&gt; have the time... I haven't even had a look at the patches to vdr, so I
+</I>&gt;<i> &gt;&gt; don't know what has changed there.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Well I'll try to give it some time then.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Many thanks!
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Per
+</I>
+&gt;<i> 
+</I>&gt;<i> My skills / time is not positive for me right at the moment. If I read between 
+</I>&gt;<i> the lines on vdr-ml, it looks to me that Stefan is on the case ;) Is it so?
+</I>&gt;<i> 
+</I>&gt;<i> Sincerely,
+</I>&gt;<i> 
+</I>&gt;<i> Per
+</I>
+Yes I'm trying something, and it seems it is running for a few
+seconds, until the decoder is reset.
+
+I've some general doubts for software decoding of h264.
+My AMD X2 3800+ is a bit slow, even xosview doesn't show both CPUs
+at 100%. Ofcourse we can improve something like decoupling decoding
+and presentation layer. But we'll get a new set of A/V sync issues. Using
+several threads for decoding has no noticeable effect.
+
+Looking at HW-decoding, the reelbox HD extension looks quite interesting:
+<A HREF="http://www.reel-multimedia.com/rmm-english/pdf/produkt-flyer/extension_hd.pdf">http://www.reel-multimedia.com/rmm-english/pdf/produkt-flyer/extension_hd.pdf</A>
+
+A new release 0.5.0 is waiting to be published, which will be without
+h264 support I guess.
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002998.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+	<LI>Next message: <A HREF="003000.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2999">[ date ]</a>
+              <a href="thread.html#2999">[ thread ]</a>
+              <a href="subject.html#2999">[ subject ]</a>
+              <a href="author.html#2999">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

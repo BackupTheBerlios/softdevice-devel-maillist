@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Work on Debian package still in progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C42ED4693.6070702%40e-tobi.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001062.html">
+   <LINK REL="Next"  HREF="001068.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Work on Debian package still in progress...</H1>
+    <B>Tobias Grimm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C42ED4693.6070702%40e-tobi.net%3E"
+       TITLE="[Softdevice-devel] Work on Debian package still in progress...">listaccount at e-tobi.net
+       </A><BR>
+    <I>Sun Jul 31 23:45:55 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001062.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+        <LI>Next message: <A HREF="001068.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1067">[ date ]</a>
+              <a href="thread.html#1067">[ thread ]</a>
+              <a href="subject.html#1067">[ subject ]</a>
+              <a href="author.html#1067">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+
+&gt;<i>With your /etc/directfbrc and your /etc/fb.modes.
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+Ok - but these seem to be ok for the moment. This is the directfbrc:
+
+
+mode=1024x768
+depth=16
+no-vt-switch
+no-vt-switching
+
+Is there anything I should take care of in fb.modes? (BTW: I'm running
+2.4.31 with vesafb)
+
+&gt;&gt;<i>(!) Direct/Modules: Unable to dlopen
+</I>&gt;&gt;<i>`/usr/lib/directfb-0.9.22/inputdrivers/libdirectfb_ps2mouse.so'!
+</I>&gt;&gt;<i>    --&gt; /usr/lib/directfb-0.9.22/inputdrivers/libdirectfb_ps2mouse.so:
+</I>&gt;&gt;<i>undefined symbol: direct_free
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>This error message is odd too. Do directfb samples work (like dfbinfo) ?
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+Yes. dfbinfo, df_neo and so on do work, but print the same error message.
+
+&gt;<i> [dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+</I>&gt;<i>
+</I>&gt;&gt;<i><A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>By default directfb uses the first mode specified in fb.modes. I you
+</I>&gt;<i>want a higher resolution and/or color depth (you will) you should
+</I>&gt;<i>specify them in directfbrc.
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+I've changed this to 1024x768 now. See the new stderr printout et the
+end of the mail.
+
+&gt;&gt;<i>[dfb] Enumeratig display Layers
+</I>&gt;&gt;<i>Layer 0 FBDev Primary Layer  Type: graphics
+</I>&gt;&gt;<i>  Caps: brightness contrast saturation surface
+</I>&gt;&gt;<i>(!) [12950:    0.000] --&gt; Caught signal 6 (sent by pid 12950, uid 0) &lt;--
+</I>&gt;&gt;<i>/usr/sbin/runvdr: line 1: 12950 Get&#246;tet                
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>Thats to my opinion caused by insufficient resolution / color depth.
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+I have <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">102x769 at 16</A> now. Should be enough, but doesn't work either.
+
+Tobias
+
+This is the new stderr printout:
+
+Warning! VDR started with root privileges
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(0.4.9-pre1) build(4756)
+[dfb] init
+(*) DirectFB/Config: Parsing config file '/etc/directfbrc'.
+
+       ---------------------- DirectFB v0.9.22 ---------------------
+             (c) 2000-2002  convergence integrated media GmbH
+             (c) 2002-2004  convergence GmbH
+        -----------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2005-07-31 15:28)
+(*) Direct/Memcpy: Using MMXEXT optimized memcpy()
+(!) Direct/Modules: Unable to dlopen
+`/usr/lib/directfb-0.9.22/inputdrivers/libdirectfb_ps2mouse.so'!
+    --&gt; /usr/lib/directfb-0.9.22/inputdrivers/libdirectfb_ps2mouse.so:
+undefined symbol: direct_free
+(*) Direct/Thread: Running 'LiRC Input' (INPUT, 7275)...
+ (!!!)  *** UNIMPLEMENTED [fusion_reactor_set_lock] ***
+[../../../lib/fusion/reactor.c:802]
+(*) DirectFB/Input: LIRC Device 0.2 (convergence integrated media GmbH)
+(*) Direct/Thread: Running 'Keyboard Input' (INPUT, 7276)...
+(*) DirectFB/Input: Keyboard 0.9 (convergence integrated media GmbH)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: MMX Software Rasterizer 0.6 (convergence
+integrated media GmbH)
+(*) DirectFB/Core/WM: Default 0.2 (Convergence GmbH)
+[dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 16</A>
+[dfb] Enumeratig display Layers
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+(!) [ 7265:    0.000] --&gt; Caught signal 6 (sent by pid 7265, uid 0) &lt;--
+/usr/sbin/runvdr: line 1:  7265 Get&#246;tet                
+LD_ASSUME_KERNEL=2.4.1 /usr/bin/vdr -v /var/lib/video.00 -c /var/lib/vdr
+-L /usr/lib/vdr/plugins -r /usr/lib/vdr/vdr-recordingaction -s
+/usr/lib/vdr/vdr-shutdown.wrapper -E /var/cache/vdr/epg.data -u root -g
+root --port 2001 --lirc -P &quot;sc &quot; -P &quot;image -m
+/usr/lib/vdr-plugin-image/mount.sh -C
+/usr/lib/vdr-plugin-image/imageplugin.sh&quot; -P &quot;softdevice -vo dfb:&quot; -P
+femon -P epgsearch -P &quot;tvonscreen -v /var/lib/vdradmin/vdradmind.at&quot; -P
+&quot;dvd -C /var/cache/vdr/dvd&quot; -P radio -P &quot;autotimeredit &quot; -w 60 --allow-root
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001062.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+	<LI>Next message: <A HREF="001068.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1067">[ date ]</a>
+              <a href="thread.html#1067">[ thread ]</a>
+              <a href="subject.html#1067">[ subject ]</a>
+              <a href="author.html#1067">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

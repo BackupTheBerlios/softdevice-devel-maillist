@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050906080813.GD3177%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001186.html">
+   <LINK REL="Next"  HREF="001188.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050906080813.GD3177%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Sep  6 10:08:13 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001186.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+        <LI>Next message: <A HREF="001188.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1187">[ date ]</a>
+              <a href="thread.html#1187">[ thread ]</a>
+              <a href="subject.html#1187">[ subject ]</a>
+              <a href="author.html#1187">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Sep 06, 2005 at 09:42:07AM +0200, Stefan Lucke wrote:
+&gt;<i> Doh, we are just copying the last line of Pv colour information.
+</I>&gt;<i> When that crash happens, is the last line of aspect change information written
+</I>&gt;<i> to syslog ([VideoOut]: %dx%d [%d,%d %dx%d] -&gt; %dx%d [%d,%d %dx%d]) ?
+</I>&gt;<i> Are there odd numbers ?
+</I>
+Nope, but I have disabled CMDDEB if that makes a difference.  Here's
+the output from the log after a couple of f.fwd and rewind.  The last
+one lead to the crash:
+
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
++++++++++++++++++++++++++++++++++++++++++[dfb] (re)configuring
+Videolayer to 704 x 576 (704x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping
+[dfb] (re)configured 0x08100609
+++++++++++++++++++++++++[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+[dfb] (re)configuring Videolayer to 704 x 576 (528x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping
+[dfb] (re)configured 0x08100609
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+++++++++++++++++++++++++
+
+(no newline at the end of the '+++' line)
+
+&gt;<i> Maybe thats a rounding issue, when placing the desired protion of the layer.
+</I>&gt;<i> If that idea is true, it should by avoided by using the newer directfb
+</I>&gt;<i> interface for that purpose. This newer interface can be activated by
+</I>&gt;<i> changing line 20 in video-dfb.c from:
+</I>&gt;<i> # define HAVE_SetSourceLocation 0
+</I>&gt;<i> to:
+</I>&gt;<i> # define HAVE_SetSourceLocation 1
+</I>
+Yes, I recall that suggestion from a few weeks ago, and I think that the
+modification made the crashes go away earlier.  However, I recall there
+were other problems the last time I tried it.  I think I'll have to keep
+using that setting longer now.  It seems to make the crash go away.
+
+Is there a reason why this cannot be made the default?  Does DirectFB
+define any version symbol that could be checked with ifdef?
+
+It looks like softdevice won't always detect aspect ratio changes during
+rewind.  It'll display 4:3 footage as 16:9, even after pressing Stop and Play.
+Skipping stream in 1-minute steps sometimes makes it detect the correct aspect
+ratio, but only if the skipping will switch from 4:3 to 16:9 and back.
+Isn't the aspect ratio setting included in every GOP?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001186.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+	<LI>Next message: <A HREF="001188.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1187">[ date ]</a>
+              <a href="thread.html#1187">[ thread ]</a>
+              <a href="subject.html#1187">[ subject ]</a>
+              <a href="author.html#1187">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

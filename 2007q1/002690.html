@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] improved lip sync with mgatv and viatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C5F3B6E5C-52B0-4CAB-A31C-042D00ADFC10%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002689.html">
+   <LINK REL="Next"  HREF="002691.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] improved lip sync with mgatv and viatv</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20improved%20lip%20sync%20with%20mgatv%20and%20viatv&In-Reply-To=%3C5F3B6E5C-52B0-4CAB-A31C-042D00ADFC10%40pobox.com%3E"
+       TITLE="[Softdevice-devel] improved lip sync with mgatv and viatv">torgeir at pobox.com
+       </A><BR>
+    <I>Wed Jan 24 22:45:28 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002689.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+        <LI>Next message: <A HREF="002691.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2690">[ date ]</a>
+              <a href="thread.html#2690">[ thread ]</a>
+              <a href="subject.html#2690">[ subject ]</a>
+              <a href="author.html#2690">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 24 Jan 2007, at 20:01, Stefan Lucke wrote:
+
+&gt;<i> On Dienstag 23 Januar 2007 01:25, Torgeir Veimo wrote:
+</I>&gt;&gt;<i> On 22 Jan 2007, at 20:26, Stefan Lucke wrote:
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> So my system skips around 9 to 10 frames per minute.
+</I>&gt;&gt;&gt;<i> 60 * 25 = 1500 frames.
+</I>&gt;&gt;&gt;<i> So the TV frame rate is 25 * 1490 / 1500 = 24.833 Hz .
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I guess I've to ask Ville if there is a way to increase the dot  
+</I>&gt;&gt;&gt;<i> clock
+</I>&gt;&gt;&gt;<i> of my card in some way.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This assumes your soundcard is perfectly clocked to the incoming DVB
+</I>&gt;&gt;<i> stream? I'd assume that eventually if the soundcard is a bit faster
+</I>&gt;&gt;<i> than the DVB stream, you'd get an xrun. Maybe it's an idea to add
+</I>&gt;&gt;<i> xrun counts as well.
+</I>&gt;<i>
+</I>&gt;<i> Yes, there are e few assumptions which may slightly influence  
+</I>&gt;<i> calculation.
+</I>&gt;<i> These numbers are from recording playback. During live view, they are
+</I>&gt;<i> a bit different, but the direction is the same.
+</I>&gt;<i>
+</I>&gt;<i> The other way, we have to issue additional delays, because of some
+</I>&gt;<i> errors we lost about 9 frames is bad too. Let's look at the code:
+</I>&gt;<i>
+</I>&gt;<i> 1. calculate current audio / video offset:
+</I>&gt;<i>   if ( aPTS )
+</I>&gt;<i>     offset = aPTS - pts ;
+</I>&gt;<i>   else offset = 0;
+</I>&gt;<i>   if ( abs(offset) &gt; 100000)
+</I>&gt;<i>           offset=0;
+</I>&gt;<i>
+</I>&gt;<i> To my opinion thats ok.
+</I>
+Maybe use the term delay instead of offset. Eg. choosing the term &quot;A/ 
+V Offset&quot; in the setup was a bad choice of me.
+
+[...]
+
+&gt;&gt;<i> Another thing which would be good to get statistics about: the
+</I>&gt;&gt;<i> average number of &quot;hurryup&quot;s after a channel change.
+</I>&gt;<i>
+</I>&gt;<i> After a channel change, I think we issue delays instead of hurryups.
+</I>
+Are you sure? Where's the code for that?
+
+I think it would be interesting to gather audio clock to DVB signal  
+clock drift over time and reprogram the audio output, if it has the  
+capability to do so. I think AC '97 compatible hardware has a  
+software programmable clock, but I'm not sure if it can be set using  
+an ioctl.
+
+Additionally, why don't we try to make use of the available vsync  
+interrupt on the matroxfb in SyncTimer.c, when we don't use  
+DSFLIP_WAITFORSYNC?.
+
+For reference, here's five minutes of log from my system. Maybe my  
+modeline is not properly adjusted to the DVB clock.
+
+Jan 24 21:35:25 htpc vdr: [19793] frontend 1 timed out while tuning  
+to channel 9, tp 578
+Jan 24 21:35:28 htpc vdr: [25708] [mpeg2decoder] skipped (5, 83 [2659  
+-&gt; 659])
+Jan 24 21:36:18 htpc vdr: [25708] [mpeg2decoder] skipped (5, 84 [2409  
+-&gt; 409])
+Jan 24 21:37:07 htpc vdr: [25708] [mpeg2decoder] skipped (5, 120  
+[2409 -&gt; 409])
+Jan 24 21:38:52 htpc kernel: cx88[1]/2-mpeg: cx8802_timeout
+Jan 24 21:38:53 htpc vdr: [25708] [mpeg2decoder] skipped (8, 163  
+[2409 -&gt; 459])
+Jan 24 21:39:00 htpc vdr: [19793] frontend 1 timed out while tuning  
+to channel 9, tp 578
+Jan 24 21:41:44 htpc kernel: cx88[1]/2-mpeg: cx8802_timeout
+Jan 24 21:41:51 htpc vdr: [25708] [mpeg2decoder] skipped (5, 85 [2509  
+-&gt; 509])
+Jan 24 21:41:52 htpc vdr: [19793] frontend 1 timed out while tuning  
+to channel 9, tp 578
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002689.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+	<LI>Next message: <A HREF="002691.html">[Softdevice-devel] improved lip sync with mgatv and viatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2690">[ date ]</a>
+              <a href="thread.html#2690">[ thread ]</a>
+              <a href="subject.html#2690">[ subject ]</a>
+              <a href="author.html#2690">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

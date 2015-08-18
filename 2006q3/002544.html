@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice xv and i915 Notebook
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C1159378202.451ab51a6ebce%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002543.html">
+   <LINK REL="Next"  HREF="002545.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice xv and i915 Notebook</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20xv%20and%20i915%20Notebook&In-Reply-To=%3C1159378202.451ab51a6ebce%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice xv and i915 Notebook">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Sep 27 19:30:02 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002543.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+        <LI>Next message: <A HREF="002545.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2544">[ date ]</a>
+              <a href="thread.html#2544">[ thread ]</a>
+              <a href="subject.html#2544">[ subject ]</a>
+              <a href="author.html#2544">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Thomas Erdmann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">t-erdmann at web.de</A>&gt;:
+
+&gt;<i> &gt; Thats strange.
+</I>&gt;<i> &gt; To locate the source of the crash, you should run vdr from gdb. For example
+</I>&gt;<i> &gt; # gdb ./ vdr
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> This is the output of trying to do full screen with the &quot;f&quot; key,
+</I>&gt;<i> vdr started under control of gdb 'vdr -Psoftdevice .....`:
+</I>
+But that's not the sequence I intendet to asked for. Command I wrote
+is buggy. From vdr's directrory I do:
+
+jarada vdr-1.4.0.jarada # gdb ./vdr
+GNU gdb 6.4
+Copyright 2005 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type &quot;show copying&quot; to see the conditions.
+There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.
+This GDB was configured as &quot;i686-pc-linux-gnu&quot;...Using host libthread_db library &quot;/lib/tls/libthread_db.so.1&quot;.
+
+(gdb) set args -P &quot;softdevice -vo xv:&quot; -E /net_data/vdr137-dvb-t-jarada/epg.data -c /net_data/vdr137-dvb-t-jarada -v
+/net_data/video/ -p 2010
+(gdb) run
+Starting program: /home/nfs/extra/src/video/DVB/vdr-1.4.0.jarada/vdr -P &quot;softdevice -vo xv:&quot; -E
+/net_data/vdr137-dvb-t-jarada/epg.data -c /net_data/vdr137-dvb-t-jarada -v /net_data/video/ -p 2010
+[Thread debugging using libthread_db enabled]
+
+
+&gt;<i> VDR terminates when pressing f and gdb shows &quot;No stack&quot;.
+</I>&gt;<i> Any hints ?
+</I>
+Which messages were written to syslog (/var/log/messages or
+/var/log/syslog, depending on your distribution).
+
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002543.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+	<LI>Next message: <A HREF="002545.html">[Softdevice-devel] softdevice xv and i915 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2544">[ date ]</a>
+              <a href="thread.html#2544">[ thread ]</a>
+              <a href="subject.html#2544">[ subject ]</a>
+              <a href="author.html#2544">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

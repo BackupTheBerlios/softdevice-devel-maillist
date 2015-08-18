@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Is there a known A/V sync issue with current	softdevice.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Is%20there%20a%20known%20A/V%20sync%20issue%20with%20current%0A%09softdevice.&In-Reply-To=%3C11BF6F4D-150B-4D1D-819F-A91B80C48993%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002818.html">
+   <LINK REL="Next"  HREF="002820.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Is%20there%20a%20known%20A/V%20sync%20issue%20with%20current%0A%09softdevice.&In-Reply-To=%3C11BF6F4D-150B-4D1D-819F-A91B80C48993%40pobox.com%3E"
+       TITLE="[Softdevice-devel] Is there a known A/V sync issue with current	softdevice.">torgeir at pobox.com
+       </A><BR>
+    <I>Tue Mar 27 09:40:16 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002818.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+        <LI>Next message: <A HREF="002820.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2819">[ date ]</a>
+              <a href="thread.html#2819">[ thread ]</a>
+              <a href="subject.html#2819">[ subject ]</a>
+              <a href="author.html#2819">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 27 Mar 2007, at 07:49, Per Mellander wrote:
+
+&gt;<i> Martin Wache wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This patch still has some issues which have to be solved, one of  
+</I>&gt;&gt;<i> them is
+</I>&gt;&gt;<i> that it breaks A-V sync for some streams. So if you don't need it,
+</I>&gt;&gt;<i> please don't apply it.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I checked out a fresh CVS yesterday and changed the 'if (0)' to 'if  
+</I>&gt;<i> (1)'
+</I>&gt;<i> at line 546 in video.c. The result was that I've now got A/V sync
+</I>&gt;<i> problems lasting much shorter in time than before. It seems to fix
+</I>&gt;<i> itself also because I didn't have to do anything to get the A/V in  
+</I>&gt;<i> sync
+</I>&gt;<i> again. I'm not quite sure but I think that the problems sometimes  
+</I>&gt;<i> occur
+</I>&gt;<i> at the same time that the HD led is active. I've switched off all the
+</I>&gt;<i> unneeded services and VDR is the only 'user activity' on the machine.
+</I>&gt;<i>
+</I>&gt;<i> Tried to find some more debugging options in softdevice but didn't do
+</I>&gt;<i> any changes. How do I set softdevice to send a little bit more  
+</I>&gt;<i> debugging
+</I>&gt;<i> info?
+</I>
+Make sure you have syslog set to debug output, also change line 917  
+of mpeg2decoder.c from #if 0 to #if 1, which will result in some  
+stats on dropped / repeted frames.
+
+You said you had better sync with an older version? Which version was  
+that? Or was it simply older hardware?
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002818.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+	<LI>Next message: <A HREF="002820.html">[Softdevice-devel] Is there a known A/V sync issue with current softdevice.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2819">[ date ]</a>
+              <a href="thread.html#2819">[ thread ]</a>
+              <a href="subject.html#2819">[ subject ]</a>
+              <a href="author.html#2819">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

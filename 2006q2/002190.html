@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606202154.50808.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002189.html">
+   <LINK REL="Next"  HREF="002191.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C200606202154.50808.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Tue Jun 20 22:54:50 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002189.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002191.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2190">[ date ]</a>
+              <a href="thread.html#2190">[ thread ]</a>
+              <a href="subject.html#2190">[ subject ]</a>
+              <a href="author.html#2190">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tuesday 20 June 2006 18:41, Martin Wache wrote:
+
+&gt;<i> I still think we should use I420 as default also when using hardware
+</I>&gt;<i> decoding. I420 and YV12 only differ in the order of the planes, so I
+</I>&gt;<i> don't see a reason why blitting from I420 to I420 should be faster than
+</I>&gt;<i> blitting from YV12 to YV12. I currently assume that there is some kind
+</I>&gt;<i> of bug in DirectFB or for some strange reason (bug?) the acceleration is
+</I>&gt;<i> disabled for YV12.
+</I>
+I think I originally set it to YV12 because that was the format used by the 
+original code I had and Blitting would only be accelerated to a YV12 surface. 
+I'm not sure whether the decoder needs the buffers in this format or not, 
+i.e. whether the 4 decoder buffers can just be set to I420 and it'll all 
+work...
+
+I don't think Blitting between different formats is accelerated so the pixel 
+format in the setup probably wants fixing at the relevant value. I can 
+currently change it between YV12 and I420 with no visible difference (not 
+looked at the CPU usage); switching to YUY2 makes it quite jerky.
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002189.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002191.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2190">[ date ]</a>
+              <a href="thread.html#2190">[ thread ]</a>
+              <a href="subject.html#2190">[ subject ]</a>
+              <a href="author.html#2190">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

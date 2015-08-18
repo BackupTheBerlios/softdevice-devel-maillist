@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Rapidly blinking black cursor in DFB output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rapidly%20blinking%20black%20cursor%20in%20DFB%20output&In-Reply-To=%3C20050523203444.GB199519%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000754.html">
+   <LINK REL="Next"  HREF="000715.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Rapidly blinking black cursor in DFB output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rapidly%20blinking%20black%20cursor%20in%20DFB%20output&In-Reply-To=%3C20050523203444.GB199519%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Rapidly blinking black cursor in DFB output">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon May 23 22:34:44 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000754.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+        <LI>Next message: <A HREF="000715.html">[Softdevice-devel] Rapidly blinking black cursor in DFB output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#711">[ date ]</a>
+              <a href="thread.html#711">[ thread ]</a>
+              <a href="subject.html#711">[ subject ]</a>
+              <a href="author.html#711">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm using matroxfb on Linux 2.6.11.6, vdr 1.3.24, up-to-date softdevice
+and DirectFB 0.9.22.
+
+I'm running VDR as non-root (thanks to Nicolas and others who participated
+in that thread).  Here is my /etc/directfbrc:
+
+fbdev=/dev/fb0
+mode=768x576
+#vt-switch
+#vt-switching
+no-banner
+no-debug
+no-vt
+depth=16
+
+My problem is that although I have disabled the text cursor
+(setterm -cursor off) and redirected all output to a file
+(&quot;exec &lt;&amp;- &gt;&gt; vdr.log 2&gt;&amp;1&quot; in my runvdr script), there appears
+to be a rapidly blinking black square in the position where the
+cursor should be.  (I tested &quot;echo -n foo &gt; /dev/tty1&quot;, and the
+blinking spot moved horizontally.)
+
+The cursor will continue its rapid blinking after pausing playback or
+suspending softdevice (until the picture goes all black).
+
+Note: the blinking appears unsynchronized to the screen.  Sometimes you
+can see it more frequently, sometimes it is hidden better.  I usually see
+the cursor only at the top left or bottom left position.  Again: note that
+I have disabled the cursor (setterm -cursor off), but I keep getting this
+rapidly blinking black 8&#215;16 rectangle at the cursor position.
+
+I don't remember seeing this when running with no-vt disabled and
+vt-switch{,ing} enabled.  Does anyone else have similar problems?
+If someone follows the DirectFB or kernel mailing list, please feel
+free to forward this report.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000754.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+	<LI>Next message: <A HREF="000715.html">[Softdevice-devel] Rapidly blinking black cursor in DFB output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#711">[ date ]</a>
+              <a href="thread.html#711">[ thread ]</a>
+              <a href="subject.html#711">[ subject ]</a>
+              <a href="author.html#711">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

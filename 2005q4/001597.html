@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Xine w/ crop mode or softdevice on CLE266/CN400
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Xine%20w/%20crop%20mode%20or%20softdevice%20on%20CLE266/CN400&In-Reply-To=%3C20051214130211.GA23953%40seneca.muc.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001600.html">
+   <LINK REL="Next"  HREF="001609.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Xine w/ crop mode or softdevice on CLE266/CN400</H1>
+    <B>Harald Milz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Xine%20w/%20crop%20mode%20or%20softdevice%20on%20CLE266/CN400&In-Reply-To=%3C20051214130211.GA23953%40seneca.muc.de%3E"
+       TITLE="[Softdevice-devel] Xine w/ crop mode or softdevice on CLE266/CN400">hm at seneca.muc.de
+       </A><BR>
+    <I>Wed Dec 14 14:02:11 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001600.html">[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+        <LI>Next message: <A HREF="001609.html">[Softdevice-devel] VDR with softdevice only 3 issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1597">[ date ]</a>
+              <a href="thread.html#1597">[ thread ]</a>
+              <a href="subject.html#1597">[ subject ]</a>
+              <a href="author.html#1597">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+as I wrote in an earlier mail, I am using softdevice (with a G550 card)
+quite successfully. One of the real advantages of softdevice is its
+crop mode that allows you to crop a 14:9 or 16:9 rectangle from a 4:3
+broadcasting and rescale it to full screen on a 16:9 capable TV set
+(1280x720). Really nice. The downside is that my current living room
+machine is just not living room compatible (looks and noise). I would
+like to build a new VDR with a mini-ITX board (CLE266 or CN400) and use
+the xine libs and plugin.
+
+The question is, does xine provide something similar? I suspect that the
+answer is no because the rescaling needs to be done _after_ the MPEG2
+decoding, which in case of the VIA chip is done in hardware. Is that
+right or is there hope?
+
+And - will xine rescale the picture to 1280x720 if it is encoded
+anamorphous, as does softdevice?
+
+Alternatively, how good is the CLE266/CN400 support in DirectFB? That would
+be an alternative (with softdevice in turn). Has somebody been there, done
+that? 
+
+Most private TV stations in Germany simply don't get it as far as
+anamorphous encoding...
+
+
+-- 
+The [Ford Foundation] is a large body of money completely surrounded by
+people who want some.
+		-- Dwight MacDonald
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001600.html">[Softdevice-devel] Re: probs with softdevice-0.2.1, FusionSound-0.9.23, linux-fusion-1.1, DirectFB-0.9.24
+</A></li>
+	<LI>Next message: <A HREF="001609.html">[Softdevice-devel] VDR with softdevice only 3 issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1597">[ date ]</a>
+              <a href="thread.html#1597">[ thread ]</a>
+              <a href="subject.html#1597">[ subject ]</a>
+              <a href="author.html#1597">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

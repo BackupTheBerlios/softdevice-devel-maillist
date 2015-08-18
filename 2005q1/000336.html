@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] use libavformat in mpeg2decoder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C16075.1111164856%40www6.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000341.html">
+   <LINK REL="Next"  HREF="000337.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] use libavformat in mpeg2decoder</H1>
+    <B>Thomas Herrmann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20use%20libavformat%20in%20mpeg2decoder&In-Reply-To=%3C16075.1111164856%40www6.gmx.net%3E"
+       TITLE="[Softdevice-devel] use libavformat in mpeg2decoder">ollo.diab at gmx.de
+       </A><BR>
+    <I>Fri Mar 18 17:54:16 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000341.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+        <LI>Next message: <A HREF="000337.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#336">[ date ]</a>
+              <a href="thread.html#336">[ thread ]</a>
+              <a href="subject.html#336">[ subject ]</a>
+              <a href="author.html#336">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Am Donnerstag, 17. M&#228;rz 2005 21:22 schrieb Martin Wache:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I just commited the new mpeg2decoder, now the PES stream is not
+</I>&gt;<i> &gt; parsed anymore by the mpeg2decoder itself, but it is passed to
+</I>&gt;<i> &gt; libavformat. ...
+</I>&gt;<i> 
+</I>
+Ok, I get some warnings during make plugins and later it does not show any
+live TV while OSD works.
+
+Please find below the build messages and then the console log:
+
+make[1]: Entering directory `/root/mmbox/VDR/PLUGINS/src/softdevice-cvs'
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ softdevice.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ utils.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ i18n.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ video.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ mpeg2decoder.c
+mpeg2decoder.c: In constructor
+`cStreamDecoder::cStreamDecoder(AVCodecContext*)':
+mpeg2decoder.c:123: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c:123: Warnung: zu viele Argumente f&#252;r Format
+mpeg2decoder.c: In member function `virtual void cStreamDecoder::Action()':
+mpeg2decoder.c:143: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c:183: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `int cMpeg2Decoder::seek(offset_t, int)':
+mpeg2decoder.c:1003: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `virtual void cMpeg2Decoder::Action()':
+mpeg2decoder.c:1028: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c:1075: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::Start(bool)':
+mpeg2decoder.c:1128: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::Suspend()':
+mpeg2decoder.c:1147: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::Resume()':
+mpeg2decoder.c:1156: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::Play()':
+mpeg2decoder.c:1180: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::Freeze()':
+mpeg2decoder.c:1193: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::Stop(bool)':
+mpeg2decoder.c:1211: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c:1236: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `int cMpeg2Decoder::StillPicture(uchar*,
+int)':
+mpeg2decoder.c:1247: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c:1259: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::Clear()':
+mpeg2decoder.c:1269: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c:1272: Warnung: int format, different type arg (arg 2)
+mpeg2decoder.c: In member function `void cMpeg2Decoder::TrickSpeed(int)':
+mpeg2decoder.c:1280: Warnung: int format, different type arg (arg 2)
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ audio.c
+audio.c: In member function `virtual int
+cDummyAudioOut::SetParams(SampleContext&amp;)':
+audio.c:347: Warnung: unused variable 'err'
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ video-dummy.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ setup-softdevice.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -shared softdevice.o
+utils.o i18n.o video.o mpeg2decoder.o audio.o video-dummy.o
+setup-softdevice.o -lavcodec-cvs -lavformat-cvs -lasound -lz -o
+libvdr-softdevice.so
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ video-fb.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -shared utils.o
+video.o video-fb.o  -o libvdr-softdevice-fb.so
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ video-xv.c
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -c -DUSE_MMX
+-DUSE_MMX2 -DUSE_3DNOW -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+-DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DFB_SUPPORT
+-DFBDEV=\&quot;/dev/fb0\&quot; -DXV_SUPPORT -DSUSPEND_BY_KEY -I../../../include
+-I../../../../DVB/include -I/usr/include/ffmpeg/ xscreensaver.c
+xscreensaver.c:30: Warnung: 'dpms_on' defined but not used
+g++ -g -O3 -mtune=athlon-xp -Wall -Woverloaded-virtual -shared video.o
+video-xv.o xscreensaver.o -L/usr/X11R6/lib -lXi -lXext -lX11 -lm -lXv -o
+libvdr-softdevice-xv.so
+make[1]: Leaving directory `/root/mmbox/VDR/PLUGINS/src/softdevice-cvs'
+
+
+tomshost:~/mmbox/VDR# ./runvdr
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] deinterlace method set to 1 lavc
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(cvs) build(4744)
+[XvVideoOut]: max area size 2046 x 2046
+[XvVideoOut]: using area size 2040 x 2046
+Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+CMD[7861]:Start IsSuspended 0
+init put byte finished
+CMD[7861]:Neuer Thread gestartet: Mpeg2Decoder pid 8861
+[MainMenuAction]
+[setup-softdevice] storing data
+[MainMenuAction]
+[setup-softdevice] storing data
+playmode not implemented... 0
+
+The very last message makes me thinking ...
+
+Thomas
+
+-- 
+DSL Komplett von GMX +++ Superg&#252;nstig und stressfrei einsteigen!
+AKTION &quot;Kein Einrichtungspreis&quot; nutzen: <A HREF="http://www.gmx.net/de/go/dsl">http://www.gmx.net/de/go/dsl</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000341.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+	<LI>Next message: <A HREF="000337.html">[Softdevice-devel] use libavformat in mpeg2decoder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#336">[ date ]</a>
+              <a href="thread.html#336">[ thread ]</a>
+              <a href="subject.html#336">[ subject ]</a>
+              <a href="author.html#336">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

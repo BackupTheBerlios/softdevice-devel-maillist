@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] (no subject)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%28no%20subject%29&In-Reply-To=%3CPine.OSF.4.64.0705180041100.448449%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002870.html">
+   <LINK REL="Next"  HREF="002872.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] (no subject)</H1>
+    <B>Rolf Ahrenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%28no%20subject%29&In-Reply-To=%3CPine.OSF.4.64.0705180041100.448449%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] (no subject)">rahrenbe at cc.hut.fi
+       </A><BR>
+    <I>Thu May 17 23:44:08 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002870.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+        <LI>Next message: <A HREF="002872.html">[Softdevice-devel] [patch] SHM compilation fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2871">[ date ]</a>
+              <a href="thread.html#2871">[ thread ]</a>
+              <a href="subject.html#2871">[ subject ]</a>
+              <a href="author.html#2871">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+the current cvs snapshot won't compile on my setup (--disable-shm) 
+without the following patch.
+
+Rofa
+
+Index: softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.83
+diff -u -r1.83 softdevice.c
+--- softdevice.c        10 May 2007 19:54:44 -0000      1.83
++++ softdevice.c        17 May 2007 21:37:03 -0000
+@@ -786,7 +786,7 @@
+    runtimePluginPath = GetLibPath();
+
+    softlog = new cSetupSoftlog();
+-#ifndef VOUT_SHM
++#ifndef SHM_SUPPORT
+    setupStore = (cSetupStore *) malloc( sizeof(cSetupStore) );
+    setupStore-&gt;InitSetupStore();
+  #else
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002870.html">[Softdevice-devel] Softplay, unable to play (mpeg) movies.
+</A></li>
+	<LI>Next message: <A HREF="002872.html">[Softdevice-devel] [patch] SHM compilation fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2871">[ date ]</a>
+              <a href="thread.html#2871">[ thread ]</a>
+              <a href="subject.html#2871">[ subject ]</a>
+              <a href="author.html#2871">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

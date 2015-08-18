@@ -1,0 +1,437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD layer not always fully cleared on mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609282057.27462.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002549.html">
+   <LINK REL="Next"  HREF="002560.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD layer not always fully cleared on mgatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609282057.27462.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OSD layer not always fully cleared on mgatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Sep 28 20:57:27 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002549.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+        <LI>Next message: <A HREF="002560.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2552">[ date ]</a>
+              <a href="thread.html#2552">[ thread ]</a>
+              <a href="subject.html#2552">[ subject ]</a>
+              <a href="author.html#2552">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag 28 September 2006 00:09, Stefan Lucke wrote:
+&gt;<i> On Mittwoch 27 September 2006 21:05, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Mon, Sep 25, 2006 at 11:24:32PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; So my tv-out test is still pending, but I've a new version of the patch.
+</I>&gt;<i> &gt; &gt; If it still happens for you sometimes, there is the possibility to enable
+</I>&gt;<i> &gt; &gt; a mutex around Flip() and Blit() calls. To enable this, USE_TEST_MUTEX
+</I>&gt;<i> &gt; &gt; should be defined to 1.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Sorry, I haven't gotten around to testing this yet.  Should I revert the
+</I>&gt;<i> &gt; -03 patch and apply this one instead?
+</I>&gt;<i> 
+</I>&gt;<i> Please don't test the -04 patch. It has still the osdMutex in. Have to test
+</I>&gt;<i> this on my system with tv-out first. 
+</I>
+So her comes -05 version of the patch. I tested this with tv-out.
+My testing was fast scrolling through the channel list.
+I did not see any issues with a missed flip on OSD drawing.
+
+So I had no need for enabling the dfbFlipMutex.
+
+The final version will have method ShowOSD() removed.
+
+If you ask for differences between -03 and -05 ..
+Upon processing events there will be never an internal OSD refresh
+via ShowOSD() .
+
+&gt;<i> 
+</I>&gt;<i> &gt; By the way, the -03 patch does slow 
+</I>&gt;<i> &gt; down my system too much from time to time, especially when watching programs
+</I>&gt;<i> &gt; containing DVB subtitles, which are mapped to OSD by the subtitles plugin.
+</I>
+If you've still this issue, I think black bar clearing could be done after
+scrSurface-&gt;Flip(NULL, DSFLIP_WAITFORSYNC); 
+to clear borders of the next frame.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: video.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.c,v
+retrieving revision 1.66
+diff -U3 -r1.66 video.c
+--- video.c	22 Sep 2006 19:28:04 -0000	1.66
++++ video.c	28 Sep 2006 17:29:55 -0000
+@@ -105,7 +105,7 @@
+ 
+     if (
+         OsdRefreshCounter &gt; 120 || // blanks the screen after inactivity (4s)
+-        (current_osdMode == OSDMODE_SOFTWARE &amp;&amp;
++        (IsSoftOSDMode() &amp;&amp;
+          OsdRefreshCounter&gt;5 &amp;&amp; Osd_changed))
+     {
+       oldPictureMutex.Lock();
+@@ -476,8 +476,6 @@
+ void cVideoOut::ClearOSD()
+ {
+   OSDDEB(&quot;ClearOSD\n&quot;);
+-  osdMutex.Lock();
+-
+   OSDpresent=false; // will automaticly be set to true on redraw ;-)
+   if (OsdPy)
+     memset(OsdPy,0,OSD_FULL_WIDTH*OSD_FULL_HEIGHT);
+@@ -490,8 +488,13 @@
+   if (OsdPAlphaUV)
+     memset(OsdPAlphaUV,0,OSD_FULL_WIDTH*OSD_FULL_HEIGHT/4);
+   Osd_changed=1;
++}
+ 
+- osdMutex.Unlock();
++/* ---------------------------------------------------------------------------
++ */
++bool cVideoOut::IsSoftOSDMode()
++{
++  return current_osdMode == OSDMODE_SOFTWARE;
+ }
+ 
+ #if VDRVERSNUM &gt;= 10307
+@@ -503,10 +506,8 @@
+ 
+ void cVideoOut::CloseOSD()
+ {
+-  osdMutex.Lock();
+   ClearOSD();
+   OSDpresent=false;
+-  osdMutex.Unlock();
+   OSDDEB(&quot;CloseOSD\n&quot;);
+ }
+ 
+Index: video.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.h,v
+retrieving revision 1.43
+diff -U3 -r1.43 video.h
+--- video.h	22 Sep 2006 19:28:04 -0000	1.43
++++ video.h	28 Sep 2006 17:29:56 -0000
+@@ -79,7 +79,9 @@
+     // oldPicture is a reference to a previous decoded frame. It is used
+     // when there is osd drawing activity in case of no video currently
+     // available. Access to this pointer must be protected by corresponding
+-    // mutex: oldPictureMutex .
++    // mutex: oldPictureMutex . This includes changeing the contens e.g.
++    // when a decoded picture will be displayed and thus will be the reference
++    // for future operation on oldPicture.
+     //
+     sPicBuffer  *oldPicture;
+     cMutex      oldPictureMutex;
+@@ -89,12 +91,8 @@
+     inline double GetAspect_F()
+     { return aspect_F;};
+ 
+-protected:
+     // -----------------------------------------------------------------------
+-    // State changes of OSD like on / off transitions, must be proteced by
+-    // osdMutex. This are changes of variable OSDpresent, as the output method
+-    // may need to take some longer actions e.g clearing background for one or
+-    // mutiple output buffers (double, triple buffering).
++    // Artefakt of vdr-1.2.x OSD create/delete locking
+     //
+     cMutex  osdMutex;
+     bool    OSDpresent,
+@@ -193,6 +191,8 @@
+ public:
+     virtual void ClearOSD();
+     // clear the OSD buffer
++
++    virtual bool IsSoftOSDMode();
+ 
+ #if VDRVERSNUM &gt;= 10307
+     virtual void OpenOSD();
+Index: video-dfb.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.c,v
+retrieving revision 1.71
+diff -U3 -r1.71 video-dfb.c
+--- video-dfb.c	16 Sep 2006 09:30:19 -0000	1.71
++++ video-dfb.c	28 Sep 2006 17:29:58 -0000
+@@ -49,6 +49,8 @@
+            }                                                         \
+      }
+ 
++#define USE_TEST_MUTEX 0
++
+ typedef struct
+ {
+   const char            *shortName;
+@@ -661,8 +663,8 @@
+     }
+   }
+ 
+-  if (OsdRefreshCounter &amp;&amp; (OsdRefreshCounter % 3) == 0)
+-    ShowOSD();
++  //if (OsdRefreshCounter &amp;&amp; (OsdRefreshCounter % 3) == 0)
++    //ShowOSD();
+ }
+ 
+ /* ---------------------------------------------------------------------------
+@@ -1072,7 +1074,7 @@
+   try
+   {
+     dirtyLines=DirtyLines=new bool[Yres];
+-    memset(dirtyLines,false,sizeof(dirtyLines));
++    memset(dirtyLines,false,sizeof(bool)*Yres);
+ 
+     tmpOsdSurface = (useStretchBlit) ? osdSurface : scrSurface;
+     tmpOsdSurface-&gt;Lock(DSLF_WRITE, (void **)&amp;dst, &amp;pitch) ;
+@@ -1100,7 +1102,13 @@
+     DFBRectangle      osdsrc;
+ 
+     tmpOsdSurface-&gt;Unlock();
++#if USE_TEST_MUTEX
++    dfbFlipMutex.Lock();
++#endif
+     tmpOsdSurface-&gt;Flip();
++#if USE_TEST_MUTEX
++    dfbFlipMutex.Unlock();
++#endif
+ 
+     int miny=0;
+     int maxy=0;
+@@ -1137,6 +1145,7 @@
+   delete[] dirtyLines;
+   dirtyLines=NULL;
+   tmpOsdSurface=NULL;
++  clearBackground = 0;
+   cVideoOut::CommitUnlockOsdSurface();
+ }
+ 
+@@ -1203,6 +1212,14 @@
+ 
+ /* ---------------------------------------------------------------------------
+  */
++bool cDFBVideoOut::IsSoftOSDMode()
++{
++  return cVideoOut::IsSoftOSDMode() ||
++         useStretchBlit;
++}
++
++/* ---------------------------------------------------------------------------
++ */
+ void cDFBVideoOut::CloseOSD()
+ {
+     IDirectFBSurface  *tmpSurface;
+@@ -1210,16 +1227,14 @@
+   if (!videoInitialized)
+     return;
+ 
++  cVideoOut::CloseOSD();
+   tmpSurface = (useStretchBlit) ? osdSurface : scrSurface;
+-
+   try
+   {
+     if (useStretchBlit)
+     {
+-      osdMutex.Lock();
+       OSDpresent  = false;
+-      osdClrBack = true;
+-      osdMutex.Unlock();
++      clearBackground = clearBackCount;
+       tmpSurface-&gt;Clear(COLORKEY,clearAlpha); //clear and
+     }
+     else
+@@ -1248,7 +1263,7 @@
+   if (!videoInitialized)
+     return;
+ 
+-  if (useStretchBlit &amp;&amp; (OSDpresent || osdClrBack)) {
++  if (useStretchBlit &amp;&amp; OSDpresent) {
+     // do image and OSD mix here
+       DFBRectangle  src, dst, osdsrc;
+ 
+@@ -1261,12 +1276,6 @@
+     dst.w = lwidth;
+     dst.h = lheight;
+ 
+-    osdMutex.Lock();
+-    if (osdClrBack) {
+-      clearBackground = clearBackCount;
+-      osdClrBack = false;
+-    }
+-
+     try
+     {
+       if (clearBackground) {
+@@ -1274,6 +1283,32 @@
+         clearBackground--;
+       }
+ 
++      /* ---------------------------------------------------------------------
++       * clear parts of screen when OSD is present and which are not
++       * covered by video. This avoids fading effects when 16:9 video
++       * is shown on 4:3 screen (top &amp; bottom) or when 4:3 video is shown
++       * on 16:9 screen (left &amp; right).
++       */
++      if (OSDpresent) {
++          scrSurface-&gt;SetColor(0,0,0,0);
++
++        /* -------------------------------------------------------------------
++         * clear top &amp; bottom black bar area
++         */
++        if (lyoff) {
++          scrSurface-&gt;FillRectangle(0,0,            dwidth,lyoff);
++          scrSurface-&gt;FillRectangle(0,lyoff+lheight,dwidth,lyoff);
++        }
++
++        /* -------------------------------------------------------------------
++         * clear left &amp; right black bar area
++         */
++        if (lxoff) {
++          scrSurface-&gt;FillRectangle(0,0,           lxoff,dheight);
++          scrSurface-&gt;FillRectangle(lxoff+lwidth,0,lxoff,dheight);
++        }
++      }
++
+       scrSurface-&gt;SetBlittingFlags(DSBLIT_NOFX);
+       scrSurface-&gt;StretchBlit(videoSurface, &amp;src, &amp;dst);
+       if (OSDpresent)
+@@ -1292,7 +1327,6 @@
+                ex-&gt;GetAction(), ex-&gt;GetResult());
+       delete ex;
+     }
+-    osdMutex.Unlock();
+   }
+ }
+ 
+@@ -1436,9 +1470,7 @@
+       //fprintf (stderr, &quot;src (%d,%d %dx%d)\n&quot;, sxoff,syoff,swidth,sheight);
+       //fprintf (stderr, &quot;dst (%d,%d %dx%d)\n&quot;, lxoff,lyoff,lwidth,lheight);
+ 
+-      osdMutex.Lock();
+-      clearBackground = (aspect_changed || osdClrBack) ? clearBackCount: clearBackground;
+-      osdClrBack = false;
++      clearBackground = (aspect_changed) ? clearBackCount: clearBackground;
+ 
+       if (clearBackground)
+       {
+@@ -1446,7 +1478,32 @@
+         clearBackground--;
+       }
+ 
+-      osdMutex.Unlock();
++
++      /* ---------------------------------------------------------------------
++       * clear parts of screen when OSD is present and which are not
++       * covered by video. This avoids fading effects when 16:9 video
++       * is shown on 4:3 screen (top &amp; bottom) or when 4:3 video is shown
++       * on 16:9 screen (left &amp; right).
++       */
++      if (OSDpresent) {
++          scrSurface-&gt;SetColor(0,0,0,0);
++
++        /* -------------------------------------------------------------------
++         * clear top &amp; bottom black bar area
++         */
++        if (lyoff) {
++          scrSurface-&gt;FillRectangle(0,0,            dwidth,lyoff);
++          scrSurface-&gt;FillRectangle(0,lyoff+lheight,dwidth,lyoff);
++        }
++
++        /* -------------------------------------------------------------------
++         * clear left &amp; right black bar area
++         */
++        if (lxoff) {
++          scrSurface-&gt;FillRectangle(0,0,           lxoff,dheight);
++          scrSurface-&gt;FillRectangle(lxoff+lwidth,0,lxoff,dheight);
++        }
++      }
+ 
+       scrSurface-&gt;SetBlittingFlags(DSBLIT_NOFX);
+       scrSurface-&gt;StretchBlit(videoSurface, &amp;src, &amp;dst);
+@@ -1457,6 +1514,11 @@
+         osdsrc.x = osdsrc.y = 0;
+         osdsrc.w = Xres;osdsrc.h=Yres;
+         scrSurface-&gt;SetBlittingFlags(DSBLIT_BLEND_ALPHACHANNEL);
++
++#if USE_TEST_MUTEX
++        dfbFlipMutex.Lock();
++#endif
++
+ #if 0
+         /* --------------------------------------------------------------------
+          * test for OSD scaleinf to 4:3 aspect on a 16:9 tv
+@@ -1467,6 +1529,10 @@
+         scrSurface-&gt;StretchBlit(osdSurface, &amp;osdsrc, &amp;osddest);
+ #else
+         scrSurface-&gt;Blit(osdSurface, &amp;osdsrc, 0, 0);
++#endif
++
++#if USE_TEST_MUTEX
++        dfbFlipMutex.Unlock();
+ #endif
+ 
+       }
+Index: video-dfb.h
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video-dfb.h,v
+retrieving revision 1.22
+diff -U3 -r1.22 video-dfb.h
+--- video-dfb.h	17 Jun 2006 16:27:35 -0000	1.22
++++ video-dfb.h	28 Sep 2006 17:29:59 -0000
+@@ -50,6 +50,8 @@
+     void SetParams();
+     void EnableFieldParity(IDirectFBDisplayLayer *layer);
+ 
++    cMutex  dfbFlipMutex;
++
+ #ifdef HAVE_CLE266_MPEG_DECODER
+     IDirectFBSurface* mpegfb[LAST_PICBUF];
+     int               mpegfb_ofs[4];
+@@ -62,6 +64,7 @@
+     void ProcessEvents ();
+     void ShowOSD ();
+     void GetDisplayFrameTime();
++    virtual bool IsSoftOSDMode();
+ 
+ #if VDRVERSNUM &gt;= 10307
+     bool *dirtyLines;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002549.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+	<LI>Next message: <A HREF="002560.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2552">[ date ]</a>
+              <a href="thread.html#2552">[ thread ]</a>
+              <a href="subject.html#2552">[ subject ]</a>
+              <a href="author.html#2552">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

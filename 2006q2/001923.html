@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] ShmClient updated
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20ShmClient%20updated&In-Reply-To=%3C444E8221.7070307%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001922.html">
+   <LINK REL="Next"  HREF="001935.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] ShmClient updated</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20ShmClient%20updated&In-Reply-To=%3C444E8221.7070307%40gmx.net%3E"
+       TITLE="[Softdevice-devel] ShmClient updated">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr 25 22:10:09 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001922.html">[Softdevice-devel] ShmClient updated
+</A></li>
+        <LI>Next message: <A HREF="001935.html">[Softdevice-devel] ShmClient updated
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1923">[ date ]</a>
+              <a href="thread.html#1923">[ thread ]</a>
+              <a href="subject.html#1923">[ subject ]</a>
+              <a href="author.html#1923">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Seppo Ingalsuo schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;&gt;<i> However I'm now mainly using the ShmClient on my Vdr, and it works very
+</I>&gt;&gt;<i> stable for me. In case there are still problems with ShmClient please
+</I>&gt;&gt;<i> report them, and of course success reports are also welcome :-)
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;<i> I have tried it some time ago but found vdr-xine to be more suitable for
+</I>&gt;<i> me. Have you considered making shmclient behave more like xine with vdr
+</I>&gt;<i> plugin?
+</I>&gt;<i> 
+</I>&gt;<i> - Shmclient would own the resources such as lirc, audio, etc. only when
+</I>&gt;<i> it runs. Shmclient would control vdr daemon similarly as vdr-xine
+</I>&gt;<i> plugin. I guess that would be a quite big philopsophy change for
+</I>&gt;<i> softdevice.
+</I>&gt;<i>
+</I>The audio device is freed automatically when the ShmClient is closed.
+Lirc is not owned by the softdevice at all, I can't do much about that.
+ The Xv-Port is as well released, so if I understand your request
+correctly everything (except lirc) is already like you are suggesting.
+
+
+&gt;<i> - Shmclient could be terminated trough lirc (e.g. remote off button)
+</I>
+Yes, that would be nice. Unfortunately we need access to keypress events
+for doing this, and this is not easily possible with vdr at the moment.
+
+It's been a long time since I last used lirc, but isn't it possible to
+execute commands on keypress? A 'killall ShmClient' should do the job...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001922.html">[Softdevice-devel] ShmClient updated
+</A></li>
+	<LI>Next message: <A HREF="001935.html">[Softdevice-devel] ShmClient updated
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1923">[ date ]</a>
+              <a href="thread.html#1923">[ thread ]</a>
+              <a href="subject.html#1923">[ subject ]</a>
+              <a href="author.html#1923">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

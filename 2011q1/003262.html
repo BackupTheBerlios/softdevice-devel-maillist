@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Patch #3128] Fix logging crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2011q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPatch%20%233128%5D%20Fix%20logging%20crash&In-Reply-To=%3C201102070709.p17793Vc001844%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003261.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Patch #3128] Fix logging crash</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPatch%20%233128%5D%20Fix%20logging%20crash&In-Reply-To=%3C201102070709.p17793Vc001844%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Patch #3128] Fix logging crash">admin at berlios.de
+       </A><BR>
+    <I>Mon Feb  7 08:09:03 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003261.html">[Softdevice-devel] [Patch #3128] Fix logging crash
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3262">[ date ]</a>
+              <a href="thread.html#3262">[ thread ]</a>
+              <a href="subject.html#3262">[ subject ]</a>
+              <a href="author.html#3262">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Patch #3128 has been updated. 
+
+Project: softdevice
+Category: None
+Status: Open
+Submitted by: scop
+Assigned to : none
+Summary: Fix logging crash
+
+Follow-Ups:
+
+Date: 2011-Feb-07 09:09
+By: scop
+
+Comment:
+Forgot to note that this is against current softdevice CVS.
+-------------------------------------------------------
+
+Date: 2011-Feb-07 09:08
+By: scop
+
+Comment:
+Log() may end up using the arg list twice without calling va_end() and va_start() again which crashes immediately for me. The attached patch fixes it.
+-------------------------------------------------------
+
+-------------------------------------------------------
+For more info, visit:
+
+<A HREF="http://developer.berlios.de/patch/?func=detailpatch&amp;patch_id=3128&amp;group_id=2051">http://developer.berlios.de/patch/?func=detailpatch&amp;patch_id=3128&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003261.html">[Softdevice-devel] [Patch #3128] Fix logging crash
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3262">[ date ]</a>
+              <a href="thread.html#3262">[ thread ]</a>
+              <a href="subject.html#3262">[ subject ]</a>
+              <a href="author.html#3262">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

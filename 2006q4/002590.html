@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] G450 simultaneous X and TV out
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20G450%20simultaneous%20X%20and%20TV%20out&In-Reply-To=%3C20061005121247.12243.qmail%40web86711.mail.ird.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002589.html">
+   <LINK REL="Next"  HREF="002592.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] G450 simultaneous X and TV out</H1>
+    <B>Stuart Morris</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20G450%20simultaneous%20X%20and%20TV%20out&In-Reply-To=%3C20061005121247.12243.qmail%40web86711.mail.ird.yahoo.com%3E"
+       TITLE="[Softdevice-devel] G450 simultaneous X and TV out">stuart_morris at talk21.com
+       </A><BR>
+    <I>Thu Oct  5 14:12:47 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002589.html">[Softdevice-devel] G450 simultaneous X and TV out
+</A></li>
+        <LI>Next message: <A HREF="002592.html">[Softdevice-devel] xv - osd appears and disapears constantly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2590">[ date ]</a>
+              <a href="thread.html#2590">[ thread ]</a>
+              <a href="subject.html#2590">[ subject ]</a>
+              <a href="author.html#2590">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Apologies I actually meant display a desktop manager like KDE for example,
+on the vga output, for use with other X applications.
+
+My intentions are to use an LCD tv. I will feed tv into a scart input for viewing
+VDR recordings. The vga input on the tv would be used for web browsing,
+viewing pictures, word processing etc etc.
+
+I want to avoid video output through vga because that would require
+deinterlacing and that requires a hot processor. The TV already does a good
+job at that at no extra thermal cost.
+
+Stuart
+
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt; wrote: 
+On 5 Oct 2006, at 12:45, Stuart Morris wrote:
+
+Can anybody suggest how one could output softdevice
+on the TV out of a Matrox G450 whilst simultaneously
+displaying the X desktop on the VGA output?
+
+
+I think it would make sense to introduce output profiles to support a similar setup. Say you'd want two output options, one for interlaced video output, another for high resolution vga output for a projector. You could then toggle between them using a user defined key on the remote. 
+
+I guess this would require us to set all directfb params in video-dfb.c, and not rely on any settings in /etc/directfbrc.
+
+This wouldn't provide simultaneous output on two devices with different signal requirements, but atleast it would support switching between them.
+
+ -- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+ 
+
+
+
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+
+
+ 		
+---------------------------------
+ Now you can scan emails quickly with a reading pane. Get the new Yahoo! Mail.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061005/0cd1063c/attachment.html">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20061005/0cd1063c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002589.html">[Softdevice-devel] G450 simultaneous X and TV out
+</A></li>
+	<LI>Next message: <A HREF="002592.html">[Softdevice-devel] xv - osd appears and disapears constantly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2590">[ date ]</a>
+              <a href="thread.html#2590">[ thread ]</a>
+              <a href="subject.html#2590">[ subject ]</a>
+              <a href="author.html#2590">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

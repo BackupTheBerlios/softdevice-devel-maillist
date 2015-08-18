@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 warning reseting decoder]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20warning%20reseting%20decoder%5D&In-Reply-To=%3C45F80FCB.5080709%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002789.html">
+   <LINK REL="Next"  HREF="002791.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 warning reseting decoder]</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20warning%20reseting%20decoder%5D&In-Reply-To=%3C45F80FCB.5080709%40calidae.net%3E"
+       TITLE="[Softdevice-devel] CLE266 warning reseting decoder]">leo at calidae.net
+       </A><BR>
+    <I>Wed Mar 14 16:07:55 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002789.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+        <LI>Next message: <A HREF="002791.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2790">[ date ]</a>
+              <a href="thread.html#2790">[ thread ]</a>
+              <a href="subject.html#2790">[ subject ]</a>
+              <a href="author.html#2790">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A lot of thanks Mike!!!!!
+I'm at work and could not test it now but I'm happy because i was 
+thinking that I was alone in the world with this problem.
+
+I'll expose results here after test it.
+
+Leo.
+
+En/na mike n ha escrit:
+&gt;&gt;<i> Leo M&#225;rquez wrote: Hi, I'm experimenting a lot of problems to run 
+</I>&gt;&gt;<i> vdr, softdevice with  dfb:cle266:viatv The output is poor, I don't 
+</I>&gt;&gt;<i> see live video, only a single frames each 2 seconds. It's very strange.
+</I>&gt;<i>
+</I>&gt;<i> Hello Leo,
+</I>&gt;<i>
+</I>&gt;<i> I have VIA M10000 and was experimenting the same problems. Fortunately 
+</I>&gt;<i> I found a &quot;solution&quot;, but I don't know what is causing the problem. 
+</I>&gt;<i> Maybe you have the same scenario.
+</I>&gt;<i>
+</I>&gt;<i> Hardware + Linux Kernel + basic software:
+</I>&gt;<i> - VIA M10000 CLE266  (Nehemiah)
+</I>&gt;<i> - Linux 2.6.18.1 kernel (Puppy linux distro)
+</I>&gt;<i> - Twinhan USB2 Alpha DVB-T dongle (uses dvb-usb-vp7045 firmware file)
+</I>&gt;<i> - VDR version 1.4.3-2 (patch level 2)
+</I>&gt;<i> - Softdevice plugin in VDR  (CVS version)
+</I>&gt;<i> - DirectFB + DFB  (CVS versions)
+</I>&gt;<i> - FFMPEG (SVN version)
+</I>&gt;<i> - linux-viafb framebuffer driver (CVS version)
+</I>&gt;<i> - libclempegdec-0.5 (downloaded from sourceforge)
+</I>&gt;<i>
+</I>&gt;<i> VDR is started using vdr -P&quot;softdevice -vo dfb:cle266:viatv&quot; option 
+</I>&gt;<i> (and other plugins having nothing to do with this problem).
+</I>&gt;<i>
+</I>&gt;<i> I had this combination working just fine somewhere in last November. 
+</I>&gt;<i> Nice picture in CRT-Television using VIAFB tv output and processor 
+</I>&gt;<i> load was about 30%. Therefore hw accelerated mpeg must have been 
+</I>&gt;<i> working. Softdevice, DirectFB/DFB, FFMPEG and linux-viafb were all 
+</I>&gt;<i> CVS/SVN checkout versions from November.
+</I>&gt;<i>
+</I>&gt;<i> Note! The version I had was still working with /ETC/DIRECTFBRC 
+</I>&gt;<i> pixelformat=ARGB setting so directfb was that old.
+</I>&gt;<i>
+</I>&gt;<i> In February I decided to upgrade every CVS/SVN version because based 
+</I>&gt;<i> on changelogs there seemed to be lots of fixes and improvements.
+</I>&gt;<i>
+</I>&gt;<i> Uuuh. Then problems started. After updating ffmpeg to latest SVN 
+</I>&gt;<i> version and DirectFB/DFB/softdevice/linux-viafb to latest CVS versions 
+</I>&gt;<i> in February, VDR and mpeg output stopped working. Lots of decoder had 
+</I>&gt;<i> errors messages or sometimes the picture was completely black but 
+</I>&gt;<i> curiously epg, audio and DVB subtitles worked.
+</I>&gt;<i>
+</I>&gt;<i> I was smart enough to delete old sources before I updated everything 
+</I>&gt;<i> so I could not verify whether the old sources would have still work :-)
+</I>&gt;<i>
+</I>&gt;<i> Well, when I checked out old versions from everything from CVS/SVN 
+</I>&gt;<i> (back to November version) things worked again. Then I started to 
+</I>&gt;<i> update CVS/SVN versions one by one to see which one breaks the system. 
+</I>&gt;<i> It turned out to be the latest FFMPEG version from SVN repository.
+</I>&gt;<i>
+</I>&gt;<i> Now-a-days I finally have working system with following software 
+</I>&gt;<i> versions:
+</I>&gt;<i> - Softdevice plugin in VDR  (latest CVS version from 
+</I>&gt;<i> cvs.softdevice.berlios.de)
+</I>&gt;<i> - DirectFB + DFB  (latest CVS versions from DirectFB.org. This version 
+</I>&gt;<i> uses pixelformat=AiRGB)
+</I>&gt;<i> - linux-viafb framebuffer driver (latest CVS version from DirectFB.org)
+</I>&gt;<i> - libclempegdec-0.5 (downloaded from sourceforge)
+</I>&gt;<i> - FFMPEG (SVN using 2006-12-01 date from svn.mplayerhq.hu)
+</I>&gt;<i>
+</I>&gt;<i> If I try to use the latest SVN version of FFMPEG, the picture breaks 
+</I>&gt;<i> just like Leo described (errors or nothing but black picture) but the 
+</I>&gt;<i> old 2006-12-01 version works.
+</I>&gt;<i>
+</I>&gt;<i> I used following command to checkout older revision of FFMPEG:
+</I>&gt;<i> cd /usr/src/
+</I>&gt;<i> svn checkout -r {20061201} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A> ffmpeg
+</I>&gt;<i>
+</I>&gt;<i> This could be problem in FFMPEG itself so not really softdevice plugin 
+</I>&gt;<i> problem. Or the latest FFMPEG would require a bit different softdevice 
+</I>&gt;<i> plugin interface. I have no idea.
+</I>&gt;<i>
+</I>&gt;<i> I hope this helps to track down the problem. Or whether me and Leo are 
+</I>&gt;<i> the only ones having problems with the latest SVN FFMPEG version?
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Mike
+</I>&gt;<i>
+</I>&gt;<i> _________________________________________________________________
+</I>&gt;<i> Get a FREE Web site, company branded e-mail and more from Microsoft 
+</I>&gt;<i> Office Live! <A HREF="http://clk.atdmt.com/MRT/go/mcrssaub0050001411mrt/direct/01/">http://clk.atdmt.com/MRT/go/mcrssaub0050001411mrt/direct/01/</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>   
+</I>
+
+-- 
+Leo M&#225;rquez
+[ Enginyeria del Software - Internet ]
+[ Calidae - www.calidae.com ]
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002789.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+	<LI>Next message: <A HREF="002791.html">[Softdevice-devel] CLE266 warning reseting decoder]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2790">[ date ]</a>
+              <a href="thread.html#2790">[ thread ]</a>
+              <a href="subject.html#2790">[ subject ]</a>
+              <a href="author.html#2790">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

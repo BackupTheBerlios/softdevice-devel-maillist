@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] witch softdevice output depending on hard and soft
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C44968B70.2000201%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002179.html">
+   <LINK REL="Next"  HREF="002182.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] witch softdevice output depending on hard and soft</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C44968B70.2000201%40calidae.net%3E"
+       TITLE="[Softdevice-devel] witch softdevice output depending on hard and soft">leo at calidae.net
+       </A><BR>
+    <I>Mon Jun 19 13:33:04 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002179.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+        <LI>Next message: <A HREF="002182.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2180">[ date ]</a>
+              <a href="thread.html#2180">[ thread ]</a>
+              <a href="subject.html#2180">[ subject ]</a>
+              <a href="author.html#2180">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi again,
+This messages perhaps helps but I don't view anything strange.
+
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: xv:
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 1 lavc
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to software
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (16:9 wide)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg version(CVS) build(3344384)
+[XvVideoOut]: osd_image shmid = 3538967
+[XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+allocating buffer format orig-&gt;format 0
+allocating buffer format orig-&gt;format 0
+
+Thanks,
+
+Leo.
+
+
+Leo M&#225;rquez wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Martin Wache wrote:
+</I>&gt;&gt;<i> Leo M&#225;rquez schrieb:
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;&gt;<i> Hi again,
+</I>&gt;&gt;&gt;<i>    
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>                   
+</I>&gt;&gt;&gt;&gt;&gt;<i> I dont know in witch debian package are this headers included. I have
+</I>&gt;&gt;&gt;&gt;&gt;<i> installled the xserver-xorg-dev package but it don't work for me.
+</I>&gt;&gt;&gt;&gt;&gt;<i> The plugins compiles fine but the configure command of softdevice 
+</I>&gt;&gt;&gt;&gt;&gt;<i> ignore
+</I>&gt;&gt;&gt;&gt;&gt;<i> the --disable-xv and the ./configure commands that are relative to 
+</I>&gt;&gt;&gt;&gt;&gt;<i> xv.
+</I>&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;<i> I would assume that xserver-xorg-dev is the one you need, but maybe 
+</I>&gt;&gt;&gt;&gt;<i> you
+</I>&gt;&gt;&gt;&gt;<i> also need some more. The softdevice also needs the headers of the x11
+</I>&gt;&gt;&gt;&gt;<i> extensions like XVideo, maybe that is still missing. If you upgrade to
+</I>&gt;&gt;&gt;&gt;<i> the cvs from today and use configure again you will get a more 
+</I>&gt;&gt;&gt;&gt;<i> detailed
+</I>&gt;&gt;&gt;&gt;<i> report of why xv is disabled in the file config.log.
+</I>&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;<i> I think that the packages I need are:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> libxv-dev                     - X11 Video extension library 
+</I>&gt;&gt;&gt;<i> (development
+</I>&gt;&gt;&gt;<i> headers)
+</I>&gt;&gt;&gt;<i> libxv1                          - X11 Video extension library
+</I>&gt;&gt;&gt;<i> libxv1-dbg                   - X11 Video extension library (debug 
+</I>&gt;&gt;&gt;<i> package)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I have installed them and this is the config.log generated after run
+</I>&gt;&gt;&gt;<i> ./configure --disable-vidix:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Parameters '--disable-vidix'
+</I>&gt;&gt;&gt;<i> PKG_CONFIG_PATH '/usr/local/lib/pkgconfig'
+</I>&gt;&gt;&gt;<i> Checking for ffmpeg.------------------------------------
+</I>&gt;&gt;&gt;<i> try to use pkg-config.
+</I>&gt;&gt;&gt;<i> -lpostproc
+</I>&gt;&gt;&gt;<i> Checking for DirectFB and DFB++.------------------
+</I>&gt;&gt;&gt;<i> /tmp/softdevice-conf-1926-8428-5600.c: In function 'int main()':
+</I>&gt;&gt;&gt;<i> /tmp/softdevice-conf-1926-8428-5600.c:5: error: 'DSBLIT_INTERLACED' was
+</I>&gt;&gt;&gt;<i> not declared in this scope
+</I>&gt;&gt;&gt;<i> Checking for vidix.------------------------
+</I>&gt;&gt;&gt;<i> Checking for Xv.-----------------------------
+</I>&gt;&gt;&gt;<i> /usr/bin/ld: cannot find -lXi
+</I>&gt;&gt;&gt;<i> collect2: ld returned 1 exit status
+</I>&gt;&gt;&gt;<i> Checking for Xinerama.-----------------------------
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It seems that not found vx headers. There is a way to indicate the 
+</I>&gt;&gt;&gt;<i> xv path?
+</I>&gt;&gt;&gt;<i> If I make a 'dpkg - L libxv-dev I see:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;<i> No, the xv-headers are found, what is missing is an additional library
+</I>&gt;&gt;<i> called Xi, you probably also need a package called libxi-dev or
+</I>&gt;&gt;<i> something similar.
+</I>&gt;&gt;<i>   
+</I>&gt;<i> Ok. Now vdr starts with xv softdevice output option. The problem is 
+</I>&gt;<i> now I can hear tv but no view, black screen.
+</I>&gt;<i> Perhaps I still missed install a codec? How can I know what is the 
+</I>&gt;<i> problem?
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i>
+</I>&gt;<i> Leo
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002179.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+	<LI>Next message: <A HREF="002182.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2180">[ date ]</a>
+              <a href="thread.html#2180">[ thread ]</a>
+              <a href="subject.html#2180">[ subject ]</a>
+              <a href="author.html#2180">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

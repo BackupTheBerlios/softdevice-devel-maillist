@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C200701251315.08269.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002693.html">
+   <LINK REL="Next"  HREF="002695.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%2C%20TVout%2C%20field%20parity%2C%20DirectFB%2C%0A%09cle266%20HW%20decoding&In-Reply-To=%3C200701251315.08269.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Thu Jan 25 14:15:08 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002693.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+        <LI>Next message: <A HREF="002695.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2694">[ date ]</a>
+              <a href="thread.html#2694">[ thread ]</a>
+              <a href="subject.html#2694">[ subject ]</a>
+              <a href="author.html#2694">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 25 January 2007 12:55, Nicolas Huillard wrote:
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> I just tested a bit more on the field parity issue on my EPIA M10k /
+</I>&gt;<i> CLE266. I updated many things on my production system.
+</I>&gt;<i>
+</I>&gt;<i> I now have no field parity issues, when using software decoding on the
+</I>&gt;<i> EPIA board. Interlaced content is OK on this.
+</I>&gt;<i> There is just a few artifacts during the first few seconds after tuning
+</I>&gt;<i> to a channel : maybe dropped frames do not take parity into account
+</I>&gt;<i> (since you're on this topic on the &quot;improved lip sync with mgatv and
+</I>&gt;<i> viatv&quot; thread, maybe that's something to investigate).
+</I>&gt;<i>
+</I>&gt;<i> When using hardware decoding, though, the parity issue comes back (with
+</I>&gt;<i> &quot;-vo dfb:viatv:cle266&quot; instead of &quot;-vo dfb:viatv&quot;) : scrolling text is
+</I>&gt;<i> awfully jerky on channels like Bloomberg.
+</I>&gt;<i>
+</I>&gt;<i> Just to be sure : does anyone have this issue when using CLE266
+</I>&gt;<i> hardware decoding, or must I dig into versions, patches et al. and
+</I>&gt;<i> solve it ?
+</I>&gt;<i>
+</I>&gt;<i> viafb 2006-10-08
+</I>&gt;<i> DirectFB 1.0.0rc2 patched for field parity ioctl
+</I>&gt;<i> DFB++ 2007-01-24
+</I>&gt;<i> libcle266mpegdec 0.5
+</I>&gt;<i> softdevice 0.3.1
+</I>&gt;<i> VDR 1.4.5
+</I>&gt;<i>
+</I>&gt;<i> (I just mentionned a 3-weeks-old CVS update to viafb from Mark Adams :
+</I>&gt;<i> &quot;Added new ioctl to allow accurately timed flipping of the video
+</I>&gt;<i> overlay. This is required to avoid occasional glitches when outputting
+</I>&gt;<i> interlaced video through the TV out.&quot; May not be used by older 0.3.1
+</I>&gt;<i> softdevice code, though)
+</I>
+Is viafb patched to actually &quot;listen for&quot; the synching ioctl?
+
+I'm using vdr-1.5.0 with softdevice cvs from last October (patched with 
+the lip-sync patch from yesterday), DirectFB, DFB++, and viafb from cvs 
+back from last October (with Mark Adams' patches from a long while back), 
+and libcle266mpegdec 0.5.
+
+I'm running vdr with &quot;-vo dfb:viatv:cle266&quot; and TV-out to connect to a CRT 
+TV and, apart from the odd glitches and A-V sync wandering a bit, I get 
+nice, smooth scrolling text (BBC News 24 is good for testing this!).
+
+If I get a chance this weekend, I might have a go at upgrading some bits 
+to see if something has changed to break this...
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002693.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB,	cle266 HW decoding
+</A></li>
+	<LI>Next message: <A HREF="002695.html">[Softdevice-devel] viafb, TVout, field parity, DirectFB, cle266 HW decoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2694">[ date ]</a>
+              <a href="thread.html#2694">[ thread ]</a>
+              <a href="subject.html#2694">[ subject ]</a>
+              <a href="author.html#2694">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #2264] alsa device name cannot be selected at runtime
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%232264%5D%20alsa%20device%20name%20cannot%20be%20selected%20at%20runtime&In-Reply-To=%3C200410291739.i9THdHDo022334%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000048.html">
+   <LINK REL="Next"  HREF="000046.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #2264] alsa device name cannot be selected at runtime</H1>
+    <B>noreply at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%232264%5D%20alsa%20device%20name%20cannot%20be%20selected%20at%20runtime&In-Reply-To=%3C200410291739.i9THdHDo022334%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #2264] alsa device name cannot be selected at runtime">noreply at berlios.de
+       </A><BR>
+    <I>Fri Oct 29 19:39:17 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000048.html">[Softdevice-devel] new alsa device patch
+</A></li>
+        <LI>Next message: <A HREF="000046.html">[Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#43">[ date ]</a>
+              <a href="thread.html#43">[ thread ]</a>
+              <a href="subject.html#43">[ subject ]</a>
+              <a href="author.html#43">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #2264, was updated on 2004-Aug-17 09:51
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: audio-out
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 4
+Submitted by: lucke
+Assigned to : lucke
+Summary: alsa device name cannot be selected at runtime
+
+Details: Alsa device name is hardcoded. Thus to change this according to system dependant needs, users have to modify source code.  Preferred way should be passing alsa device name in a mplayer style manner:
+-ao device=name#sub.id
+
+Follow-Ups:
+
+Date: 2004-Oct-29 19:39
+By: lucke
+
+Comment:
+fix by torgeir now in cvs
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=2264&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=2264&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000048.html">[Softdevice-devel] new alsa device patch
+</A></li>
+	<LI>Next message: <A HREF="000046.html">[Softdevice-devel] [Bug #2699] segfault in XvShmPutImage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#43">[ date ]</a>
+              <a href="thread.html#43">[ thread ]</a>
+              <a href="subject.html#43">[ subject ]</a>
+              <a href="author.html#43">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

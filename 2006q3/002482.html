@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C20060918074601.GA3928%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002480.html">
+   <LINK REL="Next"  HREF="002483.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Enable mgatv spic and YV12</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C20060918074601.GA3928%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [PATCH] Enable mgatv spic and YV12">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Sep 18 09:49:20 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002480.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+        <LI>Next message: <A HREF="002483.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2482">[ date ]</a>
+              <a href="thread.html#2482">[ thread ]</a>
+              <a href="subject.html#2482">[ subject ]</a>
+              <a href="author.html#2482">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Sep 17, 2006 at 11:46:23PM +0300, Heikki Lindholm wrote:
+&gt;<i> &gt; You didn't get rid of the CPU-burning Flip() calls, did you?  At least
+</I>&gt;<i> &gt; on my system, DirectFB spends about 10% of the CPU cycles waiting for
+</I>&gt;<i> &gt; MGA engine ready.  Adding a usleep(2000) right before the Flip() call
+</I>&gt;<i> &gt; reduces the CPU load but risks dropping frames.  I believe it would be
+</I>&gt;<i> &gt; much more efficient if the Flip() method blocked the thread until the
+</I>&gt;<i> &gt; hardware is ready.  That would require some new ioctl() in the kernel.
+</I>&gt;<i> 
+</I>&gt;<i> I read your earlier comment about this on the list. I was curious to ask
+</I>&gt;<i> if you could elaborate on this a bit. I _very_ briefly looked at what
+</I>&gt;<i> the Flip call does, and the only wait I saw was the wait for vsync,
+</I>&gt;<i> which for matroxfb seems to be nicely handled by a waitqueue in the
+</I>&gt;<i> kernel.
+</I>
+No, in fact it is waiting for the current operation to finish.  If you
+do Flip() immediately after initiating a large blit operation, the CPU
+will busy-wait in mga_waitidle() until the operation has finished.
+
+&gt;<i> I believe adding an usleep() is really artificial way of reducing cpu load
+</I>&gt;<i> and not really solving anything
+</I>
+It does reduce the CPU load reported by &quot;top&quot; by about 10 per cent,
+in my case from around 60% to 50%.
+
+I agree that it is not the right solution and it will probably make things
+worse if the CPU is really tightly loaded.  I tried replacing the usleep()
+calls with sched_yield(), and that really broke the timing.
+
+On Sun, Sep 17, 2006 at 11:21:27PM +0200, Stefan Lucke wrote:
+
+&gt;<i> Marko, I think you showed me a response from Ville regarding the ioctl
+</I>&gt;<i> issue. But unfortunatly I could not find this. 
+</I>
+I probably did not forward his reply to you, because it was written
+in Finnish.  On June 28, he wrote that using an IRQ would help but that
+it would require at least one more ioctl() to the kernel.
+
+&gt;<i> Was the modification based on the ioctl calls from him at directfb list
+</I>&gt;<i> which were not committed ?
+</I>
+I haven't tried any kernel patches.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002480.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+	<LI>Next message: <A HREF="002483.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2482">[ date ]</a>
+              <a href="thread.html#2482">[ thread ]</a>
+              <a href="subject.html#2482">[ subject ]</a>
+              <a href="author.html#2482">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

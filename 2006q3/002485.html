@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C20060918094126.GC3928%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002483.html">
+   <LINK REL="Next"  HREF="002479.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Enable mgatv spic and YV12</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C20060918094126.GC3928%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [PATCH] Enable mgatv spic and YV12">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Sep 18 11:41:26 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002483.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+        <LI>Next message: <A HREF="002479.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2485">[ date ]</a>
+              <a href="thread.html#2485">[ thread ]</a>
+              <a href="subject.html#2485">[ subject ]</a>
+              <a href="author.html#2485">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Sep 18, 2006 at 11:17:54AM +0300, Heikki Lindholm wrote:
+&gt;<i> &gt; No, in fact it is waiting for the current operation to finish.  If you
+</I>&gt;<i> &gt; do Flip() immediately after initiating a large blit operation, the CPU
+</I>&gt;<i> &gt; will busy-wait in mga_waitidle() until the operation has finished.
+</I>&gt;<i> 
+</I>&gt;<i> Ok. I'll look into that. I don't care if I have to add (dirty) hacks to
+</I>&gt;<i> the kernel, because the vdr box will be single-purpose anyway. Was there
+</I>&gt;<i> some patches floating around already, or just conceptual stuff?
+</I>
+You'd better ask Ville Syrj&#228;l&#228; or search the directfb-dev archives.
+Please post your findings here.  I don't mind a kernel patch either;
+I already have added one printk() to tell vdr if the computer was
+powered up by the remote control unit and if the display should be
+powered on (<A HREF="http://www.iki.fi/~msmakela/software/vdr/#relay">http://www.iki.fi/~msmakela/software/vdr/#relay</A>).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002483.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+	<LI>Next message: <A HREF="002479.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2485">[ date ]</a>
+              <a href="thread.html#2485">[ thread ]</a>
+              <a href="subject.html#2485">[ subject ]</a>
+              <a href="author.html#2485">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

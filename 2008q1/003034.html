@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Two Problems with vdr-1.6.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Two%20Problems%20with%20vdr-1.6.0&In-Reply-To=%3C1206462444.18496.8.camel%40lychee.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003033.html">
+   <LINK REL="Next"  HREF="003035.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Two Problems with vdr-1.6.0</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Two%20Problems%20with%20vdr-1.6.0&In-Reply-To=%3C1206462444.18496.8.camel%40lychee.local%3E"
+       TITLE="[Softdevice-devel] Two Problems with vdr-1.6.0">malcolm.caldwell at gmail.com
+       </A><BR>
+    <I>Tue Mar 25 17:27:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003033.html">[Softdevice-devel] H264 decoding support
+</A></li>
+        <LI>Next message: <A HREF="003035.html">[Softdevice-devel] Problems with softdevice (&amp;softplay) with	vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3034">[ date ]</a>
+              <a href="thread.html#3034">[ thread ]</a>
+              <a href="subject.html#3034">[ subject ]</a>
+              <a href="author.html#3034">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I have just upgraded my vdr to 1.6.0
+
+I have two problems with softdevice
+
+1.  Softplay does not work, it appears to segfault.  I tried compiling
+again with a fresh checkout of ffmpeg svn but it gives the same error:
+
+PLDBG: Thread started: SoftPlayer
+softdevicePlugin 0x92114f0
+IsStream .avi
+open(!) [13337:    0.000] --&gt; Caught signal 11 (at 0x8, invalid address) &lt;--
+
+This is with any file I try to play.  (Help: my kids need their movies!)
+
+2.  Old recordings have stuttering audio.  New recordings seem ok, but
+my old ones sound awful.  Livetv is also fine.  The question is &quot;Why are
+their Xruns only with old recordings&quot;.
+
+Recordings were made with vdr-1.4.3 with teletext and subtitles patch.
+(I suspect this is the cause of the problems, but need to ask here
+before I ask on the vdr list!)
+
+XXXX[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0382 D [14062] [VideoOut] reset: sync info: repF = 6, drpF = 5, totF = 8467
+No accelerated IMDCT transform found
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:24.0458 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:24.0810 D [14065] [VideoOut] video now synced (9 - 0)
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:25.0780 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0035 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0112 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0222 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0332 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms long)
+01:51:26.0553 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0608 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0662 D [14066] [softdevice-audio]: Xrun (at least 0.003 ms long)
+01:51:26.0717 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+01:51:26.0773 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:26.0982 D [14066] [softdevice-audio]: Xrun (at least 0.004 ms long)
+01:51:27.0092 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms long)
+01:51:27.0202 D [14066] [softdevice-audio]: Xrun (at least 0.005 ms long)
+[mpeg @ 0x270470]Further flags set but no bytes left
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003033.html">[Softdevice-devel] H264 decoding support
+</A></li>
+	<LI>Next message: <A HREF="003035.html">[Softdevice-devel] Problems with softdevice (&amp;softplay) with	vdr-1.6.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3034">[ date ]</a>
+              <a href="thread.html#3034">[ thread ]</a>
+              <a href="subject.html#3034">[ subject ]</a>
+              <a href="author.html#3034">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

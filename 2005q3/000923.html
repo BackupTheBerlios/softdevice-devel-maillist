@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] compile problem:parse error before string constant
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20compile%20problem%3Aparse%20error%20before%20string%20constant&In-Reply-To=%3C200507012126.35371.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000942.html">
+   <LINK REL="Next"  HREF="000925.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] compile problem:parse error before string constant</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20compile%20problem%3Aparse%20error%20before%20string%20constant&In-Reply-To=%3C200507012126.35371.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] compile problem:parse error before string constant">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jul  1 21:26:35 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000942.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000925.html">[Softdevice-devel] compile problem:parse error before string constant
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#923">[ date ]</a>
+              <a href="thread.html#923">[ thread ]</a>
+              <a href="subject.html#923">[ subject ]</a>
+              <a href="author.html#923">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Donnerstag, 30. Juni 2005 21:34, Stefan Lucke wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> got some compile problem on my prod vdr box with current cvs:
+</I>&gt;<i> 
+</I>&gt;<i> utils.c: In function `void * fast_memcpy(void *, const void *, unsigned int)':
+</I>&gt;<i> utils.c:469: parse error before string constant
+</I>&gt;<i> utils.c:514: confused by earlier errors, bailing out
+</I>&gt;<i> 
+</I>&gt;<i> Thats is with gcc: 2.95.3
+</I>&gt;<i> 
+</I>
+Strange, it compiles with the following change:
+-- cut --
+Index: utils.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+retrieving revision 1.5
+diff -U5 -r1.5 utils.c
+--- utils.c     26 Jun 2005 20:12:40 -0000      1.5
++++ utils.c     1 Jul 2005 19:23:42 -0000
+@@ -464,11 +464,11 @@
+                        &quot;sub %4, %2             \n\t&quot;
+                        &quot;cmp %4, %2             \n\t&quot;
+                        &quot; jae 1b                \n\t&quot;
+                                : &quot;+r&quot; (from), &quot;+r&quot; (to), &quot;+r&quot; (i)
+                                : &quot;r&quot; ((long)BLOCK_SIZE), &quot;i&quot; (BLOCK_SIZE/64), &quot;i&quot; ((long)CONFUSION_FACTOR)
+-                               : &quot;%&quot;REG_a, &quot;%ebx&quot;
++                               : &quot;%eax&quot; , &quot;%ebx&quot;
+                );
+
+        for(; i&gt;0; i--)
+        {
+                __asm__ __volatile__ (
+-- cut --
+
+But REG_a is defined as:
+#define REG_a &quot;eax&quot;
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000942.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000925.html">[Softdevice-devel] compile problem:parse error before string constant
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#923">[ date ]</a>
+              <a href="thread.html#923">[ thread ]</a>
+              <a href="subject.html#923">[ subject ]</a>
+              <a href="author.html#923">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

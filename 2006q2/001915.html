@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C20060425054036.GA3707%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001914.html">
+   <LINK REL="Next"  HREF="001918.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20video-dfb.c%20-r1.54%20removes%20RCU%20support%3F&In-Reply-To=%3C20060425054036.GA3707%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Apr 25 07:40:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001914.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+        <LI>Next message: <A HREF="001918.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1915">[ date ]</a>
+              <a href="thread.html#1915">[ thread ]</a>
+              <a href="subject.html#1915">[ subject ]</a>
+              <a href="author.html#1915">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Apr 25, 2006 at 07:00:38AM +0200, Stefan Lucke wrote:
+&gt;<i> &gt; It was a bit irritating to define the RCU mapping.  First, I believed
+</I>&gt;<i> &gt; that the old deadlock bug still hasn't been fixed.  
+</I>&gt;<i> 
+</I>&gt;<i> Deadlock bug? Have to to search the archive (or give me a hint).
+</I>
+Well, in early 2005, vdr would ignore RCU keypresses in the learning mode
+for most of the time.   I had to add some fprintf call to video-dfb.c
+and to manually copy the codes from the error log to remote.conf.
+It may have been related to LD_ASSUME_KERNEL=2.4.1 (NPTL vs. LinuxThreads).
+
+&gt;<i> &gt; Could it be that video-dfb.c triggers OSD updates by three things: new
+</I>&gt;<i> &gt; video frame, DFBInputEvent (cDFBVideoOut::ProcessEvents()), and a
+</I>&gt;<i> &gt; very slow timer?
+</I>&gt;<i> 
+</I>&gt;<i> Events were and are processed after each frame gets displayed.
+</I>&gt;<i> Additional they were and are processed from a background thread,
+</I>&gt;<i> previously from dfb-remote thread, now from video class, and that
+</I>&gt;<i> lacked an OSD refresh call. Should be fixed.
+</I>&gt;<i> 
+</I>&gt;<i> Can you try to cvs update ?
+</I>
+I'll try tonight.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001914.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+	<LI>Next message: <A HREF="001918.html">[Softdevice-devel] video-dfb.c -r1.54 removes RCU support?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1915">[ date ]</a>
+              <a href="thread.html#1915">[ thread ]</a>
+              <a href="subject.html#1915">[ subject ]</a>
+              <a href="author.html#1915">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

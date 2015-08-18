@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] compile problem:parse error before string constant
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20compile%20problem%3Aparse%20error%20before%20string%20constant&In-Reply-To=%3C200507031733.48422.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000925.html">
+   <LINK REL="Next"  HREF="000927.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] compile problem:parse error before string constant</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20compile%20problem%3Aparse%20error%20before%20string%20constant&In-Reply-To=%3C200507031733.48422.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] compile problem:parse error before string constant">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Jul  3 17:33:48 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000925.html">[Softdevice-devel] compile problem:parse error before string constant
+</A></li>
+        <LI>Next message: <A HREF="000927.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#926">[ date ]</a>
+              <a href="thread.html#926">[ thread ]</a>
+              <a href="subject.html#926">[ subject ]</a>
+              <a href="author.html#926">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 3. Juli 2005 12:33, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; On Donnerstag, 30. Juni 2005 21:34, Stefan Lucke wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt;Hi,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;got some compile problem on my prod vdr box with current cvs:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;utils.c: In function `void * fast_memcpy(void *, const void *, unsigned int)':
+</I>&gt;<i> &gt;&gt;utils.c:469: parse error before string constant
+</I>&gt;<i> &gt;&gt;utils.c:514: confused by earlier errors, bailing out
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;Thats is with gcc: 2.95.3
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt; 
+</I>
+&gt;<i> &gt;                                 : &quot;r&quot; ((long)BLOCK_SIZE), &quot;i&quot; (BLOCK_SIZE/64), &quot;i&quot; ((long)CONFUSION_FACTOR)
+</I>&gt;<i> &gt; -                               : &quot;%&quot;REG_a, &quot;%ebx&quot;
+</I>&gt;<i> &gt; +                               : &quot;%eax&quot; , &quot;%ebx&quot;
+</I>&gt;<i> &gt;                 );
+</I>
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; But REG_a is defined as:
+</I>&gt;<i> &gt; #define REG_a &quot;eax&quot;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> I'm sorry but I can't debug this since my distribution doesn't has gcc
+</I>&gt;<i> 2.95.3 anymore :-(. So I would be happy if you could try to fix this.
+</I>&gt;<i> The define REG_a is necessary for 64 bit systems, there REG_a has to be
+</I>&gt;<i> defined as &quot;rax&quot;.
+</I>
+At the moment I can live with that, as I know how to circumvent that.
+I think it's a compiler error with my old gcc. Previous use of REG_a is ok
+but this one fails. When I use: &quot;%&quot;&quot;eax&quot; which is REG_a direct substituted,
+it will fail with the same error.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000925.html">[Softdevice-devel] compile problem:parse error before string constant
+</A></li>
+	<LI>Next message: <A HREF="000927.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#926">[ date ]</a>
+              <a href="thread.html#926">[ thread ]</a>
+              <a href="subject.html#926">[ subject ]</a>
+              <a href="author.html#926">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

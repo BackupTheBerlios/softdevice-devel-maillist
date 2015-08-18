@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503292027.11204.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000395.html">
+   <LINK REL="Next"  HREF="000404.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C200503292027.11204.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Mar 29 20:27:11 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000395.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000404.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#398">[ date ]</a>
+              <a href="thread.html#398">[ thread ]</a>
+              <a href="subject.html#398">[ subject ]</a>
+              <a href="author.html#398">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 29. M&#228;rz 2005 16:35, Lucian Muresan wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> ...
+</I>&gt;<i> &gt; I don't believe that dfb way of screenshots works.
+</I>&gt;<i> &gt; Whats you tv type 4:3 vs 16:9 ?
+</I>&gt;<i> 
+</I>&gt;<i> It's a standard 4:3 PAL TV.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; If its a 4:3 type, was/is the video shown 4:3 or 16:9 ?
+</I>&gt;<i> 
+</I>&gt;<i> Aspect ration setting is set to &quot;PAL 4:3&quot; or something (I'm at wortk 
+</I>&gt;<i> right now, don't remember the exact name), and I didn't notice any wrong 
+</I>&gt;<i> shown aspect, I mean material broadcasted 4:3 looked OK, and on the rare 
+</I>&gt;<i> 16:9 broadcasts, softdevice seems to correctly scale the video.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Do you see judder on all channels ? and on each invocation ?
+</I>&gt;<i> 
+</I>&gt;<i> On pretty all channels. I always call vdr with the softdevice from a ssh 
+</I>&gt;<i> session with
+</I>&gt;<i> vdr -c /etc/vdr -L /usr/lib/vdr -P'softdevice -L /usr/lib/vdr -vo:mgatv' 
+</I>&gt;<i> -P'graphlcd -d noritake800'
+</I>&gt;<i> 
+</I>&gt;<i> &gt; You previously said field parity issue is back. On which exact
+</I>&gt;<i> &gt; version of video-dfb was it gone ?
+</I>&gt;<i> 
+</I>&gt;<i> Well, I started that thread &quot;CVS from last night feedback  - field 
+</I>&gt;<i> parity seems to be solved :-) , some audio issues remain&quot; on friday, the 
+</I>&gt;<i> 18.03. I would say it was the previuos version (1.19) of video-dfb.c and 
+</I>&gt;<i> 1.5 of video-dfb.h. But it could also happen that other changed code was 
+</I>&gt;<i> the reason for that, Martin replied at that time he didn't change 
+</I>&gt;<i> anything in video-dfb, but in mpeg2decoder.c, maybe rev 1.21 and/or 1.22 
+</I>&gt;<i> where OK for me at that time.
+</I>
+As Martin I'm of the opinion too, that changes any other module should
+have no influence to tv-out via directfb. Interlaced flag and top or
+bottom field flag is not taken from stream. It is set allways to
+top first in video-dfb.c
+
+&gt;<i> I think the field parity problem coming back might be related to the 
+</I>&gt;<i> syncing modifications, I don't know...
+</I>&gt;<i> 
+</I>&gt;<i> In a previous message you said you tested with &quot;Radeon-9200, G550 vga + 
+</I>&gt;<i> tv-out and G400 as mentioned above. On G400 I've still some problems but 
+</I>&gt;<i> this is probably caused by the old DFB version on that system (0.9.20)&quot;
+</I>
+A few mails before this, I said I managed to get DFB cvs version compiled
+on my G400 tv-out (s-video) system. Forgot to mention that N24 news
+ticker looks pretty well on that system now. The only problem is when
+16:9 interlaced video is scaled down to 4:3 tv aspect. When setting
+sofdevice options to &quot;center cut out&quot;, these effects disappear. But
+this is a different story.
+
+My G550 tv-out system is on connected to a 7&quot; LCD TV-monitor and looks
+well too.
+
+&gt;<i> 
+</I>&gt;<i> Now I'm not getting it, did you test TV-out an both G450 and G400, and 
+</I>&gt;<i> you see no field parity issues on scrolling newstickers like n24 and the 
+</I>&gt;<i> like?
+</I>&gt;<i> 
+</I>&gt;<i> Tonight after getting back home from work I'll try to checkout again a 
+</I>&gt;<i> softdevice CVS as of 18-19 march to see if I was right with the field 
+</I>&gt;<i> parity, then I'll tell you the exact snapshot I tested if relevant, you 
+</I>&gt;<i> might then test the very same version on G400 TV-out for yourself, would 
+</I>&gt;<i> that help? Because for me the modifications spread all over in various 
+</I>&gt;<i> areas of softdevice are still too complex to get the grand picture in my 
+</I>&gt;<i> head to diagnose this...
+</I>
+For debugging a added interlaced and top/bottom first change reporting.
+With result that top_field_first is set allways and that interlaced flag
+is unrelaiable (changeing every now and than).
+
+With attached patch you'll get field order changes reported.
+
+Mar 29 20:21:08 jarada vdr[6040]: [VideoOut]: field order changed to TOP field first (1)
+Mar 29 20:21:08 jarada vdr[6040]: [VideoOut]: aspect changed (-100 -&gt; 0 ; -100,000000 -&gt; 1,777778)
+Mar 29 20:21:08 jarada vdr[6040]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,72 768x432]
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: field-order-report-01.diff
+Type: text/x-diff
+Size: 1077 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050329/7c9fd089/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050329/7c9fd089/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000395.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000404.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#398">[ date ]</a>
+              <a href="thread.html#398">[ thread ]</a>
+              <a href="subject.html#398">[ subject ]</a>
+              <a href="author.html#398">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

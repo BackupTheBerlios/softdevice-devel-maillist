@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Next release ?!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Next%20release%20%3F%21&In-Reply-To=%3C200507232352.10207.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001017.html">
+   <LINK REL="Next"  HREF="001024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Next release ?!</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Next%20release%20%3F%21&In-Reply-To=%3C200507232352.10207.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Next release ?!">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jul 23 23:52:10 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001017.html">[Softdevice-devel] Softplay, DVB subtitles, one failing AVI example
+</A></li>
+        <LI>Next message: <A HREF="001024.html">[Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1020">[ date ]</a>
+              <a href="thread.html#1020">[ thread ]</a>
+              <a href="subject.html#1020">[ subject ]</a>
+              <a href="author.html#1020">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+the last release is more than two months old. In the past few
+days, there has been a new feature &quot;cropping&quot; (thanks to Vadim).
+So I'd like to release a new version (0.2.0) soon. Hopefully cvs
+version get's a bit more tests.
+
+As there are only a few people subscribed to cvs commit list, I want
+to offer the last changes (since 0.1.2) from CHANGELOG here too:
+
+2005-07-23:
+    - vidix-out:
+      - some cosmetic cleanups
+      - force OSD mode pseudo when YUY2 pixelformat is choosen
+2005-07-22:
+    - changed pause OSD handling in software drawing mode
+    - work around for some *.avi files where frametime is zero
+    - fix previously introduced compile fail without -DUSE_SUBPLUGINS
+    - include patch from Claas Hilbrecht for &quot;-vo dummy:&quot;
+    - some code reorg for subpluging loader
+2005-07-20:
+    - fix for live view at trick speed
+    - stretchBlit mode for dfb-out is selectable via OSD
+    - cropLeft/Right for xv-out and dfb-out
+    - exclude cropTop/Bottom OSD from fb-out
+    - adjusted vidix-out call of yv12_to_yuy2() to dfb-out
+2005-07-17:
+    - crop Top/Bottom for xv-out
+    - introduce colour space conversion (by Malcom Caldwell)
+    - make filters work with YUV422 color space
+2005-07-16:
+    - fix for cropBottom in dfb with YUY2 pixelformat
+    - some preparations for configure in video-dfb.c
+    - some preparations for configure in utils.c
+2005-07-15:
+    - by Vadim Catana:
+      - fixed a couple of compiler warnings for gcc4 on x86-64
+      - the video-vidix.c and video-dfb.c both contain code
+        that converts pictures from YV12 format to YUY2. I moved
+        this common code to a function in utils.c .
+      - Some channels display white dots at the top and bottom of
+        the screen due to WSS data encoded in the picture.
+        This problem has been mentioned on vdr, linux-dvb and
+        dxr3 mailinglists a few times. I added two new items in
+        the softdevice menu that allow to cut off a number of lines
+        from top and bottom of the picture. It is implemented now
+        only for -vo vidix and dfb with i420/YV12 format and hardware
+        alpha blending.
+    - by Malcolm Caldwell: fix for vdr segfaulting
+2005-07-03:
+    - fix fullscreen mode for 64-bit architectures
+    - improve response time for 60-sec skips
+2005-06-30:
+    - changed delay clamping low limit and printout &quot;+&quot; if we drop frames
+    - dfb: report current frame duration
+    - dfb: activated device specific delay handling
+2005-06-28:
+    - fix for loosing window dimensions upon switching from fullscreen mode to windowed mode
+2005-06-26:
+    - fix compile issue with recent gcc versions (patch by alexw)
+2005-06-18:
+    - provide error message on stderr when Xv plugin cannot connect to X server.
+2005-06-12:
+    - no new audio frame has been decoded when audio_size &lt;= 0
+       (reported by Antonio O.)
+    - introduce fast_memcpy (gives 20-30% speed increase on copying)
+    - switch xv-out to fast_memcpy
+    - enable fast and default deblock postprocessing
+    - make buffersizes choosable
+2005-06-06:
+    - fixed latest ffmpeg cvs compile issue
+    - applied fix for noisy audio on some soundcards (by Antonio O.)
+    - applied GetDeviceDescription() patch for video-dfb.c (by Lucian Muresan)
+2005-06-05:
+    - compile by default with &quot;-g&quot;
+    - fix vidix segfault
+2005-05-29:
+    - changed screen aspect ratio selection (based on suggestion by Nicolas Huillard)
+    - fix some segfaults on bad signal
+    - fix possible segfault when called without arguments 
+      (thanks to Marko M&#228;kel&#228;)
+    - buffering is now complety signal triggered
+    - made buffersizes variable
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001017.html">[Softdevice-devel] Softplay, DVB subtitles, one failing AVI example
+</A></li>
+	<LI>Next message: <A HREF="001024.html">[Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1020">[ date ]</a>
+              <a href="thread.html#1020">[ thread ]</a>
+              <a href="subject.html#1020">[ subject ]</a>
+              <a href="author.html#1020">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

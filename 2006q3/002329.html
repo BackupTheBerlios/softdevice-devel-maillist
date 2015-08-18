@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] CLE266 Vertical Refresh
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20Vertical%20Refresh&In-Reply-To=%3C44EC4057.1000609%40conealley.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002315.html">
+   <LINK REL="Next"  HREF="002330.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] CLE266 Vertical Refresh</H1>
+    <B>Kim Fredenberg</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20CLE266%20Vertical%20Refresh&In-Reply-To=%3C44EC4057.1000609%40conealley.net%3E"
+       TITLE="[Softdevice-devel] CLE266 Vertical Refresh">lists at conealley.net
+       </A><BR>
+    <I>Wed Aug 23 13:47:35 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002315.html">[Softdevice-devel] list registration at gmane (WAS: Fwd: Uncaught	bounce notification)
+</A></li>
+        <LI>Next message: <A HREF="002330.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2329">[ date ]</a>
+              <a href="thread.html#2329">[ thread ]</a>
+              <a href="subject.html#2329">[ subject ]</a>
+              <a href="author.html#2329">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I don't know if this is the correct list to ask this question, but I am
+playing around with a CLE266 equipped VIA Epia board and want to connect
+it to my Thomson TV. I have compiled in support for libcle266mpegdec and
+DirectFB/DFB++ for softdevice. Decoding works fine, displaying on a
+monitor works fine.
+
+Now my problem is that the Thompson TV is quite sensitive conserning the
+vertical refresh rate and would like to have something like 59.7Hz. My
+Epia outputs 60.05Hz measured with an oscilloscope.
+
+Now I tried to adjust the frequency using fbset and setting the
+pixelclock just slightly higher for the 800x600-60 mode. fbset -i
+actually informs me that the frequency should be something like 59.7Hz.
+
+mode &quot;800x600-60&quot;
+    # D: 39.604 MHz, H: 37.504 kHz, V: 59.719 Hz
+    geometry 800 600 800 600 8
+    timings 25250 88 40 23 1 128 4
+    hsync high
+    vsync high
+    accel true
+    rgba 6/0,6/0,6/0,0/0
+endmode
+
+But it doesn't effect the output from the Epia in any way. The
+oscilloscope still displays 60.05Hz. It acutally doesn't matter if I set
+it to 800x600-90, then fbset -i shows V: 89.913 Hz but the oscilloscope
+still displays 60.05Hz.
+
+What am I doing wrong? Why can't I adjust the frequencies using fbset?
+Is my Epia board overriding the settings from linux in any way?
+
+br,
+
+Kim Fredenberg
+
+PS. Dear list administrator, I unfortunaltely sent out this mail already
+once having the wrong sender. Please ignore the message, thanks.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002315.html">[Softdevice-devel] list registration at gmane (WAS: Fwd: Uncaught	bounce notification)
+</A></li>
+	<LI>Next message: <A HREF="002330.html">[Softdevice-devel] CLE266 Vertical Refresh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2329">[ date ]</a>
+              <a href="thread.html#2329">[ thread ]</a>
+              <a href="subject.html#2329">[ subject ]</a>
+              <a href="author.html#2329">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

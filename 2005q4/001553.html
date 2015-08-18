@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Avoiding off-sync audio at the start of a clip
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Avoiding%20off-sync%20audio%20at%20the%20start%20of%20a%20clip&In-Reply-To=%3C20051115095749.GB3794%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001529.html">
+   <LINK REL="Next"  HREF="001554.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Avoiding off-sync audio at the start of a clip</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Avoiding%20off-sync%20audio%20at%20the%20start%20of%20a%20clip&In-Reply-To=%3C20051115095749.GB3794%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Avoiding off-sync audio at the start of a clip">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Nov 15 10:57:49 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001529.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+        <LI>Next message: <A HREF="001554.html">[Softdevice-devel] Avoiding off-sync audio at the start of a clip
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1553">[ date ]</a>
+              <a href="thread.html#1553">[ thread ]</a>
+              <a href="subject.html#1553">[ subject ]</a>
+              <a href="author.html#1553">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Nov 13, 2005 at 12:13:03PM +0100, Martin Wache wrote:
+&gt;<i> &gt; After switching streams, in DFB the audio is off sync for a few seconds.
+</I>&gt;<i> &gt; I wonder if the off-sync time is shorter in Xv out.
+</I>&gt;<i> &gt;
+</I>&gt;<i> I guess no. The reason for this initial off sync is that the video
+</I>&gt;<i> stream is ahead of the audio stream (to give some time for the
+</I>&gt;<i> decoding). The softdevice starts displaying the video as soon as it has
+</I>&gt;<i> the first frame, which is before it has the corresponding audio.
+</I>&gt;<i> The video is then played slower until audio and video is in sync again.
+</I>&gt;<i> I changed this once so that the video waits for the audio, but I got
+</I>&gt;<i> some complaints about slower channel switching times. I took that change
+</I>&gt;<i> back soon since I too like the faster channel switching.
+</I>
+How hard would it be to play video only until the first up-to-date audio
+frame arrives?  Even some analog TV sets mute the audio during channel
+zapping.
+
+The current behaviour is a bit irritating when you play recordings that
+start with a program announcement showing a live picture of the announcer's
+head.  The lip-sync will be lost for a few seconds.
+
+&gt;<i> I fear the RTC timing in the softdevice is not that sophisticated. The
+</I>&gt;<i> softdevice programs the RTC to send something every 1ms and then reads
+</I>&gt;<i> from /dev/RTC until the waiting time has passed. So there is a context
+</I>&gt;<i> switch every 1ms.
+</I>
+I see, it uses the RTC as a source of 1ms time quantums.  I assumed that
+you would constantly reprogram the RTC timer to expire at the next deadline,
+but I guess it would be very hard to avoid jitter, as you'd need two context
+switches per cycle: one to read the timer and another one to reprogram it.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001529.html">[Softdevice-devel] softdevice and nvram-wakeup
+</A></li>
+	<LI>Next message: <A HREF="001554.html">[Softdevice-devel] Avoiding off-sync audio at the start of a clip
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1553">[ date ]</a>
+              <a href="thread.html#1553">[ thread ]</a>
+              <a href="subject.html#1553">[ subject ]</a>
+              <a href="author.html#1553">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

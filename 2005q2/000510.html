@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20latest%20softdevice%20CVS%20%26%20latest%20DirectFB%20%26%0A%20DFB%2B%2B%20cvs%20broken%3F%3F&In-Reply-To=%3C425B74C9.6040607%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000509.html">
+   <LINK REL="Next"  HREF="000511.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20latest%20softdevice%20CVS%20%26%20latest%20DirectFB%20%26%0A%20DFB%2B%2B%20cvs%20broken%3F%3F&In-Reply-To=%3C425B74C9.6040607%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Tue Apr 12 09:12:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000509.html">[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??
+</A></li>
+        <LI>Next message: <A HREF="000511.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#510">[ date ]</a>
+              <a href="thread.html#510">[ thread ]</a>
+              <a href="subject.html#510">[ subject ]</a>
+              <a href="author.html#510">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+...
+&gt;&gt;<i> &gt; Did you also experience this with latest DirectFB? I can't find 
+</I>&gt;&gt;<i> &gt; &quot;GetCardCapabilities&quot; anywhere in DirectFB or DFB++ sources...
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Yes, just comment out the body of the method that uses it for now..
+</I>&gt;<i> 
+</I>&gt;<i> Luckily that information is not used for further processing, so we
+</I>&gt;<i> can remove that entierly. Otherwise it would require autogen ..
+</I>&gt;<i> and we would have to include a configure script in releases as
+</I>&gt;<i> autogen etc. is targeted at developers. Ah my configure script
+</I>&gt;<i> generated for directfb is about 820KB and 150 KB compressed
+</I>&gt;<i> (twice as much as our 0.1.1 release) !!
+</I>
+Yes, thanks, both of you, I commented the whole thing out and now 
+softdevice compiled properly. Unfortunately, working the same as with 
+DirectFB-0.9.22, otherwise it's the only app linked against 0.9.23 which 
+seems to at least start (not even df_xine from DirectFB-extra works 
+properly anymire, I'll have to revert to previous DirectFB/DFB++). Well, 
+as of softdevice, I'll start another thread...
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000509.html">[Softdevice-devel] latest softdevice CVS &amp; latest DirectFB &amp; DFB++ cvs broken??
+</A></li>
+	<LI>Next message: <A HREF="000511.html">[Softdevice-devel] terrible judder and stuttering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#510">[ date ]</a>
+              <a href="thread.html#510">[ thread ]</a>
+              <a href="subject.html#510">[ subject ]</a>
+              <a href="author.html#510">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash when rewinding a recording
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20when%20rewinding%20a%20recording&In-Reply-To=%3C200507262322.09917.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001028.html">
+   <LINK REL="Next"  HREF="001040.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash when rewinding a recording</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20when%20rewinding%20a%20recording&In-Reply-To=%3C200507262322.09917.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Repeatable crash when rewinding a recording">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Jul 26 23:22:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001028.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+        <LI>Next message: <A HREF="001040.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1039">[ date ]</a>
+              <a href="thread.html#1039">[ thread ]</a>
+              <a href="subject.html#1039">[ subject ]</a>
+              <a href="author.html#1039">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 24. Juli 2005 23:05, Marko M&#228;kel&#228; wrote:
+&gt;<i> I think I have reported a similar problem before.  Now I observed the
+</I>&gt;<i> problem with another recording.  When I rewind it, softdevice passes
+</I>&gt;<i> invalid arguments to memcpy() in the YUV conversion (see attached
+</I>&gt;<i> gdb output).
+</I>
+Some parts of yout gdb output looks strange:
+(gdb) p *this
+    current_aspect = 121, currentPixelFormat = 93, cutTop = 120, cutBottom = 112, cutLeft = 0,
+
+cut values should be in the range 0 .. 100. currentPixelFormat and 
+current_aspect are bogous too.
+
+Those cut parameter set via OSD should be limited in an other way
+as they count by 2. So cutTop + cutBottom should not exceed frame
+high ( 100 + 100) * 2 = 400 lines. I've a test stream which is of size
+352x288 .
+
+&gt;<i> 
+</I>&gt;<i> By the way, I can't seem to get core files from my system any more,
+</I>&gt;<i> and I have set ulimit -c unlimited.  Maybe it is a bug in kernel
+</I>&gt;<i> 2.6.12.3?
+</I>&gt;<i> 
+</I>&gt;<i> Luckily, I can run vdr inside gdb.  See the attached gdb log.  I added
+</I>&gt;<i> the lines &quot;(gdb)&quot; manually, as they were not written out by &quot;set logging on&quot;.
+</I>&gt;<i> I hope I didn't make mistakes while doing that.
+</I>&gt;<i> 
+</I>&gt;<i> The crash cannot be due to any recent changes, because the crash also
+</I>&gt;<i> occurs with an older snapshot (mpeg2decoder.c -r1.43, video-dfb.c -r1.31).
+</I>&gt;<i> 
+</I>&gt;<i> 	Marko
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001028.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+	<LI>Next message: <A HREF="001040.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1039">[ date ]</a>
+              <a href="thread.html#1039">[ thread ]</a>
+              <a href="subject.html#1039">[ subject ]</a>
+              <a href="author.html#1039">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

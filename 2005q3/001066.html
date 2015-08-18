@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Progress%20with%20DirectFB%20%28Work%20on%20Debian%20package%0A%20still%20in%20progress...%29&In-Reply-To=%3C42ED4407.1080807%40e-tobi.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001061.html">
+   <LINK REL="Next"  HREF="001081.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)</H1>
+    <B>Tobias Grimm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Progress%20with%20DirectFB%20%28Work%20on%20Debian%20package%0A%20still%20in%20progress...%29&In-Reply-To=%3C42ED4407.1080807%40e-tobi.net%3E"
+       TITLE="[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)">listaccount at e-tobi.net
+       </A><BR>
+    <I>Sun Jul 31 23:35:03 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001061.html">[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+</A></li>
+        <LI>Next message: <A HREF="001081.html">[Softdevice-devel] Missing catch statements in video-dfb.c cause crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1066">[ date ]</a>
+              <a href="thread.html#1066">[ thread ]</a>
+              <a href="subject.html#1066">[ subject ]</a>
+              <a href="author.html#1066">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+
+&gt;<i>Search for the mailing list archive for SIGABRT (that's what signal 6 is
+</I>&gt;<i>on GNU/Linux).  I reported that a few months ago.  If I remember correctly,
+</I>&gt;<i>it was a permissions problem.  Try to run as root,
+</I>&gt;<i>
+</I>
+vdr is running as root.
+
+&gt;<i>or try adding
+</I>&gt;<i>no-vt-switch, no-vt-switching,
+</I>&gt;<i>
+</I>
+didn't work.
+
+&gt;<i>You could also try building vdr.o with make NO_KBD=1.
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+Haven't tried this yet.
+
+&gt;<i>Try adding &quot;strace&quot; before /usr/bin/vdr.  Then you should get an idea where it
+</I>&gt;<i>fails.
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+Mmm... not really:
+
+----------
+write(2, &quot;[dfb] Enumeratig display Layers\n&quot;, 32[dfb] Enumeratig display
+Layers
+) = 32
+ioctl(11, FBIOPUT_VSCREENINFO, 0xbffff530) = 0
+write(13, &quot;\33[?1;0;0c&quot;, 9)             = 9
+write(13, &quot;\33[9;0]&quot;, 6)                = 6
+ioctl(11, FBIOPUT_VSCREENINFO, 0xbffff510) = 0
+write(13, &quot;\33[?1;0;0c&quot;, 9)             = 9
+write(13, &quot;\33[9;0]&quot;, 6)                = 6
+ioctl(11, FBIOPUT_VSCREENINFO, 0xbffff470) = 0
+write(13, &quot;\33[?1;0;0c&quot;, 9)             = 9
+write(13, &quot;\33[9;0]&quot;, 6)                = 6
+write(2, &quot;Layer 0 FBDev Primary Layer&quot;, 27Layer 0 FBDev Primary Layer) = 27
+write(2, &quot;  Type: &quot;, 8  Type: )                 = 8
+write(2, &quot;graphics &quot;, 9graphics )                = 9
+write(2, &quot;\n&quot;, 1
+)                       = 1
+write(2, &quot;  Caps: &quot;, 8  Caps: )                 = 8
+write(2, &quot;brightness &quot;, 11brightness )             = 11
+write(2, &quot;contrast &quot;, 9contrast )                = 9
+write(2, &quot;saturation &quot;, 11saturation )             = 11
+write(2, &quot;surface &quot;, 8surface )                 = 8
+write(2, &quot;\n&quot;, 1
+)                       = 1
+ioctl(11, FBIOPUT_VSCREENINFO, 0xbffff520) = -1 EINVAL (Invalid argument)
+write(13, &quot;\33[?1;0;0c&quot;, 9)             = 9
+write(13, &quot;\33[9;0]&quot;, 6)                = 6
+rt_sigprocmask(SIG_UNBLOCK, [ABRT], NULL, 8) = 0
+kill(6515, SIGABRT)                     = 0
+--- SIGABRT (Aborted) @ 0 (0) ---
+gettid()                                = 6515
+gettimeofday({1122845106, 858056}, NULL) = 0
+write(2, &quot;(!) [ 6515:    0.000] --&gt; Caught&quot;..., 41(!) [ 6515:    0.000]
+--&gt; Caught signal 6) = 41
+write(2, &quot; (sent by pid 6515, uid 0) &lt;--\n&quot;, 31 (sent by pid 6515, uid
+0) &lt;--
+) = 31
+----------
+
+
+I feel more comfortable with gdb:
+
+----------
+Layer 0 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+
+Program received signal SIGABRT, Aborted.
+[Switching to Thread 16384 (LWP 5978)]
+0x401a37c1 in kill () from /lib/libc.so.6
+(gdb) bt
+#0  0x401a37c1 in kill () from /lib/libc.so.6
+#1  0x40044771 in pthread_kill () from /lib/libpthread.so.0
+#2  0x40044a7b in raise () from /lib/libpthread.so.0
+#3  0x401a3554 in raise () from /lib/libc.so.6
+#4  0x401a4a88 in abort () from /lib/libc.so.6
+#5  0x40126f57 in __cxa_call_unexpected () from /usr/lib/libstdc++.so.5
+#6  0x40126f94 in std::terminate () from /usr/lib/libstdc++.so.5
+#7  0x40127106 in __cxa_throw () from /usr/lib/libstdc++.so.5
+#8  0x40f5dd37 in IDirectFB::CreateSurface () from
+/usr/lib/libdfb++-0.9.so.22
+#9  0x40ac5642 in cDFBVideoOut (this=0xa050f58, setupStore=0x40e4a1e0)
+at video-dfb.c:357
+#10 0x40ab5fd3 in cSoftDevice (this=0xa050368, method=3, audioMethod=1,
+    pluginPath=0x40daabf4 &quot;./PLUGINS/lib&quot;) at softdevice.c:335
+#11 0x40ab76d6 in cPluginSoftDevice::Initialize (this=0x820f468) at
+softdevice.c:819
+#12 0x080f205b in cPluginManager::InitializePlugins (this=0xbffffaa0) at
+plugin.c:312
+#13 0x0812d8d8 in main (argc=34, argv=0xbffffba4) at vdr.c:589
+----------
+
+
+But this doesn't help me at the moment either. I may need to debug directfb.
+
+&gt;<i>By the way, under kernel 2.6.12.3 and DirectFB 0.9.22, vdr-softdevice works
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+I'm using 2.4.31 with vesafb.
+
+Tobias
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001061.html">[Softdevice-devel] Progress with DirectFB (Work on Debian package still in progress...)
+</A></li>
+	<LI>Next message: <A HREF="001081.html">[Softdevice-devel] Missing catch statements in video-dfb.c cause crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1066">[ date ]</a>
+              <a href="thread.html#1066">[ thread ]</a>
+              <a href="subject.html#1066">[ subject ]</a>
+              <a href="author.html#1066">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

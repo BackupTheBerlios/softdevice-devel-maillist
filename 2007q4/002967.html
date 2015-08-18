@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] mpeg2decoder.c compile error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C1198230801.476b8d11053ab%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002966.html">
+   <LINK REL="Next"  HREF="002968.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] mpeg2decoder.c compile error</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20mpeg2decoder.c%20compile%20error&In-Reply-To=%3C1198230801.476b8d11053ab%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] mpeg2decoder.c compile error">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Dec 21 10:53:21 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002966.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+        <LI>Next message: <A HREF="002968.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2967">[ date ]</a>
+              <a href="thread.html#2967">[ thread ]</a>
+              <a href="subject.html#2967">[ subject ]</a>
+              <a href="author.html#2967">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Per Mellander &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">per at mellander.org</A>&gt;:
+
+&gt;<i>
+</I>&gt;<i> I've noticed that newer ffmpeg doesn't match softdevice.
+</I>&gt;<i>
+</I>&gt;<i> I did the actual setup of my EPIA MII 12000 last week. Can't look at it now
+</I>&gt;<i> because it's powered off and @home but I recognize the error. I took an older
+</I>&gt;<i> ffmpeg and it compiled.
+</I>&gt;<i>
+</I>&gt;<i> Looking at my main VDR @home, I'm running softdevice-cvs-071220 + FFmpeg version
+</I>&gt;<i> SVN-r10885.
+</I>
+At a first glance it looks like ffmpeg svn-11071 is causing some troubles.
+Comment of this change is: &quot;Use dynamically allocated ByteIOContext in AVFormatContext&quot;
+
+So we have to adapte our sources :-).
+LIBAVFORMAT_VERSION  changed from &quot;51.19.0&quot; to &quot;52.0.0&quot;
+
+For troubles in line 1081 it should be something like:
+
+#if LIBAVFORMAT_BUILD &gt;= ((52&lt;&lt;16)+(0&lt;&lt;8)+0)
+       ic-&gt;pb-&gt;buffer=u;
+#else
+       ic-&gt;pb.buffer=u;
+#endif
+
+&gt;<i>
+</I>&gt;<i> Per
+</I>&gt;<i>
+</I>&gt;<i> D.Pageau skrev:
+</I>&gt;<i> &gt; I'm on debian and follow step here but using vdr1.4.7:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; viafb, libcle266mpegdec, ffmpeg, DirectFB, DFB++
+</I>
+I guess you took all from cvs / svn ?
+
+&gt;<i> &gt;
+</I>&gt;<i> &gt; Compile error in vdr &quot;make plugins&quot; .  I'm stuck there.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; # LANG=c make plugins
+</I>&gt;<i> &gt; Plugin softdevice:
+</I>&gt;<i> &gt; make[1]: Entering directory
+</I>&gt;<i> &gt; `/usr/local/src/vdr-1.4.7/PLUGINS/src/softdevice'
+</I>
+&gt;<i> &gt; (declared at /usr/local/include/ffmpeg/avcodec.h:2606)
+</I>&gt;<i> &gt; mpeg2decoder.c: In member function 'int
+</I>&gt;<i> &gt; cMpeg2Decoder::read_packet(uint8_t*, int)':
+</I>&gt;<i> &gt; mpeg2decoder.c:1081: error: request for member 'buffer' in
+</I>&gt;<i> &gt; '((cMpeg2Decoder*)this)-&gt;cMpeg2Decoder::ic-&gt;AVFormatContext::pb', which
+</I>&gt;<i> &gt; is of non-class type 'ByteIOContext*'
+</I>&gt;<i> &gt; mpeg2decoder.c: In member function 'void cMpeg2Decoder::initStream()':
+</I>&gt;<i> &gt; mpeg2decoder.c:1115: error: cannot convert 'ByteIOContext**' to
+</I>&gt;<i> &gt; 'ByteIOContext*' for argument '1' to 'int init_put_byte(ByteIOContext*,
+</I>&gt;<i> &gt; unsigned char*, int, int, void*, int (*)(void*, uint8_t*, int), int
+</I>&gt;<i> &gt; (*)(void*, uint8_t*, int), offset_t (*)(void*, offset_t, int))'
+</I>&gt;<i> &gt; mpeg2decoder.c:1116: error: request for member 'buf_end' in
+</I>&gt;<i> &gt; '((cMpeg2Decoder*)this)-&gt;cMpeg2Decoder::ic-&gt;AVFormatContext::pb', which
+</I>&gt;<i> &gt; is of non-class type 'ByteIOContext*'
+</I>&gt;<i> &gt; mpeg2decoder.c:1117: error: request for member 'is_streamed' in
+</I>&gt;<i> &gt; '((cMpeg2Decoder*)this)-&gt;cMpeg2Decoder::ic-&gt;AVFormatContext::pb', which
+</I>&gt;<i> &gt; is of non-class type 'ByteIOContext*'
+</I>&gt;<i> &gt; mpeg2decoder.c: In member function 'virtual void cMpeg2Decoder::Action()':
+</I>&gt;<i> &gt; mpeg2decoder.c:1155: warning: comparison between signed and unsigned
+</I>&gt;<i> &gt; integer expressions
+</I>&gt;<i> &gt; mpeg2decoder.c: In member function 'void
+</I>&gt;<i> &gt; cMpeg2Decoder::QueuePacket(const AVFormatContext*, AVPacket&amp;, bool)':
+</I>&gt;<i> &gt; mpeg2decoder.c:1215: warning: comparison between signed and unsigned
+</I>&gt;<i> &gt; integer expressions
+</I>
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002966.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+	<LI>Next message: <A HREF="002968.html">[Softdevice-devel] mpeg2decoder.c compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2967">[ date ]</a>
+              <a href="thread.html#2967">[ thread ]</a>
+              <a href="subject.html#2967">[ subject ]</a>
+              <a href="author.html#2967">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060909194514.GA2891%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002406.html">
+   <LINK REL="Next"  HREF="002427.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060909194514.GA2891%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Sat Sep  9 21:45:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002406.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002427.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2424">[ date ]</a>
+              <a href="thread.html#2424">[ thread ]</a>
+              <a href="subject.html#2424">[ subject ]</a>
+              <a href="author.html#2424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Sep 08, 2006 at 09:01:40PM +0100, Alasdair Campbell wrote:
+&gt;<i> 2nd head display is identical, except -vo dfb: is marginally sharper
+</I>&gt;<i> with small white text on black, while -vo dfb:mgatv looks almost
+</I>&gt;<i> anti-aliased. The difference is slight, but exists.
+</I>
+Thank you! My mistake was to plug the monitor to the 1st head and to
+use a different directfbrc for -vo dfb and -vo dfb:mgatv.  The directfbrc
+I tried had worked with a VGA monitor on the 1st head.
+
+The first time I tested with your configuration, I got a picture.
+&quot;top&quot; indicated 60% CPU usage, which is slightly more than with
+mgatv.  So, I tried to switch from YUY2 to I420.  The CPU load
+would drop to around 40%, but the video overlay would be all black.
+Switching back to YUY2 did affect CPU usage, but the video overlay
+remained black.  Even rebooting did not help.
+
+In the log, I can see messages like this:
+
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb]: SetParams: failed to set buffermode to back video, reverting to normal
+[dfb] SetParams: action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), result=Not supported!
+Can't configure ScreenLocation. Hope it is Fullscreen
+[surface capabilities] videoSurface: videoonly PixelFormat = 0x00200801
+[dfb] (re)configured 0x00200806
+
+Any ideas?  -vo dfb:mgatv works fine.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002406.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002427.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2424">[ date ]</a>
+              <a href="thread.html#2424">[ thread ]</a>
+              <a href="subject.html#2424">[ subject ]</a>
+              <a href="author.html#2424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

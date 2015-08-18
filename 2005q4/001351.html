@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] directfb g450 field order wrong?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20g450%20field%20order%20wrong%3F&In-Reply-To=%3C434E09C4.9050507%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001347.html">
+   <LINK REL="Next"  HREF="001356.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] directfb g450 field order wrong?</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20directfb%20g450%20field%20order%20wrong%3F&In-Reply-To=%3C434E09C4.9050507%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] directfb g450 field order wrong?">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Thu Oct 13 09:16:20 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001347.html">[Softdevice-devel] directfb g450 field order wrong?
+</A></li>
+        <LI>Next message: <A HREF="001356.html">[Softdevice-devel] [announce] Gentoo ebuilds for several DirectFB projects, 0.9.22 series and current CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1351">[ date ]</a>
+              <a href="thread.html#1351">[ thread ]</a>
+              <a href="subject.html#1351">[ subject ]</a>
+              <a href="author.html#1351">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Malcolm Caldwell wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I have now setup my new vdr box with a matrox g450 and softdevice via
+</I>&gt;<i> directfb using tvout.
+</I>&gt;<i> 
+</I>&gt;<i> After a bit of work, things are working reasonably well.   My only real
+</I>&gt;<i> complaint is that the picture on my tv looks bad.
+</I>&gt;<i> 
+</I>&gt;<i> I am fairly sure that the problem is that the fields are in the wrong
+</I>&gt;<i> order, ie top first vs bottom first issues.  My assumption is based on
+</I>&gt;<i> the fact a) scrolling text has artifacts around the boundaries b)
+</I>&gt;<i> movement especially panning has strange shimmering effects and c) the
+</I>&gt;<i> effect is not evident when I turn on de-interlacing.
+</I>&gt;<i> 
+</I>&gt;<i> While I can just use de-interlacing, this is not an optimal solution: it
+</I>&gt;<i> makes the picture less clear and increases the amount of CPU time
+</I>&gt;<i> required.
+</I>&gt;<i> 
+</I>&gt;<i> Where can I start looking to work out what the problem is?  Is it a
+</I>&gt;<i> softdevice or a directfb issue?
+</I>
+I'd say a settings issue, I had exactly the same problem lately, if the
+aspect ratio is not set correctly in the softdevice setup menu, you get
+this, it's because of the scaling of the picture to different aspect
+ratio than the display's native one (speaking of what DirectFB considers
+that to be). I once set 5:4 and thought the images fits better on my 4:3
+TV, but after switching back to 4:3 the judder has gone...
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001347.html">[Softdevice-devel] directfb g450 field order wrong?
+</A></li>
+	<LI>Next message: <A HREF="001356.html">[Softdevice-devel] [announce] Gentoo ebuilds for several DirectFB projects, 0.9.22 series and current CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1351">[ date ]</a>
+              <a href="thread.html#1351">[ thread ]</a>
+              <a href="subject.html#1351">[ subject ]</a>
+              <a href="author.html#1351">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

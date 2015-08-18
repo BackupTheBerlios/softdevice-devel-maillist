@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and latest DirectFB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20latest%20DirectFB&In-Reply-To=%3C49A4CFC9.3010900%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003214.html">
+   <LINK REL="Next"  HREF="003223.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and latest DirectFB</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20latest%20DirectFB&In-Reply-To=%3C49A4CFC9.3010900%40globall.ru%3E"
+       TITLE="[Softdevice-devel] softdevice and latest DirectFB">bob at globall.ru
+       </A><BR>
+    <I>Wed Feb 25 05:57:45 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003214.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003223.html">[Softdevice-devel] softdevice and latest DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3221">[ date ]</a>
+              <a href="thread.html#3221">[ thread ]</a>
+              <a href="subject.html#3221">[ subject ]</a>
+              <a href="author.html#3221">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I have started to update system on Epia ME6000 and have found out that
+softdevice does not work c DirectFB 1.2.7 and 1.3.0.
+With old snapshot DirectFB-2008-03-04-05-25-11-UTC all works normally.
+It is regression or change API?
+
+vdr-test  / # vdr -Psoftdevice
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] autodetectAspect 0
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 0 lines from bottom
+[setup-softdevice] Cropping 0 columns from left
+[setup-softdevice] cropping mode set to 0 (&#1085;&#1080;&#1095;&#1077;&#1075;&#1086;)
+[setup-softdevice] cropping mode toggle key set to 0 (&#1085;&#1080;&#1095;&#1077;&#1075;&#1086;)
+[setup-softdevice] Cropping 0 columns from right
+[setup-softdevice] Cropping 0 lines from top
+[setup-softdevice] deinterlace method set to 0 &#1085;&#1080;&#1095;&#1077;&#1075;&#1086;
+[setup-softdevice] Expanding 0 columns at left and right
+[setup-softdevice] Expanding 0 columns at top and bottom
+[setup-softdevice] fieldOrderMode: Auto
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to &#1087;&#1089;&#1077;&#1074;&#1076;&#1086;
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (I420)
+[setup-softdevice] preferredField: Both Fields
+[setup-softdevice] preferredFieldMarker: Off
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[setup-softdevice] useAVReadFrame: no
+[softdevice] UseSetSourceRectangle to off
+[softdevice] UseStretchBlitset to off
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 50
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 &#1085;&#1086;&#1088;&#1084;&#1072;&#1083;&#1100;&#1085;&#1099;&#1081;)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3410688)
+21:06:14.0847 I [4893] [dfb] init
+commandline read: vdr
+commandline read: -Psoftdevice
+
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~| DirectFB 1.2.7 |~~~~~~~~~~~~~~~~~~~~~~~~~~
+        (c) 2001-2008  The world wide DirectFB Open Source Community
+        (c) 2000-2004  Convergence (integrated media) GmbH
+      ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2009-02-24 15:30)
+(*) Direct/Thread: Started 'VT Switcher' (4898) [CRITICAL OTHER/OTHER
+0/0] &lt;8388608&gt;...
+(*) Direct/Thread: Started 'Keyboard Input' (4900) [INPUT OTHER/OTHER
+0/0] &lt;8388608&gt;...
+(*) DirectFB/Input: Keyboard 0.9 (directfb.org)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+(*) FBDev/Surface: Allocated 720x576 32 bit RGB32 buffer (index 0) at
+offset 0 and pitch 2880.
+(*) FBDev/Mode: Setting 720x576 RGB32
+(*) FBDev/Mode: Switched to 720x576 (virtual 720x1152) at 32 bit
+(RGB32), pitch 2880
+(*) FBDev/Surface: Allocated 720x576 32 bit RGB32 buffer (index 1) at
+offset 1658880 and pitch 2880.
+[dfb] RAM: 33288192 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Xor
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize
+SrcColorkey DstColorkey Deinterlace
+21:06:14.0985 I [4893] [dfb] Supported video Modes are:
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">872x576 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> 800x600@
+21:06:14.0993 I [4893] [dfb] Enumerating display Layers
+21:06:14.0994 I [4893] [dfb] Configuring CooperativeLevel for OSD
+Layer 0 VIA CLE266 Graphics  Type: graphics
+  Caps: alphachannel brightness contrast opacity saturation src_colorkey
+surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+  Caps: deinterlacing dst_colorkey levels field_parity opacity
+screen_location surface
+21:06:15.0001 I [4893] [dfb] (osdLayer): flags, options, pixelformat:
+0000000f, 00000000 00400c03
+21:06:15.0002 I [4893] [dfb] (osdLayer): width, height:              
+720 576
+21:06:15.0003 I [4893] [dfb] osdLayer has alpha channel
+(*) FBDev/Mode: Setting 720x576 RGB32
+(*) FBDev/Mode: Switched to 720x576 (virtual 720x576) at 32 bit (RGB32),
+pitch 2880
+(*) FBDev/Surface: Allocated 720x576 32 bit RGB32 buffer (index 0) at
+offset 0 and pitch 2880.
+21:06:15.0047 E [4893] [dfb] init
+EXITING:action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig
+ (!!!)  *** WARNING [Application exited without deinitialization of
+DirectFB!] *** [core.c:859 in dfb_core_dei
+ (!!!)  *** WARNING [still objects in 'Layer Region Pool'] ***
+[object.c:241 in fusion_object_pool_destroy()]
+ (!!!)  *** WARNING [still objects in 'Layer Context Pool'] ***
+[object.c:241 in fusion_object_pool_destroy()]
+ (!!!)  *** WARNING [still objects in 'Surface Pool'] *** [object.c:241
+in fusion_object_pool_destroy()]
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003214.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003223.html">[Softdevice-devel] softdevice and latest DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3221">[ date ]</a>
+              <a href="thread.html#3221">[ thread ]</a>
+              <a href="subject.html#3221">[ subject ]</a>
+              <a href="author.html#3221">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

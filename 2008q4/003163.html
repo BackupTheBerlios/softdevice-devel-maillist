@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] the running X letter in console
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20the%20running%20X%20letter%20in%20console&In-Reply-To=%3C1224234480.48f855f00bc19%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003162.html">
+   <LINK REL="Next"  HREF="003164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] the running X letter in console</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20the%20running%20X%20letter%20in%20console&In-Reply-To=%3C1224234480.48f855f00bc19%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] the running X letter in console">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Oct 17 11:08:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003162.html">[Softdevice-devel] the running X letter in console
+</A></li>
+        <LI>Next message: <A HREF="003164.html">[Softdevice-devel] [Patch #2578] fix build with latest libavformat
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3163">[ date ]</a>
+              <a href="thread.html#3163">[ thread ]</a>
+              <a href="subject.html#3163">[ subject ]</a>
+              <a href="author.html#3163">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Goga777:
+
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> sometimes I can see in console the running X letter
+</I>&gt;<i>
+</I>&gt;<i> #20:45:56.0335 D [9036] [VideoOut] video now synced (11 - 187)
+</I>&gt;<i> XXXXXXXXXXXXXXXXXXXXXXXXXXXX20:46:03.0313 D [9037] [softdevice-audio]: Xrun (at least 9206,584 ms
+</I>&gt;<i> long)
+</I>&gt;<i> X20:46:03.0516 D [9037] [softdevice-audio]: Xrun (at least 174,541 ms long)
+</I>&gt;<i> X20:46:03.0716 D [9037] [softdevice-audio]: Xrun (at least 173,074 ms long)
+</I>&gt;<i> X20:46:03.0921 D [9037] [softdevice-audio]: Xrun (at least 174,845 ms long)
+</I>
+&gt;<i>
+</I>&gt;<i> what's it ?
+</I>&gt;<i>
+</I>
+The X chars symbolize dropped frames to keep sync (file video.c line 470).
+
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003162.html">[Softdevice-devel] the running X letter in console
+</A></li>
+	<LI>Next message: <A HREF="003164.html">[Softdevice-devel] [Patch #2578] fix build with latest libavformat
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3163">[ date ]</a>
+              <a href="thread.html#3163">[ thread ]</a>
+              <a href="subject.html#3163">[ subject ]</a>
+              <a href="author.html#3163">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

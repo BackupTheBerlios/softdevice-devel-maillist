@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] building on mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C2510A7C7-DA0A-4267-B095-2FD68D5EE0AF%40pobox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002849.html">
+   <LINK REL="Next"  HREF="002846.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] building on mac</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20building%20on%20mac&In-Reply-To=%3C2510A7C7-DA0A-4267-B095-2FD68D5EE0AF%40pobox.com%3E"
+       TITLE="[Softdevice-devel] building on mac">torgeir at pobox.com
+       </A><BR>
+    <I>Thu Apr 12 14:44:36 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002849.html">[Softdevice-devel] building on mac
+</A></li>
+        <LI>Next message: <A HREF="002846.html">[Softdevice-devel] Softplay: DeSync in DIVX with 23.976 fps
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2852">[ date ]</a>
+              <a href="thread.html#2852">[ thread ]</a>
+              <a href="subject.html#2852">[ subject ]</a>
+              <a href="author.html#2852">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 11 Apr 2007, at 23:12, Stefan Lucke wrote:
+
+&gt;<i> On Wednesday 04 April 2007 19:06, Torgeir Veimo wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 4 Apr 2007, at 17:27, Martin Wache wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Torgeir Veimo schrieb:
+</I>&gt;&gt;&gt;&gt;&gt;<i> Ok, that works. But I got an endian issue I guess. Are you
+</I>&gt;&gt;&gt;&gt;&gt;<i> working on
+</I>&gt;&gt;&gt;&gt;&gt;<i> a ppc mac?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Yes :-)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Here's a screenshot;
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I had a chance to try it on an intel mac a few weeks ago, I didn't
+</I>&gt;&gt;&gt;<i> have
+</I>&gt;&gt;&gt;<i> the time to fix those problems correctly, but this hack fixes the
+</I>&gt;&gt;&gt;<i> problems...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Bye,
+</I>&gt;&gt;&gt;<i> Martin
+</I>&gt;&gt;&gt;<i> Index: utils.c
+</I>&gt;&gt;&gt;<i> ===================================================================
+</I>&gt;&gt;&gt;<i> RCS file: /cvsroot/softdevice/softdevice/utils.c,v
+</I>&gt;&gt;&gt;<i> retrieving revision 1.25
+</I>&gt;&gt;&gt;<i> diff -u -r1.25 utils.c
+</I>&gt;&gt;&gt;<i> --- utils.c	15 Jan 2007 19:35:13 -0000	1.25
+</I>&gt;&gt;&gt;<i> +++ utils.c	4 Apr 2007 16:24:06 -0000
+</I>&gt;&gt;&gt;<i> @@ -172,9 +172,13 @@
+</I>&gt;&gt;&gt;<i>     }
+</I>&gt;&gt;&gt;<i>  #endif
+</I>&gt;&gt;&gt;<i>     for ( ; i&gt;=2; i-=2 ) {
+</I>&gt;&gt;&gt;<i> +#if 1
+</I>&gt;&gt;&gt;<i> +      *((uint32_t *)dest1) = (yc1[1] &lt;&lt; 24)+ (vc[0] &lt;&lt; 16) + (yc1
+</I>&gt;&gt;&gt;<i> [0] &lt;&lt; 8) + (uc[0] &lt;&lt; 0);
+</I>&gt;&gt;&gt;<i> +      *((uint32_t *)dest2) = (yc2[1] &lt;&lt; 24)+ (vc[0] &lt;&lt; 16) + (yc2
+</I>&gt;&gt;&gt;<i> [0] &lt;&lt; 8) + (uc[0] &lt;&lt; 0);
+</I>&gt;&gt;&gt;<i> +#else
+</I>&gt;<i>
+</I>&gt;<i> Which one needs this: PowerMac or IntelMac ?
+</I>
+IntelMac.
+
+&gt;<i> Are you using the OpenGL output ?
+</I>
+Yes. It only works with the McVdrClient shm client. Martin indicated  
+that there are threading problems preventing normal usage.
+
+&gt;<i> Maybe that using GL_UNSIGNED_SHORT_8_8_REV_APPLE instead of
+</I>&gt;<i> GL_UNSIGNED_SHORT_8_8_APPLE has the same effect (line 747 video- 
+</I>&gt;<i> quartz.c).
+</I>
+Yes that works as well. It would be nice if configure handled these  
+things automagically.
+
+&gt;<i> OT: How much does the develoment enviroment for apple costs ?
+</I>
+It's free. My work supplied my macbook pro, which is the best machine  
+I've ever had, except for the missing home/end/pgup/pgdn keys..
+
+-- 
+Torgeir Veimo
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002849.html">[Softdevice-devel] building on mac
+</A></li>
+	<LI>Next message: <A HREF="002846.html">[Softdevice-devel] Softplay: DeSync in DIVX with 23.976 fps
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2852">[ date ]</a>
+              <a href="thread.html#2852">[ thread ]</a>
+              <a href="subject.html#2852">[ subject ]</a>
+              <a href="author.html#2852">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

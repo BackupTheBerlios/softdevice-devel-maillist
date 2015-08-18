@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] WORC5 works
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20WORC5%20works&In-Reply-To=%3C20050725103049.GA5588%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001049.html">
+   <LINK REL="Next"  HREF="001031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] WORC5 works</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20WORC5%20works&In-Reply-To=%3C20050725103049.GA5588%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] WORC5 works">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Jul 25 12:30:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001049.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+        <LI>Next message: <A HREF="001031.html">[Softdevice-devel] WORC5 works
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1030">[ date ]</a>
+              <a href="thread.html#1030">[ thread ]</a>
+              <a href="subject.html#1030">[ subject ]</a>
+              <a href="author.html#1030">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I released the source code and documentation of my Wake-on-RC5 project.
+This will allow me to power on my computer from the bundled remote
+control unit of my Hauppauge Nova-T PCI 90002 card.
+
+See <A HREF="http://www.funet.fi/~msmakela/electronics/worc5/">http://www.funet.fi/~msmakela/electronics/worc5/</A> if you are
+interested.
+
+My runvdr script will rewrite the softdevice.Suspended setting based on
+dmesg output from the modified cx88 driver.  Ugly, but it works.
+
+I could not figure out how to make vdr enter non-interactive mode
+whenever softdevice.Suspended changes, so that VDR would shut down
+automatically when a timed recording ends after output has been
+suspended by the user.  I'll try to convince VDR developers to introduce
+a Suspended flag for cDevice and VDR.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001049.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+	<LI>Next message: <A HREF="001031.html">[Softdevice-devel] WORC5 works
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1030">[ date ]</a>
+              <a href="thread.html#1030">[ thread ]</a>
+              <a href="subject.html#1030">[ subject ]</a>
+              <a href="author.html#1030">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

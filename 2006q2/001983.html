@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Patch: cle266 hardware decoding...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605080957.25886.laz%40club-burniston.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001977.html">
+   <LINK REL="Next"  HREF="001987.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Patch: cle266 hardware decoding...</H1>
+    <B>Laz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Patch%3A%20cle266%20hardware%20decoding...&In-Reply-To=%3C200605080957.25886.laz%40club-burniston.co.uk%3E"
+       TITLE="[Softdevice-devel] Patch: cle266 hardware decoding...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Mon May  8 10:57:25 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001977.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+        <LI>Next message: <A HREF="001987.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1983">[ date ]</a>
+              <a href="thread.html#1983">[ thread ]</a>
+              <a href="subject.html#1983">[ subject ]</a>
+              <a href="author.html#1983">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 07 May 2006 14:08, Stefan Lucke wrote:
+&gt;<i> On Mittwoch 03 Mai 2006 10:51, Laz wrote:
+</I>&gt;<i> &gt; I've had a private email from Rolf Ahrenberg who got this working and
+</I>&gt;<i> &gt; had the same quarter-sized image. However, he tells me that setting
+</I>&gt;<i> &gt; &quot;context-&gt;width = 720; context-&gt;height = 576;&quot; around where the
+</I>&gt;<i> &gt; decoder is called gives a full-screen picture.
+</I>&gt;<i>
+</I>&gt;<i> They should be available in CLE266MPEGDecoderState.width ( and height).
+</I>&gt;<i> Hopefully it is accessible, should be as it is not declared private.
+</I>
+Ah yes: didn't think of that at the time! I should probably add the 'which 
+buffer contains the decoded frame' variable to that structure to make it 
+a bit more self-contained.
+
+&gt;<i> But some information for aspect calculation and interlaced/progressive
+</I>&gt;<i> detection is taken from the decoded frame (AVFrame).
+</I>
+I thought it might be a bit more complicated. Does any of the A-V sync 
+stuff come from the decoding or is all of that from the libavformat bit?
+
+Cheers,
+
+Laz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001977.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+	<LI>Next message: <A HREF="001987.html">[Softdevice-devel] Patch: cle266 hardware decoding...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1983">[ date ]</a>
+              <a href="thread.html#1983">[ thread ]</a>
+              <a href="subject.html#1983">[ subject ]</a>
+              <a href="author.html#1983">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

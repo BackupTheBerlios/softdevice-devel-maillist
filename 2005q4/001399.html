@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Matrox G450 DirectFB output...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20DirectFB%20output...&In-Reply-To=%3C1130246210.14184.9.camel%40laser2.york.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001395.html">
+   <LINK REL="Next"  HREF="001401.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Matrox G450 DirectFB output...</H1>
+    <B>Laurence Abbott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Matrox%20G450%20DirectFB%20output...&In-Reply-To=%3C1130246210.14184.9.camel%40laser2.york.ac.uk%3E"
+       TITLE="[Softdevice-devel] Matrox G450 DirectFB output...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Tue Oct 25 15:16:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001395.html">[Softdevice-devel] Matrox G450 DirectFB output setup
+</A></li>
+        <LI>Next message: <A HREF="001401.html">[Softdevice-devel] cropmode toggle key handling patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1399">[ date ]</a>
+              <a href="thread.html#1399">[ thread ]</a>
+              <a href="subject.html#1399">[ subject ]</a>
+              <a href="author.html#1399">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I sent a much longer email to the list last night but it seems to have
+disappeared down a big black hole!
+
+I am setting up softdevice with a Matrox G450 dual-head card which I was
+hoping would be much simpler than the Epia system I've also been working
+on.
+
+I can get df_xine and mplayer to output to my TV using a home-made
+HD15-SCART RGB cable (although that needs modifying...). It was quite a
+decent picture with no interlace artifacts or anything like that, so my
+fb.modes and directfbrc can't be far off!
+
+When I try to start vdr-1.3.32 with softdevice-0.2.0, all looks fine in
+the output, i.e. it finds the CRTC2 layer for both OSD and video, and
+gets as far as outputting:
+
+cSoftDevice::MakePrimaryDevice
+
+and then it stops and just sits there presumably waiting for something.
+
+After reading back over archives of DirectFB and softdevice mailing
+lists, I found mention where someone had a similar problem and it was
+solved by setting the pixel format to YUY2. Looking at the source for
+softdevice, the pixel format should be forced to YUY2 when &quot;-vo
+dfb:mgatv&quot; is used.
+
+I am not getting far enough to get any softdevice.x bits in my
+setup.conf but I will try copying over that chunk from my Epia box and
+force the pixel format to YUY2 to see if that makes any difference!
+
+Can anyone shed any light on this?
+
+I'm also losing control of the keyboard when I run a DirectFB
+application, meaning I have to ssh in and kill df_xine after it has
+finished playback or vdr once it is sitting there. This is probably a
+separate issue though!
+
+Cheers,
+
+Laz
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001395.html">[Softdevice-devel] Matrox G450 DirectFB output setup
+</A></li>
+	<LI>Next message: <A HREF="001401.html">[Softdevice-devel] cropmode toggle key handling patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1399">[ date ]</a>
+              <a href="thread.html#1399">[ thread ]</a>
+              <a href="subject.html#1399">[ subject ]</a>
+              <a href="author.html#1399">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Profiling tools
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Profiling%20tools&In-Reply-To=%3C4252F682.3040905%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000442.html">
+   <LINK REL="Next"  HREF="000448.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Profiling tools</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Profiling%20tools&In-Reply-To=%3C4252F682.3040905%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Profiling tools">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr  5 22:35:14 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000442.html">[Softdevice-devel] Profiling tools
+</A></li>
+        <LI>Next message: <A HREF="000448.html">[Softdevice-devel] Profiling tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#446">[ date ]</a>
+              <a href="thread.html#446">[ thread ]</a>
+              <a href="subject.html#446">[ subject ]</a>
+              <a href="author.html#446">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> On Tue, Apr 05, 2005 at 06:11:32PM +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i>Finally, here is the list for libvdr-softdevice:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>samples  %        symbol name
+</I>&gt;&gt;&gt;<i>2986     26.1219  cVideoStreamDecoder::DecodePacket(AVPacket*)
+</I>&gt;&gt;&gt;<i>1320     11.5475  cStreamDecoder::Action()
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Actualy this is quite interessting. Action() should do nothing except 
+</I>&gt;&gt;<i>waiting for new packets and call DecodePacket() for each packet. I would 
+</I>&gt;&gt;<i>not expect it use so much time. Sleeping and the call to DecodePacket 
+</I>&gt;&gt;<i>should not count, so where does it spend the time? Maybe the mutex... I 
+</I>&gt;&gt;<i>guess playing around in this function may give some improvements..
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> The opannotate command will show the samples for individual machine
+</I>&gt;<i> instructions.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>I never used oprofile before, only gprof so I don't now exactly what 
+</I>&gt;&gt;<i>these numbers mean. What is samples exactly, I asume it is the overall 
+</I>&gt;&gt;<i>cpu time spend in a function? Is there a statistic like numbers of calls 
+</I>&gt;&gt;<i>and time consumed per call?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Please have a look at <A HREF="http://oprofile.sourceforge.net/.">http://oprofile.sourceforge.net/.</A>  There are some
+</I>&gt;<i> performance counters in every modern processor, and OProfile makes use of
+</I>&gt;<i> them.  When you start it, you specify the counter(s) to use and a sampling
+</I>&gt;<i> interval (the lower the number, the more frequently the samples will be
+</I>&gt;<i> taken).  An NMI interrupt handler saves the samples in a buffer, and the
+</I>&gt;<i> oprofile daemon collects the statistics and writes them out to a file.  This
+</I>&gt;<i> causes a few percent overhead, and no instrumentation of the running programs
+</I>&gt;<i> is necessary.  You can even profile kernel code, and you can start and stop
+</I>&gt;<i> collecting samples any time you want.
+</I>&gt;<i> 
+</I>&gt;<i> Yes, the more samples, the more resources are consumed at that location.
+</I>&gt;<i> CPU_CLK_UNHALTED measures CPU consumption.  I've also profiled some code
+</I>&gt;<i> (not VDR) using DCU_MISS_OUTSTANDING, which measures data cache misses
+</I>&gt;<i> (useful if you want to fine-tune things with __builtin_prefetch()).
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>You can disable USE_SUBPLUGINS in the softdevice makefile and you will 
+</I>&gt;&gt;<i>get at least one library for the softdevice.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Thanks.  I also see a dlopen() call in plugin.c.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i>If you want to play with oprofile yourself, be sure to enable the following
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>I guess if I find the time I will try gprof. I know it much better and 
+</I>&gt;&gt;<i>we can compare the results...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Of course, this depends on what you mean by &quot;better&quot;.  Oh, sorry, I misread
+</I>&gt;<i> you: you didn't say &quot;I know it's much better&quot;. :-)
+</I>I did not want to say that gprof is better. But I like the idea to have 
+two tools and to be able to compare the results
+&gt;<i> 
+</I>&gt;<i> I've used gprof years ago when there was no free software tool like oprofile.
+</I>&gt;<i> (I didn't have access to Intel's VTune or DCPI for Digital UNIX.)
+</I>&gt;<i> I have understood that gprof does not work with multi-threaded programs, and
+</I>There is a wrapper around pthread library which helps to get around this 
+problem.
+&gt;<i> I think you will have hard time using it in a dlopen()ed library.  Well,
+</I>&gt;<i> actually the dlopen() might not be a problem, as long as all code is compiled
+</I>&gt;<i> with gcc -pg.  For my doctoral thesis work, I wrote a program that generates
+</I>&gt;<i> some C code on the fly and executes it.  I can't remember, but it could be
+</I>&gt;<i> that it might actually have worked on the dlopen()ed code as well.
+</I>I just hacked vdr to link the softdevice staticaly...
+
+&gt;<i> 
+</I>&gt;<i> If you want to get meaningful statistics from gprof, you will have to disable
+</I>&gt;<i> inlining, which degrades performance further.  Also, you will get junk from
+</I>&gt;<i> the initialization and cleanup phases.
+</I>Sure gprof is not perfect ;-)
+&gt;<i> 
+</I>&gt;<i> With oprofile, you can choose to collect samples for the interesting part
+</I>&gt;<i> only, at a performance penalty of a few percent.  Already a run of 10 seconds
+</I>&gt;<i> gives pretty good numbers.  The longer you run it, the more accurate it gets
+</I>&gt;<i> due to the statistical nature of oprofile.  I'd let it collect samples for
+</I>&gt;<i> a couple of minutes to get a pretty accurate view.  But isn't gprof somehow
+</I>&gt;<i> statistical as well?
+</I>Yes, that's right the mechanism to collect the running times is also 
+statistical ( and I guess since it is not done by the kernel less 
+precise). But with gprof I get accurate function call acounting.
+For instance the the GetReltime function seems to use much time. As long 
+as I don't know how often it is called I don't know if a single call 
+uses to much time or if we just call it to often.
+
+&gt;<i> 
+</I>&gt;<i> Sure, and please tell me if you got it to work.  I have never tried to use
+</I>&gt;<i> gprof on a multi-threaded program.
+</I>Yes, I have it running but I used some really dirty hacks. I changed 
+plugin.c not to dlopen any plugins, and instead of invoking creator() I 
+just create a new cPluginSoftdevice. Then link all softdevice files 
+staticaly and dependency to the vdr. Of course this hacked version can't 
+use any other plugins than the softdevice...
+
+The results are somehow similar to yours... I don't want to post a 
+profiling now since it also contains all vdr functions and is realy huge.
+And I found the reason for the Action() mystery: it seems that when one 
+calls usleep() with smaller values than 10000 it waits in a busy loop. I 
+thought it would just schedule the smallest possible time... So I will 
+replace all usleeps &gt; 10000, there are a few...
+The GetRelTime function is just called very often and thus appears to 
+use too much time.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000442.html">[Softdevice-devel] Profiling tools
+</A></li>
+	<LI>Next message: <A HREF="000448.html">[Softdevice-devel] Profiling tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#446">[ date ]</a>
+              <a href="thread.html#446">[ thread ]</a>
+              <a href="subject.html#446">[ subject ]</a>
+              <a href="author.html#446">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

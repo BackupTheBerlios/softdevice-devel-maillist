@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C42FFB31D.8010805%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001110.html">
+   <LINK REL="Next"  HREF="001112.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C42FFB31D.8010805%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Aug 14 23:09:49 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001110.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001112.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1111">[ date ]</a>
+              <a href="thread.html#1111">[ thread ]</a>
+              <a href="subject.html#1111">[ subject ]</a>
+              <a href="author.html#1111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Patrick Boettcher schrieb:
+&gt;<i> Hi Martin,
+</I>&gt;<i> 
+</I>&gt;<i> I think as I have the same problem I can produce the the debug-log as
+</I>&gt;<i> well. See the attached bzip2-compressed file. It is done while watching
+</I>&gt;<i> Das Erste two minutes ago (DVB-T Berlin).
+</I>&gt;<i> 
+</I>&gt;<i> I hope this helps.
+</I>Yes it helps, thank you!
+
+audioPTS[7208]:delay 0 audio pts offset 66453061 pts 478705143
+audioPTS[7253]:new chunk 240
+audioPTS[7253]:delay 0 audio pts offset 66453271 pts 478705383
+audioPTS[7268]:new chunk 240
+audioPTS[7268]:delay 0 audio pts offset 66453181 pts 478705623
+audioPTS[7297]:new chunk 240
+audioPTS[7297]:delay 0 audio pts offset 66453231 pts 478705863
+audioPTS[7311]:new chunk 240
+audioPTS[7311]:delay 0 audio pts offset 66453127 pts 478706103
+
+The audio delay is always zero, no wonder that there are problems with
+the A-V sync. The audio delay is the time the actual playback is behind
+the sound buffer top.
+We get this value almost directly from the alsa driver, did you change
+something in the alsa setup recently? A new kernel, or alsa libraries?
+Which driver are you useing?
+
+I wonder how the A-V sync could be okay before without a propoper audio
+delay... Maybe my last change just made this problem more important. Did
+you try to revert back to softdevice-0.1.2 and check if the A-V sync is
+better there?
+
+It would also be nice to know if Marco has really the same problem, or
+just the same symptons.
+
+Thank you very much,
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001110.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001112.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1111">[ date ]</a>
+              <a href="thread.html#1111">[ thread ]</a>
+              <a href="subject.html#1111">[ subject ]</a>
+              <a href="author.html#1111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

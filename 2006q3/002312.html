@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD oddities with softdevice/xv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20oddities%20with%20softdevice/xv&In-Reply-To=%3C44D8B767.4040402%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002310.html">
+   <LINK REL="Next"  HREF="002316.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD oddities with softdevice/xv</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20oddities%20with%20softdevice/xv&In-Reply-To=%3C44D8B767.4040402%40gmx.net%3E"
+       TITLE="[Softdevice-devel] OSD oddities with softdevice/xv">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Aug  8 18:10:15 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002310.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+        <LI>Next message: <A HREF="002316.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2312">[ date ]</a>
+              <a href="thread.html#2312">[ thread ]</a>
+              <a href="subject.html#2312">[ subject ]</a>
+              <a href="author.html#2312">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Chris Elsworth schrieb:
+&gt;<i> Hello!
+</I>&gt;<i> 
+</I>&gt;<i> I am using softdevice to render my pictures/OSD via an NVidia card
+</I>&gt;<i> which is hooked up via SVideo tv out.
+</I>&gt;<i> 
+</I>&gt;<i> For the most part, it works wonderfully - for this I thank the authors
+</I>&gt;<i> very much :)
+</I>&gt;<i> 
+</I>&gt;<i> I have a couple of small oddities which these screenshots show:
+</I>&gt;<i> 
+</I>&gt;<i> firstly a normal shot - this is how it should look:
+</I>&gt;<i> <A HREF="http://spork.qfe3.net/~chris/vdr/snapshot1.png">http://spork.qfe3.net/~chris/vdr/snapshot1.png</A>
+</I>&gt;<i> 
+</I>&gt;<i> this is a mis-coloured OSD, it's pink:
+</I>&gt;<i> <A HREF="http://spork.qfe3.net/~chris/vdr/snapshot2.png">http://spork.qfe3.net/~chris/vdr/snapshot2.png</A>
+</I>&gt;<i> 
+</I>I get an &quot;404 Not Found&quot; with your links. Can you please upload the
+pictures again or send updated links?
+
+&gt;<i> As far as I can tell, the OSD goes pink when the resolution of the
+</I>&gt;<i> broadcast goes below 640x480. Sometimes, if I leave some part of OSD
+</I>&gt;<i> on screen without touching it for a while, it will flick from being
+</I>&gt;<i> correct to being pink, and back again, as adverts come and go, at
+</I>&gt;<i> different resolutions.  Does anyone have any idea why this might be
+</I>&gt;<i> happening? I'd be grateful for any suggestions. (this happens with
+</I>&gt;<i> 0.2.3 and a CVS checkout of a few minutes ago).
+</I>&gt;<i>
+</I>That makes me think that maybe the there is a bug in the scaling code. I
+fixed a bug which had similar consequences a few weeks ago, are you sure
+that you recompiled the softdevice correctly when you used the CVS version?
+On the other hand there have been  reports from nvidia users who reported
+similar problems, maybe it is somehow nvidia related.
+I never was able to reproduce these problems ( I don't own an nvidia
+card), and it is difficult to debug these problems if I don't see them.
+Is the flicking from correct to pink reproducable in a recording? It
+would be nice to have a short sequence which shows the problems on your
+setup which I could test on my machine.
+
+
+&gt;<i> Secondly I have an odd problem with windows wrapping:
+</I>&gt;<i> <A HREF="http://spork.qfe3.net/~chris/vdr/snapshot3.png">http://spork.qfe3.net/~chris/vdr/snapshot3.png</A>
+</I>&gt;<i> 
+</I>That link is also broken...
+The funny thing is both femon and osdteletext work nice on my setup.
+Which vdr version are you using?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002310.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+	<LI>Next message: <A HREF="002316.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2312">[ date ]</a>
+              <a href="thread.html#2312">[ thread ]</a>
+              <a href="subject.html#2312">[ subject ]</a>
+              <a href="author.html#2312">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

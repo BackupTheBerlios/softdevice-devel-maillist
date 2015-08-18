@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Strange compile error in SoftOsd.c
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C200602111927.14992.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001742.html">
+   <LINK REL="Next"  HREF="001744.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Strange compile error in SoftOsd.c</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C200602111927.14992.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Strange compile error in SoftOsd.c">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Feb 11 19:27:14 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001742.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+        <LI>Next message: <A HREF="001744.html">[Softdevice-devel] DFB Matrox Hardware Deinterlace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1743">[ date ]</a>
+              <a href="thread.html#1743">[ thread ]</a>
+              <a href="subject.html#1743">[ subject ]</a>
+              <a href="author.html#1743">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 11. Februar 2006 18:04, Martin Wache wrote:
+&gt;<i> Martin Wache schrieb:
+</I>&gt;<i> &gt; Stefan Lucke schrieb:
+</I>&gt;<i> &gt;&gt; Hi,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Martin I guess the following change is aquivalent:
+</I>&gt;<i> &gt;&gt; Index: SoftOsd.c
+</I>&gt;<i> &gt;&gt; ===================================================================
+</I>&gt;<i> &gt;&gt; RCS file: /cvsroot/softdevice/softdevice/SoftOsd.c,v
+</I>&gt;<i> &gt;&gt; retrieving revision 1.6
+</I>&gt;<i> &gt;&gt; diff -b -B -U3 -r1.6 SoftOsd.c
+</I>&gt;<i> &gt;&gt; --- SoftOsd.c   4 Feb 2006 10:05:09 -0000       1.6
+</I>&gt;<i> &gt;&gt; +++ SoftOsd.c   11 Feb 2006 15:25:18 -0000
+</I>&gt;<i> &gt;&gt; @@ -1347,9 +1347,7 @@
+</I>&gt;<i> &gt;&gt;          int16_t g2=0;
+</I>&gt;<i> &gt;&gt;          int16_t r2=0;
+</I>&gt;<i> &gt;&gt;  #else
+</I>&gt;<i> &gt;&gt; -        __asm__(
+</I>&gt;<i> &gt;&gt; -                 &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+</I>&gt;<i> &gt;&gt; -                 : :   );
+</I>&gt;<i> &gt;&gt; +        pxor_r2r (mm7,mm7);
+</I>&gt;<i> &gt;&gt;  #endif
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> 
+</I>&gt;<i> Ok, I think this is the best solution:
+</I>&gt;<i>         __asm__(
+</I>&gt;<i>                  &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+</I>&gt;<i>                   : : : &quot;memory&quot;  );
+</I>&gt;<i> 
+</I>&gt;<i> It just adds memory to the clobber list, which is not entirely correct,
+</I>&gt;<i> but it should also not be wrong. And since it is at the beginning of the
+</I>&gt;<i> function there should not be a speed disadvantage with this solutions.
+</I>
+So I'll stick to this version, as this compiles for both gcc 2.95.3
+and 3.3.1 . Luckily gcc and g++ report the same version numbers.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001742.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+	<LI>Next message: <A HREF="001744.html">[Softdevice-devel] DFB Matrox Hardware Deinterlace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1743">[ date ]</a>
+              <a href="thread.html#1743">[ thread ]</a>
+              <a href="subject.html#1743">[ subject ]</a>
+              <a href="author.html#1743">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

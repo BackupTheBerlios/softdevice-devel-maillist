@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Comparing mgatv, vga(yuy2) and vga(i420)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Comparing%20mgatv%2C%20vga%28yuy2%29%20and%20vga%28i420%29&In-Reply-To=%3C20060119162515.GC6778%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001695.html">
+   <LINK REL="Next"  HREF="001696.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Comparing mgatv, vga(yuy2) and vga(i420)</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Comparing%20mgatv%2C%20vga%28yuy2%29%20and%20vga%28i420%29&In-Reply-To=%3C20060119162515.GC6778%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Comparing mgatv, vga(yuy2) and vga(i420)">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Jan 19 17:25:15 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001695.html">[Softdevice-devel] -vo shm: Problems with hue and osd
+</A></li>
+        <LI>Next message: <A HREF="001696.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1693">[ date ]</a>
+              <a href="thread.html#1693">[ thread ]</a>
+              <a href="subject.html#1693">[ subject ]</a>
+              <a href="author.html#1693">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Out of interest, I profiled -vo dfb:mgatv and DirectFB VGA output on
+PixelFormat 0 and 2 (I420 and YUY2, I believe).
+
+The performance of dfb:mgatv was very close to that of VGA on YUY2.
+There were very few differences in the order of functions or the
+relative percentages displayed by &quot;opreport -l libvga-softdevice&quot;.
+Here's the big picture (opreport --global-percent):
+
+mgatv:
+    91145 66.7216 libvdr-softdevice.so.1.3.37
+    13114  9.5999 vmlinux
+    12955  9.4835 libdirectfb_matrox.so
+     5028  3.6807 oprofiled
+     4397  3.2188 vdr
+     4083  2.9889 libc-2.3.5.so
+
+VGA(YUY2):
+    91743 65.2103 libvdr-softdevice.so.1.3.37
+    15048 10.6960 libdirectfb_matrox.so
+    13762  9.7819 vmlinux
+     5212  3.7047 oprofiled
+     4635  3.2945 vdr
+     4166  2.9612 libc-2.3.5.so
+
+As expected, VGA(I420) was a little faster.  However, here we see an
+increase in libc processor usage:
+
+    71276 58.0925 libvdr-softdevice.so.1.3.37
+    23271 18.9667 vmlinux
+    13273 10.8180 libc-2.3.5.so
+     5016  4.0882 vdr
+     4296  3.5014 oprofiled
+...
+       42  0.0342 libdirectfb_matrox.so
+
+Any idea why there are so many samples in libc?  /lib/tls/libc-2.3.5.so
+lacks debugging symbols.  I guess I'll have to get a debug build of libc.
+
+For libdirectfb_matrox.so, the answer is here:
+
+samples  %        symbol name
+14977    99.5282  matroxEngineSync
+
+Any ideas why this is called on YUY2 but not on I420?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001695.html">[Softdevice-devel] -vo shm: Problems with hue and osd
+</A></li>
+	<LI>Next message: <A HREF="001696.html">[Softdevice-devel] Save 10% CPU by sleeping before IDirectFBSurface::Flip()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1693">[ date ]</a>
+              <a href="thread.html#1693">[ thread ]</a>
+              <a href="subject.html#1693">[ subject ]</a>
+              <a href="author.html#1693">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

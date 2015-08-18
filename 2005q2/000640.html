@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay : Bugs/features
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20%3A%20Bugs/features&In-Reply-To=%3C4280DE14.7040704%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000630.html">
+   <LINK REL="Next"  HREF="000636.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay : Bugs/features</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20%3A%20Bugs/features&In-Reply-To=%3C4280DE14.7040704%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softplay : Bugs/features">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue May 10 18:15:16 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000630.html">[Softdevice-devel] Softplay : Bugs/features
+</A></li>
+        <LI>Next message: <A HREF="000636.html">softplay: key navigation (WAS:[Softdevice-devel] softplay features / keys)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#640">[ date ]</a>
+              <a href="thread.html#640">[ thread ]</a>
+              <a href="subject.html#640">[ subject ]</a>
+              <a href="author.html#640">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marius van den Beek wrote:
+&gt;<i> Hello
+</I>&gt;<i> 
+</I>&gt;<i> I've tried the new softplay-plugin and it works
+</I>&gt;<i> really well for the recordings I converted to divx,
+</I>&gt;<i> but some divx and mpg's I downloaded are distorted
+</I>&gt;<i> or do not show picture at all.
+</I>&gt;<i> I don't know if you already noticed that,
+</I>&gt;<i> maybe I can send you a sample.
+</I>The decoding of the streams is done by libavformat and libavcodec, so I 
+don't have much influence on how streams are decoded. Sofplay just calls 
+libavformat and hands the packets to the softdevice which decodes the 
+packets using libavcodec.
+So if some files are not decoded properly this is most likely because of 
+some limitation in libavcodec or libavformat. To check this you can try 
+to play the streams with ffplay (the player included in ffmpeg). If 
+ffplay plays these files without problems, but softplay does not, then 
+it is really a problem of softplay or the softdevice. Currently I know 
+only one limitation, softplay is only capable of playing YUV420 encoded 
+files, but since allmost all codecs (specially mpegXX and divx) use this 
+pixel format I don't think that this is the problem.
+Softplay prints a short description of the streams on the console when 
+playing files, what does this description say?
+
+&gt;<i> As to the features I think the suggestion from
+</I>&gt;<i> Nicolas Huillard regarding the navigation is a good idea,
+</I>&gt;<i> important to me seems the possibility to switch the audio-streams
+</I>&gt;<i> (of avi's).
+</I>Yes, I forgot to mention that important feature, it is planned as soon 
+as the playlist support has stabelized. Thank you for reminding me!
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000630.html">[Softdevice-devel] Softplay : Bugs/features
+</A></li>
+	<LI>Next message: <A HREF="000636.html">softplay: key navigation (WAS:[Softdevice-devel] softplay features / keys)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#640">[ date ]</a>
+              <a href="thread.html#640">[ thread ]</a>
+              <a href="subject.html#640">[ subject ]</a>
+              <a href="author.html#640">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

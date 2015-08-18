@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3CPine.LNX.4.61.0507011503380.6190%40pub6.ifh.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000914.html">
+   <LINK REL="Next"  HREF="000916.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Patrick Boettcher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3CPine.LNX.4.61.0507011503380.6190%40pub6.ifh.de%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">patrick.boettcher at desy.de
+       </A><BR>
+    <I>Fri Jul  1 15:09:44 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000914.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000916.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#915">[ date ]</a>
+              <a href="thread.html#915">[ thread ]</a>
+              <a href="subject.html#915">[ subject ]</a>
+              <a href="author.html#915">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Martin,
+
+On Fri, 1 Jul 2005, Martin Wache wrote:
+
+&gt;<i> Tommi Lundell schrieb:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I try to look logs someday when i have time but if someone want to look
+</I>&gt;&gt;<i> log what i made (uncommenting #define BUFDEB(out...)
+</I>&gt;&gt;<i> {printf(&quot;BUF[%04d]:&quot;,(int)(getTimeMilis() % 10000));printf(out);} line
+</I>&gt;&gt;<i> from mpeg2decoder.c) then you can download it from:
+</I>&gt;&gt;<i> <A HREF="http://prelude.kapsi.fi/jerky.tar.gz">http://prelude.kapsi.fi/jerky.tar.gz</A> (about 500kB)
+</I>&gt;<i>
+</I>&gt;<i> That log is really interessting... From what I saw in the logs I think
+</I>&gt;<i> the following happens:
+</I>&gt;<i>
+</I>&gt;<i> The softdevice buffers are not really full, frames can still be
+</I>&gt;<i> accepted. So the softdevice doesn't sleep in Poll() (just like I
+</I>&gt;<i> understood the interface up to know...)
+</I>&gt;<i> On the other hand vdr doesn't have any frames to deliver to the
+</I>&gt;<i> softdevice, so it does nothing in the dvbplayer loop except for doing
+</I>&gt;<i> Poll() calls to the softdevice.
+</I>&gt;<i> The result is a busy loop!!!!
+</I>&gt;<i>
+</I>&gt;<i> I'm not yet sure how to cure that correctly. From how I understand
+</I>&gt;<i> Poll(), the softdevice should only sleep if a write to the softdevice
+</I>&gt;<i> would block because of full buffers, however the description in device.h
+</I>&gt;<i> is not completly clear.
+</I>&gt;<i>
+</I>&gt;<i> Please try the attached patch which causes the softdevice to sleep in
+</I>&gt;<i> Poll() already if the buffers a 50% full (if you want you can even try
+</I>&gt;<i> smaller values). If this fixes problems during playback we can think
+</I>&gt;<i> about what the correct solution would be.
+</I>
+I tried your patch and it seems to cure the problem partially. Jerking 
+picture is almost gone (when playing recordings) but sometimes the sound 
+stutters.
+
+Lowering it to 40% reduces stuttering a little again.
+
+Anything else I can do to debug?
+
+Patrick.
+
+--
+   Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">patrick.boettcher at desy.de</A>
+   WWW:  <A HREF="http://www.wi-bw.tfh-wildau.de/~pboettch/">http://www.wi-bw.tfh-wildau.de/~pboettch/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000914.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000916.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#915">[ date ]</a>
+              <a href="thread.html#915">[ thread ]</a>
+              <a href="subject.html#915">[ subject ]</a>
+              <a href="author.html#915">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

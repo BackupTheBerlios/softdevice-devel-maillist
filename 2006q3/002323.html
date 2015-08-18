@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD oddities with softdevice/xv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20oddities%20with%20softdevice/xv&In-Reply-To=%3C44E0A65D.60209%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002321.html">
+   <LINK REL="Next"  HREF="002325.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD oddities with softdevice/xv</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20oddities%20with%20softdevice/xv&In-Reply-To=%3C44E0A65D.60209%40gmx.net%3E"
+       TITLE="[Softdevice-devel] OSD oddities with softdevice/xv">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Aug 14 18:35:41 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002321.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+        <LI>Next message: <A HREF="002325.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2323">[ date ]</a>
+              <a href="thread.html#2323">[ thread ]</a>
+              <a href="subject.html#2323">[ subject ]</a>
+              <a href="author.html#2323">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> There might be some other mystic ;-) .
+</I>&gt;<i> YUV (aka YV12) valid values are _not_ in the range 0 .. 255 !
+</I>&gt;<i> Y and U/V values should be clamped:
+</I>&gt;<i> luma values to the range 16 .. 235 and
+</I>&gt;<i> chroma values to the range 15 .. 240 .
+</I>&gt;<i> 
+</I>Of course you are right that YUV values are not in the range 0-255, but
+I doubt that this causes the problems.
+In this bugreport it was stated that the same osd switches from
+correctly displayed to wrong colors:
+
+&gt;<i> Sometimes, if I leave some part of OSD
+</I>&gt;<i> on screen without touching it for a while, it will flick from being
+</I>&gt;<i> correct to being pink, and back again, as adverts come and go, at
+</I>&gt;<i> different resolutions.
+</I>
+I can hardy imagine how a wrong range could cause that. Also the stripes
+look like some scaling issue...
+
+&gt;<i> Perhaps that could be tested in the C part of alpha mixing code -&gt; AlphaBlend().
+</I>&gt;<i> 
+</I>That is one possibility, but using the correct range in ARGB_to_AYUV()
+is probably the better solution. By the way, are you sure that the
+calculation in ARGB_to_AYUV() is wrong? I must admit that I never
+checked it, but at least the Y component seems to be correct.
+
+Bye,
+Martin
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002321.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+	<LI>Next message: <A HREF="002325.html">[Softdevice-devel] OSD oddities with softdevice/xv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2323">[ date ]</a>
+              <a href="thread.html#2323">[ thread ]</a>
+              <a href="subject.html#2323">[ subject ]</a>
+              <a href="author.html#2323">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

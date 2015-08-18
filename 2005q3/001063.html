@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> memory leak, was: Re: [Softdevice-devel] Next release ?!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20memory%20leak%2C%20was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Next%20release%20%3F%21&In-Reply-To=%3C42ED2AC0.50107%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001084.html">
+   <LINK REL="Next"  HREF="001065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>memory leak, was: Re: [Softdevice-devel] Next release ?!</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20memory%20leak%2C%20was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Next%20release%20%3F%21&In-Reply-To=%3C42ED2AC0.50107%40gmx.net%3E"
+       TITLE="memory leak, was: Re: [Softdevice-devel] Next release ?!">M.Wache at gmx.net
+       </A><BR>
+    <I>Sun Jul 31 21:47:12 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001084.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+        <LI>Next message: <A HREF="001065.html">memory leak, was: Re: [Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1063">[ date ]</a>
+              <a href="thread.html#1063">[ thread ]</a>
+              <a href="subject.html#1063">[ subject ]</a>
+              <a href="author.html#1063">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Claas Hilbrecht schrieb:
+&gt;<i> --Am Sonntag, 24. Juli 2005 19:20 +0300 Seppo Ingalsuo
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">seppo.ingalsuo at iki.fi</A>&gt; schrieb:
+</I>&gt;<i>
+</I>&gt;&gt;<i> My vdr also seems to grow (top output)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This is my output from 08:10. As you see my VDR grows continusly. I'm
+</I>&gt;<i> running stock vdr 1.3.27 with an EPG patch (hmm, maybe this is the
+</I>&gt;<i> problem) and the softdevice plugin. The system is a recording only
+</I>&gt;<i> server with three low budget DVB-S cards.
+</I>&gt;<i>
+</I>&gt;<i>  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+</I>&gt;<i> 4497 vdr       15   0  439m 410m 2716 S  4.0 40.6   2:14.40 vdr
+</I>&gt;<i> 3862 vdr       34  19  439m 410m 2716 R  2.0 40.6   7:38.71 vdr
+</I>&gt;<i>
+</I>
+Sorry for the late answer. Unfortunatly I can confirm this - my vdr also
+grows :-(
+First I checked the source files for obvious things and found a memory
+leak when useing libpostproc, I fixed this in the CVS, but unfortunatly
+my vdr still groes. Even worse valgrind doesn't run on AMD64, so I used
+mtrace - with some difficulties because of the run-time loading of the
+softdevice.
+
+In fact I found quite a lot of memory leaks - but only one of them in
+the softdevice. And this one I already knew, the OSD memory is not freed
+correctly on exit, but that shouldn't matter since they are only
+malloced once.
+Allmost all of those memory leaks I found are from within libc6 or vdr
+(from tools.c strcpyrealloc and epg.c cComponents::Realloc) and the
+sizes are between 0x1-0x70. Both locations are calls to realloc, so
+maybe something is wrong there? Or is mtrace wrong here?
+
+My other suspect is the use of UTF-8, but that's more or less a wild
+guess. Are you also using UTF-8? Is there anyone whose vdr/softdevice
+doesn't grow?
+
+I'm using NTPL and UTF-8 on AMD64 and my vdr grows with about 1kB/second...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001084.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+	<LI>Next message: <A HREF="001065.html">memory leak, was: Re: [Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1063">[ date ]</a>
+              <a href="thread.html#1063">[ thread ]</a>
+              <a href="subject.html#1063">[ subject ]</a>
+              <a href="author.html#1063">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice and HD-material
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801161911.05559.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003000.html">
+   <LINK REL="Next"  HREF="003002.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice and HD-material</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20and%20HD-material&In-Reply-To=%3C200801161911.05559.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softdevice and HD-material">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Jan 16 19:11:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003000.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+        <LI>Next message: <A HREF="003002.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3001">[ date ]</a>
+              <a href="thread.html#3001">[ thread ]</a>
+              <a href="subject.html#3001">[ subject ]</a>
+              <a href="author.html#3001">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 16 January 2008, Per Mellander wrote:
+&gt;<i> Stefan Lucke skrev:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Yes I'm trying something, and it seems it is running for a few
+</I>&gt;<i> &gt; seconds, until the decoder is reset.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I've some general doubts for software decoding of h264.
+</I>&gt;<i> &gt; My AMD X2 3800+ is a bit slow, even xosview doesn't show both CPUs
+</I>&gt;<i> &gt; at 100%. Ofcourse we can improve something like decoupling decoding
+</I>&gt;<i> &gt; and presentation layer. But we'll get a new set of A/V sync issues. Using
+</I>&gt;<i> &gt; several threads for decoding has no noticeable effect.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Looking at HW-decoding, the reelbox HD extension looks quite interesting:
+</I>&gt;<i> &gt; <A HREF="http://www.reel-multimedia.com/rmm-english/pdf/produkt-flyer/extension_hd.pdf">http://www.reel-multimedia.com/rmm-english/pdf/produkt-flyer/extension_hd.pdf</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; A new release 0.5.0 is waiting to be published, which will be without
+</I>&gt;<i> &gt; h264 support I guess.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> Well with xine I get appx 90-120% CPU on xine and 25-35% on vdr. My cores idles 
+</I>&gt;<i> around 30-40% when there is 'normal' movement in the picture.
+</I>&gt;<i> 
+</I>&gt;<i> Would it be of any help if I test it on my Intel Core 2 Duo 6600?
+</I>
+Yes.
+
+You need:
+
+- softdevice-cvs + Martin's av_read_frame-01.diff
+- already patched vdr-1.5.1[23] + vdr-1.5.12-PSM-01.diff
+
+
+Stefan Lucke
+-------------- next part --------------
+Index: mpeg2decoder.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/mpeg2decoder.c,v
+retrieving revision 1.72
+diff -u -r1.72 mpeg2decoder.c
+--- mpeg2decoder.c	26 Feb 2007 23:00:34 -0000	1.72
++++ mpeg2decoder.c	17 Mar 2007 20:51:17 -0000
+@@ -174,7 +174,7 @@
+   freezeMode=false;
+   AVPacket *pkt;
+ 
+-  while ( PacketQueue.Available() &lt; 7 &amp;&amp; active) {
++  while ( PacketQueue.Available() &lt; 3 &amp;&amp; active) {
+     BUFDEB(&quot;wait while loop packets %d StreamDecoder  pid:%d type %d\n&quot;,
+       PacketQueue.Available(),getpid(),context-&gt;codec_type );
+     usleep(10000);
+@@ -1115,20 +1115,31 @@
+           usleep(50000);
+ 
+         BUFDEB(&quot;av_read_frame start\n&quot;);
+-        //ret = av_read_frame(ic, &amp;pkt);
+-        ret = av_read_packet(ic, &amp;pkt);
++        ret = av_read_frame(ic, &amp;pkt);
++        //ret = av_read_packet(ic, &amp;pkt);
+         if (ret &lt; 0) {
+             BUFDEB(&quot;cMpeg2Decoder Stream Error!\n&quot;);
+             if (ThreadActive)
+ 		    usleep(10000);
+             continue;
+         }
+-        //av_dup_packet(&amp;pkt);
++        av_dup_packet(&amp;pkt);
+         PacketCount++;
+         BUFDEB(&quot;got packet from av_read_frame!\n&quot;);
+ 
++#if LIBAVFORMAT_BUILD &gt; 4623
++        AVRational time_base;
++        time_base=ic-&gt;streams[pkt.stream_index]-&gt;time_base;
++        if ( pkt.pts != (int64_t) AV_NOPTS_VALUE ) {
++                pkt.pts=av_rescale(pkt.pts, AV_TIME_BASE* (int64_t)time_base.num, time_base.den)/100 ;
++        };
++
++        //printf(&quot;PTS: %lld new %lld num %d den %d\n&quot;,PTS,pkt.pts,
++        //                time_base.num,time_base.den);
++#else
+         if ( pkt.pts != (int64_t) AV_NOPTS_VALUE )
+           pkt.pts/=9;
++#endif
+ 
+         QueuePacket(ic,pkt,packetMode);
+ 
+@@ -1184,9 +1195,6 @@
+ void cMpeg2Decoder::QueuePacket(const AVFormatContext *ic, AVPacket &amp;pkt,
+ 		bool PacketMode)
+ {
+-  BUFDEB(&quot;QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d\n&quot;,
+-    AudioIdx,VideoIdx,pkt.stream_index);
+-
+   if (!ic) {
+         fprintf(stderr,&quot;Error: ic is null!\n&quot;);
+         av_free_packet(&amp;pkt);
+@@ -1212,6 +1220,8 @@
+           BUFDEB(&quot;Unknown packet type! Return;\n&quot;);
+           return;
+   };
++  BUFDEB(&quot;QueuePacket AudioIdx: %d VideoIdx %d pkt.stream_index: %d, packet_type: %d\n&quot;,
++    AudioIdx,VideoIdx,pkt.stream_index,packet_type);
+ 
+   // check if there are new streams
+   if ( AudioIdx != DONT_PLAY &amp;&amp; packet_type == CODEC_TYPE_AUDIO
+-------------- next part --------------
+diff -x libsi -x PLUGINS -x po -x symbols -x vdr -x '*.o' -x '*.orig' -x '*.dep*' -x '*~' -x include -x 'Make*' -x locale -bU 3 --show-c-function vdr-1.5.12-s2/device.c vdr-1.5.12-jarada/device.c
+--- vdr-1.5.12-s2/device.c	2008-01-16 18:56:23.000000000 +0100
++++ vdr-1.5.12-jarada/device.c	2008-01-16 18:15:12.000000000 +0100
+@@ -179,7 +179,6 @@ int cPesAssembler::PacketSize(const ucha
+     default:
+     case 0x00 ... 0xB8: // video stream start codes
+     case 0xB9: // Program end
+-    case 0xBC: // Programm stream map
+     case 0xF0 ... 0xFF: // reserved
+          return 6;
+ 
+@@ -194,6 +193,7 @@ int cPesAssembler::PacketSize(const ucha
+             return 12;
+ 
+     case 0xBB: // System header
++    case 0xBC: // Programm stream map
+     case 0xBD: // Private stream1
+     case 0xBE: // Padding stream
+     case 0xBF: // Private stream2 (navigation data)
+@@ -1225,6 +1225,8 @@ int cDevice::PlayPesPacket(const uchar *
+         int d = End - Start;
+         int w = d;
+         switch (c) {
++         case 0xBC:
++fprintf(stderr,&quot;&#195;&#164;&quot;);
+           case 0xBE:          // padding stream, needed for MPEG1
+           case 0xE0 ... 0xEF: // video
+                w = PlayVideo(Start, d);
+diff -x libsi -x PLUGINS -x po -x symbols -x vdr -x '*.o' -x '*.orig' -x '*.dep*' -x '*~' -x include -x 'Make*' -x locale -bU 3 --show-c-function vdr-1.5.12-s2/remux.c vdr-1.5.12-jarada/remux.c
+--- vdr-1.5.12-s2/remux.c	2008-01-16 18:56:23.000000000 +0100
++++ vdr-1.5.12-jarada/remux.c	2008-01-16 18:12:50.000000000 +0100
+@@ -2189,6 +2189,9 @@ void cTS2PES::instant_repack(const uint8
+                   cid = 0;
+                   switch (Buf[c]) {
+                     case PROG_STREAM_MAP:
++                         found++;
++                         cid = Buf[c++];
++                         break;
+                     case PRIVATE_STREAM2:
+                     case PROG_STREAM_DIR:
+                     case ECM_STREAM     :
+@@ -2287,6 +2290,8 @@ void cTS2PES::instant_repack(const uint8
+ 
+   if (done || ((mpeg == 2 &amp;&amp; found &gt;= 9) || (mpeg == 1 &amp;&amp; found &gt;= mpeg1_required))) {
+      switch (cid) {
++                    case PROG_STREAM_MAP:
++fprintf(stderr, &quot;.&quot;);
+        case AUDIO_STREAM_S ... AUDIO_STREAM_E:
+        case VIDEO_STREAM_S ... VIDEO_STREAM_E:
+        case PRIVATE_STREAM1:
+@@ -2486,6 +2491,20 @@ int cRingBufferLinearPes::DataReady(cons
+   return c;
+ }
+ 
++static unsigned char psm_map_0xe0_to_h264 [] =
++  { 0x00, 0x00, 0x01, 0xbc,
++    0x00, 0x10,             // psm length
++    0x00,                   // current_next(1),res(2),PSM_vers_no(5)
++    0x01,                   // res(7) marker(1)
++    0x00, 0x00,             // info length
++                            // info data here
++    0x00, 0x04,             // map length
++                            // map data here
++    0x1b, 0xe0, 0x00, 0x00, // h264 map entry / NO map info
++    0x00, 0x00, 0x00, 0x00  // crc32
++  };
++
++
+ // --- cRemux ----------------------------------------------------------------
+ 
+ #define RESULTBUFFERSIZE KILOBYTE(256)
+@@ -2504,13 +2523,20 @@ cRemux::cRemux(int VPid, const int *APid
+   resultSkipped = 0;
+   resultBuffer = new cRingBufferLinearPes(RESULTBUFFERSIZE, IPACKS, false, &quot;Result&quot;);
+   resultBuffer-&gt;SetTimeouts(0, 100);
+-  if (VPid)
++  if (VPid) {
+ #define TEST_cVideoRepacker
+ #ifdef TEST_cVideoRepacker
+      ts2pes[numTracks++] = new cTS2PES(VPid, resultBuffer, IPACKS, 0xE0, 0x00, new cVideoRepacker(h264));
+ #else
+      ts2pes[numTracks++] = new cTS2PES(VPid, resultBuffer, IPACKS, 0xE0);
+ #endif
++     if (h264) {
++        resultBuffer-&gt;Put (psm_map_0xe0_to_h264, sizeof (psm_map_0xe0_to_h264));
++fprintf(stderr, &quot;---- is h264\n&quot;);
++        } else {
++fprintf(stderr, &quot;---- is NO h264\n&quot;);
++        }
++  }
+   if (APids) {
+      int n = 0;
+      while (*APids &amp;&amp; numTracks &lt; MAXTRACKS &amp;&amp; n &lt; MAXAPIDS) {
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003000.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+	<LI>Next message: <A HREF="003002.html">[Softdevice-devel] Softdevice and HD-material
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3001">[ date ]</a>
+              <a href="thread.html#3001">[ thread ]</a>
+              <a href="subject.html#3001">[ subject ]</a>
+              <a href="author.html#3001">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

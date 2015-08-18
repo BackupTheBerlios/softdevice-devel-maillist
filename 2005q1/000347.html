@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Cannot get remote controls to work via softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Cannot%20get%20remote%20controls%20to%20work%20via%20softdevice&In-Reply-To=%3C200503201027.48125.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000346.html">
+   <LINK REL="Next"  HREF="000353.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Cannot get remote controls to work via softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Cannot%20get%20remote%20controls%20to%20work%20via%20softdevice&In-Reply-To=%3C200503201027.48125.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Cannot get remote controls to work via softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Mar 20 10:27:47 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000346.html">[Softdevice-devel] Cannot get remote controls to work via softdevice
+</A></li>
+        <LI>Next message: <A HREF="000353.html">[Softdevice-devel] Cannot get remote controls to work via	softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#347">[ date ]</a>
+              <a href="thread.html#347">[ thread ]</a>
+              <a href="subject.html#347">[ subject ]</a>
+              <a href="author.html#347">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 20. M&#228;rz 2005 08:05, Marko M&#228;kel&#228; wrote:
+&gt;<i> Hi all,
+</I>&gt;<i> 
+</I>&gt;<i> I'm sorry if this is a FAQ, but I haven't found any document that would
+</I>&gt;<i> answer my question.
+</I>&gt;<i> 
+</I>&gt;<i> I'm using VDR 1.3.22 with a recent softdevice plugin.  Initially, I tested
+</I>&gt;<i> it with Xv output, but now I'm using DirectFB with a Matrox G450 card,
+</I>&gt;<i> running Debian GNU/Linux unstable and 2.6.11.1 kernel with some video4linux
+</I>&gt;<i> related patches.
+</I>&gt;<i> 
+</I>&gt;<i> I compiled linux_input support in DirectFB and disabled other input modules.
+</I>&gt;<i> According to lsof, VDR keeps /dev/input/event* open.  However, the remote
+</I>&gt;<i> control learning screen of softdevice-dfb does not react to anything:
+</I>&gt;<i> keyboard, mouse, or the remote control of my cx88xx-based Hauppauge
+</I>&gt;<i> Nova-T card.  In order to disable the annoying 10-second delay, I manually
+</I>&gt;<i> entered a dummy line to remote.conf.
+</I>
+Whats your /etc/directfbrc and which messages are printed to console ?
+
+&gt;<i> 
+</I>&gt;<i> I can use the remote control via the vdr-remote plugin, at least if I
+</I>&gt;<i> disable the linux_input module in /etc/directfbrc.
+</I>&gt;<i> 
+</I>&gt;<i> I had a similar problem with softdevice-xv: it wouldn't react to the keyboard,
+</I>&gt;<i> no matter if the output window or the controlling terminal window has focus.
+</I>&gt;<i> The 'F' key toggled between fullscreen and windowed output when the output
+</I>&gt;<i> window had focus.
+</I>
+When we react upon 'f' for fullscreen toggle we should act on other keys
+too. The logic is: catch internal used keys and pass all others to vdr
+remote handling.
+
+Please add the following line in file video-xv.c around line 440
+after the call of XLookupString() to see which keys we get.
+Remove all softdevice-xv.* entries from your remote.conf
+and restart the key learning phase.
+fprintf(stderr,&quot;XV-Lookup: l = %d k = 0x%08x, %c\n&quot;, len, keysym, keysym);
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000346.html">[Softdevice-devel] Cannot get remote controls to work via softdevice
+</A></li>
+	<LI>Next message: <A HREF="000353.html">[Softdevice-devel] Cannot get remote controls to work via	softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#347">[ date ]</a>
+              <a href="thread.html#347">[ thread ]</a>
+              <a href="subject.html#347">[ subject ]</a>
+              <a href="author.html#347">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] ac3 passthrough 1st try
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C434776C9.90802%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001318.html">
+   <LINK REL="Next"  HREF="001322.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] ac3 passthrough 1st try</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20ac3%20passthrough%201st%20try&In-Reply-To=%3C434776C9.90802%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] [PATCH] ac3 passthrough 1st try">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Sat Oct  8 09:35:37 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001318.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+        <LI>Next message: <A HREF="001322.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1321">[ date ]</a>
+              <a href="thread.html#1321">[ thread ]</a>
+              <a href="subject.html#1321">[ subject ]</a>
+              <a href="author.html#1321">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+[...]
+&gt;<i> 
+</I>&gt;<i> Fine, it works for another one too :-) .
+</I>&gt;<i> I'm don't know the impact on the following message as it appears
+</I>&gt;<i> several time in your log:
+</I>&gt;<i> ac3play: Unable to update the IEC958 control: No such file or directory
+</I>
+Don't know, at least I can't notice anything wrong with sound, and as it
+turned out in the end, it doesn't even cause this judder, just read on ;-)
+
+[...]
+&gt;<i> For short: There is no obvious strange message except that only video modes
+</I>&gt;<i> at 16bpp are reported. That's what is reported on my system:
+</I>&gt;<i> [dfb] Supported video Modes are: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 24</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">768x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 24</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A>
+</I>
+I first thought this is due to settings /etc/directfbrc or modelines in
+/etc/fb.modes. Well, I had a line depth=32 in my directfbrc and
+commented it out, with no difference to this output. Then I noticed, my
+fb.modes had all modelines labeled like &quot;720x576 50Hz 16bit&quot;, but hey,
+those are only labels after all. However, the number of reported video
+modes is exactly the number of modelines from fb.modes, and after all, I
+know that for CRTC2 this file is irrelevant, as the PAL and NTSC modes
+are actually hard-coded in the CRTC2 gfxdriver by Ville (I think).
+
+&gt;<i> I did my ac3 test on a similar system: normal old TV (no 100Hz box),
+</I>&gt;<i> G400 dual head 32MB.
+</I>&gt;<i> I definately don't see any judder effects news ticker of N24 runs fine
+</I>&gt;<i> and deinterlaceing is turned off, as it is not needed on a interlaced tv.
+</I>&gt;<i> 
+</I>&gt;<i> Can you try to change:
+</I>&gt;<i> osdLayer-&gt;SetFieldParity(0);
+</I>&gt;<i> to:
+</I>&gt;<i> osdLayer-&gt;SetFieldParity(1);
+</I>&gt;<i> 
+</I>&gt;<i> to see if fields are swapped on your card.
+</I>
+I tried that, and even to hack the similar code at a place where
+videoLayer is configured, and it did not help. BUT, then I played again
+with the softdevice setup options in the OSD!!!! Man, what a moron I was
+when I did it some time ago and changed the aspect ratio, I had the
+impression that 5:4 &quot;looked better&quot; on my 4:3 PAL TV (because of
+overscan - btw, is there a way to tweak this for G400 CRTC2 used with
+DirectFB?). Well, the moment I switched back to 4:3, the image became
+crisp and clear, no judder, everything looks just as it should, only
+once in a while there seems to be a synchronisation catch up where
+horizontally scrolling text for example, speeds up a little bit and then
+moves with constant speed again, but it's not too obviously noticeable.
+
+So my judder issue is solved now, I'm curious if A/V sync can still be
+improved.
+
+On to the next, but I'll start another topic...
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001318.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+	<LI>Next message: <A HREF="001322.html">[Softdevice-devel] [PATCH] ac3 passthrough 1st try
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1321">[ date ]</a>
+              <a href="thread.html#1321">[ thread ]</a>
+              <a href="subject.html#1321">[ subject ]</a>
+              <a href="author.html#1321">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

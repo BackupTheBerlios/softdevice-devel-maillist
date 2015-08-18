@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hang after suspending MPEG stream for a long time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%20time&In-Reply-To=%3C451ACA43.6040605%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002542.html">
+   <LINK REL="Next"  HREF="002548.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hang after suspending MPEG stream for a long time</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hang%20after%20suspending%20MPEG%20stream%20for%20a%20long%0A%20time&In-Reply-To=%3C451ACA43.6040605%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Hang after suspending MPEG stream for a long time">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Sep 27 21:00:19 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002542.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+        <LI>Next message: <A HREF="002548.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2546">[ date ]</a>
+              <a href="thread.html#2546">[ thread ]</a>
+              <a href="subject.html#2546">[ subject ]</a>
+              <a href="author.html#2546">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> On Tuesday 26 September 2006 21:56, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Laz, how do you suspend your vdr? Do you use Marko's patch or the
+</I>&gt;&gt;<i> softdevice suspend method?
+</I>&gt;<i> 
+</I>&gt;<i> All I'm doing is pressing &quot;pause&quot; whilst I go off and do something (then 
+</I>&gt;<i> get distracted and end up coming back a long time later!), unpausing 
+</I>&gt;<i> playback, and then I get the ca. 1 s of playback before it dies. Offhand, 
+</I>
+Is this video only, audio only, or both?
+
+&gt;<i> I can't remember whether this is softdevice bombing out with something 
+</I>&gt;<i> like an &quot;invalid address&quot; error (which I still get occasionally) or 
+</I>&gt;<i> whether vdr itself hangs.
+</I>&gt;<i> 
+</I>&gt;<i> As I said, I could never manage to induce this bug when I tried! It only 
+</I>&gt;<i> ever happens when paused for a long time, though.
+</I>&gt;<i> 
+</I>&gt;<i> A thought (probably totally off-track and irrelevant!): how long in terms 
+</I>&gt;<i> of playback time do the softdevice buffers hold (can't really check this 
+</I>&gt;<i> now; I think I'm set to &quot;Good seeking&quot;)? 
+</I>
+Hmm, sorry right now I don't now.
+
+&gt;<i> I.e., am I seeing the buffers 
+</I>&gt;<i> being flushed over about 1 s and then it dies because there is no more 
+</I>&gt;<i> MPEG stream being fed into them (or no more is requested)?
+</I>&gt;<i> 
+</I>Not sure what happens. In one of the backtraces Marko sent it looked
+like the video decoder thread got deadlocked.
+
+&gt;<i> I posted something about this problem on the main vdr mailing list a while 
+</I>&gt;<i> back and someone reported that you can pause &quot;forever&quot; with a 
+</I>&gt;<i> full-featured card.
+</I>&gt;<i>
+</I>I also never had problems when I closed the ShmClient. The softdevice is
+then automatically suspended. However I'm not sure if that means
+anything... I will try some experiments at the weekend.
+
+If you, or anyone else experiences could you please try to attach to the
+vdr with a gdb and post backtraces like Marko did? Maybe we get some
+hints from them.
+
+Bye,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002542.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+	<LI>Next message: <A HREF="002548.html">[Softdevice-devel] Hang after suspending MPEG stream for a long	time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2546">[ date ]</a>
+              <a href="thread.html#2546">[ thread ]</a>
+              <a href="subject.html#2546">[ subject ]</a>
+              <a href="author.html#2546">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

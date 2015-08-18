@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Profiling tools
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Profiling%20tools&In-Reply-To=%3C4253093D.2040600%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000456.html">
+   <LINK REL="Next"  HREF="000445.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Profiling tools</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Profiling%20tools&In-Reply-To=%3C4253093D.2040600%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Profiling tools">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Apr  5 23:55:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000456.html">[Softdevice-devel] Profiling tools
+</A></li>
+        <LI>Next message: <A HREF="000445.html">OSD suspent (WAS: Re: [Softdevice-devel] Profiling tools)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#452">[ date ]</a>
+              <a href="thread.html#452">[ thread ]</a>
+              <a href="subject.html#452">[ subject ]</a>
+              <a href="author.html#452">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> On Tue, Apr 05, 2005 at 10:35:14PM +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>I just hacked vdr to link the softdevice staticaly...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I'd be interested in that patch.  The plugin.c code looked quite
+</I>&gt;<i> complicated.
+</I>The patch is attachted, but you may have to adapt some changes to your 
+situation.
+
+&gt;<i> 
+</I>&gt;&gt;<i>The results are somehow similar to yours... I don't want to post a 
+</I>&gt;&gt;<i>profiling now since it also contains all vdr functions and is realy huge.
+</I>&gt;&gt;<i>And I found the reason for the Action() mystery: it seems that when one 
+</I>&gt;&gt;<i>calls usleep() with smaller values than 10000 it waits in a busy loop. I 
+</I>&gt;&gt;<i>thought it would just schedule the smallest possible time...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I believe that the granularity of usleep() used to be around 20 milliseconds,
+</I>&gt;<i> due to some constraints of the scheduler.  Maybe that's why it's
+</I>&gt;<i> busy-waiting.
+</I>&gt;<i> 
+</I>&gt;<i> Hmm, the disassembly in the opannotate output for cDFBVideoOut::YUV()
+</I>&gt;<i> does not make much sense, e.g.,:
+</I>&gt;<i> 
+</I>&gt;<i>                :   1aa6c:       mov    %edx,0x4(%esp)
+</I>&gt;<i>      1  0.0155 :   1aa70:       mov    %eax,(%esp)
+</I>&gt;<i>    317  4.9185 :   1aa73:       call   1aa74 &lt;_ZN12cDFBVideoOut3YUVEPhS0_S0_iiii+0x3d4&gt;
+</I>&gt;<i>     11  0.1707 :   1aa78:       mov    0xffffffac(%ebp),%ecx
+</I>&gt;<i>     83  1.2878 :   1aa7b:       mov    0x20(%ebp),%eax
+</I>&gt;<i> 
+</I>&gt;<i> There are also some other call instructions jumping to %eip+1.
+</I>&gt;<i> Maybe opannotate doesn't disassemble MMX instructions properly?
+</I>I read somewhere on the ffmpeg list that gcc-3.x doesn't optimize mmx 
+instructions correctly, the example was somehow similar. But I just 
+remember one comment: gcc = gnu crab creator.
+gcc-2.95 was supposed to be fine.
+On the other hand I think if the disassembly is correct this code would 
+not execute correctly, it should crash. I don't know, I never looked at 
+any disassembly of softdevice code...
+&gt;<i> 
+</I>&gt;<i> By the way, is cDFBVideoOut::YUV() needed for the Matrox G450?  Isn't the
+</I>&gt;<i> card capable of doing YUV to RGB transform in hardware?  Or is it already
+</I>&gt;<i> doing that?  
+</I>Yes it's using the hardware YUV to RGB transformation. What you can try 
+is to check how long the memcpy takes. On my machine with an AGP RagePro 
+128 all memcpy together usually take 6-8ms (Xv-out but it should be 
+similar for dfb-out). When I use my old PCI Mach64 it takes 20-30 ms (I 
+don't remember the real value). So playback with my Mach64 is almost 
+impossible ...
+
+&gt;<i> Did you link all dependencies statically (i.e., ldd says that the
+</I>&gt;<i> executable is statically linked)?
+</I>No I just linked the softdevice statically to vdr.
+
+Martin
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: static.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050405/6494ad20/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050405/6494ad20/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000456.html">[Softdevice-devel] Profiling tools
+</A></li>
+	<LI>Next message: <A HREF="000445.html">OSD suspent (WAS: Re: [Softdevice-devel] Profiling tools)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#452">[ date ]</a>
+              <a href="thread.html#452">[ thread ]</a>
+              <a href="subject.html#452">[ subject ]</a>
+              <a href="author.html#452">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

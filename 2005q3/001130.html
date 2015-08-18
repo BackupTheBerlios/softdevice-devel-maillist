@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Remarks%20about%20cSoftDevice%3A%3ASetPlayMode%28%29&In-Reply-To=%3C20050818192432.GD3271%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001129.html">
+   <LINK REL="Next"  HREF="001131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Remarks%20about%20cSoftDevice%3A%3ASetPlayMode%28%29&In-Reply-To=%3C20050818192432.GD3271%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Aug 18 21:24:32 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001129.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+        <LI>Next message: <A HREF="001131.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1130">[ date ]</a>
+              <a href="thread.html#1130">[ thread ]</a>
+              <a href="subject.html#1130">[ subject ]</a>
+              <a href="author.html#1130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Aug 18, 2005 at 11:54:52AM +0200, Martin Wache wrote:
+&gt;<i> The drawback of this hack is that if you've requested video only, you
+</I>&gt;<i> will get audio after a still picture or trickspeed mode. Up to now noone
+</I>&gt;<i> complained about that...
+</I>
+How can one request the different play modes?  I just surfed the setup
+menus of vdr 1.3.27 and didn't notice anything relevant.
+
+&gt;<i> &gt; By the way, I think that the VDR &quot;suspended&quot; flag would have to be
+</I>&gt;<i> &gt; examined in cDevice::PlayPesPacket().  I believe that it is best to
+</I>&gt;<i> &gt; make the flag independent of the play mode, like the softdevice
+</I>&gt;<i> &gt; suspended flag currently is.
+</I>&gt;<i> 
+</I>&gt;<i> This would only work in transfer and replay mode. I'm not sure about
+</I>&gt;<i> this since I don't own a FF card, but as far as I know FF cards usually
+</I>&gt;<i> don't use transfer mode while watching TV. So in case you want to ask
+</I>&gt;<i> Klaus to introduce the patch into mainline vdr I guess you have to do it
+</I>&gt;<i> differently, or take extra care of the FF cards.
+</I>
+Well, I guess the patch simply wouldn't suspend live playback on FF
+cards.  It shouldn't break anything; it'd just make the user experience
+a bit inconsistent.  I don't have high hopes of getting the patch
+accepted to VDR, but we'll see.
+
+&gt;<i> But I don't know how to switch off the non-transfer mode for FF card,
+</I>&gt;<i> however I guess it should not be difficult.
+</I>
+I wouldn't be too sure about that.  It depends on how the proprietary
+firmware of the cards has been written.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001129.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+	<LI>Next message: <A HREF="001131.html">[Softdevice-devel] Remarks about cSoftDevice::SetPlayMode()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1130">[ date ]</a>
+              <a href="thread.html#1130">[ thread ]</a>
+              <a href="subject.html#1130">[ subject ]</a>
+              <a href="author.html#1130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

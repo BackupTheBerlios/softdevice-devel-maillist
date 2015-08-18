@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20refresh%20rate%20on%20dvb-t%20%28device%20delay%20%2B%20ac3%29&In-Reply-To=%3C1114449305.3289.37.camel%40africa%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000554.html">
+   <LINK REL="Next"  HREF="000557.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)</H1>
+    <B>Torgeir Veimo</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20refresh%20rate%20on%20dvb-t%20%28device%20delay%20%2B%20ac3%29&In-Reply-To=%3C1114449305.3289.37.camel%40africa%3E"
+       TITLE="[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)">torgeir at pobox.com
+       </A><BR>
+    <I>Mon Apr 25 19:15:05 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000554.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+        <LI>Next message: <A HREF="000557.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#556">[ date ]</a>
+              <a href="thread.html#556">[ thread ]</a>
+              <a href="subject.html#556">[ subject ]</a>
+              <a href="author.html#556">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 2005-04-25 at 06:51 +0200, Stefan Lucke wrote:
+&gt;<i> On Montag, 25. April 2005 03:16, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; Am starting to count Flip() calls when using DFB, but am only seeing
+</I>&gt;<i> 25
+</I>&gt;<i> &gt; Flip() calls per second. Surely dvb-t transmits with 50fps?? Have
+</I>&gt;<i> tried
+</I>&gt;<i> &gt; turning off deinterlacing with the same result. Any clues?
+</I>&gt;<i> 
+</I>&gt;<i> 25Hz is ok. This are 50 half frames (top/bottom fields per second).
+</I>
+This is what i expected, but that libavcodec would emit these frames at
+50 fps when not deinterlacing, and not combine them itself. I probably
+need to find a transmission with progressive signal to see if it's
+displayed at 50fps.
+
+Also, if using a video type deinterlacer, I'd expect libavcodec to
+deinterlace to 50 fps, and not 25 fps, as one would expect with a film
+type deinterlacer. 
+
+-- 
+Torgeir Veimo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">torgeir at pobox.com</A>&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000554.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+	<LI>Next message: <A HREF="000557.html">[Softdevice-devel] refresh rate on dvb-t (device delay + ac3)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#556">[ date ]</a>
+              <a href="thread.html#556">[ thread ]</a>
+              <a href="subject.html#556">[ subject ]</a>
+              <a href="author.html#556">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%0A%20for%20XV&In-Reply-To=%3C42257D8F.2010302%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000256.html">
+   <LINK REL="Next"  HREF="000260.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20PATCH%3A%20OSD%20scaling%20%26%26%20and%20real%20alpha%20blending%0A%20for%20XV&In-Reply-To=%3C42257D8F.2010302%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Mar  2 09:47:11 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000256.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+        <LI>Next message: <A HREF="000260.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#257">[ date ]</a>
+              <a href="thread.html#257">[ thread ]</a>
+              <a href="subject.html#257">[ subject ]</a>
+              <a href="author.html#257">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;&gt;<i>Not that was in software alpha mode. Now with vdr.1.3.22 I get segfaults
+</I>&gt;&gt;<i>even in pseudo alpha mode (the old mode). 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Just an idea (partial tested): Now sxoff and syoff are honored in Draw (..). Shouldn't
+</I>&gt;<i> these values be used only used in software alpha mode ?
+</I>&gt;<i> 
+</I>&gt;<i> As Draw() is used with PSEUDO Alpha (only ?) could we revert that to the
+</I>&gt;<i> previous one ? In xv-out I have some doubts about the osd-positioning
+</I>&gt;<i> in osd-pseudo mode too ShowOSD ().
+</I>&gt;<i> 
+</I>
+I'm sorry, but I currently don't have time to do extensive debuging. I 
+had a short look at it yesterday and it seems that you are right. I 
+added the sxoff and syoff to Draw() to have both pseudo and software osd 
+positioned at the same position, but this has some unwanted sideeffects 
+(and caused the crash you reported), so I just removed it from the CVS.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000256.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+	<LI>Next message: <A HREF="000260.html">[Softdevice-devel] Re: PATCH: OSD scaling &amp;&amp; and real alpha blending for XV
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#257">[ date ]</a>
+              <a href="thread.html#257">[ thread ]</a>
+              <a href="subject.html#257">[ subject ]</a>
+              <a href="author.html#257">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%201.6.0%2C%20old%20recordings%20and%20bad%20audio&In-Reply-To=%3Cd32a415e0804230156u6cd6fb50qe00d00a1d6bcebcd%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003082.html">
+   <LINK REL="Next"  HREF="003072.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr 1.6.0, old recordings and bad audio</H1>
+    <B>Malcolm Caldwell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%201.6.0%2C%20old%20recordings%20and%20bad%20audio&In-Reply-To=%3Cd32a415e0804230156u6cd6fb50qe00d00a1d6bcebcd%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] vdr 1.6.0, old recordings and bad audio">malcolm.caldwell at gmail.com
+       </A><BR>
+    <I>Wed Apr 23 10:56:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003082.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+        <LI>Next message: <A HREF="003072.html">[Softdevice-devel] [PATCH] Suspend output on user inactivity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3083">[ date ]</a>
+              <a href="thread.html#3083">[ thread ]</a>
+              <a href="subject.html#3083">[ subject ]</a>
+              <a href="author.html#3083">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This patch fixes my old recordings.  The problem will be if this patch
+does not get integrated into ffmpeg. In that case I will face a choice
+of 1 patch myself every time I upgrade, 2. Forget my old recordings,
+or 3 find a way to fix the old recordings.
+
+On 4/22/08, Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+&gt;<i> On Monday 21 April 2008, Malcolm Caldwell wrote:
+</I>&gt;<i> &gt; On Thu, 2008-04-17 at 09:56 +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; On Thursday 17 April 2008, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; Thanks, got your example.
+</I>&gt;<i> &gt; &gt; &gt; If possible keep it online for a while.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; Looked through my test streams and found a similar one which
+</I>&gt;<i> &gt; &gt; &gt; I got in May 2004.
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; So I do a search for the ffmpeg revision which breaks us.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; In between:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Both samples play fine with ffmpeg-7852.
+</I>&gt;<i> &gt; &gt; Both samples are broken by ffmpeg-7853.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Broken in this case means: NO video, only audio playback.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Why do I have already these two versions in my ffmpeg collection ?
+</I>&gt;<i> &gt; &gt; Surprisingly 7853 was not compiled.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Perhaps you were following the following thread:
+</I>&gt;<i> &gt; <A HREF="http://www.mail-archive.com/ffmpeg-issues@live.polito.it/msg00115.html">http://www.mail-archive.com/ffmpeg-issues@live.polito.it/msg00115.html</A>
+</I>&gt;<i>
+</I>&gt;<i> No, not this one.
+</I>&gt;<i>
+</I>&gt;<i> I opened an record at ffmpeg bug tracker.
+</I>&gt;<i> It is issue434:
+</I>&gt;<i> <A HREF="https://roundup.mplayerhq.hu/roundup/ffmpeg/issue434">https://roundup.mplayerhq.hu/roundup/ffmpeg/issue434</A>
+</I>&gt;<i>
+</I>&gt;<i> Michael Niedermayer prepared a patch which hopefully
+</I>&gt;<i> will be integrated into ffmpeg:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://article.gmane.org/gmane.comp.video.ffmpeg.devel/67087">http://article.gmane.org/gmane.comp.video.ffmpeg.devel/67087</A>
+</I>&gt;<i>
+</I>&gt;<i> This patch applied to my r12850 does fixx both of my test streams.
+</I>&gt;<i>
+</I>&gt;<i> Don't know if I should visit :-) Linuxtag :
+</I>&gt;<i> <A HREF="http://article.gmane.org/gmane.comp.video.ffmpeg.devel/67104">http://article.gmane.org/gmane.comp.video.ffmpeg.devel/67104</A>
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I tried to comment out the code added but it does not fix the issue.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So vdr used to produce broken streams and now does not, ffmpeg used to
+</I>&gt;<i> &gt; handle broken streams and now it does not.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Where and how to fix this?  In VDR?  (Does VDR even parse the mpeg when
+</I>&gt;<i> &gt; it replays)
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+-- 
+Sent from Gmail for mobile | mobile.google.com
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003082.html">[Softdevice-devel] vdr 1.6.0, old recordings and bad audio
+</A></li>
+	<LI>Next message: <A HREF="003072.html">[Softdevice-devel] [PATCH] Suspend output on user inactivity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3083">[ date ]</a>
+              <a href="thread.html#3083">[ thread ]</a>
+              <a href="subject.html#3083">[ subject ]</a>
+              <a href="author.html#3083">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

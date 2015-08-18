@@ -1,0 +1,851 @@
+From arth_72 at yahoo.it  Wed Apr  1 22:13:20 2009
+From: arth_72 at yahoo.it (Arturo Sandrigo)
+Date: Wed, 1 Apr 2009 20:13:20 +0000 (GMT)
+Subject: [Softdevice-devel] Softieee1394
+Message-ID: <276699.83904.qm@web23404.mail.ird.yahoo.com>
+
+
+Hi all,
+i'm trying to compile softieee1394 on suse 11.0 (gcc 4.3.1) and with ffmpeg 0.5.0, libavc1394 0.5.3, libraw1394 1.3.0.
+It compile without any error, but when i use the plugin with vdr i get this error:
+
+vdr: ./PLUGINS/lib/libvdr-softieee1394.so.1.6.0: undefined symbol: _Z13av_read_frameP15AVFormatContextP8AVPacket
+
+I checked the source code and added the complete path to the include, but without any result.
+Can anyone help me solving this problem ?
+Thanks,
+ Arturo
+
+
+
+      
+
+
+From zelts at ruksis.com  Wed Apr  8 15:02:46 2009
+From: zelts at ruksis.com (Peter)
+Date: Wed, 8 Apr 2009 16:02:46 +0300
+Subject: [Softdevice-devel] CVS softdevice, VDR 1.7.4 and HDTV
+Message-ID: <016301c9b84a$535f6060$fa1e2120$@com>
+
+I use this combo with Hauppauge HVR4000 (Lite) card that allegedly supports DVB-S2. For whatever reason it only tunes in to limited number of DVB-S2 channels, but even on these I get no picture. There are no error messages in logs when tuning to HD channels. Is softdevice known to work for HDTV?
+
+ 
+
+I also tried xineliboutput plugin but it?s hopelessly broken on 1.7.4. 
+
+ 
+
+My screen resolution is 1024x768 ? could that be an issue? It?s probably not enough for full HD picture but shouldn?t it just get scaled down? I have libswscale support enabled.
+
+ 
+
+Peter
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20090408/0dad2712/attachment.html>
+
+From Neumann at do-net.de  Wed Apr  8 15:22:45 2009
+From: Neumann at do-net.de (Neumann, Andre [DO-net GmbH])
+Date: Wed, 8 Apr 2009 15:22:45 +0200
+Subject: [Softdevice-devel] CVS softdevice, VDR 1.7.4 and HDTV
+Message-ID: <FB3B5DB3197CEA429E5FB8E83D01D039258C72@sbs2003.do-net.de>
+
+Hi Peter,
+ 
+as far as i know, there is no support for vdr-1.7.4 in softdevice.
+Stefan said that he would look at this issue once he has time
+enough, but so far the only way for a working vdr-1.7.4 is to use
+vdr-xine.
+ 
+-----------------------
+Andre Neumann
+
+________________________________
+
+Von: softdevice-devel-bounces at lists.berlios.de
+[mailto:softdevice-devel-bounces at lists.berlios.de] Im Auftrag von Peter
+Gesendet: Mittwoch, 8. April 2009 15:03
+An: softdevice-devel at lists.berlios.de
+Betreff: [Softdevice-devel] CVS softdevice, VDR 1.7.4 and HDTV
+
+
+
+I use this combo with Hauppauge HVR4000 (Lite) card that allegedly
+supports DVB-S2. For whatever reason it only tunes in to limited number
+of DVB-S2 channels, but even on these I get no picture. There are no
+error messages in logs when tuning to HD channels. Is softdevice known
+to work for HDTV?
+
+ 
+
+I also tried xineliboutput plugin but it's hopelessly broken on 1.7.4. 
+
+ 
+
+My screen resolution is 1024x768 - could that be an issue? It's probably
+not enough for full HD picture but shouldn't it just get scaled down? I
+have libswscale support enabled.
+
+ 
+
+Peter
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20090408/db292578/attachment.html>
+
+From zelts at ruksis.com  Thu Apr  9 18:32:18 2009
+From: zelts at ruksis.com (Peter)
+Date: Thu, 9 Apr 2009 19:32:18 +0300
+Subject: [Softdevice-devel] CVS softdevice, VDR 1.7.4 and HDTV
+In-Reply-To: <FB3B5DB3197CEA429E5FB8E83D01D039258C72@sbs2003.do-net.de>
+References: <FB3B5DB3197CEA429E5FB8E83D01D039258C72@sbs2003.do-net.de>
+Message-ID: <029201c9b930$c3d27c10$4b777430$@com>
+
+Hmm, CVS softdevice compiles cleanly and works fine under VDR 1.7.4. The only problem I?m (not) seeing is HDTV, but I?m not even sure it?s softdevice?s fault.
+
+ 
+
+I checked vdr-xine and looks like it does not do direct output to X. I have to use a frontend ? don?t want that hassle unless I can get away with a simple X. 
+
+ 
+
+From: Neumann, Andre [DO-net GmbH] [mailto:Neumann at do-net.de] 
+Sent: Wednesday, April 08, 2009 4:23 PM
+To: softdevice-devel at lists.berlios.de
+Subject: Re: [Softdevice-devel] CVS softdevice, VDR 1.7.4 and HDTV
+
+ 
+
+Hi Peter,
+
+ 
+
+as far as i know, there is no support for vdr-1.7.4 in softdevice. Stefan said that he would look at this issue once he has time
+
+enough, but so far the only way for a working vdr-1.7.4 is to use vdr-xine.
+
+ 
+
+-----------------------
+
+Andre Neumann
+
+ 
+
+  _____  
+
+Von: softdevice-devel-bounces at lists.berlios.de [mailto:softdevice-devel-bounces at lists.berlios.de] Im Auftrag von Peter
+Gesendet: Mittwoch, 8. April 2009 15:03
+An: softdevice-devel at lists.berlios.de
+Betreff: [Softdevice-devel] CVS softdevice, VDR 1.7.4 and HDTV
+
+I use this combo with Hauppauge HVR4000 (Lite) card that allegedly supports DVB-S2. For whatever reason it only tunes in to limited number of DVB-S2 channels, but even on these I get no picture. There are no error messages in logs when tuning to HD channels. Is softdevice known to work for HDTV?
+
+ 
+
+I also tried xineliboutput plugin but it?s hopelessly broken on 1.7.4. 
+
+ 
+
+My screen resolution is 1024x768 ? could that be an issue? It?s probably not enough for full HD picture but shouldn?t it just get scaled down? I have libswscale support enabled.
+
+ 
+
+Peter
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20090409/f89f64e7/attachment.html>
+
+From admin at berlios.de  Thu Apr 30 12:27:32 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Thu, 30 Apr 2009 12:27:32 +0200 (CEST)
+Subject: [Softdevice-devel] [Feature #4588] Suspend feature should be
+	configurable
+Message-ID: <200904301027.n3UARWXk022469@unicorn.berlios.de>
+
+Feature Request #4588, was updated on 2009-Apr-30 12:27
+You can respond by visiting: 
+http://developer.berlios.de/feature/?func=detailfeature&feature_id=4588&group_id=2051
+
+Category: None
+Status: Open
+Priority: 5
+Summary: Suspend feature should be configurable
+
+By: schrauber
+Date: 2009-Apr-30 12:27
+
+Message:
+Logged In: YES 
+user_id=49385
+Browser: Mozilla/4.0 (compatible; MSIE 6.0; K20057581B9; Windows NT 5.1; SV1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)
+
+Since the middle of 2008 softdevice has the ability 
+to suspend the output. For example when power 
+button is pressend and vdr stay on because a 
+recording is running.
+Maybe this feature should be configurable on the 
+softdevice setup page.
+
+Thanks for great work.
+
+----------------------------------------------------------------------
+You can respond by visiting: 
+http://developer.berlios.de/feature/?func=detailfeature&feature_id=4588&group_id=2051
+
+
+From admin at berlios.de  Sat May  9 23:06:16 2009
+From: admin at berlios.de (admin at berlios.de)
+Date: Sat, 9 May 2009 23:06:16 +0200 (CEST)
+Subject: [Softdevice-devel] [Bug #15654] ShmClient Fullscreen
+Message-ID: <200905092106.n49L6GUZ014818@unicorn.berlios.de>
+
+Bug #15654, was updated on 2009-May-09 23:06
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Open
+Resolution: None
+Bug Group: None
+Priority: 5
+Submitted by: jbg70
+Assigned to : none
+Summary: ShmClient Fullscreen
+
+Details: Hello,
+I would like to start ShmClient in full screen mode, but it does not work.
+I used -vo shm:full in the server options, and xinit -e ShmClient -f to start the client but I get on my screen (1920x1080) just a small window.
+Softdevice is compiled from cvs, but also compiling 0.5.0 gives me the same problem. VDR is 1.7.5.
+Hope in a help!
+BR.
+
+
+For detailed info, follow this link:
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=15654&group_id=2051
+
+
+From wallak at free.fr  Mon May 11 01:39:09 2009
+From: wallak at free.fr (wallak at free.fr)
+Date: Mon, 11 May 2009 01:39:09 +0200
+Subject: [Softdevice-devel] Patch useful with the latest ffmpeg release
+	(r29288 05-2009)
+Message-ID: <1241998749.4a07659da10a3@imp.free.fr>
+
+
+The patch is attached here.
+
+Best Regards,
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ffmpeg-200905.patch
+Type: application/octet-stream
+Size: 5413 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/softdevice-devel/attachments/20090511/a9110351/attachment.obj>
+
+From lucianm at users.sourceforge.net  Mon Jun  1 14:53:04 2009
+From: lucianm at users.sourceforge.net (Lucian Muresan)
+Date: Mon, 01 Jun 2009 14:53:04 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3
+ passthrough mode no longer working
+Message-ID: <4A23CF30.4000503@users.sourceforge.net>
+
+Hi there,
+
+well, I haven't used softdevice anymore for a long time, because I had some
+strange video issues (only black screen with OSD, no video), and after I
+decided to start with a fresh new system on my VDR machine, now I'm giving
+vdr-1.7.7 a try, with the plugins that work already with it, softdevice
+being one of them.
+I tried this with softdevice-0.5.0.20090218 (as packaged in gentoo) and
+CVS,
+and my problem is that my external amplifier hooked up via optical SPDIF
+detects no signal when switching to AC3 audio tracks of channels or
+recordings. This works however when playing a video file with an AC3 track
+in fbxine for example. I mostly copied over the settings from my old
+system,
+where even this ac3 passtrhrough with softdevice used to work. Here are
+some
+settings and outputs that might be relevant:
+
+
+In /etc/vdr/setup.conf, I have:
+CurrentDolby = 1
+DolbyTransferFix = 0  # don't know what this does, there is no difference
+UseDolbyDigital = 1
+UseDolbyInRecordings = 1
+softdevice.AC3Mode = 1 # should be passthrough, right?
+
+
+'aplay -l' shows:
+**** List of PLAYBACK Hardware Devices ****
+card 0: CMI8738 [C-Media CMI8738], device 0: CMI8738-MC6 [C-Media PCI
+DAC/ADC]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: CMI8738 [C-Media CMI8738], device 1: CMI8738-MC6 [C-Media PCI 2nd
+DAC]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: CMI8738 [C-Media CMI8738], device 2: CMI8738-MC6 [C-Media PCI
+IEC958]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+
+
+'aplay -L' shows:
+front:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI DAC/ADC
+    Front speakers
+rear:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    Rear speakers
+surround40:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    4.0 Surround output to Front and Rear speakers
+surround41:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    4.1 Surround output to Front, Rear and Subwoofer speakers
+surround50:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    5.0 Surround output to Front, Center and Rear speakers
+surround51:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI 2nd DAC
+    5.1 Surround output to Front, Center, Rear and Subwoofer speakers
+iec958:CARD=CMI8738,DEV=0
+    C-Media CMI8738, C-Media PCI DAC/ADC
+    IEC958 (S/PDIF) Digital Audio Output
+null
+    Discard all samples (playback) or generate zero samples (capture)
+
+
+
+And the most important, the parameters given to the softdevice plugin:
+'--plugin=softdevice -vo dfb:mgatv -ao alsa:pcm=default#ac3=hw:0,2#'
+
+I have to mention that normal mpeg audio is decoded and sent as PCM to the
+SPDIF, only AC3 and only with vdr softdevice is the problem. I tried hw:0,0
+and hw:0,1 as well, but no sound. How to deal with this, did I miss
+something?
+
+Lucian
+
+
+From stefan at lucke.in-berlin.de  Tue Jun  2 09:58:54 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Tue, 02 Jun 2009 09:58:54 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS:
+	AC3	passthrough mode no longer working
+In-Reply-To: <4A23CF30.4000503@users.sourceforge.net>
+References: <4A23CF30.4000503@users.sourceforge.net>
+Message-ID: <20090602095854.11011ce03bpcjgse@webmail.in-berlin.de>
+
+Quoting "Lucian Muresan" <lucianm at users.sourceforge.net>:
+
+> I tried this with softdevice-0.5.0.20090218 (as packaged in gentoo) and
+> CVS,
+> and my problem is that my external amplifier hooked up via optical SPDIF
+> detects no signal when switching to AC3 audio tracks of channels or
+> recordings. This works however when playing a video file with an AC3 track
+> in fbxine for example. I mostly copied over the settings from my old
+> system,
+> where even this ac3 passtrhrough with softdevice used to work. Here are
+> some
+> settings and outputs that might be relevant:
+>
+>
+> In /etc/vdr/setup.conf, I have:
+> CurrentDolby = 1
+> DolbyTransferFix = 0  # don't know what this does, there is no difference
+> UseDolbyDigital = 1
+> UseDolbyInRecordings = 1
+> softdevice.AC3Mode = 1 # should be passthrough, right?
+
+Yes.
+
+>
+>
+> 'aplay -l' shows:
+> **** List of PLAYBACK Hardware Devices ****
+> card 0: CMI8738 [C-Media CMI8738], device 0: CMI8738-MC6 [C-Media PCI
+> DAC/ADC]
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+> card 0: CMI8738 [C-Media CMI8738], device 1: CMI8738-MC6 [C-Media PCI 2nd
+> DAC]
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+
+> card 0: CMI8738 [C-Media CMI8738], device 2: CMI8738-MC6 [C-Media PCI
+> IEC958]
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+
+So card 0 and device 2 should be ok. But the line with subdevice #0  
+irritates me.
+
+>
+>
+> 'aplay -L' shows:
+
+> surround51:CARD=CMI8738,DEV=0
+>     C-Media CMI8738, C-Media PCI 2nd DAC
+>     5.1 Surround output to Front, Center, Rear and Subwoofer speakers
+> iec958:CARD=CMI8738,DEV=0
+>     C-Media CMI8738, C-Media PCI DAC/ADC
+>     IEC958 (S/PDIF) Digital Audio Output
+> null
+>     Discard all samples (playback) or generate zero samples (capture)
+
+Discard all samples ??
+
+>
+>
+>
+> And the most important, the parameters given to the softdevice plugin:
+> '--plugin=softdevice -vo dfb:mgatv -ao alsa:pcm=default#ac3=hw:0,2#'
+>
+> I have to mention that normal mpeg audio is decoded and sent as PCM to the
+> SPDIF, only AC3 and only with vdr softdevice is the problem. I tried hw:0,0
+> and hw:0,1 as well, but no sound. How to deal with this, did I miss
+> something?
+
+Are there messages written to stderr which start with "ac3play"  
+(autsch: everything written to stdout grr) ?
+
+
+Stefan
+
+
+
+From lucianm at users.sourceforge.net  Wed Jun  3 00:37:05 2009
+From: lucianm at users.sourceforge.net (Lucian Muresan)
+Date: Wed, 03 Jun 2009 00:37:05 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3
+	passthrough mode no longer working
+References: <4A23CF30.4000503@users.sourceforge.net>
+	<20090602095854.11011ce03bpcjgse@webmail.in-berlin.de>
+Message-ID: <4a25a990.0b38560a.37a2.ffffd6d2@mx.google.com>
+
+Stefan Lucke wrote:
+
+>> 'aplay -l' shows:
+>> **** List of PLAYBACK Hardware Devices ****
+>> card 0: CMI8738 [C-Media CMI8738], device 0: CMI8738-MC6 [C-Media PCI
+>> DAC/ADC]
+>>   Subdevices: 1/1
+>>   Subdevice #0: subdevice #0
+>> card 0: CMI8738 [C-Media CMI8738], device 1: CMI8738-MC6 [C-Media PCI 2nd
+>> DAC]
+>>   Subdevices: 1/1
+>>   Subdevice #0: subdevice #0
+> 
+>> card 0: CMI8738 [C-Media CMI8738], device 2: CMI8738-MC6 [C-Media PCI
+>> IEC958]
+>>   Subdevices: 1/1
+>>   Subdevice #0: subdevice #0
+> 
+> So card 0 and device 2 should be ok. But the line with subdevice #0
+> irritates me.
+
+Could that be a problem?
+ 
+>>
+>>
+>> 'aplay -L' shows:
+> 
+>> surround51:CARD=CMI8738,DEV=0
+>>     C-Media CMI8738, C-Media PCI 2nd DAC
+>>     5.1 Surround output to Front, Center, Rear and Subwoofer speakers
+>> iec958:CARD=CMI8738,DEV=0
+>>     C-Media CMI8738, C-Media PCI DAC/ADC
+>>     IEC958 (S/PDIF) Digital Audio Output
+>> null
+>>     Discard all samples (playback) or generate zero samples (capture)
+> 
+> Discard all samples ??
+
+Well, if that's what the "null" device does... However, I do not use it (at 
+least, not knowingly).
+
+>> And the most important, the parameters given to the softdevice plugin:
+>> '--plugin=softdevice -vo dfb:mgatv -ao alsa:pcm=default#ac3=hw:0,2#'
+>>
+>> I have to mention that normal mpeg audio is decoded and sent as PCM to
+>> the SPDIF, only AC3 and only with vdr softdevice is the problem. I tried
+>> hw:0,0 and hw:0,1 as well, but no sound. How to deal with this, did I
+>> miss something?
+> 
+> Are there messages written to stderr which start with "ac3play"
+> (autsch: everything written to stdout grr) ?
+
+No, unfortunately none of those "ac3play" messages are written, really 
+strange...
+
+
+From stefan at lucke.in-berlin.de  Wed Jun  3 09:03:50 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Wed, 03 Jun 2009 09:03:50 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS:
+	AC3	passthrough mode no longer working
+In-Reply-To: <4a25a990.0b38560a.37a2.ffffd6d2@mx.google.com>
+References: <4A23CF30.4000503@users.sourceforge.net>
+	<20090602095854.11011ce03bpcjgse@webmail.in-berlin.de>
+	<4a25a990.0b38560a.37a2.ffffd6d2@mx.google.com>
+Message-ID: <20090603090350.13390kotk6fqg7km@webmail.in-berlin.de>
+
+Quoting "Lucian Muresan" <lucianm at users.sourceforge.net>:
+
+> Stefan Lucke wrote:
+>
+>>> 'aplay -l' shows:
+
+>>
+>>> card 0: CMI8738 [C-Media CMI8738], device 2: CMI8738-MC6 [C-Media PCI
+>>> IEC958]
+>>>   Subdevices: 1/1
+>>>   Subdevice #0: subdevice #0
+>>
+>> So card 0 and device 2 should be ok. But the line with subdevice #0
+>> irritates me.
+>
+> Could that be a problem?
+
+Hm ??
+
+>
+>>>
+>>>
+>>> 'aplay -L' shows:
+>>
+>>> surround51:CARD=CMI8738,DEV=0
+>>>     C-Media CMI8738, C-Media PCI 2nd DAC
+>>>     5.1 Surround output to Front, Center, Rear and Subwoofer speakers
+>>> iec958:CARD=CMI8738,DEV=0
+>>>     C-Media CMI8738, C-Media PCI DAC/ADC
+>>>     IEC958 (S/PDIF) Digital Audio Output
+>>> null
+>>>     Discard all samples (playback) or generate zero samples (capture)
+>>
+>> Discard all samples ??
+>
+> Well, if that's what the "null" device does... However, I do not use it (at
+> least, not knowingly).
+
+So I misread that one. Thought that there was a break inserted by  
+someone, and the line should read: "IEC958 (S/PDIF) Digital Audio  
+Output null".
+
+>
+>>> And the most important, the parameters given to the softdevice plugin:
+>>> '--plugin=softdevice -vo dfb:mgatv -ao alsa:pcm=default#ac3=hw:0,2#'
+>>>
+>>> I have to mention that normal mpeg audio is decoded and sent as PCM to
+>>> the SPDIF, only AC3 and only with vdr softdevice is the problem. I tried
+>>> hw:0,0 and hw:0,1 as well, but no sound. How to deal with this, did I
+>>> miss something?
+>>
+>> Are there messages written to stderr which start with "ac3play"
+>> (autsch: everything written to stdout grr) ?
+>
+> No, unfortunately none of those "ac3play" messages are written, really
+> strange...
+
+So everything looks ok, but there is no sound :-( .
+There are 2 additional code paths (4 choices in total):
+
+1. Switching to professional transmission:
+    setting 'ac3SpdifPro = true' in audio-alsa.c, line 41.
+2. Different open for AC3 with patch from Roland Praml found here:
+    http://www.vdr-portal.de/board/thread.php?postid=506499#post506499
+    Patch includes enforcing of spdifpro mode.
+
+If you need help, please ask again.
+
+Stefan
+
+
+
+From lucianm at users.sourceforge.net  Wed Jun  3 12:06:58 2009
+From: lucianm at users.sourceforge.net (Lucian Muresan)
+Date: Wed, 03 Jun 2009 12:06:58 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3
+ passthrough mode no longer working
+In-Reply-To: <20090603090350.13390kotk6fqg7km@webmail.in-berlin.de>
+References: <4A23CF30.4000503@users.sourceforge.net>	<20090602095854.11011ce03bpcjgse@webmail.in-berlin.de>	<4a25a990.0b38560a.37a2.ffffd6d2@mx.google.com>
+	<20090603090350.13390kotk6fqg7km@webmail.in-berlin.de>
+Message-ID: <4A264B42.9070003@users.sourceforge.net>
+
+Stefan Lucke wrote:
+>>>> 'aplay -l' shows:
+> 
+>>>> card 0: CMI8738 [C-Media CMI8738], device 2: CMI8738-MC6 [C-Media PCI
+>>>> IEC958]
+>>>>   Subdevices: 1/1
+>>>>   Subdevice #0: subdevice #0
+>>> So card 0 and device 2 should be ok. But the line with subdevice #0
+>>> irritates me.
+>> Could that be a problem?
+> 
+> Hm ??
+
+I just thought you're suspecting a problem with alsa by that subdevice
+#0 line...
+
+>>> Are there messages written to stderr which start with "ac3play"
+>>> (autsch: everything written to stdout grr) ?
+>> No, unfortunately none of those "ac3play" messages are written, really
+>> strange...
+> 
+> So everything looks ok, but there is no sound :-( .
+> There are 2 additional code paths (4 choices in total):
+> 
+> 1. Switching to professional transmission:
+>     setting 'ac3SpdifPro = true' in audio-alsa.c, line 41.
+> 2. Different open for AC3 with patch from Roland Praml found here:
+>     http://www.vdr-portal.de/board/thread.php?postid=506499#post506499
+>     Patch includes enforcing of spdifpro mode.
+> 
+> If you need help, please ask again.
+
+Thanks for the two hints, will try the other 3 remaining code paths
+tonight and report back.
+
+Lucian
+
+
+From lucianm at users.sourceforge.net  Wed Jun  3 23:14:20 2009
+From: lucianm at users.sourceforge.net (Lucian Muresan)
+Date: Wed, 03 Jun 2009 23:14:20 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3
+	passthrough mode no longer working
+References: <4A23CF30.4000503@users.sourceforge.net>
+	<20090602095854.11011ce03bpcjgse@webmail.in-berlin.de>
+	<4a25a990.0b38560a.37a2.ffffd6d2@mx.google.com>
+	<20090603090350.13390kotk6fqg7km@webmail.in-berlin.de>
+	<4A264B42.9070003@users.sourceforge.net>
+Message-ID: <4a26e7ab.0c07560a.6055.0600@mx.google.com>
+
+Lucian Muresan wrote:
+
+[...]
+>>> No, unfortunately none of those "ac3play" messages are written, really
+>>> strange...
+>> 
+>> So everything looks ok, but there is no sound :-( .
+>> There are 2 additional code paths (4 choices in total):
+>> 
+>> 1. Switching to professional transmission:
+>>     setting 'ac3SpdifPro = true' in audio-alsa.c, line 41.
+>> 2. Different open for AC3 with patch from Roland Praml found here:
+>>     http://www.vdr-portal.de/board/thread.php?postid=506499#post506499
+>>     Patch includes enforcing of spdifpro mode.
+>> 
+>> If you need help, please ask again.
+> 
+> Thanks for the two hints, will try the other 3 remaining code paths
+> tonight and report back.
+
+Unfortunately, no luck with 'ac3SpdifPro = true', and that version of Roland 
+Praml's patch semms to be pretty old, it does no longer apply to current 
+softdevice. Do you have a newer one, by chance ;-) ?
+
+Lucian
+
+
+From stefan at lucke.in-berlin.de  Thu Jun  4 21:14:57 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Thu, 4 Jun 2009 21:14:57 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3
+	passthrough mode no longer working
+In-Reply-To: <4a26e7ab.0c07560a.6055.0600@mx.google.com>
+References: <4A23CF30.4000503@users.sourceforge.net>
+	<4A264B42.9070003@users.sourceforge.net>
+	<4a26e7ab.0c07560a.6055.0600@mx.google.com>
+Message-ID: <200906042114.57947.stefan@lucke.in-berlin.de>
+
+On Wednesday 03 June 2009, Lucian Muresan wrote:
+> Lucian Muresan wrote:
+> 
+> [...]
+> >>> No, unfortunately none of those "ac3play" messages are written, really
+> >>> strange...
+> >> 
+> >> So everything looks ok, but there is no sound :-( .
+> >> There are 2 additional code paths (4 choices in total):
+> >> 
+> >> 1. Switching to professional transmission:
+> >>     setting 'ac3SpdifPro = true' in audio-alsa.c, line 41.
+> >> 2. Different open for AC3 with patch from Roland Praml found here:
+> >>     http://www.vdr-portal.de/board/thread.php?postid=506499#post506499
+> >>     Patch includes enforcing of spdifpro mode.
+> >> 
+> >> If you need help, please ask again.
+> > 
+> > Thanks for the two hints, will try the other 3 remaining code paths
+> > tonight and report back.
+> 
+> Unfortunately, no luck with 'ac3SpdifPro = true', and that version of Roland 
+> Praml's patch semms to be pretty old, it does no longer apply to current 
+> softdevice. Do you have a newer one, by chance ;-) ?
+
+Here is one, I did only a compile test.
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: audio-ac3pt.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/audio-ac3pt.c,v
+retrieving revision 1.3
+diff -U3 -r1.3 audio-ac3pt.c
+--- audio-ac3pt.c	25 Dec 2007 13:21:46 -0000	1.3
++++ audio-ac3pt.c	4 Jun 2009 19:11:53 -0000
+@@ -500,6 +500,7 @@
+ unsigned int
+ cAlsaAC3pt::SpdifInitAC3(snd_pcm_t **handle, char *device, bool spdifPro)
+ {
++    char                      pcm_name[256];
+     static snd_aes_iec958_t   spdif;
+     unsigned int              rate = 48000;
+     snd_pcm_info_t            *info;
+@@ -509,22 +510,12 @@
+     unsigned int              channels = 2;
+     int                       err;//, c;
+ 
+-  if ((err = snd_pcm_open(handle, device, SND_PCM_STREAM_PLAYBACK, 0)) < 0)
+-  {
+-    fprintf(stderr, "ac3play: sound open: %s\n", snd_strerror(err));
+-    return 1;
+-  }
+-
+   if (ac3Status)
+     snd_pcm_status_free(ac3Status);
++  ac3Status = NULL;
+ 
+   snd_pcm_info_alloca(&info);
+ 
+-  if ((err = snd_pcm_info(*handle, info)) < 0) {
+-    fprintf(stderr, "ac3play: sound info: %s\n", snd_strerror(err));
+-    snd_pcm_close(*handle);
+-    return 1;
+-  }
+   {
+       snd_ctl_elem_value_t  *ctl;
+       snd_ctl_t             *ctl_handle;
+@@ -551,6 +542,31 @@
+       spdif.status[3]  = (iec958_aes3_con_fs_rate);
+     }
+ 
++
++    snprintf(pcm_name, sizeof (pcm_name),
++             "iec958:AES0=0x%.2x,AES1=0x%.2x,AES2=0x%.2x,AES3=0x%.2x,CARD=%1d",
++             spdif. status [0], spdif. status [1],
++             spdif. status [2], spdif. status [3],
++             0);
++
++    err = snd_pcm_open (handle, pcm_name, SND_PCM_STREAM_PLAYBACK, 0);
++    if (err >= 0) {
++      fprintf(stderr, "ac3play: Sucessfull opend (%s)\n", pcm_name);
++      goto __diga_end;
++    }
++
++    fprintf(stderr, "ac3play: Failed to open (%s) trying old way\n", pcm_name);
++    if ((err = snd_pcm_open(handle, device, SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
++      fprintf(stderr, "ac3play: sound open: %s\n", snd_strerror(err));
++      return 1;
++    }
++
++    if ((err = snd_pcm_info(*handle, info)) < 0) {
++      fprintf(stderr, "ac3play: sound info: %s\n", snd_strerror(err));
++      snd_pcm_close(*handle);
++      return 1;
++    }
++
+     snd_ctl_elem_value_alloca(&ctl);
+     snd_ctl_elem_value_set_interface(ctl, SND_CTL_ELEM_IFACE_PCM);
+     snd_ctl_elem_value_set_device(ctl, snd_pcm_info_get_device(info));
+@@ -572,9 +588,9 @@
+       goto __diga_end;
+     }
+     snd_ctl_close(ctl_handle);
+-    __diga_end:
+-      ;
+   }
++  __diga_end:
++    ;
+   {
+       snd_pcm_hw_params_t *params;
+       snd_pcm_sw_params_t *swparams;
+
+From stefan at lucke.in-berlin.de  Sun Jun 14 13:24:54 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Jun 2009 13:24:54 +0200
+Subject: [Softdevice-devel] Patch useful with the latest ffmpeg release
+	(r29288 05-2009)
+In-Reply-To: <1241998749.4a07659da10a3@imp.free.fr>
+References: <1241998749.4a07659da10a3@imp.free.fr>
+Message-ID: <200906141324.54703.stefan@lucke.in-berlin.de>
+
+On Monday 11 May 2009, wallak at free.fr wrote:
+> 
+> The patch is attached here.
+> 
+
+Thanks for the patch, but I decided to apply a smaller one which
+works with old ffmpeg versions too.
+
+-- 
+Stefan Lucke
+
+
+From stefan at lucke.in-berlin.de  Sun Jun 14 13:25:02 2009
+From: stefan at lucke.in-berlin.de (Stefan Lucke)
+Date: Sun, 14 Jun 2009 13:25:02 +0200
+Subject: [Softdevice-devel] softdevice-0.5.0.20090218 and CVS: AC3
+	passthrough mode no longer working
+In-Reply-To: <200906042114.57947.stefan@lucke.in-berlin.de>
+References: <4A23CF30.4000503@users.sourceforge.net>
+	<4a26e7ab.0c07560a.6055.0600@mx.google.com>
+	<200906042114.57947.stefan@lucke.in-berlin.de>
+Message-ID: <200906141325.03127.stefan@lucke.in-berlin.de>
+
+On Thursday 04 June 2009, Stefan Lucke wrote:
+> On Wednesday 03 June 2009, Lucian Muresan wrote:
+> > Lucian Muresan wrote:
+> > 
+> > [...]
+> > >>> No, unfortunately none of those "ac3play" messages are written, really
+> > >>> strange...
+> > >> 
+> > >> So everything looks ok, but there is no sound :-( .
+> > >> There are 2 additional code paths (4 choices in total):
+> > >> 
+> > >> 1. Switching to professional transmission:
+> > >>     setting 'ac3SpdifPro = true' in audio-alsa.c, line 41.
+> > >> 2. Different open for AC3 with patch from Roland Praml found here:
+> > >>     http://www.vdr-portal.de/board/thread.php?postid=506499#post506499
+> > >>     Patch includes enforcing of spdifpro mode.
+> > >> 
+> > >> If you need help, please ask again.
+> > > 
+> > > Thanks for the two hints, will try the other 3 remaining code paths
+> > > tonight and report back.
+> > 
+> > Unfortunately, no luck with 'ac3SpdifPro = true', and that version of Roland 
+> > Praml's patch semms to be pretty old, it does no longer apply to current 
+> > softdevice. Do you have a newer one, by chance ;-) ?
+> 
+> Here is one, I did only a compile test.
+
+Commited as new default.
+Works for me even is case I've compile selected S/PDIF pro.
+
+-- 
+Stefan Lucke
+
+

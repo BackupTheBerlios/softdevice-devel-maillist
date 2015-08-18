@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Rescaling for a large LCD TV
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3C200510172113.26602.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001383.html">
+   <LINK REL="Next"  HREF="001389.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Rescaling for a large LCD TV</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rescaling%20for%20a%20large%20LCD%20TV&In-Reply-To=%3C200510172113.26602.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Rescaling for a large LCD TV">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Oct 17 21:13:26 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001383.html">[Softdevice-devel] bad display after pause
+</A></li>
+        <LI>Next message: <A HREF="001389.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1384">[ date ]</a>
+              <a href="thread.html#1384">[ thread ]</a>
+              <a href="subject.html#1384">[ subject ]</a>
+              <a href="author.html#1384">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 16. Oktober 2005 20:07, Harald Milz wrote:
+&gt;<i> Hi Stefan,
+</I>&gt;<i> 
+</I>&gt;<i> On Sun, Oct 16, 2005 at 07:27:42PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; On Sonntag, 16. Oktober 2005 14:58, Harald Milz wrote:
+</I>&gt;<i> &gt; &gt; Question. The TV set (BenQ DV3250) offers various rescaling modes. Standard
+</I>&gt;<i> &gt; &gt; 720x576 PAL is usually rescaled to fill the screen vertically while
+</I>&gt;<i> &gt; &gt; keeping an aspect ratio of 4:3.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; But it should have a mode where it fills the entire screen with the
+</I>&gt;<i> &gt; 720x576 source. Thats what my 7&quot; mini LCD does. In that mode, I set
+</I>&gt;<i> &gt; monitor aspect to 16:9 and softdevice scales 4:3 aspect horizontally.
+</I>&gt;<i> 
+</I>&gt;<i> Yes it does. Normal 720x576 persons are real eggheads then ;-) 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; If there are problems, let us know which are actual scaling paramters.
+</I>&gt;<i> &gt; They are reported via syslog.
+</I>&gt;<i> 
+</I>&gt;<i> Did some tests with softdevice over DVI this afternoon. The card is a
+</I>&gt;<i> Matrox G550 w/ DVI on 1 and VGA on 2. The TV set accepts only DVI-D so
+</I>&gt;<i> I got a 24-pin dual channel cable. The Linux console comes up just fine,
+</I>&gt;<i> and I can set the display for 576p or 720p just fine. But there must be
+</I>&gt;<i> something wrong with my DFB settings.
+</I>&gt;<i> 
+</I>&gt;<i> HW/SW: 
+</I>&gt;<i> vdr-1.3.26
+</I>&gt;<i> softdevice-0.2.0
+</I>&gt;<i> DirectFB-0.9.22
+</I>&gt;<i> DFB++-0.9.22
+</I>&gt;<i> ffmpeg-0.4.8 (--enable-a52 --disable-ffserver --disable-ffplay
+</I>&gt;<i>               --enable-a52bin --disable-mmx --enable-pp --enable-shared)
+</I>&gt;<i> 
+</I>&gt;<i> SUSE 9.3 DVB modules with Werner's dvb-ttpci-01.fw-261d-patched
+</I>&gt;<i> rev. 1.3 FF card
+</I>&gt;<i> FSC Activy budget card
+</I>&gt;<i> Matrox Graphics, Inc. MGA G550 AGP (rev 01) (102b:2527)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> /etc/fb.modes: 
+</I>&gt;<i> 
+</I>&gt;<i> # HDTV 1280x720-50 for LCD projector
+</I>&gt;<i> # 50 Hz
+</I>&gt;<i> mode &quot;1280x720-50&quot;
+</I>&gt;<i>    # D: 61.80 MHz, H: 37.50 kHz, V: 50.00 Hz
+</I>&gt;<i>    geometry 1280 720 1280 720 32
+</I>&gt;<i>    timings 16181 218 110 20 5 40 5
+</I>&gt;<i> endmode
+</I>&gt;<i> 
+</I>&gt;<i> # 60 Hz
+</I>&gt;<i> mode &quot;1280x720-60&quot;
+</I>&gt;<i>    # D: 74.25 MHz, H: 45.00 kHz, V: 60.00 Hz
+</I>&gt;<i>    geometry 1280 720 1280 720 16
+</I>&gt;<i>    timings 13468 220 110 20 5 40 5
+</I>&gt;<i> endmode
+</I>&gt;<i> 
+</I>&gt;<i> mode &quot;720x576-50&quot;
+</I>&gt;<i>     geometry 720 576 720 576 16
+</I>&gt;<i>     timings 35714 32 8 46 0 136 3
+</I>&gt;<i> endmode
+</I>
+After having a look at the user manual, the BenQ devices are rather
+limited in possible display resolutions. They mention only very few
+resolutions for graphic input. the largest is 1024x768 :-( . All of
+mentioned resolution have refresh rates &gt;= 60 Hz .
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001383.html">[Softdevice-devel] bad display after pause
+</A></li>
+	<LI>Next message: <A HREF="001389.html">[Fwd: [Softdevice-devel] bad display after pause]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1384">[ date ]</a>
+              <a href="thread.html#1384">[ thread ]</a>
+              <a href="subject.html#1384">[ subject ]</a>
+              <a href="author.html#1384">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

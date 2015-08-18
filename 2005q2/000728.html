@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OProfile success story and some performance measurement tips
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%0A%20measurement%20tips&In-Reply-To=%3C4294A705.6070508%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000714.html">
+   <LINK REL="Next"  HREF="000729.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OProfile success story and some performance measurement tips</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OProfile%20success%20story%20and%20some%20performance%0A%20measurement%20tips&In-Reply-To=%3C4294A705.6070508%40gmx.net%3E"
+       TITLE="[Softdevice-devel] OProfile success story and some performance measurement tips">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed May 25 18:25:41 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000714.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+        <LI>Next message: <A HREF="000729.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#728">[ date ]</a>
+              <a href="thread.html#728">[ thread ]</a>
+              <a href="subject.html#728">[ subject ]</a>
+              <a href="author.html#728">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> Hi all,
+</I>&gt;<i> 
+</I>&gt;<i> At times, my 900 MHz Celeron system used to use over 90% CPU in VDR, and it
+</I>&gt;<i> would drop frames in busy scenes.  After some profiling, I was able to cut
+</I>&gt;<i> the CPU consumption to 60-70% of the original.
+</I>&gt;<i> 
+</I>&gt;<i> Last night I did some profiling with oprofile.  I had linked softdevice
+</I>&gt;<i> statically against ffmpeg (compiled from CVS about two weeks ago), so
+</I>&gt;<i> I could conveniently see which functions are consuming most of the time.
+</I>&gt;<i> I'm typing this from memory, so there may be inaccuracies.
+</I>&gt;<i> 
+</I>&gt;<i> The biggest surprise was color space conversion.  If I remember correctly,
+</I>&gt;<i> there are three settings: I420, YUY2 and YV12.  One might have blue and red
+</I>&gt;<i> swapped on my Matrox G450 (I think) card, but the other two look okay.
+</I>&gt;<i> Until now, I had used YV12 (I think), and wasted some 20-30 percent of
+</I>&gt;<i> softdevice's CPU consumption in color space conversions.  After selecting
+</I>&gt;<i> I420, the CPU load dropped by maybe 20 percent.
+</I>Maybe we should write somewhere that people should use I420 if possible 
+(it is the native colorspace for mpeg2). YV12 is only there for people 
+owning a graphics card which can't do I420 or YUV2. But I think 
+I420/YUV2 is the default, or am I wrong?
+
+&gt;<i> 
+</I>&gt;<i> Another thing, which wasn't so surprising, was that lavc deinterlacing consumes
+</I>&gt;<i> about 40% of softdevice's time.  After disabling deinterlacing, I couldn't
+</I>&gt;<i> notice any dropped frames.  I didn't measure all the interlacing options that
+</I>&gt;<i> are available with libpostproc.
+</I>Hmm, isn't no deinterlacing also the default?
+I guess you don't even need deintelacing because the Matrox can do it in 
+hardware ;-)
+
+Probably we should check again the default settings and write a short 
+description about the options somewhere in the Readme.
+&gt;<i> 
+</I>&gt;<i> My /root/.oprofile/daemonrc looks like this:
+</I>&gt;<i> 
+</I>&gt;<i> CHOSEN_EVENTS[0]=CPU_CLK_UNHALTED:90000:0:1:1
+</I>&gt;<i> NR_CHOSEN=1
+</I>&gt;<i> SEPARATE_LIB=1
+</I>&gt;<i> SEPARATE_KERNEL=0
+</I>&gt;<i> SEPARATE_THREAD=0
+</I>&gt;<i> SEPARATE_CPU=0
+</I>&gt;<i> VMLINUX=none
+</I>&gt;<i> IMAGE_FILTER=
+</I>&gt;<i> CPU_BUF_SIZE=0
+</I>&gt;<i> CALLGRAPH=6
+</I>&gt;<i> 
+</I>Is it possible to measure cache misses with your processor?
+The reason I'm asking is that currently the softdevice decodes a 
+complete picture, sleeps until it is to be shown, copies the picture to 
+the video memory and flips the page.
+The sleep between decoding and copying is asking for cache misses. Apart 
+from that for most boards / processors one frame doesn't fit into the 
+cache. Fortunatly libavcodec has a callback which is called as soon as 
+one slice of the picture has been decoded, so that the copying can be 
+done while that slice is still in the cache.
+I'm currently thinking of using that feature in the softdevice, but it 
+would be nice to have some hard numbers on the improvement especially 
+for processors with small caches to decide how important that feature is.
+In fact it is not that difficult to implement, but it would take some 
+time to do it right ;-)
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000714.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+	<LI>Next message: <A HREF="000729.html">[Softdevice-devel] OProfile success story and some performance measurement tips
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#728">[ date ]</a>
+              <a href="thread.html#728">[ thread ]</a>
+              <a href="subject.html#728">[ subject ]</a>
+              <a href="author.html#728">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

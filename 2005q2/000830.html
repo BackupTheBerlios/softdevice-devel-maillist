@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> AW: [Softdevice-devel] Softdevice 0.1.2 and vidix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20Softdevice%200.1.2%20and%20vidix&In-Reply-To=%3C89DA0C8396353141B701CE3927F77C7502371161%40FALNEXCH2.emea.itt.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000839.html">
+   <LINK REL="Next"  HREF="000831.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>AW: [Softdevice-devel] Softdevice 0.1.2 and vidix</H1>
+    <B>Doermann, Stefan - FHS</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20Softdevice%200.1.2%20and%20vidix&In-Reply-To=%3C89DA0C8396353141B701CE3927F77C7502371161%40FALNEXCH2.emea.itt.net%3E"
+       TITLE="AW: [Softdevice-devel] Softdevice 0.1.2 and vidix">Stefan.Doermann at itt.com
+       </A><BR>
+    <I>Tue Jun  7 09:00:58 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000839.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+        <LI>Next message: <A HREF="000831.html">AW: [Softdevice-devel] Softdevice 0.1.2 and vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#830">[ date ]</a>
+              <a href="thread.html#830">[ thread ]</a>
+              <a href="subject.html#830">[ subject ]</a>
+              <a href="author.html#830">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks Stefan, good job. I tried the CVS version yesterday. It works, no more restarts. What made wondering was that the file size of libsoftdevice.so has increased from 130kByte to 640kByte. I need to test a bit more, but it seems that there are no more chrashes when you switch from one channel with 4:3 to a different one with 16:9. One issue I noticed is about OSD. Using &quot;software&quot; osd on YUV (with or without deinterlacing) causes that no osd is shown. This option works only i402 (first pixel option, sorry I can't remember) but causes at my system 50% CPU load, whereas YUV without deinterlacing (best picture) is between 23-30%.
+Thanks for this great plugin.  
+
+Best regards, Mit freundlichen Gr&#252;ssen,
+
+Stefan Doermann
+ITT Fluid Handling Systems
+Project manager
+Unnauer Weg 7a
+50767 K&#246;ln / Germany
+Fon: 0049 (0) 221 7910 842
+Fax: 0049 (0) 221 7910 472
+Mobile: 0049 (0) 1726351965
+Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan.doermann at itt.com</A>
+
+
+
+-----Urspr&#252;ngliche Nachricht-----
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] Im Auftrag von Stefan Lucke
+Gesendet: Sonntag, 5. Juni 2005 23:00
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+Betreff: Re: [Softdevice-devel] Softdevice 0.1.2 and vidix
+
+
+On Sonntag, 5. Juni 2005 09:14, Stefan Lucke wrote:
+&gt;<i> On Samstag, 4. Juni 2005 21:36, Martin Wache wrote:
+</I>&gt;<i> &gt; Doermann, Stefan - FHS wrote:
+</I>&gt;<i> &gt; &gt; Hi list,
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I do have some questions about the latest softdevice 0.1.2:
+</I>&gt;<i> &gt; &gt; a) When compiling softdevice with vidix support, vdr keeps
+</I>&gt;<i> &gt; &gt; restarting.
+</I>&gt;<i> &gt; &gt; Obviously softdevice causes an seg. fault. This hasn't happened with
+</I>&gt;<i> &gt; &gt; 0.1.1. I also tried CVS from 30th of mai, with the same result. Has
+</I>&gt;<i> &gt; &gt; anybody noticed a similar behaviour ?
+</I>&gt;<i> &gt; For me vidix works just like in version 0.1.1. Is there something in
+</I>&gt;<i> &gt; the
+</I>&gt;<i> &gt; logs which could give a hint what causes the segfault? Or could you
+</I>&gt;<i> &gt; enable core dumps in your system and send me the backtrace?
+</I>&gt;<i>
+</I>&gt;<i> For me it is crashing too :-) . I'm currently hunting this bug. The
+</I>&gt;<i> crash is in YUV() method of vidix. It seems to be called when the
+</I>&gt;<i> layer of vidix is not initialized (memcpy() line 410). One of the last
+</I>&gt;<i> changes, calls YUV() from video.c too.
+</I>
+A fix for vidix crash is in cvs now.
+
+
+--
+Stefan Lucke
+
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+
+************************************
+This e-mail and any files transmitted with it are proprietary and intended solely for the use of the individual or entity to whom they are addressed. If you have received this e-mail in error please notify the sender. Please note that any views or opinions presented in this e-mail are solely those of the author and do not necessarily represent those of ITT Industries, Inc. The recipient should check this e-mail and any attachments for the presence of viruses. ITT Industries accepts no liability for any damage caused by any virus transmitted by this e-mail.
+************************************
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000839.html">[Softdevice-devel] An initial solution for bug #002971 ?
+</A></li>
+	<LI>Next message: <A HREF="000831.html">AW: [Softdevice-devel] Softdevice 0.1.2 and vidix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#830">[ date ]</a>
+              <a href="thread.html#830">[ thread ]</a>
+              <a href="subject.html#830">[ subject ]</a>
+              <a href="author.html#830">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

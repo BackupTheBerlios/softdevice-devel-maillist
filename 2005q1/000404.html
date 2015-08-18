@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Juddering OSD with mgatv output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C4249D4CB.7080805%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000398.html">
+   <LINK REL="Next"  HREF="000405.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Juddering OSD with mgatv output</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Juddering%20OSD%20with%20mgatv%20output&In-Reply-To=%3C4249D4CB.7080805%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] Juddering OSD with mgatv output">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Wed Mar 30 00:20:59 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000398.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+        <LI>Next message: <A HREF="000405.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#404">[ date ]</a>
+              <a href="thread.html#404">[ thread ]</a>
+              <a href="subject.html#404">[ subject ]</a>
+              <a href="author.html#404">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+...
+&gt;<i> For debugging a added interlaced and top/bottom first change reporting.
+</I>&gt;<i> With result that top_field_first is set allways and that interlaced flag
+</I>&gt;<i> is unrelaiable (changeing every now and than).
+</I>&gt;<i> 
+</I>&gt;<i> With attached patch you'll get field order changes reported.
+</I>&gt;<i> 
+</I>
+Hi Stefan,
+
+thank you for the debug patch. I've seen no filed order changes output 
+in my log file. But after Jari H said it could be the command line he 
+saw that I posted earlier today, well, yesterday, it's midnight now, I 
+checked that damned line again, and I've got interesting news!
+I only compiled softdevice with the DFB subplugin, but now I remember it 
+once only had generic DFB support, and then the specialized mgatv was 
+introduced by you. It happens that I invoked it almost all the time 
+wrong (I didn't try it often, my vdr runs mainly in deamon mode for 
+scheduled recordings from which I archive to DVDs right now, as I 
+thought it wasn't enough WAF-ready to replace my cheap Aldi-receiver 
+from last summer). Namely, I invoked it like
+vdr ..... -P'softdevice -L /usr/lib/vdr -vo:mgatv'
+which I think makes softdevice run on the &quot;generic&quot; directfb code path, 
+as mgatv is probably ignored when invoked that way.
+Then, after reading Jari's message (thanks a lot!), I invoked it as it 
+is supposed to be invoked for Matrox TV-out:
+vdr ..... -P'softdevice -L /usr/lib/vdr -vo dfb:mgatv'
+
+So the difference between theese 2 invokationa are that the first one 
+gives me judder but synced audio, and the second one, tailored for 
+Matrox G4xx TV-out gives me almost perfect video (no more field parity 
+issues, just a little jump once in a while, maybe smoe sync-related 
+catch-up), but the audio is off-sync again.
+
+I didn't notice the first invocation was wrong, there was no error 
+message, but the normal directfb output was chosen (maybe also because 
+there is no other subplugin compiled in my case).
+
+Maybe you're now able to find out what makes the non-mgatv code path in 
+softdevice succeed in AV-sync and the mgatv path fail. Well, what about 
+you, is AV in sync when using -vo dfb:mgatv (and not -vo:mgatv like I did)?
+
+Lucian
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000398.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+	<LI>Next message: <A HREF="000405.html">[Softdevice-devel] Juddering OSD with mgatv output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#404">[ date ]</a>
+              <a href="thread.html#404">[ thread ]</a>
+              <a href="subject.html#404">[ subject ]</a>
+              <a href="author.html#404">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

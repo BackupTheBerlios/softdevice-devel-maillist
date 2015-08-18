@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%20ffmpeg%0A%20%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C499B8F26.7070708%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003207.html">
+   <LINK REL="Next"  HREF="003210.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%20ffmpeg%0A%20%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C499B8F26.7070708%40globall.ru%3E"
+       TITLE="[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)">bob at globall.ru
+       </A><BR>
+    <I>Wed Feb 18 05:31:34 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003207.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003210.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3208">[ date ]</a>
+              <a href="thread.html#3208">[ thread ]</a>
+              <a href="subject.html#3208">[ subject ]</a>
+              <a href="author.html#3208">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> Attached patch is a fix for softdevice, which works with
+</I>&gt;<i> unpatched ffmpeg.
+</I>&gt;<i>   
+</I>Thanks, it works for me.
+I use ffmpeg version r16916:
+
+athlon vdr-1.6.0-2 # ffplay
+FFplay version SVN-r16916, Copyright (c) 2003-2009 Fabrice Bellard, et al.
+  configuration: --prefix=/usr --libdir=/usr/lib64 --shlibdir=/usr/lib64
+--mandir=/usr/share/man --enable-static --enable-shared
+--cc=x86_64-pc-linux-gnu-gcc --disable-debug --disable-network
+--disable-optimizations --enable-libmp3lame --enable-libvorbis
+--enable-libxvid --enable-libdc1394 --disable-demuxer=v4l
+--disable-demuxer=v4l2 --disable-demuxer=oss --disable-muxer=oss
+--enable-x11grab --enable-libamr-nb --enable-libamr-wb --enable-nonfree
+--disable-ssse3 --disable-altivec --cpu=k8 --disable-vhook --enable-gpl
+--enable-postproc --enable-avfilter --enable-avfilter-lavf
+--enable-swscale --disable-stripping
+  libavutil     49.14. 0 / 49.14. 0
+  libavcodec    52.11. 0 / 52.11. 0
+  libavformat   52.25. 0 / 52.25. 0
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libavfilter    0. 3. 0 /  0. 3. 0
+  libswscale     0. 6. 1 /  0. 6. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Feb  1 2009 22:42:50, gcc: 4.1.2 (Gentoo 4.1.2 p1.3)
+An input file must be specified
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003207.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003210.html">[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3208">[ date ]</a>
+              <a href="thread.html#3208">[ thread ]</a>
+              <a href="subject.html#3208">[ subject ]</a>
+              <a href="author.html#3208">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

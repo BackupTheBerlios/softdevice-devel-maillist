@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A-V sync problems with directfb on unichrome...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on%20unichrome...&In-Reply-To=%3C1127384905.27018.27.camel%40laser2.york.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001254.html">
+   <LINK REL="Next"  HREF="001258.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A-V sync problems with directfb on unichrome...</H1>
+    <B>Laurence Abbott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A-V%20sync%20problems%20with%20directfb%20on%20unichrome...&In-Reply-To=%3C1127384905.27018.27.camel%40laser2.york.ac.uk%3E"
+       TITLE="[Softdevice-devel] A-V sync problems with directfb on unichrome...">laz at club-burniston.co.uk
+       </A><BR>
+    <I>Thu Sep 22 12:28:25 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001254.html">[Softdevice-devel] [Feature #1293] VDR mplayer-plugin support
+</A></li>
+        <LI>Next message: <A HREF="001258.html">[Softdevice-devel] A-V sync problems with directfb on unichrome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1255">[ date ]</a>
+              <a href="thread.html#1255">[ thread ]</a>
+              <a href="subject.html#1255">[ subject ]</a>
+              <a href="author.html#1255">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm trying to debug the A-V sync problems I'm seeing with directfb
+output from softdevice on an Epia MII system. This is with CVS DirectFB
+from a couple of days ago, and the viafb module from pather2k (both
+patched to give correct field sync), softdevice CVS from a couple of
+days ago, and vdr-1.3.32.
+
+For me, A-V sync wanders about a lot, both for live TV and for
+recordings (not tried playing back vdr recordings with softplay yet, as
+others have mentioned). I'm currently enabling various debugging bits in
+mpeg2decoder.c and I'm seeing quite a lot of 'nan' in the output!
+
+#define MPGDEB:
+
+(after a few seconds to stabilise itself):
+mpegdec[8621]:Frame# 241   A-V(ms) -394  delay 11874 FrameT: B_t,
+dispTime(ms): n
+an
+mpegdec[8633]:Got pts: pictno 243  pts: 641653059 lastIdx 4
+mpegdec[8633]:video pts: 641653059, values.pkt : 641653059 pts - valid
+PTS: 0 pic
+tno: 243 idx: 3
+mpegdec[8634]:audio pts 641654803 pkt-&gt;PTS : 641654803 pts - valid PTS:
+0
+mpegdec[8634]:audio pts offset -1103818638
+mpegdec[8634]:a_delay 1823 at end of decode
+mpegdec[8635]:audio: count: 423  Length: 576 len: 576 a_size: 4608
+a_delay: 1811
+mpegdec[8648]:audio pts offset -1103818638
+mpegdec[8648]:a_delay 1918 at end of decode
+mpegdec[8661]:Frame# 242   A-V(ms) -334  delay 11289 FrameT: B_t,
+dispTime(ms): n
+an
+mpegdec[8674]:Got pts: pictno 244  pts: 641654659 lastIdx 5
+mpegdec[8674]:video pts: 641653459, values.pkt : 641653459 pts - valid
+PTS: 0 pic
+tno: 241 idx: 1
+mpegdec[8698]:audio: count: 424  Length: 576 len: 576 a_size: 4608
+a_delay: 1421
+mpegdec[8698]:audio pts offset -1103818638
+mpegdec[8698]:a_delay 1661 at end of decode
+mpegdec[8699]:audio: count: 425  Length: 576 len: 576 a_size: 4608
+a_delay: 1650
+mpegdec[8699]:audio pts offset -1103818637
+mpegdec[8699]:a_delay 1890 at end of decode
+mpegdec[8700]:audio: count: 426  Length: 576 len: 576 a_size: 4608
+a_delay: 1878
+mpegdec[8703]:Frame# 243   A-V(ms) -226  delay 7577 FrameT: P_t,
+dispTime(ms): nan
+mpegdec[8714]:Got pts: pictno 245  pts: 641653859 lastIdx 6
+mpegdec[8714]:video pts: 641653859, values.pkt : 641653859 pts - valid
+PTS: 0 pic
+tno: 245 idx: 5
+mpegdec[8724]:audio pts offset -1103818638
+mpegdec[8724]:a_delay 1876 at end of decode
+mpegdec[8726]:audio: count: 427  Length: 576 len: 576 a_size: 4608
+a_delay: 1863
+mpegdec[8741]:Frame# 244   A-V(ms) -372  delay 9394 FrameT: B_t,
+dispTime(ms): na
+n
+mpegdec[8751]:audio pts offset -1103818638
+mpegdec[8751]:a_delay 1853 at end of decode
+mpegdec[8752]:Got pts: pictno 246  pts: 641654259 lastIdx 7
+mpegdec[8752]:video pts: 641654259, values.pkt : 641654259 pts - valid
+PTS: 0 pic
+tno: 246 idx: 6
+mpegdec[8781]:Frame# 245   A-V(ms) -509  delay 10405 FrameT: B_t,
+dispTime(ms): n
+an
+mpegdec[8796]:Got pts: pictno 247  pts: 641655859 lastIdx 8
+mpegdec[8796]:video pts: 641654659, values.pkt : 641654659 pts - valid
+PTS: 0 pic
+tno: 244 idx: 4
+mpegdec[8805]:audio: count: 428  Length: 576 len: 576 a_size: 4608
+a_delay: 1311
+mpegdec[8805]:audio pts 641656243 pkt-&gt;PTS : 641656243 pts - valid PTS:
+0
+mpegdec[8805]:audio pts offset -1103818638
+mpegdec[8805]:a_delay 1551 at end of decode
+mpegdec[8806]:audio: count: 429  Length: 576 len: 576 a_size: 4608
+a_delay: 1540
+
+(I can't work out why dispTime always comes out as 'nan' because it
+should just be (float)dispTime/1000 and it's happy with delay which is
+-=dispTime.)
+
+#define AV_STATS:
+
+A-V: nan+-nan ms DispTime: nan ms hurry_up: 0
+A-V: nan+-nan ms DispTime: nan ms hurry_up: 0
+A-V: nan+-nan ms DispTime: nan ms hurry_up: 0
+A-V: nan+-nan ms DispTime: nan ms hurry_up: 0
+A-V: nan+-nan ms DispTime: nan ms hurry_up: 0
+A-V: nan+-nan ms DispTime: nan ms hurry_up: 0
+etc.
+
+Should this one work or is it hanging around from a previous version, or
+something?
+
+Looking through the source, I can't see why I should be getting nan,
+unless offset is being set to nan by:
+(mpeg2decoder.c, line 620):
+
+  uint64_t aPTS = clock-&gt;GetPTS();
+  // update video pts
+  cClock::AdjustVideoPTS(pts);
+
+  if ( aPTS )
+    offset = aPTS - pts ;
+  else offset = 0;
+
+Could this be the source of my problems, or am I barking up the wrong
+tree here?!
+
+Cheers,
+
+Laz
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001254.html">[Softdevice-devel] [Feature #1293] VDR mplayer-plugin support
+</A></li>
+	<LI>Next message: <A HREF="001258.html">[Softdevice-devel] A-V sync problems with directfb on unichrome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1255">[ date ]</a>
+              <a href="thread.html#1255">[ thread ]</a>
+              <a href="subject.html#1255">[ subject ]</a>
+              <a href="author.html#1255">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060907213350.GA2875%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002362.html">
+   <LINK REL="Next"  HREF="002373.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060907213350.GA2875%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Sep  7 23:33:51 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002362.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002373.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2372">[ date ]</a>
+              <a href="thread.html#2372">[ thread ]</a>
+              <a href="subject.html#2372">[ subject ]</a>
+              <a href="author.html#2372">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Sep 07, 2006 at 06:55:36AM +0200, Stefan Lucke wrote:
+&gt;<i> Could you check your logs to see if there is an even/odd combination
+</I>&gt;<i> of source and destination yoffset ? 
+</I>
+When viewing that BBC News clip at CropMode 14:9, it shows
+
+src (44,0 632x576)
+dst (0,41 720x494)
+
+when I enabled the fprintf calls in cDFBVideoOut::YUV().
+
+All other CropModes look fine, and both the source and destination yoffsets
+are even in all of them.
+
+So, I think that your guess is correct.  Truncating the destination
+yoffset to an even number seems to do the trick on the three 16:9 clips
+I tested:
+
+diff -p -u -r1.62 video.c
+--- video.c     4 Sep 2006 20:29:54 -0000       1.62
++++ video.c     7 Sep 2006 21:30:39 -0000
+@@ -266,7 +266,7 @@ void cVideoOut::AdjustToDisplayGeometry(
+    * center result on display
+    */
+   lxoff = (dwidth - lwidth) / 2;
+-  lyoff = (dheight - lheight) / 2;
++  lyoff = ((dheight - lheight) / 2) &amp; ~1;
+ }
+
+ /* ---------------------------------------------------------------------------
+
+Please document the reason for this in the source code, and consider making
+it conditional (only on mgatv output).
+
+By the way, what is the 14:9 crop mode good for?  For viewing 3:2
+photographs?  We only seem to get 4:3 and 16:9 programs.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002362.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002373.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2372">[ date ]</a>
+              <a href="thread.html#2372">[ thread ]</a>
+              <a href="subject.html#2372">[ subject ]</a>
+              <a href="author.html#2372">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

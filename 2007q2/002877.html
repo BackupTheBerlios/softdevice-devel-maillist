@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A few questions - softdevice+G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651C334.8030000%40globall.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002876.html">
+   <LINK REL="Next"  HREF="002878.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A few questions - softdevice+G450</H1>
+    <B>Vladimir Monchenko</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651C334.8030000%40globall.ru%3E"
+       TITLE="[Softdevice-devel] A few questions - softdevice+G450">bob at globall.ru
+       </A><BR>
+    <I>Mon May 21 18:05:08 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002876.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+        <LI>Next message: <A HREF="002878.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2877">[ date ]</a>
+              <a href="thread.html#2877">[ thread ]</a>
+              <a href="subject.html#2877">[ subject ]</a>
+              <a href="author.html#2877">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Lucian Muresan &#1087;&#1080;&#1096;&#1077;&#1090;:
+&gt;<i> your &quot;mode=768x576&quot; is ignored by DirectFB itself, output is always
+</I>&gt;<i> hardcoded at 720x576 in the Matrox DirectFB driver(would be 720x480 for
+</I>&gt;<i> NTSC), just check the output in the vdr messages you posted yourself...
+</I>&gt;<i> Therefore, DirectFB does not care about youre &quot;mode= &quot; line in
+</I>&gt;<i> /etc/directfbrc, or about any modeline definitions in /etc/fb.modes.
+</I>&gt;<i> Nevertheless, softdevice might interpret that mode=768x576 line and
+</I>&gt;<i> therefore it may cause some unnecessary postprocessing to be done
+</I>&gt;<i> internally. Please try &quot;mode=720x576&quot; and turn off any deinterlacing
+</I>&gt;<i> (since you say you're using a PAL TV, it won't need any, and moreover,
+</I>&gt;<i> take care itself of this, by technical design), and also turn off
+</I>&gt;<i> postprocessing.
+</I>&gt;<i>
+</I>&gt;<i> This is a common confusion made between output on the first head, which
+</I>&gt;<i> is for the computer monitor (no crtc2 option in the directfbrc file,
+</I>&gt;<i> hence, in that case, mode settings do matter) and where the pixels are
+</I>&gt;<i> square (there is no &quot;PAL&quot; for this, PAL or NTSC always has to do with
+</I>&gt;<i> output to _conventional_TV_, so 768x576 in sqare pixels might look like
+</I>&gt;<i> PAL, but it's not).
+</I>&gt;<i>
+</I>&gt;<i> Please tell if that helps.
+</I>&gt;<i>
+</I>&gt;<i> Lucian
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>I changed mode=768x576 on mode=720x576 in directfbrc. I already tried to
+do it before. Before, I tried similarly to apply patch
+matroxfb-g400-clock-2.6.6.patch. It did not help also. On progressive
+video and rapid motions an image moves jerks. On interlaced video added
+the effects of wrong order fields.
+I turn off any deinterlacing and postprocessing.
+Here content of file of setup.conf:
+
+softdevice.AC3Mode = 0
+softdevice.AlsaAC3Device = hw:0,1
+softdevice.AlsaDevice = default
+softdevice.autodetectAspect = 0
+softdevice.avOffset = 0
+softdevice.bufferMode = 2
+softdevice.CropBottomLines = 0
+softdevice.CropLeftCols = 0
+softdevice.CropMode = 0
+softdevice.CropModeToggleKey = 0
+softdevice.CropRightCols = 0
+softdevice.CropTopLines = 0
+softdevice.Deinterlace Method = 0
+softdevice.ExpandLeftRightCols = 0
+softdevice.ExpandTopBottomLines = 0
+softdevice.mainMenu = 1
+softdevice.OSDalphablend = 0
+softdevice.Picture mirroring = 0
+softdevice.PixelAspect = 1
+softdevice.PixelFormat = 2
+softdevice.Postprocess Method = 0
+softdevice.Postprocess Quality = 0
+softdevice.Suspend = 0
+softdevice.syncTimerMode = 0
+softdevice.UseSetSourceRectangle = 1
+softdevice.UseStretchBlit = 1
+softdevice.vidBrightness = -1
+softdevice.vidContrast = -1
+softdevice.vidHue = -1
+softdevice.vidSaturation = -1
+softdevice.Xv-Aspect = 1
+
+Regards,
+Vladimir Monchenko.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002876.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+	<LI>Next message: <A HREF="002878.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2877">[ date ]</a>
+              <a href="thread.html#2877">[ thread ]</a>
+              <a href="subject.html#2877">[ subject ]</a>
+              <a href="author.html#2877">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

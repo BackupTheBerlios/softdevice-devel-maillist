@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Many xrun(s) with latest cvs changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C200506051450.26169.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000760.html">
+   <LINK REL="Next"  HREF="000826.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Many xrun(s) with latest cvs changes.</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Many%20xrun%28s%29%20with%20latest%20cvs%20changes.&In-Reply-To=%3C200506051450.26169.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Many xrun(s) with latest cvs changes.">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Jun  5 14:50:26 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000760.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+        <LI>Next message: <A HREF="000826.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#800">[ date ]</a>
+              <a href="thread.html#800">[ thread ]</a>
+              <a href="subject.html#800">[ subject ]</a>
+              <a href="author.html#800">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 29. Mai 2005 15:06, Martin Wache wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; with latest changes I get many xrun messages in syslog. They are audible too.
+</I>&gt;<i> &gt; A/V sync seems to not ok. That is during live view.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; May 29 13:23:57 jarada vdr[3357]: [softdevice-audio]: xrun
+</I>&gt;<i> &gt; May 29 13:24:44 jarada last message repeated 15 times
+</I>&gt;<i> &gt; May 29 13:25:49 jarada last message repeated 21 times
+</I>&gt;<i> &gt; May 29 13:26:49 jarada last message repeated 12 times
+</I>&gt;<i> &gt; May 29 13:27:49 jarada last message repeated 13 times
+</I>&gt;<i> &gt; May 29 13:28:49 jarada last message repeated 2 times
+</I>&gt;<i> &gt; 
+</I>&gt;<i> The cause for this is that I reduced the buffer sizes, I plan to make it 
+</I>&gt;<i> possible to choose between &quot;good seeking&quot; (that is currently the 
+</I>&gt;<i> default), a save buffer (like it was bevore), and HDTV buffers.
+</I>&gt;<i> The good seeking buffer is as large as the FF card buffers, that means 
+</I>&gt;<i> that when seeking backward vdr will correctly guess the current position.
+</I>&gt;<i> Right now the switch to choose the buffer size is still missing, so one 
+</I>&gt;<i> can't chosse yet :-(, but I'll add this feature soon.
+</I>
+un  5 14:34:04 jarada vdr[3189]: buffer usage: 60% (tid=294919)
+Jun  5 14:34:04 jarada vdr[3189]: buffer usage: 70% (tid=294919)
+Jun  5 14:34:05 jarada vdr[3189]: buffer usage: 80% (tid=294919)
+Jun  5 14:34:06 jarada vdr[3193]: [softdevice-audio]: xrun
+Jun  5 14:34:14 jarada vdr[3189]: buffer usage: 90% (tid=294919)
+Jun  5 14:34:14 jarada vdr[3188]: clearing transfer buffer to avoid overflows
+Jun  5 14:34:14 jarada vdr[3189]: buffer usage: 0% (tid=294919)
+Jun  5 14:34:15 jarada vdr[3219]: [softdevice-audio]: xrun
+Jun  5 14:34:25 jarada vdr[3219]: [softdevice-audio]: xrun
+
+There must be something else. I played around with various buffer sizes,
+without success.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000760.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+	<LI>Next message: <A HREF="000826.html">[Softdevice-devel] Many xrun(s) with latest cvs changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#800">[ date ]</a>
+              <a href="thread.html#800">[ thread ]</a>
+              <a href="subject.html#800">[ subject ]</a>
+              <a href="author.html#800">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

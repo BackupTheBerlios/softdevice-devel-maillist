@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and 4:2:2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%204%3A2%3A2&In-Reply-To=%3C200507112301.38477.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000950.html">
+   <LINK REL="Next"  HREF="000949.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and 4:2:2</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%204%3A2%3A2&In-Reply-To=%3C200507112301.38477.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice and 4:2:2">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Jul 11 23:01:38 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000950.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+        <LI>Next message: <A HREF="000949.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#947">[ date ]</a>
+              <a href="thread.html#947">[ thread ]</a>
+              <a href="subject.html#947">[ subject ]</a>
+              <a href="author.html#947">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 11. Juli 2005 15:43, Malcolm Caldwell wrote:
+&gt;<i> On Mon, 2005-07-11 at 09:32 +0300, Vadim Catana wrote:
+</I>&gt;<i> &gt; Martin Wache wrote:
+</I>&gt;<i> &gt; &gt; That mostly depends on if libavcodec properly decodes the samples. If it
+</I>&gt;<i> &gt; &gt; does, which I currently assume since you get some kind of picture, we
+</I>&gt;<i> &gt; &gt; just need to transform from YUV422 to YUV420 colourspace which should be
+</I>&gt;<i> &gt; &gt; easy.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; If the videocard supports YUV422 in hardware we don't need to transform
+</I>&gt;<i> &gt; anything. BTW, did you try to change the pixel format from softdevice menu ?
+</I>&gt;<i> 
+</I>&gt;<i> Is this driver dependant? On my laptop I using xv, and I don't see any
+</I>&gt;<i> options to change the format in the menu.
+</I>
+Most xv driver support YUV422 too. Do you know if it is planar or
+packed format ? In the latter case, you could try to replace FOURCC_YV12
+by FOURCC_YUY2 in softdevice.c in line 243 and 320. But in this color
+mode, software alpha blending will produce some strange colored OSDs.
+
+Having a short sample stream will be helpful.
+
+&gt;<i> 
+</I>&gt;<i> &gt; If you could record a channel with YUV422 for a couple of minutes and
+</I>&gt;<i> &gt; upload it somewhere, I could take a look.
+</I>&gt;<i> 
+</I>&gt;<i> I will try to get something together for this - probably later today.
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000950.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+	<LI>Next message: <A HREF="000949.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#947">[ date ]</a>
+              <a href="thread.html#947">[ thread ]</a>
+              <a href="subject.html#947">[ subject ]</a>
+              <a href="author.html#947">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

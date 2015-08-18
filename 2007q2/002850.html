@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.4.0&In-Reply-To=%3C200704120902.46933.zzam%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002847.html">
+   <LINK REL="Next"  HREF="002851.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0</H1>
+    <B>Matthias Schwarzott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.4.0&In-Reply-To=%3C200704120902.46933.zzam%40gentoo.org%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0">zzam at gentoo.org
+       </A><BR>
+    <I>Thu Apr 12 09:02:46 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002847.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+</A></li>
+        <LI>Next message: <A HREF="002851.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2850">[ date ]</a>
+              <a href="thread.html#2850">[ thread ]</a>
+              <a href="subject.html#2850">[ subject ]</a>
+              <a href="author.html#2850">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 11. April 2007, Stefan Lucke wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>Hi!
+
+&gt;<i> we got a new release :-) .
+</I>&gt;<i>
+</I>And I have some patches, that the gentoo ebuild uses that are not yet 
+contained :)
+
+vdr-softdevice-0.3.1-osdmode-software-default.diff:
+Correctly initialize the osdmode, as that var is normally uninitialized (with 
+luck it is initialized to 0 - but that corresponds to pseudo blending).
+
+vdr-softdevice-0.2.3-shm-fullscreen.diff:
+Hack to add cmd-line-option &quot;-f&quot; to ShmClient, to start it fullscreen.
+
+vdr-softdevice-0.4.0-xinerama-configure-opts.patch:
+Added option &quot;--disable-xinerama&quot; to configure to stop it linking against 
+libXinerama. This helps for example when creating binary packages and the 
+dev-system has xinerama lib installed, but not the dest.
+
+Matthias
+
+-- 
+Matthias Schwarzott (zzam)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr-softdevice-0.3.1-osdmode-software-default.diff
+Type: text/x-diff
+Size: 537 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment.diff</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr-softdevice-0.4.0-xinerama-configure-opts.patch
+Type: text/x-diff
+Size: 787 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment.patch">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment.patch</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vdr-softdevice-0.2.3-shm-fullscreen.diff
+Type: text/x-diff
+Size: 826 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment-0001.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070412/01809873/attachment-0001.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002847.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+</A></li>
+	<LI>Next message: <A HREF="002851.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2850">[ date ]</a>
+              <a href="thread.html#2850">[ thread ]</a>
+              <a href="subject.html#2850">[ subject ]</a>
+              <a href="author.html#2850">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

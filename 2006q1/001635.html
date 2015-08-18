@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> AW: [Softdevice-devel] new OSD support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D146%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001632.html">
+   <LINK REL="Next"  HREF="001636.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>AW: [Softdevice-devel] new OSD support</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20AW%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039D146%40sbs2003.do-net.de%3E"
+       TITLE="AW: [Softdevice-devel] new OSD support">Neumann at do-net.de
+       </A><BR>
+    <I>Sun Jan  8 12:10:02 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001632.html">AW: AW: [Softdevice-devel] new OSD support
+</A></li>
+        <LI>Next message: <A HREF="001636.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1635">[ date ]</a>
+              <a href="thread.html#1635">[ thread ]</a>
+              <a href="subject.html#1635">[ subject ]</a>
+              <a href="author.html#1635">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I tried you new version, same problem. I also tried a different cvs version (i'm using cvs
+from some days ago), no luck at all.
+
+G++ is version 3.3.3.
+
+Maybe gdb does not work because vdr do not crash really. I see no segfault or something like this.
+
+cSoftDevice::MakePrimaryDevice
+CMD[4892]:SetAudioMode 0
+status: volume=255 mute=0
+CMD[4910]:SetPlayMode PmAudioVideo
+CMD[4910]:Mpeg2Decoder Start IsSuspended 0  GetMutex 1
+CMD[4910]:init put byte finished
+(!) [18263:    0.000] --&gt; Caught signal 11 (at 0xbf931000, invalid address) &lt;--
+CMD[4910]:mpeg2Decoder Start finishedCMD[4933]:Neuer Thread gestartet: Mpeg2Decoder pid 18374
+Sun Jan  8 12:11:35 CET 2006
+restarting VDR
+
+Is it maybe related to ffmpeg?
+
+-------------
+Andre Neumann
+
+-----Urspr&#252;ngliche Nachricht-----
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] Im Auftrag von Martin Wache
+Gesendet: Sonntag, 8. Januar 2006 10:58
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at berlios.de</A>
+Betreff: Re: AW: AW: [Softdevice-devel] new OSD support
+
+Andre Neumann schrieb:
+&gt;<i> I've tried your instructions, but i cannot get it to work. When i do a 
+</I>&gt;<i> ulimit -c unlimited before i call vdr, I do not get core.xx files, 
+</I>&gt;<i> even if is try to run
+</I>&gt;<i> 
+</I>&gt;<i> gdb ./vdr
+</I>&gt;<i> 
+</I>&gt;<i> and then
+</I>&gt;<i> 
+</I>&gt;<i> run -c /etc/vdr -v /video0 -P'softdevice -vo dfb:'
+</I>&gt;<i> 
+</I>&gt;<i> Vdr do not crash when running with gdb. Really strange. When running vdr normal it always crashes.
+</I>&gt;<i> 
+</I>&gt;<i> What can i do more ?
+</I>&gt;<i> 
+</I>Is Vdr running within gdb or does it stop at some point?
+
+Strange that you don't get a core dump... Maybe someone else knows if there is something more one has to do to get a core dump with DFB?
+
+But if you want you can try again. Yesterday I committed a slightly outdated version of the dfb-out part, I just committed a new version.
+Maybe this fixes your problem, but I will also investigate it further.
+Maybe I find something...
+
+Oh, by the way what is your g++-Version? Maybe it is related to different g++-Version...
+
+Martin
+
+
+_______________________________________________
+Softdevice-devel mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+<A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001632.html">AW: AW: [Softdevice-devel] new OSD support
+</A></li>
+	<LI>Next message: <A HREF="001636.html">AW: [Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1635">[ date ]</a>
+              <a href="thread.html#1635">[ thread ]</a>
+              <a href="subject.html#1635">[ subject ]</a>
+              <a href="author.html#1635">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

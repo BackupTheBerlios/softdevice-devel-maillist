@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Fwd: Re: Softdevice and via]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BFwd%3A%20Re%3A%20Softdevice%20and%20via%5D&In-Reply-To=%3C1117531733.429c2e55c0c45%40webmail.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000778.html">
+   <LINK REL="Next"  HREF="000780.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Fwd: Re: Softdevice and via]</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BFwd%3A%20Re%3A%20Softdevice%20and%20via%5D&In-Reply-To=%3C1117531733.429c2e55c0c45%40webmail.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [Fwd: Re: Softdevice and via]">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue May 31 11:28:53 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000778.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+        <LI>Next message: <A HREF="000780.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#779">[ date ]</a>
+              <a href="thread.html#779">[ thread ]</a>
+              <a href="subject.html#779">[ subject ]</a>
+              <a href="author.html#779">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting Nicolas Huillard &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at e-dition.fr</A>&gt;:
+
+&gt;<i> Any idea anyone ?
+</I>
+Which hardware ??
+
+He should use either I420 or YV12. The difference between them is just
+the swapped color components. YUV2 with directfb automatically activates
+stretchBlit(), which should not be used on via.
+
+
+Stefan Lucke
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -------- Message original --------
+</I>&gt;<i> Sujet: Re: Softdevice and via
+</I>&gt;<i> Date: Mon, 30 May 2005 21:58:40 +0200
+</I>&gt;<i> De: Rene Bredlau &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">murray at blubber.de</A>&gt;
+</I>&gt;<i> Pour: Nicolas Huillard &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">nhuillard at e-dition.fr</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Nicolas Huillard wrote:
+</I>&gt;<i> &gt; Rene Bredlau a &#233;crit :
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; i saw your postings on the vdr mailinglist. I think i am trying
+</I>&gt;<i> &gt;&gt; something similar to you setup. But at the moment i am stucked with a
+</I>&gt;<i> &gt;&gt; problem.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Vdr ist starting up and i can see a picture and the OSD. But the colors
+</I>&gt;<i> &gt;&gt; are wrong for the live picture :-(( Do you gave any idea what causing
+</I>&gt;<i> &gt;&gt; this?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Try to adjust the pixel format in the softdevice setup menu : one of
+</I>&gt;<i> &gt; I420, YUV2, etc.
+</I>&gt;<i>
+</I>&gt;<i> on I420 the collors are wrong mainly blue. and on the third option the
+</I>&gt;<i> colors look good but the picture is flickering. And also the tone is
+</I>&gt;<i> breaking up.  Any idea?
+</I>&gt;<i>
+</I>&gt;<i> &gt; ...and post this kind of question to the softdevice or vdr
+</I>&gt;<i> &gt; mailing-lists. Just in case I don't reply fast enough or you mail is
+</I>&gt;<i> &gt; automatically marked as junk...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; If your problem is not solved, add version numbers and config stuff to
+</I>&gt;<i> &gt; you post (including Linux distro, ffmpeg version, output method for
+</I>&gt;<i> &gt; softdevice, frame-buffer setup if using DirectFB, etc.)
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> So long
+</I>&gt;<i> 	.\\urray
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000778.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+	<LI>Next message: <A HREF="000780.html">[Softdevice-devel] [Fwd: Re: Softdevice and via]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#779">[ date ]</a>
+              <a href="thread.html#779">[ thread ]</a>
+              <a href="subject.html#779">[ subject ]</a>
+              <a href="author.html#779">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

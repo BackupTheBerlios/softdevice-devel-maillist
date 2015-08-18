@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] fix YV12 plane order
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20fix%20YV12%20plane%20order&In-Reply-To=%3C20060917033714.GA19188%40MAIL.13thfloor.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002456.html">
+   <LINK REL="Next"  HREF="002463.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] fix YV12 plane order</H1>
+    <B>Herbert Poetzl</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20fix%20YV12%20plane%20order&In-Reply-To=%3C20060917033714.GA19188%40MAIL.13thfloor.at%3E"
+       TITLE="[Softdevice-devel] [PATCH] fix YV12 plane order">herbert at 13thfloor.at
+       </A><BR>
+    <I>Sun Sep 17 05:37:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002456.html">[Softdevice-devel] [PATCH] fix YV12 plane order
+</A></li>
+        <LI>Next message: <A HREF="002463.html">[Softdevice-devel] [PATCH] fix YV12 plane order
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2462">[ date ]</a>
+              <a href="thread.html#2462">[ thread ]</a>
+              <a href="subject.html#2462">[ subject ]</a>
+              <a href="author.html#2462">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Sep 16, 2006 at 05:59:57PM +0200, Stefan Lucke wrote:
+&gt;<i> On Samstag 16 September 2006 16:42, Heikki Lindholm wrote:
+</I>&gt;<i> &gt; la, 2006-09-16 kello 15:25 +0200, Stefan Lucke kirjoitti:
+</I>&gt;<i> &gt; &gt; On Samstag 16 September 2006 13:38, Heikki Lindholm wrote:
+</I>&gt;<i> &gt; &gt; &gt; YV12 has different U/V plane order compared to I420. This patch fixes 
+</I>&gt;<i> &gt; &gt; &gt; the YUV() method in the dfb driver accordingly. Without the patch YV12 
+</I>&gt;<i> &gt; &gt; &gt; has wrong colours.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; So you get wrong colors when YV12 is selected.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Yes.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Do you get wrong colors too when I420 is selected ?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; No. By the spec the U/V ordering is not the same for the I420 and YV12
+</I>&gt;<i> &gt; color spaces, hence we need to swap pointers somewhere if the source
+</I>&gt;<i> &gt; data (the video) is always in the same format. When looking at different
+</I>&gt;<i> &gt; sources of information, there might well be some inconsistency in what
+</I>&gt;<i> &gt; exactly is the U/V order for the YV12 (or I420.) Anyway, if my patch
+</I>&gt;<i> &gt; works correctly for other hw (I have g400) then it's probably correct.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> &gt;From naming that would be correct.
+</I>&gt;<i> 
+</I>&gt;<i> I want to explain my argumentation again.
+</I>&gt;<i> We get some date from the decoder. Ffmpeg's name for that is YV12.
+</I>&gt;<i> - If we select X11-Xv with YV12 we get correct colors.
+</I>&gt;<i> - We get correct colors if we convert YV12 -&gt; YUY2 and allocate an
+</I>&gt;<i>   X11-Xv surface for format YUY2.
+</I>&gt;<i> - We get correct colors (same decoder + same YV12 -&gt; YUY2 converter) when
+</I>&gt;<i>   we use a YUY2 surface of directfb.
+</I>&gt;<i> - Our software OSD converter (RGB -&gt; YV12) produces correct colors too.
+</I>&gt;<i> 
+</I>&gt;<i> By this, it is proven to my opinion that our interpertation of decoded
+</I>&gt;<i> planes is correct. First plane Y, second plane U and third plane V.
+</I>&gt;<i> 
+</I>&gt;<i> - We have to specify I420 insteadof YV12 for most DirectFB drivers. So
+</I>&gt;<i> DirectFB does something bad.
+</I>
+just to add some more information into the pool,
+here is a list of some good urls to get a feeling
+for those formats ...
+
+<A HREF="http://www.fourcc.org/yuv.php">http://www.fourcc.org/yuv.php</A>
+<A HREF="http://wiki.multimedia.cx/index.php?title=I420">http://wiki.multimedia.cx/index.php?title=I420</A>
+
+HTH,
+Herbert
+
+&gt;<i> Quoted code from DirectFB is a prove for the fact that they have mixed
+</I>&gt;<i> I420 and YV12, as it is not executed in case of I420. With I420 we
+</I>&gt;<i> get correct colors. If they would swap chroma components in case of
+</I>&gt;<i> DSPF_I420 every thing would be fine.
+</I>&gt;<i>
+</I>&gt;<i> It should be an acceptable action for users to toggle between I420 and
+</I>&gt;<i> YV12 to get the correct colors.
+</I>&gt;<i> 
+</I>&gt;<i> We could rename the OSD option to some less technical term if thats an issue.
+</I>&gt;<i> 
+</I>&gt;<i> But I definitly vote against touching a swap in this place.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; In DirectFB is I420 vs YV12 is swapped. I know that video is YV12. But
+</I>&gt;<i> &gt; &gt; we have to specify I420 in DirectFB. With X11 it is YV12 :-).
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Look at the code of gfxdriver/radeon/radeon_overlay.c, (line 661):
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 661                     if (surface-&gt;format == DSPF_YV12) {
+</I>&gt;<i> &gt; &gt; 662                          __u32 tmp  = offsets[1];
+</I>&gt;<i> &gt; &gt; 663                          offsets[1] = offsets[2];
+</I>&gt;<i> &gt; &gt; 664                          offsets[2] = tmp;
+</I>&gt;<i> &gt; &gt; 665                     }
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; They swap U/V in case of YV12 :-( .
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; There is to my optinion no need to swap again.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002456.html">[Softdevice-devel] [PATCH] fix YV12 plane order
+</A></li>
+	<LI>Next message: <A HREF="002463.html">[Softdevice-devel] [PATCH] fix YV12 plane order
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2462">[ date ]</a>
+              <a href="thread.html#2462">[ thread ]</a>
+              <a href="subject.html#2462">[ subject ]</a>
+              <a href="author.html#2462">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

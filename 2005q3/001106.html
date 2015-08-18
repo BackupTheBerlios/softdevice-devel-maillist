@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] xrun problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C9117607D75DD1BB013E81E19%40%5B192.168.1.22%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001096.html">
+   <LINK REL="Next"  HREF="001108.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] xrun problems</H1>
+    <B>Claas Hilbrecht</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C9117607D75DD1BB013E81E19%40%5B192.168.1.22%5D%3E"
+       TITLE="[Softdevice-devel] xrun problems">claas+maillinglists.softdevice at jucs-kramkiste.de
+       </A><BR>
+    <I>Sun Aug 14 18:02:52 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001096.html">[Softdevice-devel] xrun problems
+</A></li>
+        <LI>Next message: <A HREF="001108.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1106">[ date ]</a>
+              <a href="thread.html#1106">[ thread ]</a>
+              <a href="subject.html#1106">[ subject ]</a>
+              <a href="author.html#1106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>--Am Montag, 8. August 2005 17:03 +0200 Martin Wache &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">M.Wache at gmx.net</A>&gt; 
+schrieb:
+
+&gt;<i> You can try to switch on the BUFDEB (by uncommenting the define in
+</I>[...]
+&gt;<i> when Xruns happen?
+</I>
+Sorry, I was busy the last days. Here's the log. But I didn't see the 
+message you mentioned.
+
+
+mpegdec[3281]:Frame# 132459  aPTS: 515560352 offset: 59 delay 35239
+mpegdec[3315]:audio: count: 220784  Length: 2034 len: 576 a_size: 4608 
+a_delay: 1119
+mpegdec[3315]:audio pts 515562511 pkt-&gt;PTS : 515562511 pts - valid PTS: 0
+mpegdec[3315]:audio pts offset -93341632
+mpegdec[3315]:audio: count: 220785  Length: 2034 len: 576 a_size: 4608 
+a_delay: 1352
+mpegdec[3315]:audio pts offset -93341632
+mpegdec[3316]:audio: count: 220786  Length: 2034 len: 576 a_size: 4608 
+a_delay: 1585
+mpegdec[3316]:audio pts offset -93341632
+mpegdec[3316]:audio: count: 220787  Length: 2034 len: 306 a_size: 0 
+a_delay: 1824
+mpegdec[3316]:a_delay 1824 at end of decode
+mpegdec[3316]:Frame# 132459 A-V(ms) 73    delay 35247 FrameT: I_t, 
+dispTime(ms): 0,01
+mpegdec[3321]:Got pts: pictno 132461  pts: 515561093 lastIdx 2
+mpegdec[3321]:video pts: 515561093, values.pkt : 515561093 pts - valid PTS: 
+0 pictno: 132461 idx: 1
+mpegdec[3321]:Frame# 132460  aPTS: 515561166 offset: 473 delay 30381
+mpegdec[3353]:Frame# 132460 A-V(ms) -327  delay 37776 FrameT: B_t, 
+dispTime(ms): 0,00
+mpegdec[3358]:Got pts: pictno 132462  pts: 515561493 lastIdx 3
+mpegdec[3358]:video pts: 515561493, values.pkt : 515561493 pts - valid PTS: 
+0 pictno: 132462 idx: 2
+mpegdec[3358]:Frame# 132461  aPTS: 515561166 offset: 73 delay 32975
+mpegdec[3389]:Frame# 132461 A-V(ms) -727  delay 44974 FrameT: B_t, 
+dispTime(ms): 0,00
+mpegdec[3397]:Got pts: pictno 132463  pts: 515563093 lastIdx 4
+mpegdec[3397]:video pts: 515561893, values.pkt : 515561893 pts - valid PTS: 
+0 pictno: 132460 idx: 0
+mpegdec[3397]:Frame# 132462  aPTS: 515561166 offset: -327 delay 37055
+mpegdec[3420]:audio: count: 220787  Length: 1422 len: 270 a_size: 4608 
+a_delay: 789
+mpegdec[3420]:audio pts offset -93341632
+mpegdec[3420]:audio: count: 220788  Length: 1422 len: 576 a_size: 4608 
+a_delay: 1022
+mpegdec[3420]:audio pts offset -93341632
+mpegdec[3421]:audio: count: 220789  Length: 1422 len: 576 a_size: 4608 
+a_delay: 1255
+mpegdec[3421]:audio pts offset -93341632
+mpegdec[3421]:a_delay 1495 at end of decode
+mpegdec[3433]:Frame# 132462 A-V(ms) -77   delay 37796 FrameT: P_t, 
+dispTime(ms): 0,00
+mpegdec[3440]:Got pts: pictno 132464  pts: 515562293 lastIdx 5
+mpegdec[3440]:video pts: 515562293, values.pkt : 515562293 pts - valid PTS: 
+0 pictno: 132464 idx: 4
+mpegdec[3440]:Frame# 132463  aPTS: 515562216 offset: 323 delay 30917
+mpegdec[3471]:Frame# 132463 A-V(ms) -477  delay 40505 FrameT: B_t, 
+dispTime(ms): 0,00
+mpegdec[3477]:Got pts: pictno 132465  pts: 515562693 lastIdx 6
+mpegdec[3477]:video pts: 515562693, values.pkt : 515562693 pts - valid PTS: 
+0 pictno: 132465 idx: 5
+mpegdec[3477]:Frame# 132464  aPTS: 515562216 offset: -77 delay 34568
+mpegdec[3513]:Frame# 132464 A-V(ms) -877  delay 43432 FrameT: B_t, 
+dispTime(ms): 0,01
+mpegdec[3519]:Got pts: pictno 132466  pts: 515564293 lastIdx 7
+mpegdec[3519]:video pts: 515563093, values.pkt : 515563093 pts - valid PTS: 
+0 pictno: 132463 idx: 3
+mpegdec[3519]:Frame# 132465  aPTS: 515562216 offset: -477 delay 37366
+mpegdec[3558]:Frame# 132465 A-V(ms) -1277 delay 46229 FrameT: I_t, 
+dispTime(ms): 0,01
+mpegdec[3563]:Got pts: pictno 132467  pts: 515563493 lastIdx 8
+mpegdec[3563]:video pts: 515563493, values.pkt : 515563493 pts - valid PTS: 
+0 pictno: 132467 idx: 7
+mpegdec[3563]:Frame# 132466  aPTS: 515562216 offset: -877 delay 40823
+mpegdec[3575]:audio: count: 220790  Length: 2034 len: 576 a_size: 4608 
+a_delay: 0
+audio: xrun
+mpegdec[3575]:audio pts 515563951 pkt-&gt;PTS : 515563951 pts - valid PTS: 0
+mpegdec[3575]:audio pts offset -93341592
+mpegdec[3576]:audio: count: 220791  Length: 2034 len: 576 a_size: 4608 
+a_delay: 231
+mpegdec[3576]:audio pts offset -93341592
+mpegdec[3576]:audio: count: 220792  Length: 2034 len: 576 a_size: 4608 
+a_delay: 464
+mpegdec[3576]:audio pts offset -93341591
+mpegdec[3576]:audio: count: 220793  Length: 2034 len: 306 a_size: 0 
+a_delay: 703
+
+
+
+-- 
+ Claas Hilbrecht
+ <A HREF="http://www.jucs-kramkiste.de">http://www.jucs-kramkiste.de</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001096.html">[Softdevice-devel] xrun problems
+</A></li>
+	<LI>Next message: <A HREF="001108.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1106">[ date ]</a>
+              <a href="thread.html#1106">[ thread ]</a>
+              <a href="subject.html#1106">[ subject ]</a>
+              <a href="author.html#1106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050906192709.GB3152%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001190.html">
+   <LINK REL="Next"  HREF="001193.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crashes%20or%20bugs%20when%20rewinding%20over%20an%20aspect%20ratio%20change&In-Reply-To=%3C20050906192709.GB3152%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Sep  6 21:27:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001190.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+        <LI>Next message: <A HREF="001193.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1192">[ date ]</a>
+              <a href="thread.html#1192">[ thread ]</a>
+              <a href="subject.html#1192">[ subject ]</a>
+              <a href="author.html#1192">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan,
+
+I've now updated ffmpeg to current CVS.  I restored
+HAVE_SetSourceLocation to 0, and it still crashes, but not always.
+
+At the most recent crash (triple-speed rewind from 16:9 to 4:3 footage),
+the screen shows a 4:3 image stretched as a 16:9 image (sides clipped,
+because I have set the softdevice clipping to 4:3).  The stack trace is
+a bit longer now:
+
+#0  0xb7d135ef in memcpy () from /lib/tls/libc.so.6
+#1  0xb793fd3a in cDFBVideoOut::YUV (this=0xb5ea5000,
+    Py=0xb11ce008 '\200' &lt;repeats 200 times&gt;...,
+    Pu=0xb11e6c08 (I guess you are not interested in the contents)
+    Pv=0xb11ff6a8
+    Width=704, Height=576, Ystride=704, UVstride=352)
+    at video-dfb.c:1194
+#2  0xb79351d5 in cVideoStreamDecoder::DecodePacket (this=0x84d7730,
+    pkt=0x8363d18) at mpeg2decoder.c:615
+#3  0xb7934843 in cStreamDecoder::Action (this=0x84d7730) at mpeg2decoder.c:188
+#4  0x080f1c32 in cThread::StartThread (Thread=0x84d7730) at thread.c:234
+#5  0xb7efdccd in start_thread () from /lib/tls/libpthread.so.0
+#6  0xb7d75b0e in clone () from /lib/tls/libc.so.6
+
+Here's the stderr (including dsyslog output from video.c):
+
+++++++++++++++[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+[VideoOut]: aspect changed (8 -&gt; 8 ; 1.333333 -&gt; 1.777778)[VideoOut]:
+704x576 [88,0 528x576] -&gt; 768x576 [0,0 768x576][dfb] (re)configuring
+Videolayer to 704 x 576 (528x576)
+[surface capabilities] videoSurface: videoonly double-buffered flipping
+[dfb] (re)configured 0x08100609
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
+[softdevice] picture buffer released
+[softdevice] allocating picture buffer for resolution 704x576 format 0
++++++++++++[VideoOut]: aspect changed (8 -&gt; 8 ; 1.777778 -&gt;
+1.333333)[VideoOut]: 704x576 [0,0 704x576] -&gt; 768x576 [0,0 768x576]++(!)
+[10164:    0.000] --&gt; Caught signal 11 (at 0xb5ea5000, invalid
+permissions) &lt;--
+
+It looks like the 4:3 -&gt; 16:9 and 16:9 -&gt; 4:3 switches were recognized
+by softdevice but not used when decoding.  Could this be a race
+condition?  How many threads does softdevice start?
+
+&gt;<i> Do you know that syslogd can be configured in a way that it does't write
+</I>&gt;<i> to local disk, but sends all messages to a remote 7/24 uptime server instead?
+</I>
+Yes, I know it that syslog can be redirected to a remote server, but I
+don't have one.  Some day, if I need to replace my ADSL bridge, I will
+consider setting up a Linux-based one that could serve Wake-on-LAN
+packets and monitor a few things.
+
+&gt;<i> There were some difficulties in ffmpeg with A/R detection (and segfaults upon
+</I>&gt;<i> A/R change). A snapshot taken after May 14th would be ok.
+</I>
+My previous ffmpeg checkout was from that time frame.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001190.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+	<LI>Next message: <A HREF="001193.html">[Softdevice-devel] Crashes or bugs when rewinding over an aspect ratio change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1192">[ date ]</a>
+              <a href="thread.html#1192">[ thread ]</a>
+              <a href="subject.html#1192">[ subject ]</a>
+              <a href="author.html#1192">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

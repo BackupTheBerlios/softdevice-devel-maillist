@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby Digital out via SPDIF
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20tripple%20buffer%20dfb%20output%20Was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C200503232231.42301.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000363.html">
+   <LINK REL="Next"  HREF="000367.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby Digital out via SPDIF</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20tripple%20buffer%20dfb%20output%20Was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Dolby%20Digital%20out%20via%20SPDIF&In-Reply-To=%3C200503232231.42301.stefan%40lucke.in-berlin.de%3E"
+       TITLE="tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby Digital out via SPDIF">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Mar 23 22:31:42 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000363.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+        <LI>Next message: <A HREF="000367.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#372">[ date ]</a>
+              <a href="thread.html#372">[ thread ]</a>
+              <a href="subject.html#372">[ subject ]</a>
+              <a href="author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 21. M&#228;rz 2005 03:41, Torgeir Veimo wrote:
+&gt;<i> On Mon, 2005-03-21 at 02:04 +0000, Torgeir Veimo wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; &gt; Thats no real feedback as I'm currently working on vdr1.2.1 .
+</I>&gt;<i> &gt; &gt; &gt; I'll try that later, especially the impact of your change around
+</I>&gt;<i> &gt; &gt; &gt; line 765 (comment was from me and indicates some problems with mga).
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; So after a short test G550 vga out:
+</I>&gt;<i> &gt; &gt; - using BES in modes I420 and YV12 viewing is
+</I>&gt;<i> &gt; &gt;  complete jerky. removed clear has still negative effects, that is
+</I>&gt;<i> &gt; &gt;  if OSD is active while videosurface changes, video is shown through
+</I>&gt;<i> &gt; &gt;  OSD only until OSD disappears.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Yes it requires a flip with DSFLIP_WAITFORSYNC, otherwise it's very
+</I>&gt;<i> &gt; jerky. There is still some occational judder, which might be related to
+</I>&gt;<i> &gt; buffer starvation due to the refresh rate being higher than the mpeg2
+</I>&gt;<i> &gt; stream rate.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; - It has no visible effect on YUY2 mode.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I'll provide a new patch where dlc.flags dont get DLCONF_BUFFERMODE
+</I>&gt;<i> &gt; unless in I420 mode.
+</I>&gt;<i> 
+</I>&gt;<i> Improved patch attached. This one forces wait for vsync for the flip.
+</I>
+This one works ok  for me. But I do not understand why previous one didn't.
+I assume that there something complete wrong. I had a look at the old
+version 0.0.6. There was Flip() commented out ;-) .
+
+&gt;<i> 
+</I>&gt;<i> It also contains an unrelated check for radeon to allow radeon specific
+</I>&gt;<i> handling. What is your view on such things? There's already mgatv and
+</I>&gt;<i> via specific handling in video-dfb.c.
+</I>
+There is nothing to say against hardware specific adaptations like &quot;via&quot;,
+which have a different (inverse) understanding of alpha values ;;-).
+If radeons only work correct without that flip then we should include
+that change. But it looks more like either a driver problem or like
+problem in our logic.
+
+I currently work on the other approach to change the logic which
+will reduce the &quot;allways comple redraw osd&quot;.
+
+&gt;<i> 
+</I>&gt;<i> directfb output has become much better for me now, so am switching to it
+</I>&gt;<i> as the main output method in my htpc setup. :) 
+</I>
+Nice to read. So the only remaing thing is A.. . Have said that
+some times earlier .
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000363.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+	<LI>Next message: <A HREF="000367.html">tripple buffer dfb output Was: Re: [Softdevice-devel] Dolby	Digital out via SPDIF
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#372">[ date ]</a>
+              <a href="thread.html#372">[ thread ]</a>
+              <a href="subject.html#372">[ subject ]</a>
+              <a href="author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

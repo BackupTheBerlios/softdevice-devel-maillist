@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] a lot of warnings with cvs softdevice	version and ffmpeg from svn
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%0A%09version%20and%20ffmpeg%20from%20svn&In-Reply-To=%3C200812031932.31192.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003176.html">
+   <LINK REL="Next"  HREF="003178.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] a lot of warnings with cvs softdevice	version and ffmpeg from svn</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20a%20lot%20of%20warnings%20with%20cvs%20softdevice%0A%09version%20and%20ffmpeg%20from%20svn&In-Reply-To=%3C200812031932.31192.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] a lot of warnings with cvs softdevice	version and ffmpeg from svn">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Dec  3 19:32:30 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003176.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+        <LI>Next message: <A HREF="003178.html">[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3177">[ date ]</a>
+              <a href="thread.html#3177">[ thread ]</a>
+              <a href="subject.html#3177">[ subject ]</a>
+              <a href="author.html#3177">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sunday 16 November 2008, Goga777 wrote:
+&gt;<i> Hi Stefan
+</I>&gt;<i> 
+</I>&gt;<i> ah - it was the good test with disconnected antenna
+</I>&gt;<i> when I connected the dish, I had vdr crash  :(
+</I>&gt;<i> seems to me it's ffmpeg problem yes ?
+</I>
+I guess yes, but unfortunately ffplay does not crash.
+
+&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr$ ./vdr -c /etc/vdr/ -P &quot;softdevice -vo xv:&quot;
+</I>&gt;<i> softdevice: Created setupStoreId 22872064!
+</I>&gt;<i> softdevice: Attatched to setupStoreId 22872064 at 0xb7fb9000.
+</I>&gt;<i> [softdevice] processing args
+</I>&gt;<i> [softdevice]   argv [0] = softdevice
+</I>&gt;<i> [softdevice]   argv [1] = -vo
+</I>&gt;<i> [softdevice] initializing Plugin
+</I>&gt;<i> [softdevice] Initializing Video Out
+</I>&gt;<i> [softdevice] ffmpeg build(3408640)
+</I>&gt;<i> [XvVideoOut]: Xinerama Screen 0: 0,0  1280x1024
+</I>&gt;<i> [XvVideoOut]: osd_image shmid = 22904833
+</I>&gt;<i> [XvVideoOut]: got osd_image: width 1280 height 1024, bytes per line 5120, Bpp 32
+</I>&gt;<i> [XvVideoOut]: max area size 2048 x 2048
+</I>&gt;<i> [XvVideoOut]: using area size 736 x 576
+</I>&gt;<i> [softdevice] Subplugin successfully opend
+</I>&gt;<i> [softdevice] Video Out seems to be OK
+</I>&gt;<i> [softdevice] Initializing Audio Out
+</I>&gt;<i> [softdevice] Audio out seems to be OK
+</I>&gt;<i> [softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+</I>&gt;<i> [XvVideoOut]: Xinerama-Screen changed to 0
+</I>&gt;<i> &#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1089;&#1077;&#1075;&#1084;&#1077;&#1085;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">goga at goga</A>:/usr/src/vdr$   
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> goga:/etc/init.d# gdb sv 5529
+</I>&gt;<i> GNU gdb 6.8-debian
+</I>&gt;<i> Copyright (C) 2008 Free Software Foundation, Inc.
+</I>&gt;<i> License GPLv3+: GNU GPL version 3 or later &lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;
+</I>&gt;<i> This is free software: you are free to change and redistribute it.
+</I>&gt;<i> There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+</I>&gt;<i> and &quot;show warranty&quot; for details.
+</I>&gt;<i> This GDB was configured as &quot;i486-linux-gnu&quot;...
+</I>&gt;<i> sv: No such file or directory.
+</I>&gt;<i> Attaching to process 5529
+</I>&gt;<i> Reading symbols from /usr/src/vdr1_70/vdr...done.
+</I>&gt;<i> Error while mapping shared library sections:
+</I>&gt;<i> ./PLUGINS/lib/libvdr-softdevice.so.1.7.0: No such file or directory.
+</I>&gt;<i> Error while mapping shared library sections:
+</I>&gt;<i> ./PLUGINS/lib//libsoftdevice-xv.so.1.7.0: No such file or directory.
+</I>
+[snip]
+
+&gt;<i> (gdb) c
+</I>&gt;<i> Continuing.
+</I>&gt;<i> [New Thread 0xb21ceb90 (LWP 5578)]
+</I>&gt;<i> [Thread 0xb21ceb90 (LWP 5578) exited]
+</I>&gt;<i> [New Thread 0xb21ceb90 (LWP 5579)]
+</I>&gt;<i> [Thread 0xb4609b90 (LWP 5538) exited]
+</I>&gt;<i> [Thread 0xb2c05b90 (LWP 5541) exited]
+</I>&gt;<i> [New Thread 0xb2c05b90 (LWP 5589)]
+</I>&gt;<i> [Thread 0xb3406b90 (LWP 5540) exited]
+</I>&gt;<i> [Thread 0xb3e08b90 (LWP 5539) exited]
+</I>&gt;<i> [New Thread 0xb3e08b90 (LWP 5590)]
+</I>&gt;<i> [New Thread 0xb3406b90 (LWP 5591)]
+</I>&gt;<i> [Thread 0xb21ceb90 (LWP 5579) exited]
+</I>&gt;<i> [New Thread 0xb21ceb90 (LWP 5592)]
+</I>&gt;<i> [New Thread 0xb4609b90 (LWP 5593)]
+</I>&gt;<i> [Thread 0xb4609b90 (LWP 5593) exited]
+</I>&gt;<i> 
+</I>&gt;<i> Program received signal SIGSEGV, Segmentation fault.
+</I>&gt;<i> [Switching to Thread 0xb21ceb90 (LWP 5592)]
+</I>&gt;<i> 0xb7947cc2 in get_byte (s=0x98aa1e0) at libavformat/aviobuf.c:351
+</I>&gt;<i> 351                 return *s-&gt;buf_ptr++;
+</I>
+Now my current ffmpeg version crashes too.
+backing out 2 most recent changes:
+<A HREF="http://svn.ffmpeg.org/ffmpeg/trunk/libavformat/aviobuf.c?view=log&amp;pathrev=15799">http://svn.ffmpeg.org/ffmpeg/trunk/libavformat/aviobuf.c?view=log&amp;pathrev=15799</A>
+
+<A HREF="http://svn.ffmpeg.org/ffmpeg/trunk/libavformat/aviobuf.c?r1=15634&amp;r2=15799&amp;pathrev=15799">http://svn.ffmpeg.org/ffmpeg/trunk/libavformat/aviobuf.c?r1=15634&amp;r2=15799&amp;pathrev=15799</A>
+<A HREF="http://svn.ffmpeg.org/ffmpeg/trunk/libavformat/aviobuf.c?r1=15555&amp;r2=15634&amp;pathrev=15799">http://svn.ffmpeg.org/ffmpeg/trunk/libavformat/aviobuf.c?r1=15555&amp;r2=15634&amp;pathrev=15799</A>
+
+prevents segfaults.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003176.html">[Softdevice-devel] a lot of warnings with cvs softdevice version and ffmpeg from svn
+</A></li>
+	<LI>Next message: <A HREF="003178.html">[Softdevice-devel] [Bug #14931] compilation fails with last ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3177">[ date ]</a>
+              <a href="thread.html#3177">[ thread ]</a>
+              <a href="subject.html#3177">[ subject ]</a>
+              <a href="author.html#3177">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

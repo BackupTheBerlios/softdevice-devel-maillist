@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] new alsa device patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2004q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20alsa%20device%20patch&In-Reply-To=%3C200410292224.11742.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000050.html">
+   <LINK REL="Next"  HREF="000045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] new alsa device patch</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20new%20alsa%20device%20patch&In-Reply-To=%3C200410292224.11742.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] new alsa device patch">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Oct 29 22:24:11 CEST 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000050.html">[Softdevice-devel] new alsa device patch
+</A></li>
+        <LI>Next message: <A HREF="000045.html">[Softdevice-devel] new alsa device patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 29. Oktober 2004 20:22, Stefan Lucke wrote:
+&gt;<i> On Freitag, 29. Oktober 2004 19:51, Torgeir Veimo wrote:
+</I>
+[ .. ]
+
+&gt;<i> &gt; Can you try changing line 643 of video-xv.c to 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; _NET_WM_STATE_FULLSCREEN = XInternAtom(dpy, &quot;_NET_WM_STATE_FULLSCREEN&quot;,
+</I>&gt;<i> &gt; True);
+</I>&gt;<i> 
+</I>&gt;<i> &quot;True&quot; -&gt; create atom if it does not exits .
+</I>
+oh, damm . you are right and i am wrong. parameter is only_if_exists.
+so i misunderstood the logic thats behind
+atom testing.
+
+so its quite funny that with wrong assumptions, i do get the right (expected) results.
+
+with gnome it's now less flickering, with windowmaker and gnome i've the
+originating x,y values, gome window has it's focus back and with kde, gnome and
+windowmaker I can go to and from full screen without problems,
+
+so i'm going to commit in a few minutes.
+
+
+stefan lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000050.html">[Softdevice-devel] new alsa device patch
+</A></li>
+	<LI>Next message: <A HREF="000045.html">[Softdevice-devel] new alsa device patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

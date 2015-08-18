@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] DirectFB install locations in the Makefile
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20DirectFB%20install%20locations%20in%20the%0A%20Makefile&In-Reply-To=%3C431BE3AF.2050609%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001173.html">
+   <LINK REL="Next"  HREF="001177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] DirectFB install locations in the Makefile</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20DirectFB%20install%20locations%20in%20the%0A%20Makefile&In-Reply-To=%3C431BE3AF.2050609%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] [PATCH] DirectFB install locations in the Makefile">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Mon Sep  5 08:20:31 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001173.html">[Softdevice-devel] [PATCH] DirectFB install locations in the Makefile
+</A></li>
+        <LI>Next message: <A HREF="001177.html">[Softdevice-devel] [PATCH] DirectFB install locations in the Makefile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1174">[ date ]</a>
+              <a href="thread.html#1174">[ thread ]</a>
+              <a href="subject.html#1174">[ subject ]</a>
+              <a href="author.html#1174">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> On Montag, 5. September 2005 00:43, Lucian Muresan wrote:
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> please consider this patch for the softdevice Makefile, it makes
+</I>&gt;&gt;<i> compilation with DFB support succeed easier on systems where DirectFB is
+</I>&gt;&gt;<i> installed under the prefix /usr (like it's standard under Gentoo for
+</I>&gt;&gt;<i> excample, whith builds managed by the portage system).
+</I>&gt;<i> 
+</I>&gt;<i> I would prefer a configure approach to get the right paths
+</I>&gt;<i> and output methods to build. But unfortunately it breaks our
+</I>&gt;<i> current Makefile. I think I have to rename it to Makefile.vanilla
+</I>&gt;<i> (including your patch) for backup purpose.
+</I>&gt;<i> 
+</I>&gt;<i> Do the following commands produce the needed paths on your system ?
+</I>&gt;<i> 
+</I>&gt;<i> pkg-config --cflags directfb dfb++
+</I>&gt;<i> pkg-config --libs directfb dfb++
+</I>
+The first one does (I don't know if the second one also should have
+providede a path, or the fact that after every library build, ldconfig
+is executed, is enough):
+
+htpc ~ # pkg-config --cflags directfb dfb++
+-D_REENTRANT -D_GNU_SOURCE -I/usr/include/directfb -I/usr/include/dfb++
+htpc ~ # pkg-config --libs directfb dfb++
+-ldfb++ -ldirectfb -lz -lfusion -ldirect -lpthread -ldl
+htpc ~ #
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001173.html">[Softdevice-devel] [PATCH] DirectFB install locations in the Makefile
+</A></li>
+	<LI>Next message: <A HREF="001177.html">[Softdevice-devel] [PATCH] DirectFB install locations in the Makefile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1174">[ date ]</a>
+              <a href="thread.html#1174">[ thread ]</a>
+              <a href="subject.html#1174">[ subject ]</a>
+              <a href="author.html#1174">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

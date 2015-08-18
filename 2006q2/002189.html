@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Updated cle266 hw mpeg decoding patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C44983361.2040209%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002218.html">
+   <LINK REL="Next"  HREF="002190.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Updated cle266 hw mpeg decoding patch</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Updated%20cle266%20hw%20mpeg%20decoding%20patch&In-Reply-To=%3C44983361.2040209%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Updated cle266 hw mpeg decoding patch">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Jun 20 19:41:53 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002218.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+        <LI>Next message: <A HREF="002190.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2189">[ date ]</a>
+              <a href="thread.html#2189">[ thread ]</a>
+              <a href="subject.html#2189">[ subject ]</a>
+              <a href="author.html#2189">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> On Samstag 17 Juni 2006 16:20, Rolf Ahrenberg wrote:
+</I>&gt;&gt;<i> On Sat, 17 Jun 2006, Stefan Lucke wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> No. This would force YV12 pixelformat whenever HAVE_CLE266_MPEG_DECODER
+</I>&gt;&gt;&gt;<i> is detected. But without option cle266 we need I420, right ?
+</I>&gt;&gt;&gt;<i> In video-dfb.c we have to force stretchblit = 0 and pixelformat = 1 in constructor
+</I>&gt;&gt;<i> Yes, my mistake. The forced pixelformat setting should be enabled only 
+</I>&gt;&gt;<i> if &quot;cle266HWdecode&quot; is set. I placed it into setup's parse method just 
+</I>&gt;&gt;<i> to make sure that the setting in setup.conf doesn't have any effect.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Anyway, the patch is quite ready (IMHO) to be included into cvs and all 
+</I>&gt;&gt;<i> those little annoyances can corrected later on.
+</I>&gt;<i> 
+</I>&gt;<i> Yes. In cvs, so we can talk in smaller patches.
+</I>
+Good point.
+
+&gt;<i> I left out disabling pixelformat and stretchblit, until we are sure
+</I>&gt;<i> of the right/fastest one.
+</I>&gt;<i> 
+</I>I still think we should use I420 as default also when using hardware
+decoding. I420 and YV12 only differ in the order of the planes, so I
+don't see a reason why blitting from I420 to I420 should be faster than
+blitting from YV12 to YV12. I currently assume that there is some kind
+of bug in DirectFB or for some strange reason (bug?) the acceleration is
+disabled for YV12.
+
+Bye,
+Martin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002218.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+	<LI>Next message: <A HREF="002190.html">[Softdevice-devel] Updated cle266 hw mpeg decoding patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2189">[ date ]</a>
+              <a href="thread.html#2189">[ thread ]</a>
+              <a href="subject.html#2189">[ subject ]</a>
+              <a href="author.html#2189">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

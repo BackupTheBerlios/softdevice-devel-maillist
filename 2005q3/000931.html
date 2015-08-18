@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42CC0824.6080708%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000941.html">
+   <LINK REL="Next"  HREF="000934.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42CC0824.6080708%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Jul  6 18:34:44 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000941.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000934.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#931">[ date ]</a>
+              <a href="thread.html#931">[ thread ]</a>
+              <a href="subject.html#931">[ subject ]</a>
+              <a href="author.html#931">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; schrieb:
+&gt;<i> On Thu, Jun 30, 2005 at 06:16:09PM +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>It would be really nice to find the reason for these troubles,
+</I>&gt;&gt;<i>unfortunatly on my box I don't see them, so for me it is impossible to
+</I>&gt;&gt;<i>find out more....
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Don't you even see increased CPU usage when playing back recordings?
+</I>On my old box (1GHz AMD) I never noticed an increased CPU usage. Now I
+finally moved my vdr to the new AMD64 box and there I see the increased
+CPU usage clearly.
+
+&gt;<i> In &quot;dead&quot; playback, the list looks roughly the same, except for the
+</I>&gt;<i> method at top:
+</I>&gt;<i> 
+</I>&gt;<i> samples  %        symbol name
+</I>&gt;<i> 22284    13.0933  cStreamDecoder::BufferFill()
+</I>Yep, that's the one which is called in Poll() to check the buffer fill.
+It should be inside of the busy loop in cDvbplayer::Action().
+
+&gt;<i> In live playback, the method cStreamDecoder::BufferFill() got only
+</I>&gt;<i> 16 samples (0.0106 % of softdevice execution time).  In the output of
+</I>&gt;<i> &quot;opannotate -t 13 -a --source .../libvdr-softdevice-1.3.27&quot;, there
+</I>&gt;<i> are two weird-looking instructions that seem to consume a lot of time.
+</I>&gt;<i> Or maybe it's the preceding idiv that is consuming the time:
+</I>&gt;<i> 
+</I>&gt;<i>    187  0.1099 :   656d3:       idiv   %ecx
+</I>&gt;<i>   9485  5.5731 :   656d5:       lea    (%edx,%edx,4),%edx
+</I>&gt;<i>    302  0.1774 :   656d8:       lea    (%edx,%edx,4),%edx
+</I>&gt;<i>    289  0.1698 :   656db:       lea    0x0(,%edx,4),%eax
+</I>I guess it's the &quot;idiv&quot; instruction which uses the time. I think shifts
+by one instruction is possible when using oprofile, or am I wrong?
+
+&gt;<i> 
+</I>&gt;<i> This is after the call to Available():
+</I>&gt;<i>                :    inline int Available()
+</I>&gt;<i> 	       :    { return (LastPacket+MaxPackets - FirstPacket)%MaxPackets; }
+</I>&gt;<i> 
+</I>&gt;<i> The &quot;+MaxPackets&quot; is redundant, isn't it?  (Unless LastPacket&lt;FirstPacket,
+</I>&gt;<i> of course.)
+</I>The PacketBuffer is a ringbuffer, so LastPacket maybe smaller than
+FirstPacket.
+
+&gt;<i> BTW, any chance of introducing the &quot;suspended&quot; flag to vdr itself?
+</I>&gt;<i> That'd go with some auto-power-off logic, i.e., if suspended=true
+</I>&gt;<i> and vdr is currently recording, turn power off after the recording
+</I>&gt;<i> is completed (after some short timeout).  That'd make vdr much easier
+</I>&gt;<i> to use for my wife.  (We're recording children's programs daily, and
+</I>&gt;<i> she leaves the computer on, because she won't retry if the timed
+</I>&gt;<i> recording is still going on at the time she tries to power the
+</I>&gt;<i> system off.)
+</I>Hmm, you should ask that question on the vdr maillinglist.
+
+&gt;<i> 
+</I>&gt;<i> Should there perhaps be a bug reporting system or a list of known
+</I>&gt;<i> bugs on the web page?  I have reported two bugs earlier that still
+</I>&gt;<i> appear to be there with vdr-1.3.27 and current softdevice CVS.
+</I>There is a bug tracking system for the softdevice at:
+
+<A HREF="http://developer.berlios.de/bugs/?group_id=2051">http://developer.berlios.de/bugs/?group_id=2051</A>
+
+&gt;<i> First, the Power key is ignored when playing back recordings.
+</I>I don't think this bug is softdevice related, the softdevice has no
+chance to interfere on keypress events (except for those keys which are
+used for the control of Xv which are not delivered to vdr).
+
+&gt;<i> Second, vdr crashes with Signal 11 when selecting &quot;Restart&quot; (sp?,
+</I>&gt;<i> my OSD is in Finnish).
+</I>I will try to have a look at this.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000941.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000934.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#931">[ date ]</a>
+              <a href="thread.html#931">[ thread ]</a>
+              <a href="subject.html#931">[ subject ]</a>
+              <a href="author.html#931">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

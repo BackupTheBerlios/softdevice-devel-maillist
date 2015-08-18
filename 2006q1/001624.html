@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Hint: SPDIF out with SUSE 9.3 / 10.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hint%3A%20SPDIF%20out%20with%20SUSE%209.3%20/%2010.0&In-Reply-To=%3C20060105231450.GB2532%40seneca.muc.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001627.html">
+   <LINK REL="Next"  HREF="001628.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Hint: SPDIF out with SUSE 9.3 / 10.0</H1>
+    <B>Harald Milz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Hint%3A%20SPDIF%20out%20with%20SUSE%209.3%20/%2010.0&In-Reply-To=%3C20060105231450.GB2532%40seneca.muc.de%3E"
+       TITLE="[Softdevice-devel] Hint: SPDIF out with SUSE 9.3 / 10.0">hm at seneca.muc.de
+       </A><BR>
+    <I>Fri Jan  6 00:14:50 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001627.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001628.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1624">[ date ]</a>
+              <a href="thread.html#1624">[ thread ]</a>
+              <a href="subject.html#1624">[ subject ]</a>
+              <a href="author.html#1624">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+a while ago I upgraded my VDR to SL10 just for the heck of it. (more
+exactly: to be able to use dvb-kernel with the SL kernel for the Skystar2
+card). 
+
+After upgrading, ALSA over SPDIF stopped completely. (mind you, it's both
+1.0.9). 
+
+I use
+
+softdevice -ao &quot;alsa:pcm=plug:spdif#ac3=plug:spdif#&quot; -vo dfb:
+
+because I don't want to fiddle with my receiver all the time. 
+
+With SL10, I couldn't even use aplay to play a normal .wav file (S16_LE,
+44100) over SPDIF. 
+
+Guess what: After re-installing SL93 everything worked again out of the
+box. I have no idea why. 
+
+Hardware: Via VT8235 w/ ALC650. 
+
+Maybe this helps save someone a couple of hours. 
+
+
+-- 
+Those who educate children well are more to be honored than parents,
+for these only gave life, those the art of living well.
+		-- Aristotle
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001627.html">[Softdevice-devel] MPEG4/H.264 w/ softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001628.html">[Softdevice-devel] new OSD support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1624">[ date ]</a>
+              <a href="thread.html#1624">[ thread ]</a>
+              <a href="subject.html#1624">[ subject ]</a>
+              <a href="author.html#1624">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

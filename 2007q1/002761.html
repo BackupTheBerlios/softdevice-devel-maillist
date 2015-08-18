@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703022301.17955.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002760.html">
+   <LINK REL="Next"  HREF="002762.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C200703022301.17955.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Mar  2 23:01:17 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002760.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002762.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2761">[ date ]</a>
+              <a href="thread.html#2761">[ thread ]</a>
+              <a href="subject.html#2761">[ subject ]</a>
+              <a href="author.html#2761">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 02 March 2007 18:45, Hugo Visser wrote:
+&gt;<i> 
+</I>&gt;<i> On Mar 2, 2007, at 12:22 PM, Nicolas Huillard wrote:
+</I>&gt;<i> &gt; Your photos seem to show what I would like, except that you're in a
+</I>&gt;<i> &gt; 1024x576 window on a 4:3 device.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; We're talking about DirectFB and full-screen and output on a 16:9
+</I>&gt;<i> &gt; device. The problem might be either of those 3 conditions.
+</I>
+That shouldn't matter :-) .
+
+&gt;<i> 
+</I>&gt;<i> Maybe it's also due to the fact that I've set softdevice to 16:9 and  
+</I>&gt;<i> not &quot;default&quot;. Here are my screen shots:
+</I>&gt;<i> 
+</I>&gt;<i> A 16:9 broadcast shown correctly, soft device is set to 16:9 aspect  
+</I>&gt;<i> ratio. Then the same broadcast using the &quot;default&quot; aspect ratio; the  
+</I>&gt;<i> image is stretched, black bars are added on top.
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://img402.imageshack.us/img402/1438/dsc00244xv7.jpg">http://img402.imageshack.us/img402/1438/dsc00244xv7.jpg</A>
+</I>&gt;<i> <A HREF="http://img442.imageshack.us/img442/1990/dsc00245lt9.jpg">http://img442.imageshack.us/img442/1990/dsc00245lt9.jpg</A>
+</I>
+Can't believe what I see.
+
+Can you try attached patch to get some more infos ?
+Which graphic card do you use ?
+
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+Index: video.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/video.c,v
+retrieving revision 1.73
+diff -U3 -r1.73 video.c
+--- video.c	26 Feb 2007 23:00:34 -0000	1.73
++++ video.c	2 Mar 2007 21:58:43 -0000
+@@ -262,6 +262,9 @@
+      */
+     lheight = dheight;
+     lwidth = (int) (0.5 + ((double) dheight * afd_aspect / p_asp));
++setupStore-&gt;softlog-&gt;Log(SOFT_LOG_DEBUG, 0,
++&quot;[video] ++ afd = %.5f, pasp = %.5f, dasp = %.5f, sa = %d, dw = %d, dh = %d\n&quot;,
++afd_aspect, p_asp, d_asp, screenPixelAspect, dwidth, dheight);
+   } else {
+     /* ------------------------------------------------------------------------
+      * display aspect is taller or equal than frame aspect
+@@ -269,6 +272,9 @@
+      */
+     lwidth = dwidth;
+     lheight = (int) (0.5 + ((double) dwidth * p_asp / afd_aspect));
++setupStore-&gt;softlog-&gt;Log(SOFT_LOG_DEBUG, 0,
++&quot;[video] -- afd = %.5f, pasp = %.5f, dasp = %.5f, sa = %d, dw = %d, dh = %d\n&quot;,
++afd_aspect, p_asp, d_asp, screenPixelAspect, dwidth, dheight);
+   }
+ 
+   /* -------------------------------------------------------------------------
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002760.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002762.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2761">[ date ]</a>
+              <a href="thread.html#2761">[ thread ]</a>
+              <a href="subject.html#2761">[ subject ]</a>
+              <a href="author.html#2761">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

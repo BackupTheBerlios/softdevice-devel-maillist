@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060911190131.GA2735%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002436.html">
+   <LINK REL="Next"  HREF="002267.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060911190131.GA2735%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Sep 11 21:01:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002436.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002267.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2438">[ date ]</a>
+              <a href="thread.html#2438">[ thread ]</a>
+              <a href="subject.html#2438">[ subject ]</a>
+              <a href="author.html#2438">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Sep 11, 2006 at 10:48:43AM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> I think I know.  I'll try to post my directfbrcs tonight.  I have
+</I>&gt;<i> two of them: one for VGA output on primary head, and another one for
+</I>&gt;<i> -vo dfb:mgatv on the secondary head.  Both allow the console to be used
+</I>&gt;<i> on the primary head.  I'm using the secondary head only.
+</I>&gt;<i> 
+</I>&gt;<i> Since the console shares the OSD layer of the primary head, the usability
+</I>&gt;<i> of the primary-head-only setup is a bit limited.  (Also, light grey tiny
+</I>&gt;<i> text on a bright TV background is often hard to read.)
+</I>
+Attached: directfbrc.vga and directfbrc.mgatv.  I use to symlink either
+file to /etc/directfbrc.  Remember to pass -vo dfb or -vo dfb:mgatv
+to softdevice.
+
+I believe that DirectFB will pick the first entry from /etc/fb.modes
+that matches the specified resolution.  In my case, it'd be 768x576-75
+(46.58 kHz and 75 Hz) when I'm using a SVGA monitor.
+
+	Marko
+-------------- next part --------------
+fbdev=/dev/fb0
+mode=768x576
+no-banner
+no-debug
+no-vt
+-------------- next part --------------
+matrox-crtc2
+matrox-tv-standard=pal
+matrox-cable-type=scart-rgb
+primary-layer=2
+hardware
+mmx
+no-banner
+no-vt
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002436.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002267.html">[Softdevice-devel] Exit out on wrong audio rates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2438">[ date ]</a>
+              <a href="thread.html#2438">[ thread ]</a>
+              <a href="subject.html#2438">[ subject ]</a>
+              <a href="author.html#2438">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14302] ShmClient broken
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314302%5D%20ShmClient%20broken&In-Reply-To=%3C200809211300.m8LD0E3A025693%40unicorn.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003141.html">
+   <LINK REL="Next"  HREF="003146.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14302] ShmClient broken</H1>
+    <B>admin at berlios.de</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314302%5D%20ShmClient%20broken&In-Reply-To=%3C200809211300.m8LD0E3A025693%40unicorn.berlios.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14302] ShmClient broken">admin at berlios.de
+       </A><BR>
+    <I>Sun Sep 21 15:00:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003141.html">[Softdevice-devel] [Bug #14494] softdevice fails to build with	ffmpeg r15306
+</A></li>
+        <LI>Next message: <A HREF="003146.html">[Softdevice-devel] transcoding w softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3142">[ date ]</a>
+              <a href="thread.html#3142">[ thread ]</a>
+              <a href="subject.html#3142">[ subject ]</a>
+              <a href="author.html#3142">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bug #14302, was updated on 2008-Aug-03 01:43
+Here is a current snapshot of the bug.
+
+Project: Vdr Softdevice
+Category: general
+Status: Closed
+Resolution: Fixed
+Bug Group: None
+Priority: 5
+Submitted by: bugmenot
+Assigned to : none
+Summary: ShmClient broken
+
+Details: Since softdevice version 0.5 ShmClient is only black. The tv pictures aren't displayed. OSD and sound is working.
+
+Version 0.4 was working fine.
+
+Follow-Ups:
+
+Date: 2008-Sep-21 15:00
+By: lucke
+
+Comment:
+Assume fixed since 2008-09-10.
+-------------------------------------------------------
+
+Date: 2008-Sep-10 19:16
+By: lucke
+
+Comment:
+It's not only black, even worse one (I) were not able to change xv output paramters via OSD. Bug was in vdr version dependent member in setupstore.
+Fix is in cvs. Please recompile after make clean.
+-------------------------------------------------------
+
+For detailed info, follow this link:
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14302&amp;group_id=2051">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=14302&amp;group_id=2051</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003141.html">[Softdevice-devel] [Bug #14494] softdevice fails to build with	ffmpeg r15306
+</A></li>
+	<LI>Next message: <A HREF="003146.html">[Softdevice-devel] transcoding w softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3142">[ date ]</a>
+              <a href="thread.html#3142">[ thread ]</a>
+              <a href="subject.html#3142">[ subject ]</a>
+              <a href="author.html#3142">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dfb-out: square with different colours
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb-out%3A%20square%20with%20different%20colours&In-Reply-To=%3C1849e5180609081308s4994e930jea43811e608f6224%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002371.html">
+   <LINK REL="Next"  HREF="002426.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dfb-out: square with different colours</H1>
+    <B>Alasdair Campbell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dfb-out%3A%20square%20with%20different%20colours&In-Reply-To=%3C1849e5180609081308s4994e930jea43811e608f6224%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] dfb-out: square with different colours">ragawu at gmail.com
+       </A><BR>
+    <I>Fri Sep  8 22:08:33 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002371.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+        <LI>Next message: <A HREF="002426.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2407">[ date ]</a>
+              <a href="thread.html#2407">[ thread ]</a>
+              <a href="subject.html#2407">[ subject ]</a>
+              <a href="author.html#2407">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 07/09/06, Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+&gt;<i> You are using the no-vt* options in your directfbrc. A good way to avoid
+</I>&gt;<i> any interruptions from text written you should redirect stdout and stderr
+</I>&gt;<i> to a log file  vdr_call &gt;vdr_log 2&gt;&amp;1.
+</I>
+I should be using those no-vt* options shouldn't I, if I'm just after
+vdr output to the 2nd head and won't be using the first? Sorry for
+this directfb related question..
+
+&gt;<i> For hiding cursor etc.. I once suggested the following which may be
+</I>&gt;<i> useful for vidix users too:
+</I>&gt;<i>
+</I>&gt;<i> -- snip --
+</I>&gt;<i> # setup logfile name
+</I>&gt;<i> LOGFILE=/var/log/my_vdr_logfile
+</I>&gt;<i> #
+</I>&gt;<i> # save prompt mode, hide prompt and switch cursor off
+</I>&gt;<i> PSSAVE=${PS1}
+</I>&gt;<i> export PS1=''
+</I>&gt;<i> setterm -cursor off
+</I>&gt;<i> #
+</I>&gt;<i> # deactivate powersaving mode and clear screen
+</I>&gt;<i> setterm -powersave off
+</I>&gt;<i> clear
+</I>&gt;<i> #
+</I>&gt;<i> # start vdr
+</I>&gt;<i> vdr WITH_DESIRED_PARAMETERS  &gt;${LOGFILE} 2&gt;&amp;1
+</I>&gt;<i> # restore settings
+</I>&gt;<i> export PS1=${PSSAVE}
+</I>&gt;<i> setterm -default
+</I>&gt;<i> -- snip --
+</I>
+Something strange happened when I tried this script, first of all with
+it copied verbatim, vdr loads as normal but there is only a black
+screen. I then tried commenting out lines such as the powersave one,
+and the &quot;clear&quot; line, however even after removing ALL the lines until
+it was only a exact copy of my vdr command line, there was still
+nothing but a black screen.
+
+I figure this must be to do with permissions or what not, however I
+ran the command on the console directly with the same user and it
+worked fine, exact same command in an executable shell script and
+nothing appears.
+
+&gt;<i> &gt;
+</I>&gt;<i> &gt; Also, (this is something I have seen with the gentoo ebuilds and
+</I>&gt;<i> &gt; unpatched DirectFb cvs) on the first head, along with the console off
+</I>&gt;<i> &gt; center, I see three instances of the same video image, with the wrong
+</I>&gt;<i> &gt; colours.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I don't know if this is simply a configuration error, I've attached
+</I>&gt;<i> &gt; the config files / outputs I thought were relevant.
+</I>&gt;<i> &gt;
+</I>
+So is that to be expected, the video appearing on the first head?
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>
+
+-- 
+A l a s d a i r   C a m p b e l l
+
+r a g a w u @ g m a i l . c o m
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002371.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+	<LI>Next message: <A HREF="002426.html">[Softdevice-devel] dfb-out: square with different colours
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2407">[ date ]</a>
+              <a href="thread.html#2407">[ thread ]</a>
+              <a href="subject.html#2407">[ subject ]</a>
+              <a href="author.html#2407">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

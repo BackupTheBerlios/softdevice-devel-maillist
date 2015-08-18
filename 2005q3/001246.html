@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softieee1394, fighting with pts values
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softieee1394%2C%20fighting%20with%20pts%20values&In-Reply-To=%3C432AEBC6.9070106%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001241.html">
+   <LINK REL="Next"  HREF="001248.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softieee1394, fighting with pts values</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softieee1394%2C%20fighting%20with%20pts%20values&In-Reply-To=%3C432AEBC6.9070106%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softieee1394, fighting with pts values">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Sep 16 17:59:02 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001241.html">[Softdevice-devel] softieee1394, fighting with pts values
+</A></li>
+        <LI>Next message: <A HREF="001248.html">[Softdevice-devel] softieee1394, fighting with pts values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1246">[ date ]</a>
+              <a href="thread.html#1246">[ thread ]</a>
+              <a href="subject.html#1246">[ subject ]</a>
+              <a href="author.html#1246">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+&gt;<i> Hi,
+</I>&gt;<i> at the moment I'm just wondering why softieee1394 goes in sync 
+</I>&gt;<i> with audio and video for a few seconds. Then it just starts dropping
+</I>&gt;<i> every 2nd frame (&quot;+&quot; chars written).
+</I>&gt;<i> Looking at the pts values used for syncing, I realized they are just 0.
+</I>&gt;<i> Thats not the only odd thing. I added some tracing and it shows like
+</I>&gt;<i> the coded picture number is always 0 too, and so the pts lookup
+</I>&gt;<i> mechanism may fail.
+</I>&gt;<i> 
+</I>This a bad news... I think we should try to figure out how MPlayer or
+Xine solves this problem. I know that the pts value in the AVPacket
+belongs to the coded frame which starts in the packet, but since the
+order of the coded frames is not necesarily the order to display the
+frames, how should we find out the correct frame for the pts value?
+Maybe we can ask this question on the ffmpeg mailling list...
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001241.html">[Softdevice-devel] softieee1394, fighting with pts values
+</A></li>
+	<LI>Next message: <A HREF="001248.html">[Softdevice-devel] softieee1394, fighting with pts values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1246">[ date ]</a>
+              <a href="thread.html#1246">[ thread ]</a>
+              <a href="subject.html#1246">[ subject ]</a>
+              <a href="author.html#1246">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

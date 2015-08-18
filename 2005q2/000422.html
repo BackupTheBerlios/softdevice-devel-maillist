@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Aspect ratio handling [WAS: Re: [Softdevice-devel] Ready for 0.0.9pre1]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20Aspect%20ratio%20handling%20%5BWAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Ready%20for%200.0.9pre1%5D&In-Reply-To=%3C200504020013.11870.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000495.html">
+   <LINK REL="Next"  HREF="000421.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Aspect ratio handling [WAS: Re: [Softdevice-devel] Ready for 0.0.9pre1]</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20Aspect%20ratio%20handling%20%5BWAS%3A%20Re%3A%20%5BSoftdevice-devel%5D%20Ready%20for%200.0.9pre1%5D&In-Reply-To=%3C200504020013.11870.stefan%40lucke.in-berlin.de%3E"
+       TITLE="Aspect ratio handling [WAS: Re: [Softdevice-devel] Ready for 0.0.9pre1]">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Apr  2 00:13:11 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000495.html">[Softdevice-devel] Thoughts on testing and standards compliance
+</A></li>
+        <LI>Next message: <A HREF="000421.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#422">[ date ]</a>
+              <a href="thread.html#422">[ thread ]</a>
+              <a href="subject.html#422">[ subject ]</a>
+              <a href="author.html#422">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 5. M&#228;rz 2005 20:38, Stefan Lucke wrote:
+&gt;<i> On Samstag, 5. M&#228;rz 2005 19:58, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; On Fri, 2005-03-04 at 13:11 +0100, Nicolas Huillard wrote:
+</I>&gt;<i> &gt; &gt; Stefan Lucke a &#233;crit :
+</I>&gt;<i> &gt; &gt; &gt; Has someone a pending modification or fix ?
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; If not, I'll release 0.0.9pre1 tomorrow .
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; There's still the aspect ratio bug on some channels here which change
+</I>&gt;<i> &gt; a/r during commercial breaks. I'll try to get my head around it.
+</I>&gt;<i> 
+</I>&gt;<i> Is that the short sequence I got from you &quot;T4: The O.C. There is a
+</I>&gt;<i> commercial in 16:9 format, followed by the 4:3 main movie. Excerpt from
+</I>&gt;<i> log with reported a/r changes:
+</I>&gt;<i> Mar  5 20:34:51 jarada vdr[3907]: [VideoOut]: aspect changed (9 -&gt; 14 ; 1,333333 -&gt; 1,777778)
+</I>&gt;<i> Mar  5 20:34:51 jarada vdr[3907]: [VideoOut]: 704x576 [0,0 704x576] -&gt; 1024x576 [0,0 1024x576]
+</I>&gt;<i> Mar  5 20:34:52 jarada vdr[3908]: buffer usage: 100% (tid=196616)
+</I>&gt;<i> Mar  5 20:35:19 jarada vdr[3907]: [VideoOut]: aspect changed (14 -&gt; 9 ; 1,777778 -&gt; 1,333333)
+</I>&gt;<i> Mar  5 20:35:19 jarada vdr[3907]: [VideoOut]: 704x576 [0,0 704x576] -&gt; 1024x576 [128,0 768x576]
+</I>
+Have to start here with my answer to compare the log messages.
+Yes I've upgraded my ffmpeg's version to current cvs.
+
+[softdevice] ffmpeg version(0.4.9-pre1) build(4751)
+
+They changed something:
+Apr  1 23:54:42 jarada vdr[14589]: [VideoOut]: resolution changed: W(720 -&gt; 704); H(576 -&gt;576)
+Apr  1 23:54:42 jarada vdr[14589]: [VideoOut]: aspect changed (0 -&gt; 14 ; 1,333333 -&gt; 1,777778)
+Apr  1 23:54:42 jarada vdr[14589]: [VideoOut]: 704x576 [0,0 704x576] -&gt; 768x576 [0,72 768x432]
+Apr  1 23:55:09 jarada vdr[14589]: [VideoOut]: aspect changed (14 -&gt; 9 ; 1,777778 -&gt; 1,777778)
+Apr  1 23:55:09 jarada vdr[14589]: [VideoOut]: 704x576 [88,0 528x576] -&gt; 768x576 [0,0 768x576]
+
+As you see, they report the 2nd part now as 16:9 instead of 4:3 formerly.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000495.html">[Softdevice-devel] Thoughts on testing and standards compliance
+</A></li>
+	<LI>Next message: <A HREF="000421.html">[Softdevice-devel] Other playback formats than mpeg2 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#422">[ date ]</a>
+              <a href="thread.html#422">[ thread ]</a>
+              <a href="subject.html#422">[ subject ]</a>
+              <a href="author.html#422">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

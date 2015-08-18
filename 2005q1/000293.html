@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] dvd plugin with softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dvd%20plugin%20with%20softdevice&In-Reply-To=%3C423708E9.6050209%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000292.html">
+   <LINK REL="Next"  HREF="000294.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] dvd plugin with softdevice</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20dvd%20plugin%20with%20softdevice&In-Reply-To=%3C423708E9.6050209%40gmx.net%3E"
+       TITLE="[Softdevice-devel] dvd plugin with softdevice">M.Wache at gmx.net
+       </A><BR>
+    <I>Tue Mar 15 17:10:17 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000292.html">[Softdevice-devel] dvd plugin with softdevice
+</A></li>
+        <LI>Next message: <A HREF="000294.html">[Softdevice-devel] dvd plugin with softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#293">[ date ]</a>
+              <a href="thread.html#293">[ thread ]</a>
+              <a href="subject.html#293">[ subject ]</a>
+              <a href="author.html#293">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> based on Martin's work, I made a patch to get the cvs version of the
+</I>&gt;<i> dvd plugin work with softdevice.
+</I>&gt;<i> 
+</I>&gt;<i> If that wouldn't disturb Martin's next setps we can include this
+</I>&gt;<i> into cvs if it works for oters too.
+</I>No, it won't disturb my work on using libavformat. I had to make so may 
+changes in mpeg2decoder.c that there are almost no similarities anyway.
+
+On the other hand, I hope to be able to publish my libavformat work the 
+next weekend. Live tv with ac3 already works (Stereo, in 5.1 mode I get 
+only the rear speakers with my stereo soundcard, has anyone a 5.1 card 
+with Speakers connected directly to the card? - there is no ac3 
+passthrough yet), watching recordings also works (there are some minor 
+problems with still pictures though...), and it is now stable. What 
+remains to be done is mainly compilation issues with older vdr versions 
+and ffmpeg versions.
+
+Also the dvd-plugin works, but I still have some troubles with audio 
+buffer underruns in ac3 mode :-(.
+
+Since we just released a new version, think I will commit the changes 
+directly to the CVS, so that we don't have to mess around with patches, 
+or are there any objections?
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000292.html">[Softdevice-devel] dvd plugin with softdevice
+</A></li>
+	<LI>Next message: <A HREF="000294.html">[Softdevice-devel] dvd plugin with softdevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#293">[ date ]</a>
+              <a href="thread.html#293">[ thread ]</a>
+              <a href="subject.html#293">[ subject ]</a>
+              <a href="author.html#293">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

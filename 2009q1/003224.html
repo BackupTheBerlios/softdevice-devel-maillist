@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and latest DirectFB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20latest%20DirectFB&In-Reply-To=%3C200902252303.53673.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003227.html">
+   <LINK REL="Next"  HREF="003226.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and latest DirectFB</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20latest%20DirectFB&In-Reply-To=%3C200902252303.53673.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice and latest DirectFB">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Feb 25 23:03:53 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003227.html">[Softdevice-devel] softdevice and latest DirectFB
+</A></li>
+        <LI>Next message: <A HREF="003226.html">[Softdevice-devel] softdevice and latest DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3224">[ date ]</a>
+              <a href="thread.html#3224">[ thread ]</a>
+              <a href="subject.html#3224">[ subject ]</a>
+              <a href="author.html#3224">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 25 February 2009, Vladimir Monchenko wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I have started to update system on Epia ME6000 and have found out that
+</I>&gt;<i> softdevice does not work c DirectFB 1.2.7 and 1.3.0.
+</I>&gt;<i> With old snapshot DirectFB-2008-03-04-05-25-11-UTC all works normally.
+</I>&gt;<i> It is regression or change API?
+</I>
+Current version still works. I did th cvs checkout, as git clone didn't work:
+
+cvs -d :pserver:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">anonymous at git.directfb.org</A>:/git/directfb/core/DirectFB.git co -d DirectFB master
+cvs -d :pserver:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">anonymous at git.directfb.org</A>:/git/directfb/extras/DFB++.git co -d DFB++ master
+
+My /usr/local/etc/directfbrc looks like (output method is vga out):
+-- cut
+#mode  = 1024x768
+mode = 1280x1024
+#mode = 800x480
+pixelformat=AiRGB
+#pixelformat=ARGB
+disable-module=cle266
+disable-module=mouse
+#disable-module=ps2mouse
+#mouse-protocol=touchkitPS/2
+disable-module=serialmouse
+#disable-module=keyboard
+#disable-module=linux_input
+#enable-module=MuTouch
+#unichrome-revision=3
+unichrome-revision=3
+#no-hardware
+#no-vt
+#vt-num=0
+#no-vt-switch
+-- cut
+
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3407872)
+commandline read: vdr
+commandline read: -P
+commandline read: softdevice -vo dfb:cle266
+commandline read: -c
+commandline read: /loc_data/vdr137-dvb-t-jarada/
+commandline read: -v
+commandline read: /loc_data/video
+commandline read: -E
+commandline read: /loc_data/vdr137-dvb-t-jarada/epg.data
+
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~| DirectFB 1.3.0 |~~~~~~~~~~~~~~~~~~~~~~~~~~
+        (c) 2001-2008  The world wide DirectFB Open Source Community
+        (c) 2000-2004  Convergence (integrated media) GmbH
+      ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2009-02-25 21:16)
+
+[snip]
+
+(*) Direct/Thread: Started 'Linux Input' (15267) [INPUT OTHER/OTHER 0/0] &lt;8388608&gt;...
+(*) DirectFB/Input: touchkitPS/2 eGalax Touchscreen (4) 0.1 (directfb.org)
+(*) Direct/Thread: Started 'Linux Input' (15268) [INPUT OTHER/OTHER 0/0] &lt;8388608&gt;...
+(*) DirectFB/Input: IR-receiver inside an USB DVB r (5) 0.1 (directfb.org)
+(*) Direct/Thread: Started 'Keyboard Input' (15269) [INPUT OTHER/OTHER 0/0] &lt;8388608&gt;...
+(*) DirectFB/Input: Keyboard 0.9 (directfb.org)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+(*) FBDev/Mode: Setting 1280x1024 AiRGB
+(*) FBDev/Mode: Switched to 1280x1024 (virtual 1280x2048) at 32 bit (AiRGB), pitch 5120
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 0) at offset 0 and pitch 5120.
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 1) at offset 5242880 and pitch 5120.
+[dfb] RAM: 66842624 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Xor
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize SrcColorkey DstColorkey Deinterlace
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">720x576 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">848x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">856x480 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x512 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x768 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x800 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1440x1050 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x720 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1920x1080 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1400x1050 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1366x768 at 32</A>
+Layer 0 VIA CLE266 Graphics  Type: graphics
+  Caps: alphachannel brightness contrast opacity saturation src_colorkey surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+  Caps: deinterlacing dst_colorkey levels field_parity opacity screen_location surface
+(*) FBDev/Mode: Setting 1280x1024 AiRGB
+(*) FBDev/Mode: Switched to 1280x1024 (virtual 1280x1024) at 32 bit (AiRGB), pitch 5120
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 0) at offset 0 and pitch 5120.
+(*) FBDev/Mode: Setting 1280x1024 AiRGB
+(*) FBDev/Mode: Switched to 1280x1024 (virtual 1280x2048) at 32 bit (AiRGB), pitch 5120
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 0) at offset 0 and pitch 5120.
+(*) FBDev/Surface: Allocated 1280x1024 32 bit AiRGB buffer (index 1) at offset 5242880 and pitch 5120.
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003227.html">[Softdevice-devel] softdevice and latest DirectFB
+</A></li>
+	<LI>Next message: <A HREF="003226.html">[Softdevice-devel] softdevice and latest DirectFB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3224">[ date ]</a>
+              <a href="thread.html#3224">[ thread ]</a>
+              <a href="subject.html#3224">[ subject ]</a>
+              <a href="author.html#3224">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

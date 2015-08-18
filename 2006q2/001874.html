@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Joining%20the%20club%20of%20%22Caught%20signal%2011%20..%22%20users&In-Reply-To=%3C4442EF45.3050209%40mountaincable.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001872.html">
+   <LINK REL="Next"  HREF="001883.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users</H1>
+    <B>Dave</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Joining%20the%20club%20of%20%22Caught%20signal%2011%20..%22%20users&In-Reply-To=%3C4442EF45.3050209%40mountaincable.net%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users">inssomniak at mountaincable.net
+       </A><BR>
+    <I>Mon Apr 17 03:28:37 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001872.html">[Softdevice-devel] Joining the club of &quot;Caught signal 11 ..&quot; users
+</A></li>
+        <LI>Next message: <A HREF="001883.html">[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1874">[ date ]</a>
+              <a href="thread.html#1874">[ thread ]</a>
+              <a href="subject.html#1874">[ subject ]</a>
+              <a href="author.html#1874">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Im using:
+
+gcc version 3.4.5 (Gentoo 3.4.5, ssp-3.4.5-1.0, pie-8.7.9)
+Softdevice CVS and DirectFB CVS probably from a few weeks ago now.
+
+Very stable here. But didnt compile with --enable-debug or --enable-trace
+
+
+Stefan Lucke wrote:
+
+&gt;<i>Hi,
+</I>&gt;<i>
+</I>&gt;<i>with a gentoo 2006.0 system and gcc 3.4.4
+</I>&gt;<i>g++ (GCC) 3.4.4 (Gentoo 3.4.4-r1, ssp-3.4.4-1.0, pie-8.7.8)
+</I>&gt;<i>
+</I>&gt;<i>configuring with --enable-multi --enable-debug --enable-trace ,
+</I>&gt;<i>compilations result in triggering an internal compiler bug:
+</I>&gt;<i><A HREF="http://bugs.gentoo.org/show_bug.cgi?id=130001">http://bugs.gentoo.org/show_bug.cgi?id=130001</A>
+</I>&gt;<i>
+</I>&gt;<i>With and without --enable-multi I got sig11 at various times when
+</I>&gt;<i>starting vdr with softdevice plugin.
+</I>&gt;<i>
+</I>&gt;<i>my directfb version is cvs from yesterday.
+</I>&gt;<i>hardware for sig11 is a G550 on aopen celeron-m board.
+</I>&gt;<i>
+</I>&gt;<i>dfbinfo works most of the time, but sometimes it did not
+</I>&gt;<i>finish reporting.
+</I>&gt;<i>
+</I>&gt;<i>Error message from softdevice:
+</I>&gt;<i>[dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+</I>&gt;<i>[dfb] DLOP_FIELD_PARITY supported by layer [Matrox CRTC2 Layer]
+</I>&gt;<i>[dfb] 1 draw frame (736 x 576) Y: 736 UV: 368
+</I>&gt;<i>[dfb] (re)configuring Videolayer to 736 x 576 (720x576)
+</I>&gt;<i>[dfb] creating new surface (stretchBlit)
+</I>&gt;<i>[surface capabilities] videoSurface: videoonly
+</I>&gt;<i>[dfb] (re)configured 0x00200806
+</I>&gt;<i>[dfb] 2 draw frame (736 x 576) Y: 736 UV: 368
+</I>&gt;<i>xx3
+</I>&gt;<i>xx4
+</I>&gt;<i>(!) [10775:    0.197] --&gt; Caught signal 11 (at 0x4, invalid address) &lt;--
+</I>&gt;<i>(!) [10769:    0.198] --&gt; Caught signal 11 (at 0xb565d54e, invalid address) &lt;--
+</I>&gt;<i>(!) Direct/Thread: Killing 'Fusion Dispatch' (10776)!
+</I>&gt;<i>Killed
+</I>&gt;<i>
+</I>&gt;<i>My question is: which gcc version use other softdevice / directfb / gentoo
+</I>&gt;<i>users in a stable enviroment ?
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001872.html">[Softdevice-devel] Joining the club of &quot;Caught signal 11 ..&quot; users
+</A></li>
+	<LI>Next message: <A HREF="001883.html">[Softdevice-devel] Re: [directfb-users] Joining the club of &quot;Caught signal 11 ..&quot; users
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1874">[ date ]</a>
+              <a href="thread.html#1874">[ thread ]</a>
+              <a href="subject.html#1874">[ subject ]</a>
+              <a href="author.html#1874">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] witch softdevice output depending on hard and soft
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C44904497.5020301%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002129.html">
+   <LINK REL="Next"  HREF="002139.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] witch softdevice output depending on hard and soft</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C44904497.5020301%40gmx.net%3E"
+       TITLE="[Softdevice-devel] witch softdevice output depending on hard and soft">M.Wache at gmx.net
+       </A><BR>
+    <I>Wed Jun 14 19:17:11 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002129.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+        <LI>Next message: <A HREF="002139.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2132">[ date ]</a>
+              <a href="thread.html#2132">[ thread ]</a>
+              <a href="subject.html#2132">[ subject ]</a>
+              <a href="author.html#2132">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Leo M&#225;rquez schrieb:
+
+&gt;<i> It says me that softdevice is not compiled with xv support.
+</I>&gt;<i> I have been checked the softdevice Makefile and XV_SUPPORT is set to 1
+</I>&gt;<i> But I have noticed that when I execute in the softdevice dir the
+</I>&gt;<i> ./configure command with an option related to xv then the config.h and
+</I>&gt;<i> config.mak don't change. For example if I execute ./config --disable-fb
+</I>&gt;<i> I see config.h and config.mak updated.
+</I>&gt;<i> But if I execute ./configure --disable-xv don't update anything. If
+</I>&gt;<i> after that I execute again only ./configure anything changed again and
+</I>&gt;<i> it must update to enable all the outputs again.
+</I>&gt;<i> 
+</I>Do you have the x-development headers installed?
+
+&gt;<i> The other type of client I want set is a non x-window system based. I
+</I>&gt;<i> have tried it with directfb without luck. The hardware is geoforce mx
+</I>&gt;<i> 4400 or 5500.
+</I>&gt;<i> 
+</I>I'm not sure how good the support for gforce graphics cards is in
+DirectFB. I would suggest you to by a old, cheap and well supported
+graphics card if you want to use Directfb.
+
+
+&gt;<i> I know there is a lot of docs and I have readed a lot of them but I'm
+</I>&gt;<i> confused about how to set the best output. I know that the fb output is
+</I>&gt;<i> bad because cpu have a lot of work. At the moment the fb output is the
+</I>&gt;<i> only way softdevice worked to me.
+</I>&gt;<i> I understand that xvmc or directfb is the best way but I don't know
+</I>&gt;<i> exactly how to set up these.
+</I>&gt;<i> 
+</I>Xvmc is currently not supported by the softdevice. DirectFB is certainly
+the best way if you want to avoid X. For directFB you need a framebuffer
+driver for your graphics card which enables hardware acceleration (like
+atyfb for Mach64, aty128fb for Mach128, viafb for via-cle266...). Get
+and compile DirectFB and DFB++, set up /etc/directfbrc (examples are on
+the softdevice hompage) compile the softdevice with directfb support,
+and you should be ready to go.
+
+Bye,
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002129.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+	<LI>Next message: <A HREF="002139.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2132">[ date ]</a>
+              <a href="thread.html#2132">[ thread ]</a>
+              <a href="subject.html#2132">[ subject ]</a>
+              <a href="author.html#2132">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

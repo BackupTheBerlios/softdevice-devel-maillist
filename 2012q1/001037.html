@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2012q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.4.1331738280.11969.softdevice-devel%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="001104.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.4.1331738280.11969.softdevice-devel%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:17:53 CET 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="001104.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1037">[ date ]</a>
+              <a href="thread.html#1037">[ thread ]</a>
+              <a href="subject.html#1037">[ subject ]</a>
+              <a href="author.html#1037">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Libavformats version number changed a few days (chg. on 2005-06-03)
+after they changed this function prototype (chg. on 2005-05-30).
+By this our version check fails if your checkout date is in between
+those days.
+
+&gt;<i> mpeg2decoder.c: In member function `void cMpeg2Decoder::QueuePacket(const
+</I>&gt;<i>     AVFormatContext*, AVPacket&amp;)':
+</I>&gt;<i> mpeg2decoder.c:1100: error: request for member `codec_type' in `
+</I>&gt;<i>  
+</I>&gt;<i> ic-&gt;AVFormatContext::streams[pkt-&gt;AVPacket::stream_index]-&gt;AVStream::codec',
+</I>&gt;<i>     which is of non-class type `AVCodecContext*'
+</I>&gt;<i> mpeg2decoder.c:1112: error: no matching function for call to `
+</I>&gt;<i>     cAudioStreamDecoder::cAudioStreamDecoder(AVCodecContext**, 
+</I>&gt;<i> cAudioOut*&amp;, int&amp;
+</I>&gt;<i>     )'
+</I>&gt;<i> mpeg2decoder.h:136: error: candidates are:
+</I>&gt;<i>     cAudioStreamDecoder::cAudioStreamDecoder(const cAudioStreamDecoder&amp;)
+</I>&gt;<i> mpeg2decoder.c:236: error:
+</I>&gt;<i>     cAudioStreamDecoder::cAudioStreamDecoder(AVCodecContext*, 
+</I>&gt;<i> cAudioOut*, int)
+</I>&gt;<i> mpeg2decoder.c:1115: error: request for member `codec_type' in `
+</I>&gt;<i>  
+</I>&gt;<i> ic-&gt;AVFormatContext::streams[pkt-&gt;AVPacket::stream_index]-&gt;AVStream::codec',
+</I>&gt;<i>     which is of non-class type `AVCodecContext*'
+</I>&gt;<i> mpeg2decoder.c:1127: error: no matching function for call to `
+</I>&gt;<i>     cVideoStreamDecoder::cVideoStreamDecoder(AVCodecContext**, cVideoOut*&amp;,
+</I>&gt;<i>     cClock*, int&amp;)'
+</I>&gt;<i> mpeg2decoder.h:162: error: candidates are:
+</I>&gt;<i>     cVideoStreamDecoder::cVideoStreamDecoder(const cVideoStreamDecoder&amp;)
+</I>&gt;<i> mpeg2decoder.c:383: error:
+</I>&gt;<i>     cVideoStreamDecoder::cVideoStreamDecoder(AVCodecContext*, cVideoOut*,
+</I>&gt;<i>     cClock*, int)
+</I>&gt;<i> &quot;
+</I>
+Just don't know whats wrong here. Please give a newer ffmpeg version a try.
+
+&gt;<i> 
+</I>&gt;<i> My enviroment is as following:
+</I>&gt;<i> 
+</I>&gt;<i> Suse 9.3 32bit
+</I>&gt;<i> gcc 3.3.5
+</I>&gt;<i> kernel 2.6.11.4-21.7 (compiled with Matrox FB support)
+</I>&gt;<i> 
+</I>&gt;<i> I am no C programmer, so I have no clue, what this nice error message 
+</I>&gt;<i> should tell me...
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="001104.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1037">[ date ]</a>
+              <a href="thread.html#1037">[ thread ]</a>
+              <a href="subject.html#1037">[ subject ]</a>
+              <a href="author.html#1037">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

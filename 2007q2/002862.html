@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] no video (OSD works),	stuttering audio (xruns)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20video%20%28OSD%20works%29%2C%0A%09stuttering%20audio%20%28xruns%29&In-Reply-To=%3C4635C0C7.5040900%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002861.html">
+   <LINK REL="Next"  HREF="002863.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20no%20video%20%28OSD%20works%29%2C%0A%09stuttering%20audio%20%28xruns%29&In-Reply-To=%3C4635C0C7.5040900%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Mon Apr 30 12:11:19 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002861.html">[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)
+</A></li>
+        <LI>Next message: <A HREF="002863.html">[Softdevice-devel] E-tobi: vdr-plugin-softdevice-0.4.0 - no dfb	support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2862">[ date ]</a>
+              <a href="thread.html#2862">[ thread ]</a>
+              <a href="subject.html#2862">[ subject ]</a>
+              <a href="author.html#2862">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke wrote:
+&gt;<i> Quoting Lucian Muresan:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hello folks,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I did not really used VDR very often in past few weeks, so I can't
+</I>&gt;&gt;<i> really know when this exactly happened, but maybe you guys could point
+</I>&gt;&gt;<i> me on some known issue or something, before I start downgrading
+</I>&gt;&gt;<i> everything...
+</I>&gt;&gt;<i> So here are the facts:
+</I>&gt;&gt;<i> I'm using Gentoo, the TV-Out (crtc2) of a Matrox G400 DH connected via
+</I>&gt;&gt;<i> SCART-RGB cable to a normal PAL TV, and used to start VDR with the
+</I>&gt;&gt;<i> softdevice plugin, over DirectFB, which is really well supported for
+</I>&gt;&gt;<i> this card. Now, I have all these versions pulled from cvs/git/svn:
+</I>&gt;&gt;<i> DirectFB, linux-fusion, DFB++, softdevice. Furthermore, I have
+</I>&gt;&gt;<i> media-video/ffmpeg-0.4.9_p20070330-r1.
+</I>&gt;<i> 
+</I>&gt;<i> Are you using the patched gentoo vdr-1.x.y  or a vanilla version ?
+</I>&gt;<i> In this gentoo bug:
+</I>
+I'm using the gentoo-patched vdr-1.4.6.
+
+&gt;<i> <A HREF="http://bugs.gentoo.org/show_bug.cgi?id=175490">http://bugs.gentoo.org/show_bug.cgi?id=175490</A>
+</I>
+Unfortunately, I can't use the &quot;bigpatch&quot; USE flag, because I'm also 
+using local patches (UTF-8 stuff for example) which are adapted to the 
+patchset induced by the &quot;aio&quot; USE flag which can't be used at the same 
+time with &quot;bigpatch&quot;. So I don't have the repacker code in my vdr, which 
+seems to be just a workaround, but not a solution to the problem, anyway.
+
+&gt;<i> ffmpeg is at SVN-8560.
+</I>&gt;<i> 
+</I>&gt;<i> &quot;ffmpeg 2&gt;&amp;1 | grep SVN&quot; for my system is:
+</I>&gt;<i> FFmpeg version SVN-r8627, Copyright (c) 2000-2007 Fabrice Bellard, et al.
+</I>&gt;<i> without these problems.
+</I>
+
+So, my ffmpeg version is newer (unfortunately that command line does not 
+  give me a suitable version string, I'm pasting here the whole output 
+of &quot;ffmpeg -version&quot; instead), but it's most likely newer than what 
+you're using. Maybe it's worth having a look at what's actually wrong 
+with softdevice code if it can't keep up with ffmpeg changes, but 
+unfortunately I don't have the necessary knowledge for this.
+
+
+blues ~ # ffmpeg -version
+FFmpeg version SVN-rUNKNOWN, Copyright (c) 2000-2007 Fabrice Bellard, et al.
+   configuration: --prefix=/usr --libdir=/usr/lib --shlibdir=/usr/lib 
+--mandir=/usr/share/man --enable-static --enable-shared 
+--cc=i686-pc-linux-gnu-gcc --disable-altivec --disable-debug 
+--disable-opts --enable-libmp3lame --enable-libvorbis --enable-libogg 
+--enable-libtheora --enable-libogg --enable-liba52 --enable-dc1394 
+--enable-xvid --enable-x11grab --enable-libogg --enable-libdts 
+--enable-x264 --enable-libfaad --enable-libfaac --enable-gpl --enable-pp 
+--disable-strip
+   libavutil version: 49.4.0
+   libavcodec version: 51.40.2
+   libavformat version: 51.11.0
+   built on Apr 29 2007 10:52:21, gcc: 4.1.2 (Gentoo 4.1.2)
+ffmpeg      SVN-rUNKNOWN
+libavutil   3212288
+libavcodec  3352578
+libavformat 3345152
+
+
+Also, building softdevice-0.4.0 or CVS produces lots of warnings in 
+ffmpeg headers, telling about using deprecated stuff like in the 
+attached file (I stopped the build, it's not complete, and this was 
+produced on my desktop machine, on which I could ssh now, where I also 
+have X11 and stuff, but it's same ffmpeg version as on my DirectFB-only 
+htpc, and those warnings are also the same). Maybe that gives you 
+developers a hint on what's going on?
+
+Regards,
+Lucian
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: softdevice-cvs-gentoo-build.log
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070430/826f810b/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20070430/826f810b/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002861.html">[Softdevice-devel] no video (OSD works),	stuttering audio (xruns)
+</A></li>
+	<LI>Next message: <A HREF="002863.html">[Softdevice-devel] E-tobi: vdr-plugin-softdevice-0.4.0 - no dfb	support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2862">[ date ]</a>
+              <a href="thread.html#2862">[ thread ]</a>
+              <a href="subject.html#2862">[ subject ]</a>
+              <a href="author.html#2862">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

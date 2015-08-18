@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Avoid vdr crash in &quot;make plugins&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Avoid%20vdr%20crash%20in%20%22make%20plugins%22&In-Reply-To=%3C20050909185414.GC279751%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001212.html">
+   <LINK REL="Next"  HREF="001231.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Avoid vdr crash in &quot;make plugins&quot;</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Avoid%20vdr%20crash%20in%20%22make%20plugins%22&In-Reply-To=%3C20050909185414.GC279751%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] [PATCH] Avoid vdr crash in &quot;make plugins&quot;">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Sep  9 20:54:14 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001212.html">[Softdevice-devel] Whats the deal with the xv option?
+</A></li>
+        <LI>Next message: <A HREF="001231.html">[Softdevice-devel] Crash when fast-skipping a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1230">[ date ]</a>
+              <a href="thread.html#1230">[ thread ]</a>
+              <a href="subject.html#1230">[ subject ]</a>
+              <a href="author.html#1230">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The attached patch fixes the Makefile so that existing softdevice
+library files in PLUGINS/lib will not be overwritten but replaced.
+
+On my system, if the plugin library files change while vdr is running,
+vdr will crash at seemingly random places that do not seem to have anything
+to do with the plugins.  I think that it is better to explicitly restart
+vdr in order to load the new plugins, because in that way vdr will warn if
+there are active timed recordings.
+
+You may want to write @- instead of grouping the statements, but I wanted
+to save one /bin/sh invocation per rule.
+
+	Marko
+-------------- next part --------------
+Index: Makefile
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/Makefile,v
+retrieving revision 1.14
+diff -u -r1.14 Makefile
+--- Makefile	15 Jul 2005 20:42:16 -0000	1.14
++++ Makefile	9 Sep 2005 18:28:21 -0000
+@@ -245,25 +245,25 @@
+ 
+ libvdr-$(PLUGIN).so: $(OBJS)
+ 	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) -o $@
+-	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
++	@rm -f $(LIBDIR)/$@.$(VDRVERSION); cp $@ $(LIBDIR)/$@.$(VDRVERSION)
+ 
+ ifdef USE_SUBPLUGINS
+ 
+ libvdr-$(PLUGIN)-dfb.so: $(DFB_OBJS)
+ 	$(CXX) $(CXXFLAGS) -shared $(DFB_OBJS) $(DFB_LIBS) -o $@
+-	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
++	@rm -f $(LIBDIR)/$@.$(VDRVERSION); cp $@ $(LIBDIR)/$@.$(VDRVERSION)
+ 
+ libvdr-$(PLUGIN)-fb.so: $(FB_OBJS)
+ 	$(CXX) $(CXXFLAGS) -shared $(FB_OBJS) $(FB_LIBS) -o $@
+-	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
++	@rm -f $(LIBDIR)/$@.$(VDRVERSION); cp $@ $(LIBDIR)/$@.$(VDRVERSION)
+ 
+ libvdr-$(PLUGIN)-xv.so: $(XV_OBJS)
+ 	$(CXX) $(CXXFLAGS) -shared $(XV_OBJS) $(XV_LIBS) -o $@
+-	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
++	@rm -f $(LIBDIR)/$@.$(VDRVERSION); cp $@ $(LIBDIR)/$@.$(VDRVERSION)
+ 
+ libvdr-$(PLUGIN)-vidix.so: $(VIDIX_OBJS)
+ 	$(CXX) $(CXXFLAGS) -shared $(VIDIX_OBJS) $(VIDIX_LIBS) -o $@
+-	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
++	@rm -f $(LIBDIR)/$@.$(VDRVERSION); cp $@ $(LIBDIR)/$@.$(VDRVERSION)
+ 
+ endif
+ 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001212.html">[Softdevice-devel] Whats the deal with the xv option?
+</A></li>
+	<LI>Next message: <A HREF="001231.html">[Softdevice-devel] Crash when fast-skipping a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1230">[ date ]</a>
+              <a href="thread.html#1230">[ thread ]</a>
+              <a href="subject.html#1230">[ subject ]</a>
+              <a href="author.html#1230">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

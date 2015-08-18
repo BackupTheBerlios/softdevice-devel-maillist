@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay-ing%20PCM%20on%20S/PDIF%20or%20analog%20out&In-Reply-To=%3C43540FFF.6090309%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001377.html">
+   <LINK REL="Next"  HREF="001378.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay-ing%20PCM%20on%20S/PDIF%20or%20analog%20out&In-Reply-To=%3C43540FFF.6090309%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Mon Oct 17 22:56:31 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001377.html">[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+</A></li>
+        <LI>Next message: <A HREF="001378.html">[Softdevice-devel] Softdevice and image viewing with muggle or mp3 plugins
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1386">[ date ]</a>
+              <a href="thread.html#1386">[ thread ]</a>
+              <a href="subject.html#1386">[ subject ]</a>
+              <a href="author.html#1386">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke a &#233;crit :
+&gt;<i> Epia ia a hard work,  and after googleing a bit I found:
+</I>
+Yes.Thanks for your help.
+
+&gt;<i> 1st tried google with &quot;AC97-SPSA&quot; ( thats control.42 in your asound.state)
+</I>
+I had this value set to 3 instead of 0 :
+
+0. PCM1
+1. PCM2,PCM1 (rear)
+2. Centre and LFE
+3. PCM3,Modem,Dedicated S/PDIF
+
+amixer set 'IEC958 Playback AC97-SPSA' 0
+
+See <A HREF="http://alsa.opensrc.org/index.php?page=via8233">http://alsa.opensrc.org/index.php?page=via8233</A> or 
+<A HREF="http://www.epiawiki.org/wiki/tiki-index.php?page=EpiaSound">http://www.epiawiki.org/wiki/tiki-index.php?page=EpiaSound</A>
+
+&gt;<i> 2nd I tried google with &quot;dxs_support&quot; and found that interesting link:
+</I>&gt;<i> <A HREF="http://www.issociate.de/board/goto/749819/via82xx_driver:_reporting_dxs_support_experience.html#msg_749819">http://www.issociate.de/board/goto/749819/via82xx_driver:_reporting_dxs_support_experience.html#msg_749819</A>
+</I>
+Then it appears to be better with dxs_support=4
+Since unloading + reloading modules + setting mixer setting + playing a 
+file with alsaplayer doesn't always play right (not reproducible in my 
+box), I'm not sure whether dxs_support=0 is not good either.
+
+I changed /etc/modutils/alsa the run update-modules (Debian).
+
+According to the web pages above :
+
+#  0 - the default value; set 48000 Hz only mode in most cases, except 
+on some known motherboards (which are in the whitelist).
+# 1 - enable full DXS support (at any supported sample rate).
+# 2 - disable DXS support completely. In this case the hardware mixing 
+ability of the chip is not used.
+# 3 - use DXS at 48000 Hz only.
+# 4 - enable DXS at any supported sample rate, but always set the codec 
+to 48000 Hz (apparently on some motherboards this works better than 
+dxs_support=1).
+
+My softdevice config is then :
+
+-ao alsa:pcm=default#ac3=spdif#
+-vo dfb:
+
+Setting 'IEC958 Playback AC97-SPSA' to 0 allows to get PCM sound both 
+through analog and SPDIF. With 3, using pcm=spdif only get audio through 
+SPDIF (no analog).
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001377.html">[Softdevice-devel] Softplay-ing PCM on S/PDIF or analog out
+</A></li>
+	<LI>Next message: <A HREF="001378.html">[Softdevice-devel] Softdevice and image viewing with muggle or mp3 plugins
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1386">[ date ]</a>
+              <a href="thread.html#1386">[ thread ]</a>
+              <a href="subject.html#1386">[ subject ]</a>
+              <a href="author.html#1386">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

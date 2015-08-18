@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problems with nvidia TwinView and ShmClient
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C20071005183646.GA10637%40radylon.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002924.html">
+   <LINK REL="Next"  HREF="002926.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problems with nvidia TwinView and ShmClient</H1>
+    <B>Michael Rademacher</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problems%20with%20nvidia%20TwinView%20and%20ShmClient&In-Reply-To=%3C20071005183646.GA10637%40radylon.com%3E"
+       TITLE="[Softdevice-devel] Problems with nvidia TwinView and ShmClient">radi at radylon.com
+       </A><BR>
+    <I>Fri Oct  5 20:36:46 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002924.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+        <LI>Next message: <A HREF="002926.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2925">[ date ]</a>
+              <a href="thread.html#2925">[ thread ]</a>
+              <a href="subject.html#2925">[ subject ]</a>
+              <a href="author.html#2925">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+On Fri, 05.10.07, at 14:42 Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt; wrote:
+
+&gt;<i> If you are able to compile softdevice, you may change
+</I>&gt;<i> in video-xv.c, ~line 479
+</I>&gt;<i> from:
+</I>&gt;<i> displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+</I>&gt;<i> to:
+</I>&gt;<i> displayAspect = displayRatio  = (double) GetScreenWidth() / (double) GetScreenHeight();
+</I>
+Ok, took a while to get the necessary development libraries installed as I
+am not a software developer. Anyway, with the suggested fix it works indeed.
+
+What's the next step to support this in future releases? I imagine that
+there has to be some code to detect my special setup, right? Anything I can
+do to support you?
+
+Thanks a lot for your immediate help!
+
+Michael Rademacher.
+
+-- 
+====================================================================//====
+ Michael Rademacher     fon +49-4103-8036388       RADYLON Netzwerkdesign
+ Schillerstr. 31        fax +49-4103-8036389      <A HREF="http://www.radylon.com/">http://www.radylon.com/</A>
+ D-22880 Wedel          gsm +49-170-4543911       eMail: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">radi at radylon.com</A>
+ GPG Key fingerprint = C713 8AA0 8EE7 4B02 73A6  0948 EA48 B6CD 55CB 7337
+==========================================================================
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: Digital signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071005/6929a650/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20071005/6929a650/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002924.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+	<LI>Next message: <A HREF="002926.html">[Softdevice-devel] Problems with nvidia TwinView and ShmClient
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2925">[ date ]</a>
+              <a href="thread.html#2925">[ thread ]</a>
+              <a href="subject.html#2925">[ subject ]</a>
+              <a href="author.html#2925">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

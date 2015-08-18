@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and 4:2:2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%204%3A2%3A2&In-Reply-To=%3C42D7C4FF.20705%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000972.html">
+   <LINK REL="Next"  HREF="000992.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and 4:2:2</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%204%3A2%3A2&In-Reply-To=%3C42D7C4FF.20705%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softdevice and 4:2:2">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Jul 15 16:15:27 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000972.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+        <LI>Next message: <A HREF="000992.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#981">[ date ]</a>
+              <a href="thread.html#981">[ thread ]</a>
+              <a href="subject.html#981">[ subject ]</a>
+              <a href="author.html#981">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Malcolm Caldwell schrieb:
+&gt;<i> On Thu, 2005-07-14 at 18:17 +0200, Martin Wache wrote:
+</I>
+&gt;&gt;<i>In the case YUV422 to YUV420 we just have to average every two lines of
+</I>&gt;&gt;<i>U and V components to one and we're done. That's just a couple of
+</I>&gt;&gt;<i>instructions in MMX so it shouldn't even slow down the copy process.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>As far as I understood you do the conversion for all pixel formats, it
+</I>&gt;&gt;<i>would be better to call libavcodec_img_convert() only if necessary
+</I>&gt;&gt;<i>otherwise every frame will be copied -&gt; that's slow!!
+</I>&gt;&gt;<i>A minor thing, you called diff with the files in the wrong sequence...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> OK.  Here is a version that only calls img_convert if needed.
+</I>&gt;<i> 
+</I>&gt;<i> TODO: think about selecting the format to convert to based on what the
+</I>&gt;<i> hardware can do.  (Currently I just convert to YUV420 regardless).  This
+</I>&gt;<i> will require the video subplugins telling the mpegdecoder what formats
+</I>&gt;<i> they like.
+</I>&gt;<i> 
+</I>That would be a nice feature :-)
+Maybe just a function in cVideoOut called with the pixelformat returning
+something like &quot;supported in hardware&quot;, &quot;supported with fast on the fly
+conversion&quot;, and &quot;not supported&quot; will do. But we'll also need a reliable
+way to switch the pixelformats in cVideoOut ( I think mainly Xv needs
+there some work...)
+
+If there are no objections, I will do some final tests and if every
+thing works fine I will commit the patch.
+
+Martin
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000972.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+	<LI>Next message: <A HREF="000992.html">[Softdevice-devel] softdevice and 4:2:2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#981">[ date ]</a>
+              <a href="thread.html#981">[ thread ]</a>
+              <a href="subject.html#981">[ subject ]</a>
+              <a href="author.html#981">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

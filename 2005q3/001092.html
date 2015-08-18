@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] xrun problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C42F72D0F.8040302%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001091.html">
+   <LINK REL="Next"  HREF="001094.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] xrun problems</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xrun%20problems&In-Reply-To=%3C42F72D0F.8040302%40gmx.net%3E"
+       TITLE="[Softdevice-devel] xrun problems">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Aug  8 11:59:43 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001091.html">[Softdevice-devel] xrun problems
+</A></li>
+        <LI>Next message: <A HREF="001094.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1092">[ date ]</a>
+              <a href="thread.html#1092">[ thread ]</a>
+              <a href="subject.html#1092">[ subject ]</a>
+              <a href="author.html#1092">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Claas Hilbrecht schrieb:
+&gt;<i> Sometimes I have xrun messages in my syslog. Every few minutes there are
+</I>&gt;<i> one or several xrun syslog entries. I know that xrun problems are
+</I>&gt;<i> generally related to high latency. I'm running 2.6.12.1 with
+</I>&gt;<i> 
+</I>&gt;<i> CONFIG_PREEMPT=y
+</I>&gt;<i> CONFIG_PREEMPT_BKL=y
+</I>&gt;<i> 
+</I>&gt;<i> and I can't image that a Pentium 2.4 GHz system that is idle is not able
+</I>&gt;<i> to run vdr with only audio without xruns.
+</I>Currently, if you use &quot;-vo dummy:&quot; video is still decoded, but not
+displayed! To not decode the video there are still some changes in
+mpeg2decoder necessary...
+
+&gt;<i> I know that latency and
+</I>&gt;<i> CONFIG_PREEMPT=y are not the same. Are there any other hints where to
+</I>&gt;<i> start looking? Or should I try a low latency patch before? If yes, which
+</I>&gt;<i> low latency patch is recommeneded?
+</I>&gt;<i> 
+</I>
+Are these audio Xruns audible? Do you hear some clicks or does the audio
+stop sometimes for a short period, or do you just see the messages in
+the syslog?
+The reason I'm asking is that the softdevice doesn't stop the audio
+properly on channel change, so you'll get an audio Xrun message every
+time you change the channel. Up to now I've been to lazy to implement
+this correctly ( and I don't think it would make a difference expect
+that the Xrun messages would disapear...)
+
+If you really hear these Xruns then you should try the different  buffer
+settings from the OSD menu, the HDTV setting is the savest against
+buffer underruns, but the seeking in video will behave completly crazy.
+The &quot;good seeking&quot; setting should be avoided if you have problems with
+buffer underruns.
+
+I don't think that low latency patches are necessary on a system with
+low load, but they may improve the situation...
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001091.html">[Softdevice-devel] xrun problems
+</A></li>
+	<LI>Next message: <A HREF="001094.html">[Softdevice-devel] xrun problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1092">[ date ]</a>
+              <a href="thread.html#1092">[ thread ]</a>
+              <a href="subject.html#1092">[ subject ]</a>
+              <a href="author.html#1092">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

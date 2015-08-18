@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20with%20FFmpeg%20with%20--enable-dc1394%20compiled%20%28Ubuntu%29&In-Reply-To=%3Cd5c44b7f0603191449n1ef5b4a9p%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001821.html">
+   <LINK REL="Next"  HREF="001823.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)</H1>
+    <B>Karl Glatz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%20with%20FFmpeg%20with%20--enable-dc1394%20compiled%20%28Ubuntu%29&In-Reply-To=%3Cd5c44b7f0603191449n1ef5b4a9p%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)">karl.glatz at googlemail.com
+       </A><BR>
+    <I>Sun Mar 19 23:49:26 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001821.html">[Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001823.html">[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1822">[ date ]</a>
+              <a href="thread.html#1822">[ thread ]</a>
+              <a href="subject.html#1822">[ subject ]</a>
+              <a href="author.html#1822">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+i've just installed VDR with the softdevice plugin on my Ubuntu
+system. As I'm using many programms wich depends on ffmpeg packages
+I'd like to use this instead of compiling my own.
+
+Compiling works great! But now when I try to start VDR it says:
+--
+Mar 19 23:39:57 localhost vdr: [9328] ERROR:
+/usr/local/lib/vdr/libvdr-softdevice.so.1.3.44: undefined symbol:
+dc1394_create_handle
+--
+
+But ffplay works perfect! And libraw1394 ist also installed!
+
+I think the libvdr-softdevice calls the ffmpeg libs which compiled
+against libraw1394 and trys to call the dc1394_create_handle.
+
+Have anyone a Idea what I can do to solve this problem. Installing
+FFmpeg without the --enable-dc1394 option isn't a option for me,
+because I want to keep my Ubuntu package!
+
+mfg
+Karl Glatz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001821.html">[Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001823.html">[Softdevice-devel] Softdevice with FFmpeg with --enable-dc1394 compiled (Ubuntu)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1822">[ date ]</a>
+              <a href="thread.html#1822">[ thread ]</a>
+              <a href="subject.html#1822">[ subject ]</a>
+              <a href="author.html#1822">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

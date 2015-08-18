@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash with latest CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20with%20latest%20CVS&In-Reply-To=%3C20050607201641.GB135019%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000824.html">
+   <LINK REL="Next"  HREF="000838.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash with latest CVS</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20with%20latest%20CVS&In-Reply-To=%3C20050607201641.GB135019%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Repeatable crash with latest CVS">marko.makela at hut.fi
+       </A><BR>
+    <I>Tue Jun  7 22:16:41 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000824.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+        <LI>Next message: <A HREF="000838.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#835">[ date ]</a>
+              <a href="thread.html#835">[ thread ]</a>
+              <a href="subject.html#835">[ subject ]</a>
+              <a href="author.html#835">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jun 06, 2005 at 09:55:36PM +0200, Stefan Lucke wrote:
+&gt;<i> On Montag, 6. Juni 2005 17:33, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; On Sat, Jun 04, 2005 at 09:36:44PM +0200, Martin Wache wrote:
+</I>&gt;<i> &gt; &gt; Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; &gt;I have a recording with a 4:3 -&gt; 16:9 transition.  When rewinding it at
+</I>&gt;<i> &gt; &gt; &gt;triple speed, a Signal 11 sometimes occurs.   I made a short clip that can 
+</I>&gt;<i> &gt; &gt; &gt;be
+</I>&gt;<i> &gt; &gt; &gt;fast-forwarded and rewinded some times (maybe 5-10) to trigger the crash
+</I>&gt;<i> &gt; &gt; &gt;on my system.  Here is the stack trace from the core dump:
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Thanks for your report, up to now I could not reproduce the crash on my 
+</I>&gt;<i> &gt; &gt; box, but I didn't try very hard yet ;-)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I got it twice today on the first try when rewinding the clip from the end
+</I>&gt;<i> &gt; to the beginning at triple speed.  The second time was within gdb, running
+</I>&gt;<i> &gt; vdr 1.3.24 with the patch from subtitles-0.3.7 and with only the softdevice
+</I>&gt;<i> &gt; plugin loaded, using DirectFB 0.9.22 playback on a Matrox G400 or G450 card
+</I>&gt;<i> &gt; on VGA monitor with 4:3 cropping:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; (gdb) bt full
+</I>&gt;<i> &gt; #0  0xb7dceb7f in memcpy () from /lib/libc.so.6
+</I>&gt;<i> &gt; No symbol table info available.
+</I>&gt;<i> &gt; #1  0xb79523da in cDFBVideoOut::YUV (this=0x82247c8,
+</I>&gt;<i> &gt;     Py=0xb64fcb30 '\200' &lt;repeats 200 times&gt;...,
+</I>&gt;<i> &gt;     Pu=0x8313bc8 '\200' &lt;repeats 200 times&gt;...,
+</I>&gt;<i> &gt;     Pv=0x83a0940 '\200' &lt;repeats 200 times&gt;..., Width=720, Height=576,
+</I>&gt;<i> &gt;     Ystride=752, UVstride=376) at video-dfb.c:1021
+</I>&gt;<i> &gt;         dst = (uint8_t *) 0xb779bee0 &lt;Address 0xb779bee0 out of bounds&gt;
+</I>&gt;<i> &gt;         pitch = 576
+</I>&gt;<i> &gt;         hi = 288
+</I>&gt;<i> 
+</I>&gt;<i> I don't understand that: When hi = 288 we should have left the loop as
+</I>&gt;<i> hi &lt; sheight/2 (with sheight = 576) should be evaluate FALSE.
+</I>&gt;<i> pitch seems to strange too. When width is 720, pitch should be a
+</I>&gt;<i> reasonable value above that (768 ?).
+</I>
+Could you suggest some assertions to add to the code, or some other way to
+narrow down the problem?  The display mode I'm using is 768&#215;576 at 75 Hz.
+The end of the kernel log looks like this:
+ACPI: PCI interrupt 0000:00:10.2[A] -&gt; GSI 18 (level, low) -&gt; IRQ 18
+cx88[0]/2: found at 0000:00:10.2, rev: 5, irq: 18, latency: 64, mmio: 0xdd000000cx88[0]/2: cx2388x based dvb card
+DVB: registering new adapter (cx88[0]).
+DVB: registering frontend 0 (Hauppauge Nova-T DVB-T)...
+ACPI: PCI interrupt 0000:00:0e.0[A] -&gt; GSI 16 (level, low) -&gt; IRQ 16
+matroxfb: cannot set xres to 800, rounded up to 832
+matroxfb: cannot set xres to 800, rounded up to 832
+matroxfb: cannot set xres to 800, rounded up to 832
+matroxfb: cannot set xres to 800, rounded up to 832
+matroxfb: cannot set xres to 800, rounded up to 832
+matroxfb: cannot set xres to 800, rounded up to 832
+matroxfb: cannot set xres to 800, rounded up to 832
+matroxfb: cannot set xres to 800, rounded up to 832
+
+In the syslog, I see this:
+
+Jun  7 23:10:45 vdr vdr[3111]: setting watchdog timer to 60 seconds
+Jun  7 23:10:46 vdr vdr[3132]: [VideoOut]: aspect changed (-100 -&gt; 8 ; -100.000000 -&gt; 1.333333)
+Jun  7 23:10:46 vdr vdr[3132]: [VideoOut]: 720x576 [0,0 720x576] -&gt; 768x576 [0,0 768x576]
+Jun  7 23:10:46 vdr vdr[3125]: setting audio track to 1
+Jun  7 23:10:47 vdr vdr[3135]: [softdevice-audio] samplerate: 48000Hz, channels: #2
+Jun  7 23:10:47 vdr vdr[3135]: [softdevice-audio] Period size 1152 Buffer size 9216
+Jun  7 23:10:47 vdr vdr[3135]: [softdevice-audio] Hardware initialized
+
+Note that it says 720&#215;576 and 768&#215;576. /etc/directfbrc says mode=768x576,
+and the only matching mode in /etc/fb.modes is this one:
+
+mode &quot;768x576-75&quot;
+    # D: 49.188 MHz, H: 46.580 kHz, V: 75.008 Hz
+    geometry 768 576 768 576 32
+    timings 20330 128 32 32 8 128 5
+endmode
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000824.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+	<LI>Next message: <A HREF="000838.html">[Softdevice-devel] Repeatable crash with latest CVS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#835">[ date ]</a>
+              <a href="thread.html#835">[ thread ]</a>
+              <a href="subject.html#835">[ subject ]</a>
+              <a href="author.html#835">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

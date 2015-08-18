@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD layer not always fully cleared on mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609242323.44875.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002521.html">
+   <LINK REL="Next"  HREF="002526.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD layer not always fully cleared on mgatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609242323.44875.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OSD layer not always fully cleared on mgatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Sep 24 23:23:44 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002521.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+        <LI>Next message: <A HREF="002526.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2524">[ date ]</a>
+              <a href="thread.html#2524">[ thread ]</a>
+              <a href="subject.html#2524">[ subject ]</a>
+              <a href="author.html#2524">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 23 September 2006 21:45, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Fri, Sep 22, 2006 at 11:12:56PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; &gt; One or two weeks ago I have noticed that when something is blanked
+</I>&gt;<i> &gt; &gt; (made transparent) in the OSD of -vo dfb:mgatv, the change does not
+</I>&gt;<i> &gt; &gt; happen immediately, but the pixels will fade out in at least 4 steps.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; This fading effect is caused by not clearing non-video area (black 
+</I>&gt;<i> &gt; borders). It most visible in paused mode when there are OSD changes
+</I>&gt;<i> &gt; outside the active video area.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Attached patch dfb-blbar-clear-02.patch should fix this. 
+</I>&gt;<i> &gt; Tested this only in pause mode. As this may cause a  higher
+</I>&gt;<i> &gt; load, it should be tested more careful on small systems.
+</I>&gt;<i> 
+</I>&gt;<i> This one worked for me.  Test case: pressing the Up or Down key for several
+</I>&gt;<i> seconds in a short Recordings menu (which fits entirely on the screen)
+</I>&gt;<i> while playing a recording.  The CPU consumption grew from about 55% to
+</I>&gt;<i> 80%, but very few frames were dropped, and the selection on the OSD menu
+</I>&gt;<i> was updated smoothly.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Patch dfb-blbar-clear-03.patch includes this and osdMutex removal
+</I>&gt;<i> &gt; from video-dfb.c . Did only a compile check with this one.
+</I>&gt;<i> 
+</I>&gt;<i> I tested this one first.  It removed the fading effect, but unfortunately
+</I>&gt;<i> it also caused OSD updates to take much longer or to be lost.  When I
+</I>&gt;<i> pressed the Down button for a second in a short Recordings menu that fits
+</I>&gt;<i> entirely on screen, the selection jumped around in a bit chaotic way.
+</I>&gt;<i> I'm just guessing, but could it be a locking granularity issue?
+</I>
+Was that during live-tv or during a paused playback of a recording?
+Could be an issue with triplebuffering too.
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002521.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+	<LI>Next message: <A HREF="002526.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2524">[ date ]</a>
+              <a href="thread.html#2524">[ thread ]</a>
+              <a href="subject.html#2524">[ subject ]</a>
+              <a href="author.html#2524">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

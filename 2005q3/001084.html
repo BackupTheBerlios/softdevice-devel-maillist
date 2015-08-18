@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Work on Debian package still in progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C42F10A4E.5000608%40e-tobi.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001080.html">
+   <LINK REL="Next"  HREF="001063.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Work on Debian package still in progress...</H1>
+    <B>Tobias Grimm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Work%20on%20Debian%20package%20still%20in%20progress...&In-Reply-To=%3C42F10A4E.5000608%40e-tobi.net%3E"
+       TITLE="[Softdevice-devel] Work on Debian package still in progress...">listaccount at e-tobi.net
+       </A><BR>
+    <I>Wed Aug  3 20:17:50 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001080.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+        <LI>Next message: <A HREF="001063.html">memory leak, was: Re: [Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1084">[ date ]</a>
+              <a href="thread.html#1084">[ thread ]</a>
+              <a href="subject.html#1084">[ subject ]</a>
+              <a href="author.html#1084">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Martin Wache schrieb:
+
+&gt;&gt;<i>I searched this list, but couldn't find a another fb driver for the VIA
+</I>&gt;&gt;<i>chipset. Does anyone know which alternative driver this may be?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>Hmm, maybe I remember the discussion from somewhere else, or I'm
+</I>&gt;<i>completly mistaken :-/
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+After digging around some more, I found a kernel patch from patcher2k:
+
+<A HREF="http://patcher2k.012webpages.com/">http://patcher2k.012webpages.com/</A>
+
+But it doesn't realy work. At least not with the KM800M. I'll get the
+VIA driver another try,
+if I can get it to compile with a kernel 2.4.31.
+
+Meanwhile I did a test with a ATI Radeon 9600 and I could finally get it
+to work with directfb and
+softdevice - Hurray! :-) Only when switching to a HDTV channel, it fires
+some errors and kills the system. HDTV with normal FB output worked (but
+was far too slow).
+
+I also solved the problem with the &quot;undefined symbol: direct_free&quot;. The
+directfb tarball wasn't &quot;distcleaned&quot;, which broke the Debian package,
+which expected a clean tarball.
+
+bye,
+
+Tobias
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001080.html">[Softdevice-devel] Work on Debian package still in progress...
+</A></li>
+	<LI>Next message: <A HREF="001063.html">memory leak, was: Re: [Softdevice-devel] Next release ?!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1084">[ date ]</a>
+              <a href="thread.html#1084">[ thread ]</a>
+              <a href="subject.html#1084">[ subject ]</a>
+              <a href="author.html#1084">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

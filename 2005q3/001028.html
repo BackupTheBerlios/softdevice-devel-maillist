@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Repeatable crash when rewinding a recording
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20when%20rewinding%20a%20recording&In-Reply-To=%3C20050724210535.GB7329%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001123.html">
+   <LINK REL="Next"  HREF="001039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Repeatable crash when rewinding a recording</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Repeatable%20crash%20when%20rewinding%20a%20recording&In-Reply-To=%3C20050724210535.GB7329%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Repeatable crash when rewinding a recording">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Jul 24 23:05:35 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001123.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001039.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1028">[ date ]</a>
+              <a href="thread.html#1028">[ thread ]</a>
+              <a href="subject.html#1028">[ subject ]</a>
+              <a href="author.html#1028">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think I have reported a similar problem before.  Now I observed the
+problem with another recording.  When I rewind it, softdevice passes
+invalid arguments to memcpy() in the YUV conversion (see attached
+gdb output).
+
+By the way, I can't seem to get core files from my system any more,
+and I have set ulimit -c unlimited.  Maybe it is a bug in kernel
+2.6.12.3?
+
+Luckily, I can run vdr inside gdb.  See the attached gdb log.  I added
+the lines &quot;(gdb)&quot; manually, as they were not written out by &quot;set logging on&quot;.
+I hope I didn't make mistakes while doing that.
+
+The crash cannot be due to any recent changes, because the crash also
+occurs with an older snapshot (mpeg2decoder.c -r1.43, video-dfb.c -r1.31).
+
+	Marko
+-------------- next part --------------
+(gdb) bt
+#0  0xb7d6b07f in memcpy () from /lib/tls/libc.so.6
+#1  0xb798d8aa in cDFBVideoOut::YUV (this=0xb5e49000, 
+    Py=0xb3d82b30 '\200' &lt;repeats 200 times&gt;..., Pu=0x85dcb98 '\200' &lt;repeats 200 times&gt;..., 
+    Pv=0x85f88e0 '\200' &lt;repeats 200 times&gt;..., Width=720, Height=576, Ystride=752, 
+    UVstride=376) at video-dfb.c:1133
+#2  0xb7983425 in cVideoStreamDecoder::DecodePacket (this=0x82b7700, pkt=0x838533c)
+    at mpeg2decoder.c:606
+#3  0xb7982b74 in cStreamDecoder::Action (this=0x82b7700) at mpeg2decoder.c:188
+#4  0x080e6b12 in cThread::StartThread (Thread=0x82b7700) at thread.c:233
+#5  0xb7f41b63 in start_thread () from /lib/tls/libpthread.so.0
+#6  0xb7dc918a in clone () from /lib/tls/libc.so.6
+(gdb) bt full
+#0  0xb7d6b07f in memcpy () from /lib/tls/libc.so.6
+No symbol table info available.
+#1  0xb798d8aa in cDFBVideoOut::YUV (this=0xb5e49000, 
+    Py=0xb3d82b30 '\200' &lt;repeats 200 times&gt;..., Pu=0x85dcb98 '\200' &lt;repeats 200 times&gt;..., 
+    Pv=0x85f88e0 '\200' &lt;repeats 200 times&gt;..., Width=720, Height=576, Ystride=752, 
+    UVstride=376) at video-dfb.c:1133
+	dst = (uint8_t *) 0xb5e48ee0 &lt;Address 0xb5e48ee0 out of bounds&gt;
+	pitch = 576
+	hi = 287
+#2  0xb7983425 in cVideoStreamDecoder::DecodePacket (this=0x82b7700, pkt=0x838533c)
+    at mpeg2decoder.c:606
+	findPTS = Variable &quot;findPTS&quot; is not available.
+(gdb) up
+#1  0xb798d8aa in cDFBVideoOut::YUV (this=0xb5e49000, 
+    Py=0xb3d82b30 '\200' &lt;repeats 200 times&gt;..., Pu=0x85dcb98 '\200' &lt;repeats 200 times&gt;..., 
+    Pv=0x85f88e0 '\200' &lt;repeats 200 times&gt;..., Width=720, Height=576, Ystride=752, 
+    UVstride=376) at video-dfb.c:1133
+1133	      memcpy(dst+cutLeft, Pv+sxoff/2+cutLeft, swidth/2-(cutLeft+cutRight));
+Current language:  auto; currently c++
+(gdb) p *this
+$1 = {&lt;cVideoOut&gt; = {&lt;cThread&gt; = {_vptr.cThread = 0x464c457f, running = true, childTid = 0, 
+      mutex = {mutex = {__m_reserved = 0, __m_count = 196611, __m_owner = 0x1, 
+          __m_kind = 7808, __m_lock = {__status = 52, __spinlock = 37440}}, locked = 0}, 
+      description = 0x200034 &lt;Address 0x200034 out of bounds&gt;, 
+      static emergencyExitRequested = false}, osdMutex = {mutex = {__m_reserved = 2621444, 
+        __m_count = 1703965, __m_owner = 0x1, __m_kind = 0, __m_lock = {__status = 0, 
+          __spinlock = 0}}, locked = 35078}, OSDxOfs = 35078, OSDyOfs = 5, OSDw = 4096, 
+    OSDh = 1, OSDpresent = 32, OSDpseudo_alpha = 137, current_osdMode = 39200, Xres = 39200, 
+    Yres = 924, Bpp = 936, dx = 6, dy = 4096, dwidth = 2, dheight = 35388, old_x = 39484, 
+    old_y = 39484, old_dwidth = 216, old_dheight = 216, screenPixelAspect = 6, fwidth = 4, 
+    fheight = 1685382481, swidth = 0, sheight = 0, sxoff = 0, syoff = 0, lwidth = 0, 
+    lheight = 6, lxoff = 4, lyoff = 97, flags = 129, display_aspect = 67, 
+    current_aspect = 121, currentPixelFormat = 93, cutTop = 120, cutBottom = 112, cutLeft = 0, 
+    cutRight = 0, aspect_changed = 78, current_afd = 105, displayTimeUS = 64, parValues = {
+      1.5490569279184771e-312, 2.3715151000379834e-322, 3.4090529563046012e-322, 
+      1.4853970536756906e-312, 1.8774494541967369e-322}, old_picture = 0x7c, old_width = 91, 
+    old_height = 88, setupStore = 0x0, osd = 0x7d, active = false, OSDdirty = false, 
+    freezeMode = false, PixelMask = 0x0, Osd_changed = 109, 
+    OsdPy = 0x3c &lt;Address 0x3c out of bounds&gt;, OsdPu = 0x0, 
+    OsdPv = 0x4c &lt;Address 0x4c out of bounds&gt;, OsdPAlphaY = 0x34 &lt;Address 0x34 out of bounds&gt;, 
+    OsdPAlphaUV = 0x63 &lt;Address 0x63 out of bounds&gt;, OsdHeight = 111, OsdWidth = 0, 
+    OsdRefreshCounter = 123}, osdLayer = 0x0, videoLayer = 0x0, scrDsc = {flags = 96, 
+    caps = DSCAPS_NONE, width = 0, height = 117, pixelformat = 56, preallocated = {{
+        data = 0x0, pitch = 0}, {data = 0x0, pitch = 0}}, palette = {entries = 0x71, 
+      size = 44}}, osdDsc = {flags = 107, caps = 102, width = 81, height = 31, 
+    pixelformat = 115, preallocated = {{data = 0x33, pitch = 97}, {data = 0x50, pitch = 128}}, 
+    palette = {entries = 0x0, size = 0}}, vidDsc = {flags = 0, caps = DSCAPS_NONE, 
+    width = 118, height = 0, pixelformat = DSPF_UNKNOWN, preallocated = {{data = 0x53, 
+        pitch = 0}, {data = 0x74, pitch = 0}}, palette = {entries = 0x72, size = 126}}, 
+  osdSurface = 0x0, videoSurface = 0x6e, scrSurface = 0x0, pixelformat = DSPF_UNKNOWN, 
+  dfbRemote = 0x0, events = 0x52, deinterlace = false, alphablend = false, 
+  useStretchBlit = false, osdClrBack = false, isVIAUnichrome = 59, clearAlpha = 127, 
+  clearBackCount = 0, clearBackground = 63, dfb = 0x3a}
+(gdb) up
+#2  0xb7983425 in cVideoStreamDecoder::DecodePacket (this=0x82b7700, pkt=0x838533c)
+    at mpeg2decoder.c:606
+606	        picture-&gt;linesize[0],picture-&gt;linesize[1]);
+(gdb) p *this
+$2 = {&lt;cStreamDecoder&gt; = {&lt;cThread&gt; = {_vptr.cThread = 0xb7c2a0e8, running = true, 
+      childTid = 2979732400, mutex = {mutex = {__m_reserved = 0, __m_count = 0, 
+          __m_owner = 0x0, __m_kind = 2, __m_lock = {__status = 0, __spinlock = 0}}, 
+        locked = 0}, description = 0x0, static emergencyExitRequested = false}, PacketQueue = {
+      MaxPackets = 150, queue = 0x8384f48, FirstPacket = 23, LastPacket = 145, 
+      EnablePut = {&lt;cRelTimer&gt; = {_vptr.cRelTimer = 0xb7c2bb88, lastTime = 1974258280}, 
+        mutex = {__m_reserved = 0, __m_count = 0, __m_owner = 0x0, __m_kind = 0, __m_lock = {
+            __status = 0, __spinlock = 0}}, cond = {__c_lock = {__status = 0, __spinlock = 0}, 
+          __c_waiting = 0x79, 
+          __padding = &quot;\000\000\000\000y\000\000\000\000\000\000\000y\000\000\000\000\000\000\000Hw+\b?\235*\b&quot;, __align = 8299696943243293742}, got_signal = false}, 
+      EnableGet = {&lt;cRelTimer&gt; = {_vptr.cRelTimer = 0xb7c2bb88, lastTime = 1956706938}, 
+        mutex = {__m_reserved = 0, __m_count = 0, __m_owner = 0x0, __m_kind = 0, __m_lock = {
+            __status = 0, __spinlock = 0}}, cond = {__c_lock = {__status = 0, __spinlock = 0}, 
+          __c_waiting = 0x26, 
+          __padding = &quot;\000\000\000\000&amp;\000\000\000\000\000\000\000&amp;\000\000\000\000\000\000\000?w+\b\2108??&quot;, __align = 68719476752}, got_signal = true}}, syncTimer = 0x838b138, 
+    freezeMode = false, pts = 41803298, frame = 1879, codec = 0xb7c8c9e0, context = 0x838b388, 
+    mutex = {mutex = {__m_reserved = 1, __m_count = 0, __m_owner = 0xa78, __m_kind = 2, 
+        __m_lock = {__status = 1, __spinlock = 0}}, locked = 1}, active = true, 
+    running = true}, clock = 0x82b75f4, pts_values = {{coded_frame_no = 1879, pts = 41836898, 
+      duration = 0}, {coded_frame_no = 1880, pts = 41832098, duration = 0}, {
+      coded_frame_no = 1881, pts = 41827298, duration = 0}, {coded_frame_no = 1882, 
+      pts = 41822498, duration = 0}, {coded_frame_no = 1883, pts = 41817698, duration = 0}, {
+      coded_frame_no = 1884, pts = 41812898, duration = 0}, {coded_frame_no = 1885, 
+      pts = 41808098, duration = 0}, {coded_frame_no = 1886, pts = 41803298, duration = 0}, {
+      coded_frame_no = 1887, pts = 41798498, duration = 0}, {coded_frame_no = 1878, 
+      pts = 41841698, duration = 0}}, lastPTSidx = 9, lastCodedPictNo = 1887, 
+  lastPTS = 41793698, lastDuration = 0, picture = 0x84458e0, avpic_src = {data = {
+      0x28 &lt;Address 0x28 out of bounds&gt;, 0x82b7880 &quot;?\003~\002&quot;, 
+      0x3 &lt;Address 0x3 out of bounds&gt;, 0x82a9c30 &quot;_snd_pcm_dmix_open&quot;}, linesize = {0, 0, 
+      137066804, 137066680}}, avpic_dest = {data = {0x82b78b0 &quot;b?}\002&quot;, 0x0, 
+      0x111 &lt;Address 0x111 out of bounds&gt;, 0x82b76f8 &quot;(&quot;}, linesize = {-1209911160, 16, 40, 
+      137066720}}, width = 720, height = 576, pix_fmt = PIX_FMT_YUV420P, 
+  currentDeintMethod = 0, currentMirrorMode = 0, currentppMethod = 0, currentppQuality = 0, 
+  pic_buf_lavc = 0x0, pic_buf_pp = 0x0, pic_buf_mirror = 0x0, pic_buf_convert = 0x0, 
+  ppmode = 0x0, ppcontext = 0x0, videoOut = 0x8255098, hurry_up = 1, offset = 3067278, 
+  delay = -27219, trickspeed = 1, default_frametime = 400}
+(gdb) p *pkt
+$3 = {pts = 41793698, dts = 376132482, data = 0x8334d20 &quot;&quot;, size = 2029, stream_index = 0, 
+  flags = 0, duration = 0, destruct = 0xb7bde440 &lt;av_destruct_packet&gt;, priv = 0x7}
+(gdb) up
+#3  0xb7982b74 in cStreamDecoder::Action (this=0x82b7700) at mpeg2decoder.c:188
+188	         DecodePacket(pkt);
+(gdb) up
+#4  0x080e6b12 in cThread::StartThread (Thread=0x82b7700) at thread.c:233
+233	  Thread-&gt;Action();
+Kill the program being debugged? (y or n) y
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001123.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001039.html">[Softdevice-devel] Repeatable crash when rewinding a recording
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1028">[ date ]</a>
+              <a href="thread.html#1028">[ thread ]</a>
+              <a href="subject.html#1028">[ subject ]</a>
+              <a href="author.html#1028">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

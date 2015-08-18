@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [announce] Gentoo ebuilds for several DirectFB projects, 0.9.22 series and current CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bannounce%5D%20Gentoo%20ebuilds%20for%20several%20DirectFB%20projects%2C%200.9.22%20series%0A%20and%20current%20CVS&In-Reply-To=%3C434E51F7.4000906%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001356.html">
+   <LINK REL="Next"  HREF="001355.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [announce] Gentoo ebuilds for several DirectFB projects, 0.9.22 series and current CVS</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5Bannounce%5D%20Gentoo%20ebuilds%20for%20several%20DirectFB%20projects%2C%200.9.22%20series%0A%20and%20current%20CVS&In-Reply-To=%3C434E51F7.4000906%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] [announce] Gentoo ebuilds for several DirectFB projects, 0.9.22 series and current CVS">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Thu Oct 13 14:24:23 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001356.html">[Softdevice-devel] [announce] Gentoo ebuilds for several DirectFB projects, 0.9.22 series and current CVS
+</A></li>
+        <LI>Next message: <A HREF="001355.html">[Softdevice-devel] softdevice / DFB : scaling + OSD transparency
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1354">[ date ]</a>
+              <a href="thread.html#1354">[ thread ]</a>
+              <a href="subject.html#1354">[ subject ]</a>
+              <a href="author.html#1354">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi folks,
+
+I made up some Gentoo ebuilds for the 0.9.22 series of several DirectFB
+projects, including for 0.9.23 which is now in CVS. Some of them of
+course, have a different version pattern (DFBTutorials and the released
+LiTE, which btw. requests DirectFB-0.9.23 already :-) ). For
+linux-fusion I didn't know what other version to use than 0.9.23 as
+there is no other way of getting it, than CVS. Btw, Denis &amp; co-devs,
+would you mind having a look at the tiny patch I had to do for the
+linux-fusion makefile, in order to make it work under gentoo (as the
+depmod command is issued automatically ehen emerging kernel module
+stuff). Could you accept that one?
+<A HREF="http://www.muresan.de/DirectFB/linux-fusion_gentoo-makefile.diff">http://www.muresan.de/DirectFB/linux-fusion_gentoo-makefile.diff</A>
+
+Now here is the list:
+++DFB/
+	++DFB-0.9.22.ebuild
+	++DFB-0.9.23.ebuild
+
+DFB++/
+	DFB++-0.9.22.ebuild
+	DFB++-0.9.23.ebuild
+
+DFBTutorials/
+	DFBTutorials-0.5.0.ebuild
+
+DirectFB/
+	DirectFB-0.9.22.ebuild
+	DirectFB-0.9.23.ebuild
+
+DirectFB-examples/
+	DirectFB-examples-0.9.22.ebuild
+	DirectFB-examples-0.9.23.ebuild
+
+DirectFB-extra/
+	DirectFB-extra-0.9.22.ebuild
+	DirectFB-extra-0.9.23.ebuild
+
+FusionSound/
+	FusionSound-0.9.22.ebuild
+	FusionSound-0.9.23.ebuild
+
+LiTE/
+	LiTE-0.3.1.ebuild
+
+linux-fusion-cvs/
+	linux-fusion-cvs-0.9.23.ebuild
+	files/
+		linux-fusion_gentoo-makefile.diff
+
+
+To get the ebuilds, just unpack
+<A HREF="http://www.muresan.de/DirectFB/DirectFB_gentoo-ebuilds.tar.bz2">http://www.muresan.de/DirectFB/DirectFB_gentoo-ebuilds.tar.bz2</A> in your
+portage overlay folder, and generate digests before attempting to emerge
+anything, but please read ahead first.
+
+So if you want to use just 0.9.22 stuff, just mask the 0.9.23 out. If
+you're curious and look in the ebuilds themselves, you'll notice that
+they're identical. So these ebuilds are able to fetch either the
+released versions or from CVS, controlled by the following USE flags
+(they're also included in profiles/use.local.desc):
+
+cvs_directfb cvs_dfbpp cvs_ppdfb cvs_dfbfusionsound cvs_dfblite
+cvs_dfbextra cvs_dfbexamples cvs_dfbtutorials
+
+The cvs_ flags are independent to allow mixing (you should know what
+you're doing, sometimes this only works with equal versions) released
+projects with CVS projects.
+
+Further flags: voodoo unique trace extra-warnings ieee-floats accuracy
+lite swfdec mpeg3
+
+Please report dependency problems (proposals for the proper library
+versions welcome) especially with DirectFB-extra, on which avifile,
+libmpeg3 and swfdec failed on my X-less box, Openquicktime is blocked by
+libquicktime which I need for transcode, didn't test yet libsvg-cairo,
+will try it on my desktop box, but hey, the important thing for mew was
+that df_xine is working :-D .
+
+
+Have phun,
+Lucian
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001356.html">[Softdevice-devel] [announce] Gentoo ebuilds for several DirectFB projects, 0.9.22 series and current CVS
+</A></li>
+	<LI>Next message: <A HREF="001355.html">[Softdevice-devel] softdevice / DFB : scaling + OSD transparency
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1354">[ date ]</a>
+              <a href="thread.html#1354">[ thread ]</a>
+              <a href="subject.html#1354">[ subject ]</a>
+              <a href="author.html#1354">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

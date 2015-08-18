@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] definitive configuration
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20definitive%20configuration&In-Reply-To=%3C431572D3.1%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001159.html">
+   <LINK REL="Next"  HREF="001161.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] definitive configuration</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20definitive%20configuration&In-Reply-To=%3C431572D3.1%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] definitive configuration">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Wed Aug 31 11:05:23 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001159.html">[Softdevice-devel] definitive configuration
+</A></li>
+        <LI>Next message: <A HREF="001161.html">[Softdevice-devel] definitive configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1160">[ date ]</a>
+              <a href="thread.html#1160">[ thread ]</a>
+              <a href="subject.html#1160">[ subject ]</a>
+              <a href="author.html#1160">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Leo M&#225;rquez a &#233;crit :
+&gt;<i> Hi!,
+</I>&gt;<i> 
+</I>&gt;<i> Few months ago I asked to the list about to set up a VDR in a epia
+</I>&gt;<i> m10000 board using the s-video out connector.
+</I>
+That's a thread for me !
+
+&gt;<i> Actually I'm using the video out of a ff card but I have problems with
+</I>&gt;<i> mplayer scaling. I want to try the softdevice plugin but I don't want
+</I>&gt;<i> have to compile components continually, I want see the TV. I have
+</I>&gt;<i> installed in my debian: dfb, softdevice and the viafb (from viaarena). I
+</I>&gt;<i> can't get it work (see the topic in the list 'libavcodec does not match
+</I>&gt;<i> avcodec.h').
+</I>
+I just finished tuning the tv-out tables of the VT1622 present on the
+EPIA M10k board (see thread &quot;viafb kernel frame buffer vs. 720x576 tvout
+no-scale update...&quot; on the directfb-users ML).
+See attached patch. This is a patch against the patcher2k version of the
+viafb kernel frame-buffer driver. Download it on
+<A HREF="http://patcher2k.012webpages.com/,">http://patcher2k.012webpages.com/,</A> then apply my patch to have correct
+TV-out.
+You should also use the following /etc/fb.modes :
+-----------------
+mode &quot;720x576-50&quot;
+    geometry 720 576 720 576 16
+    timings 35714 32 8 46 0 136 3
+endmode
+-----------------
+Once you have this, you can go with vdr + softdevice et al.
+
+&gt;<i> But my question is:
+</I>&gt;<i> 
+</I>&gt;<i> Could you say me the actual software and versions you recommend me to
+</I>&gt;<i> set up the system and enjoy, with the minimum maintance? I want use vdr
+</I>&gt;<i> to see and record tv, see dvd, divx, play mp3.
+</I>&gt;<i> My tv is a standard 16/9 (no lcd). Can I have problems with the tv out?
+</I>&gt;<i> For example with dvb output and mplayer divx movies are not centered and
+</I>&gt;<i> I lose some screen. With some movies I lose near 50%.
+</I>&gt;<i> There are debian packages to do this? I like compile vdr myself and
+</I>&gt;<i> plugins but is more confortable use apt.
+</I>&gt;<i> But I dont' know if with debian packages I can install the bitstreamout
+</I>&gt;<i> plugin for example.
+</I>
+I'd recommend e-tobi's repository, which is the feed for the official
+Debian repository. There is the nearly latest VDR there, softdevice, and
+many other plugins and add-ons.
+See <A HREF="http://www.e-tobi.net/">http://www.e-tobi.net/</A>
+I am going to upgrade to the vdr-experimental flavour (latest VDR and
+plugins) precompiled on the sarge base.
+If you don't need patches not present on this repository, you could go
+without recompiling.
+
+&gt;<i> Thank you.
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+-- 
+NH
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: via_tv3-720x576noscale.diff
+Type: text/x-patch
+Size: 4634 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050831/7f99e5ee/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050831/7f99e5ee/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001159.html">[Softdevice-devel] definitive configuration
+</A></li>
+	<LI>Next message: <A HREF="001161.html">[Softdevice-devel] definitive configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1160">[ date ]</a>
+              <a href="thread.html#1160">[ thread ]</a>
+              <a href="subject.html#1160">[ subject ]</a>
+              <a href="author.html#1160">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

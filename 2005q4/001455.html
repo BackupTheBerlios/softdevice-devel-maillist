@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay and divx/xvid artefacts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20and%20divx/xvid%20artefacts&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039056B75%40sbs2003.do-net.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001454.html">
+   <LINK REL="Next"  HREF="001456.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay and divx/xvid artefacts</H1>
+    <B>Andre Neumann</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20and%20divx/xvid%20artefacts&In-Reply-To=%3CFB3B5DB3197CEA429E5FB8E83D01D039056B75%40sbs2003.do-net.de%3E"
+       TITLE="[Softdevice-devel] Softplay and divx/xvid artefacts">Neumann at do-net.de
+       </A><BR>
+    <I>Thu Nov  3 14:23:07 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001454.html">[Softdevice-devel] Restructured OSD
+</A></li>
+        <LI>Next message: <A HREF="001456.html">[Softdevice-devel] Softplay and divx/xvid artefacts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1455">[ date ]</a>
+              <a href="thread.html#1455">[ thread ]</a>
+              <a href="subject.html#1455">[ subject ]</a>
+              <a href="author.html#1455">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yesterday i tested the divx file (Madagascar 720p) and it works great. I need a little
+more cpu power i think, because i only have a 2GHz Celeron.
+
+I only have a good picture when using YUY2 and StrechBlit activated. But thats the
+best settings i think. 
+
+Is there a chance to get a better deinterlacer? All the options arent really good, for now
+im using linblend.
+
+Which deinterlacer other Users use ?
+
+-------------
+Andre Neumann
+ 
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> 
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] On Behalf Of Andre Neumann
+</I>&gt;<i> Sent: Monday, October 31, 2005 1:46 PM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> Subject: RE: [Softdevice-devel] Softplay and divx/xvid artefacts
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for the fast reply and fix. I will test it on 
+</I>&gt;<i> Wednesday and report back.
+</I>&gt;<i> 
+</I>&gt;<i> Feature Request: Can you integrate a &quot;hide mainmenu&quot; switch 
+</I>&gt;<i> in your plugin?
+</I>&gt;<i> 
+</I>&gt;<i> Greetings,
+</I>&gt;<i> -------------
+</I>&gt;<i> Andre Neumann
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -----Urspr&#252;ngliche Nachricht-----
+</I>&gt;<i> Von: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A> 
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel-admin at berlios.de</A>] Im Auftrag von Stefan Lucke
+</I>&gt;<i> Gesendet: Samstag, 29. Oktober 2005 10:34
+</I>&gt;<i> An: <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> Betreff: Re: [Softdevice-devel] Softplay and divx/xvid artefacts
+</I>&gt;<i> 
+</I>&gt;<i> On Freitag, 28. Oktober 2005 14:26, DO-net GmbH Newsletter wrote:
+</I>&gt;<i> &gt; Hi list,
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt; I have setup my VDR with matrox g550 dvi and softdevice to 
+</I>&gt;<i> be able to 
+</I>&gt;<i> &gt; get hdtv working with my sanyo
+</I>&gt;<i> &gt; Z3 beamer. Normal VDR ist working really great, a only have 
+</I>&gt;<i> a problem 
+</I>&gt;<i> &gt; with softplay when i want to watch divx/xvid avi files.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; They are displayed very ugly (many artefacts). For tests 
+</I>&gt;<i> you can use 
+</I>&gt;<i> &gt; the madagascar hdtv 720p trailer from:
+</I>&gt;<i> &gt; <A HREF="http://www.divx.com/hd/">http://www.divx.com/hd/</A> Im using DirectFB + Softdevice + 
+</I>&gt;<i> ffmpeg (all 
+</I>&gt;<i> &gt; from cvs).
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I also tried older versions from ffmpeg, as i think, ffmpeg is the 
+</I>&gt;<i> &gt; reason for this. When playing this file with mplayer the 
+</I>&gt;<i> output is ok.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Maybe anyone knows a solution.
+</I>&gt;<i> 
+</I>&gt;<i> Fix/work around is in softdevice cvs.
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001454.html">[Softdevice-devel] Restructured OSD
+</A></li>
+	<LI>Next message: <A HREF="001456.html">[Softdevice-devel] Softplay and divx/xvid artefacts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1455">[ date ]</a>
+              <a href="thread.html#1455">[ thread ]</a>
+              <a href="subject.html#1455">[ subject ]</a>
+              <a href="author.html#1455">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

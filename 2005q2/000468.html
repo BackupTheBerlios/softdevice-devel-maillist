@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Towards softdevice-0.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C425555D1.4040700%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000462.html">
+   <LINK REL="Next"  HREF="000469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Towards softdevice-0.1.1</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20Towards%20softdevice-0.1.1&In-Reply-To=%3C425555D1.4040700%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: Towards softdevice-0.1.1">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Apr  7 17:46:25 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000462.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+        <LI>Next message: <A HREF="000469.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#468">[ date ]</a>
+              <a href="thread.html#468">[ thread ]</a>
+              <a href="subject.html#468">[ subject ]</a>
+              <a href="author.html#468">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo wrote:
+&gt;<i> On Thu, 2005-04-07 at 11:04 +0200, Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>I get sometimes similar errors. I got them even in previous versions
+</I>&gt;&gt;<i>before
+</I>&gt;&gt;<i>I used the max available area. That happens when I had one or several
+</I>&gt;&gt;<i>browser
+</I>&gt;&gt;<i>windows of vdr-portal open. Closing them resolves the situation. It
+</I>&gt;&gt;<i>looks like
+</I>&gt;&gt;<i>card memory is used for caching of pixmaps and when the xv should be
+</I>&gt;&gt;<i>realized on
+</I>&gt;&gt;<i>screen, the xserver does not get enough contigues memory for that on
+</I>&gt;&gt;<i>the video
+</I>&gt;&gt;<i>card.
+</I>For me this happens even when I only load gnome and vdr. I also tried 
+the resolution 1280x768, which fails. I guess the XServer reporting that 
+it is capable of doing 2048x2048 is just wrong.
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> We might to install a special X error handler. X errors can happen when
+</I>&gt;<i> telling the screensaver to stay away as well. The one in xscreensaver.c
+</I>&gt;<i> can be extended a bit to handle fallback on those errors.
+</I>&gt;<i> 
+</I>
+I think this would be a good solution, we could fallback to the default 
+resolution if there is not enough memory for HDTV. If there is not even 
+enough for default resolution we can still give a meaningfull error message.
+Would it be difficult to do this? E.g will it be possible to include 
+this for the next release? I don't know programming X, but I will have a 
+look at your error handler. I didn't even know that it's possible to 
+install an error handler...
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000462.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+	<LI>Next message: <A HREF="000469.html">[Softdevice-devel] Re: Towards softdevice-0.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#468">[ date ]</a>
+              <a href="thread.html#468">[ thread ]</a>
+              <a href="subject.html#468">[ subject ]</a>
+              <a href="author.html#468">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.4.0&In-Reply-To=%3C200704111119.44271.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002846.html">
+   <LINK REL="Next"  HREF="002850.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.4.0&In-Reply-To=%3C200704111119.44271.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Apr 11 11:19:44 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002846.html">[Softdevice-devel] Softplay: DeSync in DIVX with 23.976 fps
+</A></li>
+        <LI>Next message: <A HREF="002850.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2847">[ date ]</a>
+              <a href="thread.html#2847">[ thread ]</a>
+              <a href="subject.html#2847">[ subject ]</a>
+              <a href="author.html#2847">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+we got a new release :-) .
+
+Support of vdr versions earlier than vdr-1.3.7 has been removed.
+Supported vdr versions: 1.3.x, 1.4.x and 1.5.x
+
+Changelog since last release:
+2007-04-11: softdevice-0.4.0
+   - xv-out: activate suspend/resume key (r/R) via configure (by Artur Skawina).
+   - i18n: some german translations.
+   - osd: moved aspect detection entry to &quot;Cropping&quot; sub menu.
+2007-04-03:
+   - add automatic border detection, based on a patch by Roland Praml.
+   - altivec needs 16 byte alignment
+   - compile fix for Darwin
+   - make flag for shared linking a variable
+   - add BGRA32 mode to SoftOsd
+   - compile linux RTC syncing mode support only on Linux.
+   - detect cpu endianness and define CPU_BIGENDIAN if necessary.
+   - add video-quartz and audio-macos for Mac Os X support
+2007-03-25:
+   - fix types in GetTime().
+   - pts values are stored in uint64_t
+   - almost complete rewrite of video-fb. Supported are now 15,16,24 and 32 bit
+     depth framebuffers. The osd is rendered with software alpha blending,
+     and it is even faster :-)
+2007-03-12:
+   - compile fix for recent ffmpeg SVN
+   - include ffmpeg headers as 'extern &quot;C&quot;'
+   - enable and use as default the software mixer. The old behaviour (use the
+     system's mixer) can be selected via -vo oss:mixer.
+   - increase the stepsize of the software mixer.
+   - don't scale audio if the volume is at maximum.
+   - set edge_width/_height always to zero. Fixes picture shiftes with
+     the ShmClient. This is not the optimal(/final) solution...
+2007-03-04:
+   - video-dfb: Make use of SetSourceRectangle() runtime selectable,
+                changed *SetSourceLocation* to SetSourceRectangle.
+2007-02-26:
+   - softlog: sanitycheck for zero length filenames and fix use filename member
+              when changeing append mode.
+   - video-dfb: shifted most prints via softlog.
+   - video sync: preparation for new changeable sync parameters.
+2007-02-24:
+   - Makefile: add --remove-destination , so that &quot;make plugins&quot; does not
+     disturb a running vdr.
+   - softlog: added indicator for priority I(nfo), E(rror), D(ebug), T(race).
+   - video-vidix: shifted prints via softlog.
+2007-02-13:
+   - fix gettid compile error on some systems.
+2007-02-11:
+   - Some more options selectable via log menu.
+2007-02-10:
+   - Pause the playback of recordings when suspended (by Marko M&#228;kel&#228;)
+   - add configurable logging
+   - report Xrun audio duration
+2007-01-28:
+   - don't lock NULL pictures in cVideo::GetLockLastPic().
+   - implement avcodec_decode_audio2() interface to libavcodec.
+   - set ic-&gt;bp.is_streamed to true, to avoid calls to unimlemented seek method.
+   - add architecture &quot;x86_64&quot; to configure and report unsupported
+     architectures.
+   - add StealToBitmap() for OSD in grabbed image.
+   - add OSD with alpha blending to grabbed images.
+2007-01-27:
+   - video-dfb: - Limit VIA-unichrome name compare to 19 chars.
+                - Detect a patched DirectFB version for VIA CN700 support,
+                  and set some parameters for video layer V3:
+                    pixelformat YUY2, NO hardware decoding support .
+2007-01-20:
+   - Fixed video-dfb for VIA-unichrome with current DirectFB cvs. In directfbrc
+     pixelformat=AiRGB must be specified.
+2007-01-15:
+   - introduce yuv420_to_rgb15() (mmx acceleration still missing).
+   - properly start cShmRemote thread in ShmClient.
+   - avoid &quot;BadWindow&quot; errors by using an errror handler. Also fix
+     &quot;BadWindow&quot; errors which occur after the xscreensaver has once been
+     active.
+   - fix vidWin for non zero VidX1 and VidY1.
+2006-12-17:
+   - Silence some warnings with gcc 4.1.1.
+   - Adjust MMX and C version of fast_memcpy() to the same return type.
+   - Fix wrong colors in yuv420_to_yuy2() when all MMX is disabled.
+2006-12-13:
+   - don't undefine X cursur on keypresses, to prevent the fake shift key
+     press from producing flickering of the mouse cursor.
+   - fix possible segfault.
+   - fix possible division by zero.
+   - comment out fake key sending syslog message
+   - add cOSSAudioOut::GetDelay() (supplied by Lubos Novak).
+2006-12-03:
+   - applied patch from Matthias Schwarzott for vdr uint64 change.
+   - unify yuv420_to_rgbXX() and yv12_to_yuy2_line() functions to allow
+     usage in CopyScalePicBuf()
+   - change CopyPicBuf_YUV420P_to_YUY() to a general YUV420P to planar
+     conversion method
+   - introduce the possibility to scale the video window (for yaepg).
+   - detection of and support for the yaepg-patch.
+   - add open sound system support (contributed by Lubos Novak).
+     GetDelay() is commented out, this means the A/V synchronization
+     is broken.
+   - add open sound system detection to configure
+2006-11-26:
+   - use brackets in WRITE_RGB16 macro, introduce WRITE_RGB15 (untested)
+     and ARGB_TO_RGB.
+   - introduce FillPicBuffer()
+   - make it possible to use a color key other than 0x000000 for video-xv,
+     video-shm and ShmClient
+   - change the default color key of xv-out to 0x001a0f00LL
+   - add support for X11 drivers without xv support
+2006-11-22:
+   - remove cShmVideo::Process() method, and instead signal PICT_SIG
+     from cShmRemote to simulate a timeout.
+   - fix ShmClient not forwarding to key presses to vdr on AMD64
+     (patch by <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">peterw2k at vdr-portal</A>)
+2006-11-20:
+   - send fake key events to disable any screen saver (patch by
+     <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">peterw2k at vdr-portal</A>)
+2006-11-16:
+   - fix wrong colors when using GRAB with the cle266 hardware decoder
+     (patch by Laz)
+   - better colorkey support in SoftOsd.c, with interface to video.c
+   - fix a bug which causes bad resolution on upscaling
+   - fix a bug which causes segfaults when upscaling to huge images
+   - reintroduce the chessboard pattern for pseudo alpha blending
+   - use WRITE_RGB macros from utils.h
+2006-11-11:
+   - !! removed support for vdr versions older than vdr-1.3.7 !!
+2006-11-08:
+   - change PIX_FMT_RGB32 to PIX_FMT_RGBA32 to support older ffmpeg versions
+2006-11-07:
+   - add yuv to rgb conversion routines for rgb32, rgb24, bgr24 and rgb16
+   - audio-alsa: restore samplerate after a unsuccessfull change request
+   - add scaling methods with yuv to rgb conversion
+   - add packed pixel format support to ClearPicBuffer()
+   - move AllocatePicBuffer(), DeallocatePicBuffer(), GetFormatBPP and
+     GetChromaSubSample() out of cPicBufferManager
+   - add packed pixel format to PicBuffer
+   - add GetLockLastPic() to video.h
+   - add GrabImage() support. Currently there is no OSD in the grabbed
+     images.
+   - some more debugging info in softdevice.c
+   - add explanations to error messages in ShmClient.c
+   - use SEM_UNDO on PICT_MUT semaphore
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002846.html">[Softdevice-devel] Softplay: DeSync in DIVX with 23.976 fps
+</A></li>
+	<LI>Next message: <A HREF="002850.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2847">[ date ]</a>
+              <a href="thread.html#2847">[ thread ]</a>
+              <a href="subject.html#2847">[ subject ]</a>
+              <a href="author.html#2847">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

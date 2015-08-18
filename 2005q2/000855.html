@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Poor%20performance%20and%20crashes%20on%20G450%20SCART-RGB%20output&In-Reply-To=%3C20050610200102.GB387709%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000847.html">
+   <LINK REL="Next"  HREF="000860.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Poor%20performance%20and%20crashes%20on%20G450%20SCART-RGB%20output&In-Reply-To=%3C20050610200102.GB387709%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Jun 10 22:01:02 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000847.html">[Softdevice-devel] No sound whit Softdevice.
+</A></li>
+        <LI>Next message: <A HREF="000860.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#855">[ date ]</a>
+              <a href="thread.html#855">[ thread ]</a>
+              <a href="subject.html#855">[ subject ]</a>
+              <a href="author.html#855">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I profiled softdevice with SCART RGB output on the Matrox G450, maybe a
+week old softdevice, vdr 1.3.24 and DirectFB 0.9.22.  ffmpeg has been linked
+statically with softdevice, but DirectFB and VDR are not.
+
+The processor time usage really tells it:
+
+CPU: PIII, speed 906.618 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (clocks processor is not halted) with a unit mask of 0x00 (No unit mask) count 90000
+samples  %        symbol name
+57132    25.3435  cDFBVideoOut::YUV(unsigned char*, unsigned char*, unsigned char*, int, int, int, int)
+14163     6.2826  put_pixels16_xy2_mmx
+13877     6.1558  ff_simple_idct_add_mmx
+13762     6.1048  cStreamDecoder::BufferFill()
+13366     5.9291  put_pixels8_mmx
+12849     5.6997  put_pixels16_mmx
+8186      3.6313  mpeg2_decode_block_non_intra
+8108      3.5967  mpeg_decode_mb
+
+Okay, so it's converting color spaces in software.  When I tried to change
+the pixel format from YUV2 by pressing the Left button, vdr immediately
+crashed.  It won't change when I press the Right button.  Here's the backtrace:
+
+#0  0xb788b400 in dfb_system_video_memory_virtual ()
+   from /usr/local/lib/libdirectfb-0.9.so.22
+#1  0xb788862e in dfb_surface_software_lock ()
+   from /usr/local/lib/libdirectfb-0.9.so.22
+#2  0xb788856f in dfb_surface_soft_lock ()
+   from /usr/local/lib/libdirectfb-0.9.so.22
+#3  0xb785d64b in IDirectFBSurface_Lock ()
+   from /usr/local/lib/libdirectfb-0.9.so.22
+#4  0xb78a545e in IDirectFBSurface::Lock (this=0xa57000, flags=0, ptr=0x0,
+    pitch=0x0) at idirectfbsurface.cpp:116
+#5  0xb79edcfd in cDFBVideoOut::Refresh (this=0x822b658, Bitmap=0x82f80e8)
+    at video-dfb.c:839
+#6  0xb79df5f5 in cSoftOsd::Flush (this=0x8211598) at softdevice.c:137
+#7  0x080d8f5b in cSkinSTTNGDisplayMenu::Flush (this=0x8208990)
+    at skinsttng.c:597
+#8  0x080d4bd8 in cSkins::Flush (this=0x81b1a84) at skins.h:43
+#9  0x080a1790 in cInterface::GetKey (this=0x8289b00, Wait=true)
+    at interface.c:35
+#10 0x080eb8aa in main (argc=1118428321, argv=0x820a2f0) at osdbase.h:79
+
+I also get a crash when selecting &quot;Restart VDR&quot; (or whatever it is in
+English) from the Settings menu.  This also happens with DirectFB VGA
+output.  I'm using VDR 1.3.24 with the patch from subtitles-0.3.7,
+and with -Psoftdevice -Psubtitles, no other plugins:
+
+(gdb) bt full
+#0  0x0841b0c0 in ?? ()
+No symbol table info available.
+#1  0xb7943544 in ~cSoftOsd (this=0x828aa78) at softdevice.c:113
+No locals.
+#2  0xb77930c9 in SubtitlesViewer::Hide (this=0x82ee490) at viewer.c:51
+        lock = {mutex = 0x83bec78, locked = true}
+#3  0x080ef348 in NonInteractiveOsdPatch::cOsdController::Unsubscribe (
+    this=0x81b4e98, listener=0x82ee490) at osdcontroller.c:93
+        llo = (NonInteractiveOsdPatch::cListenerListObject *) 0x8210650
+        iMutex = {mutex = 0x0, locked = false}
+#4  0xb7791685 in ~cSubtitlesReceiver (this=0x82ee350) at receiver.c:36
+No locals.
+#5  0xb779a008 in ~cSubtitlesChangedHandler (this=0xb77a50c0)
+    at subfilter.c:329
+No locals.
+#6  0xb779d602 in __tcf_0 () at subfilter.c:449
+No locals.
+#7  0xb7d82de1 in __cxa_finalize () from /lib/libc.so.6
+No symbol table info available.
+#8  0xb7790980 in __do_global_dtors_aux ()
+   from ./PLUGINS/lib/libvdr-subtitles.so.1.3.24
+No symbol table info available.
+#9  0xb779f1b6 in _fini () from ./PLUGINS/lib/libvdr-subtitles.so.1.3.24
+No symbol table info available.
+#10 0xb7e5f4a8 in _dl_close () from /lib/libc.so.6
+No symbol table info available.
+#11 0x00000021 in ?? ()
+No symbol table info available.
+
+The same crash happens even without -Psubtitles, when using the svdrp
+connection (HITK Setup, HITK Right, HITK OK, HITK OK).
+
+#0  0xb7943541 in ~cSoftOsd (this=0x82b8be0) at softdevice.c:113
+113         videoOut-&gt;CloseOSD();
+(gdb) bt
+#0  0xb7943541 in ~cSoftOsd (this=0x82b8be0) at softdevice.c:113
+#1  0xb77930c9 in SubtitlesViewer::Hide (this=0x8296b08) at viewer.c:51
+#2  0x080ef348 in NonInteractiveOsdPatch::cOsdController::Unsubscribe (
+    this=0x81b4e98, listener=0x8296b08) at osdcontroller.c:93
+#3  0xb7791685 in ~cSubtitlesReceiver (this=0x82969c8) at receiver.c:36
+#4  0xb779a008 in ~cSubtitlesChangedHandler (this=0xb77a50c0)
+    at subfilter.c:329
+#5  0xb779d602 in __tcf_0 () at subfilter.c:449
+#6  0xb7d82de1 in __cxa_finalize () from /lib/libc.so.6
+#7  0xb7790980 in __do_global_dtors_aux ()
+   from ./PLUGINS/lib/libvdr-subtitles.so.1.3.24
+#8  0xb779f1b6 in _fini () from ./PLUGINS/lib/libvdr-subtitles.so.1.3.24
+#9  0xb7e5f4a8 in _dl_close () from /lib/libc.so.6
+#10 0x00000022 in ?? ()
+Previous frame inner to this frame (corrupt stack?)
+
+It looks like vdr will update setup.conf before crashing.
+softdevice.PixelFormat used to be 0 (with VGA output) but
+got somehow changed to 2 (I didn't touch it in the OSD).
+If I manually change it to 1 in setup.conf, it'll get
+changed to YUV2 (I guess that is 2).  If playback is
+suspended, VDR won't immediately crash after changing
+the pixel format.  I even have time to change it to I420
+before it will crash.  Is this by design?  Maybe the
+PixelFormat menu should be disabled on -vo:mgatv?
+
+One more thing: Is there some way to get the Linux console
+on the Matrox SCART RGB output?  I tried the matroxset program,
+but I only managed to get a black screen or apparently
+unsyncronized VGA RGB output.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000847.html">[Softdevice-devel] No sound whit Softdevice.
+</A></li>
+	<LI>Next message: <A HREF="000860.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#855">[ date ]</a>
+              <a href="thread.html#855">[ thread ]</a>
+              <a href="subject.html#855">[ subject ]</a>
+              <a href="author.html#855">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

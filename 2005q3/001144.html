@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%200.1.2%20and%20cvs%20compiling%20problems&In-Reply-To=%3C430E1142.8070805%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001135.html">
+   <LINK REL="Next"  HREF="001146.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softdevice%200.1.2%20and%20cvs%20compiling%20problems&In-Reply-To=%3C430E1142.8070805%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Aug 25 20:43:14 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001135.html">[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems
+</A></li>
+        <LI>Next message: <A HREF="001146.html">[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1144">[ date ]</a>
+              <a href="thread.html#1144">[ thread ]</a>
+              <a href="subject.html#1144">[ subject ]</a>
+              <a href="author.html#1144">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kim Patovaara schrieb:
+
+&gt;<i> g++ -fPIC -g -O2 -Wall -Woverloaded-virtual -c -DUSE_MMX
+</I>&gt;<i> -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE
+</I>&gt;<i> -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -DUSE_SUBPLUGINS -DDFB_SUPPORT
+</I>&gt;<i> -DXV_SUPPORT -DPP_LIBAVCODEC -I../../../include -I../DVB/include
+</I>&gt;<i> -I/usr/local/include/ffmpeg/ -I/usr/include/dfb++
+</I>&gt;<i> -I/usr/include/directfb utils.c
+</I>&gt;<i> utils.c: In function `void* fast_memcpy(void*, const void*, size_t)':
+</I>&gt;<i> utils.c:560: error: PIC register `%ebx' clobbered in `asm'
+</I>&gt;<i> make[1]: *** [utils.o] Error 1
+</I>&gt;<i> 
+</I>&gt;<i> Versions:
+</I>&gt;<i> gcc version 3.4.4 20050209 (prerelease) (Debian 3.4.3-9ubuntu4)
+</I>&gt;<i> (Same problem also gcc 3.3.5)
+</I>&gt;<i> Softdevice: CVS Aug 25 2005 or 0.1.2
+</I>&gt;<i> ffmpeg: CVS Aug 25
+</I>&gt;<i> 
+</I>
+I commented a part from fast_memcpy which doesn't give much speed
+advantage, and made continously problems with compilers.
+Please try the latest CVS version, it should work now.
+
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001135.html">[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems
+</A></li>
+	<LI>Next message: <A HREF="001146.html">[Softdevice-devel] Softdevice 0.1.2 and cvs compiling problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1144">[ date ]</a>
+              <a href="thread.html#1144">[ thread ]</a>
+              <a href="subject.html#1144">[ subject ]</a>
+              <a href="author.html#1144">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Rapidly blinking black cursor in DFB output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rapidly%20blinking%20black%20cursor%20in%20DFB%20output&In-Reply-To=%3C4292FD20.6080904%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000711.html">
+   <LINK REL="Next"  HREF="000712.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Rapidly blinking black cursor in DFB output</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Rapidly%20blinking%20black%20cursor%20in%20DFB%20output&In-Reply-To=%3C4292FD20.6080904%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Rapidly blinking black cursor in DFB output">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Tue May 24 12:08:32 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000711.html">[Softdevice-devel] Rapidly blinking black cursor in DFB output
+</A></li>
+        <LI>Next message: <A HREF="000712.html">[Softdevice-devel] Suspending playback of a recording makes it fast-forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#715">[ date ]</a>
+              <a href="thread.html#715">[ thread ]</a>
+              <a href="subject.html#715">[ subject ]</a>
+              <a href="author.html#715">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; a &#233;crit :
+&gt;<i> My problem is that although I have disabled the text cursor
+</I>&gt;<i> (setterm -cursor off) and redirected all output to a file
+</I>&gt;<i> (&quot;exec &lt;&amp;- &gt;&gt; vdr.log 2&gt;&amp;1&quot; in my runvdr script), there appears
+</I>&gt;<i> to be a rapidly blinking black square in the position where the
+</I>&gt;<i> cursor should be.  (I tested &quot;echo -n foo &gt; /dev/tty1&quot;, and the
+</I>&gt;<i> blinking spot moved horizontally.)
+</I>&gt;<i> 
+</I>&gt;<i> The cursor will continue its rapid blinking after pausing playback or
+</I>&gt;<i> suspending softdevice (until the picture goes all black).
+</I>&gt;<i> 
+</I>&gt;<i> Note: the blinking appears unsynchronized to the screen.  Sometimes you
+</I>&gt;<i> can see it more frequently, sometimes it is hidden better.  I usually see
+</I>&gt;<i> the cursor only at the top left or bottom left position.  Again: note that
+</I>&gt;<i> I have disabled the cursor (setterm -cursor off), but I keep getting this
+</I>&gt;<i> rapidly blinking black 8&#215;16 rectangle at the cursor position.
+</I>&gt;<i> 
+</I>&gt;<i> I don't remember seeing this when running with no-vt disabled and
+</I>&gt;<i> vt-switch{,ing} enabled.  Does anyone else have similar problems?
+</I>&gt;<i> If someone follows the DirectFB or kernel mailing list, please feel
+</I>&gt;<i> free to forward this report.
+</I>
+I did a lot of tests this past WE with the viafb kernel frame-buffer 
+driver, and tried kernel 2.6.11 (instead of 2.6.8)
+I can say that frame-buffer cursor handling changed between 2.6.8 and 
+2.6.11, with a missing fb_info.cursor member (from the top of my head).
+What the viafb OSS frame-buffer maintainer did was simply somment out 
+the lines involving the fb_info.cursor struct member...
+
+You may experience the same problem with your Matrox frame-buffer : 
+cursor handling changed in the kernel, but the driver wasn't updated 
+enough... resulting in a ghost blinking cursor (with no-vt).
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000711.html">[Softdevice-devel] Rapidly blinking black cursor in DFB output
+</A></li>
+	<LI>Next message: <A HREF="000712.html">[Softdevice-devel] Suspending playback of a recording makes it fast-forward
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#715">[ date ]</a>
+              <a href="thread.html#715">[ thread ]</a>
+              <a href="subject.html#715">[ subject ]</a>
+              <a href="author.html#715">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

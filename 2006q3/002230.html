@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice + libcle266mpegdec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C44B2A086.7090500%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002228.html">
+   <LINK REL="Next"  HREF="002231.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice + libcle266mpegdec</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20%2B%20libcle266mpegdec&In-Reply-To=%3C44B2A086.7090500%40gmx.net%3E"
+       TITLE="[Softdevice-devel] softdevice + libcle266mpegdec">M.Wache at gmx.net
+       </A><BR>
+    <I>Mon Jul 10 20:46:30 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002228.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+        <LI>Next message: <A HREF="002231.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2230">[ date ]</a>
+              <a href="thread.html#2230">[ thread ]</a>
+              <a href="subject.html#2230">[ subject ]</a>
+              <a href="author.html#2230">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Laz schrieb:
+&gt;<i> On Monday 10 July 2006 19:14, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &lt;snippage&gt;
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hmm, I don't see anything wrong in the log until it dies...
+</I>&gt;&gt;<i> You seem to have X installed on you system? Is X still runnning in the
+</I>&gt;&gt;<i> background? Was X running before you started the softdevice? Is it
+</I>&gt;&gt;<i> working without hardware decoding (&quot;-vo dfb:&quot;)? Is it working with Xv?
+</I>&gt;&gt;<i> Many questions... ;-)
+</I>&gt;&gt;<i> The nicest would be a traceback of the crash, but as far as I know
+</I>&gt;&gt;<i> DirectFB overloads the crash handler so that you don't get a core dump
+</I>&gt;&gt;<i> anymore. Or does anyone know how to get one? I only know that one can
+</I>&gt;&gt;<i> compile DirectFB with a debug option which enables some kind of
+</I>&gt;&gt;<i> backtrace, but I don't remember the details. So if you could try to
+</I>&gt;&gt;<i> produce some kind of traceback, that would be nice!
+</I>&gt;<i> 
+</I>&gt;<i> It all looked OK to me, too. Did you try it again or just the once?
+</I>&gt;<i> 
+</I>&gt;<i> I sometimes get softdevice dieing with a sig 11 / invalid address error. I've 
+</I>&gt;<i> yet to work out why, though! I've a feeling that it works when the aspect 
+</I>&gt;<i> changes on the live stream during playback of a recording but this is a 
+</I>&gt;<i> complete guess.
+</I>We had an issue like that long ago, Stefan found out that it was
+actually a bug in ffmpeg. How old is your ffmpeg version? I don't
+remember exactly which version had this problem, but if your version is
+about one year old you could try an update of ffmpeg.
+
+&gt;<i> It usually happens when I stop playback rather than in the 
+</I>&gt;<i> middle of something, although I have seen it a couple of times at start up.
+</I>&gt;<i> 
+</I>Please report all crashes of the softdevice! I really don't like the
+idea of having crashes with the softdevice. The main problem is that to
+be able to do something about it we either have to be able to reproduce
+the crash or we must have a (meaningfull) traceback...
+But I would really like to try to fix all crashes :-)
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002228.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+	<LI>Next message: <A HREF="002231.html">[Softdevice-devel] softdevice + libcle266mpegdec
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2230">[ date ]</a>
+              <a href="thread.html#2230">[ thread ]</a>
+              <a href="subject.html#2230">[ subject ]</a>
+              <a href="author.html#2230">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

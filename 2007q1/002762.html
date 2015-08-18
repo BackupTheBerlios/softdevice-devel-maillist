@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Zoom to 16:9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C4925233E-DDD3-4B8F-9D35-D76403607BFD%40scene.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002761.html">
+   <LINK REL="Next"  HREF="002763.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Zoom to 16:9</H1>
+    <B>Hugo Visser</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Zoom%20to%2016%3A9&In-Reply-To=%3C4925233E-DDD3-4B8F-9D35-D76403607BFD%40scene.nl%3E"
+       TITLE="[Softdevice-devel] Zoom to 16:9">joegi at scene.nl
+       </A><BR>
+    <I>Sat Mar  3 16:03:24 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002761.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+        <LI>Next message: <A HREF="002763.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2762">[ date ]</a>
+              <a href="thread.html#2762">[ thread ]</a>
+              <a href="subject.html#2762">[ subject ]</a>
+              <a href="author.html#2762">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>
+</I>&gt;<i> Can't believe what I see.
+</I>&gt;<i>
+</I>&gt;<i> Can you try attached patch to get some more infos ?
+</I>&gt;<i> Which graphic card do you use ?
+</I>
+I'm running vdr on an epia m10k, so the graphics are unichrome/ 
+cle266. I'm using the -vo dfb:cle266 switch, but it doesn't matter if  
+I'm using dfb: or dfb:266.
+
+Here's the log (latest cvs + patch)
+
+Again, softdevice is set to a fixed 16:9 aspect. The first broadcast  
+is a 4:3 broadcast and is displayed correctly (black bars left and  
+right).
+
+Mar  3 15:48:46 localhost vdr: [7788] TS buffer on device 1 thread  
+started (pid=7765, tid=7788)
+Mar  3 15:48:48 localhost vdr: [7787] [VideoOut] reset: sync info:  
+repF = 0, drpF = 0, totF = 0
+Mar  3 15:48:48 localhost vdr: [7790] [VideoOut]: resolution changed:  
+W(736 -&gt; 704); H(576 -&gt;576)
+Mar  3 15:48:48 localhost vdr: [7790] [VideoOut]: aspect changed (0 - 
+ &gt; 0 ; 1.366667 -&gt; 1.333333)
+Mar  3 15:48:48 localhost vdr: [7790] [video] ++ afd = 1.33333, pasp  
+= 1.33333, dasp = 1.33333, sa = 3, dw = 1024, dh = 768
+Mar  3 15:48:48 localhost vdr: [7790] [VideoOut]: 704x576 [0,0  
+704x576] -&gt; 1024x768 [128,0 768x768]
+Mar  3 15:48:48 localhost vdr: [7790] [dfb] (re)configuring  
+Videolayer to 704 x 576 (704x576)
+Mar  3 15:48:48 localhost vdr: [7790] [dfb] surface capabilities for  
+(videoSurface): videoonly, double-buffered, flipping, PixelFormat =  
+0x08100609
+Mar  3 15:48:48 localhost vdr: [7790] [dfb] (re)configured 0x08100609
+
+Then I switched to another channel with a 16:9 broadcast cropped back  
+to 4:3 (black bars all around)
+
+Mar  3 15:49:15 localhost vdr: [7805] TS buffer on device 1 thread  
+started (pid=7765, tid=7805)
+Mar  3 15:49:16 localhost vdr: [7804] [VideoOut] reset: sync info:  
+repF = 153, drpF = 1, totF = 158
+Mar  3 15:49:16 localhost vdr: [7806] [VideoOut]: resolution changed:  
+W(704 -&gt; 528); H(576 -&gt;576)
+Mar  3 15:49:16 localhost vdr: [7806] [video] ++ afd = 1.33333, pasp  
+= 1.33333, dasp = 1.33333, sa = 3, dw = 1024, dh = 768
+Mar  3 15:49:16 localhost vdr: [7806] [VideoOut]: 528x576 [0,0  
+528x576] -&gt; 1024x768 [128,0 768x768]
+Mar  3 15:49:16 localhost vdr: [7806] [dfb] (re)configuring  
+Videolayer to 528 x 576 (528x576)
+Mar  3 15:49:16 localhost vdr: [7806] [dfb] surface capabilities for  
+(videoSurface): videoonly, double-buffered, flipping, PixelFormat =  
+0x08100609
+Mar  3 15:49:16 localhost vdr: [7806] [dfb] (re)configured 0x08100609
+
+Then I set the cropmode to 16:9
+
+Mar  3 15:49:35 localhost vdr: [7806] [video] ++ afd = 1.33333, pasp  
+= 1.33333, dasp = 1.33333, sa = 3, dw = 1024, dh = 768
+Mar  3 15:49:35 localhost vdr: [7806] [VideoOut]: 528x576 [0,0  
+528x576] -&gt; 1024x768 [128,0 768x768]
+Mar  3 15:49:35 localhost vdr: [7806] [dfb] (re)configuring  
+Videolayer to 528 x 576 (528x576)
+Mar  3 15:49:35 localhost vdr: [7806] [dfb] surface capabilities for  
+(videoSurface): videoonly, double-buffered, flipping, PixelFormat =  
+0x08100609
+Mar  3 15:49:35 localhost vdr: [7806] [dfb] (re)configured 0x08100609
+Mar  3 15:49:36 localhost vdr: [7806] [video] -- afd = 1.77778, pasp  
+= 1.33333, dasp = 1.33333, sa = 3, dw = 1024, dh = 768
+Mar  3 15:49:36 localhost vdr: [7806] [VideoOut]: 528x576 [0,72  
+528x432] -&gt; 1024x768 [0,0 1024x768]
+Mar  3 15:49:36 localhost vdr: [7806] [dfb] (re)configuring  
+Videolayer to 528 x 576 (528x432)
+Mar  3 15:49:36 localhost vdr: [7806] [dfb] surface capabilities for  
+(videoSurface): videoonly, double-buffered, flipping, PixelFormat =  
+0x08100609
+Mar  3 15:49:36 localhost vdr: [7806] [dfb] (re)configured 0x08100609
+
+I've kept the full syslog, but I think these are the revelant parts.
+
+Any clues?
+
+Hugo
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002761.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+	<LI>Next message: <A HREF="002763.html">[Softdevice-devel] Zoom to 16:9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2762">[ date ]</a>
+              <a href="thread.html#2762">[ thread ]</a>
+              <a href="subject.html#2762">[ subject ]</a>
+              <a href="author.html#2762">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

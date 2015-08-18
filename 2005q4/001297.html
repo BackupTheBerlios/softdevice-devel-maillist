@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] undefined variables in configure script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20undefined%20variables%20in%20configure%20script&In-Reply-To=%3C200510052055.04985.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001325.html">
+   <LINK REL="Next"  HREF="001300.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] undefined variables in configure script</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20undefined%20variables%20in%20configure%20script&In-Reply-To=%3C200510052055.04985.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [PATCH] undefined variables in configure script">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Wed Oct  5 20:55:04 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001325.html">[Softdevice-devel] epia recommendations
+</A></li>
+        <LI>Next message: <A HREF="001300.html">[Softdevice-devel] [PATCH] undefined variables in configure script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1297">[ date ]</a>
+              <a href="thread.html#1297">[ thread ]</a>
+              <a href="subject.html#1297">[ subject ]</a>
+              <a href="author.html#1297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 30. September 2005 20:29, Marko M&#228;kel&#228; wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I wondered how my DirectFB key-repeat patch suddenly didn't work.
+</I>&gt;<i> The configure test worked, albeit with a warning, but config.h
+</I>&gt;<i> somehow defined HAVE_DIEF_REPEAT 0.  It turned out to be a
+</I>&gt;<i> misspelled variable.
+</I>&gt;<i> 
+</I>
+DIEF_REPEAT part is in cvs. There is one change I don't understand:
+
+-PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/
++: ${PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/}
++: ${CFLAGS=&quot;&quot;}
+
+My intension was to add PKG_CONFIG_PATH with /usr/local/lib/pkgconfig/
+Do you run into problems, when PKG_CONFIG_PATH is not set ?
+
+In between I added a small check for existance of an X11 enviroment.
+
+&gt;<i> To prevent this in the future, I suggest that the script
+</I>&gt;<i> defines &quot;set -eu&quot; to report undefined variables.
+</I>&gt;<i> 
+</I>&gt;<i> 	Marko
+</I>&gt;<i> 
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001325.html">[Softdevice-devel] epia recommendations
+</A></li>
+	<LI>Next message: <A HREF="001300.html">[Softdevice-devel] [PATCH] undefined variables in configure script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1297">[ date ]</a>
+              <a href="thread.html#1297">[ thread ]</a>
+              <a href="subject.html#1297">[ subject ]</a>
+              <a href="author.html#1297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

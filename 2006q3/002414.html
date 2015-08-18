@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nvidia OSD patches...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C200609091201.48615.zzam%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002412.html">
+   <LINK REL="Next"  HREF="002416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nvidia OSD patches...</H1>
+    <B>Matthias Schwarzott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C200609091201.48615.zzam%40gentoo.org%3E"
+       TITLE="[Softdevice-devel] nvidia OSD patches...">zzam at gentoo.org
+       </A><BR>
+    <I>Sat Sep  9 12:01:45 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002412.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+        <LI>Next message: <A HREF="002416.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2414">[ date ]</a>
+              <a href="thread.html#2414">[ thread ]</a>
+              <a href="subject.html#2414">[ subject ]</a>
+              <a href="author.html#2414">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 09 September 2006 07:56, Martin Wache wrote:
+&gt;<i> Matthias Schwarzott schrieb:
+</I>&gt;<i> &gt; On Friday 08 September 2006 22:56, Stefan Lucke wrote:
+</I>&gt;<i> &gt;&gt; On Freitag 08 September 2006 21:48, Chris Elsworth wrote:
+</I>&gt;<i> &gt;&gt;&gt; On Fri, Sep 08, 2006 at 09:10:24PM +0200, Matthias Schwarzott wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt; Then I found a working version:
+</I>&gt;<i> &gt;&gt;&gt;&gt; Compiling softdevice with -O0 instead of -O2 made it working :)))
+</I>&gt;<i> &gt;&gt;&gt;&gt; (Exactly I use normally: -O2 -march=athlon-xp -fomit-frame-pointer
+</I>&gt;<i> &gt;&gt;&gt;&gt; -pipe, and changed the -O2 to -O0 leaving the rest as they are).
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; It works now with -vo xv: and also with -vo shm:, the colors are
+</I>&gt;<i> &gt;&gt;&gt;&gt; correct for all channels not only these with 720px width.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Wow! Nice catch! I can confirm exactly the same result here, using
+</I>&gt;<i> &gt;&gt;&gt; CXXFLAGS=-O0 -g -Wall -fPIC -Woverloaded-virtual
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I'd like to know:
+</I>&gt;<i> &gt;&gt; 1. compiler version
+</I>&gt;<i> &gt;&gt;    mine is:
+</I>&gt;<i> &gt;&gt;    gcc (GCC) 3.4.4 (Gentoo 3.4.4-r1, ssp-3.4.4-1.0, pie-8.7.8)
+</I>&gt;<i> &gt;&gt;    Copyright (C) 2004 Free Software Foundation, Inc.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; gcc-Version 4.1.1 (Gentoo 4.1.1-r1)
+</I>&gt;<i>
+</I>&gt;<i> Maybe it is a compiler bug or at least a change in the behaviour. I had
+</I>&gt;<i> a similar problem some time ago, it went away when I disabled the mmx
+</I>&gt;<i> optimization. If with -O2 and --disable-mmx the code works, could you
+</I>&gt;<i> please try to enable the mmx by hand in the SoftOsd.c file separately
+</I>&gt;<i> for the Methods ScaleDownHoriz_MMX() and ScaleDownVert_MMX()? The best
+</I>&gt;<i> method to do this is to insert
+</I>&gt;<i> #define USE_MMX
+</I>&gt;<i> #define USE_MMX2
+</I>&gt;<i> before the method and
+</I>&gt;<i> #undef USE_MMX
+</I>&gt;<i> #undef USE_MMX2
+</I>&gt;<i> after it. If that breaks again, please tell me which method causes the
+</I>&gt;<i> problems.
+</I>&gt;<i>
+</I>I did it another way: bisecting like Prakash Punnoor suggested.
+Now I found out that cSoftOsd::ScaleDownHoriz_MMX from SoftOsd.c causes the 
+problem.
+If compiling that part with -O2 it does not work and with -O0 it works.
+
+When now switching back to -O2 but undefining USE_MMX2 it also works again.
+
+
+So enough for now.
+
+
+Btw. I'm not able to compile softdevice with all mmx-versions disabled.
+If calling
+./configure --disable-mmx --disable-mmx2 --disable-dfb --disable-fb
+
+&quot;make all&quot; then dies with:
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual -c -DHAVE_CONFIG -DCONFIGDIR=\&quot;/etc/vdr\&quot; -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;/usr/lib/vdr/plugins&quot;' -DSHM_SUPPORT -I/usr/include/vdr/.. -I/usr/include/include -I/usr/include/ffmpeg -I/usr/include/postproc   
+utils.c
+/tmp/cc8z7jw0.s: Assembler messages:
+/tmp/cc8z7jw0.s:1420: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1421: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1422: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1423: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1424: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1425: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1426: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1427: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1481: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1482: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1483: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1484: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1485: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1486: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1487: Error: junk at end of line, first unrecognized character 
+is `%'
+/tmp/cc8z7jw0.s:1488: Error: junk at end of line, first unrecognized character 
+is `%'
+make: *** [utils.o] Fehler 1
+
+Seems to me like undefined MOVNTQ when not having MMX and MMXEXT.
+
+Matthias
+
+-- 
+Matthias Schwarzott
+Gentoo Developer
+<A HREF="http://www.gentoo.org">http://www.gentoo.org</A>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060909/cbdd43ef/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060909/cbdd43ef/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002412.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+	<LI>Next message: <A HREF="002416.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2414">[ date ]</a>
+              <a href="thread.html#2414">[ thread ]</a>
+              <a href="subject.html#2414">[ subject ]</a>
+              <a href="author.html#2414">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

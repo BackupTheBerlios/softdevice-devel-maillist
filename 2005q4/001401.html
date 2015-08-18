@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] cropmode toggle key handling patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cropmode%20toggle%20key%20handling%20patch&In-Reply-To=%3C435EB27E.1040402%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001399.html">
+   <LINK REL="Next"  HREF="001409.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] cropmode toggle key handling patch</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cropmode%20toggle%20key%20handling%20patch&In-Reply-To=%3C435EB27E.1040402%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] cropmode toggle key handling patch">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Wed Oct 26 00:32:30 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001399.html">[Softdevice-devel] Matrox G450 DirectFB output...
+</A></li>
+        <LI>Next message: <A HREF="001409.html">[Softdevice-devel] cropmode toggle key handling patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1401">[ date ]</a>
+              <a href="thread.html#1401">[ thread ]</a>
+              <a href="subject.html#1401">[ subject ]</a>
+              <a href="author.html#1401">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes, the subject says it all!
+
+cropmode rotation was from 0 to max + 1, that patch fixes it and 
+setupstore clamp values :
+
+
+--- setup-softdevice.c.orig     2005-10-26 00:30:20.000000000 +0200
++++ setup-softdevice.c  2005-10-26 00:30:32.000000000 +0200
+@@ -19,8 +19,8 @@
+  /* 
+----------------------------------------------------------------------------
+   * index to this array correspond to AFD values
+   */
+-#define SETUP_CROPMODES 5
+-const char *crop_str[SETUP_CROPMODES];
++#define SETUP_CROPMODES 4
++const char *crop_str[SETUP_CROPMODES+1];
+
+  /* 
+---------------------------------------------------------------------------
+   */
+@@ -366,7 +366,10 @@
+   */
+  void cSetupStore::CropModeNext(void)
+  {
+-  cropMode = (cropMode == (SETUP_CROPMODES-1)) ? 0 : cropMode + 1;
++  if (!crop_str[++cropMode])
++  {
++    cropMode = 0;
++  }
+  }
+
+  /* 
+---------------------------------------------------------------------------
+
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001399.html">[Softdevice-devel] Matrox G450 DirectFB output...
+</A></li>
+	<LI>Next message: <A HREF="001409.html">[Softdevice-devel] cropmode toggle key handling patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1401">[ date ]</a>
+              <a href="thread.html#1401">[ thread ]</a>
+              <a href="subject.html#1401">[ subject ]</a>
+              <a href="author.html#1401">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

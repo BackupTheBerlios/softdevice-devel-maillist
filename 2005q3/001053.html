@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problem%20compiling%20softdevice%20v0.1.2%20and%20also%20CVS&In-Reply-To=%3C200507292247.11542.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001050.html">
+   <LINK REL="Next"  HREF="001027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Problem%20compiling%20softdevice%20v0.1.2%20and%20also%20CVS&In-Reply-To=%3C200507292247.11542.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Jul 29 22:47:11 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001050.html">[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS
+</A></li>
+        <LI>Next message: <A HREF="001027.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1053">[ date ]</a>
+              <a href="thread.html#1053">[ thread ]</a>
+              <a href="subject.html#1053">[ subject ]</a>
+              <a href="author.html#1053">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Freitag, 29. Juli 2005 12:25, Seppo Ingalsuo wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Thats now in cvs. Can you check if it still compiles for you ?
+</I>&gt;<i> 
+</I>&gt;<i> It is perhaps not related to this modification but something related to 
+</I>&gt;<i> ffmpeg postprocessing configurations is now broken:
+</I>&gt;<i> 
+</I>&gt;<i> (gdb) where
+</I>&gt;<i> #0  0xb7d1c980 in strcmp () from /lib/libc.so.6
+</I>&gt;<i> #1  0xb7c97e66 in cSetupStore::getPPValue (this=0xb7ca6800) at 
+</I>&gt;<i> setup-softdevice.c:291
+</I>&gt;<i> #2  0xb7c93beb in cVideoStreamDecoder::ppLibavcodec (this=0x856b9b0) at 
+</I>&gt;<i> mpeg2decoder.c:917
+</I>&gt;<i> #3  0xb7c92f4d in cVideoStreamDecoder::DecodePacket (this=0x856b9b0, 
+</I>&gt;<i> pkt=0x856c684) at mpeg2decoder.c:565
+</I>&gt;<i> #4  0xb7c91f4b in cStreamDecoder::Action (this=0x856b9b0) at 
+</I>&gt;<i> mpeg2decoder.c:187
+</I>&gt;<i> #5  0x080e66b6 in cThread::StartThread (Thread=0x856b9b0) at thread.c:233
+</I>&gt;<i> #6  0xb7ec8e51 in pthread_start_thread () from /lib/libpthread.so.0
+</I>&gt;<i> #7  0xb7d7f92a in clone () from /lib/libc.so.6
+</I>&gt;<i> 
+</I>&gt;<i> Softdevice works with defaults (i.e. setup.conf cleared) but not e.g. 
+</I>&gt;<i> when deinterlace is set to linipol.
+</I>
+There are/were some other issues too, but that should be fixed now
+[setup-softdevice] cropping mode set to 0 ((null))
+[setup-softdevice] cropping mode toggle key set to 3 ((null))
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001050.html">[Softdevice-devel] Problem compiling softdevice v0.1.2 and also CVS
+</A></li>
+	<LI>Next message: <A HREF="001027.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1053">[ date ]</a>
+              <a href="thread.html#1053">[ thread ]</a>
+              <a href="subject.html#1053">[ subject ]</a>
+              <a href="author.html#1053">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

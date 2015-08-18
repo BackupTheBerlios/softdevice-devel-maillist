@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] witch softdevice output depending on hard and soft
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C4491D52D.5090301%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002139.html">
+   <LINK REL="Next"  HREF="002151.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] witch softdevice output depending on hard and soft</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C4491D52D.5090301%40gmx.net%3E"
+       TITLE="[Softdevice-devel] witch softdevice output depending on hard and soft">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Jun 15 23:46:21 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002139.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+        <LI>Next message: <A HREF="002151.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2147">[ date ]</a>
+              <a href="thread.html#2147">[ thread ]</a>
+              <a href="subject.html#2147">[ subject ]</a>
+              <a href="author.html#2147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Leo M&#225;rquez schrieb:
+&gt;<i> Thanks for your answer Martin,
+</I>&gt;<i> 
+</I>&gt;<i> Martin Wache wrote:
+</I>&gt;&gt;<i> Leo M&#225;rquez schrieb:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;&gt;<i> It says me that softdevice is not compiled with xv support.
+</I>&gt;&gt;&gt;<i> I have been checked the softdevice Makefile and XV_SUPPORT is set to 1
+</I>&gt;&gt;&gt;<i> But I have noticed that when I execute in the softdevice dir the
+</I>&gt;&gt;&gt;<i> ./configure command with an option related to xv then the config.h and
+</I>&gt;&gt;&gt;<i> config.mak don't change. For example if I execute ./config --disable-fb
+</I>&gt;&gt;&gt;<i> I see config.h and config.mak updated.
+</I>&gt;&gt;&gt;<i> But if I execute ./configure --disable-xv don't update anything. If
+</I>&gt;&gt;&gt;<i> after that I execute again only ./configure anything changed again and
+</I>&gt;&gt;&gt;<i> it must update to enable all the outputs again.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;<i> Do you have the x-development headers installed?
+</I>&gt;&gt;<i>   
+</I>&gt;<i> I dont know in witch debian package are this headers included. I have
+</I>&gt;<i> installled the xserver-xorg-dev package but it don't work for me.
+</I>&gt;<i> The plugins compiles fine but the configure command of softdevice ignore
+</I>&gt;<i> the --disable-xv and the ./configure commands that are relative to xv.
+</I>
+I would assume that xserver-xorg-dev is the one you need, but maybe you
+also need some more. The softdevice also needs the headers of the x11
+extensions like XVideo, maybe that is still missing. If you upgrade to
+the cvs from today and use configure again you will get a more detailed
+report of why xv is disabled in the file config.log.
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002139.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+	<LI>Next message: <A HREF="002151.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2147">[ date ]</a>
+              <a href="thread.html#2147">[ thread ]</a>
+              <a href="subject.html#2147">[ subject ]</a>
+              <a href="author.html#2147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

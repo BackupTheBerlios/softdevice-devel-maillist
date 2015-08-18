@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Displaying images
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C20060306194046.GA13666%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001808.html">
+   <LINK REL="Next"  HREF="001775.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Displaying images</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Displaying%20images&In-Reply-To=%3C20060306194046.GA13666%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Displaying images">marko.makela at hut.fi
+       </A><BR>
+    <I>Mon Mar  6 20:40:46 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001808.html">[Softdevice-devel] Displaying images
+</A></li>
+        <LI>Next message: <A HREF="001775.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1811">[ date ]</a>
+              <a href="thread.html#1811">[ thread ]</a>
+              <a href="subject.html#1811">[ subject ]</a>
+              <a href="author.html#1811">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Mar 05, 2006 at 04:34:41PM +0100, Sebastian Vandersee wrote:
+&gt;<i> What I have in mind is an vdr-plugin &quot;softimage&quot;, which would the
+</I>&gt;<i> replace the existing vdr-image plugin for me. So I ask myself, what
+</I>&gt;<i> functions should be provided by such a plugin and what functions
+</I>&gt;<i> should belong to softdevice (regarding scaling, aspect ratio etc.)?
+</I>&gt;<i> Any suggestions?
+</I>
+Because digital images tend to have a much bigger resolution than TV
+screens, there should be a zoom in/out feature with the ability to move
+the zoom window (the cropping area), so that you can see details.  On
+recent digital cameras, you get at least 8 megapixels, and the TV screen
+can only display less than half a megapixel.
+
+I don't know if keys can be grabbed by plugins or if you'd have to
+resort to dirty tricks like the CropModeToggleKey in softdevice.
+I'd map the arrow keys to moving the zoom window and perhaps the
+color keys for zoom min/in/out/max.
+
+I have some thousands of photos backed up on my vdr box, and I could
+find the plugin useful.  It could be a nice way to show pictures to visitors.
+In that application, it would be nice to tag images either in advance (to
+create &quot;playlists&quot;, i.e., slide shows) or while viewing the images (to
+compose lists of photos for copying or printing).  The &quot;playlists&quot; could
+well be left out of the plugin; i.e., let the user create a directory
+containing symlinks to the images, and to choose that directory as the
+starting point.
+
+It would be nice if the plugin could optionally show on OSD the contents of
+JPEG COM markers (embedded image comments) or maybe even certain Exif tags
+and various colour curves and histograms (just kidding about the last one).
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001808.html">[Softdevice-devel] Displaying images
+</A></li>
+	<LI>Next message: <A HREF="001775.html">[Softdevice-devel] Displaying images
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1811">[ date ]</a>
+              <a href="thread.html#1811">[ thread ]</a>
+              <a href="subject.html#1811">[ subject ]</a>
+              <a href="author.html#1811">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

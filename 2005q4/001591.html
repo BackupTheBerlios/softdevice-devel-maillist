@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] cropmode toggle key
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cropmode%20toggle%20key&In-Reply-To=%3C20051211200335.GA402049%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001528.html">
+   <LINK REL="Next"  HREF="001402.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] cropmode toggle key</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20cropmode%20toggle%20key&In-Reply-To=%3C20051211200335.GA402049%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] cropmode toggle key">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Dec 11 21:03:35 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001528.html">[Softdevice-devel] cropmode toggle key
+</A></li>
+        <LI>Next message: <A HREF="001402.html">[Softdevice-devel] Matrox G450, directfb: a bit of progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1591">[ date ]</a>
+              <a href="thread.html#1591">[ thread ]</a>
+              <a href="subject.html#1591">[ subject ]</a>
+              <a href="author.html#1591">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Nov 12, 2005 at 10:42:39PM +0200, Marko M&#228;kel&#228; wrote:
+&gt;<i> My two cents: It appears that softdevice does not properly write the
+</I>&gt;<i> CropModeToggleKey setting to setup.conf if the key has been defined
+</I>&gt;<i> for the first time in the menu.
+</I>
+It appears that the setting will sometimes be forgotten, even if it has
+been written to setup.conf.
+
+Today, I noticed this way to get a repeatable crash until the next reboot:
+
+(1) observe that softdevice starts in cropmode=None even though I do not
+remember changing it from 4:3
+
+(2) select the desired crop mode by pressing CropModeToggleKey or
+via the softdevice OSD menu
+
+(3) select Restart from the VDR menu
+
+(4) watch vdr crash and burn when _any_ key is pressed on the remote
+control unit:
+
+#0  0xb79ba85c in cDFBVideoOut::ProcessEvents (this=0x8277aa8) at video-dfb.c:646
+	event = {clazz = DFEC_INPUT, type = DIET_KEYPRESS, device_id = 3, flags = 249, 
+  timestamp = {tv_sec = 1134328262, tv_usec = 932859}, key_code = 139, key_id = DIKI_UNKNOWN, 
+  key_symbol = DIKS_MENU, modifiers = 0, locks = 0, button = 4294967295, buttons = 4294967295, 
+  axis = 4294967295, axisabs = -1, axisrel = -1}
+#1  0xb79bb84e in cDFBVideoOut::YUV (this=0x8277aa8, 
+    Py=0xb5c3d630 '\200' &lt;repeats 200 times&gt;..., Pu=0x83f0638 '\200' &lt;repeats 200 times&gt;..., 
+    Pv=0x840bb68 '\200' &lt;repeats 200 times&gt;..., Width=704, Height=576, Ystride=736, 
+    UVstride=368) at video-dfb.c:1367
+	dst = (uint8_t *) 0xb5adf000 &quot;&quot;
+	pitch = 704
+	hi = &lt;value optimized out&gt;
+#2  0xb79aafcc in cVideoOut::DrawVideo_420pl (this=0x8277aa8, syncTimer=0x832ab28, 
+    delay=0x832ba40, picture=0x8356d70, context=0x83f1d68) at video.c:433
+No locals.
+#3  0xb79ae9a2 in cVideoStreamDecoder::DecodePacket (this=0x832b7e0, pkt=0x834c1b0)
+    at mpeg2decoder.c:653
+	findPTS = &lt;value optimized out&gt;
+	aPTS = 714720029
+	pts_corr = &lt;value optimized out&gt;
+	dispTime = &lt;value optimized out&gt;
+	len = 0
+	got_picture = 32
+	data = (uint8_t *) 0x8555060 &quot;&quot;
+	size = 2039
+#4  0xb79adf74 in cStreamDecoder::Action (this=0x832b7e0) at mpeg2decoder.c:189
+	pkt = (AVPacket *) 0x834c1b0
+#5  0x080f6772 in cThread::StartThread (Thread=0x832b7e0) at thread.c:235
+No locals.
+#6  0xb7fb8cfd in start_thread () from /lib/tls/libpthread.so.0
+No symbol table info available.
+#7  0xb7e3c19e in clone () from /lib/tls/libc.so.6
+No symbol table info available.
+
+Any ideas?  Any gdb commands I should try when the crash occurs?
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001528.html">[Softdevice-devel] cropmode toggle key
+</A></li>
+	<LI>Next message: <A HREF="001402.html">[Softdevice-devel] Matrox G450, directfb: a bit of progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1591">[ date ]</a>
+              <a href="thread.html#1591">[ thread ]</a>
+              <a href="subject.html#1591">[ subject ]</a>
+              <a href="author.html#1591">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

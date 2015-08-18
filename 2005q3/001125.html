@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Minor AV sync problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050817190421.GC3273%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001124.html">
+   <LINK REL="Next"  HREF="001126.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Minor AV sync problems</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Minor%20AV%20sync%20problems&In-Reply-To=%3C20050817190421.GC3273%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] Minor AV sync problems">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Aug 17 21:04:21 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001124.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+        <LI>Next message: <A HREF="001126.html">[Softdevice-devel] Minor AV sync problems - fix works!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1125">[ date ]</a>
+              <a href="thread.html#1125">[ thread ]</a>
+              <a href="subject.html#1125">[ subject ]</a>
+              <a href="author.html#1125">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan,
+
+&gt;<i> I found a way to get a audio delay with alsa-1.0.9 and default device.
+</I>&gt;<i> Please try attached patch. There are additional fprintfs which will be
+</I>&gt;<i> removed before committing. The messages now look like:
+</I>&gt;<i> 
+</I>&gt;<i> (0 - 3115)  (0 - 3115)  audioPTS[2853]:delay 3115 audio pts offset -2197034010 pts 951384735
+</I>
+On my laptop (pretty much vanilla CVS + this most recent patch), the
+output for a recorded stream (there is no DVB tuner) looks like this:
+
+(0 - 2703)  (0 - 2943)  (0 - 3183)  (0 - 3210)  (0 - 3023)  (0 - 3050)
+(0 - 2863)  (0 - 3103)  (0 - 3130)  (0 - 3157)  (0 - 3183)  ...
+
+(all in a single line, no linefeeds)
+
+The lip sync is perfect now, thank you!  I believe that this patch will
+fix the sync problems on my VDR box as well.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001124.html">[Softdevice-devel] Minor AV sync problems
+</A></li>
+	<LI>Next message: <A HREF="001126.html">[Softdevice-devel] Minor AV sync problems - fix works!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1125">[ date ]</a>
+              <a href="thread.html#1125">[ thread ]</a>
+              <a href="subject.html#1125">[ subject ]</a>
+              <a href="author.html#1125">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice and gentoo
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20gentoo&In-Reply-To=%3C200611191920.17011.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002659.html">
+   <LINK REL="Next"  HREF="002663.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice and gentoo</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%20and%20gentoo&In-Reply-To=%3C200611191920.17011.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice and gentoo">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Nov 19 19:20:16 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002659.html">[Softdevice-devel] [Softdevice-cvs] softdevice CHANGELOG, 1.264,	1.265
+</A></li>
+        <LI>Next message: <A HREF="002663.html">[Softdevice-devel] softdevice and gentoo
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2662">[ date ]</a>
+              <a href="thread.html#2662">[ thread ]</a>
+              <a href="subject.html#2662">[ subject ]</a>
+              <a href="author.html#2662">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm on the way to make my 2nd vdr productive with softdevice and dfb mgatv output.
+
+There are/were some issues:
+
+1. I had to modify the ebuild file by hand, as the default
+   vdr-softdevice-0.3.0-r1.ebuild would disable directfb support if derectfb
+   is not in USE flags. By this softdevice configure can detect my already installed
+   DirectFB/DFB++ versions. Those from cvs 2006-11-05 are more suitable then
+   those which would be pulled in otherwise:DirectFB-0.9.25.1 / DFB++-0.9.23 .
+-- cut --
+--- vdr-softdevice-0.3.0-r1.ebuild.old  2006-11-14 10:35:59.000000000 +0100
++++ vdr-softdevice-0.3.0-r1.ebuild      2006-11-18 23:07:35.000000000 +0100
+@@ -88,7 +88,7 @@
+        MYOPTS=&quot;${MYOPTS} --disable-vidix&quot;
+        use xv || MYOPTS=&quot;${MYOPTS} --disable-xv&quot;
+        use fbcon || MYOPTS=&quot;${MYOPTS} --disable-fb&quot;
+-       use directfb || MYOPTS=&quot;${MYOPTS} --disable-dfb&quot;
++       # use directfb || MYOPTS=&quot;${MYOPTS} --disable-dfb&quot;
+
+        # MMX-Support
+        # hardcode mmx for amd64 - do not disable even without use-flag
+-- cut --
+   After modifying ebuild I had to run:
+     ebuild  vdr-softdevice-0.3.0-r1.ebuild digest
+
+2. For ALSA audio access I had to add user vdr to group audio
+
+3. For running vdr as user &quot;vdr&quot; and having directfb input work via 
+   linux-input I had to modify udev rules:
+     # lucke: changed input event* settings
+     #KERNEL==&quot;event*&quot;,      NAME=&quot;input/%k&quot;, MODE=&quot;0600&quot;
+     KERNEL==&quot;event*&quot;,       NAME=&quot;input/%k&quot;, GROUP=&quot;video&quot;, MODE=&quot;0660&quot;
+   Current /etc/directfbrc looks like the following:
+   -- cut --
+     mode=720x576
+     depth = 32
+     matrox-crtc2
+     matrox-tv-standard=pal
+     primary-layer=2
+     pixelformat=ARGB
+     matrox-cable-type=scart-rgb
+     disable-module=lirc
+     no-vt
+     no-vt-switch
+   -- cut --
+
+4. Shutdown (vdr power off) is still not working.
+
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002659.html">[Softdevice-devel] [Softdevice-cvs] softdevice CHANGELOG, 1.264,	1.265
+</A></li>
+	<LI>Next message: <A HREF="002663.html">[Softdevice-devel] softdevice and gentoo
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2662">[ date ]</a>
+              <a href="thread.html#2662">[ thread ]</a>
+              <a href="subject.html#2662">[ subject ]</a>
+              <a href="author.html#2662">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

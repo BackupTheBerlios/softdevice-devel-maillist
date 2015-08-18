@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] epia recommendations
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20epia%20recommendations&In-Reply-To=%3C4343A383.6050309%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001292.html">
+   <LINK REL="Next"  HREF="001294.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] epia recommendations</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20epia%20recommendations&In-Reply-To=%3C4343A383.6050309%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] epia recommendations">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Wed Oct  5 11:57:23 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001292.html">[Softdevice-devel] epia recommendations
+</A></li>
+        <LI>Next message: <A HREF="001294.html">[Softdevice-devel] epia recommendations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1293">[ date ]</a>
+              <a href="thread.html#1293">[ thread ]</a>
+              <a href="subject.html#1293">[ subject ]</a>
+              <a href="author.html#1293">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Torgeir Veimo a &#233;crit :
+&gt;<i> Can some recommend which via epia version is best for normal tv output
+</I>&gt;<i> configuration for use with vdr and softdevice? 
+</I>
+With the latest kernel frame-buffer patches and DirectFB, you can choose
+either VT1622 or VT1622a/VT1623 based boards, ie. EPIA M or EPIA MII
+Tested on EPIA M 10k (me) and EPIA MII 12k (I think, Mark Adams).
+Works great with TV-out in 720x576 resolution, with DirectFB output
+method. See directfb-users ML archives for recent threads and patches
+about this.
+
+VT1622 and VT1622a can also output RGB signals, but they do not seem to
+be all wired on M and MII boards (lacks the B signal line : only 3 out
+of 4 DACs are actually used : CVBS, Y, C). A bit of soldering on the
+VT162x package on the board could bring top-quality TV-out with
+simultaneous VGA-out...
+Those who solder RAM chips on FF cards could also do that ?
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001292.html">[Softdevice-devel] epia recommendations
+</A></li>
+	<LI>Next message: <A HREF="001294.html">[Softdevice-devel] epia recommendations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1293">[ date ]</a>
+              <a href="thread.html#1293">[ thread ]</a>
+              <a href="subject.html#1293">[ subject ]</a>
+              <a href="author.html#1293">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

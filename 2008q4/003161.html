@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Fix for error &quot;&#8216;offset_t&#8217; has not been declared&quot; - cvs softdevice and cvs ffmpeg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%3D%3Fwindows-1252%3Fq%3FFix_for_error_%3D22%3D91offset%3D5F%3F%3D%0A%20%3D%3Fwindows-1252%3Fq%3Ft%3D92_has_not_been_declared%3D22_-_cvs_softdevice_and_cvs_f%3F%3D%0A%20%3D%3Fwindows-1252%3Fq%3Ffmpeg%3F%3D&In-Reply-To=%3C48F73C62.20303%40jasonline.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003160.html">
+   <LINK REL="Next"  HREF="003166.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Fix for error &quot;&#8216;offset_t&#8217; has not been declared&quot; - cvs softdevice and cvs ffmpeg</H1>
+    <B>Jason Harvey</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%3D%3Fwindows-1252%3Fq%3FFix_for_error_%3D22%3D91offset%3D5F%3F%3D%0A%20%3D%3Fwindows-1252%3Fq%3Ft%3D92_has_not_been_declared%3D22_-_cvs_softdevice_and_cvs_f%3F%3D%0A%20%3D%3Fwindows-1252%3Fq%3Ffmpeg%3F%3D&In-Reply-To=%3C48F73C62.20303%40jasonline.co.uk%3E"
+       TITLE="[Softdevice-devel] Fix for error &quot;&#8216;offset_t&#8217; has not been declared&quot; - cvs softdevice and cvs ffmpeg">softdevice at jasonline.co.uk
+       </A><BR>
+    <I>Thu Oct 16 15:06:42 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003160.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+        <LI>Next message: <A HREF="003166.html">[Softdevice-devel] Fix for error &quot; &#8216;offset_t&#8217; has not been declared&quot; - cvs softdevice and cvs ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3161">[ date ]</a>
+              <a href="thread.html#3161">[ thread ]</a>
+              <a href="subject.html#3161">[ subject ]</a>
+              <a href="author.html#3161">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Using cvs softdevice and cvs ffmpeg I got an error &quot;&#8216;offset_t&#8217; has not 
+been declared&quot;
+
+I googled and trawled the softdevice archive and don't think this has 
+been encountered/fixed anywhere yet...
+
+A recent change in cvs ffmpeg removed a custom type &quot;offset_t&quot; and 
+replaced it with a standard int64_t.
+This broke softdevice compilation.
+The attached patch makes the necessary replacements in cvs softdevice 
+files to match and it all now works.
+
+Apologies if I should email direct or cc someone, and if the patch is 
+broken, malformed or wrong please let me know I'll try not to get it 
+wrong next time.
+
+Hope this helps someone.
+
+Just like to add a quick thanks to the softdevice developer(s)
+Many thanks!
+
+Jason
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: softdevice.patch
+Type: text/x-patch
+Size: 1176 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20081016/dd17dc85/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20081016/dd17dc85/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003160.html">[Softdevice-devel] I couldn't compile softdevice from cvs
+</A></li>
+	<LI>Next message: <A HREF="003166.html">[Softdevice-devel] Fix for error &quot; &#8216;offset_t&#8217; has not been declared&quot; - cvs softdevice and cvs ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3161">[ date ]</a>
+              <a href="thread.html#3161">[ thread ]</a>
+              <a href="subject.html#3161">[ subject ]</a>
+              <a href="author.html#3161">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

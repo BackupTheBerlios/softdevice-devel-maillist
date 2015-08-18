@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] desperate plea to stop dolby digital cut outs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20desperate%20plea%20to%20stop%20dolby%20digital%20cut%20outs&In-Reply-To=%3C43EFAA1C.1010109%40mountaincable.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001750.html">
+   <LINK REL="Next"  HREF="001752.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] desperate plea to stop dolby digital cut outs</H1>
+    <B>Dave</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20desperate%20plea%20to%20stop%20dolby%20digital%20cut%20outs&In-Reply-To=%3C43EFAA1C.1010109%40mountaincable.net%3E"
+       TITLE="[Softdevice-devel] desperate plea to stop dolby digital cut outs">inssomniak at mountaincable.net
+       </A><BR>
+    <I>Sun Feb 12 22:35:24 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001750.html">[Softdevice-devel] desperate plea to stop dolby digital cut outs
+</A></li>
+        <LI>Next message: <A HREF="001752.html">[Softdevice-devel] desperate plea to stop dolby digital cut outs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1751">[ date ]</a>
+              <a href="thread.html#1751">[ thread ]</a>
+              <a href="subject.html#1751">[ subject ]</a>
+              <a href="author.html#1751">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Stefan Lucke wrote:
+
+&gt;<i>On Sonntag, 12. Februar 2006 20:27, Dave wrote:
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;&gt;<i>I use SPDIF 5.1 mode with softdevice, and the dolby digital cuts in and 
+</I>&gt;&gt;<i>out during periods of &quot;xruns&quot; (PCM does too but only for a tiny fraction 
+</I>&gt;&gt;<i>of a second), the dolby digital can cut out for more than a second, 
+</I>&gt;&gt;<i>while the av receiver re-syncs  the bitstream.  Is a better quality 
+</I>&gt;&gt;<i>sound card going to fix this?
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>Just for interest: whats your current card ?
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+Its just an onboard SIS 7012 with alc655 codec
+
+&gt;&gt;<i>what causes it?
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>Even if normal audio is streamed as 48KHz or other sample frequencies,
+</I>&gt;<i>there is slight difference between A/D sampling and D/A conversion.
+</I>&gt;<i>Let's guess A/D is done at 47990Hz and D/A at 48100Hz. With this
+</I>&gt;<i>setup it is obvious that you'll get some Xruns during playback.
+</I>&gt;<i>For PCM output we could think of a resampling logic that adjusts audio
+</I>&gt;<i>rate to video rate (sync on video).
+</I>&gt;<i>In case DD5.1 things are more complicated: Decode 5.1, resample
+</I>&gt;<i>all 6 channels, reencode them to DD5.1 and then output via SPDIF.
+</I>&gt;<i>
+</I>&gt;<i>With decoding/encoding there could be some patent issues I guess :-( .
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+I thought with the dolby digital bitstream out there was no decoding of 
+the stream, but was simply sent to the av decoder in encoded format, 
+therefore there was no patent issues involved?
+
+&gt;&gt;<i>Ill go get a good quality 
+</I>&gt;&gt;<i>sound card if it will fix it, but Im not sure that it will.  Any thoughts?
+</I>&gt;&gt;<i>    
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>The ideal solution would be a sound card that would allow some
+</I>&gt;<i>software controlled adjustments of the PLL which clocks PCM/SPDIF out.
+</I>&gt;<i>But unfortunatly I've never heard of such a card (or searched for the
+</I>&gt;<i>wrong keywords).
+</I>&gt;<i>
+</I>&gt;<i>Another way would be some finetuning of the video refresh rate.
+</I>&gt;<i>
+</I>&gt;<i>Ideally both (audio and video PLLs) should be adjusted to incoming
+</I>&gt;<i>reference clock.
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>So if I understand correctly the bitstream out plugin can use a FF DVB 
+card SPDIF out to input of sound card SPDIF as a reference clock to the 
+DVB channel tuned to hold sample rate.. interesting, but as far as Im 
+aware there is no outout of FF card video/audio while using softdevice? 
+( I have a nexus FF card with spdif out)  I tried vdr -a&quot;ac3dec -C&quot; as 
+test, and still ran into the same problems of sound cutting out (not to 
+mention bad sync issues), so real problem is that the 48000 sample rate 
+of the DVB channel isnt the same as the 48000 rate of the sound card, 
+therefore you get drift. 
+
+My guess is also no way to do it in software to fix, but maybe what you 
+said, is do something with the video instead, (drop frames, duplicate 
+frames?)  Use the sound card as reference to video?  Im not a programmer 
+im sorry I just think of weird things. :)
+
+
+&gt;<i>For long resync periods of your A/V receiver, I'll think I should
+</I>&gt;<i>have a closer look at bitstream-out code. This FF-card plugin has
+</I>&gt;<i>some better underrun and overruns handling code I guess.
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001750.html">[Softdevice-devel] desperate plea to stop dolby digital cut outs
+</A></li>
+	<LI>Next message: <A HREF="001752.html">[Softdevice-devel] desperate plea to stop dolby digital cut outs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1751">[ date ]</a>
+              <a href="thread.html#1751">[ thread ]</a>
+              <a href="subject.html#1751">[ subject ]</a>
+              <a href="author.html#1751">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

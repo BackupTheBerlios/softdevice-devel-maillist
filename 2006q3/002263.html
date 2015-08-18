@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180607160937v18db8580n6e27b7c2a4c9fe7c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002262.html">
+   <LINK REL="Next"  HREF="002264.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Alasdair Campbell</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C1849e5180607160937v18db8580n6e27b7c2a4c9fe7c%40mail.gmail.com%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">ragawu at gmail.com
+       </A><BR>
+    <I>Sun Jul 16 18:37:00 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002262.html">[Softdevice-devel] [Softdevice-cvs] softdevice CHANGELOG, 1.213, 1.214 configure, 1.21, 1.22
+</A></li>
+        <LI>Next message: <A HREF="002264.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2263">[ date ]</a>
+              <a href="thread.html#2263">[ thread ]</a>
+              <a href="subject.html#2263">[ subject ]</a>
+              <a href="author.html#2263">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I've been having trouble getting the interlaced output of the G450
+working correctly.
+With current CVS, DirectFB 0..25.1 &amp; current CVS FFMPEG no matter
+whether I set the post-processing option &quot;Deinterlace method&quot; to
+'none' or 'FB-intern' I still see lines (interlacing artifacts) where
+there is quick movement or scrolling text/credits.
+
+I have followed the instructions on the softdevice home page.
+
+Should I be using &quot;-vo dfb:&quot; or &quot;-vo dfb:mgatv&quot; for my G450 with diy
+vga to scart cable?  I should add that using &quot;mplayer -vo dfbmga&quot;
+shows the same lines.
+
+I've picked up on work being done to ensue scaling of 16:9 interlaced
+video to 4:3 tv works correctly, is this complete &amp; working now? I
+notice that if I set &quot;Screen Aspect&quot; to 16:9, although I'm missing a
+lot of the image, and the aspect ratio is incorrect, there are no
+lines like those mentioned above.
+
+I would prefer not to use any software deinterlacing, as the main
+reason I bought this card was that everywhere I read I was told that
+the card could do all this in hardware. Other than this current
+problem, the output is fantastic, although the audio does seem to lose
+sync quite regularly.
+
+thanks for all your hard work on this great peice of software!
+
+-- 
+A l a s d a i r   C a m p b e l l
+
+r a g a w u @ g m a i l . c o m
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002262.html">[Softdevice-devel] [Softdevice-cvs] softdevice CHANGELOG, 1.213, 1.214 configure, 1.21, 1.22
+</A></li>
+	<LI>Next message: <A HREF="002264.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2263">[ date ]</a>
+              <a href="thread.html#2263">[ thread ]</a>
+              <a href="subject.html#2263">[ subject ]</a>
+              <a href="author.html#2263">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

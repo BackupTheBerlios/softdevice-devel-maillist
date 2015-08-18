@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> option -vo dfb:mgatv (Was: Re: [Softdevice-devel] new OSD support; DirectFB issues)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20option%20-vo%20dfb%3Amgatv%20%28Was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support%3B%20DirectFB%20issues%29&In-Reply-To=%3C20060112203901.GA3487%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001662.html">
+   <LINK REL="Next"  HREF="001657.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>option -vo dfb:mgatv (Was: Re: [Softdevice-devel] new OSD support; DirectFB issues)</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20option%20-vo%20dfb%3Amgatv%20%28Was%3A%20Re%3A%20%5BSoftdevice-devel%5D%20new%20OSD%20support%3B%20DirectFB%20issues%29&In-Reply-To=%3C20060112203901.GA3487%40localhost.localdomain%3E"
+       TITLE="option -vo dfb:mgatv (Was: Re: [Softdevice-devel] new OSD support; DirectFB issues)">marko.makela at hut.fi
+       </A><BR>
+    <I>Thu Jan 12 21:39:01 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001662.html">option -vo dfb:mgatv (Was: Re: [Softdevice-devel] new OSD support; DirectFB issues)
+</A></li>
+        <LI>Next message: <A HREF="001657.html">[Softdevice-devel] new OSD support; DirectFB issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1663">[ date ]</a>
+              <a href="thread.html#1663">[ thread ]</a>
+              <a href="subject.html#1663">[ subject ]</a>
+              <a href="author.html#1663">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jan 12, 2006 at 09:46:47AM +0100, Stefan Lucke wrote:
+&gt;<i> Quoting Malcolm Caldwell &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">malcolm.caldwell at ntu.edu.au</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; Yes,  option '-vo dfb:mgatv' implicit switches to YUY2 and stretchblit.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; However, at least on my machine, dfb:mgatv does not allow alpha blending
+</I>&gt;<i> &gt; - its disabled.
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> Strange, are there some messages with errors (stderr or syslog) ?
+</I>&gt;<i> Usually you need to load a kernel module to get 'mgatv' option work.
+</I>
+I just switched back to -vo dfb:mgatv output.  I almost forgot that
+/etc/directfbrc has to be adjusted accordingly.  Here's my directfbrc
+for mgatv:
+
+matrox-crtc2
+matrox-tv-standard=pal
+matrox-cable-type=scart-rgb
+primary-layer=2
+hardware
+mmx
+no-banner
+no-vt
+graphics-vt
+linux-input-ir-only
+
+And here's my directfbrc for VGA output:
+
+fbdev=/dev/fb0
+mode=768x576
+no-banner
+no-debug
+no-vt
+depth=16
+linux-input-ir-only
+
+I guess there might be some redundant entries in my directfbrc for mgatv.
+If I comment out primary-layer=2, the picture will be out of sync (it looks
+like the default setting (primary-layer=0) produces VGA frequencies).
+If I set primary-layer=1, I get a static almost-completely-black screen.
+
+Here's a log excerpt for primary-layer=2:
+
+-----
+[dfb] Enumerating display Layers
+Layer 2 FBDev Primary Layer  Type: graphics
+  Caps: brightness contrast saturation surface
+Layer 1 Matrox Backend Scaler  Type: graphics picture video
+  Caps: brightness contrast deinterlacing dst_colorkey screen_location surface
+Layer 0 Matrox CRTC2 Layer  Type: graphics picture video
+  Caps: brightness contrast hue field_parity saturation surface
+[dfb] Set DLBM_TRIPLE for layer [Matrox CRTC2 Layer]
+[dfb] DLOP_FIELD_PARITY supported by layer [Matrox CRTC2 Layer]
+[surface capabilities] scrSurface: videoonly flipping interlaced triple-buffered
+[dfb] width = 720, height = 576
+[dfb] got fmt = 0x00418c04 bpp = 32
+[dfb] Using this layer for OSD: (Matrox CRTC2 Layer - [720x576])
+[surface capabilities] osdSurface: videoonly double-buffered flipping
+[surface capabilities] videoSurface: videoonly
+[dfb] Using this layer for OSD: Matrox CRTC2 Layer
+[dfb] Using this layer for Video out: Matrox CRTC2 Layer
+[dfb] Display frame time is 19964 microseconds
+[dfb] (re)configuring Videolayer to 720 x 576 (720x576)
+[dfb] creating new surface (stretchBlit)
+[surface capabilities] videoSurface: videoonly
+[dfb] (re)configured 0x00200806
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+cSoftDevice::MakePrimaryDevice
+[dfb] (re)configuring Videolayer to 704 x 576 (528x576)
+[dfb] creating new surface (stretchBlit)
+[surface capabilities] videoSurface: videoonly
+[dfb] (re)configured 0x00200806
+-----
+
+Any suggestions for improvement?  The card is a Matrox G450.
+
+After I set the display aspect ratio to 4:3 (it somehow was 5:4) to disable
+scaling, interlaced video looks perfect.  Also the background of the OSD
+is nicely alpha blended.
+
+The only issue I have with -vo dfb:mgatv is occasional audio chopping.
+I have the feeling that average CPU consumption is 40%-60% (of 900 MHz
+Celeron), while on VGA output it is 30%-50%.  On VGA output, the only
+way to get audio chopping is to transfer large files over the network.
+Even enabling deinterlacing won't cause audio chopping.
+
+Could the audio chopping on dfb:mgatv be due to A/V synchronization rather
+than running out of CPU cycles?  I'll try firing up OProfile to see if
+there is anything obvious that could reduce the CPU consumption.
+
+For the time being, I think I will switch to dfb:mgatv, because it produces
+sharper picture and reduces the amount of cables and boxes.  Really, the only
+issue is the occasional audio chopping.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001662.html">option -vo dfb:mgatv (Was: Re: [Softdevice-devel] new OSD support; DirectFB issues)
+</A></li>
+	<LI>Next message: <A HREF="001657.html">[Softdevice-devel] new OSD support; DirectFB issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1663">[ date ]</a>
+              <a href="thread.html#1663">[ thread ]</a>
+              <a href="subject.html#1663">[ subject ]</a>
+              <a href="author.html#1663">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] last softdevice/ffmpeg branch and blank video...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20last%20softdevice/ffmpeg%20branch%20and%20blank%20video...&In-Reply-To=%3C1192304675.47112023154a1%40imp.free.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002942.html">
+   <LINK REL="Next"  HREF="002945.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] last softdevice/ffmpeg branch and blank video...</H1>
+    <B>wallak at free.fr</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20last%20softdevice/ffmpeg%20branch%20and%20blank%20video...&In-Reply-To=%3C1192304675.47112023154a1%40imp.free.fr%3E"
+       TITLE="[Softdevice-devel] last softdevice/ffmpeg branch and blank video...">wallak at free.fr
+       </A><BR>
+    <I>Sat Oct 13 21:44:35 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002942.html">[Softdevice-devel] [Bug #12090] softplay: problems with recent	ffmpeg snapshot
+</A></li>
+        <LI>Next message: <A HREF="002945.html">[Softdevice-devel] last softdevice/ffmpeg branch and blank	video...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2944">[ date ]</a>
+              <a href="thread.html#2944">[ thread ]</a>
+              <a href="subject.html#2944">[ subject ]</a>
+              <a href="author.html#2944">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+This patch seems to be mandatory to get the video back with the last branch. Is
+there an other way to solve this problem ?
+
+Is there an h264 support ?
+
+Best Regards,
+
+
+diff -r -u ffmpeg-20071012/libavformat/mpeg.c
+ffmpeg-20071012-mdf/libavformat/mpeg.c
+--- ffmpeg-20071012/libavformat/mpeg.c  2007-10-12 14:27:56.000000000 +0200
++++ ffmpeg-20071012-mdf/libavformat/mpeg.c      2007-10-13 00:30:41.000000000
++0200
+@@ -305,7 +305,7 @@
+                 header_len -= 5;
+             }
+         }
+-        if (flags &amp; 0x01) { /* PES extension */
++       if ((flags &amp; 0x01) &amp;&amp; 0 /*ZZ*/) { /* PES extension */
+             pes_ext = get_byte(&amp;s-&gt;pb);
+             header_len--;
+             if (pes_ext &amp; 0x40) { /* pack header - should be zero in PS */
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002942.html">[Softdevice-devel] [Bug #12090] softplay: problems with recent	ffmpeg snapshot
+</A></li>
+	<LI>Next message: <A HREF="002945.html">[Softdevice-devel] last softdevice/ffmpeg branch and blank	video...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2944">[ date ]</a>
+              <a href="thread.html#2944">[ thread ]</a>
+              <a href="subject.html#2944">[ subject ]</a>
+              <a href="author.html#2944">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

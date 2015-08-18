@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%3D%3FISO-8859-1%3FQ%3FRe%3A_Resend%3A_Re%3A_%5BSoftdevice-devel%5D_Will_Softplay_stay_sepa%3F%3D%0A%20%3D%3FISO-8859-1%3FQ%3Frated_from_Softdevice%3D3F%3F%3D&In-Reply-To=%3C8715.1143068582%40www045.gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001825.html">
+   <LINK REL="Next"  HREF="001827.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%3D%3FISO-8859-1%3FQ%3FRe%3A_Resend%3A_Re%3A_%5BSoftdevice-devel%5D_Will_Softplay_stay_sepa%3F%3D%0A%20%3D%3FISO-8859-1%3FQ%3Frated_from_Softdevice%3D3F%3F%3D&In-Reply-To=%3C8715.1143068582%40www045.gmx.net%3E"
+       TITLE="[Softdevice-devel] Re: Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Mar 23 00:03:02 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001825.html">Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+        <LI>Next message: <A HREF="001827.html">[Softdevice-devel] Small include fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1826">[ date ]</a>
+              <a href="thread.html#1826">[ thread ]</a>
+              <a href="subject.html#1826">[ subject ]</a>
+              <a href="author.html#1826">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> You missed one:
+</I>&gt;<i> 
+</I>&gt;<i> --- vdr-plugin-softplay-0.0.2+cvs20060322.orig/PlayList.c
+</I>&gt;<i> +++ vdr-plugin-softplay-0.0.2+cvs20060322/PlayList.c
+</I>&gt;<i> @@ -672,7 +672,9 @@
+</I>&gt;<i>                 
+</I>&gt;<i>          // check for extinfos...
+</I>&gt;<i>          char *extInfoPos=line[!swapLine];
+</I>&gt;<i> -        skipSpaces((const char *)extInfoPos);
+</I>&gt;<i> +        //skipSpaces((const char *)extInfoPos);
+</I>&gt;<i> +        while ( *extInfoPos==' ' )
+</I>&gt;<i> +            extInfoPos++;
+</I>&gt;<i>          if ( *extInfoPos=='#' &amp;&amp; FileIndex ) {
+</I>&gt;<i>              cIndex *Idx=FileIndex-&gt;GetOrAddIndex(ItemFile);
+</I>&gt;<i>              if (Idx)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>Thanks for the patch, I applied it to the CVS.
+
+Bye,
+Martin
+
+-- 
+Bis zu 70% Ihrer Onlinekosten sparen: GMX SmartSurfer!
+Kostenlos downloaden: <A HREF="http://www.gmx.net/de/go/smartsurfer">http://www.gmx.net/de/go/smartsurfer</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001825.html">Resend: Re: [Softdevice-devel] Will Softplay stay separated from Softdevice?
+</A></li>
+	<LI>Next message: <A HREF="001827.html">[Softdevice-devel] Small include fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1826">[ date ]</a>
+              <a href="thread.html#1826">[ thread ]</a>
+              <a href="subject.html#1826">[ subject ]</a>
+              <a href="author.html#1826">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] nvidia OSD patches...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C200609082110.24446.zzam%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002400.html">
+   <LINK REL="Next"  HREF="002405.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] nvidia OSD patches...</H1>
+    <B>Matthias Schwarzott</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20nvidia%20OSD%20patches...&In-Reply-To=%3C200609082110.24446.zzam%40gentoo.org%3E"
+       TITLE="[Softdevice-devel] nvidia OSD patches...">zzam at gentoo.org
+       </A><BR>
+    <I>Fri Sep  8 21:10:24 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002400.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+        <LI>Next message: <A HREF="002405.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2403">[ date ]</a>
+              <a href="thread.html#2403">[ thread ]</a>
+              <a href="subject.html#2403">[ subject ]</a>
+              <a href="author.html#2403">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 08 September 2006 19:41, Martin Wache wrote:
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> thinking again about the OSD troubles with nvidia, and that Stefan
+</I>&gt;<i> suggested that it might be a wrong range of YUV values, I have prepared
+</I>&gt;<i> some patches. Could someone who has these problems with the OSD please
+</I>&gt;<i> try them separately and tell me if one resolves the problems?
+</I>&gt;<i>
+</I>&gt;<i> I checked our conversion RGB-&gt;YUV, it respects the range. But there is
+</I>&gt;<i> still this small bug in the scaling algorithm which sometimes produces
+</I>&gt;<i> stray pixels at the edges. Those pixel may have any values and if the
+</I>&gt;<i> nVidia cards gets confused by those pixels, it may well be that the
+</I>&gt;<i> complete line looks strange.
+</I>&gt;<i>
+</I>&gt;<i> Thank you for any reports!
+</I>&gt;<i> Martin
+</I>
+I tried all your patches applied against my ebuild for cvs from today. They 
+all do not change anything.
+Then I tried using insight as debugger but that crashed :(
+
+Then I found a working version:
+Compiling softdevice with -O0 instead of -O2 made it working :)))
+(Exactly I use normally: -O2 -march=athlon-xp -fomit-frame-pointer -pipe, and 
+changed the -O2 to -O0 leaving the rest as they are).
+
+It works now with -vo xv: and also with -vo shm:, the colors are correct for 
+all channels not only these with 720px width.
+
+
+Btw. When entering menu and switching from Pseudo to Software OSD-Mode the OSD 
+is drawn twice (seems like pseudo over software) until I leave OSD and 
+reenter it.
+
+Matthias
+
+-- 
+Matthias Schwarzott
+Gentoo Developer
+<A HREF="http://www.gentoo.org">http://www.gentoo.org</A>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060908/a214ba8e/attachment.pgp">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060908/a214ba8e/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002400.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+	<LI>Next message: <A HREF="002405.html">[Softdevice-devel] nvidia OSD patches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2403">[ date ]</a>
+              <a href="thread.html#2403">[ thread ]</a>
+              <a href="subject.html#2403">[ subject ]</a>
+              <a href="author.html#2403">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

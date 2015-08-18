@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Error compiling softplay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%20compiling%20softplay&In-Reply-To=%3C446AE9AE.3020202%40welho.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002040.html">
+   <LINK REL="Next"  HREF="002048.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Error compiling softplay</H1>
+    <B>Juha Pahkala</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Error%20compiling%20softplay&In-Reply-To=%3C446AE9AE.3020202%40welho.com%3E"
+       TITLE="[Softdevice-devel] Error compiling softplay">jpahka at welho.com
+       </A><BR>
+    <I>Wed May 17 11:15:26 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002040.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+        <LI>Next message: <A HREF="002048.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2045">[ date ]</a>
+              <a href="thread.html#2045">[ thread ]</a>
+              <a href="subject.html#2045">[ subject ]</a>
+              <a href="author.html#2045">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>jonis2006 wrote:
+&gt;<i> I know.In all lines just do replacements like:
+</I>&gt;<i>
+</I>&gt;<i> ic-&gt;streams[pkt.stream_index]-&gt;codec.codec_type
+</I>&gt;<i> replace by:
+</I>&gt;<i> ic-&gt;streams[pkt.stream_index].codec.codec_type
+</I>&gt;<i> the &quot;-&gt;&quot; replace on &quot;.&quot;
+</I>&gt;<i> in all lines what have error. And softplay will be compiled and working. This softplay working well with my VDR 1.4.0. Have a nice day ! :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>Well, actually I had to do it the other way around, changing 
+*-&gt;codec.codec* to *-&gt;codec-&gt;codec*
+
+Anyhow, that made it to at least compile, haven't gotten around to 
+testing it yet...
+
+thanks, juhis
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002040.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+	<LI>Next message: <A HREF="002048.html">[Softdevice-devel] Error compiling softplay
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2045">[ date ]</a>
+              <a href="thread.html#2045">[ thread ]</a>
+              <a href="subject.html#2045">[ subject ]</a>
+              <a href="author.html#2045">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

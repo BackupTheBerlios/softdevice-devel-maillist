@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #6409] Version 0.2.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%236409%5D%20Version%200.2.2&In-Reply-To=%3C200602172201.42083.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001756.html">
+   <LINK REL="Next"  HREF="001755.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #6409] Version 0.2.2</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%236409%5D%20Version%200.2.2&In-Reply-To=%3C200602172201.42083.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] [Bug #6409] Version 0.2.2">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Fri Feb 17 22:01:41 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001756.html">[Softdevice-devel] [Bug #6409] Version 0.2.2
+</A></li>
+        <LI>Next message: <A HREF="001755.html">[Softdevice-devel] [PATCH] Use pluginlibdir defined in Make.config
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1758">[ date ]</a>
+              <a href="thread.html#1758">[ thread ]</a>
+              <a href="subject.html#1758">[ subject ]</a>
+              <a href="author.html#1758">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch, 15. Februar 2006 07:52, Stefan Lucke wrote:
+&gt;<i> On Montag, 13. Februar 2006 19:22, wrote:
+</I>&gt;<i> &gt; Bug #6409, was updated on 2006-Feb-13 08:10
+</I>&gt;<i> &gt; Here is a current snapshot of the bug.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Project: Vdr Softdevice
+</I>&gt;<i> &gt; Category: None
+</I>&gt;<i> &gt; Status: Open
+</I>&gt;<i> &gt; Resolution: None
+</I>&gt;<i> &gt; Bug Group: None
+</I>&gt;<i> &gt; Priority: 5
+</I>&gt;<i> &gt; Submitted by: daliman
+</I>&gt;<i> &gt; Assigned to : none
+</I>&gt;<i> &gt; Summary: Version 0.2.2
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Details: Im Vergleich zu 0.2.1 sind mir ein paar Sachen aufgefallen:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 1. Bei Radiosender (hier Astra 19.2) dauert es f&#252;nf Sekunden bis das OSD aktualisiert wird. Auch das Aufrufen aller VDR-Funktionen dauert es allgemein 5 sekunden bis das entsprechende OSD erscheint. (shm &amp; xv)
+</I>&gt;<i> 
+</I>&gt;<i> This one could be fixed by attached patch. Setting video-&gt;Osd_changed = true 
+</I>&gt;<i> in SoftOsd.c is not the best way I guess. But this fix would trigger some/one
+</I>&gt;<i> other bug more often. 
+</I>&gt;<i> Without that fix I get deadlocks at startup in xv-out mode very seldom.
+</I>&gt;<i> Deadlock viewed with an attached gdb session at line 1185 (video-xv.c):
+</I>&gt;<i> 
+</I>&gt;<i> pthread_mutex_lock(&amp;xv_mutex);
+</I>&gt;<i> 
+</I>&gt;<i> With this it happens frequent, but with a different mutex :-( :
+</I>&gt;<i> (gdb) bt
+</I>&gt;<i> #0  0x4005db94 in __pthread_sigsuspend () from /lib/i686/libpthread.so.0
+</I>&gt;<i> #1  0x4005d9d8 in __pthread_wait_for_restart_signal () from /lib/i686/libpthread.so.0
+</I>&gt;<i> #2  0x4005f1bd in __pthread_alt_lock () from /lib/i686/libpthread.so.0
+</I>&gt;<i> #3  0x4005bf90 in pthread_mutex_lock () from /lib/i686/libpthread.so.0
+</I>&gt;<i> #4  0x080faf1d in cMutex::Lock() (this=0x81e0c80) at thread.c:190
+</I>&gt;<i> #5  0x418167e1 in cVideoOut::CloseOSD() (this=0x8374880) at video.c:447
+</I>&gt;<i> #6  0x41819b0e in cXvVideoOut::CloseOSD() (this=0x8374880) at video-xv.c:1170
+</I>&gt;<i> #7  0x4031eb11 in ~cSoftOsd (this=0x8274388) at SoftOsd.c:75
+</I>&gt;<i> #8  0x080eb473 in ~cSkinSTTNGDisplayChannel (this=0x841ac98) at skinsttng.c:226
+</I>&gt;<i> #9  0x080be41f in ~cDisplayChannel (this=0x83d4d98) at menu.c:3041
+</I>&gt;<i> #10 0x081058f0 in main (argc=12, argv=0xbffff304) at vdr.c:993
+</I>&gt;<i> 
+</I>&gt;<i> It is commen is that this happens at start-up, osd-close of the first osd displayed.
+</I>&gt;<i> Some memory corruption I guess. I addition somtimes I get some
+</I>&gt;<i> invalid pointer in free() during termination or some segfaults.
+</I>&gt;<i> from gdb it sometimes look like it is the destructor of cXvVideoOut,
+</I>&gt;<i> last line ;-) (delete this ?).
+</I>
+Finally I got it with help from valgrind, which complained about a
+conditional jump in GetOSDDimension() based on an uninitialized variable.
+After enabling OSD debugging I saw the initial area of size 1024x576,
+(startup mode is 16:9) which is larger than my default xv-area.
+
+Fix is done by introducing a new method to adjust video-out's osd
+mode, which has to be called _before_ any other query functions and
+removing osd mode setting from Commit..Unlock() functions.
+
+Perhaps I should release a fix version (0.2.3).
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001756.html">[Softdevice-devel] [Bug #6409] Version 0.2.2
+</A></li>
+	<LI>Next message: <A HREF="001755.html">[Softdevice-devel] [PATCH] Use pluginlibdir defined in Make.config
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1758">[ date ]</a>
+              <a href="thread.html#1758">[ thread ]</a>
+              <a href="subject.html#1758">[ subject ]</a>
+              <a href="author.html#1758">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

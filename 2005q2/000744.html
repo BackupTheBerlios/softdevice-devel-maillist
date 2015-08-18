@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Unrepeatable crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C4296404C.5040109%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000730.html">
+   <LINK REL="Next"  HREF="000746.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Unrepeatable crashes</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Unrepeatable%20crashes&In-Reply-To=%3C4296404C.5040109%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Unrepeatable crashes">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu May 26 23:31:56 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000730.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+        <LI>Next message: <A HREF="000746.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#744">[ date ]</a>
+              <a href="thread.html#744">[ thread ]</a>
+              <a href="subject.html#744">[ subject ]</a>
+              <a href="author.html#744">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; wrote:
+&gt;<i> On Wed, May 25, 2005 at 05:28:16PM +0200, Martin Wache wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Unfortunatly it is very difficult to find the reasons for these crashes 
+</I>&gt;&gt;<i>just with this information. It is possible to enable core dumps in your 
+</I>&gt;&gt;<i>system, so that we can have this additional information? It would make 
+</I>&gt;&gt;<i>finding the problem a lot easier...
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Sure.  It seems it will be just a matter of adding ulimit -c unlimited
+</I>&gt;<i> to the runvdr script.  I'll also add &quot;sysctl kernel.core_pattern=core.%p&quot;
+</I>&gt;<i> to the startup scripts in order to ensure that the files are less likely
+</I>&gt;<i> to be overwritten (in case there are multiple crashes).  Both SIGABRT
+</I>&gt;<i> and SIGSEGV seem to create a core dump by default (I tested with /bin/cat
+</I>&gt;<i> and an explicit kill from another virtual console.)
+</I>&gt;<i> 
+</I>And please compile the softdevice with the -g switch enabled, it is not 
+the default!
+
+I played a bit crash-me yesterday, I moved my antenna to get a bad 
+signal and waited until the softdevice crashed. And indeed it payed off: 
+I found a few places where I forgot to check pointers and one _really_ 
+silly bug which caused a lot of problems on bad signal.
+Now I can watch a station with almost no signal ( mostly noise, 
+sometimes pieces of words, or parts of picture, or some movements 
+nothing someone would want to watch) for more than a quater of an hour. 
+There are still a few crashes which I couldn't track down yet, they 
+happen in ffmpeg but the cause may be in the softdevice.
+I will commit these fixes together with the HDTV patch (which I started 
+to merge, but is not fully completed yet) hopefully on sunday, but I 
+will send you an e-mail. So please update your installation to this 
+version  when it's available before sending bug reports :-)
+
+Looking forward for some more crash reports from you, and hoping that it 
+will take long until you have something to report ;-)
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000730.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+	<LI>Next message: <A HREF="000746.html">[Softdevice-devel] Unrepeatable crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#744">[ date ]</a>
+              <a href="thread.html#744">[ thread ]</a>
+              <a href="subject.html#744">[ subject ]</a>
+              <a href="author.html#744">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

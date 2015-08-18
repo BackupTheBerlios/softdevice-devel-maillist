@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] 4:3-&gt;16:9 crashes, interlacing options
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%204%3A3-%3E16%3A9%20crashes%2C%20interlacing%20options&In-Reply-To=%3C20050511163328.GA518934%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000641.html">
+   <LINK REL="Next"  HREF="000626.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] 4:3-&gt;16:9 crashes, interlacing options</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%204%3A3-%3E16%3A9%20crashes%2C%20interlacing%20options&In-Reply-To=%3C20050511163328.GA518934%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] 4:3-&gt;16:9 crashes, interlacing options">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed May 11 18:33:28 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000641.html">[Softdevice-devel] Blanking the screen when no video; standby mode
+</A></li>
+        <LI>Next message: <A HREF="000626.html">[Softdevice-devel] softplay features / keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#643">[ date ]</a>
+              <a href="thread.html#643">[ thread ]</a>
+              <a href="subject.html#643">[ subject ]</a>
+              <a href="author.html#643">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan,
+
+&gt;<i> &gt; Btw. thanks for the great Plugin, it saves me a lot of nerves since my 
+</I>&gt;<i> &gt; FF-card is faulty somehow. Besides the 16:9 and 4:3 switch-crashes it is 
+</I>&gt;<i> &gt; rock-stable.
+</I>&gt;<i> 
+</I>&gt;<i> Which ffmpeg version (if cvs from which day) do you use ?
+</I>&gt;<i> Can you try attached patch to see if it fexes that for you (too) ?
+</I>
+I now tested a fresh ffmpeg snapshot with your patch applied.  Unfortunately,
+it still crashes on the clip from which you have an extract, right before
+the 4:3 -&gt; 16:9 transition.  For some reason, I couldn't run it in gdb,
+and attaching to the running process in gdb created a constant flow of
+SIGTRAP when I tried to play the clip.  I'm running vdr-1.3.24 with
+the patch from subtitles-0.3.7.  The only plugins loaded are softdevice
+and subtitles.  It also crashes without -Psubtitles.
+
+I tried to make sure that I'm running the patched ffmpeg (libavcodec.a).
+I checked that /usr/local/lib/libavcodec.c matches with the one in the
+source tree, and the date is later than parser.c and parser.o.  I also
+did rm PLUGINS/src/softdevice/*.o; make plugins.
+
+BTW, another thing: the softdevice settings menu now offers three interlacing
+methods: &quot;none&quot;, &quot;lavc&quot; and &quot;linblend&quot;.  It looks like &quot;linblend&quot; will be
+changed to &quot;none&quot; after pressing the OK key.  For some time, I think I got
+a larger selection, but I'm not sure.  I compiled the libpostproc and enabled
+it in the softdevice Makefile.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000641.html">[Softdevice-devel] Blanking the screen when no video; standby mode
+</A></li>
+	<LI>Next message: <A HREF="000626.html">[Softdevice-devel] softplay features / keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#643">[ date ]</a>
+              <a href="thread.html#643">[ thread ]</a>
+              <a href="subject.html#643">[ subject ]</a>
+              <a href="author.html#643">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

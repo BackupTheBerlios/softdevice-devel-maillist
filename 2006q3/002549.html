@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] OSD layer not always fully cleared on mgatv
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609280009.52120.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002547.html">
+   <LINK REL="Next"  HREF="002552.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] OSD layer not always fully cleared on mgatv</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20OSD%20layer%20not%20always%20fully%20cleared%20on%20mgatv&In-Reply-To=%3C200609280009.52120.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] OSD layer not always fully cleared on mgatv">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Thu Sep 28 00:09:51 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002547.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+        <LI>Next message: <A HREF="002552.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2549">[ date ]</a>
+              <a href="thread.html#2549">[ thread ]</a>
+              <a href="subject.html#2549">[ subject ]</a>
+              <a href="author.html#2549">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mittwoch 27 September 2006 21:05, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Mon, Sep 25, 2006 at 11:24:32PM +0200, Stefan Lucke wrote:
+</I>&gt;<i> &gt; So my tv-out test is still pending, but I've a new version of the patch.
+</I>&gt;<i> &gt; If it still happens for you sometimes, there is the possibility to enable
+</I>&gt;<i> &gt; a mutex around Flip() and Blit() calls. To enable this, USE_TEST_MUTEX
+</I>&gt;<i> &gt; should be defined to 1.
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, I haven't gotten around to testing this yet.  Should I revert the
+</I>&gt;<i> -03 patch and apply this one instead?
+</I>
+Please don't test the -04 patch. It has still the osdMutex in. Have to test
+this on my system with tv-out first. 
+
+&gt;<i> By the way, the -03 patch does slow 
+</I>&gt;<i> down my system too much from time to time, especially when watching programs
+</I>&gt;<i> containing DVB subtitles, which are mapped to OSD by the subtitles plugin.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Don't know if DirectFB locks Flip() and Blit() calls internal.
+</I>&gt;<i> 
+</I>&gt;<i> I'm not familiar with the code, but I would tend to believe it does not.
+</I>&gt;<i> When I did my weekly EPG scan (looking for programs to record) today and
+</I>&gt;<i> was changing pages in the EPG menu, a few times the old page quickly
+</I>&gt;<i> flashed (for one field or frame) immediately after the page was redrawn.
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002547.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+	<LI>Next message: <A HREF="002552.html">[Softdevice-devel] OSD layer not always fully cleared on mgatv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2549">[ date ]</a>
+              <a href="thread.html#2549">[ thread ]</a>
+              <a href="subject.html#2549">[ subject ]</a>
+              <a href="author.html#2549">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

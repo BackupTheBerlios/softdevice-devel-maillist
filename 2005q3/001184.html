@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Softplay *.jpg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20%2A.jpg&In-Reply-To=%3C200509052126.53953.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001182.html">
+   <LINK REL="Next"  HREF="001194.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Softplay *.jpg</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Softplay%20%2A.jpg&In-Reply-To=%3C200509052126.53953.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Softplay *.jpg">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Sep  5 21:26:53 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001182.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+        <LI>Next message: <A HREF="001194.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1184">[ date ]</a>
+              <a href="thread.html#1184">[ thread ]</a>
+              <a href="subject.html#1184">[ subject ]</a>
+              <a href="author.html#1184">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Montag, 5. September 2005 19:43, Martin Wache wrote:
+&gt;<i> Stefan Lucke schrieb:
+</I>&gt;<i> &gt; Does someone know if it is possible to play/decode jpeg image files via
+</I>&gt;<i> &gt; ffmpeg ? When I tried that, I got error -6 (AVERROR_NOFMT format not
+</I>&gt;<i> &gt; supported).
+</I>&gt;<i> 
+</I>&gt;<i> I guess one would have to use av_read_image instead of the standard AV
+</I>&gt;<i> open/close routines. So it doesn't work out of the box currently.
+</I>&gt;<i> 
+</I>&gt;<i> I did not look into this deeply but I think changes to the softdevice
+</I>&gt;<i> are needed to display pictures with softplay... Or maybe one can trick
+</I>&gt;<i> ffmpeg to use &quot;mjpeg&quot;????
+</I>
+I have to explain a bit more what my intension is. In the past days I
+did an journey into the world of UPnP and associated media players
+and servers:
+<A HREF="http://www.twonkyvision.de/">http://www.twonkyvision.de/</A>
+
+Still have to try the free mediaserver MediaTomb:
+<A HREF="http://sourceforge.net/projects/mediatomb">http://sourceforge.net/projects/mediatomb</A>
+
+At least it is possible to play MP3 from an url connecting to a UPnP
+mediaserver, filename hard coded set to :
+<A HREF="http://192.x.y.z:9000/disk/music/O962.mp3">http://192.x.y.z:9000/disk/music/O962.mp3</A>&quot;
+
+That info was transferred in the following document:
+  &lt;DIDL-Lite&gt;
+    &lt;item id=&quot;962&quot; refID=&quot;960&quot; parentID=&quot;709&quot; restricted=&quot;1&quot;&gt;
+      &lt;dc:title&gt;What Do You Want The Girl To Do&lt;/dc:title&gt;
+      &lt;dc:creator&gt;Lowell George&lt;/dc:creator&gt;
+      &lt;upnp:artist&gt;Lowell George&lt;/upnp:artist&gt;
+      &lt;upnp:album&gt;Thanks I'll Eat It Here&lt;/upnp:album&gt;
+      &lt;upnp:genre&gt;Rock&lt;/upnp:genre&gt;
+      &lt;upnp:playlist&gt;&lt;/upnp:playlist&gt;
+      &lt;dc:date&gt;1999-01-01&lt;/dc:date&gt;
+      &lt;upnp:originalTrackNumber&gt;1&lt;/upnp:originalTrackNumber&gt;
+      &lt;upnp:albumArtURI&gt;&lt;/upnp:albumArtURI&gt;
+      &lt;res size=&quot;4629639&quot; duration=&quot;0:04:49.340&quot; protocolInfo=&quot;http-get:*:audio/mpeg:*&quot;&gt;<A HREF="http://192.x.y.z:9000/disk/music/O962.mp3&lt;/res">http://192.x.y.z:9000/disk/music/O962.mp3&lt;/res</A>&gt;
+      &lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;
+    &lt;/item&gt;
+.. 
+  &lt;/DIDL-Lite&gt;
+
+Thats part of a trace from a java UPnP controll point Cidero:
+<A HREF="http://www.cidero.com/">http://www.cidero.com/</A>
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001182.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+	<LI>Next message: <A HREF="001194.html">[Softdevice-devel] Softplay *.jpg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1184">[ date ]</a>
+              <a href="thread.html#1184">[ thread ]</a>
+              <a href="subject.html#1184">[ subject ]</a>
+              <a href="author.html#1184">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

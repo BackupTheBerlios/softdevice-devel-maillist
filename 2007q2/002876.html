@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] A few questions - softdevice+G450
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651B232.8080501%40users.sourceforge.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002875.html">
+   <LINK REL="Next"  HREF="002877.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] A few questions - softdevice+G450</H1>
+    <B>Lucian Muresan</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20A%20few%20questions%20-%20softdevice%2BG450&In-Reply-To=%3C4651B232.8080501%40users.sourceforge.net%3E"
+       TITLE="[Softdevice-devel] A few questions - softdevice+G450">lucianm at users.sourceforge.net
+       </A><BR>
+    <I>Mon May 21 16:52:34 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002875.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+        <LI>Next message: <A HREF="002877.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2876">[ date ]</a>
+              <a href="thread.html#2876">[ thread ]</a>
+              <a href="subject.html#2876">[ subject ]</a>
+              <a href="author.html#2876">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Vladimir Monchenko wrote:
+&gt;<i> Torgeir Veimo ?????:
+</I>&gt;&gt;<i> On 21 May 2007, at 12:02, Vladimir Monchenko wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I try to use old Celeron 850MHz and Matrox G450 DH together with
+</I>&gt;&gt;&gt;<i> softdevice.  I download  from CVS DirectFB, DFB++ and softdevice.  
+</I>&gt;&gt;&gt;<i> FFmpeg
+</I>&gt;&gt;&gt;<i> build is 3349760, matroxfb built in kernel (2.6.20.7).
+</I>&gt;&gt;&gt;<i> After the attentive reading of guidance and tuning all began to work,
+</I>&gt;&gt;&gt;<i> but a few questions appeared.
+</I>&gt;&gt;&gt;<i> Output through head1 (19&quot; LCD, 800x600-32), video is very smooth,  
+</I>&gt;&gt;&gt;<i> overal
+</I>&gt;&gt;&gt;<i> CPU utilization 90% . Is it a normal CPU load or it very much?
+</I>&gt;&gt;&gt;<i> Output through head2 (PAL TV, crtc2 768x576-32), video is slow and
+</I>&gt;&gt;&gt;<i> jerky, wrong  field order, CPU loaded on 70%.
+</I>&gt;&gt;&gt;<i> A few days of experiments and googling changed nothing. It can be  
+</I>&gt;&gt;&gt;<i> there
+</I>&gt;&gt;&gt;<i> are what to specific requirements?
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;<i> 70% cpu sounds right with crtc2, but you should get the correct field  
+</I>&gt;&gt;<i> order. What's your /etc/directfb and what version of DirectFB do you  
+</I>&gt;&gt;<i> have?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 90% through crtc1 doesn't sound right, but I've never used crtc1 on a  
+</I>&gt;&gt;<i> matrox card before.. Can you try toggling between the different sync  
+</I>&gt;&gt;<i> impl in softdevice settings? Also, are you using mmx, and lavc  
+</I>&gt;&gt;<i> deinterlacing?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   
+</I>&gt;<i> My /etc/directfbrc and /etc/fb.modes:
+</I>&gt;<i> 
+</I>&gt;<i> mode=768x576
+</I>&gt;<i> #mode=800x600
+</I>&gt;<i> depth = 32
+</I>&gt;<i> matrox-crtc2
+</I>&gt;<i> matrox-tv-standard=pal
+</I>&gt;<i> primary-layer=2
+</I>&gt;<i> matrox-cable-type=composite
+</I>&gt;<i> #matrox-cable-type=scart-composite
+</I>&gt;<i> #matrox-cable-type=scart-rgb
+</I>&gt;<i> disable-module=lirc
+</I>&gt;<i> pixelformat=ARGB
+</I>
+With &quot;matrox-crtc2&quot; and &quot;matrox-tv-standard=pal&quot; in /etc/directfbrc,
+your &quot;mode=768x576&quot; is ignored by DirectFB itself, output is always
+hardcoded at 720x576 in the Matrox DirectFB driver(would be 720x480 for
+NTSC), just check the output in the vdr messages you posted yourself...
+Therefore, DirectFB does not care about youre &quot;mode= &quot; line in
+/etc/directfbrc, or about any modeline definitions in /etc/fb.modes.
+Nevertheless, softdevice might interpret that mode=768x576 line and
+therefore it may cause some unnecessary postprocessing to be done
+internally. Please try &quot;mode=720x576&quot; and turn off any deinterlacing
+(since you say you're using a PAL TV, it won't need any, and moreover,
+take care itself of this, by technical design), and also turn off
+postprocessing.
+
+This is a common confusion made between output on the first head, which
+is for the computer monitor (no crtc2 option in the directfbrc file,
+hence, in that case, mode settings do matter) and where the pixels are
+square (there is no &quot;PAL&quot; for this, PAL or NTSC always has to do with
+output to _conventional_TV_, so 768x576 in sqare pixels might look like
+PAL, but it's not).
+
+Please tell if that helps.
+
+Lucian
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002875.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+	<LI>Next message: <A HREF="002877.html">[Softdevice-devel] A few questions - softdevice+G450
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2876">[ date ]</a>
+              <a href="thread.html#2876">[ thread ]</a>
+              <a href="subject.html#2876">[ subject ]</a>
+              <a href="author.html#2876">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

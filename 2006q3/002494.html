@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C1158602438.15103.57.camel%40marumake%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002492.html">
+   <LINK REL="Next"  HREF="002469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Enable mgatv spic and YV12</H1>
+    <B>Heikki Lindholm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C1158602438.15103.57.camel%40marumake%3E"
+       TITLE="[Softdevice-devel] [PATCH] Enable mgatv spic and YV12">holindho at cs.helsinki.fi
+       </A><BR>
+    <I>Mon Sep 18 20:00:38 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002492.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+        <LI>Next message: <A HREF="002469.html">[Softdevice-devel] troubles with new svn version of ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2494">[ date ]</a>
+              <a href="thread.html#2494">[ thread ]</a>
+              <a href="subject.html#2494">[ subject ]</a>
+              <a href="author.html#2494">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ma, 2006-09-18 kello 20:05 +0300, Marko M&#228;kel&#228; kirjoitti:
+&gt;<i> On Sun, Sep 17, 2006 at 08:33:37PM +0300, Heikki Lindholm wrote:
+</I>&gt;<i> &gt; The included patch makes dfb:mgatv use YV12 colourspace for video and 
+</I>&gt;<i> &gt; the hardware subpicture layer for OSD. The patch is a prime example of 
+</I>&gt;<i> &gt; bad goal-oriented programming, but does what I wanted: improves 
+</I>&gt;<i> &gt; performance to the level that my 450 MHz P2 can now function as a DVB 
+</I>&gt;<i> &gt; box like no underpowered P2 has done before! Unfortunately, the patch 
+</I>&gt;<i> &gt; probably breaks everything else, but I'm too lazy to clean it up.
+</I>&gt;<i> 
+</I>&gt;<i> I tried the patch.  When I compiled softdevice while vdr was running
+</I>&gt;<i> (which will normally result in a SIGSEGV), the parameter
+</I>&gt;<i> softdevice.AlsaDevice somehow changed from &quot;default&quot; to &quot;ult&quot;.
+</I>&gt;<i> It took me a while to figure out what was going on and how to resolve it.
+</I>&gt;<i> 
+</I>&gt;<i> Two issues:
+</I>&gt;<i> 
+</I>&gt;<i> 1) The patch seems to ignore CropMode.  Both 16:9 and 4:3 programs are
+</I>&gt;<i> blitted pixel for pixel, although the display should be scaled or
+</I>&gt;<i> cropped.
+</I>
+No wonder. As I said I probably broke everything else in directfb
+output. I left completely stupid hacks in the dfb driver. The patch is
+more of a proof-of-concept than anything generally usable. Thanks for
+testing, though.
+
+&gt;<i> 2) The OSD colours are wrong much of the time.  For instance, when you
+</I>&gt;<i> hit OK while playing a recording, the progress bar will not be updated
+</I>&gt;<i> properly.
+</I>
+I noticed that, too. It's really weird. That one I'm going to fix (or
+try), at least. Even letting the menu just hang there messes the colours
+after a while eventhough I don't think anything is actually updated by
+softdevice. 
+
+&gt;<i> I did not measure CPU consumption, but it might have been slightly lower.
+</I>
+I get about 20% less CPU usage compared to YUY2, according to vmstat,
+when measuring with a &quot;lighter&quot; transmission (544x576) that the CPU
+could handle also in YUY2 without too many dropped frames. Because
+there's much less blitting going on, there should also be much less
+mga_wait_idle:ing going on.
+
+-- Heikki Lindholm
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002492.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+	<LI>Next message: <A HREF="002469.html">[Softdevice-devel] troubles with new svn version of ffmpeg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2494">[ date ]</a>
+              <a href="thread.html#2494">[ thread ]</a>
+              <a href="subject.html#2494">[ subject ]</a>
+              <a href="author.html#2494">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

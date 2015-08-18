@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Segfault in softplay CVS 20051014
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Segfault%20in%20softplay%20CVS%2020051014&In-Reply-To=%3C435109BE.5000502%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001375.html">
+   <LINK REL="Next"  HREF="001370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Segfault in softplay CVS 20051014</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Segfault%20in%20softplay%20CVS%2020051014&In-Reply-To=%3C435109BE.5000502%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] Segfault in softplay CVS 20051014">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Sat Oct 15 15:53:02 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001375.html">[Softdevice-devel] FFmpeg/softdevice problem
+</A></li>
+        <LI>Next message: <A HREF="001370.html">[Softdevice-devel] softdevice AC3 with DVD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1368">[ date ]</a>
+              <a href="thread.html#1368">[ thread ]</a>
+              <a href="subject.html#1368">[ subject ]</a>
+              <a href="author.html#1368">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+When closing menu :
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread -1210515328 (LWP 29203)]
+0xb7e03e84 in mallopt () from /lib/tls/libc.so.6
+(gdb) bt
+#0  0xb7e03e84 in mallopt () from /lib/tls/libc.so.6
+#1  0xb7e02dcb in free () from /lib/tls/libc.so.6
+#2  0xb7f82d13 in operator delete () from /usr/lib/libstdc++.so.5
+#3  0xb71b05a7 in cMenuDirectory::~cMenuDirectory ()
+   from /usr/lib/vdr/plugins/libvdr-softplay.so.1.3.33
+#4  0x080e357f in cOsdMenu::CloseSubMenu (this=0x86b15b8) at osdbase.c:429
+#5  0x080e3600 in cOsdMenu::ProcessKey (this=0x86b15b8, Key=kBack) at
+osdbase.c:441
+#6  0x080d44a8 in cMenuMain::ProcessKey (this=0x86b15b8, Key=kBack) at
+menu.c:2584
+#7  0x0812bd4b in main (argc=30, argv=0xbffffa14) at vdr.c:973
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001375.html">[Softdevice-devel] FFmpeg/softdevice problem
+</A></li>
+	<LI>Next message: <A HREF="001370.html">[Softdevice-devel] softdevice AC3 with DVD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1368">[ date ]</a>
+              <a href="thread.html#1368">[ thread ]</a>
+              <a href="subject.html#1368">[ subject ]</a>
+              <a href="author.html#1368">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

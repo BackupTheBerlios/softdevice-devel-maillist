@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Inefficient synchronization when playing back recordings
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Inefficient%20synchronization%20when%20playing%20back%20recordings&In-Reply-To=%3C20050612112425.GA251025%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000864.html">
+   <LINK REL="Next"  HREF="000866.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Inefficient synchronization when playing back recordings</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Inefficient%20synchronization%20when%20playing%20back%20recordings&In-Reply-To=%3C20050612112425.GA251025%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Inefficient synchronization when playing back recordings">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Jun 12 13:24:25 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000864.html">[Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output
+</A></li>
+        <LI>Next message: <A HREF="000866.html">[Softdevice-devel] Inefficient synchronization when playing	back recordings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#865">[ date ]</a>
+              <a href="thread.html#865">[ thread ]</a>
+              <a href="subject.html#865">[ subject ]</a>
+              <a href="author.html#865">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jun 12, 2005 at 09:33:06AM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> Somehow, libpthread is consuming 13 % of processing time.  In live
+</I>&gt;<i> playback, it uses less than one percent.
+</I>
+I confirmed this with VGA output.  When repeating live stream (and recording
+it at the same time), libpthread-0.10.so uses 0.8 % of CPU_CLK_UNHALTED time.
+When playing back the recording, it uses 11.6 %.
+
+I tested again with NPTL (after removing the nagging from vdr.c).  It
+appears to be twice as fast, i.e., live playback spends 0.44 % in
+libpthread, and playing back the recording spends 6.55% in libpthread.
+
+If someone has a hardware decoder (dxr3 or a full-featured card), I'd
+be interested to see the results from a similar test.  (That is, who
+is invoking synchronization primitives too often: vdr or softdevice?)
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000864.html">[Softdevice-devel] Poor performance and crashes on G450 SCART-RGB output
+</A></li>
+	<LI>Next message: <A HREF="000866.html">[Softdevice-devel] Inefficient synchronization when playing	back recordings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#865">[ date ]</a>
+              <a href="thread.html#865">[ thread ]</a>
+              <a href="subject.html#865">[ subject ]</a>
+              <a href="author.html#865">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

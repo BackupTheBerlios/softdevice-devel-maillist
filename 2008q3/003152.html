@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Epia EN1500G + softdevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2008q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C200809292145.32660.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003145.html">
+   <LINK REL="Next"  HREF="003147.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Epia EN1500G + softdevice</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Epia%20EN1500G%20%2B%20softdevice&In-Reply-To=%3C200809292145.32660.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Epia EN1500G + softdevice">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Mon Sep 29 21:45:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003145.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+        <LI>Next message: <A HREF="003147.html">[Softdevice-devel] Epia EN1500G + softdevice (kernel + via	driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3152">[ date ]</a>
+              <a href="thread.html#3152">[ thread ]</a>
+              <a href="subject.html#3152">[ subject ]</a>
+              <a href="author.html#3152">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tuesday 23 September 2008, Vladimir Monchenko wrote:
+&gt;<i> Stefan Lucke wrote:
+</I>&gt;<i> &gt; This description reminds me of pitch size mismatch for OSD.
+</I>&gt;<i> &gt; Can you add some debug message(s) to method GetLockOsdSurface()
+</I>&gt;<i> &gt; around line 1192, after commented out printf.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; softlog-&gt;Log(SOFT_LOG_INFO, 0, &quot;[dfb--] osd surface pitch is (%d)\n&quot;, pitch),
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;   
+</I>&gt;<i> After experiments, I have detected that this effect depends on the 
+</I>&gt;<i> resolution with which it is started vdr.
+</I>&gt;<i> In resolutions 640x480, 800x600 and 1024x768 OSD works not correctly. It 
+</I>&gt;<i> does not depend on customisations of video output (dfb:, dfb:cle266, 
+</I>&gt;<i> dfb:cle266:viatv).
+</I>&gt;<i> In reslution 720x576 OSD works normally.
+</I>
+With my system I can see now the same messy OSD.
+Pitch sizes are buggy when the first entry of /etc/fb.modes does not
+match the resolution choosen in directfbrc ;-) 
+
+&gt;<i> Sep 22 19:09:34 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+</I>&gt;<i> Sep 22 19:09:41 epia-en vdr: [5266] [dfb--] osd surface pitch is (3200)
+</I>&gt;<i> Sep 22 19:09:43 epia-en vdr: [5266] [dfb--] osd surface pitch is (2880)
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003145.html">[Softdevice-devel] Epia EN1500G + softdevice
+</A></li>
+	<LI>Next message: <A HREF="003147.html">[Softdevice-devel] Epia EN1500G + softdevice (kernel + via	driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3152">[ date ]</a>
+              <a href="thread.html#3152">[ thread ]</a>
+              <a href="subject.html#3152">[ subject ]</a>
+              <a href="author.html#3152">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

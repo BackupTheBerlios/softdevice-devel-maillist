@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame-buffer%20driver%20%3A%20%22state%0A%20of%20the%20art%22&In-Reply-To=%3C42933150.5050700%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000717.html">
+   <LINK REL="Next"  HREF="000725.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20viafb%20kernel%20frame-buffer%20driver%20%3A%20%22state%0A%20of%20the%20art%22&In-Reply-To=%3C42933150.5050700%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Tue May 24 15:51:12 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000717.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+        <LI>Next message: <A HREF="000725.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#718">[ date ]</a>
+              <a href="thread.html#718">[ thread ]</a>
+              <a href="subject.html#718">[ subject ]</a>
+              <a href="author.html#718">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Michael Reinelt a &#233;crit :
+&gt;<i> Hello Nicolas and others,
+</I>&gt;<i> 
+</I>&gt;<i> I did some testing lately, and came to similar results.
+</I>&gt;<i> 
+</I>&gt;<i> I'm using a EPIA-M6000 board, VGA connected to a LCD TV set. I *don't*
+</I>&gt;<i> use TV-out. I want to use VDR/softdevice/DirectFB/VGA. I've seen the
+</I>&gt;<i> quality this combination delivers, its marvellous compared to the
+</I>&gt;<i> S-Video I'm using at the moment.
+</I>&gt;<i> 
+</I>&gt;<i> the driver from viaarena does not work here with DirectFB and
+</I>&gt;<i> softdevice, but provides correct modes.
+</I>&gt;<i> 
+</I>&gt;<i> The driver from Andre Kriehn works, but most of the video modes (not
+</I>&gt;<i> only TV-out!) are incorrect. This driver seems to be quite buggy (I
+</I>&gt;<i> tried to find out why some of the modes don't work, and found that
+</I>&gt;<i> there's a problem with the refresh tables: there is a index into this
+</I>&gt;<i> tables called 'resMode', this variable is initialized to a 720x576 mode,
+</I>&gt;<i> but never assigned to).
+</I>&gt;<i> 
+</I>&gt;<i> I too think that the viaarena driver looks cleaner. Although I'm a bit
+</I>&gt;<i> confused about the fact that the release date on viaarena says
+</I>&gt;<i> 2005-05-20, but the driver file is called
+</I>&gt;<i> linux-fbdev-kernel-src_20050203.tgz... maybe a wrong file has been
+</I>&gt;<i> released???
+</I>
+The comments next to the file name also ask to quit all apps and run 
+setup.exe to install the driver... I think the Linux guy at Via packaged 
+the driver on 2005-02-03 but the webmaster put it online last friday, 
+taking the standard comment without thinking a bit about it.
+
+&gt;<i> I'd appreciate very much a cleanup/merge of the different drivers, and
+</I>&gt;<i> if I can be of any help anywhere, just let me know.
+</I>
+My first try : a diff to make the driver compile. Attached.
+Just create a /usr/src/linux link pointing to the kernel source tree you 
+would like to compile against (no other /usr/src/linux-* links must 
+exist if you want to control things : check Makefile in viafb), and run 
+&quot;make&quot; in the viafb directory.
+make sure you at least selected the vesafb frmae-buffer driver, in order 
+to have the cfb* functions compiled-in (used when accel=0).
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at vdr</A>:Linux-FBDev-kernel-src_20050203# ln -sfn kernel-source-2.6.11 
+/usr/src/linux
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">root at vdr</A>:Linux-FBDev-kernel-src_20050203# make clean
+
+Backup your /etc/fb.modes before typing &quot;make install&quot;, or simply 
+hand-install the kernel module :
+
+cp viafb.ko /lib/modules/2.6.11/kernel/drivers/video
+depmod -a
+cp viafb.modes /etc/fb.modes
+modprobe viafb mode=720x576 TV_ON=1 tv_system=2 tv_level=1 accel=1
+
+I will recompile the kernel (missing vesafb) and test that tonight. last 
+commands are untested yet.
+
+-- 
+NH
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: viafbdev.c.diff
+Type: text/x-patch
+Size: 5198 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050524/a6a44eb9/attachment.bin">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050524/a6a44eb9/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000717.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+	<LI>Next message: <A HREF="000725.html">[Softdevice-devel] viafb kernel frame-buffer driver : &quot;state of the art&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#718">[ date ]</a>
+              <a href="thread.html#718">[ thread ]</a>
+              <a href="subject.html#718">[ subject ]</a>
+              <a href="author.html#718">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

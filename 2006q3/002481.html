@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C450E4160.30001%40cs.helsinki.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002479.html">
+   <LINK REL="Next"  HREF="002484.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Enable mgatv spic and YV12</H1>
+    <B>Heikki Lindholm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Enable%20mgatv%20spic%20and%20YV12&In-Reply-To=%3C450E4160.30001%40cs.helsinki.fi%3E"
+       TITLE="[Softdevice-devel] [PATCH] Enable mgatv spic and YV12">holindho at cs.helsinki.fi
+       </A><BR>
+    <I>Mon Sep 18 08:49:04 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002479.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+        <LI>Next message: <A HREF="002484.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2481">[ date ]</a>
+              <a href="thread.html#2481">[ thread ]</a>
+              <a href="subject.html#2481">[ subject ]</a>
+              <a href="author.html#2481">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke kirjoitti:
+&gt;<i> On Sonntag 17 September 2006 19:33, Heikki Lindholm wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>The included patch makes dfb:mgatv use YV12 colourspace for video and 
+</I>&gt;&gt;<i>the hardware subpicture layer for OSD. The patch is a prime example of 
+</I>&gt;&gt;<i>bad goal-oriented programming, but does what I wanted: improves 
+</I>&gt;&gt;<i>performance to the level that my 450 MHz P2 can now function as a DVB 
+</I>&gt;&gt;<i>box like no underpowered P2 has done before! Unfortunately, the patch 
+</I>&gt;&gt;<i>probably breaks everything else, but I'm too lazy to clean it up.
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Have to put some comments on this.
+</I>&gt;<i> 
+</I>&gt;<i> Sometime ago we already looked at the subpicture layer of matrox cards.
+</I>&gt;<i> But the disadvantage of this layer is that it only supports a few lookup entries.
+</I>&gt;<i> There are less entries than vdr can handle.
+</I>
+&quot;Can&quot; as in &quot;vdr has more entries&quot;; yes, that's right. Fortunately, the 
+mga spic layer palette (of 16 colours) can be defined freely.
+
+&gt;<i> Vdr's OSD drawing consists of drawing to several areas and each area
+</I>&gt;<i> has it's own lookup table. Vdr in native mode (without OSD plugins)
+</I>
+Right. Actually, I was a bit disappointed when I noticed that. A global 
+static palette would have been so much easier to handle. Btw. Could you 
+point me to some plugins that do use a lot of colours in the OSD? The 
+only other (besides of softdevice) plugin I use is the DVB subtitle one, 
+which uses 4 colours AFAICT.
+
+&gt;<i> draws it's OSD in a single area with only a few colors entries. So 
+</I>&gt;<i> you'll eventually don't see a problem.
+</I>
+And this was good enough for me. Basically, implementing a good colour 
+allocator, maybe with some clustering colour reduction algorithm and LRU 
+allocation policy, would usually produce acceptable results even when 
+there are many more than 16 colours in use. I, however, did not venture 
+in to such level of sophistication. But, I definitely don't think the 
+mga spic approach is in any way infeasible or worthless. My patch might 
+be worthless, though..
+
+I first tried CRTC2 using YV12 colour space with strechBlit, like the 
+YUY2 is used currently, but it was dead slow, so, without further 
+investigation, I turned to alternative strategy.  My only goal was to 
+get decent viewing pleasure from my trusty old P2 box.
+
+&gt;<i> When i remember our OSD drawing correct, we map all OSD drawing to
+</I>&gt;<i> a single RGB32 area and so we don't need to have separate areas ourself.
+</I>
+Yes, that seems to be the case, and using RGBA there is ideal, of course.
+
+-- Heikki Lindholm
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002479.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+	<LI>Next message: <A HREF="002484.html">[Softdevice-devel] [PATCH] Enable mgatv spic and YV12
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2481">[ date ]</a>
+              <a href="thread.html#2481">[ thread ]</a>
+              <a href="subject.html#2481">[ subject ]</a>
+              <a href="author.html#2481">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

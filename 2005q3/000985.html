@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D&In-Reply-To=%3C42D7E9C9.1040701%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000984.html">
+   <LINK REL="Next"  HREF="000986.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH]</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D&In-Reply-To=%3C42D7E9C9.1040701%40gmx.net%3E"
+       TITLE="[Softdevice-devel] [PATCH]">M.Wache at gmx.net
+       </A><BR>
+    <I>Fri Jul 15 18:52:25 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000984.html">[Softdevice-devel] [PATCH]
+</A></li>
+        <LI>Next message: <A HREF="000986.html">[Softdevice-devel] [PATCH]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#985">[ date ]</a>
+              <a href="thread.html#985">[ thread ]</a>
+              <a href="subject.html#985">[ subject ]</a>
+              <a href="author.html#985">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Lucke schrieb:
+
+&gt;&gt;<i>Yesterday I tried to compile utils.c using the build in define
+</I>&gt;&gt;<i>__x86_64__, it worked fine for me so I will commit this change when I
+</I>&gt;&gt;<i>find the time this weekend. If then fast_memcpy also compiles for you,
+</I>&gt;&gt;<i>from my point of view we can commit your patch.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Even if there are some issues with _64 architectures we can commit that
+</I>&gt;<i> change. For now I included Malcolms segfault fix too.
+</I>&gt;<i> 
+</I>
+Well, the problems with 64bit are already in the CVS, so from that point
+of view we shure can commit the patch. But fast_memcpy should not be
+commented since this breakes Xv. So I don't have any objections against
+the patch, I just want to fix the 64bit problems as well :-)
+
+I think we should also try to fix the 2.95 compile problem before the
+next release. I think there are still many debian woody based systems
+out there which use gcc-2.95. Maybe using to defines one for &quot;eax&quot; and
+one for &quot;%eax&quot; can solve this...
+
+Martin
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000984.html">[Softdevice-devel] [PATCH]
+</A></li>
+	<LI>Next message: <A HREF="000986.html">[Softdevice-devel] [PATCH]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#985">[ date ]</a>
+              <a href="thread.html#985">[ thread ]</a>
+              <a href="subject.html#985">[ subject ]</a>
+              <a href="author.html#985">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

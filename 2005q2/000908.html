@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Jerky picture when i replay recordings.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C41AC9.1080203%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000907.html">
+   <LINK REL="Next"  HREF="000910.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Jerky picture when i replay recordings.</H1>
+    <B>Martin Wache</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Jerky%20picture%20when%20i%20replay%20recordings.&In-Reply-To=%3C42C41AC9.1080203%40gmx.net%3E"
+       TITLE="[Softdevice-devel] Jerky picture when i replay recordings.">M.Wache at gmx.net
+       </A><BR>
+    <I>Thu Jun 30 18:16:09 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000907.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+        <LI>Next message: <A HREF="000910.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#908">[ date ]</a>
+              <a href="thread.html#908">[ thread ]</a>
+              <a href="subject.html#908">[ subject ]</a>
+              <a href="author.html#908">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tommi Lundell schrieb:
+&gt;<i> Hello
+</I>&gt;<i> 
+</I>&gt;<i> I use G400 TV out, vdr-1.3.27 and latest softdevice source from CVS.
+</I>&gt;<i> When i look live TV picture is fine but when i look recording picture
+</I>&gt;<i> jerking whole time :-/
+</I>&gt;<i> Any idea where to look that problem?
+</I>As Torgeir already said, this is a known problem, I think you are the
+third one to report it.
+It would be really nice to find the reason for these troubles,
+unfortunatly on my box I don't see them, so for me it is impossible to
+find out more....
+
+Currently I know the following:
+1. one of vdr's threads takes much more cpu time on the affected systems
+   (this is the thread which feeds the data to the softdevice)
+2. when replaying a recording the buffers of the softdevice are usually
+   full. This is because vdr feeds data as fast as it can since vdr
+   doesn't know how fast it will be consumed.
+So my current guess is that something (either the softdevice or vdr)
+busy waits because of the full buffers. No idea why or where....
+
+&gt;<i> 
+</I>&gt;<i> I added little timing debug to code.
+</I>&gt;<i> mpeg2decoder.c
+</I>&gt;<i> Line 594:
+</I>&gt;<i> 
+</I>&gt;<i>   // display picture
+</I>&gt;<i>    delay2=syncTimer2-&gt;GetRelTime();
+</I>&gt;<i>    printf(&quot;decode = %d\t&quot;,delay2);
+</I>&gt;<i>    videoOut-&gt;YUV(picture-&gt;data[0], picture-&gt;data[1],picture-&gt;data[2],
+</I>&gt;<i>        context-&gt;width,context-&gt;height,
+</I>&gt;<i>        picture-&gt;linesize[0],picture-&gt;linesize[1]);
+</I>&gt;<i>    delay2+=syncTimer2-&gt;GetRelTime();
+</I>&gt;<i>    printf(&quot;Total = %d\n&quot;,delay2);
+</I>
+[.....]
+
+&gt;<i> It's seems that problem is somewhere mpeg2 stream decoding part but i
+</I>&gt;<i> can be wrong also ;-)
+</I>
+Your debuging code is a bit simple, it cannot decide if it's really in
+the decoding or in the buffering somewhere.
+If you really want to debug this, you should enable the BUFDEB debugging
+macro, which gives you a lot of debugging information together with the
+times, pipe the output into a file since it quite a lot. You could can
+compare the output of live tv with the output of a replay, and keep in
+mind that the softdevice is multithreaded. I said &quot;if you really want to
+debug this&quot;, because I think trying to understand the logs will be very
+difficult since you need to understand fully how all the threads of the
+softdevice and vdr work together. But if you are willing to try, don't
+hesitate to ask if you don't understand something. Note that you won't
+find the reason with this method if it is in vdr.
+
+The other possibility would be to profile the softdevice playing a
+recording and live-tv and compare where the softdevice or vdr spents the
+time. I guess oprofile would be the best profiler for this since gprof
+doesn't like threads and shared librarys...
+I think the second possiblity is the better one, but unfortunatly I'm
+still no expert of oprofile, so I can't help you much there...
+
+
+Bye,
+Martin
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000907.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+	<LI>Next message: <A HREF="000910.html">[Softdevice-devel] Jerky picture when i replay recordings.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#908">[ date ]</a>
+              <a href="thread.html#908">[ thread ]</a>
+              <a href="subject.html#908">[ subject ]</a>
+              <a href="author.html#908">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

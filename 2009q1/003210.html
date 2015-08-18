@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2009q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%0A%09ffmpeg%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C20090218201236.mejjxeyroko8ss04%40www.domaingo-webmail.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003208.html">
+   <LINK REL="Next"  HREF="003211.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)</H1>
+    <B>Maik Opitz</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BBug%20%2314990%5D%20Problem%20with%20newest%0A%09ffmpeg%09%28snapshot%20from%202008-12-19%29&In-Reply-To=%3C20090218201236.mejjxeyroko8ss04%40www.domaingo-webmail.de%3E"
+       TITLE="[Softdevice-devel] [Bug #14990] Problem with newest	ffmpeg	(snapshot from 2008-12-19)">maik at fjordblau.de
+       </A><BR>
+    <I>Wed Feb 18 20:12:36 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003208.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+</A></li>
+        <LI>Next message: <A HREF="003211.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3210">[ date ]</a>
+              <a href="thread.html#3210">[ thread ]</a>
+              <a href="subject.html#3210">[ subject ]</a>
+              <a href="author.html#3210">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The patch for softdevice works fine here with unpatched ffmpeg.
+Should go into CVS.
+
+Zitat von Stefan Lucke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">stefan at lucke.in-berlin.de</A>&gt;:
+
+&gt;<i> On Tuesday 17 February 2009, Maik Opitz wrote:
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> with the patches it works fine for me.
+</I>&gt;&gt;<i> But is this a bug in ffmpeg? Should we report it to them?
+</I>&gt;<i>
+</I>&gt;<i> I think we have to modify our ByteIOContext interface,
+</I>&gt;<i> so that we do an additional copy of data to decode.
+</I>&gt;<i> Currently we just adjust the pointers inside the ByteIOContext.
+</I>&gt;<i>
+</I>&gt;<i> Attached patch is a fix for softdevice, which works with
+</I>&gt;<i> unpatched ffmpeg.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i>
+</I>
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003208.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+</A></li>
+	<LI>Next message: <A HREF="003211.html">[Softdevice-devel] [Bug #14990] Problem with newest ffmpeg (snapshot from 2008-12-19)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3210">[ date ]</a>
+              <a href="thread.html#3210">[ thread ]</a>
+              <a href="subject.html#3210">[ subject ]</a>
+              <a href="author.html#3210">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

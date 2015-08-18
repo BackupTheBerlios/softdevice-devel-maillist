@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Re%3A%20G550%2C%20TV-Out%2C%20SetFieldParity&In-Reply-To=%3C200502082314.30756.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000223.html">
+   <LINK REL="Next"  HREF="000225.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Re%3A%20%5Bdirectfb-users%5D%20Re%3A%20G550%2C%20TV-Out%2C%20SetFieldParity&In-Reply-To=%3C200502082314.30756.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Tue Feb  8 23:14:30 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000223.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+        <LI>Next message: <A HREF="000225.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#224">[ date ]</a>
+              <a href="thread.html#224">[ thread ]</a>
+              <a href="subject.html#224">[ subject ]</a>
+              <a href="author.html#224">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Dienstag, 8. Februar 2005 22:43, Stefan Lucke wrote:
+&gt;<i> On Dienstag, 8. Februar 2005 20:46, Tony Houghton wrote:
+</I>&gt;<i> &gt; In &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">200502072201.54897.stefan at lucke.in-berlin.de</A>&gt;, Stefan Lucke wrote:
+</I>&gt;<i> &gt; 
+</I>
+&gt;<i> &gt; &gt; On Sonntag, 6. Februar 2005 21:12, Tony Houghton wrote:
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Unfortunately I'm only getting a blank white screen - with black bars
+</I>&gt;<i> &gt; &gt; &gt; top and bottom, because the 16:9 option only works if I select it
+</I>&gt;<i> &gt; &gt; &gt; manually at start-up, but that problem is lower priority ATM! VDR is
+</I>&gt;<i> &gt; &gt; &gt; working correctly in the background, I can hear the sound and change
+</I>&gt;<i> &gt; &gt; &gt; channels. When the OSD comes up I can see a white area overlapping the
+</I>&gt;<i> &gt; &gt; &gt; border in the shape of the proper OSD. I remember seeing this white
+</I>&gt;<i> &gt; &gt; &gt; screen phenomenon before, but I can't remember why or what I did to stop
+</I>&gt;<i> &gt; &gt; &gt; it.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; That previous diff failed the test on my vdr-1.2.1 G400 system too, got
+</I>&gt;<i> &gt; &gt; a flickering green image via s-video. But time goes on and this next one
+</I>&gt;<i> &gt; &gt; works with:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; a) vdr-1.3.18, DirectFB cvs from 2005-02-05, G550, composite out +
+</I>&gt;<i> &gt; &gt; monitor, P4 2.2G
+</I>&gt;<i> &gt; &gt; b) vdr-1.2.1, DirectFB 0.9.20, G400, s-video out, P3 Celeron 1.2G
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; c) vdr-1.3.19, DirectFB 0.9.21, G450, S-Video, P3 Celeron 1.2GHz.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; :-)
+</I>&gt;<i> 
+</I>&gt;<i> OK, I commited the diff to cvs.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; To be honest, on system &quot;b&quot; viewing is unacceptable. When OSD kicks in,
+</I>&gt;<i> &gt; &gt; video seems to be slow motion. Without OSD there is a jitter/flicker
+</I>&gt;<i> &gt; &gt; every now and then. CPU load at that time was about 50%.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; That has to be resolved too, next step(s). I'm wondering why these
+</I>&gt;<i> &gt; &gt; effects are not noticable on system &quot;a&quot;.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> So now we get OT for this list and should continue on softdevice-devel.
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> &gt; It works quite smoothly for me with the same CPU as your (b), so I
+</I>&gt;<i> &gt; suspect it's due more to the outdated VDR or (more likely) DirectFB than
+</I>&gt;<i> &gt; CPU power. VDR 1.2 may be worth supporting until 1.3 becomes 1.4 stable
+</I>&gt;<i> &gt; release, but I think you should try upgrading from DirectFB 0.9.20 to
+</I>&gt;<i> &gt; .21 before worrying.
+</I>
+As I remember the OSD drawing changed between vdr 1.2.x and 1.3.x ,
+in 1.2 there was a OSD refresh after each frame. So this may be the
+main issue with my observation.
+We still do not take into account dirty regions and do not mark them
+as &quot;Clean&quot; for drawing optimisation.
+
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; I do have some issues though, I'm afraid:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; (a) A/V sync is a bit of a problem. It's probably mostly my fault for
+</I>&gt;<i> &gt; buying a sound card that cost only about &#163;5 new and may therefore have a
+</I>&gt;<i> &gt; dodgy clock, but without any guarantee that a more expensive card would
+</I>&gt;<i> &gt; fix the problem I'd rather see a software workaround of dynamic
+</I>&gt;<i> &gt; resampling. I'm willing to do most of the work on this myself, but I
+</I>&gt;<i> &gt; think I might need lots of help from you, explaining the stages the
+</I>&gt;<i> &gt; sound goes through as it's decoded and buffered etc.
+</I>
+Is that sync issue common between all channels or for a specific one ?
+
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; (b) Sometimes when starting VDR after using MPlayer I get the blank
+</I>&gt;<i> &gt; white screen problem again and I can't make it work properly until I
+</I>&gt;<i> &gt; reboot.
+</I>
+mplayer problem !?
+
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; (c) I can't use VDR's mplayer plugin for two reasons. One is that
+</I>&gt;<i> &gt; softdevice appears to be leaving the sound card tied up, so mplayer
+</I>&gt;<i> &gt; can't play sound. The other is that when returning to VDR it either
+</I>&gt;<i> &gt; plays a couple of seconds of sound with a black screen, then locks up
+</I>&gt;<i> &gt; with lots of ringbuffer errors in the log, or produces a garbled screen
+</I>&gt;<i> &gt; in garish colours with only room for about half the OSD. When I used to
+</I>&gt;<i> &gt; use th DXR3 plugin, starting the mplayer plugin would pop up a message
+</I>&gt;<i> &gt; about releasing DXR3 devices, so I guess something similar is needed for
+</I>&gt;<i> &gt; softdevice to make it fully shut down and reinitialise.
+</I>
+So dfb-out should resume reconnect (as xv-out does) dfb, someone else
+asked for that too. The only problem I see with such a feature is that I see
+no way at the moment to reconnect, as in such a situation I have to release
+everything I allocated of dfb.
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000223.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+	<LI>Next message: <A HREF="000225.html">[Softdevice-devel] Re: [directfb-users] Re: G550, TV-Out, SetFieldParity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#224">[ date ]</a>
+              <a href="thread.html#224">[ thread ]</a>
+              <a href="subject.html#224">[ subject ]</a>
+              <a href="author.html#224">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

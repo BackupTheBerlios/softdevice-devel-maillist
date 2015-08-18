@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Poor%20performance%20and%20crashes%20on%20%3D%3Fiso-8859-1%3Fq%3FG450%3D09SCART-RGB%3F%3D%20output&In-Reply-To=%3C200506111328.15441.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000861.html">
+   <LINK REL="Next"  HREF="000863.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Poor%20performance%20and%20crashes%20on%20%3D%3Fiso-8859-1%3Fq%3FG450%3D09SCART-RGB%3F%3D%20output&In-Reply-To=%3C200506111328.15441.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Jun 11 13:28:15 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000861.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+        <LI>Next message: <A HREF="000863.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#862">[ date ]</a>
+              <a href="thread.html#862">[ thread ]</a>
+              <a href="subject.html#862">[ subject ]</a>
+              <a href="author.html#862">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 11. Juni 2005 12:10, Marko M&#228;kel&#228; wrote:
+&gt;<i> On Sat, Jun 11, 2005 at 03:11:30AM +0100, Torgeir Veimo wrote:
+</I>&gt;<i> &gt; On Fri, 2005-06-10 at 23:01 +0300, Marko M&#228;kel&#228; wrote:
+</I>&gt;<i> &gt; &gt; I profiled softdevice with SCART RGB output on the Matrox G450, maybe a
+</I>&gt;<i> &gt; &gt; week old softdevice, vdr 1.3.24 and DirectFB 0.9.22.  ffmpeg has been linked
+</I>&gt;<i> &gt; &gt; statically with softdevice, but DirectFB and VDR are not.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Could you also possibly do some profiling when playing back recordings?
+</I>&gt;<i> 
+</I>&gt;<i> The profiling report I posted was obtained while playing back a
+</I>&gt;<i> recording, albeit from a randomly chosen position.
+</I>&gt;<i> 
+</I>&gt;<i> I see no point in profiling further until the processor-intensive color
+</I>&gt;<i> space conversion can be avoided.  (Stefan wrote that softdevice would do
+</I>&gt;<i> color space conversion in hardware.)
+</I>
+There is a small misunderstanding. Color space conversion is done in
+hardware (YUY2 -&gt; RGB). Color format change is done in software
+(YV12 -&gt; YUV2).
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000861.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+	<LI>Next message: <A HREF="000863.html">[Softdevice-devel] Poor performance and crashes on G450	SCART-RGB output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#862">[ date ]</a>
+              <a href="thread.html#862">[ thread ]</a>
+              <a href="subject.html#862">[ subject ]</a>
+              <a href="author.html#862">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

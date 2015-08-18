@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Pause%20the%20playback%20of%20recordings%0A%09when%20suspended&In-Reply-To=%3C20070207174100.GA7399%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002710.html">
+   <LINK REL="Next"  HREF="002712.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20Pause%20the%20playback%20of%20recordings%0A%09when%20suspended&In-Reply-To=%3C20070207174100.GA7399%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended">marko.makela at hut.fi
+       </A><BR>
+    <I>Wed Feb  7 18:41:00 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002710.html">[Softdevice-devel] [PATCH] Pause the playback of recordings when	suspended
+</A></li>
+        <LI>Next message: <A HREF="002712.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2711">[ date ]</a>
+              <a href="thread.html#2711">[ thread ]</a>
+              <a href="subject.html#2711">[ subject ]</a>
+              <a href="author.html#2711">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Feb 02, 2007 at 10:26:33PM +0200, Marko M&#228;kel&#228; wrote:
+&gt;<i> I fixed the long-standing bug with the suspend function of softdevice.
+</I>&gt;<i> If softdevice is suspended when playing back a recording, the recording
+</I>&gt;<i> will fast-forward to the end.  This patch modifies softdevice so that
+</I>&gt;<i> it will block the data stream from vdr when playing back recordings.
+</I>&gt;<i> 
+</I>&gt;<i> This fix is now also included in my softdevice patch for Udo Richter's
+</I>&gt;<i> shutdown rewrite:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://www.iki.fi/~msmakela/software/vdr/#shutdown">http://www.iki.fi/~msmakela/software/vdr/#shutdown</A>
+</I>&gt;<i> <A HREF="http://www.iki.fi/~msmakela/software/vdr/shutdown-softdevice.patch">http://www.iki.fi/~msmakela/software/vdr/shutdown-softdevice.patch</A>
+</I>&gt;<i> 
+</I>&gt;<i> The attached patch is simpler, as it only fixes this bug.  Please apply it.
+</I>
+Sorry, the patch causes 100% CPU load when softdevice is suspended.  Adding
+a usleep(10000) drops the load to less than 1% on my system.  I first tried
+usleep(100000), but it caused vdr to hang for a long time.  I updated the
+patch on my home page.  Below are the hunks that fix this bug only.
+
+	Marko
+
+Index: softdevice.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/softdevice.c,v
+retrieving revision 1.77
+diff -p -u -r1.77 softdevice.c
+--- softdevice.c	28 Jan 2007 19:38:06 -0000	1.77
++++ softdevice.c	7 Feb 2007 17:30:19 -0000
+@@ -525,6 +534,10 @@ int cSoftDevice::PlayAudio(const uchar *
+ # endif
+ {
+   SOFTDEB(&quot;PlayAudio... %p length %d\n&quot;,Data,Length);
++  if (setupStore.shouldSuspend &amp;&amp; !Transferring()) {
++    usleep(10000); // avoid burning CPU
++    return 0;
++  }
+   if (! packetMode)
+     return decoder-&gt;Decode(Data, Length);
+ 
+@@ -580,6 +593,10 @@ int  cSoftDevice::GetAudioChannelDevice(
+ int cSoftDevice::PlayVideo(const uchar *Data, int Length)
+ {
+    SOFTDEB(&quot;PlayVideo %x length %d\n&quot;,Data,Length);
++  if (setupStore.shouldSuspend &amp;&amp; !Transferring()) {
++    usleep(10000); // avoid burning CPU
++    return 0;
++  }
+    if (! packetMode)
+     return decoder-&gt;Decode(Data, Length);
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002710.html">[Softdevice-devel] [PATCH] Pause the playback of recordings when	suspended
+</A></li>
+	<LI>Next message: <A HREF="002712.html">[Softdevice-devel] [PATCH] Pause the playback of recordings	when suspended
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2711">[ date ]</a>
+              <a href="thread.html#2711">[ thread ]</a>
+              <a href="subject.html#2711">[ subject ]</a>
+              <a href="author.html#2711">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

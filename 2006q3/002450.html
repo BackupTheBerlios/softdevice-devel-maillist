@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [PATCH] fix YV12 plane order
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20fix%20YV12%20plane%20order&In-Reply-To=%3C450BE22A.3030905%40cs.helsinki.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002449.html">
+   <LINK REL="Next"  HREF="002451.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [PATCH] fix YV12 plane order</H1>
+    <B>Heikki Lindholm</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BPATCH%5D%20fix%20YV12%20plane%20order&In-Reply-To=%3C450BE22A.3030905%40cs.helsinki.fi%3E"
+       TITLE="[Softdevice-devel] [PATCH] fix YV12 plane order">holindho at cs.helsinki.fi
+       </A><BR>
+    <I>Sat Sep 16 13:38:18 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002449.html">[Softdevice-devel] YUY2 on MGA
+</A></li>
+        <LI>Next message: <A HREF="002451.html">[Softdevice-devel] [PATCH] fix YV12 plane order
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2450">[ date ]</a>
+              <a href="thread.html#2450">[ thread ]</a>
+              <a href="subject.html#2450">[ subject ]</a>
+              <a href="author.html#2450">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>YV12 has different U/V plane order compared to I420. This patch fixes 
+the YUV() method in the dfb driver accordingly. Without the patch YV12 
+has wrong colours.
+
+-- Heikki Lindholm
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: patch-softdev-060916-YV12-UVorder.patch
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060916/82397d7d/attachment.ksh">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20060916/82397d7d/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002449.html">[Softdevice-devel] YUY2 on MGA
+</A></li>
+	<LI>Next message: <A HREF="002451.html">[Softdevice-devel] [PATCH] fix YV12 plane order
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2450">[ date ]</a>
+              <a href="thread.html#2450">[ thread ]</a>
+              <a href="subject.html#2450">[ subject ]</a>
+              <a href="author.html#2450">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] xv - osd appears and disapears constantly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xv%20-%20osd%20appears%20and%20disapears%20constantly&In-Reply-To=%3C200610071634.40467.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002595.html">
+   <LINK REL="Next"  HREF="002597.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] xv - osd appears and disapears constantly</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20xv%20-%20osd%20appears%20and%20disapears%20constantly&In-Reply-To=%3C200610071634.40467.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] xv - osd appears and disapears constantly">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Oct  7 16:34:40 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002595.html">[Softdevice-devel] xv - osd appears and disapears constantly
+</A></li>
+        <LI>Next message: <A HREF="002597.html">[Softdevice-devel] Softdevice CVS + CLE266 + 352x288 streams
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2596">[ date ]</a>
+              <a href="thread.html#2596">[ thread ]</a>
+              <a href="subject.html#2596">[ subject ]</a>
+              <a href="author.html#2596">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag 07 Oktober 2006 13:20, Leo M&#225;rquez wrote:
+&gt;<i> Thank you for your answer!
+</I>&gt;<i> 
+</I>&gt;<i> Herbert Poetzl escribi&#243;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;On Fri, Oct 06, 2006 at 09:23:39PM +0200, Leo M&#225;rquez wrote:
+</I>
+&gt;<i> &gt;&gt;When I run vdr I get a window with the image but osd is shown for a
+</I>&gt;<i> &gt;&gt;half second and get off. This behavior is produced every key I press
+</I>&gt;<i> &gt;&gt;and can't get osd fixed in screen to navigate menus.
+</I>&gt;<i> &gt;&gt;    
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;try to change the softdevice.OSDalphablend to 1
+</I>&gt;<i> &gt;in the setup.conf (should fix this)
+</I>
+Can you please test if changing:
+attributeStore.SetValue(&quot;XV_AUTOPAINT_COLORKEY&quot;,0);
+to
+attributeStore.SetValue(&quot;XV_AUTOPAINT_COLORKEY&quot;,1);
+
+(file video-xv.c around line 1206)
+
+has some effect when using pseudo drawing mode ?
+
+&gt;<i> &gt;  
+</I>&gt;<i> &gt;
+</I>&gt;<i> Yes!, you're right! Thanks!
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt;Another q&#252;estion is if I can run softdevice -vo xv in full screen mode. 
+</I>&gt;<i> &gt;&gt;It's possible?
+</I>&gt;<i> &gt;&gt;    
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;works fine here, just press 'f' to toggle
+</I>&gt;<i> &gt;fullscreen 
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt;
+</I>&gt;<i> Ok! It work too but any way to start always in fullscreen. I will not 
+</I>&gt;<i> have keyboard on my box.
+</I>
+To get a full list of available parameter, you may try calling vdr
+with parameter -h.
+for option &quot;-vo xv:&quot; you'll get the following list:
+
+  -vo xv:                  enable output via X11-Xv
+  -vo xv:aspect=wide       use a 16:9 display area (1024x576)
+  -vo xv:aspect=normal     use a  4:3 display area (768x576)
+  -vo xv:max-area          use maximum available area
+  -vo xv:full              startup fullscreen
+  -vo xv:use-defaults      don't change brigtness etc on startup
+
+&gt;<i> 
+</I>&gt;<i> Thank you again.
+</I>&gt;<i> 
+</I>&gt;<i> Leo
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt;My vga card is a riva tnt2 m64.
+</I>
+
+-- 
+Stefan Lucke
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002595.html">[Softdevice-devel] xv - osd appears and disapears constantly
+</A></li>
+	<LI>Next message: <A HREF="002597.html">[Softdevice-devel] Softdevice CVS + CLE266 + 352x288 streams
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2596">[ date ]</a>
+              <a href="thread.html#2596">[ thread ]</a>
+              <a href="subject.html#2596">[ subject ]</a>
+              <a href="author.html#2596">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

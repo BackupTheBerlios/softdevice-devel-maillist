@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] HDTV &amp; XV out &amp; scaling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HDTV%20%26%20XV%20out%20%26%20scaling&In-Reply-To=%3C200503062246.04566.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000276.html">
+   <LINK REL="Next"  HREF="000280.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] HDTV &amp; XV out &amp; scaling</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20HDTV%20%26%20XV%20out%20%26%20scaling&In-Reply-To=%3C200503062246.04566.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] HDTV &amp; XV out &amp; scaling">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Mar  6 22:46:04 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000276.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+        <LI>Next message: <A HREF="000280.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sonntag, 6. M&#228;rz 2005 21:56, Stefan Lucke wrote:
+&gt;<i> On Sonntag, 6. M&#228;rz 2005 09:51, Thomas Herrmann wrote:
+</I>&gt;<i> &gt; Hi Stefan &amp; list,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I have a question on the softdevice XV out scaling viewing HDTV channels
+</I>&gt;<i> &gt; like HD1. I run the X server at 1280x1024 resolution because this is the
+</I>&gt;<i> &gt; native resolution of my LCD. Softdevice runs and scales great using PAL
+</I>&gt;<i> &gt; resolutions, but if I switch to HD1 the XV window stays the same size, but
+</I>&gt;<i> &gt; the visuable picture is only a fraction of the full picture. It still scales
+</I>&gt;<i> &gt; with the XV window, but I can not see the full 1920x1080 picture. It's hard
+</I>&gt;<i> &gt; to describe and I was not (yet) able to make a screenshot of the behavior
+</I>&gt;<i> &gt; I'm talking about.
+</I>&gt;<i> 
+</I>&gt;<i> Up to now I haven't spend any time on thinking of support for HDTV.
+</I>&gt;<i> It should be easy (tm) to add support for larger areas.
+</I>&gt;<i> Query the max supported xv dimensions and allocated matching shared
+</I>&gt;<i> memory area. I don't know the performance implication of allocating
+</I>&gt;<i> the largest possible area always.
+</I>
+Hm, not so simple as originally thought, but not so complicated as expected.
+Could you try attached diff and report your results ?
+
+-- 
+Stefan Lucke
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: xv-max-area.diff
+Type: text/x-diff
+Size: 5113 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050306/51cf3744/attachment.diff">https://lists.berlios.de/pipermail/softdevice-devel/attachments/20050306/51cf3744/attachment.diff</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000276.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+	<LI>Next message: <A HREF="000280.html">[Softdevice-devel] HDTV &amp; XV out &amp; scaling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] vdr exit on dfb error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2007q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%20exit%20on%20dfb%20error&In-Reply-To=%3C476C3AE3.3040909%40sympatico.ca%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002970.html">
+   <LINK REL="Next"  HREF="002975.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] vdr exit on dfb error</H1>
+    <B>D.Pageau</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20vdr%20exit%20on%20dfb%20error&In-Reply-To=%3C476C3AE3.3040909%40sympatico.ca%3E"
+       TITLE="[Softdevice-devel] vdr exit on dfb error">dompageau at sympatico.ca
+       </A><BR>
+    <I>Fri Dec 21 23:14:59 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002970.html">[Softdevice-devel] VDR help
+</A></li>
+        <LI>Next message: <A HREF="002975.html">[Softdevice-devel] vdr exit on dfb error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2973">[ date ]</a>
+              <a href="thread.html#2973">[ thread ]</a>
+              <a href="subject.html#2973">[ subject ]</a>
+              <a href="author.html#2973">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>vdr exit with dfb error.
+
+I've seen some discussion on this list 2007Q1, I have try both 
+ARGB/AiRGB without success.  Can't figure out what's wrong.
+
+My config: debian and follow step here but using vdr1.4.7:
+
+<A HREF="http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266">http://www.mellander.org/per/projects/linux/?chapter=epia-hw-cle266</A>
+
+viafb, libcle266mpegdec, ffmpeg, DirectFB, DFB++
+
+# cat /etc/directfbrc
+fbdev=/dev/fb0
+mode=720x576
+depth=32
+pixelformat=ARGB
+disable-module=cle266
+no-vt
+
+# LANG=c ./vdr -P&quot;softdevice -vo dfb:cle266&quot; -v /tmp
+softdevice: Created setupStoreId 360449!
+softdevice: Attatched to setupStoreId 360449 at 0xb7f4a000.
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+[softdevice] enabling CLE266 HW decoding
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3354880)
+16:55:17.0231 I [6430] [dfb] init
+
+      =======================|  DirectFB 1.0.0  |=======================
+           (c) 2001-2007  The DirectFB Organization (directfb.org)
+           (c) 2000-2004  Convergence (integrated media) GmbH
+         ------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2007-12-21 19:37)
+(*) Direct/Thread: Running 'PS/2 Input' (INPUT, 6433)...
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (directfb.org)
+(*) Direct/Thread: Running 'Linux Input' (INPUT, 6434)...
+(*) DirectFB/Input: PC Speaker 0.1 (directfb.org)
+(*) DirectFB/Genefx: MMX detected and enabled
+(*) Direct/Modules: suppress module 'cle266'
+(*) DirectFB/Graphics: VIA/S3G CLE266/UniChrome 0.4 (-)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+(!) DirectFB/DirectFBCreate: Setting desktop resolution to 720x576 failed!
+      -&gt; Using default resolution.
+(!) DirectFB/DirectFBCreate: Setting desktop format failed!
+      -&gt; Using default format.
+(!) DirectFB/DirectFBCreate: Setting desktop buffer mode failed!
+      -&gt; No virtual resolution support or not enough memory?
+         Falling back to system back buffer.
+[dfb] RAM: 33288192 bytes
+[dfb] Accellerated Functions: FillRectange DrawRectange DrawLine 
+FillTriangle Blit StretchBlit All
+[dfb] Drawing Flags: Blend Xor
+[dfb] Surface Blitting Flags: BlendAlpha BlendColorAlpha Colorize 
+SrcColorkey DstColorkey Deinterlace
+16:55:17.0404 I [6430] [dfb] Supported video Modes are:
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">640x480 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">800x600 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1024x768 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1152x864 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 16</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x960 at 32</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> 
+<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1280x1024 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">1600x1200 at 8</A>
+16:55:17.0408 I [6430] [dfb] Enumerating display Layers
+16:55:17.0409 I [6430] [dfb] Configuring CooperativeLevel for OSD
+Layer 0 VIA CLE266 Graphics  Type: graphics
+   Caps: alphachannel brightness contrast opacity saturation 
+src_colorkey surface
+Layer 1 VIA Unichrome Video  Type: graphics picture video
+   Caps: deinterlacing dst_colorkey levels field_parity opacity 
+screen_location surface
+16:55:17.0414 I [6430] Initialising CLE266 decoder (&#248;4&#223;&#183;&#248;4&#223;&#183;): success!
+16:55:17.0414 I [6430] CLE266: Creating buffers for decoder
+16:55:17.0415 D [6430] CLE266: Creating buffer number 0
+16:55:17.0417 D [6430] CLE266: Creating buffer number 1
+16:55:17.0418 D [6430] CLE266: Creating buffer number 2
+16:55:17.0420 D [6430] CLE266: Creating buffer number 3
+16:55:17.0422 D [6430] CLE266: passing mpegfb_stride
+16:55:17.0422 D [6430] CLE266: passing buffers to decoder
+16:55:17.0423 I [6430] [dfb] (osdLayer): flags, options, pixelformat: 
+0000000f, 00000000 00200801
+16:55:17.0423 I [6430] [dfb] (osdLayer): width, height: 
+640 480
+16:55:17.0424 I [6430] [dfb] osdLayer has alpha channel
+16:55:17.0440 E [6430] [dfb] init 
+EXITING:action=IDirectFBDisplayLayer::SetConfiguration(DFBDisplayLayerConfig&amp;), 
+result=Not supported!
+  (!!!)  *** WARNING [Application exited without deinitialization of 
+DirectFB!] *** [core.c:775 in dfb_core_deinit_check()]
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002970.html">[Softdevice-devel] VDR help
+</A></li>
+	<LI>Next message: <A HREF="002975.html">[Softdevice-devel] vdr exit on dfb error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2973">[ date ]</a>
+              <a href="thread.html#2973">[ thread ]</a>
+              <a href="subject.html#2973">[ subject ]</a>
+              <a href="author.html#2973">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

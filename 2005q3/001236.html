@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Crash while recording and playing live program
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20while%20recording%20and%20playing%20live%20program&In-Reply-To=%3C20050911081436.GA441501%40kosh.hut.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001239.html">
+   <LINK REL="Next"  HREF="001238.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Crash while recording and playing live program</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Crash%20while%20recording%20and%20playing%20live%20program&In-Reply-To=%3C20050911081436.GA441501%40kosh.hut.fi%3E"
+       TITLE="[Softdevice-devel] Crash while recording and playing live program">marko.makela at hut.fi
+       </A><BR>
+    <I>Sun Sep 11 10:14:36 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001239.html">[Softdevice-devel] Crash when fast-skipping a recording
+</A></li>
+        <LI>Next message: <A HREF="001238.html">[Softdevice-devel] Crash while recording and playing live program
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1236">[ date ]</a>
+              <a href="thread.html#1236">[ thread ]</a>
+              <a href="subject.html#1236">[ subject ]</a>
+              <a href="author.html#1236">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Sep 10, 2005 at 04:41:08PM +0300, Marko M&#228;kel&#228; wrote:
+&gt;<i> Thanks, I look forward to testing your fix.  I'll then report another
+</I>&gt;<i> crash bug on the following day. :-)
+</I>
+As promised, here it is.  vdr was recording and viewing the same program.
+Before the crash, a recording was watched for maybe 30 minutes.  Then
+vdr was suspended for maybe an hour.  During that time, the timed recording
+started.  Then I resumed vdr playback and switched to the program.  The
+program was shown for about 5 minutes.  I didn't touch the remote control
+during that time, so it shouldn't be OSD related at this time.
+
+Luckily, I got a core dump this time.  See the attached two dumps of
+the stack trace.  For some reason, &quot;bt full&quot; truncates the trace.
+Could it be a double free() call?  Has anyone run softdevice under
+Valgrind?  (Should I try, or will it be hopelessly slow?)
+
+I have saved the stderr output in case it will help troubleshooting.
+I normally log stderr to /tmp, which lives on shmfs.
+
+	Marko
+-------------- next part --------------
+(gdb) bt full
+#0  0xb7d15e8c in free () from /lib/tls/libc.so.6
+No symbol table info available.
+#1  0xb77a3b0d in fusion_shfree () from /usr/local/lib/libfusion-0.9.so.22
+No symbol table info available.
+#2  0xb77e2dd1 in dfb_surfacemanager_destroy () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#3  0xb77d40a3 in dfb_gfxcard_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#4  0xb77d38e0 in dfb_core_part_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#5  0xb77d336c in dfb_core_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#6  0xb77d3522 in dfb_core_arena_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#7  0xb77a3901 in fusion_arena_exit () from /usr/local/lib/libfusion-0.9.so.22
+No symbol table info available.
+#8  0xb77d2c79 in dfb_core_destroy () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#9  0xb77d3316 in dfb_core_signal_handler () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#10 0xb779e8b7 in signal_handler () from /usr/local/lib/libdirect-0.9.so.22
+No symbol table info available.
+#11 &lt;signal handler called&gt;
+No symbol table info available.
+#12 0xb77e11ad in dfb_surface_soft_lock () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#13 0xb77b3cc0 in IDirectFBSurface_Lock () from /usr/local/lib/libdirectfb-0.9.so.22
+No symbol table info available.
+#14 0xb77fb45e in IDirectFBSurface::Lock (this=0x2, flags=2998006340, ptr=0xb2b1f244, 
+    pitch=0xb2b1f244) at idirectfbsurface.cpp:116
+	ret = 48758540
+#15 0xb7949e00 in cDFBVideoOut::YUV (this=0x8286050, 
+    Py=0xb0e89008 &quot;\021\021\021\020\020\020\020\020\020\020\020\020\020\021\021\022\017\016\017\020\021\017\020\021\020\017\020\020\021\023\024\023\022\022\023\022\021\021\020\020\020\020\020\017\017\017\020\020\021\021\021\020\020\017\017\016\016\017\020\022\023\023\022\022\020\017\017\017\017\020\020\020\021\021\020\021\022\022\022\022\020\021\020\020\021\021\021\022\022\022\022\022\023\023\023\022\023\023\022&quot;, '\021' &lt;repeats 11 times&gt;, &quot;\020\020\021\021\021\021\021\022\022\022\022\021\020\020\021\021\022\022\021\021\022\021\022\022\021\020\020\020\021\021\021\021\020\020\020\020\020\020\021\021\020\017\020\021\022\022\021\020\021\021\021\020\017\017\017\r\016\r\017\017\016\r\r\r\r\016\020\021\021\020\020\020\020\021\021\021\021\021\020\020\020\020\017\r\r\016\016\016\r\r&quot;..., 
+    Pu=0xb0eec008 &quot;\200\200\200\200\200\201\201\201\201\201\201\201\201\201\200~\200~\177\177\200\200\200\200\201\201\200\200\177\177\177\177~\177\177\200\200\201\200\201\200\200\200\200\200\200\200&quot;, '\201' &lt;repeats 17 times&gt;, &quot;\200\200\200\177\200\200\201\200\200\200\200\201\201\201\200\177\202\202\201\201\201\201\202\202&quot;, '\200' &lt;repeats 17 times&gt;, &quot;\177\177\200\200\200\201\200~}~~\177~\200~\200\177\177\200\201\200\201\202\200\200\200\200\200\201\200\200\177\200\200\200\200\200\200\200\201\201\201\201\201\201\201\200\200\200\200\200\200\200\201\201\201\201\201\200\200&quot;, '\201' &lt;repeats 19 times&gt;, &quot;\200\200\200\200\201\201\201\200\201\201\200\200\200\200\200\200&quot;..., 
+    Pv=0xb0f04c08 &quot;\200\200\200\200\200\200\200\200\201\201\201\201\201\200\200\200&quot;, '\201' &lt;repeats 23 times&gt;, &quot;\200\177\177\177\177\177\177\177\177\200\200\200\200\200\200\200\177\177\200\177\200\177\177\177\200\200\200\200\200\200\200\200\200\201\201\201\201\202\202\202\202~~\177\200\200\200\201\201\200\200\200\200\201\201\200\201\201\200\201\200\201\200\201\201\200\200\200\200\200\200\177\200\200\201\201\201\201\201\201\201\177\177\200\200\200\200\200\200\177~\177~\177~\177~\200\200\200\201\201\201\201\201\177\200\177\200\177\200\200\200\200\200\200\200\201\200\200\200\200\177\200\200\200\200\200\177\200\200\200\200\200\200\200\200\177\177\177\177\200\200\200\200\201\200\177\177\177\177\177\177\177\200\200\201\200\200\200\200&quot;..., Width=-833902112, 
+    Height=124435387, Ystride=704, UVstride=352) at video-dfb.c:1139
+	dst = Variable &quot;dst&quot; is not available.
+
+(gdb) bt
+#0  0xb7d15e8c in free () from /lib/tls/libc.so.6
+#1  0xb77a3b0d in fusion_shfree () from /usr/local/lib/libfusion-0.9.so.22
+#2  0xb77e2dd1 in dfb_surfacemanager_destroy () from /usr/local/lib/libdirectfb-0.9.so.22
+#3  0xb77d40a3 in dfb_gfxcard_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+#4  0xb77d38e0 in dfb_core_part_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+#5  0xb77d336c in dfb_core_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+#6  0xb77d3522 in dfb_core_arena_shutdown () from /usr/local/lib/libdirectfb-0.9.so.22
+#7  0xb77a3901 in fusion_arena_exit () from /usr/local/lib/libfusion-0.9.so.22
+#8  0xb77d2c79 in dfb_core_destroy () from /usr/local/lib/libdirectfb-0.9.so.22
+#9  0xb77d3316 in dfb_core_signal_handler () from /usr/local/lib/libdirectfb-0.9.so.22
+#10 0xb779e8b7 in signal_handler () from /usr/local/lib/libdirect-0.9.so.22
+#11 &lt;signal handler called&gt;
+#12 0xb77e11ad in dfb_surface_soft_lock () from /usr/local/lib/libdirectfb-0.9.so.22
+#13 0xb77b3cc0 in IDirectFBSurface_Lock () from /usr/local/lib/libdirectfb-0.9.so.22
+#14 0xb77fb45e in IDirectFBSurface::Lock (this=0x2, flags=2998006340, ptr=0xb2b1f244, pitch=0xb2b1f244) at idirectfbsurface.cpp:116
+#15 0xb7949e00 in cDFBVideoOut::YUV (this=0x8286050, Py=0xb0e89008 &quot;\021\021\021\020\020\020\020\020\020\020\020\020\020\021\021\022\017\016\017\020\021\017\020\021\020\017\020\020\021\023\024\023\022\022\023\022\021\021\020\020\020\020\020\017\017\017\020\020\021\021\021\020\020\017\017\016\016\017\020\022\023\023\022\022\020\017\017\017\017\020\020\020\021\021\020\021\022\022\022\022\020\021\020\020\021\021\021\022\022\022\022\022\023\023\023\022\023\023\022&quot;, '\021' &lt;repeats 11 times&gt;, &quot;\020\020\021\021\021\021\021\022\022\022\022\021\020\020\021\021\022\022\021\021\022\021\022\022\021\020\020\020\021\021\021\021\020\020\020\020\020\020\021\021\020\017\020\021\022\022\021\020\021\021\021\020\017\017\017\r\016\r\017\017\016\r\r\r\r\016\020\021\021\020\020\020\020\021\021\021\021\021\020\020\020\020\017\r\r\016\016\016\r\r&quot;..., Pu=0xb0eec008 &quot;\200\200\200\200\200\201\201\201\201\201\201\201\201\201\200~\200~\177\177\200\200\200\200\201\201\200\200\177\177\177\177~\177\177\200\200\201\200\201\200\200\200\200\200\200\200&quot;, '\201' &lt;repeats 17 times&gt;, &quot;\200\200\200\177\200\200\201\200\200\200\200\201\201\201\200\177\202\202\201\201\201\201\202\202&quot;, '\200' &lt;repeats 17 times&gt;, &quot;\177\177\200\200\200\201\200~}~~\177~\200~\200\177\177\200\201\200\201\202\200\200\200\200\200\201\200\200\177\200\200\200\200\200\200\200\201\201\201\201\201\201\201\200\200\200\200\200\200\200\201\201\201\201\201\200\200&quot;, '\201' &lt;repeats 19 times&gt;, &quot;\200\200\200\200\201\201\201\200\201\201\200\200\200\200\200\200&quot;..., Pv=0xb0f04c08 &quot;\200\200\200\200\200\200\200\200\201\201\201\201\201\200\200\200&quot;, '\201' &lt;repeats 23 times&gt;, &quot;\200\177\177\177\177\177\177\177\177\200\200\200\200\200\200\200\177\177\200\177\200\177\177\177\200\200\200\200\200\200\200\200\200\201\201\201\201\202\202\202\202~~\177\200\200\200\201\201\200\200\200\200\201\201\200\201\201\200\201\200\201\200\201\201\200\200\200\200\200\200\177\200\200\201\201\201\201\201\201\201\177\177\200\200\200\200\200\200\177~\177~\177~\177~\200\200\200\201\201\201\201\201\177\200\177\200\177\200\200\200\200\200\200\200\201\200\200\200\200\177\200\200\200\200\200\177\200\200\200\200\200\200\200\200\177\177\177\177\200\200\200\200\201\200\177\177\177\177\177\177\177\200\200\201\200\200\200\200&quot;..., Width=-833902112, Height=124435387, Ystride=704, UVstride=352) at video-dfb.c:1139
+#16 0xb793bc14 in cVideoOut::DrawVideo_420pl (this=0x8286050, syncTimer=0x8645630, delay=0x84ae80c, picture=0x838dcc0, context=0x8558328) at video.c:397
+#17 0xb793f5f5 in cVideoStreamDecoder::DecodePacket (this=0x84ae5a8, pkt=0x83afdd4) at mpeg2decoder.c:603
+#18 0xb793ed03 in cStreamDecoder::Action (this=0x84ae5a8) at mpeg2decoder.c:188
+#19 0x080f1c32 in cThread::StartThread (Thread=0x84ae5a8) at thread.c:234
+#20 0xb7f08ccd in start_thread () from /lib/tls/libpthread.so.0
+#21 0xb7d80b0e in clone () from /lib/tls/libc.so.6
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001239.html">[Softdevice-devel] Crash when fast-skipping a recording
+</A></li>
+	<LI>Next message: <A HREF="001238.html">[Softdevice-devel] Crash while recording and playing live program
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1236">[ date ]</a>
+              <a href="thread.html#1236">[ thread ]</a>
+              <a href="subject.html#1236">[ subject ]</a>
+              <a href="author.html#1236">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

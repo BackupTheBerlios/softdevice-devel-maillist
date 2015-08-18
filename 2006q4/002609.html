@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.3.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.3.0&In-Reply-To=%3C20061010014219.GB29930%40MAIL.13thfloor.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002604.html">
+   <LINK REL="Next"  HREF="002605.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.3.0</H1>
+    <B>Herbert Poetzl</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20%5BANNOUNCE%5D%20vdr-softdevice-0.3.0&In-Reply-To=%3C20061010014219.GB29930%40MAIL.13thfloor.at%3E"
+       TITLE="[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.3.0">herbert at 13thfloor.at
+       </A><BR>
+    <I>Tue Oct 10 03:42:19 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002604.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.3.0
+</A></li>
+        <LI>Next message: <A HREF="002605.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2609">[ date ]</a>
+              <a href="thread.html#2609">[ thread ]</a>
+              <a href="subject.html#2609">[ subject ]</a>
+              <a href="author.html#2609">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Oct 09, 2006 at 01:25:18AM +0200, Stefan Lucke wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> the softdevice team (Torgeir Veimo, Martin Wache and me, Stefan Lucke)
+</I>&gt;<i> is pleased to announce a new release of vdr's softdevice plugin.
+</I>&gt;<i> 
+</I>&gt;<i> General info:
+</I>&gt;<i> &#160; Softdevice plugin enables vdr to run on your desktop with
+</I>&gt;<i> &#160; so called budget cards. You'll get vdr output via framebuffer or X11-Xv or
+</I>&gt;<i> &#160; DirectFB or vidix to your screen. Decoding is done via ffmpeg.
+</I>&gt;<i> 
+</I>&gt;<i> Supported vdr versions: (1.2.x,) 1.3.x and 1.4.x
+</I>
+segfaults here (100% reproducible) with or without
+alpha blending (i.e. pseudo and software). the only
+difference is the backtrace (CopyPicBuf vs *AlphaBlend)
+
+# ./vdr -D1 -c/opt/CONFIG-1/ -P&quot;softdevice -vo xv:&quot;
+[softdevice] processing args
+[softdevice]   argv [0] = softdevice
+[softdevice]   argv [1] = -vo
+vo_argv: xv: 
+[setup-softdevice] alsa ac3Mode set to: 0
+[setup-softdevice] alsa AC3 device set to: hw:0,1
+[setup-softdevice] alsa device set to: default
+[setup-softdevice] A/V Offset set to (0)
+[setup-softdevice] Cropping 2 lines from bottom
+[setup-softdevice] Cropping 2 columns from left
+[setup-softdevice] cropping mode set to 0 (none)
+[setup-softdevice] cropping mode toggle key set to 0 (none)
+[setup-softdevice] Cropping 2 columns from right
+[setup-softdevice] Cropping 2 lines from top
+[setup-softdevice] deinterlace method set to 1 lavc
+[setup-softdevice] mainMenu: 1
+[setup-softdevice] setting alpha blend mode to software
+[softdevice] picture mirroring set to 0 (off)
+[setup-softdevice] pixel format set to (YUY2)
+[setup-softdevice] shouldSuspend to: 0
+[setup-softdevice] syncTimerMode: sig
+[softdevice] UseStretchBlitset to on
+[setup-softdevice] vidBrightness: 50
+[setup-softdevice] vidContrast: 50
+[setup-softdevice] vidHue: 0
+[setup-softdevice] vidSaturation: 50
+[setup-softdevice] startup aspect set to (4:3 normal)
+[softdevice] initializing Plugin
+[softdevice] Initializing Video Out
+[softdevice] ffmpeg build(3345152)
+[XvVideoOut]: osd_image shmid = 24051722
+[XvVideoOut]: got osd_image: width 1600 height 1200, bytes per line 3200
+[XvVideoOut]: max area size 2046 x 2046
+[XvVideoOut]: using area size 736 x 576
+[softdevice] Subplugin successfully opend
+[softdevice] Video Out seems to be OK
+[softdevice] Initializing Audio Out
+[softdevice] Audio out seems to be OK
+[softdevice] A/V devices initialized, now initializing MPEG2 Decoder
+DeinitXv
+[XvVideoOut]: max area size 2046 x 2046
+[XvVideoOut]: using area size 736 x 576
+vout_pic[2304]:CopyPicBufAlphaBlend_YUV420P_YUY2 width 736 height 576
+Segmentation fault (core dumped)
+
+
+with the following backtrace
+
+#0  yv12_to_yuy2_il_mmx2_line (dest1=0xb4723a34 &quot;\020\200\020\200\020\200\020\200\020&quot;, dest2=0xb4723ff4 &quot;\020\200\020\200\020\200\020\200&quot;, chromaWidth=368, 
+    yc1=0xb6103ef8 '\020' &lt;repeats 200 times&gt;..., yc2=0xb61041d8 &quot;\020\020\020\020&quot;, uc=0xb6103a9c &quot;\200\200&quot;, vc=0xb61037ac &quot;\200\200&quot;) at utils.c:133
+133	    movntq(mm6,*(dest2 + 8));
+
+(gdb) where
+#0  yv12_to_yuy2_il_mmx2_line (dest1=0xb4723a34 &quot;\020\200\020\200\020\200\020\200\020&quot;, dest2=0xb4723ff4 &quot;\020\200\020\200\020\200\020\200&quot;, chromaWidth=368, 
+    yc1=0xb6103ef8 '\020' &lt;repeats 200 times&gt;..., yc2=0xb61041d8 &quot;\020\020\020\020&quot;, uc=0xb6103a9c &quot;\200\200&quot;, vc=0xb61037ac &quot;\200\200&quot;) at utils.c:133
+#1  0xb675503a in CopyPicBufAlphaBlend_YUV420P_YUY2 (dst=0x8383ce8, src=0xb61043c0, width=736, height=576, OsdPy=0xb65ca008 '\020' &lt;repeats 200 times&gt;..., 
+    OsdPu=0x8bc6338 '\200' &lt;repeats 200 times&gt;..., OsdPv=0x8be0148 '\200' &lt;repeats 200 times&gt;..., OsdPAlphaY=0xb6562008 &quot;&quot;, OsdPAlphaUV=0x8bf9f58 &quot;&quot;, OsdStride=736, 
+    cutTop=2, cutBottom=2, cutLeft=2, cutRight=2) at PicBuffer.c:570
+#2  0xb6755591 in CopyPicBufAlphaBlend (dst=0x8383ce8, src=0xb61043c0, OsdPy=0xb65ca008 '\020' &lt;repeats 200 times&gt;..., OsdPu=0x8bc6338 '\200' &lt;repeats 200 times&gt;..., 
+    OsdPv=0x8be0148 '\200' &lt;repeats 200 times&gt;..., OsdPAlphaY=0xb6562008 &quot;&quot;, OsdPAlphaUV=0x8bf9f58 &quot;&quot;, OsdStride=736, cutTop=2, cutBottom=2, cutLeft=2, cutRight=2)
+    at PicBuffer.c:700
+#3  0xb6752874 in cXvVideoOut::YUV (this=0x8383680, buf=0xb61043c0) at video-xv.c:1820
+#4  0xb674e1c9 in cVideoOut::DrawStill_420pl (this=0x8383680, buf=0xb61043c0) at video.c:468
+#5  0xb674d79a in cVideoOut::Action (this=0x8383680) at video.c:133
+#6  0x080ea83a in cThread::StartThread (Thread=0x8383adc) at thread.c:244
+#7  0xb7f37c40 in start_thread () from /lib/tls/libpthread.so.0
+#8  0xb7dbb0ee in clone () from /lib/tls/libc.so.6
+
+
+note: the softdevice-cvs20060623 version I used before
+works perfectly fine in the same vdr/setup  (although I h
+ad to #define the FFMPEG_VERSION to make it work)
+
+any ideas?
+
+TIA,
+Herbert
+
+&gt;<i> Plugin's homepage is located at: <A HREF="http://softdevice.berlios.de/">http://softdevice.berlios.de/</A>
+</I>&gt;<i> 
+</I>&gt;<i> Special hint:
+</I>&gt;<i>  For cle266 hardware decoding support via DirectFB, you'll need a fresh
+</I>&gt;<i>  version from todays DirectFB's cvs.
+</I>&gt;<i>  Further you'll need libcle266mpegdec which is available from:
+</I>&gt;<i>    <A HREF="http://sourceforge.net/projects/cle266mpegdec/">http://sourceforge.net/projects/cle266mpegdec/</A>
+</I>&gt;<i> 
+</I>&gt;<i> Changelog since last release:
+</I>&gt;<i> 2006-10-09: softdevice-0.3.0
+</I>&gt;<i> 2006-10-03:
+</I>&gt;<i>    - fix hang after long pause.
+</I>&gt;<i> 2006-10-01:
+</I>&gt;<i>    - enable cropping for video-shm.
+</I>&gt;<i>    - Remove some unneeded code and fix ctl-&gt;width/height setting.
+</I>&gt;<i> 2006-09-29:
+</I>&gt;<i>    - video-shm: silence warnings.
+</I>&gt;<i>    - video-xv: removed osdMutex.
+</I>&gt;<i>    - video-dfb: removed osdMutex.
+</I>&gt;<i>                 clear non video area when OSD is active to avoid fade effects.
+</I>&gt;<i> 2006-09-22:
+</I>&gt;<i>    - protect locking for old picture by a separate mutex.
+</I>&gt;<i>    - fix possible lost picture update and dropped areaMutex.
+</I>&gt;<i> 2006-09-21:
+</I>&gt;<i>    - introduce a mutex to protect calls to videoOut from SoftOsd
+</I>&gt;<i>    - initialize parameters for the vout-&gt;GetOSDMode() call
+</I>&gt;<i> 2006-09-19:
+</I>&gt;<i>    - fix &quot;Error! Trying to unlock a nil picture... Ignoring&quot; error message.
+</I>&gt;<i>    - use current_OsdMode instead of setupStore.OsdMode
+</I>&gt;<i> 2006-09-18:
+</I>&gt;<i>    - fix RefreshAll for NoVScaleCopyToBitmap()
+</I>&gt;<i>    - add a very simple cpu type and host system detection to configure
+</I>&gt;<i>    - fix changing from pseudo to software osd blending for video-xv
+</I>&gt;<i>    - remove no longer needed test for broken gcc compiler from configure
+</I>&gt;<i>    - combine shared memory checks into CheckShmIDs()
+</I>&gt;<i>    - improve error messages in video-shm.c
+</I>&gt;<i> 2006-09-17:
+</I>&gt;<i>    - replace &quot;pshufw&quot; with MMX commands to make scaling optimazations available
+</I>&gt;<i>      to processors without MMX2
+</I>&gt;<i>    - cleanup PicBuffer.c, release PicBuffers in destructor,...
+</I>&gt;<i>    - add linux framebuffer detection to configure
+</I>&gt;<i>    - disable libcle266mpegdec if no DirectFB is found
+</I>&gt;<i>    - add altivec optimizations to some AlphaBlend() and
+</I>&gt;<i>      yv12_to_yuy2_il_mmx2_line()
+</I>&gt;<i>    - make utils.c compile on non MMX machines, cleanup some #ifdefs
+</I>&gt;<i>    - fix compile issue with g++-4.1.1
+</I>&gt;<i>    - add NoVScaleCopyToBitmap() for RGB modes
+</I>&gt;<i> 2006-09-16:
+</I>&gt;<i>    - added -vo shm: to help option
+</I>&gt;<i>    - added support new fields from libcle266mpegdec-0.4
+</I>&gt;<i>    - video-dfb: removed check and support for DSBLIT_INTERLACED as DirectFB
+</I>&gt;<i>                 has buildin support for this now.
+</I>&gt;<i>    - disable cle266 support if DirectFB is not patched for this
+</I>&gt;<i>    - cle266: fix one aspect ratio info and configure (by Rolf Ahrenberg)
+</I>&gt;<i> 2006-09-12:
+</I>&gt;<i>    - don't continue on argument errors
+</I>&gt;<i> 2006-09-11:
+</I>&gt;<i>    - catch unrecognized options for dfb-out (reported by Rolf Ahrenberg)
+</I>&gt;<i> 2006-09-10:
+</I>&gt;<i>    - fix &quot;NVidia software alpha blending OSD&quot; issue, which turned out
+</I>&gt;<i>      to be a compiler problem with g++-4.1.1. (Many thanks to Prakash
+</I>&gt;<i>      Punnoor, Matthias Schwarzott, Chris Elsworth and all the others
+</I>&gt;<i>      who helped to fix this)
+</I>&gt;<i> 2006-09-09:
+</I>&gt;<i>    - video-xv.c: silence some warnings
+</I>&gt;<i>    - video-vidix: offer equalizer settings via OSD (brightness, hue,
+</I>&gt;<i>                   saturation and contrast)
+</I>&gt;<i>                   offer HW-deinetrlace via OSD when available
+</I>&gt;<i>                   (by Roland Praml)
+</I>&gt;<i> 2006-09-08:
+</I>&gt;<i>    - limit destination video offsets to even values
+</I>&gt;<i>    - fix typo in asignment
+</I>&gt;<i>    - fix xv-out with subplugins disabled
+</I>&gt;<i> 2006-09-04:
+</I>&gt;<i>    - fix wrong colors when using ShmClient (reported by Matthias Schwarzott
+</I>&gt;<i>      and <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">derWolf at vdrportal</A>)
+</I>&gt;<i>    - disable debuging printouts
+</I>&gt;<i>    - cleanup
+</I>&gt;<i>    - set sPicBuffer completly to zero
+</I>&gt;<i> 2006-08-27:
+</I>&gt;<i>    - adjust ffmpeg library order in configure
+</I>&gt;<i>    - enable different pixel formats in video-xv
+</I>&gt;<i>    - properly init ctl-&gt;key (reported by Matthias Schwarzott)
+</I>&gt;<i> 2006-08-05:
+</I>&gt;<i>    - video-dfb: disable reported failed flags in SetParams()
+</I>&gt;<i> 2006-07-25:
+</I>&gt;<i>    - no longer exit when a audio mode is not available, audio is only disabled.
+</I>&gt;<i>    - clean up audio-alsa
+</I>&gt;<i>    - init tmpOsdSurface and delete dirtyLines properly
+</I>&gt;<i>    - try to use the XVideo default brightness, hue etc. values on first start
+</I>&gt;<i>    - new option: &quot;-vo xv:use-defaults&quot;, can be used to reset the values
+</I>&gt;<i>      of brightness, hue etc. to the default values. (Based on a patch
+</I>&gt;<i>      by Matthias Schwarzott)
+</I>&gt;<i> 2006-07-16:
+</I>&gt;<i>    - only link against libXi if necessary ( do we need libXi at all?)
+</I>&gt;<i>    - check explicitly for pkg-config in configure
+</I>&gt;<i>    - configure: &quot;--with-ffmpeg-path&quot; overrides pkg-config
+</I>&gt;<i>    - unconditionally set _NET_WM_FULLSCREEN Atom when going fullscreen (recent Metacity WM need it)
+</I>&gt;<i> 2006-07-12:
+</I>&gt;<i>    - fix segfault in OSD refresher.
+</I>&gt;<i> 2006-07-11:
+</I>&gt;<i>    - remove no longer defined FFMPEG_VERSION string
+</I>&gt;<i> 2006-07-10:
+</I>&gt;<i>    - move alsa related stuff into a separate file, enable build without alsa
+</I>&gt;<i>      support
+</I>&gt;<i>    - remove uneeded include of &quot;sys/mman.h&quot; and &quot;sys/ioctl.h&quot; from video.c
+</I>&gt;<i>    - set max_width and max_height for temporary PicBuffer
+</I>&gt;<i>    - remove uneeded include of &quot;linux/fb.h&quot; from softdevice.c
+</I>&gt;<i>    - fix possible endianness problems in SoftOsd.c
+</I>&gt;<i>    - add support for yuy2 pixel format to alpha blend and copy pic buf code
+</I>&gt;<i>    - change return value of AllocPicBuffer()
+</I>&gt;<i>    - change the parameters of yv12_to_yuy2_il_mmx() so that it can also be used
+</I>&gt;<i>      for not interlaced pictures
+</I>&gt;<i> 2006-06-25:
+</I>&gt;<i>    - video pixelformat and stretchblit mode can be locked by output driver, so
+</I>&gt;<i>      that changeing them is not offered via OSD.
+</I>&gt;<i>    - video-dfb: - Adapted radeon real alphablend handling to current DirectFB-cvs.
+</I>&gt;<i>                   It is now handled similary to via mode (with underlay).
+</I>&gt;<i>                 - In mgatv-out mode, video surface is now allways allocated with
+</I>&gt;<i>                   attribute DSCAPS_INTERLACED to support interlaced stretchblit
+</I>&gt;<i>                   of DirectFB-cvs.
+</I>&gt;<i>                 - Removed test #if directives introduced in first via hw-dec support.
+</I>&gt;<i>                 - Lock pixelformat and stretchblit mode in case via hw-decode
+</I>&gt;<i>                   and mgatv mode.
+</I>&gt;<i> 2006-06-21:
+</I>&gt;<i>    - video-dfb: changed pixel format for HW-decoding to I420. So accelerated and
+</I>&gt;<i>      unaccelerated modes use the same pixel format.
+</I>&gt;<i> 2006-06-18:
+</I>&gt;<i>    - ignore config.log on commit checks
+</I>&gt;<i>    - removed hardcoded FBDEV name in Makefile and configure
+</I>&gt;<i> 2006-06-17:
+</I>&gt;<i>    - cle266, video-dfb: added HW-decoder support
+</I>&gt;<i>    - configure: check for libcle266mpegdec instead of cle266mpegdec
+</I>&gt;<i>    - get frame buffer name at runtime:
+</I>&gt;<i>      1. via enviroment variable FRAMEBUFFER
+</I>&gt;<i>      2. try /dev/fb0 or /dev/fb/0
+</I>&gt;<i> 2006-06-16:
+</I>&gt;<i>    - video-dfb: fix via aspect ratio handling
+</I>&gt;<i> 2006-06-15:
+</I>&gt;<i>    - make configure a bit more verbose. A complete log is now saved in
+</I>&gt;<i>      config.log.
+</I>&gt;<i>    - fix delete &lt;-&gt; delete[] mismatch reported by Prakash Punnoor.
+</I>&gt;<i> 2006-06-09:
+</I>&gt;<i>    - activate mmx version of yv12_to_yuy2_il_ () for dfb, xv and vidix.
+</I>&gt;<i>    - name change libsubvdr-softdevice-METHOD.so.?? -&gt; libsoftdevice-METHOD.so.?? .
+</I>&gt;<i>    - removed option -L . is obsolete since we can get the path we are loaded from,
+</I>&gt;<i>      at runtime (thanks to Petri Hintukainen).
+</I>&gt;<i> 2006-06-06:
+</I>&gt;<i>    - mmx version of yv12_to_yuy2_il_c(): yv12_to_yuy2_il_mmx2(). not yet called.
+</I>&gt;<i> 2006-05-30:
+</I>&gt;<i>    - set pic-&gt;format in AllocPicBuffer()
+</I>&gt;<i>    - more debug messages
+</I>&gt;<i> 2006-05-29:
+</I>&gt;<i>    - fix PICDEB
+</I>&gt;<i>    - fix a few stupid errors in VideoFilter.c, initialise more
+</I>&gt;<i>      variables in PicFilter.c
+</I>&gt;<i> 2006-05-27:
+</I>&gt;<i>    - move postproc stuff into VideoFilter.[ch]
+</I>&gt;<i>    - apply patch to use direct rendering
+</I>&gt;<i>    - add tests for older ffmpeg versions to configure
+</I>&gt;<i>    - add &quot;--disable-mmx&quot; and &quot;--disable-mmx2&quot; to configure
+</I>&gt;<i>    - fix possible segfaults in SoftOsd when using a zoom faktor
+</I>&gt;<i> 2006-05-23:
+</I>&gt;<i>    - fix VIA OSD transparency for newer DirectFB cvs versions
+</I>&gt;<i>    - merged some defines which belong together
+</I>&gt;<i>    - added 15:9 screen aspect
+</I>&gt;<i>    - fix postprocessing not offered via OSD even detected by configure
+</I>&gt;<i>    - reenable software alpha blending for video-shm
+</I>&gt;<i>    - move AlphaBlend into utils.c, clean up MMX defines
+</I>&gt;<i> 2006-05-07:
+</I>&gt;<i>    - video-dfb: preparation for DSBLIT_INTERLACED which results
+</I>&gt;<i>      in better displaying of downscaled 16:9 on 4:3 TVs with matrox.
+</I>&gt;<i>    - video-dfb: make YUY2 color info reordering dependant of
+</I>&gt;<i>      interlaced vs. progressive video.
+</I>&gt;<i> 2006-05-01:
+</I>&gt;<i>    - some fixes for DirectFB compile, configure &amp; 64bit arch .
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Stefan Lucke
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">https://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002604.html">[Softdevice-devel] [ANNOUNCE] vdr-softdevice-0.3.0
+</A></li>
+	<LI>Next message: <A HREF="002605.html">[Softdevice-devel] viafb + cle266mpegdec + TVout : field parity status and patches [update]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2609">[ date ]</a>
+              <a href="thread.html#2609">[ thread ]</a>
+              <a href="subject.html#2609">[ subject ]</a>
+              <a href="author.html#2609">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

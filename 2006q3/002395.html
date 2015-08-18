@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] g450 interlaced output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q3/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060908172529.GC2833%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002367.html">
+   <LINK REL="Next"  HREF="002402.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] g450 interlaced output</H1>
+    <B>Marko M&#228;kel&#228;</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20g450%20interlaced%20output&In-Reply-To=%3C20060908172529.GC2833%40localhost.localdomain%3E"
+       TITLE="[Softdevice-devel] g450 interlaced output">marko.makela at hut.fi
+       </A><BR>
+    <I>Fri Sep  8 19:25:30 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002367.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+        <LI>Next message: <A HREF="002402.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2395">[ date ]</a>
+              <a href="thread.html#2395">[ thread ]</a>
+              <a href="subject.html#2395">[ subject ]</a>
+              <a href="author.html#2395">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Sep 07, 2006 at 09:09:20PM +0100, Alasdair Campbell wrote:
+&gt;<i> On 06/09/06, Marko M&#228;kel&#228; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">marko.makela at hut.fi</A>&gt; wrote:
+</I>&gt;<i> &gt; Now I only have one wishlist item left for DirectFB on Matrox cards:
+</I>&gt;<i> &gt; get rid of that busy-waiting in IDirectFBSurface::Flip() by implementing
+</I>&gt;<i> &gt; some ioctl() calls to make it interrupt-driven.
+</I>&gt;<i> 
+</I>&gt;<i> Is that a lot of work?
+</I>
+For someone who knows how interrupts are processed in the Linux kernel,
+it should not be that hard.  I have programmed interrupt routines in
+machine language, but not in C on a sophisticated operating system
+like the Linux kernel.  I think that Ville Syrj&#228;l&#228; might have had a
+kernel patch for this, but I am not sure how much work it would be
+to get it in the 2.6 kernel.
+
+&gt;<i> With my underclocked barton (running at 1350 MHz) the following
+</I>&gt;<i> results were got from 'top'.
+</I>&gt;<i> [I just took the value for the vdr process with the highest value,
+</I>&gt;<i> don't know if this is misleading].
+</I>
+Oh, you must be using LinuxThreads then.  I've used NPTL for the past year
+(just unset the environment variable LD_ASSUME_KERNEL if you are using
+GNU libc 2.3 or later).  NTPL should have smaller overhead than LinuxThreads.
+
+&gt;<i> Unpatched:
+</I>&gt;<i> -vo dfb:mgatv  = ~40%
+</I>&gt;<i> -vo dfb:  = ~21% ( a lovely figure!)
+</I>&gt;<i> 
+</I>&gt;<i> Patched:
+</I>&gt;<i> -vo dfb:mgatv = ~29% (great patch)
+</I>&gt;<i> -vo dfb: = ~29%
+</I>
+The usleep() calls should not affect the -vo dfb: code path.  You should
+perhaps have watched a recording instead of live stream to get more
+repeatable results.  Anyway, you seem to be getting 10% savings on
+dfb:mgatv, about the same as me.
+
+&gt;<i> With results like that, and with Matrox hardware scaled interlaced
+</I>&gt;<i> output working in 'VGA' mode, I could nearly run vdr on my old AMD K6
+</I>&gt;<i> 500mhz relic.
+</I>
+You need some margin.  I was unable to underclock my system, but I think
+you will be dropping frames if the CPU load goes above 60% or 70%.
+
+&gt;<i> &gt; I plan to make some OProfile measurements this weekend.  At the very least,
+</I>&gt;<i> &gt; I will measure the impact of colour space transformation (i.e., let
+</I>&gt;<i> &gt; -vo dfb:mgatv show wrong colours by pretending it uses the native output
+</I>&gt;<i> &gt; colour space of ffmpeg).
+</I>&gt;<i> 
+</I>&gt;<i> I remember you saying your cable didn't work with &quot;-vo dfb:&quot; because
+</I>&gt;<i> that option didn't generate a composite sync signal - well I don't
+</I>&gt;<i> think I made it clear enough that I _did_ see a picture of comparable
+</I>&gt;<i> (slightly sharper) quality using &quot;-vo dfb:&quot; &amp; the cable from the
+</I>&gt;<i> diagram we both used.
+</I>
+And come to think of it, it might be that the problem is not the
+colour space conversion but simply the Flip() call.  I seem to remember
+that Stefan's test program from June or so gave comparable results
+for memcpy() and yv12_to_yuy2_il_mmx2().  The only thing that you could
+avoid on -vo dfb: output is the memcpy(), i.e., let ffmpeg uncompress
+the data directly to the frame buffer (if it does not do so already).
+
+&gt;<i> Basically, latest DirectFB CVS with softdevice option '-vo dfb:' seems
+</I>&gt;<i> to generate a composite signal just like '-vo dfb:mgatv' does.
+</I>
+I'll give it another try in that case.
+
+	Marko
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002367.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+	<LI>Next message: <A HREF="002402.html">[Softdevice-devel] g450 interlaced output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2395">[ date ]</a>
+              <a href="thread.html#2395">[ thread ]</a>
+              <a href="subject.html#2395">[ subject ]</a>
+              <a href="author.html#2395">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

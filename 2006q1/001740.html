@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] Strange compile error in SoftOsd.c
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C200602111628.09190.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001738.html">
+   <LINK REL="Next"  HREF="001741.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] Strange compile error in SoftOsd.c</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20Strange%20compile%20error%20in%20SoftOsd.c&In-Reply-To=%3C200602111628.09190.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] Strange compile error in SoftOsd.c">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sat Feb 11 16:28:09 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001738.html">[Softdevice-devel] [Bug #6298] ShmClient
+</A></li>
+        <LI>Next message: <A HREF="001741.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1740">[ date ]</a>
+              <a href="thread.html#1740">[ thread ]</a>
+              <a href="subject.html#1740">[ subject ]</a>
+              <a href="author.html#1740">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Martin I guess the following change is aquivalent:
+Index: SoftOsd.c
+===================================================================
+RCS file: /cvsroot/softdevice/softdevice/SoftOsd.c,v
+retrieving revision 1.6
+diff -b -B -U3 -r1.6 SoftOsd.c
+--- SoftOsd.c   4 Feb 2006 10:05:09 -0000       1.6
++++ SoftOsd.c   11 Feb 2006 15:25:18 -0000
+@@ -1347,9 +1347,7 @@
+         int16_t g2=0;
+         int16_t r2=0;
+ #else
+-        __asm__(
+-                 &quot; pxor %%mm7,%%mm7 \n&quot; //mm7: 00 00 00 ...
+-                 : :   );
++        pxor_r2r (mm7,mm7);
+ #endif
+
+         int32_t pos=start_pos;
+
+
+Without that, I get the following error with gcc 2.95.3:
+g++ -O2 -g -Wall -fPIC -Woverloaded-virtual -c -DHAVE_CONFIG -DPLUGIN_NAME_I18N='&quot;softdevice&quot;' -D_GNU_SOURCE -DPLUGINLIBDIR='&quot;./PLUGINS/lib&quot;' -I../../../include -I../../../../DVB/include -I/usr/local/include -I/usr/local/include/ffmpeg -I/usr/local/include/postproc   -D_REENTRANT -D_GNU_SOURCE -I/usr/local/include/directfb -I/usr/local/include/dfb++   SoftOsd.c
+/tmp/cciMiMh0.s: Assembler messages:
+/tmp/cciMiMh0.s:6269: Error: bad register name `%%mm7'
+
+:<i>-(( .
+</I>
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001738.html">[Softdevice-devel] [Bug #6298] ShmClient
+</A></li>
+	<LI>Next message: <A HREF="001741.html">[Softdevice-devel] Strange compile error in SoftOsd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1740">[ date ]</a>
+              <a href="thread.html#1740">[ thread ]</a>
+              <a href="subject.html#1740">[ subject ]</a>
+              <a href="author.html#1740">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

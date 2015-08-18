@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] VIA audio quality or lack thereof
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VIA%20audio%20quality%20or%20lack%20thereof&In-Reply-To=%3C427022C3.7070309%40e-dition.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000569.html">
+   <LINK REL="Next"  HREF="000564.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] VIA audio quality or lack thereof</H1>
+    <B>Nicolas Huillard</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20VIA%20audio%20quality%20or%20lack%20thereof&In-Reply-To=%3C427022C3.7070309%40e-dition.fr%3E"
+       TITLE="[Softdevice-devel] VIA audio quality or lack thereof">nhuillard at e-dition.fr
+       </A><BR>
+    <I>Thu Apr 28 01:39:47 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000569.html">[Softdevice-devel] VIA audio quality or lack thereof
+</A></li>
+        <LI>Next message: <A HREF="000564.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#570">[ date ]</a>
+              <a href="thread.html#570">[ thread ]</a>
+              <a href="subject.html#570">[ subject ]</a>
+              <a href="author.html#570">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Marko M&#228;kel&#228; a &#233;crit :
+&gt;<i> On Wed, Apr 27, 2005 at 09:15:52PM +0200, Nicolas Huillard wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>I also experience the same problem, with the following setup : 
+</I>&gt;&gt;<i>&quot;Multimedia audio controller: VIA Technologies, Inc. VT8233/A/8235/8237 
+</I>&gt;&gt;<i>AC97 Audio Controller&quot; connected with stereo analog cable to hifi receiver.
+</I>&gt;<i> 
+</I>&gt;<i> For my setup, alsamixer reports the following:
+</I>&gt;<i> Card: VIA 82C686A/B rev50
+</I>&gt;<i> Chip: ICEnsemble ICE1232
+</I>
+Here :
+Card: VIA 8235
+Chip: ICEnsemble VT1616i
+You have the previous generation of the chip.
+
+&gt;<i> Also, lspci -vv says it's &quot;VIA Technologies, Inc. Onboard Audio on EP7KXA&quot;.
+</I>&gt;<i> 
+</I>&gt;&gt;<i>Also, OSD refresh is clearly audible (when sound is VDR muted) through 
+</I>&gt;&gt;<i>the receiver at high amp.
+</I>&gt;<i> 
+</I>&gt;<i> Well, as my speakers are powered from the +12V from the ATX power supply,
+</I>&gt;<i> I'm hearing hard disk accesses as well, even though I added a coil to
+</I>&gt;<i> the +12V line.  Maybe I should build a relay circuit to control the original
+</I>&gt;<i> linear power supply of the speakers as well as the power feed of the monitor.
+</I>
+Look at OWFS (<A HREF="http://owfs.sourceforge.net/">http://owfs.sourceforge.net/</A>) for controling the real 
+world using your favorite Linux box. I drive the heaters of the whole 
+house, ventilation, and monitor temperatures with this. The software 
+project is very active (attractive, too), and the hardware parts 
+(1-wire, from Dallas/Maxim) is pretty strong : you can drive a 100m 
+network the same way you drive a chip 10cm away inside your computer 
+case. 1-wire covers the range from I2C to X10, and more.
+
+&gt;&gt;<i>I think Via audio chip are very very far from being Hifi components...
+</I>&gt;<i> 
+</I>&gt;<i> It's certainly not the only problem with VIA hardware.  I wonder why I
+</I>&gt;<i> haven't seen any hardware lockups - I've heard and read that VIA chipsets
+</I>&gt;<i> may have some race conditions in DMA handling, e.g., when copying large
+</I>&gt;<i> files over Ethernet or Firewire to an ATAPI hard disk.
+</I>
+I regularly copy recordings from the ATA local disk to the network. No 
+problems yet. I once had problems with the Ethernet port not working 
+(blinking LED), with some power supply (wrong ground).
+
+-- 
+NH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000569.html">[Softdevice-devel] VIA audio quality or lack thereof
+</A></li>
+	<LI>Next message: <A HREF="000564.html">[Softdevice-devel] Aspect ratio handling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#570">[ date ]</a>
+              <a href="thread.html#570">[ thread ]</a>
+              <a href="subject.html#570">[ subject ]</a>
+              <a href="author.html#570">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] softdevice 0.1.3 no alsa audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C200510020013.06926.stefan%40lucke.in-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001283.html">
+   <LINK REL="Next"  HREF="001285.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] softdevice 0.1.3 no alsa audio</H1>
+    <B>Stefan Lucke</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20softdevice%200.1.3%20no%20alsa%20audio&In-Reply-To=%3C200510020013.06926.stefan%40lucke.in-berlin.de%3E"
+       TITLE="[Softdevice-devel] softdevice 0.1.3 no alsa audio">stefan at lucke.in-berlin.de
+       </A><BR>
+    <I>Sun Oct  2 00:13:06 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001283.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+        <LI>Next message: <A HREF="001285.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1284">[ date ]</a>
+              <a href="thread.html#1284">[ thread ]</a>
+              <a href="subject.html#1284">[ subject ]</a>
+              <a href="author.html#1284">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Samstag, 1. Oktober 2005 22:40, Peter Andersson wrote:
+&gt;<i> Hi,
+</I>&gt;<i> I'm trying to get audio output via softdevice without any luck.
+</I>&gt;<i> I launch softdevice with these options: -P'softdevice -ao alsa:hw:0,0 -vo
+</I>&gt;<i> xv:'.
+</I>&gt;<i> I have verified that the settings are correct by using mplayer with the
+</I>&gt;<i> setting -ao alsa:device=hw=0,0.
+</I>
+Usually I don't need to specify an alsa device name, as the default
+name &quot;default&quot; works well. Just checked both variants and they both work.
+
+-P'softdevice -ao alsa:hw:0,0 -vo xv:'
+Oct  2 00:02:23 jarada vdr[6673]: [softdevice-audio] Opening alsa device hw:0,0
+Oct  2 00:02:23 jarada vdr[6673]: [softdevice-audio] Device opened! Ready to play
+
+-P'softdevice -ao alsa:default -vo xv:'
+Oct  2 00:02:43 jarada vdr[6686]: [softdevice-audio] Opening alsa device default
+Oct  2 00:02:43 jarada vdr[6686]: [softdevice-audio] Device opened! Ready to play
+
+Are there error messages ? Usually we don't start if we cannot open alsa device.
+
+&gt;<i> I have also played a couple of recordings made by vdr just to make sure
+</I>&gt;<i> that they include sound.
+</I>&gt;<i> I'm using fedora core 3, softdevice 0.1.3 and kernel 2.6.13.2 with
+</I>&gt;<i> included alsa and dvb modules.
+</I>
+Is master volume unmuted and set to non zero value ?
+We adjust volume via PCM volume (not master volume).
+
+
+-- 
+Stefan Lucke
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001283.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+	<LI>Next message: <A HREF="001285.html">[Softdevice-devel] softdevice 0.1.3 no alsa audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1284">[ date ]</a>
+              <a href="thread.html#1284">[ thread ]</a>
+              <a href="subject.html#1284">[ subject ]</a>
+              <a href="author.html#1284">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>

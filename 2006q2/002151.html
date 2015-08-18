@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Softdevice-devel] witch softdevice output depending on hard and soft
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/softdevice-devel/2006q2/index.html" >
+   <LINK REL="made" HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C449266F1.8010207%40calidae.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002147.html">
+   <LINK REL="Next"  HREF="002155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Softdevice-devel] witch softdevice output depending on hard and soft</H1>
+    <B>Leo M&#225;rquez</B> 
+    <A HREF="mailto:softdevice-devel%40lists.berlios.de?Subject=Re%3A%20%5BSoftdevice-devel%5D%20witch%20softdevice%20output%20depending%20on%20hard%0A%20and%20soft&In-Reply-To=%3C449266F1.8010207%40calidae.net%3E"
+       TITLE="[Softdevice-devel] witch softdevice output depending on hard and soft">leo at calidae.net
+       </A><BR>
+    <I>Fri Jun 16 10:08:17 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002147.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+        <LI>Next message: <A HREF="002155.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2151">[ date ]</a>
+              <a href="thread.html#2151">[ thread ]</a>
+              <a href="subject.html#2151">[ subject ]</a>
+              <a href="author.html#2151">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi again,
+&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i> I dont know in witch debian package are this headers included. I have
+</I>&gt;&gt;<i> installled the xserver-xorg-dev package but it don't work for me.
+</I>&gt;&gt;<i> The plugins compiles fine but the configure command of softdevice ignore
+</I>&gt;&gt;<i> the --disable-xv and the ./configure commands that are relative to xv.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> I would assume that xserver-xorg-dev is the one you need, but maybe you
+</I>&gt;<i> also need some more. The softdevice also needs the headers of the x11
+</I>&gt;<i> extensions like XVideo, maybe that is still missing. If you upgrade to
+</I>&gt;<i> the cvs from today and use configure again you will get a more detailed
+</I>&gt;<i> report of why xv is disabled in the file config.log.
+</I>&gt;<i>   
+</I>I think that the packages I need are:
+
+libxv-dev                     - X11 Video extension library (development 
+headers)
+libxv1                          - X11 Video extension library
+libxv1-dbg                   - X11 Video extension library (debug package)
+
+I have installed them and this is the config.log generated after run 
+./configure --disable-vidix:
+
+Parameters '--disable-vidix'
+PKG_CONFIG_PATH '/usr/local/lib/pkgconfig'
+Checking for ffmpeg.------------------------------------
+try to use pkg-config.
+-lpostproc
+Checking for DirectFB and DFB++.------------------
+/tmp/softdevice-conf-1926-8428-5600.c: In function 'int main()':
+/tmp/softdevice-conf-1926-8428-5600.c:5: error: 'DSBLIT_INTERLACED' was 
+not declared in this scope
+Checking for vidix.------------------------
+Checking for Xv.-----------------------------
+/usr/bin/ld: cannot find -lXi
+collect2: ld returned 1 exit status
+Checking for Xinerama.-----------------------------
+
+It seems that not found vx headers. There is a way to indicate the xv path?
+If I make a 'dpkg - L libxv-dev I see:
+
+/usr
+/usr/share
+/usr/share/doc
+/usr/share/doc/libxv-dev
+/usr/share/doc/libxv-dev/changelog.Debian.gz
+/usr/include
+/usr/include/X11
+/usr/include/X11/extensions
+/usr/include/X11/extensions/Xvlib.h
+/usr/lib
+/usr/lib/libXv.a
+/usr/lib/pkgconfig
+/usr/lib/pkgconfig/xv.pc
+/usr/lib/libXv.so
+
+
+Thanks,
+
+Leo
+&gt;<i> Bye,
+</I>&gt;<i> Martin
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Softdevice-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/softdevice-devel">Softdevice-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/softdevice-devel">http://lists.berlios.de/mailman/listinfo/softdevice-devel</A>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002147.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+	<LI>Next message: <A HREF="002155.html">[Softdevice-devel] witch softdevice output depending on hard and soft
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2151">[ date ]</a>
+              <a href="thread.html#2151">[ thread ]</a>
+              <a href="subject.html#2151">[ subject ]</a>
+              <a href="author.html#2151">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/softdevice-devel">More information about the Softdevice-devel
+mailing list</a><br>
+</body></html>
